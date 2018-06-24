@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html XMLNS:O>
+	<head>
+		<title>存储过程</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+			<style type="text/css"> p.MsoNormal {margin-bottom:.0001pt; text-align:justify; text-justify:inter-ideograph; font-size:10.5pt; font-family:"Calibri","sans-serif"; margin-left: 0cm; margin-right: 0cm; margin-top: 0cm; }
+	</style>
+	</head>
+	<body leftmargin="0" topmargin="0">
+		<table class="tableTitle">
+			<tr>
+				<td class="title">存储过程</td>
+			</tr>
+			<tr>
+				<td class="aTd ">
+					<a class="aDwHomepage" href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+			</tr>
+		</table>
+		<div class="mainDiv">
+			<div class="divTitle">1.sql server 存储过程</div>
+			<div class="divTitle">1.1 sql储存过程说明及相关控件</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据集控件中调用存储过程：在表单设计界面上，双击数据集控件，打开数据集属性页，在数据集的sql输入域，输入存储过程的名字(proc_dw),如果存储过程有参数，那它的写法是：<font style="FONT-SIZE: 12px">procName(</font>存储过程名称)&nbsp;&nbsp;&nbsp; 
+			parameter1(第一个参数)，parameter2(第二个参数)依次类推，参数与参数之间用逗号分隔。表单打开后即可调用sql server 
+			数据库中的存储过程,其它选择输入控件如：tree,checkboxlist,radiolist,listbox,combobox,dropdownlist控件也是在控件属性中的sql输入域，输入存储过程的名字，如果存储过程有参数带上参数。单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=sql_control_Procedure'>存储过程</a>
+			进入调用存储过程表单设计界面. &nbsp;<br>
+			<div class="divTitle">1.2 SelectSql方法调用存储过程</div>
+			&nbsp;&nbsp;&nbsp; 
+			SelectSql语法：SelectSql(procedureName,PageNo,PageSize)，procedureName表示存储过程名称，pageNo为起始页号，PageSize表示页尺寸。在SelectSql("proc_dw",1,5)函数中输入存储过程名字proc_dw来调用存储过程，从第一行记录起选中五行记录，PageSize为-1表示全部记录。单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=sql_control_Procedure'>查看SelectSql语法</a>
+			进入使用SelectSql语法表单设计界面.<br>
+			<div class="divTitle">
+				1.3 doSaveData执行存储过程和保存时执行其它存储过程</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=sql_djsave_procedure">doSaveData中执行存储过程</a>
+			进入调用存储过程表单设计界面. 存储过程的xml串是
+			<p class="MsoNormal">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;proc name=</span><span style="FONT-FAMILY:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">存储过程名</span><span lang="EN-US">&gt;</span></p>
+			<p class="MsoNormal" style="TEXT-INDENT:21pt">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;params&gt; </span>
+			</p>
+			<p class="MsoNormal" style="MARGIN-LEFT:21pt;TEXT-INDENT:21pt">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param name=</span><span style="FONT-FAMILY:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">参数名</span><span lang="EN-US"> dataType=</span><span style="FONT-FAMILY:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">数据类型</span><span lang="EN-US">&gt;</span><span style="FONT-FAMILY:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">参数值</span><span lang="EN-US">&lt;/param&gt; </span>
+			</p>
+			<p class="MsoNormal" style="MARGIN-LEFT:21pt;TEXT-INDENT:21pt">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .......</span></p>
+			<p class="MsoNormal" style="TEXT-INDENT:21pt">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/params&gt;</span></p>
+			<p class="MsoNormal">
+				<span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/proc&gt;</span></p>
+			<div class="divTitle">
+				1.3.1 doSaveData执行存储过程</div>
+			&nbsp;&nbsp;&nbsp; dosavedata执行存储过程，先将存储过程名和参数生成合法的xml数据，通过<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><b><span style="COLOR:blue">do</span></b>SaveData方法执行，</span>代码如下<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<p align="left" class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">&nbsp;&nbsp;&nbsp; 
+               function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_testProcedure()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; var</span></b> xmlproc1<span style="COLOR:red">=</span><span style="COLOR:purple">"&lt;proc 
+               name='proc_updatedw'&gt;&lt;params&gt; &lt;param name='@sdwid' dataType='</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes;mso-bidi-font-family:'Courier New'">字符串</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">'&gt;ZCF00000002&lt;/param&gt; 
+               &lt;param name='@sdwname' dataType='</span><span style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:宋体;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-bidi-font-family:'Courier New'">字符串</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">'&gt;</span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes;mso-bidi-font-family:'Courier New'">哈药集团</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">&lt;/param&gt;&lt;/params&gt;&lt;/proc&gt;"</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">;<span style="mso-tab-count:1">&nbsp; </span><o:p></o:p></span>
+			</p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; do</span></b>SaveData(xmlproc1);<o:p></o:p></span></p>
+			<p class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">&nbsp;&nbsp;&nbsp; }</span></b></p>
+			<div class="divTitle">
+				1.3.2 保存时执行其它存储过程</div>
+			&nbsp;&nbsp; 保存时执行其它存储过程：执行表单保存函数的同一事务中,同时执行一些其它的存储过程语句.代码如下<br>
+			&nbsp;&nbsp;&nbsp;
+			<p align="left" class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">&nbsp;&nbsp;&nbsp; 
+               function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_save()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; var</span></b> sdwname<span style="COLOR:red">=</span>DsMain.Field(<span style="COLOR:purple">"sdwname"</span>).Value<span style="COLOR:red">+</span><span style="COLOR:purple">"</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes;mso-bidi-font-family:'Courier New'">加存储过程</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">"</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">;<o:p></o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; var</span></b> xmlproc<span style="COLOR:red">=</span><span style="COLOR:purple">"&lt;proc 
+               name='proc_updatedw'&gt;&lt;params&gt; &lt;param name='@sdwid' dataType='</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes;mso-bidi-font-family:'Courier New'">字符串</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">'&gt;ZCF00000002&lt;/param&gt; 
+               &lt;param name='@sdwname' dataType='</span><span style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:宋体;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-bidi-font-family:'Courier New'">字符串</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">'&gt;"</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:red;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">+</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">sdwname<span style="COLOR:red">+</span><span style="COLOR:purple">"&lt;/param&gt;&lt;/params&gt;&lt;/proc&gt;"</span>;<o:p></o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+					<o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>DsMain.<b>
+						<span style="COLOR:blue">event</span></b>SaveRecordAfter
+               <span style="COLOR:red">=</span> xmlsql;<o:p></o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; var</span></b> sErr <span style="COLOR:red">
+               =</span> <b>
+						<span style="COLOR:blue">do</span></b>SubmitData(<b><span style="COLOR:blue">function</span></b>()<b><span style="COLOR:blue">{alert</span></b>(<span style="COLOR:purple">"</span></span><span style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:宋体;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-bidi-font-family:'Courier New'">提交数据成功</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">!"</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">);<b><span style="COLOR:blue">CloseBill</span></b>();<b><span style="COLOR:blue">}</span></b>); <o:p></o:p></span>
+			</p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b>
+						<span style="COLOR:blue">&nbsp;&nbsp;&nbsp; if</span></b>(<b><span style="COLOR:blue">IsSpace</span></b>(sErr)<span style="COLOR:red">==</span><b>
+						<span style="COLOR:blue">false</span></b>) <b>
+						<span style="COLOR:blue">alert</span></b>(sErr);<o:p>&lt;(sErr);<o:p></o:p></span></p>
+			<p class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">&nbsp;&nbsp;&nbsp; }</span></b></p>
+			<p class="MsoNormal">
+				&nbsp;</p>
+			<div class="divTitle">2. oracle存储过程</div>
+			<div class="divTitle">2.1 oracle存储过程说明及相关控件</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;对于oracle库，eform for 
+			.NET版，用oracleclient方式来连接oracle数据库来说:在数据集的sql输入域写法格式为：ebpag.e_testpara:::typename='fcs_dept',ret=@@result 
+			这表示运行ebpag包中的e_testpara，它有两个参数。注意此时应写上参数名称，且参数名称必须和存储过程中定义的参数名称一样。typename是一个输入参数，它的参数值是fcs_dept，ret是一个输出参数，则应在参数定义时固定写上 
+			@@result ，例如有一个输出参数out1，那它要固定写上@@result，即out1=@@result代表out1是输出参数。::: 
+			为存储过程名与参数名之间的分隔符，参数与参数之间用逗号分隔。在其它可以输入sql语句查询数据的控件如：tree,checkboxlist,radiolist,listbox,combobox,dropdownlist控件，一样可以调用存储过程用法也一样。单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=oracle_Procedure'>存储过程</a>
+			进入调用存储过程表单设计界面.
+			<div class="divTitle">2.2 有输出参数也有输入参数的存储过程</div>
+			&nbsp;&nbsp;&nbsp; 单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=oracle_Procedure_MuchPara'>有输入参数也有输出参数的存储过程</a>，它的数据集的sql语句输入域，调用存储过程写法为：ebpag2.e_testpara2 ::: dwid='ZCF00000098',ret=@@result dwid是输入参数，ret是输出参数。
+
+			进入调用存储过程表单设计界面.
+			<DIV class="divTitle">2.3 SelectSql方法调用存储过程</DIV>
+			&nbsp;&nbsp;&nbsp; 
+			SelectSql语法：SelectSql(procedureName,PageNo,PageSize)，procedureName表示存储过程名称，pageNo为起始页号，PageSize表示页尺寸。在SelectSql("ebpag.e_testpara",1,5)函数中输入存储过程名字proc_dw来调用存储过程，从第一行记录起选中五行记录，PageSize为-1表示全部记录。单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=oracle_Procedure_MuchPara">查看SelectSql语法</A>
+			进入使用SelectSql语法表单设计界面.<BR>
+			<DIV class="divTitle">2.4 doSaveData执行存储过程和保存时执行其它存储过程</DIV>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=oracle_djsave_procedure">doSaveData中执行存储过程</A>
+			进入调用存储过程表单设计界面. 存储过程的xml串是
+			<P class="MsoNormal"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;proc 
+name=</SPAN><SPAN style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">存储过程名</SPAN><SPAN lang="EN-US">&gt;</SPAN></P>
+			<P class="MsoNormal" style="TEXT-INDENT: 21pt"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;params&gt; </SPAN></P>
+			<P class="MsoNormal" style="MARGIN-LEFT: 21pt; TEXT-INDENT: 21pt"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param name=</SPAN><SPAN style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">参数名</SPAN><SPAN lang="EN-US"> dataType=</SPAN><SPAN style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">数据类型</SPAN><SPAN lang="EN-US">&gt;</SPAN><SPAN style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">参数值</SPAN><SPAN lang="EN-US">&lt;/param&gt; </SPAN></P>
+			<P class="MsoNormal" style="MARGIN-LEFT: 21pt; TEXT-INDENT: 21pt"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .......</SPAN></P>
+			<P class="MsoNormal" style="TEXT-INDENT: 21pt"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/params&gt;</SPAN></P>
+			<P class="MsoNormal"><SPAN lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&lt;/proc&gt;</SPAN></P>
+			<DIV class="divTitle">2.4.1 doSaveData执行存储过程</DIV>
+			&nbsp;&nbsp;&nbsp; dosavedata执行存储过程，先将存储过程名和参数生成合法的xml数据，通过<SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><B><SPAN style="COLOR: blue">do</SPAN></B>SaveData方法执行，</SPAN>
+			代码如下&nbsp;&nbsp;&nbsp;
+			<P class="MsoNormal" align="left"><B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&nbsp;&nbsp;&nbsp; 
+function</SPAN></B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"> 
+uf_testProcedure()<B><SPAN style="COLOR: blue">{ 
+<O:P></O:P></SPAN></B></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; var</SPAN></B> xmlproc1<SPAN style="COLOR: red">=</SPAN><SPAN style="COLOR: purple">"&lt;proc 
+name= 
+'ebpag3.e_testinsertpara'&gt;&lt;params&gt; &lt;param name='dwid' 
+dataType='</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;ZCF00000802&lt;/param&gt; 
+&lt;param name='wname' dataType='</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">哈药集团</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&lt;/param&gt; &lt;param name='phone' 
+dataType='</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">82645156</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&lt;/param&gt;</SPAN>&lt;/params&gt;&lt;/proc&gt;"</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">;<SPAN style="mso-tab-count: 1">&nbsp; </SPAN>
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; 
+do</SPAN></B>SaveData(xmlproc1);
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal"><B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&nbsp;&nbsp;&nbsp; 
+}</SPAN></B></P>
+			<DIV class="divTitle">2.4.2 保存时执行其它存储过程</DIV>
+			&nbsp;&nbsp; 保存时执行其它存储过程：执行表单保存函数的同一事务中,同时执行一些其它的存储过程语句.代码如下 &nbsp;&nbsp;&nbsp;
+			<P class="MsoNormal" align="left"><B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&nbsp;&nbsp;&nbsp; 
+function</SPAN></B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"> 
+uf_save()<B><SPAN style="COLOR: blue">{
+<O:P></O:P></SPAN></B></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; var</SPAN></B> sdwname<SPAN style="COLOR: red">=</SPAN>DsMain.Field(<SPAN style="COLOR: purple">"sdwname"</SPAN>).Value<SPAN style="COLOR: red">+</SPAN><SPAN style="COLOR: purple">"</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">加存储过程</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">"</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">;
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; var</SPAN></B> xmlproc<SPAN style="COLOR: red">=</SPAN><SPAN style="COLOR: purple">"&lt;proc 
+name= 
+'ebpag3.e_testinsertpara'&gt;&lt;params&gt; &lt;param name='dwid' 
+dataType='</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;ZCF00000602&lt;/param&gt; 
+&lt;param name='dwname' dataType='</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;"</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: red; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">+</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">sdwname<SPAN style="COLOR: red">+</SPAN><SPAN style="COLOR: purple">"&lt;/param&gt;&lt;param name='phone' 
+dataType='</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">字符串</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">'&gt;</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">82645156</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&lt;/param&gt;</SPAN>&lt;/params&gt;&lt;/proc&gt;"</SPAN>;
+				<O:P></O:P></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">
+					<O:P></O:P>
+				</SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN>DsMain.<B>
+						<SPAN style="COLOR: blue">event</SPAN></B>SaveRecordAfter <SPAN style="COLOR: red">=</SPAN> xmlsql;
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; var</SPAN></B> sErr <SPAN style="COLOR: red">=</SPAN> <B>
+						<SPAN style="COLOR: blue">do</SPAN></B>SubmitData(<B><SPAN style="COLOR: blue">function</SPAN></B>()<B><SPAN style="COLOR: blue">{alert</SPAN></B>(<SPAN style="COLOR: purple">"</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes; mso-bidi-font-family: 'Courier New'">提交数据成功</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: purple; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">!"</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">);<B><SPAN style="COLOR: blue">CloseBill</SPAN></B>();<B><SPAN style="COLOR: blue">}</SPAN></B>); 
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp; </SPAN><B>
+						<SPAN style="COLOR: blue">&nbsp;&nbsp;&nbsp; if</SPAN></B>(<B><SPAN style="COLOR: blue">IsSpace</SPAN></B>(sErr)<SPAN style="COLOR: red">==</SPAN><B>
+						<SPAN style="COLOR: blue">false</SPAN></B>) 
+<B><SPAN style="COLOR: blue">alert</SPAN></B>(sErr);
+<O:P>&lt;(sErr);
+<O:P></O:P></SPAN></P>
+			<P class="MsoNormal"><B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&nbsp;&nbsp;&nbsp; 
+}</SPAN></B></P>
+			<P class="MsoNormal">&nbsp;</P>
+			</O:P>
+		</div>
+		</o:p>
+	</body>
+</html>

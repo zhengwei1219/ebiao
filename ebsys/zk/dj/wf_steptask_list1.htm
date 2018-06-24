@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var iPageno=1;
+var iPageCount = 1;
+function uf_first(){
+	iPageno = 1;
+	uf_search();
+}
+function uf_prev(){
+	if (iPageno>1){
+		iPageno = iPageno -1;
+		uf_search();	
+	}
+}
+function uf_next(){
+	if (iPageno <iPageCount){
+		iPageno = iPageno +1;
+		uf_search();
+	}
+}
+function uf_last(){
+	iPageno = iPageCount;
+	uf_search();
+}
+function uf_change(){
+	iPageno = 1;
+	uf_search();
+}
+function uf_keypress(){
+	if (event.keyCode==13){
+		uf_search();	
+	}	
+}
+function uf_search(){
+
+	if (txtPageSize.value=="" || txtPageSize.value=="0"){
+		alert("请设置页尺寸，不能设置为0！");
+		return;
+	}	
+	
+	var searchType = parent.Request.QueryString('search_type').toString();
+	var searchWfid = parent.Request.QueryString('wf_id').toString();
+	var searchStepid = parent.Request.QueryString('step_id').toString();
+	
+	var searchWfName = parent.Request.QueryString('wf_name').toString();
+	if (!IsSpace(searchWfName))
+		wfname.value = searchWfName;
+	
+	var sKey = "?operate=get_steptask_list&search_type=" + searchType;
+	sKey +="&wf_id=" + searchWfid;
+	sKey +="&step_id=" + searchStepid;
+	if (!IsSpace(wfname.value))
+		sKey +="&wf_name=" + wfname.value;
+	if (!IsSpace(wfversion.value))
+		sKey +="&wf_version=" + wfversion.value
+	if (!IsSpace(cboState.value))
+		sKey +="&wf_state=" + cboState.value;
+					
+		//增加当前页，页尺寸	
+	sKey +="&page_size=" + txtPageSize.value;	
+	sKey +="&page_no=" + iPageno ;
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	
+	var oDom=SetDom(strReturn);
+	
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	iPageCount = oDom.childNodes(0).childNodes(1).text;
+	txtPageInfo.value = iPageno + "/" + iPageCount;
+
+	
+	var sXml = oDom.childNodes(0).childNodes(2).xml;
+	sXml = sXml.substring(3,sXml.length-4);//去掉<n></n>
+	
+//	var ss = ds1.xml;	
+//	ss = ss.substring(6,ss.length);	
+//CopyToPub(ds1.xml);
+	/*
+	var ss = ds1.xml;
+	var pos = ss.indexOf("<set><pages>");
+	if (pos>=0){
+		ss = ss.substring(pos,ss.length);	
+	}else{
+		ss = ss.substring(6,ss.length);
+	}
+	ss= "<root>"+sXml+ss;	
+	
+	ds1.OpenXmlData(ss);*/
+	
+	OpenDsAddSql(ds1,sXml,"SELECT wf_id,FCQ_BUG.bug_title, FCQ_BUG_USER.org_name, FCQ_BUG_USER.item_name FROM FCQ_BUG INNER JOIN FCQ_BUG_USER ON FCQ_BUG.create_user_id = FCQ_BUG_USER.fcbug_user_id WHERE FCQ_BUG.wf_id IN (:v_get) ");
+	
+/*
+	if (searchType!="undefined" && searchType=="2"){//待办任务列表
+		grid1.tab.childNodes(0).childNodes(11-4).style.display="none";  //撤回操作 隐藏
+		grid1.tab.childNodes(0).childNodes(9-4).style.display="none";  //任务完成时间 隐藏
+		
+	}
+
+	
+	if (searchType!="undefined" && searchType=="3"){//已办任务列表
+		grid1.tab.childNodes(0).childNodes(10-4).style.display="none";  //执行任务列 隐藏		
+	}
+		
+*/
+}
+
+//装入表格数据
+function uf_onload(){
+	//设置查询组button的背景图片
+	wf_setQueryImage();	
+	txtPageSize.value = 20;	
+	/*var searchType = parent.Request.QueryString('search_type').toString();
+	if (searchType!="undefined" && searchType=="2")
+		Label15.innerText = "我的待办任务列表";
+	else
+		Label15.innerText = "我的已办任务列表";
+		*/
+	uf_search();
+}
+
+
+
+
+
+function hideTableCol(oTable,index){
+	for (var i=0;i<oTable.rows.length;i++){
+		oTable.rows(i).cells(index).style.display="none";	
+	}
+}
+function uf_doRevoke(wfid,stepid,actionid,instanceid){	
+	if (!window.confirm("确定执行撤回任务操作吗？")){
+		return;
+	}
+	
+	var sKey = "?operate=do_revoke&wf_id=" + wfid +"&step_id=" + stepid	
+	sKey +="&action_id=" + actionid;
+	if (instanceid!=null && instanceid!="" && instanceid!="undefined")
+		sKey +="&dynamic_instance_id=" + instanceid;
+
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	var oDom=SetDom(strReturn);
+
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	var surl,wfName
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);		
+	}
+	else{
+		alert(oDom.childNodes(0).childNodes(1).text);
+		uf_search();
+	}
+	
+}
+function uf_doActionList(wfid,stepid,actionid,sdynamicId,wfName,wfDesc,wfVersion,sfieldkey,sfieldkeyvalue){
+	//任务列表－》流程实例步骤－》动作
+	var sKey = "?operate=get_task_action_list&wf_id=" + wfid +"&step_id=" + stepid	;
+	sKey +="&action_id=" + actionid;
+	if (sdynamicId!=null && sdynamicId!="" && sdynamicId!="undefined")
+		sKey +="&dynamic_instance_id=" + sdynamicId;
+
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	var oDom=SetDom(strReturn);
+
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	var surl,wfName
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	else{
+		var stage = oDom.childNodes(0).childNodes(1).text; //="step" 到达了步骤了
+		var num = oDom.childNodes(0).childNodes(2).text; //步骤的当前可执行的 action数量
+		var wfId = oDom.childNodes(0).childNodes(3).text;//流程实例id
+		if (num==1){//直接链接到action的view中
+			var action = oDom.getElementsByTagName("action");
+			var actionId = action.item(0).getAttribute("id");
+			var actionName = action.item(0).getAttribute("name");
+			var view = action.item(0).getAttribute("view");
+			var dynamicId = action.item(0).getAttribute("dynamic_instance_id");
+			var fieldkey = action.item(0).getAttribute("bs_id_field");
+			if (fieldkey==null) fieldkey="";
+			var fieldkeyvalue = action.item(0).getAttribute("id_field_value");
+			if (fieldkeyvalue==null) fieldkeyvalue="";
+
+			var traceId = action.item(0).getAttribute("traceId");//加当前步骤主键id 2011-9-17
+			
+			
+			
+			if (view==""){//没有view,则出现action选择页，点击action名字，执行doAction				
+				var sXml = "<root>";
+				sXml +="<wfname>" + wfName +"</wfname>";
+				sXml +="<wfdesc>" + escape(wfDesc) +"</wfdesc>";
+				sXml +="<wfversion>" + wfVersion +"</wfversion>";
+				//sXml +="<fieldkey>" + fieldkey + "</fieldkey>";
+				//sXml +="<fieldkeyvalue>" + fieldkeyvalue + "</fieldkeyvalue>";
+				//sXml +="<action name ='" + escape(actionName) + "' id='" + actionId +"'/>";
+				sXml +="<action name ='" + escape(actionName) + "' id='" + actionId +"'";
+				sXml +=" field_key='" + fieldkey + "' ";
+				sXml +=" field_key_value='" + fieldkeyvalue + "' ";
+				if (dynamicId!=null)
+					sXml +=" dynamic_instance_id='" + dynamicId + "' ";
+				sXml +=" traceId='" + traceId + "' ";//加当前步骤主键id 2011-9-17
+				sXml +="/>";
+				
+				sXml+="</root>";
+				
+				var surl = location.protocol+'//'+location.host + fcpubdata.path +"/fceform/common/djframe.htm?djsn=wf_action_list&djtype=WF";
+				surl +="&domxml=" + sXml;
+				surl +="&wfId=" + wfId;
+
+				surl +="&wfName=" + wfName;
+				surl +="&wfDesc=" + escape(wfDesc);
+				surl +="&wfVersion=" + wfVersion;
+
+				window.open(surl);
+				return;				
+			}
+			else{//有view的直接进入view链接的表单页面，表单提交的时候，同时做流程doAction
+				var surl = unescape(view) ;
+				surl = surl + "&wfName=" + wfName ;
+				surl = surl + "&wfDesc=" + escape(wfDesc);
+				surl = surl + "&wfVersion=" + wfVersion;				
+				surl = surl + "&wfId=" + wfId
+				surl = surl + "&actionId=" + actionId;
+				
+				surl = surl + "&"+fieldkey+"="+fieldkeyvalue;
+				if (dynamicId!=null)
+					surl = surl + "&dynamicInstanceId="+dynamicId; //在wf_tools.htm页面会获取此参数
+				
+				surl = surl + "&traceId=" + traceId ;//加当前步骤主键id 2011-9-17
+				window.open(location.protocol+'//'+location.host + fcpubdata.path + surl);	
+				return;			
+			}			
+		}
+		else{//多个action，用户选择一个执行
+			var sXml = "<root>";
+			sXml +="<wfname>" + wfName +"</wfname>";
+			sXml +="<wfdesc>" + escape(wfDesc) +"</wfdesc>";
+			sXml +="<wfversion>" + wfVersion +"</wfversion>";
+			//sXml +="<fieldkey>" + fieldkey + "</fieldkey>";
+			//sXml +="<fieldkeyvalue>" + fieldkeyvalue + "</fieldkeyvalue>";
+			
+		
+			var oActionList = oDom.getElementsByTagName("action");
+			var name,id,view,traceId;
+			for (var i=0;i<oActionList.length;i++){
+				name = escape(oActionList.item(i).getAttribute("name"));
+				id = oActionList.item(i).getAttribute("id");
+				view = oActionList.item(i).getAttribute("view");
+				traceId = oActionList.item(i).getAttribute("traceId");//2011-9-17
+				//sXml +="<action name ='" + name + "' id='" + id + "' view='" + view + "'/>";
+				dynamicId = oActionList.item(i).getAttribute("dynamic_instance_id");
+
+				var fieldkey = oActionList.item(i).getAttribute("bs_id_field");
+				if (fieldkey==null) fieldkey="";
+				var fieldkeyvalue = oActionList.item(i).getAttribute("id_field_value");
+				if (fieldkeyvalue==null) fieldkeyvalue="";
+				
+				sXml +="<action name ='" + name + "' id='" + id + "' view='" + view + "'";
+				sXml +=" field_key='" + fieldkey + "' ";
+				sXml +=" field_key_value='" + fieldkeyvalue + "' ";
+				if (dynamicId!=null)
+					sXml +=" dynamic_instance_id='" + dynamicId + "' ";
+				
+				sXml +=" traceId='" + traceId + "' ";//加当前步骤主键id 2011-9-17
+				
+				sXml +="/>";				
+			}
+			sXml+="</root>";
+			
+			var surl = location.protocol+'//'+location.host + fcpubdata.path +"/fceform/common/djframe.htm?djsn=wf_action_list&djtype=WF";
+			surl +="&wfId=" + wfId;
+
+			surl +="&wfName=" + wfName;
+			surl +="&wfDesc=" + escape(wfDesc);
+			surl +="&wfVersion=" + wfVersion;			
+
+			surl +="&domxml=" + sXml;
+			
+			window.open(surl);
+			return;
+		}
+	
+		
+	}
+
+	
+}
+
+
+function uf_showdj(wfid,stepid,actionid,sdynamicId,wfName,wfDesc,wfVersion,sfieldkey,sfieldkeyvalue,traceId){
+	
+	var searchType = parent.Request.QueryString('search_type').toString();
+	if (searchType=="2"){//待办任务列表
+		uf_doActionList(wfid,stepid,actionid,sdynamicId,wfName,wfDesc,wfVersion,sfieldkey,sfieldkeyvalue);
+		return;
+		
+	}
+	//已办理任务列表 则打开当时办理的单据显示
+	//查找出 节点挂接的单据view
+		//任务列表－》流程实例步骤－》动作
+	var sKey = "?operate=get_action_view&wf_id=" + wfid +"&step_id=" + stepid	;
+	sKey +="&action_id=" + actionid;
+	if (sdynamicId!=null && sdynamicId!="" && sdynamicId!="undefined")
+		sKey +="&dynamic_instance_id=" + sdynamicId;
+
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	var oDom=SetDom(strReturn);
+
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	var surl,wfName
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	var view = oDom.childNodes(0).childNodes(2).text;
+	
+	var surl = unescape(view) ;
+	surl = surl + "&wfName=" + wfName ;
+	surl = surl + "&wfDesc=" + escape(wfDesc);
+	surl = surl + "&wfVersion=" + wfVersion;				
+	surl = surl + "&wfId=" + wfid
+	surl = surl + "&actionId=" + actionid;
+	
+	surl = surl + "&"+sfieldkey+"="+sfieldkeyvalue;
+	surl = surl + "&show=true";
+	if (sdynamicId!=null)
+		surl = surl + "&dynamicInstanceId="+sdynamicId; //在wf_tools.htm页面会获取此参数
+	if (traceId!=null)
+		surl = surl + "&traceId="+traceId; //2011-9-17
+	
+	window.open(location.protocol+'//'+location.host + fcpubdata.path + surl);	
+			
+	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml OtherSave="否" entertype="修改" keyfield codeheader runsave idtype="1" BLONopenBefore contxml="<root><label><id>label0</id><id>label2</id><id>label3</id><id>label1</id><id>Label15</id></label><combobox><id>cboState</id></combobox><button><id>btnSearch</id><id>btnFirst</id><id>btnPrev</id><id>btnNext</id><id>btnLast</id></button><text><id>wfname</id><id>wfversion</id><id>txtPageInfo</id><id>txtPageSize</id></text><grid><id>grid1</id></grid><dataset><id>ds1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>wfname</taborder><taborder>wfversion</taborder><taborder>grid1</taborder><taborder>cboState</taborder><taborder>btnSearch</taborder><taborder>btnFirst</taborder><taborder>btnPrev</taborder><taborder>btnNext</taborder><taborder>btnLast</taborder><taborder>txtPageInfo</taborder><taborder>txtPageSize</taborder></root>" isfile="是" posheight poswidth postop posleft window="当前窗口" caption="任务列表" type="ZK" dj_sn="wf_steptask_list1" center="  " BLONopen="uf_onload()" BLONclose jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userType alertType="1" isCheckPermit="否"><?xml:namespace prefix = fc /><fc:dataset id=ds1 idtype="1" onSetText='bill_ondatasetsettext("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><dynamic_instance_id></dynamic_instance_id><trace_id></trace_id><taskname></taskname><bstable></bstable><fieldkey></fieldkey><fieldkeyvalue></fieldkeyvalue><fielddesc></fielddesc><fielddescvalue></fielddescvalue><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><finishdate></finishdate><operate></operate><revoke></revoke><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")' onGetText='bill_ondatasetgettext("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><dynamic_instance_id></dynamic_instance_id><trace_id></trace_id><taskname></taskname><bstable></bstable><fieldkey></fieldkey><fieldkeyvalue></fieldkeyvalue><fielddesc></fielddesc><fielddescvalue></fielddescvalue><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><finishdate></finishdate><operate></operate><revoke></revoke><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")' onValid='bill_ondatasetvalid("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><dynamic_instance_id></dynamic_instance_id><trace_id></trace_id><taskname></taskname><bstable></bstable><fieldkey></fieldkey><fieldkeyvalue></fieldkeyvalue><fielddesc></fielddesc><fielddescvalue></fielddescvalue><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><finishdate></finishdate><operate></operate><revoke></revoke><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")' format="<fields><field><fieldname>wfid</fieldname><datatype>整数</datatype><displaylabel>实例id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfname</fieldname><datatype>字符</datatype><displaylabel>流程名称</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfdesc</fieldname><datatype>字符</datatype><displaylabel>流程描述</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfversion</fieldname><datatype>字符</datatype><displaylabel>流程版本</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskid</fieldname><datatype>字符</datatype><displaylabel>任务id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>stepid</fieldname><datatype>字符</datatype><displaylabel>步骤id</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>actionid</fieldname><datatype>字符</datatype><displaylabel>动作id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dynamic_instance_id</fieldname><datatype>字符</datatype><displaylabel>动态分支实例id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>trace_id</fieldname><datatype>整数</datatype><displaylabel>轨迹id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskname</fieldname><datatype>字符</datatype><displaylabel>任务名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>是</link><target>_self</target><href>javascript:uf_showdj(ds1.Field('wfid').Value,ds1.Field('stepid').Value,ds1.Field('actionid').Value,ds1.Field('dynamic_instance_id').Value,ds1.Field('wfname').Value,ds1.Field('wfdesc').Value,ds1.Field('wfversion').Value,ds1.Field('fieldkey').Value,ds1.Field('fieldkeyvalue').Value,ds1.Field('trace_id').Value)</href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bstable</fieldname><datatype>字符</datatype><displaylabel>业务表名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldkey</fieldname><datatype>字符</datatype><displaylabel>业务字段名</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldkeyvalue</fieldname><datatype>字符</datatype><displaylabel>业务id字段值</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fielddesc</fieldname><datatype>字符</datatype><displaylabel>业务描述字段名</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fielddescvalue</fieldname><datatype>字符</datatype><displaylabel>记录描述</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tasktype</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskstatus</fieldname><datatype>字符</datatype><displaylabel>状态</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>createuser</fieldname><datatype>字符</datatype><displaylabel>创建人</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>createdate</fieldname><datatype>字符</datatype><displaylabel>创建时间</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>finishdate</fieldname><datatype>字符</datatype><displaylabel>完成时间</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>operate</fieldname><datatype>字符</datatype><displaylabel>操作</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>是</link><target>_self</target><href>javascript:uf_doActionList(ds1.Field('wfid').Value,ds1.Field('stepid').Value,ds1.Field('actionid').Value,ds1.Field('dynamic_instance_id').Value,ds1.Field('wfname').Value,ds1.Field('wfdesc').Value,ds1.Field('wfversion').Value,ds1.Field('fieldkey').Value,ds1.Field('fieldkeyvalue').Value)</href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>revoke</fieldname><datatype>字符</datatype><displaylabel>操作</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>是</link><target>_self</target><href>javascript:uf_doRevoke(ds1.Field('wfid').Value,ds1.Field('stepid').Value,ds1.Field('actionid').Value,ds1.Field('dynamic_instance_id').Value)</href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bug_title</fieldname><datatype>字符</datatype><displaylabel>提问标题</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>org_name</fieldname><datatype>字符</datatype><displaylabel>单位名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>item_name</fieldname><datatype>字符</datatype><displaylabel>项目名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" opensortno="1" pubpara="否" isSubGrid="否"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' format="<cols><col><fname>wfid</fname><cname>实例id</cname><width>10</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>50</columnwidth><align>left</align></col><col><fname>taskname</fname><cname>任务名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>createuser</fname><cname>创建人</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>createdate</fname><cname>创建时间</cname><width>30</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>finishdate</fname><cname>完成时间</cname><width>30</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>center</align></col><col><fname>revoke</fname><cname>操作</cname><width>10</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>center</align></col><col><fname>bug_title</fname><cname>提问标题</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>250</columnwidth><align>left</align></col><col><fname>org_name</fname><cname>单位名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>item_name</fname><cname>项目名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col></cols>" controltype="grid" left="6" top="83" height="254" width="714" hideHscroll="auto" blRowNo="否" canselect="是" autoheight="是" autowidth="是" autoappend="否" readonly="否" visible="是" SetRowHeight="是" hideVscroll="auto" bodyrowheight="-1" bodyrows="-1" dataset="ds1">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><LABEL style="POSITION: absolute; WIDTH: 57px; HEIGHT: 16px; TOP: 36px; LEFT: 6px" id=label0 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">模版名称</LABEL><INPUT style="POSITION: absolute; WIDTH: 149px; HEIGHT: 20px; TOP: 32px; LEFT: 62px" id=wfname onmovestart=moveStart() size=27 controltype="text" china="模版名称" onkeydown='bill_onkeydown("uf_keypress()")'><LABEL style="POSITION: absolute; WIDTH: 36px; HEIGHT: 15px; TOP: 35px; LEFT: 226px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">版本</LABEL><INPUT style="POSITION: absolute; WIDTH: 150px; HEIGHT: 20px; TOP: 32px; LEFT: 255px" id=wfversion onmovestart=moveStart() size=27 controltype="text" china="版本" onkeydown='bill_onkeydown("uf_keypress()")'><LABEL style="POSITION: absolute; WIDTH: 58px; HEIGHT: 18px; TOP: 36px; LEFT: 423px" id=label3 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">实例状态</LABEL><SELECT style="POSITION: absolute; WIDTH: 145px; HEIGHT: 25px; TOP: 30px; LEFT: 480px" id=cboState onmovestart=moveStart() controltype="combobox" china="实例状态" sqltrans tempvalue="&#13;&#10;0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4" temptext="全部&#13;&#10;创建&#13;&#10;激活&#13;&#10;挂起&#13;&#10;终止&#13;&#10;完成" sql check="1" async="否" datasourceName><OPTION value="">全部</OPTION><OPTION value=0>创建</OPTION><OPTION selected value=1>激活</OPTION><OPTION value=2>挂起</OPTION><OPTION value=3>终止</OPTION><OPTION value=4>完成</OPTION></SELECT><BUTTON style="POSITION: absolute; WIDTH: 66px; HEIGHT: 21px; TOP: 1px; LEFT: 6px" id=btnSearch onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_search()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 76px" id=btnFirst onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_first()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 100px" id=btnPrev onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_prev()")'></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: center; WIDTH: 37px; HEIGHT: 20px; TOP: 2px; LEFT: 124px" id=txtPageInfo onmovestart=moveStart() value=1/1 readOnly size=5 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 165px" id=btnNext onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_next()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 189px" id=btnLast onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_last()")'></BUTTON><LABEL style="POSITION: absolute; WIDTH: 41px; HEIGHT: 16px; TOP: 6px; LEFT: 213px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">页尺寸</LABEL><INPUT style="POSITION: absolute; WIDTH: 32px; HEIGHT: 20px; TOP: 2px; LEFT: 258px" id=txtPageSize onmovestart=moveStart() onchange='bill_onclick("uf_change()")' value=20 size=7 controltype="text"><SPAN style="POSITION: absolute; WIDTH: 213px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 28px; COLOR: #0000ff; FONT-SIZE: 12pt; TOP: 59px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 7px" id=Label15 controltype="label" inputTag="否" NotBg="否" align="Center">我的已办任务列表</SPAN></DIV></body></html>

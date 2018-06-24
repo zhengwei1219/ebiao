@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>保存前转换</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">保存前转换</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 保存前转换</div>
+       
+      &nbsp;&nbsp;&nbsp;  此表单主要演示将界面上输入的值保存到数据库中时或从数据库中读出时会作转换,比如本例作了将备注字段的内容加上备注:后再保存到库中.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_6_5_submitSave'>多出时转换示例</a> 进入多出时转换示例设计界面.
+       
+       <div class="divTitle">2. 保存前转换的设置</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;在字段保存前转换中的文本框中输入"备注:"+$f_value('bz'),$f_value('bz')是获取字段的bz值<br />
+        <img  src ="images/help_6_5_1.gif"/><br />  
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var isEdit = true;//是否为修改记录
+var editId = "";
+//var arrCode = new Array();
+//var arrName = new Array();
+function uf_open(){
+	new Eform.SysForm().setButtonImage();
+	if(!IsSpace(fcpubdata.obj[1].Field('editId').Value)) editId = fcpubdata.obj[1].Field('editId').Value;
+	if(IsSpace(fcpubdata.obj[0].Field('SID').Value)){
+		isEdit = false;
+		if(IsSpace(fcpubdata.obj[1].Field('SID').Value) == false){//获取当前父节点的全路径名，id等信息
+			dataset1.Field('sFID').Value = fcpubdata.obj[1].Field('sFID').Value;//全路径id
+			//dataset1.Field('sFCode').Value = fcpubdata.obj[1].Field('sFCode').Value;//全路径编号
+			//dataset1.Field('SFNAME').Value = fcpubdata.obj[1].Field('SFNAME').Value;//全路径名称
+			dataset1.Field('SPARENT').Value = fcpubdata.obj[1].Field('SID').Value;//父id
+			//dataset1.Field('sSequence').Value = fcpubdata.obj[1].Field('sSequence').Value;//顺序号
+			
+		}
+		dataset1.Field('SORGKINDID').Value = fcpubdata.obj[1].Field('SORGKINDID').Value;
+		var sorgkindid = dataset1.Field('SORGKINDID').Value;
+		if(sorgkindid == "ogn"){
+		 	dataset1.Field('SORGKINDID1').Value = "机构"
+		}else if(sorgkindid == "dpt"){
+		 	dataset1.Field('SORGKINDID1').Value = "部门"
+		}else if(sorgkindid == "pos"){
+		 	dataset1.Field('SORGKINDID1').Value = "岗位"
+		}else if(sorgkindid == "psm"){
+			dataset1.Field('SORGKINDID1').Value = "人员"
+		}
+		
+	}
+	dataset1.Field('sFCode').Value = fcpubdata.obj[1].Field('sFCode').Value;//全路径编号
+	dataset1.Field('SFNAME').Value = fcpubdata.obj[1].Field('SFNAME').Value;//全路径名称
+	dataset1.fset_cont1();
+}
+
+
+function uf_save(){
+	if(uf_check('txtName','name') == false) return ;
+	if(uf_check('txtCode','code') == false) return ;
+	if(uf_checkName() == false) return;
+	var sFID = "";
+	var xmlSql = "";
+	var sFName = dataset1.Field('SFNAME').Value +"/"+dataset1.Field('SNAME').Value;
+	var sFCode = dataset1.Field('sFCode').Value +"/"+dataset1.Field('sCode').Value;
+	if(isEdit == false){
+		var sId = getMaxNo('ORG');
+		var sortNo = getMaxIntNo('SOR');
+		sFID = dataset1.Field('sFID').Value +"/"+sId +"."+dataset1.Field('SORGKINDID').Value;
+		xmlSql = "<insert tableName='FCQ_ORG'><names> SID,SCODE,SNAME,SFID,SFCODE,SFNAME,SPERSONID,SPARENT,SORGKINDID,SLONGNAME,SLEVEL,DELETEMARK,sortNo  </names><values>'"+sId+"','"+dataset1.Field('sCode').Value+"','"+dataset1.Field('sName').Value+"','"+sFID+"','"+sFCode+"','"+sFName+"','"+dataset1.Field('SPERSONID').Value+"','"+dataset1.Field('SPARENT').Value+"','"+dataset1.Field('SORGKINDID').Value+"','"+dataset1.Field('SLONGNAME').Value+"','"+dataset1.Field('SLEVEL').Value+"',0,"+sortNo+" </values></insert>";	//dataset1.Field('SLEVEL').Value
+	}else{
+		xmlSql = "<update tableName='FCQ_ORG'><set>SCODE='"+dataset1.Field('sCode').Value+"',SNAME='"+dataset1.Field('sName').Value+"',SFCODE='"+sFCode+"',SFNAME='"+sFName +"',SLONGNAME='"+dataset1.Field('SLONGNAME').Value+"',SLEVEL='"+dataset1.Field('SLEVEL').Value+"'</set><where> SID = '"+dataset1.Field('SID').Value+"'</where></update>"
+		if(fcpubdata.obj[0].Field('sCode').Value != $id('txtCode').value || fcpubdata.obj[0].Field('sName').Value != $id('txtName').value){//修改了编号或名称
+			var updataSql = updataUrlSql(fcpubdata.obj[0].Field('sCode').Value,fcpubdata.obj[0].Field('sName').Value,$id('txtCode').value,$id('txtName').value,dataset1.Field('SID').Value);
+			xmlSql = updataSql+xmlSql;
+		}
+	}
+	doSaveData(xmlSql,function(){alert("保存成功");$eform('关闭窗口');});
+}
+function updataUrlSql(sCode,sName,editCode,editName,sId){//更改编号名称后修改子节点的编号名称全路径
+	var xmlSqls="";
+	var sFID = SqlToField("select sFId from fcq_org where sId='" + sId + "'");
+	var sql = "select sFCode,sFName,sID from  fcq_org where  sFID like '" + sFID + "%' ";
+    var xmlRet = SelectSql(sql, 1, -1);
+    var oXml = SetDom(xmlRet);
+    if (oXml.documentElement == null) {
+        alert(xmlRet);
+        return;
+    }
+    var len = oXml.documentElement.childNodes.length - 1;
+    for (var i = 0; i < len; i++) {
+    	var id = oXml.documentElement.childNodes[i].childNodes[2].text;
+    	if(sId == id) continue ;
+        var sFCode = oXml.documentElement.childNodes[i].childNodes[0].text;
+        var oldSFCode = dataset1.Field('SFCODE').Value+"/"+ sCode;
+        sFCode = dataset1.Field('SFCODE').Value+"/"+ editCode +"/"+ sFCode.substring(oldSFCode.length + 1, sFCode.length);
+        var sFName = oXml.documentElement.childNodes[i].childNodes[1].text;
+        var oldSFName = dataset1.Field('SFNAME').Value+"/"+ sName;
+        sFName = dataset1.Field('SFNAME').Value+"/"+ editName + "/" + sFName.substring(oldSFName.length + 1, sFName.length);
+        xmlSqls += "<update tableName='fcq_org'><set>sFCode='" + sFCode + "' ,sFName='" + sFName + "'</set><where> sID = '" + id + "'</where></update>";        
+    }
+    return xmlSqls;
+}
+
+function uf_check(contId,type){//检查名称编号字段重名
+	var sRt = true;
+	if(IsSpace($id(contId).value)) {alert('编号和名称字段都不能为空'); return false}
+	var sql = "select SCODE,SNAME  from FCQ_ORG where sParent='"+fcpubdata.obj[1].Field('SID').Value+"' and deleteMark <> 1"
+	if(isEdit == true) sql += " and  sID <> '"+editId + "'" ; 
+	var xmlRet = SelectSql(sql,1,-1);
+	var oXml = SetDom(xmlRet);
+	if (oXml.documentElement == null) {
+	    alert(xmlRet);
+	    return;
+	}
+	if (oXml.documentElement.childNodes.length < 1) return;
+	for(var i=0;i< oXml.documentElement.childNodes.length-1;i++){
+		if(($id(contId).value == oXml.documentElement.childNodes[i].childNodes[0].text) && type == "code"){
+			alert("同级节点下，编号字段值'"+$id(contId).value+"'重名");
+			sRt = false	;
+			return sRt;
+		}
+		if(($id(contId).value == oXml.documentElement.childNodes[i].childNodes[1].text) && type == "name"){
+			alert("同级节点下，名称字段值'"+$id(contId).value+"'重名");
+			sRt = false	;
+			return sRt;
+		}
+	
+	}
+	return sRt;
+}
+
+function uf_checkName(){
+	var reg = /[^_|a-z|A-Z|0-9|\u4e00-\u9fa5]/;
+    if(reg.test($id('txtName').value)) {alert("名称字段只能是数字字母和下划线和汉字");return false}else{return true}	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/shape.css'  /><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_save()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType contxml="<root><label><id>label1</id><id>label2</id><id>label5</id><id>label6</id><id>label7</id><id>label8</id><id>label9</id><id>label11</id></label><shape><id>shape1</id><id>shape2</id></shape><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtName</id><id>txtCode</id><id>text11</id></text><dropdownlist><id>dropdownlist1</id></dropdownlist><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:11;radio:0;listbox:0;textarea:0;combobox:2;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:2;tab:0;div:0;DsMain_field:0;a:0;button:5;text:13;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:0;dataset:3;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" billtaborder="<root><taborder>txtName</taborder><taborder>txtCode</taborder><taborder>text11</taborder><taborder>dropdownlist1</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" isfile="是" posheight="180" poswidth="410" postop posleft window="有模式窗口" caption="组织机构卡片表" type="ZK" dj_sn="zk_org_card" BLONopen="uf_open()" center="居中" BLONclose BLONopenBefore AutoResizeXml envType="电脑" useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore runParams viewType=" "><LABEL style="POSITION: absolute; WIDTH: 49px; HEIGHT: 12px; TOP: 34px; LEFT: 10px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">上级</LABEL><LABEL style="POSITION: absolute; WIDTH: 50px; HEIGHT: 12px; TOP: 59px; LEFT: 10px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否">名称</LABEL><LABEL style="POSITION: absolute; WIDTH: 49px; HEIGHT: 12px; TOP: 81px; LEFT: 10px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">长名称</LABEL><LABEL style="POSITION: absolute; WIDTH: 34px; HEIGHT: 12px; TOP: 58px; LEFT: 219px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">编号</LABEL><LABEL style="POSITION: absolute; WIDTH: 40px; HEIGHT: 12px; TOP: 105px; LEFT: 10px" id=label7 onmovestart=moveStart() controltype="label" inputTag="否">类型</LABEL><LABEL style="POSITION: absolute; WIDTH: 36px; HEIGHT: 14px; TOP: 106px; LEFT: 219px" id=label8 onmovestart=moveStart() controltype="label" inputTag="否">级别</LABEL><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" controltype="dataset" format="<fields><field><fieldname>SID</fieldname><datatype>字符</datatype><displaylabel>id字段</displaylabel><size>130</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SCODE</fieldname><datatype>字符</datatype><displaylabel>编号</displaylabel><size>128</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SNAME</fieldname><datatype>字符</datatype><displaylabel>名称</displaylabel><size>256</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SFCODE</fieldname><datatype>字符</datatype><displaylabel>全路径编号</displaylabel><size>4096</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SFID</fieldname><datatype>字符</datatype><displaylabel>全路径id</displaylabel><size>4096</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SFNAME</fieldname><datatype>字符</datatype><displaylabel>全路径名称</displaylabel><size>4096</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SLEVEL</fieldname><datatype>字符</datatype><displaylabel>级别</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SLONGNAME</fieldname><datatype>字符</datatype><displaylabel>长名称</displaylabel><size>510</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SORGKINDID</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SORGKINDID1</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SPARENT</fieldname><datatype>字符</datatype><displaylabel>父id</displaylabel><size>64</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SPERSONID</fieldname><datatype>字符</datatype><displaylabel>人员id</displaylabel><size>64</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DELETEMARK</fieldname><datatype>整数</datatype><displaylabel>删除标记</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sortNo</fieldname><datatype>整数</datatype><displaylabel>新建字段</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" fieldtrans="<root><field><name>SLEVEL1</name><trans></trans><rtrans></rtrans><sql>select%20code%20%20as%20SLEVEL%20%2Cname%20as%20SLEVEL1%20from%20fc_datadict%20where%20typename%3D%27%u7EC4%u7EC7%u6743%u9650%u7EA7%u522B%27%20</sql></field><field><name>SORGKINDID1</name><trans></trans><rtrans></rtrans><sql>select%20code%20%20as%20SORGKINDID%20%2Cname%20as%20SORGKINDID1%20from%20fc_datadict%20where%20typename%3D%27%u7EC4%u7EC7%u5355%u5143%u7C7B%u578B%27</sql></field></root>" idparam="ORG" async="否" isSubGrid="否" pubpara="否" isaddemptyrec="否" submittype="2" submitno="1" savetable="FCQ_ORG" issubds="否" opensortno="1" onValid='bill_ondatasetvalid("<dsid><SID></SID><SCODE>$valid(&amp;quot;字母、数字或_&amp;quot;);</SCODE><SNAME>uf_checkName()</SNAME><SFCODE></SFCODE><SFID></SFID><SFNAME></SFNAME><SLEVEL></SLEVEL><SLONGNAME></SLONGNAME><SORGKINDID></SORGKINDID><SORGKINDID1></SORGKINDID1><SPARENT></SPARENT><SPERSONID></SPERSONID><DELETEMARK></DELETEMARK><sortNo></sortNo></dsid>")' onGetText='bill_ondatasetgettext("<dsid><SID></SID><SCODE></SCODE><SNAME></SNAME><SFCODE></SFCODE><SFID></SFID><SFNAME></SFNAME><SLEVEL></SLEVEL><SLONGNAME></SLONGNAME><SORGKINDID></SORGKINDID><SORGKINDID1></SORGKINDID1><SPARENT></SPARENT><SPERSONID></SPERSONID><DELETEMARK></DELETEMARK><sortNo></sortNo></dsid>")' onSetText='bill_ondatasetsettext("<dsid><SID></SID><SCODE></SCODE><SNAME></SNAME><SFCODE></SFCODE><SFID></SFID><SFNAME></SFNAME><SLEVEL></SLEVEL><SLONGNAME></SLONGNAME><SORGKINDID></SORGKINDID><SORGKINDID1></SORGKINDID1><SPARENT></SPARENT><SPERSONID></SPERSONID><DELETEMARK></DELETEMARK><sortNo></sortNo></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%B0%CC%AC%B2%9CjbXr%94%B4%AC%B2%9C%A4%A0%AA%96%A0%96Xrn%D0%F4Xrn%B4%AC%B2%9C%A4%A0%AA%96%A0%96pXrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%AC%B2%9CXrnXrn%FC%DE%D8%F2%D8Xrn%B4%A0%96Xt%96Xr%7CXt%90X%7C%92%DA%D4%EE%F8%D2%D6%D0%F6%D0j%EC%D2%E2Xx%92nXx%96j%9A%E0%D8%E6%D6Xr%7EXr%7C%B4%A0%96Xr%7CXr%80j%BA%D0%E6%F8%D8X%7C%96Xt%90Xr%7C" BeforePost='bill_dsevent("BeforePost","uf_saveBefore()")'></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 135px; HEIGHT: 20px; TOP: 54px; LEFT: 52px" id=txtName onmovestart=moveStart() onchange="bill_onclick(&quot;uf_check('txtName','name');&quot;)" size=24 controltype="text" dataset="dataset1" china="名称" field="SNAME"><INPUT style="POSITION: absolute; WIDTH: 132px; HEIGHT: 20px; TOP: 54px; LEFT: 250px" id=txtCode onmovestart=moveStart() onchange="bill_onclick(&quot;uf_check('txtCode','code')&quot;)" size=23 controltype="text" dataset="dataset1" china="编号" field="SCODE"><INPUT style="POSITION: absolute; WIDTH: 330px; HEIGHT: 20px; TOP: 78px; LEFT: 52px" id=text11 onmovestart=moveStart() size=61 controltype="text" dataset="dataset1" china="长名称" field="SLONGNAME"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 105px; LEFT: 52px" id=label9 onmovestart=moveStart() controltype="label" dataset="dataset1" inputTag="否" china="新建字段" field="SORGKINDID1">label9</LABEL><fc:fc_code id=dropdownlist1 controltype="dropdownlist" dataset="dataset1" visible="是" format="" width="133" height="20" top="103" left="249" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F4%A6%D8%FA%D8%E6Xrn%DA%F2%EC%E8Xrn%DA%D4%F0%CC%EC%F2%DCXrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xt%96n" datasourceName="" field="SLEVEL" addrow="否" multiselect="否" blnempty="否" blninput="是" isShowTree="0" isTreeNewSql="0" FieldNameList="" xml="" position="absolute" align="undefined" sql2="null"></fc:fc_code><LABEL style="POSITION: absolute; WIDTH: 327px; HEIGHT: 12px; TOP: 32px; LEFT: 54px" id=label11 onmovestart=moveStart() controltype="label" dataset="dataset1" inputTag="否" china="全路径名称" field="SFNAME"></LABEL><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 328px; HEIGHT: 113px; TOP: 47px; LEFT: 53px" id=shape1 onresize="" onmovestart=moveStart() controltype="shape" linetype="横线" cover="9" from = "0,0" to = "246pt,0" fillcolor = "white" strokecolor = "gray" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><v:line style="POSITION: absolute; WIDTH: 134px; HEIGHT: 100px; TOP: 120px; LEFT: 51px" id=shape2 onresize="" onmovestart=moveStart() controltype="shape" linetype="横线" cover="9" from = "0,0" to = "100.5pt,0" fillcolor = "white" strokecolor = "gray" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><BUTTON style="POSITION: absolute; WIDTH: 65px; HEIGHT: 25px; TOP: 2px; LEFT: 11px" id=cmdOk onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_save()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 65px; HEIGHT: 25px; TOP: 2px; LEFT: 82px" id=cmdClose onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;$eform('关闭窗口')&quot;)"></BUTTON></DIV><script></script></body></html>

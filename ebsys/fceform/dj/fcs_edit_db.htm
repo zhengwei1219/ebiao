@@ -1,0 +1,450 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//拼写listbox控件的显示SQL语句
+var db2UserName=fcpubdata.db2UserName;
+function uf_sSql(){
+	if(fcpubdata.databaseTypeName!="sqlserver" && fcpubdata.databaseTypeName!="oracle" && fcpubdata.databaseTypeName!="db2" && fcpubdata.databaseTypeName!="mysql"){
+		alert("数据库维护只支持sqlserver和oracle和db2和mysql");
+		CloseBill();
+	}
+	var sSql="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		sSql="select name from sysobjects where name <> 'dtproperties' and xtype='U' and name not like 'tmp_%' order by name ";	
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sSql="select table_name from user_tables order by table_name";	
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		sSql="SELECT TABNAME FROM SYSCAT.TABLES WHERE TABSCHEMA='"+db2UserName+"'";
+		Label2.style.display="none";
+		txtPkey.style.display="none";
+	}
+	if(sSql == ""){
+		var oOpt = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?GetAllTables","<returnType>option</returnType><sFilter></sFilter>");
+	}else{
+		var oOpt=SqlCombo(lstTable,sSql);
+	}
+	lstTable.outerHTML=SelectAddOption(lstTable,oOpt);
+}
+
+//双击List列表，查询出当前数据表中的字段列表
+function uf_click(){
+	var slen=lstTable.length;
+	if(lstTable.selectedIndex>=0){
+		var mysqlKey = uf_showFieldList(lstTable.value);
+		if(typeof(mysqlKey ) != "undefined"){
+			txtPkey.value=mysqlKey;
+		}else{
+			uf_showkey(lstTable.value);
+		}
+	}
+}
+function uf_showFieldList(tableName) {
+	var sval = tableName;
+	var sSql="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		sSql="select syscolumns.name as fdname,systypes.name as fdtype,syscolumns.length as fdsize,syscolumns.scale as fddec,case when syscolumns.isnullable=0 then 'NOT NULL' when syscolumns.isnullable=1 then 'NULL' end as isnullable from syscolumns,sysobjects,"
+		+"systypes where syscolumns.id=sysobjects.id and  syscolumns.xtype=systypes.xtype and sysobjects.xtype='U' and systypes.name!='sysname' and "
+		+"sysobjects.name='"+sval+"' order by syscolumns.colorder";
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sSql="select COLUMN_NAME as fdname,DATA_TYPE AS fdtype,decode(DATA_TYPE,'CHAR',DATA_LENGTH,'NCHAR',DATA_LENGTH,'VARCHAR2',DATA_LENGTH,'NVARCHAR2',DATA_LENGTH,'RAW',DATA_LENGTH,DATA_PRECISION) as fdsize,decode(DATA_TYPE,'NUMBER',DATA_SCALE,DATA_PRECISION) as fddec,decode(NULLABLE,'N','NOT NULL','Y','NULL') as isnullable from user_tab_columns where table_name='"+sval+"'";	
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		sSql="select COLNAME as fdname,TYPENAME AS fdtype,LENGTH as fdsize,SCALE as fddec,CASE NULLS WHEN 'N' THEN 'NOT NULL' ELSE 'NULL' END as isnullable  FROM SYSCAT.COLUMNS where TABNAME='"+sval+"' and TABSCHEMA='"+db2UserName+"'";	
+	}
+	if(sSql==""){ //mysql
+        var retX = SelectSql("describe "+tableName,1,-1);
+        var oX = SetDom(retX);
+        if(oX.documentElement == null){
+        	alert(retX);
+        	return;
+        }
+        var keyName=""; //主键字段名
+        var sb=new Sys.StringBuilder("<root>");
+        for(var i=0;i<oX.documentElement.childNodes.length-1;i++){
+        	sb.append("<tr><td>"+oX.documentElement.childNodes(i).childNodes(0).text + "</td>")	;
+        	var sTypes = oX.documentElement.childNodes(i).childNodes(1).text;
+        	var posStart = sTypes.indexOf("(");
+        	var posEnd = sTypes.indexOf(")");
+        	var pos = sTypes.indexOf(",");
+        	if(pos>=0){
+	        	var fieldLen = sTypes.substring(posStart+1,pos);
+	        	var fieldDecLen=sTypes.substring(pos+1,posEnd);
+        	}else{
+	        	var fieldLen = sTypes.substring(posStart+1,posEnd);
+	        	var fieldDecLen="0";
+        	}
+        	
+        	var typeName = sTypes.substring(0,posStart);
+        	if(posStart < 0) typeName = sTypes;
+        	
+  			var sNull = "NULL";
+  			if(oX.documentElement.childNodes(i).childNodes(2).text == "NO") sNull = "NOT " +sNull;     	
+        	sb.append("<td>"+typeName+"</td><td>"+fieldLen+"</td><td>"+fieldDecLen+"</td><td>"+sNull+"</td><td></td></tr>");
+        	
+        	if(oX.documentElement.childNodes(i).childNodes(3).text != ""){
+        		keyName += oX.documentElement.childNodes(i).childNodes(0).text +"," ;
+        	}
+        }
+	
+		var ss = imgdataset1.xml;
+		var pos1 = ss.indexOf("<set><pages>");
+		if (pos1>=0){
+			ss = ss.substring(pos1,ss.length);	
+		}
+		sb.append(ss);
+        //sb.append("<set><pages>9</pages><fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>字段宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>字段精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnullable</fieldname><datatype>整数</datatype><displaylabel>允许空</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>colorder</fieldname><datatype>字符</datatype><displaylabel>序列号</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields></set></root>");
+        imgdataset1.OpenXmlData(sb.toString());   	        
+		if(keyName != "") keyName = keyName.substring(0,keyName.length-1);
+		return keyName;
+		
+	}else{
+		imgdataset1.Open(sSql);
+	}
+	
+	
+}
+//点击删除Button，将字段表中当前选中行从数据表中删除
+function uf_del(){
+	if(fcpubdata.databaseTypeName=="db2"){
+		alert("db2数据库不支持删除字段!");
+		return;
+	}
+	if(lstTable.selectedIndex<0){
+		alert("请选择数据表")
+		return;	
+	}
+	var TAB=lstTable.value;
+	var sSql="";
+	var allZD="";
+	var iCount=0;
+	var strusql = "";
+	
+	//双击多选删除字段
+	for (i=0;i<imgdataset1.RecordCount;i++){
+		if (imgdataset1.oDom.documentElement.childNodes(i).getAttribute("multisel")=='是') {  
+	    	var ZD=imgdataset1.oDom.documentElement.childNodes(i).childNodes(0).text;
+			sSql += _delOneField(TAB,ZD);
+			//strusql += "<no>delete FC_DBSTRU where tbname='"+TAB+"' and fdname='"+ZD+"'</no>";
+			allZD+=ZD+",";	
+			iCount++;
+		}
+	}
+	//默认当前行删除字段
+	if(iCount<=0){
+		allZD=imgdataset1.Field("fdname").Value
+		sSql += _delOneField(TAB,allZD);
+		//strusql += "<no>delete FC_DBSTRU where tbname='"+TAB+"' and fdname='"+allZD+"'</no>";
+	}
+	if(allZD.indexOf(",")>0){
+		allZD=allZD.substring(0,allZD.length-1);
+	}
+	var s1=sSql ;
+	var arr = s1.split(";");
+	var l= arr.length;
+	var sXml = ""
+	for(var i=0;i<l;i++){
+		var s2=new Eapi.Str().trim(arr[i])
+		if(IsSpace(s2)) continue;
+		sXml += s2 ;
+	}
+	if(confirm("真的要删除'"+allZD+"'字段吗？")){
+		var sRet=doSaveData(sXml,function (){alert("删除成功");uf_click();});	///
+		
+	}
+	/*if(IsSpace(sRet)){
+		var ss = InsertSqls(strusql);
+		uf_click();
+	}else{
+		alert(sRet);
+	}*/
+	
+	function _delOneField(tableName,fieldName){
+		var TAB = tableName;
+		var allZD = fieldName;
+		var sSql="";
+		if(fcpubdata.databaseTypeName=="sqlserver"){
+			var DF=SqlToField("select top 1 name from sysobjects where id=(select syscolumns.cdefault from syscolumns,sysobjects where syscolumns.id=sysobjects.id and sysobjects.name='"+TAB+"' and syscolumns.name='"+allZD+"')")
+			if(IsSpace(DF)==false){
+			sSql="<alter tableName='"+TAB+"'>"+ " <detail> drop constraint  "+DF+"</detail>"+"</alter>;\n"///
+			}
+		    sSql+="<alter tableName='"+TAB+"'>"+" <detail> drop column "+allZD+ "</detail>"+"</alter>;\n";	///
+		}
+		if(fcpubdata.databaseTypeName=="oracle" || fcpubdata.databaseTypeName=="mysql"){
+			sSql+="<alter tableName='"+TAB+"'>"+" <detail> drop column "+allZD+ "</detail>"+"</alter>;\n";///	
+		}
+		return sSql;
+	}
+}
+
+//点击修改Button，修改当前选中字段
+
+function uf_alterField(bAdd){
+	if(bAdd == false && fcpubdata.databaseTypeName=="db2"){
+		alert("db2数据库不支持修改字段!");
+		return;
+	}
+	
+	if(lstTable.selectedIndex<0){
+		alert("请选择数据表")
+		return;		
+	}
+	var sval=lstTable.value;
+	var sFd="";
+	if(bAdd == false){
+		sFd=imgdataset1.Field('fdname').Value;
+	}
+	var arr=new Array();
+	arr[0]=sval;	//表名
+	arr[1]=sFd;		//字段名
+	var formTitle="";
+	if(bAdd == true){formTitle="新增字段"} else {formTitle="修改字段"};
+	var sText=DjOpen('fcs_edit_column',arr,'展现','有模式窗口','直接',formTitle);	
+	if(sText=="ok"){
+		uf_showFieldList(sval);
+	}
+}
+
+//设置主键
+
+function uf_setPrimaryKey(){
+	if(lstTable.selectedIndex<0){
+		alert("请选择数据表")	
+		return;	
+	}
+	var sval=lstTable.value;  //表名 
+	var sFd=""   //字段名
+	var sSql1="";
+	//查找原来的主键,并删除
+	var xmSql2="";
+	if(fcpubdata.databaseTypeName=="mysql"){
+	//	xmSql2+="<alter tableName='"+sval+"'>"+" <detail> drop primary key </detail>"+"</alter>"	
+	}
+	else{
+		if(fcpubdata.databaseTypeName=="sqlserver"){
+			sSql1="select name from sysobjects where parent_obj=(select id from sysobjects where sysobjects.name='"+sval+"') and sysobjects.type='K'";
+		}
+		if(fcpubdata.databaseTypeName=="oracle"){
+			sSql1="select constraint_name from user_constraints where table_name='"+sval+"' and constraint_type='P'"	
+		}
+		
+		
+		var s1=SqlToField(sSql1);
+		if(IsSpace(s1)==false){
+			xmSql2+="<alter tableName='"+sval+"'>"+" <detail> drop constraint  "+s1+"</detail>"+"</alter>"	
+		}
+	}
+	//加上新的主键
+	for(var i=0;i<imgdataset1.RecordCount;i++){
+		if(imgdataset1.oDom.documentElement.childNodes(i).getAttribute("multisel")=='是'){
+			sFd+=imgdataset1.oDom.documentElement.childNodes(i).childNodes(0).text+",";
+		}	
+	}
+	var len=sFd.length;
+	sFd=sFd.substring(0,len-1);
+	if(IsSpace(sFd)){
+		sFd=imgdataset1.Field('fdname').Value	///xmFd
+	}
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		xmSql2+="<alter tableName='"+sval+"'>"+"<detail> add constraint PK_"+sval+" PRIMARY KEY CLUSTERED ("+sFd+")"+"</detail>"+"</alter>"
+	}
+	if(fcpubdata.databaseTypeName=="oracle" || fcpubdata.databaseTypeName=="mysql"){
+		xmSql2+="<alter tableName='"+sval+"'>"+"<detail> add primary key ("+sFd+")"+"</detail>"+"</alter>"
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		xmSql2+="<alter tableName='"+sval+"<detail> add constraint PK_"+sval+" PRIMARY KEY ("+sFd+")"+"</detail>"+"</alter>"
+	}
+	
+	
+	//成批执行这些命令
+	/*var arr = xmSql2.split(";");
+	var l= arr.length;
+	var sXml = ""
+	for(var i=0;i<l;i++){
+		var s3=new Eapi.Str().trim(arr[i])
+		if(IsSpace(s3)) continue;
+		sXml +=  s3 ;
+	}*/
+	//alert(xmSql2);
+	doSaveData(xmSql2,function (){alert("成功");uf_click();});	///
+	/*var sRet=InsertSqls(sXml);
+	if(IsSpace(sRet)){
+		//uf_showkey(sval)
+		uf_click();
+		alert("成功！");
+	}else{
+		alert(sRet);
+	}*/
+}
+//显示主键到编辑框
+function uf_showkey(sval) {
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		var sSql3="sp_helpindex '"+sval+"'"
+		var str=SelectSql(sSql3,1,1);
+		var oXml=SetDom(str);
+		var s1="";
+		if(oXml.documentElement != null ){
+			if(oXml.documentElement.childNodes.length>1){
+				s1=oXml.documentElement.childNodes(0).childNodes(2).text;
+			}
+		}
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		var sSql3="select user_cons_columns.column_name from user_constraints ,user_cons_columns where user_cons_columns.constraint_name=user_constraints.constraint_name and constraint_type='P' and user_constraints.table_name='"+sval+"'";
+		var sSql4="select count(user_cons_columns.column_name) from user_constraints ,user_cons_columns where user_cons_columns.constraint_name=user_constraints.constraint_name and constraint_type='P' and user_constraints.table_name='"+sval+"'";
+		var slen=SelectSql(sSql4,1,1);//查询出表内有几个字段被设为主键，返回XML串
+		var oXml1=SetDom(slen);
+		var ilen="";
+		var s1="";
+		if(oXml1.documentElement != null ){
+			if(oXml1.documentElement.childNodes.length>1){
+				ilen=oXml1.documentElement.childNodes(0).childNodes(0).text;//返回数字
+			}
+		}
+		if(ilen>0){
+			var str=SelectSql(sSql3,1,ilen);
+			var oXml=SetDom(str);
+			for(var i=0;i<ilen;i++){
+				s1+=oXml.documentElement.childNodes(i).childNodes(0).text+",";
+			}
+			s1=s1.substring(0,s1.length-1);
+		}
+	}
+	if(typeof s1 == "undefined") s1 = "";
+	txtPkey.value=s1;
+	
+}
+//删除表
+function uf_dropTab(){
+	if(lstTable.selectedIndex<0){
+		alert("请选择数据表")
+		return;		
+	}
+	var TAB=lstTable.value;  //表名 
+	var xmlSql="<drop tableName='"+TAB+"'>"+"</drop>";
+	var strusql = "delete FC_DBSTRU where tbname = '"+TAB+"'";
+	
+	if(confirm("确定要删除'"+TAB+"'表吗？")==true){
+		doSaveData(xmlSql,function (){
+			alert("删除成功");
+			lstTable.remove(lstTable.selectedIndex);
+			lstTable.selectedIndex=0;
+			
+			uf_click();
+		
+		});	
+	}
+    
+	/*var strusql = "delete FC_DBSTRU where tbname = '"+TAB+"'";
+	
+	//if(confirm("确定要删除'"+TAB+"'表吗？")==true){
+		//var s1=InsertSql(sSql);
+		//var ss = InsertSql(strusql);
+		
+	}else{
+		return;
+	}
+    
+	if(IsSpace(s1)){
+		for (var i=lstTable.length-1;i>=0;i--){
+			if (lstTable.options(i).selected){
+				lstTable.remove(i)
+				lstTable.selectedIndex=0
+				break;
+			}
+		}
+		uf_click();
+	}else{
+		alert(s1)*/
+	
+}
+
+//新建表
+function uf_createTab(){
+	var sText=DjOpen('fcs_edit_table','','展现','有模式窗口','直接','新建表及添加字段')	
+	
+	if(IsSpace(sText)==false){
+		sText = sText.toUpperCase();
+		var i=lstTable.options.length;
+		var oOpt=document.createElement("option")
+		oOpt.text=sText;
+		oOpt.value=sText;
+		lstTable.add(oOpt);
+		lstTable.options(i).selected=true;
+		
+		uf_showFieldList(sText);
+		txtPkey.value=""
+		uf_showkey(sText)	
+	}
+}
+
+//删除主键
+
+function uf_delUnique(){
+	var sval=lstTable.value;	//表名
+	if(fcpubdata.databaseTypeName=="db2" || fcpubdata.databaseTypeName=="mysql"){
+		//var sSql2="alter table "+sval+" drop PRIMARY KEY " ;
+		var xmlSql2="<alter tableName='"+sval+"'>"+"<detail> drop PRIMARY KEY </detail>"+"</alter>"; 
+		if(confirm("确定要删除'"+sval+"'表的主键吗？")==true){
+			doSaveData(xmlSql2,function (){
+				alert("删除成功");
+				txtPkey.value="";	
+			});	
+		}
+	
+		return;
+	}
+	var sSql="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		sSql="select name from sysobjects where parent_obj=(select id from sysobjects where sysobjects.name='"+sval+"') and sysobjects.type='k'";
+		var oXml=SetDom(SelectSql(sSql,1,1));
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sSql="select constraint_name from user_constraints where table_name='"+sval+"' and constraint_type='P'"	
+		var oXml=SetDom(SelectSql(sSql,1,1))
+	}
+	if(oXml.documentElement.childNodes.length>1){
+		var s1=oXml.documentElement.childNodes(0).childNodes(0).text;
+		//alert(s1)
+	}else{
+		alert("此表内未设主键");
+	}	
+	if(IsSpace(s1)==false){
+		xmlSql2="<alter tableName='"+sval+"'>"+"<detail> drop constraint "+ s1+"</detail>"+"</alter>"; 
+		//alert(xmlSql2)
+		doSaveData(xmlSql2,function (){alert("删除成功");txtPkey.value="";});
+		/*var sSql2="alter table "+sval+" drop constraint "+s1;///
+		if(confirm("确定要删除'"+sval+"'表的主键吗？")==true){
+			var s2=InsertSql(sSql2);
+			if(IsSpace(s2)){
+				txtPkey.value="";	
+			}else{
+				alert(s2)
+			}
+		}else{
+			return;
+		}*/
+		
+	}
+	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" runsave idtype="1" OtherSave="否" isfile="是" postop posleft window="当前窗口" toolbar="不带工具栏" BLONopen="uf_sSql()" contxml="<root><label><id>Label1</id><id>Label2</id></label><listbox><id>lstTable</id></listbox><button><id>FCButton7</id><id>button0</id><id>button1</id><id>button2</id><id>button3</id><id>button4</id><id>button5</id></button><text><id>txtPkey</id></text><grid><id>imgwebgrid1</id></grid><dataset><id>imgdataset1</id></dataset></root>" billtaborder="<root><taborder>lstTable</taborder><taborder>FCButton7</taborder><taborder>txtPkey</taborder><taborder>imgwebgrid1</taborder><taborder>button0</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder><taborder>button4</taborder><taborder>button5</taborder></root>" dj_sn="fcs_edit_db" type="ST" caption="数据库维护" mkbh codeheader="BBB" entertype="修改" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" keyfield center="  " BLONopenBefore BLONclose userType AutoResizeXml="<record id ='lstTable'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>0</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"><SPAN style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 124px; DISPLAY: block; FONT-FAMILY: 楷体_GB2312; HEIGHT: 17px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 37px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 12px; backgroundColor1: #ffffff" id=Label1 onmovestart=moveStart() controltype="label" value="Label1">选择数据库表：</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 195px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 384px; FONT-SIZE: 12px; TOP: 56px; LEFT: 6px" id=lstTable onmovestart=moveStart() onchange='bill_onclick("uf_click()")' size=8 controltype="listbox" AutoSizeXml="<record id ='lstTable'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>0</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" datasourceName async="否" tempvalue temptext check="1" sql sqltrans></SELECT><?xml:namespace prefix = fc /><fc:dataset id=imgdataset1 idtype="1" controltype="dataset" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" isSubGrid="否" opensortno="1" format="<fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnullable</fieldname><datatype>字符</datatype><displaylabel>允许空</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>colorder</fieldname><datatype>字符</datatype><displaylabel>序列号</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><colorder></colorder></dsid>")' onGetText='bill_ondatasetgettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><colorder></colorder></dsid>")' onSetText='bill_ondatasetsettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><colorder></colorder></dsid>")'></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' id=imgwebgrid1 ondblclick='bill_ongriddblclick("<imgwebgrid1><col>GridMultiSel(imgwebgrid1,imgdataset1)</col><col>GridMultiSel(imgwebgrid1,imgdataset1)</col><col>GridMultiSel(imgwebgrid1,imgdataset1)</col><col>GridMultiSel(imgwebgrid1,imgdataset1)</col><col>GridMultiSel(imgwebgrid1,imgdataset1)</col></imgwebgrid1>")' onclick='bill_ongridclick("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' controltype="grid" canselect="是" autoheight="是" autowidth="是" autoappend="否" readonly="否" visible="是" SetRowHeight="是" hideHscroll="auto" hideVscroll="否" blRowNo="否" bodyrowheight="-1" bodyrows="-1" dataset="imgdataset1" format="<cols><col><fname>fdname</fname><cname>西文字段名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>fdtype</fname><cname>字段类型</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>fdsize</fname><cname>宽度</cname><width>2</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>fddec</fname><cname>精度</cname><width>2</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>40</columnwidth><align>left</align></col><col><fname>isnullable</fname><cname>允许空</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" width="429" height="385" top="56" left="200">
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #d4d0c8; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><SPAN style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 92px; DISPLAY: block; FONT-FAMILY: 楷体_GB2312; HEIGHT: 0px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 37px; FONT-WEIGHT: bold; TEXT-DECORATION: none; LEFT: 160px; backgroundColor1: #c0c0c0" id=Label2 onmovestart=moveStart() controltype="label" value="Label2">主键字段：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 337px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 34px; LEFT: 249px" id=txtPkey onmovestart=moveStart() readOnly controltype="text" CanSelect="false"></INPUT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 521px" id=FCButton7 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_delUnique()")' dropstyle="否">删除主键</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 454px" id=button0 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_setPrimaryKey()")' dropstyle="否">设置主键</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 388px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_alterField(false)")' dropstyle="否">修改字段</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 322px" id=button2 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_del()")' dropstyle="否">删除字段</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 256px" id=button3 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_alterField(true)")' dropstyle="否">新增字段</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 190px" id=button4 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_dropTab()")' dropstyle="否">删除表</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 123px" id=button5 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_createTab()")' dropstyle="否">新建表</BUTTON></DIV></body></html>

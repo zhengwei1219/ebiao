@@ -1,0 +1,217 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>		
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<title></title>
+		<link rel="stylesheet" href="style/Style.css" type="text/css">
+		<script language="javascript" src="js/FcPub.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Load.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Flow.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Move.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Edit.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Set.js" charset="gb2312"></script>
+		<script language="javascript" src="js/File.js" charset="gb2312"></script>
+		<script language="javascript" src="js/Node.js" charset="gb2312"></script>
+		<script language="javascript" src="js/csjsrequest.js" charset="gb2312"></script>			
+			<STYLE> v\:* { Behavior: url(#default#VML) }
+	</STYLE>
+	</HEAD>
+	<BODY topmargin="0" leftmargin="0" oncontextmenu="Flow_CancelActiveNodeFocus();" onunload="Flow_CloseWindow()">
+<!-- 流程工具条 Start -->
+<div id=FlowNodeElement style="position:absolute;left:0;top:0;width:100%;height:37px;border-bottom:0px solid #000000;z-index:20000" oncontextmenu="event.cancelBubble=true;event.returnValue=false;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" background="images/t_bg.gif">
+		<tr>
+			<td><img src="images/t_opendb.gif" style="cursor:hand" id="OpenData" onclick='Flow_ActivateTool(this, "images/opendb.gif", "OpenData");' title ="打开数据库中的流程" width="36" height="36"></td>
+			<script language="javascript">
+				// 打开数据库中的流程
+				SetupTool(OpenData, "images/d_opendb.gif", "images/t_opendb.gif", "default", Flow_OpenData, null);
+			</script>
+			<td><img src="images/t_openflow.gif" style="cursor:hand" id="OpenFile" onclick='Flow_ActivateTool(this, "images/openflow.gif", "OpenFile");' title ="打开设计目录中的流程" width="36" height="36"></td>
+			<script language="javascript">
+				// 打开文件中的流程
+				SetupTool(OpenFile, "images/d_openflow.gif", "images/t_openflow.gif", "default", Flow_OpenFile, null);
+			</script>
+			<td><img src="images/t_newflow.gif" style="cursor:hand" id="NewFlow" onclick='Flow_ActivateTool(this, null, null);'title ="新建流程" width="36" height="36"></td>
+			<script language="javascript">
+				// 新建流程
+				SetupTool(NewFlow, "images/d_newflow.gif", "images/t_newflow.gif", "default", null, Flow_CreateWorkFlow);
+			</script>
+			<td><img src="images/t_attribute.gif" style="cursor:hand" id="FlowAttribute" onclick='Flow_ActivateTool(this, null, null);' title ="流程属性" width="36" height="36"></td>
+			<script language="javascript">
+				// 流程属性
+				SetupTool(FlowAttribute, "images/d_attribute.gif", "images/t_attribute.gif", "default", null, Flow_ShowFlowAttribute);
+			</script>
+				
+			<td><img src="images/t_save.gif" style="cursor:hand" id="SaveFlow" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 提交流程
+				SetupTool(SaveFlow, "images/d_save.gif", "images/t_save.gif", "default", null, Flow_SaveFlow);
+			</script>	
+					
+			<td><img src="images/sp.gif" width="5" height="36"></td>					
+			<td><img src="images/t_comp.gif" style="cursor:hand" id="CompNode" onclick='Flow_ActivateTool(this, "images/comp.gif", "CompNode");' title ="创建节点" width="36" height="36"></td>
+			<script language="javascript">
+				// 复合节点工具
+				SetupTool(CompNode, "images/d_comp.gif", "images/t_comp.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+						
+				
+			<td><img src="images/t_task.gif" style="cursor:hand" id="StepNode" onclick='Flow_ActivateTool(this, "images/task.gif", "StepNode");' title ="创建步骤" width="36" height="36"></td>
+			<script language="javascript">
+				// 步骤工具
+				SetupTool(StepNode, "images/d_task.gif", "images/t_task.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+			
+			<td><img src="images/t_cluster.gif" style="cursor:hand" id="ActionNode" onclick='Flow_ActivateTool(this, "images/cluster.gif", "ActionNode");' title ="创建动作" width="36" height="36"></td>
+			<script language="javascript">
+				// 动作工具
+				SetupTool(ActionNode, "images/d_cluster.gif", "images/t_cluster.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+
+			<td><img src="images/t_codeterminant.gif" style="cursor:hand" id="JoinNode" onclick='Flow_ActivateTool(this, "images/codeterminant.gif",  "JoinNode");' title ="创建合并" width="36" height="36"></td>
+			<script language="javascript">
+				// 协同工具
+				SetupTool(JoinNode, "images/d_codeterminant.gif", "images/t_codeterminant.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+			<td><img src="images/t_case.gif" style="cursor:hand" id="SplitNode" onclick='Flow_ActivateTool(this, "images/case.gif", "SplitNode");' title ="创建分支" width="36" height="36"></td>
+			<script language="javascript">
+				// 分支工具
+				SetupTool(SplitNode, "images/d_case.gif", "images/t_case.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+			
+			<td><img src="images/t_subflow.gif" style="cursor:hand" id="SubflowNode" onclick='Flow_ActivateTool(this, "images/subflow.gif", "SubflowNode");' title ="创建子流程" width="36" height="36"></td>
+			<script language="javascript">
+				// 子流程工具
+				SetupTool(SubflowNode, "images/d_subflow.gif", "images/t_subflow.gif", "default", Flow_CreateActiveNode, null);
+			</script>
+			
+			<td><img src="images/t_action.gif" style="cursor:hand" id="NodeResult" onclick='Flow_ActivateTool(this, null, null);' title ="创建连线" width="36" height="36"></td>
+			<script language="javascript">
+				// 连线工具
+				SetupTool(NodeResult, "images/d_action.gif", "images/t_action.gif", "images/chain.cur", Flow_AddResult, null);
+			</script>
+			<td><img src="images/sp.gif" width="5" height="36"></td>
+			<td><img src="images/t_check.gif" style="cursor:hand" id="CheckFlow" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 流程校验
+				SetupTool(CheckFlow, "images/d_check.gif", "images/t_check.gif", "default", null, Flow_CheckFlow);
+			</script>
+			<td><img src="images/t_simulation.gif" style="cursor:hand" id="FlowSimulation" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 流程模拟
+				SetupTool(FlowSimulation, "images/d_simulation.gif", "images/t_simulation.gif", "default", Flow_StartFlowSimulation, null);
+			</script>
+			<td><img src="images/sp.gif" width="5" height="36"></td>
+			
+			<td><img src="images/t_download.gif" style="cursor:hand" id="DownloadFlow" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">				
+				// 下载流程
+				SetupTool(DownloadFlow, "images/d_download.gif", "images/t_download.gif", "default", null,Flow_DownloadFlow);
+			</script>
+			
+			<td><img src="images/t_copy.gif" style="cursor:hand" id="CopyNode" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 复制节点
+				SetupTool(CopyNode, "images/d_copy.gif", "images/t_copy.gif", "default", null, Flow_CopyActiveNode);
+			</script>
+			<td><img src="images/t_plast.gif" style="cursor:hand" id="PlastNode" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 粘贴节点
+				SetupTool(PlastNode, "images/d_plast.gif", "images/t_plast.gif", "default", null, Flow_PlastActiveNode);
+			</script>
+			<td><img src="images/t_delete.gif" style="cursor:hand" id="DeleteNode" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 删除节点
+				SetupTool(DeleteNode, "images/d_delete.gif", "images/t_delete.gif", "default", null, Flow_RemoveActiveNode);
+			</script>
+			<td><img src="images/sp.gif" width="5" height="36"></td>
+			<td><img src="images/t_undo.gif" style="cursor:hand" id="UnDo" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 撤销操作
+				SetupTool(UnDo, "images/d_undo.gif", "images/t_undo.gif", "default", null, Flow_UnDo);
+			</script>
+			<td><img src="images/t_redo.gif" style="cursor:hand" id="ReDo" onclick='Flow_ActivateTool(this, null, null);' width="36" height="36"></td>
+			<script language="javascript">
+				// 重复操作
+				SetupTool(ReDo, "images/d_redo.gif", "images/t_redo.gif", "default", null, Flow_ReDo);
+			</script>
+			<td width="22%">&nbsp;</td>
+		</tr>
+	</table>
+</div>
+<!-- 流程工具条 End -->
+
+<!-- 流程显示区域 Start -->
+<div id="FlowArea" style="border-width:0px; border-style:Solid; height:100%; width:100%; Z-INDEX: 101; LEFT: 0px; POSITION: absolute; TOP: 0px">
+</div>
+<!-- 流程显示区域 End -->
+
+<!-- 流程右键菜单 Start -->
+<div id='FlowContextmenuDiv' style="position:absolute; width:86px; height:64px; left:0; top:0; overflow: hidden; border:1px solid #98AAB1; z-index:9000; display:none; background='#e2e2e2'; filter:alpha(opacity=80)revealTrans(Duration=0.3, Transition=1);" onmouseover="this.filters.alpha.opacity=95;" onmouseout="this.filters.alpha.opacity=80;">
+	<table border="0" cellspacing="0" cellpadding="3"  width="100%" align="center">
+		<tr>
+		  <td width="15"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" id="PlastTd" disabled>粘贴节点</td>
+		</tr>
+		<tr>
+		  <td width="15"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" id="AttributeTd">流程属性</td>
+		</tr>
+		<tr>
+		  <td width="15"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" onClick="Flow_SaveFlow();" id="SaveFlowTd" disabled>保存流程</td>
+		</tr>
+	</table>
+</div>
+<!-- 流程右键菜单 End -->
+
+<!-- 节点右键菜单 Start -->
+<div id='ActiveNodeContextmenuDiv' style="position:absolute; width:86px; height:64px; left:0; top:0; overflow: hidden; border:1px solid #98AAB1; z-index:9000; display:none; background='#e2e2e2'; filter:alpha(opacity=80)revealTrans(Duration=0.3, Transition=1);" onmouseover="this.filters.alpha.opacity=95;" onmouseout="this.filters.alpha.opacity=80;">
+	<table border="0" cellspacing="0" cellpadding="3"  width="100%" align="center">
+		<tr>
+		  <td width="18"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" onClick="Flow_ModifyActiveNodeName();" id="NodeAttributeTd">节点属性</td>
+		</tr>
+		<tr>
+		  <td width="15"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" onClick="Flow_CopyActiveNode();" id="CopyTd">复制节点</td>
+		</tr>
+		<tr>
+		  <td width="15"><img src="images/jt.gif" width="14" height="14"></td>
+		  <td class="winhead" style="cursor:hand; background='#fefefe'" onMouseOver="mOvr(this);" onMouseOut="mOut(this);" onClick="Flow_RemoveActiveNode();" id="DeleteTd">删除节点</td>
+		</tr>
+	</table>
+</div>
+<!-- 节点右键菜单 End -->
+
+<!-- 节点属性设置界面 Start -->
+<div id='NodeNameDiv' style="position:absolute; width:160px; height:92px; left: expression((document.body.offsetWidth-this.style.pixelWidth) / 2); top:30; overflow: hidden; border:1px solid #98AAB1; z-index:9000; display:none;" onmousedown="FocusMe(NodeNameDivHead, null, NodeNameDiv, null);">
+	<div id=NodeNameDivHead style="position:absolute;left:0;top:0;width:100%;height:22;cursor:default;background-image:url('images/tabs_m_tile.gif'); filter:alpha(opacity=80);" onmousedown="MDown(NodeNameDiv);">
+		<table width="100%" border="0" cellspacing="2" cellpadding="0">
+			<tr height="18">
+				<td><img src="images/iSubSystem1Folder.gif" align="absmiddle" width="16" height="16"></td>
+				<td class="winhead">节点属性</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;left:0;top:22;width:100%;height:100%; background='#f2f2f2'; filter:alpha(opacity=80);" id="NodeNameDivContent" class="winhead" onmouseover="this.filters.alpha.opacity=95;" onmouseout="this.filters.alpha.opacity=80;">
+		<table border="0" cellspacing="0" cellpadding="5"  width="80%" align="center">
+			<tr>
+			  <td colspan="3" height="8"></td>
+			</tr>
+			<tr>
+			  <td align="center"><input type="text" name="NodeName" value="我的标识" size="15" maxlength="50" onfocus="this.select();"></td>
+			</tr>
+			<tr>
+			  <td colspan="3" align="center"><input type="image" name="" value="" src="images/bt_ok.gif" align="absmiddle" class="input1" onClick="Flow_SetActiveNodeName();" width="45" height="18">&nbsp;</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- 节点属性设置界面 End -->
+
+	</body>
+</HTML>
+<!-- 流程工具初始化及操作结果处理 Start -->
+<script language="javascript" src="js/Setup.js"></script>
+<!-- 流程工具初始化及操作结果处理 End -->

@@ -1,0 +1,66 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+	
+var arrUserFuncList;
+function uf_open(){
+	var sOpt= new Sys.StringBuilder();
+	if(typeof arrRegFuncList != "undefined"){
+		var l=arrRegFuncList.length;
+		for(var i=0;i<l;i++){
+			sOpt.append("<option>"+ arrRegFuncList[i][1] +"</option>") ;
+		}
+		lstFunc.outerHTML = SelectAddOption(lstFunc,sOpt.toString());
+		txtRet.value = "";	
+		divDesc.innerHTML = "";
+	}
+	
+	uf_seltype();
+	new Eform.SysForm().setButtonImage();
+}
+function uf_seltype() {
+	var sOpt= new Sys.StringBuilder();
+	
+	for(var i=0;i< arrRegFuncList.length;i++){
+		//if(arrUserFuncList[i][0] == cboType.value)
+		sOpt.append("<option>"+ arrRegFuncList[i][1] +"</option>") ;
+	}
+	
+	lstFunc.options.length = 0 ;
+	lstFunc.outerHTML = SelectAddOption(lstFunc,sOpt.toString());
+	txtRet.value = "";	
+	divDesc.innerHTML = "";
+}
+function uf_selfunc() {
+	var ipos = lstFunc.selectedIndex ;
+	if( ipos<0 ) return ;
+	
+	for(var i=0;i<arrRegFuncList.length;i++){
+		if(arrRegFuncList[i][1] == lstFunc.options[ipos].text)
+		{	
+			txtRet.value = arrRegFuncList[i][2];
+			divDesc.innerHTML = arrRegFuncList[i][3] ;
+		}
+	}
+		
+}
+function uf_ok() {
+	window.returnValue = txtRet.value;
+	window.close();
+	}</script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" jslib="fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;~userfunc.js&#13;&#10;" BLONopenBefore BLONclose center="居中" BLONopen="uf_open()" dj_sn="zk_sel_fun_list" type="ZK" caption="函数列表" codeheader="BBB" keyfield window="有模式窗口" entertype="修改" posleft postop poswidth="400" posheight="330" isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>lstFunc</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtRet</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:4;radio:0;listbox:1;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:4;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label3</id><id>label4</id></label><listbox><id>lstFunc</id></listbox><div><id>divDesc</id></div><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtRet</id></text></root>" userType alertType="1" isCheckPermit="否" AutoResizeXml mkbh><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 153px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 258px; FONT-SIZE: 12px; TOP: 30px; LEFT: 4px" id=lstFunc onmovestart=moveStart() onchange='bill_onclick("uf_selfunc()")' size=8 controltype="listbox" sqltrans ondblclick='bill_ondblclick("uf_ok()")' check="1" temptext tempvalue sql></SELECT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 0px; LEFT: 4px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 1px; LEFT: 74px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 215px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 255px; LEFT: 165px" id=txtRet onmovestart=moveStart() controltype="text" CanSelect="false" china></INPUT> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 235px; LEFT: 172px" id=label3 onmovestart=moveStart() noWrap controltype="label" value="label3">返回的内容:</DIV>
+<DIV style="BORDER-BOTTOM: #d6d3bd 1px solid; POSITION: absolute; BORDER-LEFT: #d6d3bd 1px solid; OVERFLOW-X: auto; OVERFLOW-Y: auto; BACKGROUND-COLOR: #ffffff; WIDTH: 216px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 181px; FONT-SIZE: 12px; OVERFLOW: auto; BORDER-TOP: #d6d3bd 1px solid; TOP: 48px; BORDER-RIGHT: #d6d3bd 1px solid; LEFT: 165px" id=divDesc onmovestart=moveStart() controltype="div"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 33px; LEFT: 169px" id=label4 onmovestart=moveStart() noWrap controltype="label" value="label4">说明:</DIV></DIV><script></script></body></html>

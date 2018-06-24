@@ -1,0 +1,3685 @@
+<ATTACH EVENT="ondocumentready" HANDLER="Init" />
+<PUBLIC:PROPERTY ID="leftID" NAME="left" PUT="fnPutleft" GET="fnGetleft"  />
+<PUBLIC:PROPERTY ID="topID" NAME="top" PUT="fnPuttop" GET="fnGettop"  />
+<PUBLIC:PROPERTY ID="heightID" NAME="height" PUT="fnPutheight" GET="fnGetheight"  />
+<PUBLIC:PROPERTY ID="widthID" NAME="width" PUT="fnPutwidth" GET="fnGetwidth"  />
+
+//隐藏
+<PUBLIC:PROPERTY ID="visibleID" NAME="visible" PUT="fnPutvisible" GET="fnGetvisible"  />
+//格式标,列宽等
+<PUBLIC:PROPERTY ID="formatID" NAME="format" PUT="fnPutformat" GET="fnGetformat"  />
+
+//自动表格的宽度和高度
+<PUBLIC:PROPERTY ID="autosizeID" NAME="autosize" PUT="fnPutautosize" GET="fnGetautosize"  />
+
+
+//隐藏滚动条
+<PUBLIC:PROPERTY ID="hideVscrollID" NAME="hideVscroll" PUT="fnPuthideVscroll" GET="fnGethideVscroll"  />
+<PUBLIC:PROPERTY ID="hideHscrollID" NAME="hideHscroll" PUT="fnPuthideHscroll" GET="fnGethideHscroll"  />
+//=auto表示自动出滚动条,=yes表示始终出滚动条,=no表示始终不出滚动条
+<PUBLIC:PROPERTY ID="ScrollBarID" NAME="ScrollBar" PUT="fnPutScrollBar" GET="fnGetScrollBar"  />
+
+//能否选择 是/否
+<PUBLIC:PROPERTY ID="canselectID" NAME="canselect" PUT="fnPutcanselect" GET="fnGetcanselect"  />
+
+//只读
+<PUBLIC:PROPERTY ID="ReadOnlyID" NAME="ReadOnly" PUT="fnPutReadOnly" GET="fnGetReadOnly"  />
+//ColShow=true表示要处理当rowspan>1时此列隐藏时将此内容清空
+<PUBLIC:PROPERTY ID="ColShowID" NAME="ColShow" PUT="fnPutColShow" GET="fnGetColShow"  />
+
+//能否调节行高列宽
+<PUBLIC:PROPERTY ID="AdjustColWidthID" NAME="AdjustColWidth" PUT="fnPutAdjustColWidth" GET="fnGetAdjustColWidth"  />
+<PUBLIC:PROPERTY ID="AdjustRowHeightID" NAME="AdjustRowHeight" PUT="fnPutAdjustRowHeight" GET="fnGetAdjustRowHeight"  />
+//点击标题行能否排序
+<PUBLIC:PROPERTY ID="IsOrderID" NAME="IsOrder" PUT="fnPutIsOrder" GET="fnGetIsOrder"  />
+
+//固定行数列数
+<PUBLIC:PROPERTY ID="FixRowsID" NAME="FixRows" PUT="fnPutFixRows" GET="fnGetFixRows"  />
+<PUBLIC:PROPERTY ID="FixColsID" NAME="FixCols" PUT="fnPutFixCols" GET="fnGetFixCols"  />
+//行数列数
+<PUBLIC:PROPERTY ID="RowsID" NAME="Rows" PUT="fnPutRows" GET="fnGetRows"  />
+<PUBLIC:PROPERTY ID="ColsID" NAME="Cols" PUT="fnPutCols" GET="fnGetCols"  />
+//当前行列
+<PUBLIC:PROPERTY ID="RowID" NAME="Row" GET="fnGetRow"  />
+<PUBLIC:PROPERTY ID="ColID" NAME="Col" GET="fnGetCol"  />
+<PUBLIC:PROPERTY ID="curTDID" NAME="curTD" GET="fnGetcurTD"  />
+//当前滚动值
+<PUBLIC:PROPERTY ID="TopRowID" NAME="TopRow" GET="fnGetTopRow"  />
+//当前滚动范围
+<PUBLIC:PROPERTY ID="VmaxID" NAME="Vmax" GET="fnGetVmax"  />
+
+//表格对象,参照对象
+<PUBLIC:PROPERTY ID="tabID" NAME="tab" PUT="fnPuttab" GET="fnGettab"  />
+<PUBLIC:PROPERTY ID="czID" NAME="cz"  GET="fnGetcz"  />
+<PUBLIC:PROPERTY ID="prnID" NAME="prn" GET="fnGetprn"  />
+<PUBLIC:PROPERTY ID="txtID" NAME="txt"  GET="fnGettxt"  />
+//记录表格失去时的最后一个TD
+<PUBLIC:PROPERTY ID="lostfocustdID" NAME="lostfocustd" PUT="fnPutlostfocustd" GET="fnGetlostfocustd"  />
+
+
+
+//为真表示自动给每行行高，缺省为真。
+<PUBLIC:PROPERTY ID="SetRowHeightID" NAME="SetRowHeight" PUT="fnPutSetRowHeight" GET="fnGetSetRowHeight"  />
+//设置DIV的overflow属性
+<PUBLIC:PROPERTY ID="overflowID" NAME="overflow" PUT="fnPutoverflow" GET="fnGetoverflow"  />
+
+//为"add"表示最后一行为增加状态,缺省为"edit"
+<PUBLIC:PROPERTY ID="EndRowStateID" NAME="EndRowState" PUT="fnPutEndRowState" GET="fnGetEndRowState"  />
+
+//为真表示输入焦点在表格上.
+<PUBLIC:PROPERTY ID="bIngridID" NAME="bIngrid" GET="fnGetbIngrid"  /> //暂时没实现
+
+<PUBLIC:PROPERTY ID="datasetID" NAME="dataset" PUT="fnPutdataset" GET="fnGetdataset"  />
+//有一个属性来表示所有列的编辑格式
+<PUBLIC:PROPERTY ID="coleditID" NAME="coledit" PUT="fnPutcoledit" GET="fnGetcoledit"  />
+//
+<PUBLIC:PROPERTY NAME="ParentPos"/>
+// added by liuxr at 2009-5-22 增加一个是否显示行号的属性
+<PUBLIC:PROPERTY NAME="blRowNo"/>
+//-----------------------------end----------//
+<PUBLIC:METHOD NAME="Init" > //初始化表格
+
+<PUBLIC:METHOD NAME="MoveDataSet" >
+
+<PUBLIC:METHOD NAME="SetCheckBoxCol" > //设置某列为复选框列.
+
+<PUBLIC:METHOD NAME="AddBackColor" >
+<PUBLIC:METHOD NAME="RemoveBackColor" >
+
+//强行发生数据改变事件
+<PUBLIC:METHOD NAME="Act_onDataChange" >
+<PUBLIC:METHOD NAME="ResizeDiv" > //刷新边框的大小
+
+//找到表格的第一个可有焦点的TD
+<PUBLIC:METHOD NAME="FindFirstTD" >
+<PUBLIC:METHOD NAME="initGrid" >
+<PUBLIC:METHOD NAME="InsertCol" >
+<PUBLIC:METHOD NAME="InsertRow" >
+<PUBLIC:METHOD NAME="DeleteRow" >
+<PUBLIC:METHOD NAME="DeleteCol" >
+//设置表格的焦点方法,带一个TD对象作参数,以直接到此TD
+<PUBLIC:METHOD NAME="SetFocus" >
+
+<PUBLIC:METHOD NAME="SetCol" >
+
+<PUBLIC:METHOD NAME="hide" > //隐藏输入控件
+<PUBLIC:METHOD NAME="Scroll" > //向四个方向滚动一步
+<PUBLIC:METHOD NAME="VScroll" > //重算垂直滚动条
+<PUBLIC:METHOD NAME="HScroll" > //重算垂直滚动条
+
+<PUBLIC:METHOD NAME="VscrollTo" > //垂直滚动到某个位置
+
+<PUBLIC:METHOD NAME="moveedit" > //移动和调整输入控件
+<PUBLIC:METHOD NAME="RefreshEdit" > //刷新编辑框
+<PUBLIC:METHOD NAME="tdTotxt" > //移动和调整输入控件
+<PUBLIC:METHOD NAME="txtTotd" > //移动和调整输入控件
+<PUBLIC:METHOD NAME="actcellchange" > //移动和调整输入控件
+//装入XML数据TABLE作表格内容
+<PUBLIC:METHOD NAME="LoadXmlData"/>
+<PUBLIC:METHOD NAME="LoadXml"/>
+//added by liuxr at 2009-5-14 增加一个初始化行高的方法
+<PUBLIC:METHOD NAME="ReCalRowHeight"/>
+//-----------------end------------//
+
+//added by liuxr at 2009-5-22 增加一个重算行号的方法
+<PUBLIC:METHOD NAME="ReCalRowNo"/>
+//-----------------end------------------//
+
+<PUBLIC:EVENT NAME="onCellChange" ID="onCellChangeID">
+<PUBLIC:EVENT NAME="onRowChange" ID="onRowChangeID">
+<PUBLIC:EVENT NAME="onBeforeRowChange" ID="onBeforeRowChangeID">
+
+//当单元格的数据通过输入发生变化时
+<PUBLIC:EVENT NAME="onDataChange" ID="onDataChangeID">
+
+//在调节行高和列宽时发生
+<PUBLIC:EVENT NAME="onAdjustRow" ID="onAdjustRowID">
+<PUBLIC:EVENT NAME="onAdjustCol" ID="onAdjustColID">
+
+<PUBLIC:EVENT NAME="onRightClick" ID="onRightClickID">
+
+
+//滚动事件
+<PUBLIC:EVENT NAME="onHscroll" ID="onHscrollID">
+<PUBLIC:EVENT NAME="onVscroll" ID="onVscrollID">
+
+
+
+
+<script>
+
+var bInited = false ; 
+/* IE6的光标形状为col-resize,row-resize.IE5下为move  */
+var cursorcolresize="col-resize";
+var cursorrowresize="row-resize";
+if(getIEVersion()<6){
+	cursorcolresize="move";
+	cursorrowresize="move";
+}
+/* 控件传递全局的fccode控件的onclickopen对象值 */
+var ponclickopen="";
+/* 最后行的状态 */
+var mEndRowState="edit";
+//点击表格取得焦点
+//var pubFirstClickTab=""
+
+var pubeval=0;
+var mdataset;
+//判断进入文本框后是否按了键
+//var bHitKey=false
+//oldTD在按键改变前的值
+var BeforeChangeText="";
+var mbIngrid=false;
+var div1,tgrid,line,lineH,divconer,fchtcDiv1,fcButton1,fcButton2,fcButton3,fchtcDiv2,fcButton4,fcButton5,fcButton6,txtMyGrid,czFc;
+//缺省是只读,
+//TXT分数据类型(字符<最大长度>,数字<小数位数>,日期)
+//CODE分.....
+var arr=new Array(100);
+
+/**
+*计算垂直滚动条的滚动范围
+**/
+function VScroll(){
+    ActionAutoScroll("V"); //处理滚动条=auto时的情况
+	Vscrollmax=getVScrollMax();
+	fnPutVscrollmax(Vscrollmax);
+}
+
+/**
+*计算水平滚动条的滚动范围
+**/
+function HScroll() {
+    ActionAutoScroll("H"); //处理滚动条=auto时的情况
+	Hscrollmax=getHScrollMax();
+	fnPutHscrollmax(Hscrollmax);
+}
+/**
+*输入框失去焦点事件,
+**/
+function txtMyGrid_onfocusout(){
+		//dsfasd
+//	var oldBeforeChangeText=BeforeChangeText
+	BeforeChangeText=curObj.innerText;
+	txtTotd();
+	if(Act_onDataChange()==false){
+	}
+	
+}
+/**
+*表格失去焦点事件,
+**/
+function tgrid_onfocusout(){
+	//var oNext=event.toElement
+	var bln=false;  
+	var o=event.toElement;
+	if(o==null)return  ; //点到地址栏上,此为null
+	var tagname=o.tagName.toUpperCase();
+	var curGridid=eval(uniqueID+".id");
+	if(tagname=="TD"){
+		
+		if(o.parentNode.parentNode.parentNode.parentNode.parentNode.id==curGridid){
+			bln=true;
+		}
+	}
+	if(tagname=="DIV" || tagname=="INPUT"){
+		if(o.parentNode.id==curGridid){
+			bln=true;
+		}
+	}
+	if(o.id=="txtMyGrid"){
+		if(o.parentNode.parentNode.id==curGridid){
+			bln=true;
+		}
+
+    }
+    if (tagname == "INPUT") { //dropdownlist
+        if (o.parentNode.parentNode.id == curGridid) {
+            bln = true;
+        }
+    }
+    if (tagname == "IFRAME") { //dropdownlist
+
+        if (o.id == "fc_ifra") {
+            bln = true;
+        }
+    }
+
+	if(bln==false){
+		LostFocus();
+		//window.status=window.status+" 表格失去焦点:"+event.srcElement.id
+	}
+}
+/**
+*表格获得焦点事件
+**/
+function tgrid_onfocusin(){
+	var bln=false;  
+	var o=event.fromElement;
+	if(o==null) return ; //切换IE时为null
+	if (IsSpace(o.tagName)) return;
+	var tagname=o.tagName.toUpperCase();
+	var focusTD=null;
+	var ocur=null ;  //当前TD
+	var curGridid=eval(uniqueID+".id");
+	if(tagname=="TD"){
+		//alert(o.parentNode.parentNode.parentNode.parentNode.parentNode.tagName)
+		if(o.parentNode.parentNode.parentNode.parentNode.parentNode.id==curGridid){
+			bln=true;
+			//focusTD=event.srcElement
+		}
+	}
+	if(tagname=="DIV" || tagname=="INPUT"){
+		if(o.parentNode.id==curGridid){
+			bln=true;
+		}
+	}
+	if(o.id=="txtMyGrid"){
+		if(o.parentNode.parentNode.id==curGridid){
+			bln=true;
+		}
+	}
+	if (tagname == "INPUT") { //dropdownlist
+	    if (o.parentNode.parentNode.id == curGridid) {
+	        bln = true;
+	    }
+	}
+	if (tagname == "IFRAME") { //dropdownlist
+
+	    if (o.id == "fc_ifra") {
+	        bln = true;
+	    }
+	}
+
+	if(bln==false){
+		ocur=event.srcElement;
+		if(ocur.tagName.toUpperCase()=="A"){
+			if(ocur.parentNode.tagName.toUpperCase()=="TD"){
+				ocur=ocur.parentNode;
+			}
+		}		
+		if(ocur.tagName.toUpperCase()=="TD"){
+			if(ocur.parentNode.rowIndex>0){
+				//alert("first focus")
+				//lostfocusTD = null
+				//2004-04-30 防止从表格到别的控件再点击表格时不对
+				SetFocus(ocur,""); //移动数据集
+			}else if(lostfocusTD != null  && lostfocusTD.cellIndex >= 0){
+				SetFocus(lostfocusTD,"");	
+			} else {
+				
+				SetFocus(null,"");	
+			}
+		}else if(lostfocusTD != null  && lostfocusTD.cellIndex >= 0){
+			SetFocus(lostfocusTD,"");
+		}else{
+			SetFocus(null,"");
+		}
+		//window.status=window.status+" 表格取得焦点:"
+	}
+}
+/**
+*找到第一个能有焦点的TD
+*@param irowfocus 整型,表示找此行的第一个能有焦点的TD
+*@date 2003-09-16
+**/
+function FindFirstTD(irowfocus){
+//	var td1=tgrid.rows(tgrid.rows.length-1).cells(1)
+    if (tgrid.rows.length > lngFixRows) {
+		if(isSpace(irowfocus)){
+			var td1=tgrid.rows(lngFixRows).cells(1);
+		}else{
+			var td1=tgrid.rows(irowfocus).cells(1);
+		}
+	}else{
+		var td1=tgrid.rows(0).cells(1);
+	}
+	for(var i=1;i<tgrid.rows(0).cells.length;i++){
+		//判断是否是因滚动隐藏而列宽为0
+		var colwidth1=tgrid.childNodes(0).childNodes(i).getAttribute("oldwidth");
+		if(isSpace(colwidth1))
+			colwidth1=tgrid.rows(0).cells(i).offsetWidth;
+		else
+			colwidth1=parseInt(colwidth1);
+		if(colwidth1>1){
+			if(tgrid.children[0].children[i].getAttribute("cz")!=null){
+				var temprow=tgrid.rows.length-1;
+				if(isSpace(irowfocus)==false && irowfocus<tgrid.rows.length) temprow=irowfocus;
+				
+				//到第一行在用下移键加行时会出错,所以到最后一行.
+				//if(tgrid.rows.length>1){
+    				td1=tgrid.rows(temprow).cells(i);
+    			//}else {
+    			//	td1=tgrid.rows(lngFixRows).cells(i)
+    			//}
+
+    			//mcurCol=i
+    			break;
+    		}
+		}
+	}
+	return td1;
+}
+/**
+*设置焦点到表格
+      		调用时机:在表格控件上点击且isfocus为真,在用TAB键导航时直接用代码调用.自动加行时也调用它来置焦点
+      		功能:	 计算出表格的第一个有效TD(列宽不为0),并让它高亮显示,给curObj 和preTD mcurRow mcurCol的值
+
+*@param td 为表格的某个单元,可为null
+*@param sTag =程序给焦点 表示点击表格得到焦点
+**/
+function SetFocus(td,sTag){
+	
+	//alert(td)
+	if(mReadOnly==true || mcanselect=="否") return;
+	try{
+		curObj.className="";	//自动加行时去原来的焦点  
+		RemoveBackColor();
+	}catch (e){}
+	if(sTag != "程序给焦点") { //点击表格得焦点
+		preTD=curObj;
+		
+		SetTDFilter();
+		return;
+	}
+	
+    if(td==null)	{
+    	//至少有一内容行
+    	if(tgrid.rows.length>1){
+			if(txtMyGrid.style.display=="none"){
+				
+				//if( preTD == null ){
+	    	 		curObj=FindFirstTD();
+	    			preTD=curObj;
+	    		//}
+	    	}
+		}else{
+    	 	preTD=tgrid.rows(0).cells(0);
+    		curObj=preTD;
+		}
+		
+    }else {
+   		//moveedit(td)
+		//preTD=td
+		//curObj=preTD
+	//	if( preTD == null ){
+			
+//		}
+		if(true || lostfocusTD==null || lostfocusTD.cellIndex==-1){
+			curObj=td;
+		}else {
+			curObj=lostfocusTD;
+		}
+		preTD=curObj;
+    }
+	//mcurRow=curObj.parentNode.rowIndex
+	//mcurCol=curObj.cellIndex
+	//preTD.className="";
+	//curObj.className="tdfilter" 
+	
+	//if(sTag=="移动数据集" && lostfocusTD==null ){  
+	//	MoveDataSet()
+	//}
+	//alert("eeee")
+	SetTDFilter();
+
+	
+	//防止看不见的单元格获得焦点造成自动滚动.
+	if(curObj.offsetTop<div1.style.pixelHeight){
+		try{
+			curObj.focus();
+		}catch(E){}
+	}else {
+		//暂时给tgrid
+		tgrid.focus();
+	}
+}
+/**
+*表格的失去焦点方法
+      		调用时机:在其它控件上点击且isblur为真,在用TAB键导航时直接用代码调用.
+      		功能:    清除表格的高亮显示.
+*@date 2003-09-15
+**/
+function LostFocus(){
+	//alert("lostfocus")
+	lostfocusTD=curObj;
+	
+	//保存fset中的数据到dataset中
+	if (isSpace(mdataset) == false) {
+	    var oDs = $id(mdataset);
+	    if (oDs != null && oDs.RecordCount>0 && (oDs.bAdd || oDs.bEdit)) {
+	        oDs.Update('不检查');
+	        curObj.className = "";
+	        txtMyGrid.style.display = "none";
+	    }
+//		var sCommand=mdataset+".Update('不检查')"; //检查失败的话再强行保存非法的数据到数据集中,以防丢失用户输入的非法数据.
+//		if(eval(sCommand)==1){
+//		    //sCommand=mdataset+".Update('不检查')"; 
+//			//eval(sCommand);
+//			if(txtMyGrid.style.display=="block"){	
+//				txtMyGrid.focus();
+//			}else{
+//				tgrid.focus();
+//				//moveedit(curObj)
+//			}
+//		}else{
+//			//RemoveBackColor()
+//			curObj.className="";   
+//			txtMyGrid.style.display="none";
+//		}
+	}
+
+}
+/**
+*重新将当前TD的值送给编辑框,常用于用程序直接给了后端表格的值,此时要刷新编辑框
+**/
+function RefreshEdit(){
+	tdTotxt();
+}
+/**
+	移动数据集的指针
+*@date 2004-03-19
+**/
+function MoveDataSet() {
+	if(isSpace(mdataset)==false){
+		
+		//var sCommand=mdataset+".SetPos("+curObj.parentNode.rowIndex+"-1);"
+		//eval(sCommand)
+		var oDs=eval(mdataset);
+		if(oDs.bEdit==false &&  oDs.bAdd == false){
+			oDs.SetPos(curObj.parentNode.rowIndex-1);
+		}/*
+		else { //刚进入时表格新增了一行时应移动recno
+			oDs.RecNo=curObj.parentNode.rowIndex-1
+		}*/
+	}
+}
+
+/**
+*装入一个XML数据作表格内容
+*@param sXml 要装入的XML数据
+**/
+function LoadXmlData(sXml) {
+	fnInit(sXml);
+}
+/**
+*滚动一步
+*@param Direct =1 2 3 4 分别表示向四个方向
+**/
+function Scroll(Direct){
+//Direct=1 2 3 4
+	switch (Direct){
+		case 1:
+			fcButton1_onclick();
+			break;
+		case 2:
+			fcButton3_onclick();
+			break;
+		case 3:
+			fcButton4_onclick();
+			break;
+		case 4:
+			fcButton6_onclick();
+			break;
+	}
+
+}
+/**
+//设置col列的参照类型
+//属性的XML串
+//CODE的XML串格式:
+<code>
+	<sql1></sql1> //escape
+	<sql2></sql2> //escape
+	<xml></xml>
+	<blninput></blninput>
+	<blnempty></blnempty>
+
+</code>
+<str>
+	<maxlength></maxlength>
+</str>
+<int>
+	<max></max>
+	<min></min>
+</int>
+<double>
+	<max></max>
+	<min></min>
+	<pointnum></pointnum>
+</double>
+<date>
+
+</date>
+**/
+function SetCol(col,sXml){
+
+	tgrid.children[0].children[col].setAttribute("cz",sXml);
+
+/*
+czFc.format="颜色!"
+czFc.xml="红色;绿色;兰色;白色;青色;黑色;灰色;黄色"
+arr[2]=czFc
+
+czFc.format="颜色!"
+czFc.xml="红色;绿色;兰色"
+arr[1]=czFc
+*/
+}
+/**
+*属性EndRowState用于判断表格的最后一行是否为增加状态,它在数据集中进行管理.
+*为增加状态时其值为"add",缺省为"edit"
+*@date 2003-05-19
+**/
+function fnGetEndRowState()
+{
+	return mEndRowState;
+}
+function fnPutEndRowState(vValue)
+{
+	mEndRowState=vValue;
+	EndRowStateID.fireChange();
+}
+
+function fnGetRows()
+{
+	return tgrid.rows.length;
+}
+function fnPutRows(vValue)
+{
+	if(isNaN(parseInt(vValue)))return;
+	if(parseInt(vValue)<lngFixRows || parseInt(vValue)<1) return;
+
+	var oldRows=tgrid.rows.length;
+	if (oldRows>vValue){
+		for(var i=0;i<oldRows-vValue;i++){
+			DeleteRow();
+		}
+	}
+	else if (oldRows<vValue){
+		for(var i=0;i<vValue-oldRows;i++){
+			InsertRow();
+		}
+	}
+	ActionAutoScroll("V"); //处理滚动条=auto时的情况
+	Vscrollmax=getVScrollMax();
+	fnPutVscrollmax(Vscrollmax);
+
+	RowsID.fireChange();
+}
+function fnGetCols()
+{
+	return tgrid.childNodes(0).childNodes.length;
+}
+function fnPutCols(vValue)
+{
+	if(isNaN(parseInt(vValue)))return;
+	if(parseInt(vValue)<lngFixCols || parseInt(vValue)<1) return;
+	var oldCols=tgrid.childNodes(0).childNodes.length;
+	if (oldCols>vValue){
+		for(var i=0;i<oldCols-vValue;i++){
+			DeleteCol();
+		}
+	}
+	else if (oldCols<vValue){
+		for(var i=0;i<vValue-oldCols;i++){
+			InsertCol();
+		}
+    }
+
+    ActionAutoScroll("H"); //处理滚动条=auto时的情况
+	Hscrollmax=getHScrollMax();
+	fnPutHscrollmax(Hscrollmax);
+	ColsID.fireChange();
+}
+/**
+*插入列
+*@param index 插入的位置
+**/
+function InsertCol(index){
+	var o=element.document.createElement("COL");
+	//alert("aaa")
+	o.style.width=70;
+	var iPos=tgrid.childNodes(0).childNodes.length-1;
+	if (arguments.length==1 && iPos>index)
+		iPos=index;
+	tgrid.children[0].insertBefore(o,tgrid.children[0].children[iPos]);
+//add TD
+	for(var i=0;i<tgrid.rows.length;i++) {
+		tgrid.rows(i).insertCell(iPos);
+	}
+
+	ActionAutoScroll("H"); //处理滚动条=auto时的情况
+	Hscrollmax=getHScrollMax();
+	fnPutHscrollmax(Hscrollmax);
+
+}
+/**
+*插入行
+*index插入的位置
+**/
+function InsertRow(index){
+
+	var iPos=tgrid.rows.length;
+	if (arguments.length==1 && iPos>index)
+		iPos=index;
+
+	//置EndRowState为"add"
+	if(mEndRowState=="edit" && iPos==tgrid.rows.length){
+		mEndRowState="add";
+	}
+
+	//alert(iPos+"=="+tgrid.rows.length)
+
+	var oTr=tgrid.insertRow(iPos);
+	//取标题行作默认行高
+	//oTr.style.height=tgrid.rows(0).offsetHeight
+	var oTd;
+	for (j=0;j<tgrid.childNodes(0).childNodes.length;j++){
+		oTd=oTr.insertCell(j);
+		var sxml = tgrid.children[0].children[j].getAttribute("cz");
+		if(IsSpace(sxml) == false){
+			var oXml = SetDom(sxml);
+			var sType = oXml.documentElement.nodeName;
+			if(sType == "checkbox") {
+			    oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)";
+			    oTd.style.backgroundPosition = "center center";
+				oTd.style.backgroundRepeat="no-repeat";
+			}
+			if (sType == "checkbox_readonly") {
+			    oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheckdisabled.gif)";
+			    oTd.style.backgroundPosition = "center center";
+			    oTd.style.backgroundRepeat = "no-repeat";
+			}
+
+        }
+	}
+	var iFontSize = parseInt(tgrid.style.fontSize) ;
+	if(isNaN(iFontSize)) iFontSize = 13;
+	//-------added by liuxt at 2008-8-5 增加行时设置行高
+	var rowHeight = -1;
+	if (typeof bodyrowheight != "undefined")
+		rowHeight = bodyrowheight;
+	if (parseInt(rowHeight,10)>0)
+		oTr.style.height = rowHeight;
+	else
+    	oTr.style.height=iFontSize+8;	//15  //4 //tgrid.style.fontSize*4/3
+	//mcurRow=iPos
+
+    ActionAutoScroll("V"); //处理滚动条=auto时的情况
+	Vscrollmax=getVScrollMax();
+	fnPutVscrollmax(Vscrollmax);
+	return oTr;
+}
+
+/**
+*删除行
+*@param index 删除行的位置
+*@return 无
+**/
+function DeleteRow(index){
+	var iPos=tgrid.rows.length-1;
+	if (arguments.length==1 && iPos>index)
+		iPos=index;
+
+	//置EndRowState为"add"
+	if(mEndRowState=="add" && iPos==tgrid.rows.length-1){
+		mEndRowState="edit";
+	}
+
+
+//固定行不能删除
+	if(tgrid.rows.length<=lngFixRows || index<lngFixRows)return;
+	//for (var j=tgrid.rows(iPos).cells.length-1;j>=0;j--){
+	//	tgrid.rows(iPos).deleteCell(j)
+	//}
+	tgrid.deleteRow(iPos);
+//	hide()
+
+//移动当前行
+
+	//if(iPos-1>=lngFixRows)
+	//	mcurRow=iPos-1
+	//else
+	//	mcurRow=0
+
+//	mcurCol=0
+//------------
+	//alert(Vscrollmax)
+	ActionAutoScroll("V"); //处理滚动条=auto时的情况
+	Vscrollmax=getVScrollMax();
+	//alert(Vscrollmax)
+	fnPutVscrollmax(Vscrollmax);
+
+	try{
+//		curObj=tgrid.rows(0).cells(0)
+	//	curObj=tgrid.rows(mcurRow).cells(mcurCol)
+	}
+	catch (e){
+	
+	}
+
+}
+/**
+ * @func 重算grid行号
+ * @date 2009-5-15
+ * @author liuxr
+**/
+function ReCalRowNo()
+{
+	if (IsSpace(blRowNo)) blRowNo = "否";
+	if (blRowNo == "否") return;
+//	var intFixRows = tgrid.getAttribute("fixrows");
+//	if (intFixRows != null) 
+//		intFixRows = parseInt(intFixRows,10);
+//	else
+//		intFixRows = 1;
+//
+
+	var baseNo = 0;
+	if (isSpace(mdataset) == false) {
+	    var oDs = eval("window." + mdataset);
+	    if(oDs.PageNo > 1 && oDs.PageSize > 0  ){
+	        baseNo = (oDs.PageNo - 1) * oDs.PageSize;
+	    }
+	}
+
+	var len = tgrid.rows.length;
+	//alert("fixrows:" + intFixRows + " rows:" + len);
+	var rowNo = baseNo+1;
+	for(var i=lngFixRows;i<len;i++)
+	{
+		tgrid.rows(i).cells(0).innerText = rowNo;
+		rowNo++;	
+	}
+	
+}
+
+/**
+*删除列
+*index插入的位置
+**/
+function DeleteCol(index){
+	var iPos=tgrid.childNodes(0).childNodes.length-1;
+	if (arguments.length==1 && iPos>index)
+		iPos=index;
+	tgrid.children[0].removeChild(tgrid.children[0].children[iPos]);
+//固定行不能删除
+	if(tgrid.childNodes(0).childNodes.length<=lngFixCols || index<=lngFixCols)return;
+
+	for (i=0;i<=tgrid.rows.length-1;i++)
+	{
+		tgrid.rows(i).deleteCell(iPos);
+	}
+
+	ActionAutoScroll("H"); //处理滚动条=auto时的情况
+	Hscrollmax=getHScrollMax();
+	fnPutHscrollmax(Hscrollmax);
+}
+
+function fnGettxt(){
+	return txtMyGrid;
+}
+function fnPutlostfocustd(vValue){
+	lostfocusTD=vValue;
+	lostfocustdID.fireChange();
+}
+
+function fnGetlostfocustd(){
+	return lostfocusTD;
+}
+
+function fnGettab(){
+	//return t
+	return tgrid;
+}
+function fnGetcz(){
+	return czFc;
+}
+function fnGetprn(){
+	return prnSet;
+}
+function fnGetbIngrid(){
+	return mbIngrid;
+}
+function fnGetRow(){
+	return curObj.parentNode.rowIndex; //mcurRow
+}
+function fnGetCol(){
+	return curObj.cellIndex; //mcurCol
+}
+function fnGetcurTD(){
+	return curObj;
+}
+function fnGetdataset(){
+	return mdataset;
+}
+function fnPutdataset(vValue){
+	mdataset=vValue;
+	datasetID.fireChange();
+}
+var mcoledit;
+function fnGetcoledit(){
+	return mcoledit;
+}
+function fnPutcoledit(vValue,itype){
+/*
+  vValue的格式如下:
+  <root>
+     <str><maxlength>40</maxlength></str>
+     <readonly></readonly>
+     <double><pointnum>2</pointnum></double>
+     <double><pointnum>2</pointnum></double>
+     <double><pointnum>2</pointnum></double>
+  </root>
+*/
+  try{
+     if(isSpace(vValue)==false){
+	  var oXml=new ActiveXObject("Microsoft.XMLDOM");
+	  oXml.async=false;
+	  oXml.loadXML (vValue);
+	  for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+	     if(oXml.documentElement.childNodes(i).tagName.toLowerCase()!="readonly"){
+		//alert(oXml.documentElement.childNodes(i).xml)
+			SetCol(i,oXml.documentElement.childNodes(i).xml);
+	     }
+	  }
+     }
+  }catch(e){}
+  mcoledit=vValue;
+  coleditID.fireChange();
+}
+
+var moverflow="hidden"; //scroll/hidden
+function fnGetoverflow(){
+	return moverflow;
+}
+function fnPutoverflow(vValue){
+	//alert("aa:"+moverflow)
+	moverflow=vValue;
+	overflowID.fireChange();
+}
+
+var mColShow=false;
+function fnGetColShow(){
+	return mColShow;
+function fnPutColShow(vValue){
+}
+	mColShow=vValue;
+	actColShow(true);
+	ColShowID.fireChange();
+}
+
+var mvisible="是";
+function fnGetvisible(){
+	return mvisible;
+}
+function fnPutvisible(vValue){
+	mvisible=vValue;
+	try{
+		//全部显示
+		var s1="none";
+		if(IsTrue(mvisible)) s1="block";
+		for(var i=0;i<13;i++){
+		   if(i!=1 || i!=2)
+		       element.children[i].style.display=s1;
+	    }
+	    
+    }catch(e){}
+    if(s1=="block"){
+		try{
+			onResize();
+    	}catch (E){}
+	}
+	visibleID.fireChange();
+}
+var mformat;
+function fnGetformat(){
+	return mformat;
+}
+function fnPutformat(vValue){
+	mformat=vValue;
+	formatID.fireChange();
+}
+//
+var mcanselect="是";
+function fnGetcanselect(){
+	return mcanselect;
+}
+function fnPutcanselect(vValue){
+	mcanselect=vValue;
+	canselectID.fireChange();
+}
+
+var mReadOnly=false;
+function fnGetReadOnly(){
+	return mReadOnly;
+}
+function fnPutReadOnly(vValue){
+	if(IsTrue(vValue))
+		mReadOnly=true;
+	else
+		mReadOnly=false;
+	ReadOnlyID.fireChange();
+}
+var mSetRowHeight=true;
+function fnGetSetRowHeight(){
+	return mSetRowHeight;
+}
+function fnPutSetRowHeight(vValue){
+	mSetRowHeight=vValue;
+	SetRowHeightID.fireChange();
+}
+
+var mAdjustColWidth=true;
+function fnGetAdjustColWidth(){
+	return mAdjustColWidth;
+}
+function fnPutAdjustColWidth(vValue){
+	mAdjustColWidth=IsTrue(vValue);
+	AdjustColWidthID.fireChange();
+}
+var mAdjustRowHeight=false ;
+function fnGetAdjustRowHeight(){
+	return mAdjustRowHeight;
+}
+function fnPutAdjustRowHeight(vValue){
+	mAdjustRowHeight=IsTrue(vValue);
+	AdjustRowHeightID.fireChange();
+}
+var mIsOrder="是" ;
+function fnGetIsOrder(){
+	return mIsOrder;
+}
+function fnPutIsOrder(vValue){
+	mIsOrder=vValue;
+	IsOrderID.fireChange();
+}
+var mhideVscroll=false;
+function fnGethideVscroll(){
+	return mhideVscroll;
+	/*if(fchtcDiv1.style.display=="none")
+		return true;
+	else
+		return false;
+*/
+}
+
+function fnPuthideVscroll(vValue){
+	if(IsSpace(vValue)) return;
+	mhideVscroll = vValue;
+	hideVscrollID.fireChange();
+	if(typeof fchtcDiv1 == "undefined")return;
+	onResize();
+}
+var mhideHscroll=false;
+function fnGethideHscroll(){
+	return mhideHscroll;
+/*
+	if(fchtcDiv2.style.display=="none")
+		return true;
+	else
+		return false;
+*/
+}
+function fnPuthideHscroll(vValue){
+	if(IsSpace(vValue)) return;
+	mhideHscroll = vValue;
+	hideHscrollID.fireChange();
+	if(typeof fchtcDiv2 == "undefined")return;
+	onResize();
+}
+var mScrollBar="yes";
+function fnGetScrollBar(){
+	return mScrollBar;
+}
+function fnPutScrollBar(vValue){
+	mScrollBar=vValue;
+	ScrollBarID.fireChange();
+	if(IsTrue(mvisible)==false) return ;
+	try{
+		if(vValue == "yes" || vValue == "no" ) {
+			var s1="block";
+			if(vValue == "no" ) s1 = "none";
+			fchtcDiv1.style.display=s1;
+			fcButton1.style.display=s1;
+			fcButton2.style.display=s1;
+			fcButton3.style.display=s1;
+			
+			fchtcDiv2.style.display=s1;
+			fcButton4.style.display=s1;
+			fcButton5.style.display=s1;
+			fcButton6.style.display=s1;
+			divconer.style.display=s1;//
+			
+		}else{	//auto模式
+			var s1="block";
+			if(Vscrollmax <= 0) s1 = "none";
+			fchtcDiv1.style.display=s1;
+			fcButton1.style.display=s1;
+			fcButton2.style.display=s1;
+			fcButton3.style.display=s1;
+			if(Vscrollmax <= 0 && Hscrollmax <= 0){
+				divconer.style.display="none";
+			}else{
+				divconer.style.display="";
+			}
+			var s1="";
+			if(Hscrollmax <= 0) s1 = "none";
+			fchtcDiv2.style.display=s1;
+			fcButton4.style.display=s1;
+			fcButton5.style.display=s1;
+			fcButton6.style.display=s1;
+			
+			
+		}
+	}catch(e){}
+}
+
+mautosize=false;
+function fnGetautosize(){
+	return mautosize;
+}
+function fnPutautosize(vValue){
+	mautosize=IsTrue(vValue);
+	autosizeID.fireChange();
+	if(typeof div1 != "undefined" && typeof tgrid != "undefined"){
+		div1.style.height=tgrid.offsetHeight;
+		div1.style.width=tgrid.offsetWidth;
+	}
+
+}
+var mleft;
+function fnGetleft(){
+	return mleft ; //div1.style.pixelLeft
+}
+function fnPutleft(vValue){
+    try {
+	div1.style.position="absolute";
+	div1.style.left=vValue;
+	onResize();
+    } catch (e) {} //当left属性写在控件上时会出错,需要强行关闭
+    mleft=vValue;
+    leftID.fireChange();
+}
+var mtop;
+function fnGettop(){
+	return mtop;   //div1.style.pixelTop
+}
+function fnPuttop(vValue){
+   try{
+	div1.style.position="absolute";
+	div1.style.top=vValue;
+	onResize();
+    } catch (e) {} //当left属性写在控件上时会出错,需要强行关闭
+    mtop=vValue;
+    topID.fireChange();
+
+}
+var mheight;
+function fnGetheight(){
+	return mheight ;  //div1.style.pixelHeight
+}
+function fnPutheight(vValue){
+    if(mautosize) return;
+    mheight = vValue;
+    try{
+	div1.style.height=vValue;
+	onResize();
+    } catch (e) {} //当left属性写在控件上时会出错,需要强行关闭
+    
+    heightID.fireChange();
+
+}
+var mwidth;
+function fnGetwidth(){
+	return mwidth ; //div1.style.pixelWidth
+}
+function fnPutwidth(vValue){
+    if(mautosize) return;
+    mwidth = vValue;
+    try{
+	div1.style.width=vValue;
+	onResize();
+    } catch (e) {} //当left属性写在控件上时会出错,需要强行关闭
+
+    
+    widthID.fireChange();
+}
+function fnGetFixRows(){
+	return lngFixRows;
+}
+function fnPutFixRows(vValue){
+	lngFixRows=vValue;
+	if(lngFixRows>tgrid.rows.length)return;
+
+	FixRowsID.fireChange();
+}
+function fnGetFixCols(){
+	return lngFixCols;
+}
+function fnPutFixCols(vValue){
+	lngFixCols=vValue;
+	if(lngFixCols>tgrid.childNodes(0).childNodes.length)return;
+	FixColsID.fireChange();
+}
+
+/////////////////////////Vscroll
+function fnGetTopRow(){
+	return Vscrollvalue;
+}
+function fnGetVmax(){
+	return Vscrollmax;
+}
+
+function VscrollTo(ipos){
+	fnPutVscrollvalue(Vscrollvalue,ipos);
+}
+var bDrag=false;
+var curY=0;
+var lngTop=0;
+var Vscrollmax=0;//=5 //范围
+var Vscrollvalue=0; //当前值
+function fnPutVscrollmax(vVscrollvalue)
+{
+	//if(fchtcDiv1.style.display=="none") return	
+	var oldValue=Vscrollvalue;
+	var l=parseInt(vVscrollvalue);
+	if(isNaN(l) || l<0)
+		Vscrollmax=0;
+	else
+		Vscrollmax=l;
+
+	if (Vscrollmax==0){
+		Vscrollvalue=0;
+		var sHeight=fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton3.style.pixelHeight;
+		if(sHeight>0)
+			fcButton2.style.height=sHeight;
+	}
+	else {
+		var sHeight=fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton3.style.pixelHeight -Vscrollmax*17;
+		if (sHeight<10) //10为最小母指宽度
+			fcButton2.style.height=10;
+		else
+			fcButton2.style.height=sHeight;
+		if(Vscrollvalue>Vscrollmax)
+			Vscrollvalue=Vscrollmax;
+	}
+	//当自动出滚动条时
+	if(mScrollBar == "auto"){
+		var s1="";
+		if(Vscrollmax <= 0) s1 = "none";
+		fchtcDiv1.style.display=s1;
+		fcButton1.style.display=s1;
+		fcButton2.style.display=s1;
+		fcButton3.style.display=s1;
+		if(Vscrollmax <= 0 && Hscrollmax <= 0){
+			divconer.style.display="none";
+		}else{
+			divconer.style.display="";
+		}
+		
+	}
+	fnPutVscrollvalue(oldValue,Vscrollvalue);
+}
+function fnPutVscrollvalue(oldValue,newValue)
+{
+	if(fchtcDiv1.style.display=="none") return;
+	
+	Vscrollvalue=newValue;
+	if (Vscrollmax==0) return;
+	var avar=( fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton2.style.pixelHeight - fcButton3.style.pixelHeight )/Vscrollmax;
+	if (newValue>0 && parseInt(newValue)< parseInt(Vscrollmax) )
+	{
+		fcButton2.style.pixelTop=fcButton1.style.pixelTop+fcButton1.style.pixelHeight+avar*newValue;
+
+	}
+	Vscroll_check(oldValue,newValue);
+	//Vscroll_onchange(oldValue,newValue);
+}
+
+function fcButton2_onmousedown() {
+	bDrag=true;
+	curY=event.screenY;
+	fcButton2.style.cursor="hand";
+	fcButton2.setCapture();
+}
+function fcButton2_onmousemove() {
+}
+function fcButton2_onmousemoveold(changeHeight) {
+        if(txtMyGrid.style.display != "none") txtMyGrid_onfocusout();
+		if (Vscrollmax==0) return;
+		var avar=( fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton2.style.pixelHeight - fcButton3.style.pixelHeight )/Vscrollmax;
+
+		if(avar==0)return;
+		if(typeof changeHeight == "undefined") changeHeight = event.screenY-curY;
+		var changeValue=Math.round(changeHeight/avar);
+		//changeValue变化值
+		if (changeValue!=0 )
+		{
+			var oldvalue=Vscrollvalue;
+			Vscrollvalue=Vscrollvalue+changeValue;
+			fcButton2.style.top=Vscrollvalue*avar+fcButton1.style.pixelTop+fcButton1.style.pixelHeight; 
+			Vscroll_check(oldvalue,Vscrollvalue);
+			//Vscroll_onchange(oldvalue,Vscrollvalue);
+			
+			//给新的Y值
+			curY=event.screenY;
+		}
+
+}
+
+function fcButton2_onmouseup() {
+	if (bDrag)//表示按下了mousedown
+	{
+		fcButton2_onmousemoveold();
+	}
+	bDrag=false;
+	fcButton2.releaseCapture();
+	fcButton2.style.cursor="default";
+}
+
+function fcButton1_onclick() {
+	if (Vscrollmax==0) return;
+	var avar=( fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton2.style.pixelHeight - fcButton3.style.pixelHeight )/Vscrollmax;
+	//avar为除所有按钮外的空白区域除以滚动范围
+	if (Vscrollvalue>0)
+	{
+		Vscrollvalue=Vscrollvalue-1;
+		fcButton2.style.pixelTop=fcButton1.style.pixelTop+fcButton1.style.pixelHeight+avar*Vscrollvalue;
+		Vscroll_check(Vscrollvalue+1,Vscrollvalue);
+		//Vscroll_onchange(Vscrollvalue+1,Vscrollvalue);
+		
+	}
+}
+function fcButton3_onclick() {
+    
+	if (Vscrollmax==0) return;
+	var avar=( fchtcDiv1.style.pixelHeight-fcButton1.style.pixelHeight-fcButton2.style.pixelHeight - fcButton3.style.pixelHeight )/Vscrollmax;
+	if (Vscrollvalue<Vscrollmax)
+	{
+		Vscrollvalue=Vscrollvalue+1;
+		fcButton2.style.pixelTop=fcButton1.style.pixelTop+fcButton1.style.pixelHeight+avar*Vscrollvalue;
+		Vscroll_check(Vscrollvalue-1,Vscrollvalue);
+		//Vscroll_onchange(Vscrollvalue-1,Vscrollvalue);	
+	}
+}
+
+function fchtcDiv1_onclick() {
+	fcButton2_onmousemoveold(event.y -fcButton2.style.pixelTop) ;
+/*	if (event.y -fcButton2.style.pixelTop<0){
+		fcButton1_onclick();
+	}else{
+		fcButton3_onclick();
+	}*/
+	
+}
+//越界检查
+function Vscroll_check(oldVscrollvalue,newVscrollvalue) {
+	var curVscrollvalue=newVscrollvalue;
+	var lngTop = fcButton2.style.pixelTop;
+	if (lngTop < fcButton1.style.pixelHeight+fcButton1.style.pixelTop || Vscrollvalue<=0)
+	{
+		lngTop =fcButton1.style.pixelHeight+fcButton1.style.pixelTop;
+		Vscrollvalue=0;
+		curVscrollvalue=Vscrollvalue;
+	}
+	if	(lngTop >fcButton3.style.pixelTop-fcButton2.style.pixelHeight || Vscrollvalue>=Vscrollmax )
+	{
+		lngTop =fcButton3.style.pixelTop-fcButton2.style.pixelHeight;
+		Vscrollvalue=Vscrollmax;
+		curVscrollvalue=Vscrollvalue;
+	}
+	fcButton2.style.top=lngTop;
+	//让其成为全局变量
+	//fcpubdata.oldVscrollvalue = oldVscrollvalue;
+	//fcpubdata.curVscrollvalue = curVscrollvalue;
+	Vscroll_onchange(oldVscrollvalue,curVscrollvalue);
+}
+////////////////////////Hscroll
+var bHDrag=false;
+var curX=0;
+var lngLeft=0;
+var Hscrollmax=0;//=5 //范围
+var Hscrollvalue=0; //当前值
+function fnPutHscrollmax(vHscrollvalue)
+{
+	//if(fchtcDiv2.style.display=="none") return	
+	var oldValue=Hscrollvalue;
+	var l=parseInt(vHscrollvalue);
+	if(isNaN(l) || l<0)
+		Hscrollmax=0;
+	else
+		Hscrollmax=l;
+
+	if (Hscrollmax==0) {
+		Hscrollvalue=0;
+		var sWidth1=fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton6.style.pixelWidth;
+		if(sWidth1>0)
+		
+			fcButton5.style.width=sWidth1+1;
+	}
+	else {
+		var sWidth1=fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton6.style.pixelWidth - Hscrollmax*17;
+		if (sWidth1<10) //10为最小母指宽度
+			fcButton5.style.width=10;
+		else
+			fcButton5.style.width=sWidth1+1;
+		if(Hscrollvalue>Hscrollmax)
+			Hscrollvalue=Hscrollmax;
+	}
+	//当自动出滚动条时
+	if(mScrollBar == "auto"){
+		var s1="";
+		if(Hscrollmax <= 0) s1 = "none";
+		fchtcDiv2.style.display=s1;
+		fcButton4.style.display=s1;
+		fcButton5.style.display=s1;
+		fcButton6.style.display=s1;
+		if(Vscrollmax <= 0 && Hscrollmax <= 0){
+			divconer.style.display="none";
+		}else{
+			divconer.style.display="";
+		}
+		
+	}
+	
+	fnPutHscrollvalue(oldValue,Hscrollvalue);
+}
+function fnPutHscrollvalue(oldValue,newValue)
+{
+	
+	if(fchtcDiv2.style.display=="none") return;
+	
+	Hscrollvalue=newValue;
+	if(Hscrollmax==0)return;
+	var avar=(fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton5.style.pixelWidth -fcButton6.style.pixelWidth )/Hscrollmax;
+	if (newValue>0 && parseInt(newValue)< parseInt(Hscrollmax) )
+	{
+		fcButton5.style.pixelLeft=fcButton4.style.pixelLeft+fcButton4.style.pixelWidth+avar*newValue;
+
+	}
+	Hscroll_check(oldValue,newValue);
+	//Hscroll_onchange(oldValue,newValue);
+}
+
+function fcButton5_onmousedown() {
+	fcButton5.style.cursor="hand";
+	bHDrag=true;
+	curX=event.screenX;
+	fcButton5.setCapture();
+}
+function fcButton5_onmousemove() {
+}
+function fcButton5_onmousemoveold(changeWidth) {
+    if(txtMyGrid.style.display != "none") txtMyGrid_onfocusout();
+	if(Hscrollmax==0)return;
+	var avar=(fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton5.style.pixelWidth -fcButton6.style.pixelWidth )/Hscrollmax;
+	if(avar==0)return;
+	if(typeof changeWidth == "undefined") changeWidth = event.screenX-curX ;
+	var changeValue=Math.round(changeWidth/avar);
+    if (changeValue!=0)
+	 {
+		var oldValue=Hscrollvalue;
+		Hscrollvalue=Hscrollvalue+changeValue;
+		fcButton5.style.left=Hscrollvalue*avar+fcButton4.style.pixelLeft+fcButton4.style.pixelWidth;
+		Hscroll_check(oldValue,Hscrollvalue);
+		//Hscroll_onchange(oldValue,Hscrollvalue);
+		
+	 }
+
+
+
+}
+function fcButton5_onmouseup() {
+	if (bHDrag)
+	{
+		fcButton5_onmousemoveold();
+	}
+	bHDrag=false;
+	fcButton5.releaseCapture();
+	fcButton5.style.cursor="default";
+}
+
+
+function fcButton4_onclick() {
+	if(Hscrollmax==0)return;
+	var avar=(fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton5.style.pixelWidth -fcButton6.style.pixelWidth )/Hscrollmax;
+	if (Hscrollvalue>0)
+	{
+		Hscrollvalue=Hscrollvalue-1;
+		fcButton5.style.pixelLeft=fcButton4.style.pixelLeft+fcButton4.style.pixelWidth+avar*Hscrollvalue;
+		Hscroll_check(Hscrollvalue+1,Hscrollvalue);
+		//Hscroll_onchange(Hscrollvalue+1,Hscrollvalue);
+	}
+}
+function fcButton6_onclick() {
+	if(Hscrollmax==0)return;
+	var avar=(fchtcDiv2.style.pixelWidth-fcButton4.style.pixelWidth-fcButton5.style.pixelWidth -fcButton6.style.pixelWidth )/Hscrollmax;
+	if (Hscrollvalue<Hscrollmax)
+	{
+		Hscrollvalue=Hscrollvalue+1;
+		fcButton5.style.pixelLeft=fcButton4.style.pixelLeft+fcButton4.style.pixelWidth+avar*Hscrollvalue;
+		Hscroll_check(Hscrollvalue-1,Hscrollvalue);	
+		//Hscroll_onchange(Hscrollvalue-1,Hscrollvalue);
+	}
+}
+
+
+function fchtcDiv2_onclick() {
+	fcButton5_onmousemoveold(event.x -fcButton5.style.pixelLeft);
+/*
+	if (event.x -fcButton5.style.pixelLeft<0)
+		fcButton4_onclick();
+	else
+		fcButton6_onclick();*/
+		
+}
+function Hscroll_check(oldHscrollvalue,newHscrollvalue){
+	var curHscrollvalue=newHscrollvalue;
+	var lngLeft = fcButton5.style.pixelLeft;
+	if (lngLeft < fcButton4.style.pixelWidth +fcButton4.style.pixelLeft || Hscrollvalue<=0 )
+	{
+		lngLeft =fcButton4.style.pixelWidth +fcButton4.style.pixelLeft;
+		Hscrollvalue=0;
+		curHscrollvalue=Hscrollvalue;
+	}
+	if	(lngLeft >fcButton6.style.pixelLeft-fcButton5.style.pixelWidth || Hscrollvalue>=Hscrollmax )
+	{
+		lngLeft =fcButton6.style.pixelLeft-fcButton5.style.pixelWidth;
+		Hscrollvalue=Hscrollmax;
+		curHscrollvalue=Hscrollvalue;
+	}
+	fcButton5.style.left = lngLeft ;
+	Hscroll_onchange(oldHscrollvalue,curHscrollvalue);
+}
+function getVScrollMax(){
+	var lngMax=0;//使最底下的行能看到
+	var lngRowH=0;
+	//固定列的宽度
+	var height0=0;
+	//计算固定行高
+	for(var i=0;i<lngFixRows;i++){//lngFixRows为固定行数
+		height0=height0+tgrid.rows(i).style.pixelHeight;
+	}
+	for (var i=tgrid.rows.length-1;i>0;i--){
+		lngRowH=lngRowH+Math.max(tgrid.rows(i).offsetHeight,tgrid.rows(i).style.pixelHeight);
+//		lngRowH=lngRowH+tgrid.rows(i).style.pixelHeight
+		if (lngRowH > div1.style.pixelHeight - height0 || (tgrid.rows(i).offsetHeight == 0 && i > 1)) { //,add || tgrid.rows(i).offsetHeight == 0 防止数据集属性框中,只有一行时还有滚动. -17
+			lngMax=i-lngFixRows+1;
+			break;
+		}
+    }
+
+ 
+	
+	return lngMax;
+}
+
+function getHScrollMax(){
+	//取得滚动范围
+	var lngMax=0;
+	var lngRowH=0;
+	//固定列的宽度
+	var width0=0;
+	//计算固定行高
+	for(var i=0;i<lngFixCols;i++){//lngFixRows为固定行数
+		width0=width0+tgrid.children[0].children[0].style.pixelWidth;
+	}
+	for (var i=tgrid.children[0].children.length-1;i>0;i--){
+		//如某列滚动隐藏,则其宽度为0
+		if(tgrid.children[0].children[i].style.pixelWidth==0) {
+			var s1=tgrid.childNodes(0).childNodes(i).getAttribute("oldwidth");
+			if(isSpace(s1)==false){
+				lngRowH=lngRowH+parseInt(s1);
+			}
+		}
+		else {
+			lngRowH=lngRowH+tgrid.children[0].children[i].style.pixelWidth;
+		}
+		if (lngRowH > div1.style.pixelWidth - width0) {//17为底高 -17
+			//alert(lngRowH+">"+(div1.style.pixelWidth-width0-17))
+			lngMax=i-lngFixCols+1;
+			break;
+		}
+	}
+
+	
+	return lngMax;
+}
+
+
+function Vscroll_onchange(oldValue,newValue){
+//oldValue,newValue滚动前后的值
+//竖直滚动到的位置tgrid.style.top=0（在未移动时相对div1的位置）
+//使表格滚动到Vscrollvalue
+//oldValue,newValue为滚动前后的值
+	if (newValue>oldValue){
+		//往下滚
+		for(var i=oldValue+lngFixRows;i<newValue+lngFixRows;i++){
+			HideRow(i);
+		}
+	}
+	if (newValue<oldValue){
+		//往上滚
+		for(var i=newValue+lngFixRows;i<oldValue+lngFixRows;i++){
+			ShowRow(i);
+		}
+//added by liuxr at 2009-9-17 向上滚动后设置grid焦点，解决出现空白行的问题。
+		try{SetFocus(1,"");}
+		catch(e){}		
+	}
+	Actmoveedit();
+	txtMyGrid.style.display="none";
+	onVscrollID.fire();
+	//tgrid.focus();
+}
+function Hscroll_onchange(oldValue,newValue){
+//	HScrollTo(oldValue,newValue)
+//竖直滚动到的位置tgrid.style.top=0（在未移动时相对div1的位置）
+//oldValue,newValue为滚动前后的值
+	if (newValue>oldValue){
+		//往下滚
+		for(var i=oldValue+lngFixCols;i<newValue+lngFixCols;i++){
+			HideCol(i);
+		}
+	}
+	if (newValue<oldValue){
+		//往上滚
+		for(var i=newValue+lngFixCols;i<oldValue+lngFixCols;i++){
+			ShowCol(i);
+		}
+	}
+	Actmoveedit();
+	onHscrollID.fire();
+
+}
+
+//--------------------------------------
+function LeftToCol(lngLeft) {
+	//由offsetLeft计算列
+
+	var lngWidth=0;
+	for(var i=0;i<tgrid.childNodes(0).childNodes.length;i++) {
+		lngWidth=lngWidth+tgrid.childNodes(0).childNodes(i).style.pixelWidth;
+
+		if(lngWidth>=lngLeft){
+			break;
+		}
+	}
+	return i;
+}
+//保存表格的上层的偏移值,在onresize函数中计算
+var iUpLeft=0;
+var iUpTop=0;
+var blnAdjust=false;
+var blnAdjustH=false;
+var AdjustRow=0,AdjustCol=0;
+var lngFixRows=1; //固定行数
+var lngFixCols=1; //固定行数
+var blnFixRowDrap=true; //为真表示固定行上能拖动但不能选择
+//输入报表模版模式:只能在第一行拖动,运行查询报表模式:在固定行上可以拖动
+function div1_onmousedown(){
+	//先运行t_onmousedown
+	//show("div1_onmousedown")
+	if (event.button !=1) return;
+
+	var curObj=element.document.elementFromPoint(event.clientX,event.clientY);
+	if(curObj==null || curObj.tagName.toUpperCase()=="A")return;
+	try{
+		var curObjParent=curObj.parentNode.tagName;
+	}
+	catch (e){}
+	if(curObj.tagName=="TD" || curObjParent=="TD" ){
+		var curCol=curObj.cellIndex;
+		curObj=curObj.parentNode;
+		var curRow=curObj.rowIndex;
+		//if(curRow>0 && curCol>0 )return
+	}
+	else {
+		return;
+	}
+	//下面是为了防止表中套表中，求到子表的当前列。
+	if(curCol>=tgrid.childNodes(0).childNodes.length)
+		curCol=tgrid.childNodes(0).childNodes.length-1;
+	//调节列宽
+	if (tgrid.rows(curRow).style.cursor ==cursorcolresize){
+	    line.style.display = "block";
+	    //alert(mleft);
+		div1.setCapture();
+		sWidth1 = event.x + element.document.body.scrollLeft; //+parseInt(div1.offsetLeft)
+		if (ParentPos == "相对") sWidth1 = sWidth1 - getAbsLeft(div1) + parseInt(mleft, 10); // 2010-09-07 add + parseInt(mleft, 10)
+		
+		line.style.left =sWidth1;
+		line.style.top= getdiv1top() ;				//parseInt(div1.offsetTop)+parseInt(tgrid.offsetTop)
+		line.style.height =div1.offsetHeight;
+		blnAdjust=true;
+		return;
+	}
+	else {
+		line.style .display ="none";
+		blnAdjust=false;
+	}
+	//调节行高
+	if (tgrid.childNodes(0).childNodes(curCol).style.cursor ==cursorrowresize){
+		lineH.style.display ="block";
+		div1.setCapture();
+		sWidth1=event.y+element.document.body.scrollTop;
+		if(ParentPos == "相对") sWidth1 = sWidth1-getAbsTop(div1);
+		lineH.style.top =sWidth1;
+		lineH.style.left=getdiv1left();								//parseInt(div1.offsetLeft)+parseInt(tgrid.offsetLeft)
+		lineH.style.width =div1.offsetWidth;
+		blnAdjustH=true;
+		return;
+	}
+	else {
+		lineH.style.display ="none";
+		blnAdjustH=false;
+	}
+
+
+
+}
+function div1_onmousemove(){
+	var iLinePosWidth = event.x+element.document.body.scrollLeft- getAbsLeft(div1) ; 
+    var iLinePosHeight = event.y+element.document.body.scrollTop-getAbsTop(div1) ;
+	
+	tgrid.childNodes(0).childNodes(0).style.cursor="default";
+	if (blnAdjust==true){
+	    var iPosTmp = event.x + element.document.body.scrollLeft;
+	    if (ParentPos == "相对") iPosTmp = iLinePosWidth + parseInt(mleft, 10); // 2010-09-07 add + parseInt(mleft, 10)
+		line.style.left =iPosTmp;
+	}
+	else if(blnAdjustH==true){
+	    var iPosTmp = event.y + element.document.body.scrollTop;
+	    if(ParentPos == "相对") iPosTmp = iLinePosHeight;
+		lineH.style.top =iPosTmp;
+	}
+	else {//变列鼠标形状
+		//此段是为了防止在表格中间也能出现修改表格列宽和行高的线
+		var curObj=element.document.elementFromPoint(event.clientX,event.clientY);
+		if(curObj==null)return;
+		try{
+			var curObjParent=curObj.parentNode.tagName;
+		}
+		catch (e){}
+		
+		if(curObj.tagName=="TD" || curObjParent=="TD" ){
+			var curCol=curObj.cellIndex;
+			curObj=curObj.parentNode;
+			var curRow=curObj.rowIndex;
+		}
+		else {
+			return;
+		}
+		
+		//------------
+		if (curRow < lngFixRows) {
+		//可以改变列宽
+		tgrid.rows(curRow).style.cursor="default";
+		//不能调整列宽则返回
+		if(mAdjustColWidth==false)return;
+		//alert("test")
+		for (var i=0;i<tgrid.rows(curRow).cells.length;i++){
+			//如某列隐藏了则offsetLeft offsetWidth都等于0
+			if(tgrid.childNodes(0).childNodes(i).style.display!="none"){
+				if (iLinePosWidth>=tgrid.rows(curRow).cells(i).offsetLeft+tgrid.rows(curRow).cells(i).offsetWidth-4 && iLinePosWidth<=tgrid.rows(curRow).cells(i).offsetLeft+tgrid.rows(curRow).cells(i).offsetWidth+4 )
+				{
+					//当左边框不为空时将使单元格的offsetLeft为1
+					if(tgrid.style.borderLeftStyle=="none"){
+						var iTmpLeft=parseInt(tgrid.rows(curRow).cells(i).offsetLeft)+1;
+					}
+					else{
+						var iTmpLeft=parseInt(tgrid.rows(curRow).cells(i).offsetLeft);
+					}
+					var offsetCol=LeftToCol(iTmpLeft);
+					//如大于中间线则调后面的列宽
+					if(iLinePosWidth>=iTmpLeft+tgrid.rows(curRow).cells(i).offsetWidth) {
+						//调隐藏列的列宽
+						var bFind=false;
+						for (var j=offsetCol+1;j<tgrid.rows(curRow).cells.length;j++){
+							//if(tgrid.childNodes(0).childNodes(j).style.display!="none"){
+							if(tgrid.childNodes(0).childNodes(j).style.pixelWidth>1){
+								break;
+							}
+							bFind=true;
+						}
+						if(bFind){
+							AdjustCol=j-1;
+						}
+						else {	//后面无一个隐藏列
+							AdjustCol=offsetCol;
+						}
+					}
+					else
+						AdjustCol=offsetCol;
+
+					tgrid.rows(curRow).style.cursor =cursorcolresize;
+					break;
+				}
+			}
+		}
+			return;
+		}
+		//改变行高
+		if (curCol < lngFixCols) {
+
+		tgrid.childNodes(0).childNodes(curCol).style.cursor ="default";
+		//不能调整行高则返回
+		if(mAdjustRowHeight==false) return;
+		//可以改变行高
+		for (var i=0;i<tgrid.rows.length;i++){
+			//如某列隐藏了则offsetLeft offsetWidth都等于0
+			if(tgrid.rows(i).style.display!="none"){
+
+				if (iLinePosHeight>=tgrid.rows(i).cells(0).offsetTop+tgrid.rows(i).cells(0).offsetHeight-2 && iLinePosHeight<=tgrid.rows(i).cells(0).offsetTop+tgrid.rows(i).cells(0).offsetHeight+2 )
+				{
+					//如大于中间线则调后面的列宽
+					if(iLinePosHeight>=tgrid.rows(i).cells(0).offsetTop+tgrid.rows(i).cells(0).offsetHeight) {
+						//调隐藏列的列宽
+						var bFind=false;
+						for (var j=i+1;j<tgrid.rows.length;j++){
+							//if(tgrid.rows(j).style.pixelHeight>1){
+							if(tgrid.rows(j).style.display!="none"){
+								break;
+							}
+							bFind=true;
+						}
+						if(bFind)
+							AdjustRow=j-1;
+						else//后面无一个隐藏列
+							AdjustRow=i;
+					}
+					else
+						AdjustRow=i;
+
+					tgrid.childNodes(0).childNodes(curCol).style.cursor =cursorrowresize;
+					break;
+				}
+			}
+		}
+		}
+//--------------
+
+	}
+
+}
+
+function div1_onmouseup(){
+	if(typeof sWidth1 =="undefined") return;
+	//调节列宽
+	if (line.style.display=="block" ){
+
+		var lngRange=parseInt(line.style.left) - parseInt(sWidth1);
+		var afterWidth=tgrid.children[0].children[AdjustCol].style.pixelWidth+ lngRange;
+		//alert(AdjustCol)
+		if(afterWidth<=0){
+			tgrid.children[0].children[AdjustCol].style.width=0; //隐藏列的列宽为1
+			//tgrid.children[0].children[AdjustCol].style.display="none" //列宽等于0则隐藏
+		}
+		else {
+			//if(tgrid.children[0].children[AdjustCol].style.display=="none") {
+			//	tgrid.children[0].children[AdjustCol].style.display="block"
+			//}
+			tgrid.children[0].children[AdjustCol].style.width=afterWidth;
+
+		}
+		//修改表格的宽度
+		if(mautosize){
+			div1.style.width=tgrid.offsetWidth;
+			div1.style.height=tgrid.offsetHeight;
+		}
+		blnChange=true;
+		//AdjustCol=0;
+		sWidth1=0;
+		tgrid.style.cursor="default";
+		//tgrid.rows(curRow).style.cursor="default"
+		line.style .display ="none";
+		div1.releaseCapture ();
+		blnAdjust = false;
+		
+		ActionAutoScroll("H"); //处理滚动条=auto时的情况
+		Hscrollmax=getHScrollMax();
+		fnPutHscrollmax(Hscrollmax);
+
+		hide();
+		//刷新
+		//tgrid.style.visibility="hidden";
+		//tgrid.style.visibility="visible";
+		onAdjustColID.fire();
+		return;
+	}
+	//行高
+	if (lineH.style.display=="block" && sWidth1!=0 ){
+
+		var lngRange=parseInt(lineH.style.top) - parseInt(sWidth1);
+		var afterWidth=tgrid.rows(AdjustRow).style.pixelHeight+ lngRange;
+		if(afterWidth<=0){
+			//tgrid.rows(AdjustRow).style.display="none"
+			//拖动隐藏时
+			tgrid.rows(AdjustRow).style.height=0; //隐藏列的列宽为1
+			//tgrid.children[0].children[AdjustCol].style.display="none" //列宽等于0则隐藏
+
+		}
+		else {
+			if(tgrid.rows(AdjustRow).style.display=="none") {
+				tgrid.rows(AdjustRow).style.display="block";
+			}
+			tgrid.rows(AdjustRow).style.height=afterWidth;
+		}
+		//修改div表格的高度
+		if(mautosize)
+			div1.style.height=tgrid.offsetHeight;
+
+		//-------------
+		blnChange=true;
+		//AdjustRow=0;
+		sWidth1=0;
+		tgrid.style.cursor="default";
+		//tgrid.children[0].children[AdjustCol].style.cursor="default"
+		lineH.style.display ="none";
+		div1.releaseCapture ();
+		blnAdjustH=false;
+
+		ActionAutoScroll("V"); //处理滚动条=auto时的情况
+		Vscrollmax=getVScrollMax();
+		fnPutVscrollmax(Vscrollmax);
+
+		hide();
+		onAdjustRowID.fire();
+		return;
+	}
+
+}
+//----------------------------------------------------------------
+function line_onmousemove() {
+	//竖直线
+	line.style.left =parseInt(line.style.left)+2;
+}
+function lineH_onmousemove() {//水平线
+	lineH.style.top=parseInt(lineH.style.top)+2;
+
+}
+/**
+*取表格外在控件的位置
+**/
+function getdiv1top(){
+	var div1top=getAbsTop(div1) ;
+	
+	if(ParentPos == "相对"){
+		div1top= div1.style.pixelTop ; 
+	}
+	return div1top ;
+
+}
+function getdiv1left() {
+	var div1left=getAbsLeft(div1) ;		
+	
+	if(ParentPos == "相对"){
+		div1left = div1.style.pixelLeft ; 
+	}
+	return div1left ;
+}
+/**
+*将滚动条放到div的外面
+**/
+var scrollBarWidth = 14; //滚动条宽度值
+function setBottomPosition() {
+    
+    
+	//下面的定位是如果在页签控件中要用div1.style.pixelLeft ,如果在相对定位模式情况下用getAbsLeft(div1)
+	var div1left=getdiv1left() ;		
+	var div1top=getdiv1top() ;
+	
+
+	//alert(div1top+ ":" + div1.style.pixelTop)
+	var div1width=div1.style.pixelWidth ;
+	var div1height=div1.style.pixelHeight ;
+//竖直滚动条的位置
+	fchtcDiv1.style.pixelLeft=div1left+div1width-1; //-17//17滚动条的宽度
+	fcButton1.style.pixelLeft=fchtcDiv1.style.pixelLeft;
+	fcButton2.style.pixelLeft=fchtcDiv1.style.pixelLeft;
+	fcButton3.style.pixelLeft=fchtcDiv1.style.pixelLeft;
+
+	fchtcDiv1.style.pixelTop=div1top;
+	fcButton1.style.pixelTop=fchtcDiv1.style.pixelTop;
+	fcButton2.style.pixelTop = fchtcDiv1.style.pixelTop + scrollBarWidth;
+	if(divconer.style.display=="none")
+		fchtcDiv1.style.pixelHeight=div1height;//+16;
+	else
+		fchtcDiv1.style.pixelHeight=div1height-1;
+fcButton3.style.pixelTop = fchtcDiv1.style.pixelTop + fchtcDiv1.style.pixelHeight - scrollBarWidth;
+
+
+//水平滚动条的位置
+	var lngSW = (div1width - 4 * scrollBarWidth) / 2;
+	fchtcDiv2.style.pixelTop=div1top+div1height-1; //-17
+	fcButton4.style.pixelTop=fchtcDiv2.style.pixelTop;
+	fcButton5.style.pixelTop=fchtcDiv2.style.pixelTop;
+	fcButton6.style.pixelTop=fchtcDiv2.style.pixelTop;
+
+	fchtcDiv2.style.pixelLeft=div1left;
+	fcButton4.style.pixelLeft=fchtcDiv2.style.pixelLeft;
+	fcButton5.style.pixelLeft = fchtcDiv2.style.pixelLeft + scrollBarWidth;
+	if(divconer.style.display=="none")
+		fchtcDiv2.style.pixelWidth=div1.style.pixelWidth;  //+16
+	else
+		fchtcDiv2.style.pixelWidth=div1.style.pixelWidth-1;  //-17
+fcButton6.style.pixelLeft = fchtcDiv2.style.pixelLeft + fchtcDiv2.style.pixelWidth - scrollBarWidth;
+
+//低端右边的遮盖块
+	divconer.style.left =fchtcDiv1.style.left;
+	divconer.style.top=fchtcDiv2.style.top;
+	//zhangsp
+	//divconer.style.width =17+1
+	//divconer.style.height =17+1
+	//---
+	divconer.style.width = scrollBarWidth;
+	divconer.style.height = scrollBarWidth;
+//	divconer.style.display ="block"
+	
+}
+/**
+//处理列变动
+**/
+function actColShow(bInit){
+	//return
+	if(mColShow==false)return;
+	for (var i=0;i<tgrid.rows.length;i++){
+		for (var j=0;j<tgrid.rows(i).cells.length;j++){
+			try {
+				var curTd=tgrid.rows(i).cells(j);
+				if (curTd.rowSpan>1 ){
+					if(bInit){
+						curTd.setAttribute("oldtitlevalue",curTd.innerText);
+						curTd.innerText="";
+					}
+					if(curTd.offsetWidth<20){
+						curTd.innerText="";
+					}
+					else{
+						curTd.innerText=curTd.getAttribute("oldtitlevalue");
+					}
+				}
+
+			}
+			catch (e) {}
+		}
+	}
+
+}
+/**
+ * added by liuxr at 2009-5-14 重算行高
+ * @func 重算初始化为固定行高
+**/
+function ReCalRowHeight()
+{
+	var intFixRows = tgrid.getAttribute("fixrows");
+	if (intFixRows != null) 
+		intFixRows = parseInt(intFixRows,10);
+	else
+		intFixRows = 1;
+		
+	var len = tgrid.rows.length;
+	//alert("fixrows:" + intFixRows + " rows:" + len);
+	for(var i=intFixRows;i<len;i++)
+	{
+		//alert(tgrid.rows(i).style.height + "---" + tgrid.rows(i).offsetHeight);
+		tgrid.rows(i).style.height = tgrid.rows(i).offsetHeight;	
+	}
+}
+
+/**
+//隐藏列
+**/
+function HideCol(lngCol) {
+	tgrid.childNodes.item(0).childNodes.item(lngCol).setAttribute("oldwidth",tgrid.childNodes.item(0).childNodes.item(lngCol).style.pixelWidth);
+	tgrid.childNodes.item(0).childNodes.item(lngCol).style.width=0;
+	//actColShow(false);
+	SetTDAtt(lngCol, "hidden");
+}
+/**
+//显示列
+**/
+function ShowCol(lngCol) {
+	tgrid.childNodes.item(0).childNodes.item(lngCol).style.width=tgrid.childNodes.item(0).childNodes.item(lngCol).getAttribute("oldwidth");
+	//actColShow(false);
+	SetTDAtt(lngCol, "visible");
+}
+var lngHideRows=0;
+/**
+//隐藏行
+**/
+function HideRow(lngRow) {
+		//tgrid.rows(lngRow).style.display="none";
+        //return ;
+
+//判断能否隐藏
+	var blnCanHide=true;
+	/*
+	for (var i=0;i<tgrid.rows(lngRow).cells.length;i++){
+		var curTd=tgrid.rows(lngRow).cells(i);
+		if (curTd.rowSpan>1){
+			blnCanHide=false;
+			break;
+		}
+	}*/
+	//-----------
+	
+	if (blnCanHide){
+		//tgrid.rows(lngRow).setAttribute("oldheight",tgrid.rows(lngRow).style.height);
+		//tgrid.rows(lngRow).style.height=0;
+		//tgrid.rows(lngRow).style.display="none";
+		tgrid.rows(lngRow).className="fc_hidden_tr";
+	}
+	else {
+		tgrid.rows(lngRow).setAttribute("oldheight",tgrid.rows(lngRow).style.height);
+		tgrid.rows(lngRow).style.height=0;
+	}
+}
+/**
+//显示行
+**/
+function ShowRow(lngRow) {
+    //tgrid.rows(lngRow).style.display="";
+    tgrid.rows(lngRow).className="fc_show_tr";
+    return ;
+
+	if(tgrid.rows(lngRow).style.pixelHeight>0) //=0表示拖动隐藏
+	{
+		//tgrid.rows(lngRow).style.height=tgrid.rows(lngRow).getAttribute("oldheight");
+		//tgrid.rows(lngRow).style.display="";
+		tgrid.rows(lngRow).className="fc_show_tr";
+	}
+	else {
+		tgrid.rows(lngRow).style.height=tgrid.rows(lngRow).getAttribute("oldheight");
+	}
+
+}
+/**
+*设置TD的Filter
+**/
+function SetTDFilter(){
+	
+	//preTD.className="";
+	preTD.style.backgroundColor = "";//preTD.bakBgColor;
+	preTD.style.color = "";//preTD.bakColor;
+	
+	RemoveBackColor(preTD);
+	if(curObj.cellIndex==-1){
+		return;
+    }
+    try {
+        var tmpTest = curObj.parentNode.rowIndex;
+    } catch (e) {
+        return;
+    }
+	AddBackColor()	;
+	//alert(curObj.offsetHeight);
+	if(curObj.parentNode.rowIndex>0){
+		//curObj.bakBgColor = curObj.style.backgroundColor;
+		//curObj.bakColor = curObj.style.color;
+		curObj.style.backgroundColor = "#0000cd";
+		curObj.style.color = "#ffffff";
+		//curObj.style.filter = "Invert";
+
+		//判断当行高变大时就不用滤镜了. 2007-03-21
+		/*var rh = tgrid.rows(curObj.parentNode.rowIndex).style.pixelHeight
+		if(typeof  rh != "undefined" && rh > ToInt(tgrid.style.fontSize)+28){
+			curObj.className="tdfilter1";
+		    curObj.style.backgroundColor = "#0000cd";
+		    
+		}else{
+			curObj.className="tdfilter";
+		    curObj.style.backgroundColor = "#ffff32";
+		    curObj.style.filter = "Invert";
+		}*/
+	}else{
+		//curObj.className="";
+	}
+	//怕出错,但未发现
+	//try {
+		//curObj.focus() ;
+		//下面这行是为了防止一进入有多行的表格时,焦点直接到最后行.
+		//if(tgrid.style.pixelTop !=0 ) tgrid.style.top=0
+	//}catch(E){}
+}
+
+
+/** nouse
+*当前焦点显示高亮
+*@para sTag ==空,表示清空当前背景
+*@date 2003-09-16 
+**/
+function ShowHighLight(sTag){
+	if(sTag=="空"){
+		curObj.className="";
+		//去掉上一个背景
+		var i=curObj.parentNode.rowIndex;
+		tgrid.rows(i).cells(0).innerText=" ";
+		tgrid.rows(i).style.backgroundColor=tgrid.rows(i).getAttribute("oldcolor");
+	
+	}else{
+		SetTDFilter();
+		//preTD.className=""
+		//curObj.className="tdfilter"
+		//去掉上一个背景
+		var i=preTD.parentNode.rowIndex;
+		tgrid.rows(i).cells(0).innerText=" ";
+		tgrid.rows(i).style.backgroundColor=tgrid.rows(i).getAttribute("oldcolor");
+	
+		var selColor="e6e6fa";  // "#a9caff"
+		var oldColor="";
+		i=curObj.parentNode.rowIndex;
+		//added by liuxr at 20095-22 加上判断，如果“显示行号=true”则不能加innerText=">"
+		if (!IsSpace(blRowNo))
+    		tgrid.rows(i).cells(0).innerText=">";
+		if(tgrid.rows(i).style.backgroundColor!=selColor)
+			tgrid.rows(i).setAttribute("oldcolor",tgrid.rows(i).style.backgroundColor);
+		
+		tgrid.rows(i).style.backgroundColor=selColor;
+	}
+
+}
+
+//-----------------------------------------
+var curObj; //当前TD
+var preTD=null; //上一个输入TD
+var lostfocusTD=null; //表格失去焦点后将当前TD保存到此变量中
+var mcurRow, mcurCol;
+
+/**
+*将编辑框移动到当前td单元格(或setTD)的过程，
+*赋值过程：将td单元格中的值赋到编辑框上；将按键的值赋到编辑框上
+**/
+function moveedit(setTD){
+
+	//if(typeof curObj=="undefined") return
+	if (arguments.length>0){
+		curObj=setTD;
+	}
+	
+	//将下面这行的&&改为|| 2003-06-27 modify
+	if(curObj.parentNode.rowIndex==0 || curObj.cellIndex<=0 ) return;
+	//判断当前列,如果只读
+	var sReadOnly=tgrid.children[0].children[curObj.cellIndex].getAttribute("cz");
+	if(sReadOnly==null || sReadOnly==""){
+		return;
+		//alert(sReadOnly)
+		//if(sReadOnly.toLowerCase()=="<readonly></readonly>")
+		//	alert("readonly")
+	}
+	var oXml = SetDom(sReadOnly);
+	var sType=oXml.documentElement.nodeName;
+	if(sType == "code"){
+			if( ParentPos == "相对" ){   //div1.parentNode.parentNode.id == "SKbillsheet"
+				//alert("aa");
+				czFc.left=curObj.offsetLeft+tgrid.offsetLeft+div1.offsetLeft+1;
+				czFc.top=curObj.offsetTop+tgrid.offsetTop+div1.offsetTop+1;
+			}else{
+			    czFc.left = getAbsLeft(curObj); //+3; //curObj.offsetLeft+tgrid.offsetLeft+div1.offsetLeft+1;
+			    czFc.top = getAbsTop(curObj); //+3 ; //curObj.offsetTop+tgrid.offsetTop+div1.offsetTop+1;
+				//alert(czFc.top)
+			}
+			czFc.height=curObj.offsetHeight+1;//-2
+			czFc.width=curObj.offsetWidth+1;//-2
+			//-防止在一表格有两种不同的数据源参照时出错
+			czFc.sql1="";
+			czFc.sql2="";
+			czFc.xml="";
+			ponclickopen = "" ;
+			ponselchange = "" ;
+			poninterchange = "" ;
+			ponchange = "" ;
+			ponkeydown = "" ;
+			ponclick = "" ;
+			for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+				switch(oXml.documentElement.childNodes(i).tagName) {
+					case "sql1" : czFc.sql1=UnRepXml(oXml.documentElement.childNodes(i).text); break;
+					case "sql2" : czFc.sql2=UnRepXml(oXml.documentElement.childNodes(i).text); break;
+					case "xml" :  
+						var s = oXml.documentElement.childNodes(i).xml;
+						s = s.substring(5,s.length-6) ;
+						czFc.xml=s ;
+						break;
+		            case "format": czFc.format = UnRepXml(RepStr(oXml.documentElement.childNodes(i).text, "&nbsp;", " ")); break;
+					case "blninput" : czFc.blninput=oXml.documentElement.childNodes(i).text; break;
+					case "blnempty" : czFc.blnempty=oXml.documentElement.childNodes(i).text; break;
+					case "keycol" : czFc.keycol=parseInt(oXml.documentElement.childNodes(i).text); break;
+					case "onclickopen" :czFc.detachEvent("onclickopen",onclickopenEvent); ponclickopen = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("onclickopen",onclickopenEvent); break;
+					case "onselchange" :czFc.detachEvent("onselchange",onselchangeEvent); ponselchange = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("onselchange",onselchangeEvent); break;
+					case "oninterchange" :czFc.detachEvent("oninterchange",oninterchangeEvent); poninterchange = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("oninterchange",oninterchangeEvent); break;
+					case "onchange" :czFc.detachEvent("onchange",onchangeEvent); ponchange = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("onchange",onchangeEvent); break;
+					case "onkeydown" :czFc.detachEvent("onkeydown",onkeydownEvent); ponkeydown = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("onkeydown",onkeydownEvent); break;
+					case "onclick" :czFc.detachEvent("onclick",onclickEvent); ponclick = oXml.documentElement.childNodes(i).text ; czFc.attachEvent("onclick",onclickEvent); break;
+					case "fieldnamelist" : czFc.FieldNameList=UnRepXml(oXml.documentElement.childNodes(i).text); break;
+					case "isShowTree": czFc.isShowTree = UnRepXml(oXml.documentElement.childNodes(i).text); break;
+					case "isTreeNewSql": czFc.isTreeNewSql = UnRepXml(oXml.documentElement.childNodes(i).text); break;
+
+				}
+			}
+			//var ssss = getAbsTop(div1);
+			czFc.style.display="block";
+			//var ssss = getAbsTop(div1);
+			//alert(getAbsTop(div1))
+			//czFc.onfocus();
+			czFc.value=curObj.innerText;
+			
+			return;
+
+
+    } else if (sType == "checkbox" || sType == "checkbox_readonly") {
+		return;
+	}
+	
+	//-------------------
+	mbIngrid=true;
+	
+	
+	txtMyGrid.style.zIndex=10;
+	txtMyGrid.style.display ="block";
+	try {
+			txtMyGrid.style.left=curObj.offsetLeft +tgrid.offsetLeft; //+1
+			txtMyGrid.style.top=curObj.offsetTop +tgrid.offsetTop ; //+1
+			txtMyGrid.style.height=tgrid.rows(curObj.parentNode.rowIndex).offsetHeight;//tgrid.rows(curObj.parentNode.rowIndex).style.pixelHeight ; //curObj.offsetHeight //-2
+			txtMyGrid.style.width=tgrid.childNodes(0).childNodes(curObj.cellIndex).style.pixelWidth ;//curObj.offsetWidth //-2
+	}
+	catch (e){}
+	//获得当前对象的属性
+	//当前TD无则取表格的
+	
+	if(isSpace(curObj.style.fontSize)){
+		var iFontSize = parseInt(tgrid.style.fontSize) ;
+		if(isNaN(iFontSize) == false) txtMyGrid.style.fontSize =iFontSize+1;  //+1是为了使显示效果更好
+		txtMyGrid.style.fontWeight =tgrid.style.fontWeight;
+		txtMyGrid.style.fontStyle =tgrid.style.fontStyle;
+		txtMyGrid.style.textDecorationUnderline =tgrid.style.textDecorationUnderline;
+		txtMyGrid.style.fontFamily =tgrid.style.fontFamily;
+	}else{
+		txtMyGrid.style.fontFamily =curObj.style.fontFamily;
+		txtMyGrid.style.fontSize =curObj.style.fontSize;
+		txtMyGrid.style.fontWeight =curObj.style.fontWeight;
+		txtMyGrid.style.fontStyle =curObj.style.fontStyle;
+		txtMyGrid.style.textDecorationUnderline =curObj.style.textDecorationUnderline;
+	}
+	//当前TD的对齐方式为空是找COL元素的对齐方式
+	if(isSpace(curObj.align)){
+	   //alert(tgrid.childNodes(0).outerHTML)
+	   txtMyGrid.style.textAlign=tgrid.childNodes(0).childNodes(curObj.cellIndex).align;
+	}else {
+	   txtMyGrid.style.textAlign=curObj.align;
+	}
+
+	/*
+	if(isSpace(curObj.bgColor)){
+	    //alert(document.body.bgColor)
+	   txtMyGrid.style.backgroundColor =window.document.body.bgColor
+	}else {
+	   txtMyGrid.style.backgroundColor =curObj.bgColor
+	}
+	*/
+	//txtMyGrid.style.backgroundColor =curObj.parentNode.style.backgroundColor
+	//txtMyGrid.style.backgroundColor = curObj.bgColor;
+	//alert(curObj.parentNode.outerHTML)
+	//txtMyGrid.style.color  = curObj.style.color;
+
+	tdTotxt();
+	window.setTimeout("try {txtMyGrid.focus()} catch (e){};", 10);
+	
+	//window.setTimeout("try {"+uniqueID+".children[0].children[2].focus()} catch (e){};", 10);
+}
+function onclickopenEvent() {
+	if(isSpace(ponclickopen) == false)
+	eval(ponclickopen);
+}
+function onselchangeEvent() {
+	if(isSpace(ponselchange) == false)
+	eval(ponselchange);
+}
+function oninterchangeEvent() {
+	if(isSpace(poninterchange) == false)
+	eval(poninterchange);
+}
+function onchangeEvent() {
+	if(isSpace(ponchange) == false)
+	eval(ponchange);
+}
+function onkeydownEvent() {
+	if(isSpace(ponkeydown) == false)
+	eval(ponkeydown);
+}
+function onclickEvent() {
+	if(isSpace(ponclick) == false)
+	eval(ponclick);
+}
+
+/**
+*此函数在表格点击及按上下左右回车键时调用
+*@param sUp ="上下移动" 表示按了上下方向键和纵向移动键,此时不计算横向滚动条
+**/
+function tgrid_onclick(curObj1, sUp) {
+    try { //怕出错而加的try, 2010-06-03 my add 处理在grid上单击事件选日期时会将日期复制到别的单元格中.
+        var ctn = "txtname";
+        var oDate = window.document.all("div_dtTable_" + ctn);
+        if (oDate != null) {
+            if (oDate.style.visibility != "hidden") {
+                oDate.innerHTML = "";
+                oDate.style.visibility = "hidden";
+                _g_dt2_ShowingDTPicker = null;
+
+            }
+        }
+    } catch (ee) { } 
+    
+    
+			var d=new Date();
+			var t = d.getTime();
+	//alert(curObj.cellIndex)
+	var ooEvent=event.srcElement;
+	var tmpB=false;
+	if(mReadOnly || mcanselect=="否")
+		return;
+	//if(pubFirstClickTab=="点击表格取得焦点") return
+	if(ooEvent.tagName.toUpperCase()=="A"){
+		if(ooEvent.parentNode.tagName == "TD"){
+			ooEvent=ooEvent.parentNode;
+		}
+	}
+	if(arguments.length==0 || typeof curObj1.tagName=="undefined"){//点击
+		
+		if (ooEvent.tagName!='TD') return;
+
+		if (ooEvent.parentNode.rowIndex < lngFixRows && tgrid.rows(ooEvent.parentNode.rowIndex).style.cursor == "default") ClickHeader(ooEvent.cellIndex);
+
+		//在固定行列上
+		if (ooEvent.parentNode.rowIndex < lngFixRows || ooEvent.cellIndex < lngFixCols) {
+		    //hide();
+		    
+		    return;
+		}
+		if (tgrid.childNodes(0).childNodes(ooEvent.cellIndex).getAttribute("cz") == "<checkbox_readonly></checkbox_readonly>") return;
+		if(tgrid.childNodes(0).childNodes(ooEvent.cellIndex).getAttribute("cz") == "<checkbox></checkbox>") {
+		    //alert(dataset1.oDom.documentElement.childNodes(0).childNodes(0).text);
+			//checkbox直接提交到数据集
+			if(ooEvent.style.backgroundImage == "url("+fcpubdata.path+"/fceform/images/ef_run_grid_checked.gif)" ) {
+			    ooEvent.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)";
+			    ooEvent.style.backgroundPosition = "center center";
+				//if(Act_onDataChange("强行发生数据改变事件","是","否") == false) return
+				checkbox_update_ds(ooEvent.cellIndex, ooEvent.parentNode.rowIndex - lngFixRows, "否");
+				return;
+			} else if(ooEvent.style.backgroundImage == "url("+fcpubdata.path+"/fceform/images/ef_run_grid_uncheck.gif)" ) {
+				ooEvent.style.backgroundImage = "url("+fcpubdata.path+"/fceform/images/ef_run_grid_checked.gif)";
+				ooEvent.style.backgroundPosition = "center center";
+				//if(Act_onDataChange("强行发生数据改变事件","否","是") == false) return
+				checkbox_update_ds(ooEvent.cellIndex,ooEvent.parentNode.rowIndex-lngFixRows,"是");
+				return;
+			}			
+		}
+		//当检查非法后应取消
+		//if (actcellchange(event.srcElement)==false) return
+		//alert(curObj.parentNode.rowIndex+"=="+event.srcElement.parentNode.rowIndex+" &&"+ event.srcElement.cellIndex+"=="+curObj.cellIndex)
+		//if(curObj.parentNode.rowIndex==event.srcElement.parentNode.rowIndex && event.srcElement.cellIndex==curObj.cellIndex ){
+		if(curObj==ooEvent  ){
+
+			//alert("等")
+			moveedit();
+			return;
+		}else{
+				//当检查非法后应取消
+			if (actcellchange(ooEvent)==false) {
+				return;
+			}
+
+
+			preTD=curObj;
+			curObj=ooEvent;
+
+		}
+	}else {//按键
+	
+		if (curObj1.tagName!='TD') return;
+		//在固定行列上
+		if(curObj1.parentNode.rowIndex<lngFixRows || curObj1.cellIndex<lngFixCols) return;
+		preTD=curObj;
+		curObj=curObj1;
+		
+		tmpB=true;
+
+	}
+	
+	
+	if(mautosize==false ){
+	    if(fchtcDiv1.style.display!="none"){
+			//如向下出界则滚动
+			if(Vscrollmax>0){
+			var d=new Date();
+			var t = d.getTime();
+				
+				var num1= tgrid.rows(curObj.parentNode.rowIndex).offsetHeight; // tgrid.rows(curObj.parentNode.rowIndex).style.pixelHeight;		//curObj.offsetHeight
+
+			
+			/*	//var n=tgrid.childNodes(0).childNodes(curObj.cellIndex).style.pixelWidth		//curObj.offsetWidth
+
+				var num2=div1.offsetHeight
+				var num3=curObj.offsetTop
+				*/
+				//var oRect=curObj.getBoundingClientRect();
+				//var oRect1=div1.getClientRects();
+
+				//var n1=oRect.bottom
+				//var n2=500 //oRect1[0].bottom
+				var n3=tgrid.rows.length-Vscrollmax+Vscrollvalue;
+				var n4=curObj.parentNode.rowIndex;
+
+				
+				if(n4>n3){  //-17
+						//alert("aa")
+						fnPutVscrollvalue(Vscrollvalue,Vscrollvalue+1);
+				}else{
+					
+					if(num1 == 0  ){
+						div1.scrollTop=0;
+						//alert("aab")
+						fnPutVscrollvalue(Vscrollvalue,0);
+					}
+				}
+	            if(tmpB ){
+			            var d=new Date();
+			            var t1 = d.getTime();
+			            //alert(t1-t)
+	            }
+				
+			}
+
+	    }
+	    if(fchtcDiv2.style.display!="none" && sUp!="上下移动" ){
+			if(Hscrollmax>0){
+				var num1=tgrid.childNodes(0).childNodes(curObj.cellIndex).style.pixelWidth;
+				var oRect=curObj.getClientRects();
+				var oRect1=div1.getClientRects();
+
+				var n1=oRect[0].right;
+				var n2=oRect1[0].right;
+			
+			//如向右出界则滚动
+			if(n1 >n2){  //-17
+				//计算一次滚动多少列
+				//可能不一定只滚动一列,如中间有只读列的话
+				var scrollcols=0;
+				var sumWidth=curObj.offsetLeft +num1-(div1.offsetWidth);  //-17
+				var tmpWidth=0;
+				var i=Hscrollvalue+1;
+				while (tmpWidth<sumWidth && i<tgrid.childNodes(0).childNodes.length ){
+					tmpWidth+=tgrid.childNodes(0).childNodes(i).offsetWidth;
+					i++;
+				}
+				if(i>Hscrollmax) i=Hscrollmax;
+				//---------------------------------------
+				fnPutHscrollvalue(Hscrollvalue,i);
+			}else{
+				div1.scrollLeft=0;
+				if(num1==0 ){
+					fnPutHscrollvalue(Hscrollvalue,0);
+				}
+			}
+			}
+	    }
+	}
+
+	//mcurRow=curObj.parentNode.rowIndex
+	//mcurCol=curObj.cellIndex
+
+	txtMyGrid.style.display="none";
+	czFc.style.display="none";
+	
+	//MoveDataSet() //在actcellchange中处理了
+	
+    SetTDFilter();
+	//preTD.className="";
+	//curObj.className="tdfilter"    
+			var d=new Date();
+			var t1 = d.getTime();
+			//alert("tgrid_onclick时间:"+(t1-t))	
+	    
+	return;
+	/**
+	*强行更新打勾项,在tgrid_onclick()中使用
+	*@param colNo 列号
+	*@param rowNo 行号
+	*@param svalue 要更新的值
+	*@return 无
+	*@date 2005-01-25
+	**/
+	function checkbox_update_ds(colNo,rowNo,svalue) {
+		if(isSpace(mdataset)==false){
+			var oDs = eval("window."+mdataset);
+			//if(oDs.bAdd == false) oDs.bEdit = true 
+			var cur = tgrid.childNodes(0).childNodes(colNo).getAttribute("dsfield");
+			cur = parseInt(cur);
+			if(isNaN(cur)) cur = 0 ;
+			oDs.oDom.documentElement.childNodes(rowNo).childNodes(cur).text = svalue;
+			if(oDs.RecNo == rowNo) oDs.Field(cur).Value = svalue;
+			//修改行标志
+			if(oDs.oDom.documentElement.childNodes(rowNo).getAttribute("rowstate") == "new")
+				oDs.oDom.documentElement.childNodes(rowNo).setAttribute("rowstate","add");;
+			if(oDs.oDom.documentElement.childNodes(rowNo).getAttribute("rowstate") != "add")
+				oDs.oDom.documentElement.childNodes(rowNo).setAttribute("rowstate","edit");;
+			
+		}
+		return true;
+	}
+	/**
+	*由表格列号得到数据集的字段名
+	*还未有地方使用
+	*@date 2005-01-25
+	**/
+	function gridcol_dsfieldname(colNo) {
+		var oXml = SetDom(mformat);
+		if(colNo>0) colNo--;
+		var curFieldName=oXml.documentElement.childNodes(colNo).childNodes(0).text ; //0个节点为字段名
+		return curFieldName;
+	}
+
+}
+/**
+*处理将文本框上的值往单元格上传递的情况
+**/
+function txtTotd() {
+		curObj.innerText=txtMyGrid.value;
+}
+/**
+*处理将单元格上的值往文本框上传递的情况
+**/
+function tdTotxt(){
+	//
+	var TransValue=curObj.innerText;
+	//保存改前的值以便undo
+	BeforeChangeText=TransValue;
+
+	var s1=curObj.getAttribute("formula");
+	if(s1!=null){
+		TransValue="="+s1;
+		//使TD的值与文本框的值一致,否则有公式时不对
+		txtMyGrid.value=TransValue;
+
+		//为了给curObj.innerText值而调用
+		txtTotd();
+	}
+	else
+		txtMyGrid.value=TransValue;
+
+
+}
+/**
+*点击表格标题行,用于排序 ↑↓
+*@param curcol 当前列
+*@date 2003-12-05
+**/
+function ClickHeader(curcol){
+	if(mIsOrder != "是") return;
+	if(curcol<=0)return;
+	if(tgrid.childNodes(0).childNodes(curcol).style.width==0)return;
+	if(lngFixRows>1) return; //多层表头时不能排序
+	var orderstr="↑";
+	var orderstr1="↓";
+	var asc="升序";
+
+	//去掉原来的
+	for(var i=1;i<tgrid.childNodes(0).childNodes.length;i++){
+		if(i!=curcol){
+			var s4=tgrid.rows(0).cells(i).innerHTML;
+			var s5=s4.substring(0,1);
+			if(s5==orderstr || s5==orderstr1){
+				tgrid.rows(0).cells(i).innerHTML=s4.substring(1,s4.length);
+			}
+		}
+	}
+
+	//加上新的
+	var s2=tgrid.rows(0).cells(curcol).innerHTML;
+	var s3=s2.substring(0,1);
+	if(s3!=orderstr && s3!=orderstr1 ){
+		tgrid.rows(0).cells(curcol).innerHTML=orderstr+s2;
+	}else if(s3==orderstr){
+		tgrid.rows(0).cells(curcol).innerHTML=orderstr1+s2.substring(1,s2.length);
+		asc="降序";
+	}else{
+		tgrid.rows(0).cells(curcol).innerHTML=orderstr+s2.substring(1,s2.length);
+	}
+	if(isSpace(mdataset)==false){
+		//alert(asc)
+		var sformat=eval(uniqueID+".format");
+	
+		var oXml=new ActiveXObject("Microsoft.XMLDOM");
+		oXml.async=false;
+		oXml.loadXML (sformat);
+		var s1="";
+		//取字段名,表格多左边一个标记列
+		s1=oXml.documentElement.childNodes(curcol-1).childNodes(0).text;
+		s1=new Eapi.Str().trim(s1);
+
+		var ods=eval(mdataset);
+		if(ods.Update("提示错误信息")!="") return;
+		var sortcol=ods.FieldNameToNo(s1);
+		ods.Sort(sortcol,asc);
+	}
+	
+}
+
+
+function onResize(scrollDirection) {
+    
+    var bak_hideVscroll = mhideVscroll;
+    if (scrollDirection != "H" && mhideVscroll == "auto") {
+        Vscrollmax = getVScrollMax();
+        if (Vscrollmax < 1) 
+            mhideVscroll = "是";
+        else
+            mhideVscroll = "否";
+
+        
+    }
+    var bak_hideHscroll = mhideHscroll;
+    if (scrollDirection != "V" && mhideHscroll == "auto") {
+        Hscrollmax = getHScrollMax();
+        if (Hscrollmax < 1) 
+            mhideHscroll = "是";
+        else
+            mhideHscroll = "否";
+    }
+
+    var bool_hideVscroll = IsTrue(mhideVscroll);
+    var bool_hideHscroll = IsTrue(mhideHscroll);
+    if (scrollDirection != "H") {
+        if (bool_hideVscroll || mvisible != "是") {
+            fchtcDiv1.style.display = "none";
+            fcButton1.style.display = "none";
+            fcButton2.style.display = "none";
+            fcButton3.style.display = "none";
+            divconer.style.display = "none";
+            if (mautosize == false) {
+                div1.style.width = mwidth;
+            }
+
+        }
+        else {
+            fchtcDiv1.style.display = "";
+            fcButton1.style.display = "";
+            fcButton2.style.display = "";
+            fcButton3.style.display = "";
+            if (fchtcDiv2.style.display == "" && fchtcDiv1.style.display == "") {
+                divconer.style.display = "";
+            }
+            else {
+                divconer.style.display = "none";
+            }
+
+            if (mautosize == false) {
+                var tmpWidth = mwidth - scrollBarWidth;
+                if (tmpWidth < 10) tmpWidth = 10;
+                div1.style.width = tmpWidth;
+            }
+        }
+    }
+
+    if (scrollDirection != "V") {
+        if (bool_hideHscroll || mvisible != "是") {
+            fchtcDiv2.style.display = "none";
+            fcButton4.style.display = "none";
+            fcButton5.style.display = "none";
+            fcButton6.style.display = "none";
+            divconer.style.display = "none";
+            if (mautosize == false) {
+                div1.style.height = mheight;
+            }
+
+
+        }
+        else {
+            fchtcDiv2.style.display = "";
+            fcButton4.style.display = "";
+            fcButton5.style.display = "";
+            fcButton6.style.display = "";
+            if (fchtcDiv2.style.display == "" && fchtcDiv1.style.display == "") {
+                divconer.style.display = "";
+            }
+            else {
+                divconer.style.display = "none";
+            }
+
+            if (mautosize == false) {
+                var tmpHeight = mheight - scrollBarWidth;
+                if (tmpHeight < 10) tmpHeight = 10;
+                div1.style.height = tmpHeight;
+            }
+
+        }
+    }
+
+    if ((bak_hideVscroll == "auto" || bak_hideHscroll == "auto" || bool_hideVscroll == false || bool_hideHscroll == false) && mvisible == "是") setBottomPosition();
+	
+    if (scrollDirection != "V" && bool_hideVscroll == false) {
+        Vscrollmax = getVScrollMax();
+        fnPutVscrollmax(Vscrollmax);
+    }
+    if (scrollDirection != "H" && bool_hideHscroll == false) {
+        Hscrollmax = getHScrollMax();
+        fnPutHscrollmax(Hscrollmax);
+    }
+
+    if (mvisible == "是" && mautosize) { 
+		div1.style.height=tgrid.offsetHeight;
+		div1.style.width=tgrid.offsetWidth;
+    }
+	
+	//恢复
+    mhideVscroll = bak_hideVscroll;
+    mhideHscroll = bak_hideHscroll;
+}
+/**
+* 在增删行,调整列宽行高时调用.用于auto时计算显示滚动条.
+**/
+function ActionAutoScroll(scrollDirection) {
+    if ( (scrollDirection == "V" && mhideVscroll == "auto") || (scrollDirection == "H" && mhideHscroll == "auto") ) 
+        onResize(scrollDirection);
+ 
+}
+function ResizeDiv(){
+    if (mautosize) {
+        div1.style.height=tgrid.offsetHeight;
+        div1.style.width=tgrid.offsetWidth;
+    }
+
+}
+function initGrid() {
+onResize();
+
+}
+function hide() {
+//隐藏编辑控件
+txtMyGrid.style.display="none";
+czFc.style.display="none";
+
+
+}
+
+/**
+*去掉当前行的背景色,用于数据集中调用
+*@date 2003-12-26
+**/
+function RemoveBackColor(td) {
+    if (tgrid.rows.length <= lngFixRows) return; //以防删空表格后,再增加行时报错.
+	if(typeof td == "undefined" ) td=curObj;
+	if(td.cellIndex>=0){
+		var tmpcurRow=td.parentNode.rowIndex;
+		if(tmpcurRow>0){
+			//2009-5-22 增加判断 liuxr
+			if (!IsTrue(blRowNo))
+				tgrid.rows(tmpcurRow).cells(0).innerText=" ";
+			tgrid.rows(tmpcurRow).style.backgroundColor="" ;
+			//2009-04-21 加上
+			td.style.color="";
+			td.style.backgroundColor="";
+		}
+	}else{ //移去所有的行背景
+		for(var i=1;i<tgrid.rows.length;i++){
+			//2009-5-22 增加判断 liuxr
+			if (!IsTrue(blRowNo))
+				tgrid.rows(i).cells(0).innerText=" ";
+			tgrid.rows(i).style.backgroundColor="" 	;		
+		}
+	}
+
+}
+/**
+*加当前行的背景色,用于tgrid_onclick 和Append时调用
+*@date 2003-12-26
+**/
+function AddBackColor(){
+
+        //给行标记
+        var tmprow = curObj.parentNode.rowIndex;
+        if (tmprow > 0) {
+            //added by liuxr at 2009-5-22 加上判断，如果不显示行号时才innerText=">"
+            if (!IsTrue(blRowNo))
+                tgrid.rows(tmprow).cells(0).innerText = ">";
+            tgrid.rows(tmprow).style.backgroundColor = "e6e6fa";
+        }
+}
+
+
+/**
+*滚动后调用此函数
+**/
+function Actmoveedit() {
+	hide();
+}
+/**
+*onDataChange事件
+*@date 2003-09-16
+*@param sTag=="强行发生数据改变事件"
+*@return true 表示后面可以移动单元格, false 表示ondatachange中检查非法后要取消移动单元格.用于立即检验.
+**/
+function Act_onDataChange(sTag,oldvalue,newvalue){
+
+	//保存前的TD值和以后的不同则发生onDataChange
+	//alert(txtMyGrid.style.display)==none表示第一次进入表格
+	if(((curObj.innerText!=BeforeChangeText && txtMyGrid.style.display=="block") || sTag=="强行发生数据改变事件" )&& curObj.parentNode.rowIndex>0){
+		//alert(curObj.innerText+"!="+BeforeChangeText)
+		oEvent1=createEventObject();
+		oEvent1.curTD=curObj;
+		oEvent1.BeforeChangeText=BeforeChangeText;
+		oEvent1.AfterChangeText=curObj.innerText;
+		//if(typeof oldvalue != "undefined" && typeof newvalue != "undefined"){
+		//	oEvent1.BeforeChangeText = oldvalue ;
+		//	oEvent1.AfterChangeText = newvalue ;
+		//}
+		//oEvent1.returnValue=true
+		//为数据集对象新加的
+		if(isSpace(mdataset)==false){
+		    var sCommand="if("+mdataset+".bAdd==false) "+mdataset+".bEdit=true;";
+		    eval(sCommand);
+		    //   if(dsMain.bAdd==false) dsMain.bEdit=true
+		}
+
+		//置EndRowState为"edit"
+		if(mEndRowState=="add" && curObj.parentNode.rowIndex==tgrid.rows.length-1){
+			mEndRowState="edit";
+		}
+		onDataChangeID.fire(oEvent1);
+	}
+	return true;
+
+}
+/**
+*处理事件的参数,n
+*此函数在按方向键和点击表格时调用
+*param newTD 为发生事件的TD
+*return false 表示取消后续代码的运行
+**/
+function actcellchange(newTD) {
+	
+	if(curObj != null  && curObj.cellIndex >= 0)	{
+	}else if(lostfocusTD != null  && lostfocusTD.cellIndex >= 0)	{
+		curObj=lostfocusTD;
+	}else{
+		curObj=tgrid.rows(0).cells(0);
+		//alert(newTD.parentNode.rowIndex)
+	}
+	//数据改变事件
+	if(Act_onDataChange()==false ) return false;
+	//if(curObj.parentNode.rowIndex==newTD.parentNode.rowIndex && curObj.cellIndex==newTD.cellIndex) return false
+	oEvent=createEventObject();
+	oEvent.oldTD=curObj;
+	oEvent.newTD=newTD;
+	//oldTD在改变前的值
+	oEvent.BeforeChangeText=BeforeChangeText;
+	onCellChangeID.fire(oEvent);
+    //alert(curObj.parentNode.rowIndex+"!="+newTD.parentNode.rowIndex)
+		if(curObj.parentNode.rowIndex!=newTD.parentNode.rowIndex){
+//onBeforeRowChange事件---------------------------------------------------------------
+//暂时没使用此事件
+			oEvent=createEventObject() ;
+			oEvent.Cancel=false ;
+			onBeforeRowChangeID.fire() ;
+			if(oEvent.Cancel)return false;
+
+
+//------------------------------------------------------------------------------------
+			oEvent=createEventObject();
+			oEvent.oldRow=curObj.parentNode.rowIndex;
+			oEvent.newRow=newTD.parentNode.rowIndex;
+			oEvent.Cancel=false ;
+
+
+			//为数据集对象新加的
+			//下面在2005-04-07 时去掉了'不检查'和加上了刷新表格
+			if(isSpace(mdataset)==false){
+				var oDs=eval("window."+mdataset);
+				var blnChangeData = false;
+				if(oDs.bEdit || oDs.bAdd) blnChangeData = true;
+				if(oDs.Update("提示错误信息")!=""){  //'不检查'
+					return false ;
+				}else{
+					//alert("rowchange!!")
+					
+					if(oEvent.oldRow -lngFixRows > 0 && blnChangeData ) {
+						oDs.fset_cont(oEvent.oldRow -lngFixRows); //刷新表格
+					}
+					oDs.SetPos(oEvent.newRow-lngFixRows);
+				}
+			}
+
+			//
+			onRowChangeID.fire(oEvent);
+			if(oEvent.Cancel)return false;
+		}
+	try{	}
+	catch (e){}
+
+	return true;
+}
+
+function txtMyGrid_onkeydown() {
+	//alert("b")
+	//window.status=window.status+"txt"
+	KeyMove(1);  //左右键不起作用
+	
+	
+}
+function txtMyGrid_onkeypress() {
+	//alert("b")
+	//window.status=window.status+"txtpress"
+
+	if(txtMyGrid.style.display=="block" && event.keyCode==13){ //回车键
+		//---------------------------------------
+		//调用双击事件
+		var s2=eval(uniqueID+".ondblclick");
+		//去掉{}外边的东西
+		var s1=s2+"";
+		s1=s1.substring(22,s1.length-1);
+		
+		//alert(s1)
+		if(isSpace(s1)==false){
+		//if(txtMyGrid.value==" "){
+			//调用参照
+			try{
+				eval(s1);
+			}catch(E){
+				eval(s2);
+			}
+		}
+			curObj.focus();
+			txtMyGrid.style.display="none";
+			event.returnValue=false;
+		
+	}
+}
+
+
+/**
+*表格的按钮事件
+**/
+function tgrid_onkeydown() {
+	//window.status=window.status+"tgrid "
+	
+	var iKeyCode=event.keyCode;
+	
+	KeyMove(2) ;//2=全部键起作用
+	
+
+	if (iKeyCode ==13){//enter键
+		if(txtMyGrid.style.display=="none"){
+			moveedit();
+		}
+
+	}
+	
+
+}
+/**
+*表格的按钮事件
+**/
+function tgrid_onkeypress() {
+	//window.status=window.status+"tgridpress "
+	var iKeyCode=event.keyCode;
+	//if(iKeyCode<33 || iKeyCode>40){
+		//按平常键
+		if(txtMyGrid.style.display=="none"){
+			moveedit();
+			//考虑只读情况
+			if(txtMyGrid.style.display=="block"){
+				//if(iKeyCode==32){ //空格键
+				//	txtMyGrid.value=""
+				//}else{
+					txtMyGrid.value="";
+					MoveIns(0);  //移动插入符
+				//}
+				txtTotd();
+			}			
+		}	
+	//}
+}
+
+/**
+*按方向键按移动,包括pageup pagedown end home 33 34 35 36 
+*@para iEdit =1表示左右键不起作用 =2表示全部八个键都起作用.
+*@date 2003-09-09
+**/
+function KeyMove(iEdit){
+	if(curObj.cellIndex==-1)return ; //意外
+	if((mReadOnly && mautosize ) || mcanselect=="否") return;
+	var mcurRow=curObj.parentNode.rowIndex;
+	var mcurCol=curObj.cellIndex;
+	//没有组合键的情况
+	if (event.shiftKey ==true || event.ctrlKey ==true) return;
+
+	var iKeyCode=event.keyCode;
+
+	if(iKeyCode<33 || iKeyCode>40 ) return;
+	if(iEdit==1){
+		 if ( iKeyCode==37 || iKeyCode==39 || iKeyCode==36 || iKeyCode==35  ) {
+		 	return;
+		 }else{
+		 	curObj.focus();
+		 }	
+	}
+	
+	
+	
+	switch (iKeyCode) {
+		case 33: //pageup
+			//自动加行后要删除尾行 2003-05-19 add
+			if(mcurRow==tgrid.rows.length-1 ){
+				
+				if(isSpace(mdataset)==false && mEndRowState=="add"){
+					var ods=eval("window."+mdataset);
+					ods.Delete();	//删除最后一行
+					return;
+				}
+				
+			}
+
+			if(mcurRow>lngFixRows){
+				var nextRow=0;
+				if(mcurRow-20<lngFixRows){
+					nextRow=1;
+					fnPutVscrollvalue(Vscrollvalue,0);
+				}else{
+					nextRow=mcurRow-20;
+					//到顶时自动上滚
+					if(Vscrollvalue-20>0){
+						fnPutVscrollvalue(Vscrollvalue,Vscrollvalue-20);
+					}else{
+						fnPutVscrollvalue(Vscrollvalue,0);
+					}
+				}
+				//当检查非法后应取消
+				if (actcellchange(tgrid.rows(nextRow).cells(mcurCol))==false) return;
+				
+				tgrid_onclick(tgrid.rows(nextRow).cells(mcurCol));
+			}
+			break;
+		case 34: //pagedown
+			if(mcurRow<tgrid.rows.length-1 ){
+				var nextRow=0;
+				
+				if(mcurRow+20>tgrid.rows.length-1){
+					nextRow=tgrid.rows.length-1;
+					fnPutVscrollvalue(Vscrollvalue,Vscrollmax);
+				}else{
+					nextRow=mcurRow+20;
+					//到顶时自动上滚
+					if(Vscrollvalue+20<Vscrollmax){
+						fnPutVscrollvalue(Vscrollvalue,Vscrollvalue+20);
+					}else{
+						fnPutVscrollvalue(Vscrollvalue,Vscrollmax);
+					}
+				}
+				
+				//当检查非法后应取消
+				if (actcellchange(tgrid.rows(nextRow).cells(mcurCol))==false) return;
+
+				tgrid_onclick(tgrid.rows(nextRow).cells(mcurCol));
+			} else {  //否则部分用于自动加行 2003-05-09 add
+				/*
+				if(isSpace(mdataset)==false && mEndRowState=="edit"){
+					var ods=eval("window."+mdataset)
+					ods.Append()
+				}
+				*/
+			}			
+			break;
+		case 35: //end
+			if(mcurCol<tgrid.childNodes(0).childNodes.length-1){
+				fnPutHscrollvalue(Hscrollvalue,Hscrollmax);
+				var nextCol=tgrid.childNodes(0).childNodes.length-1;
+				//为了跳过没有设置列属性的列(即不能输入的列)，所以用循环，
+				//加上当列隐藏或列宽为0时也跳过
+				
+				while (tgrid.childNodes(0).childNodes(nextCol).style.pixelWidth==0 ||  tgrid.childNodes(0).childNodes(nextCol).offsetWidth==0 ) {
+					if(nextCol>lngFixCols) {
+						nextCol--;
+					}
+					else {		//右边出界了则返回原地
+						nextCol=mcurCol;
+					}
+				}
+				
+				actcellchange(tgrid.rows(mcurRow).cells(nextCol));
+				tgrid_onclick(tgrid.rows(mcurRow).cells(nextCol));
+			}
+			
+			break;
+		case 36: //home
+			if(mcurCol>lngFixCols){
+				fnPutHscrollvalue(Hscrollvalue,0);
+
+				var nextCol=lngFixCols;
+				//处理隐藏列
+				while ( tgrid.childNodes(0).childNodes(nextCol).style.pixelWidth==0 ||  tgrid.childNodes(0).childNodes(nextCol).offsetWidth==0 ) {
+					if(nextCol<tgrid.childNodes(0).childNodes.length-1) {
+						nextCol++;
+					}
+					else {//右边出界了则返回原地
+						nextCol=mcurCol;
+					}
+				}
+				actcellchange(tgrid.rows(mcurRow).cells(nextCol));
+				tgrid_onclick(tgrid.rows(mcurRow).cells(nextCol));
+			}
+			
+			break;
+		case 37: //左
+			if(mcurCol>lngFixCols){
+				//到顶时自动上滚
+				if(mcurCol<=lngFixCols+Hscrollvalue){
+					fnPutHscrollvalue(Hscrollvalue,Hscrollvalue-1);
+				}
+				var nextCol=mcurCol-1;
+				//处理隐藏列
+				while (  tgrid.childNodes(0).childNodes(nextCol).style.pixelWidth==0 ||  tgrid.childNodes(0).childNodes(nextCol).offsetWidth==0 ) {
+					if(nextCol>lngFixCols) {
+						nextCol--;
+					}
+					else {//右边出界了则返回原地
+						nextCol=mcurCol;
+					}
+				}
+				actcellchange(tgrid.rows(mcurRow).cells(nextCol));
+				tgrid_onclick(tgrid.rows(mcurRow).cells(nextCol));
+			}
+			break;
+		case 39: //右
+			if(mcurCol<tgrid.childNodes(0).childNodes.length-1){
+				var nextCol=mcurCol+1;
+				//为了跳过没有设置列属性的列(即不能输入的列)，所以用循环，
+				//加上当列隐藏或列宽为0时也跳过
+				while ( tgrid.childNodes(0).childNodes(nextCol).style.pixelWidth==0 ||  tgrid.childNodes(0).childNodes(nextCol).offsetWidth==0 ) {
+					if(nextCol<tgrid.childNodes(0).childNodes.length-1) {
+						nextCol++;
+					}
+					else {		//右边出界了则返回原地
+						nextCol=mcurCol;
+					}
+				}
+				actcellchange(tgrid.rows(mcurRow).cells(nextCol));
+				tgrid_onclick(tgrid.rows(mcurRow).cells(nextCol));
+			}
+			break;
+
+		case 38: //上
+		/*
+			var d=new Date()
+			var t = d.getTime();
+			curObj=tgrid.rows(6).cells(2)
+			SetTDFilter()
+			var d=new Date()
+			var t1 = d.getTime();
+			alert("up:"+(t1-t))
+			break;
+			*/
+			//自动加行后要删除尾行 2003-05-19 add
+			if(mcurRow==tgrid.rows.length-1 ){
+				
+				if(isSpace(mdataset)==false && mEndRowState=="add"){
+					var ods=eval("window."+mdataset);
+					ods.Delete();	//删除最后一行
+					//if(Vscrollvalue-1>=0){
+					//	fnPutVscrollvalue(Vscrollvalue,Vscrollvalue-1);
+					//}
+					return;
+				}
+				
+			}
+
+			if(mcurRow>lngFixRows){
+				var nextRow=mcurRow-1;
+				//到顶时自动上滚
+				if(nextRow<lngFixRows+Vscrollvalue){
+					fnPutVscrollvalue(Vscrollvalue,Vscrollvalue-1);
+				}
+				//当检查非法后应取消
+				if (actcellchange(tgrid.rows(nextRow).cells(mcurCol))==false) return;
+				
+				tgrid_onclick(tgrid.rows(nextRow).cells(mcurCol),"上下移动");
+
+			}
+			
+			break;
+		case 40: //下
+			if(mcurRow<tgrid.rows.length-1 ){
+				var nextRow=mcurRow+1;
+				//此处利用了自动滚动,所以不需要设置滚动条
+				
+				//当检查非法后应取消
+				if (actcellchange(tgrid.rows(nextRow).cells(mcurCol))==false) return;
+
+				tgrid_onclick(tgrid.rows(nextRow).cells(mcurCol),"上下移动");
+			} else if(eval(uniqueID+".autoappend")=="是"){  //否则部分用于自动加行 2003-05-09 add
+
+				if(isSpace(mdataset)==false && mEndRowState=="edit" && AllColReadOnly()==false ){
+					
+					var ods=eval("window."+mdataset);
+					ods.Append();
+				}
+
+			}
+			break;
+	}
+	
+}
+/**
+*用代码移动插入符的位置
+*@date 2003-09-09
+**/
+function MoveIns(iPos){
+
+  var r =txtMyGrid.createTextRange();
+  r.moveStart('character',iPos);
+  r.collapse(true);
+  r.select();
+}
+/**
+*判断是否所有显示列都只读,在自动增加列时用
+*@date 2003-09-16
+**/
+function AllColReadOnly(){
+	var bRead=true;
+	for(var i=1;i<tgrid.rows(0).cells.length;i++){	
+		if(tgrid.children[0].children[i].style.pixelWidth>0){
+		if(tgrid.children[0].children[i].getAttribute("cz")!=null){
+			bRead=false;
+			break;
+		}
+		}
+	}
+	//alert(tgrid.children[0].innerHTML)
+	//alert(bRead)
+	return bRead;
+
+}
+function getCurPageRows(){
+	//取得当前页显示的行数
+	var lngFixRowHeight=0;
+	var lngRowH=0;
+	for (var i=0;i<lngFixRows;i++){
+		lngFixRowHeight+=tgrid.rows(i).style.pixelHeight;
+	}
+	for (var i=Vscrollvalue+lngFixRows;i<tgrid.rows.length;i++){
+		lngRowH=lngRowH+tgrid.rows(i).style.pixelHeight;
+		if (lngRowH>=parseInt(div1.offsetHeight) ){
+			break;
+		}
+	}
+	return i-Vscrollvalue-lngFixRows;
+
+}
+
+function closeright() {
+	onRightClickID.fire();
+	event.returnValue=false;
+}
+
+
+
+/**
+*在滚动条上双击
+*@date 2004-05-21
+**/
+function scrollbar_ondblclick() {
+    window.event.cancelBubble = true;
+    window.event.returnValue = false;
+}
+function trueTotrue(sTrue) {
+	return IsTrue(sTrue);
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+*快速装入XML报表数据到表格
+*@date 2003-12-24
+**/
+function LoadXml(sHTML) {
+	Vscrollvalue=0;
+	Hscrollvalue=0;
+	Vscrollmax=0;
+	Hscrollmax=0;
+	//fnPutVscrollvalue(Vscrollvalue,0)
+			var d=new Date();
+			var t = d.getTime();
+	tgrid.outerHTML=sHTML;
+			var d=new Date();
+			var t1 = d.getTime();
+			//alert(t1-t)	
+	tgrid=element.children[0].children[0];
+	curObj=tgrid.rows(0).cells(0);
+	tgrid.attachEvent("onclick", tgrid_onclick);
+	tgrid.attachEvent("onkeydown", tgrid_onkeydown);
+	tgrid.attachEvent("onkeypress", tgrid_onkeypress);
+
+	onResize();
+}
+
+function Init(){
+	return fnInit();
+}
+
+function fnInit(sHTML) {
+//alert("start");
+	//if(element.isContentEditable)return
+	if(typeof sHTML == "undefined" && bInited == true) return ;
+
+			var d=new Date();
+			var t = d.getTime();
+
+//sHTML为表格内容的XML串
+if(mleft==null) mleft=0;
+if(mtop==null) mtop=0;
+if(mwidth==null) mwidth=550;
+if(mheight==null) mheight=400;
+//alert(moverflow)
+//将 fcwebgriddiv 固定为绝对定位的,因为它外边的滚动条是要求绝对定位的. 但 fcwebgriddiv里的html table固定为静态的.因为它不需要移动位置. 2010-12-09 my edit
+var sPosition = "position:absolute;"; // "";
+//if(mleft!=0 || mtop!=0) {
+//	sPosition="position:absolute;";
+//}else if (IsSpace(sHTML)) {  //非绝对模式时当窗口位置变化时应重新定位
+//	window.attachEvent("onresize",onResize) ;
+//}
+
+//alert(sPosition); 
+var s1="";
+s1 = s1 + '<div id=fcwebgriddiv align=left style="width:' + mwidth + ';height:' + mheight + ';left:' + mleft + ';top:' + mtop + ';'
+   +sPosition+'OVERFLOW: '+moverflow+'; " >';
+
+var sTab;
+if(arguments.length==1){
+	sTab=sHTML;
+}else{
+	sTab=element.innerHTML;
+}
+//CopyToPub(sTab)
+if(sTab.indexOf(" id=fcwebgriddiv ")>=0)return;
+var bmpPath = fcpubdata.path + fcpubdata.skinsPath + "/css/skins/" + fcpubdata.skins + "/images/";
+//调平表格线
+var sFlat = ""; //"BORDER-LEFT: gray 0px solid;BORDER-RIGHT: gray 0px solid;BORDER-TOP: gray 0px solid;BORDER-BOTTOM: gray 0px solid;";
+
+s1 = s1 + sTab;
+//下面的这个tc控件象是没有使用,只是占了一个位置
+s1 = s1 + '<TABLE border=2 borderColor=blue cellSpacing=0 id=tc style="DISPLAY: none; LEFT: 4px; POSITION: absolute; TOP: 50px"><TR><TD></TD></TR></TABLE>';
+s1 = s1 + '<INPUT id=txtMyGrid style="DISPLAY: none; LEFT: 50px; POSITION: absolute; TOP: 50px" tabIndex=1 >';
+s1 = s1 + '</div>';
+//if(element.isContentEditable==false){
+s1 = s1 + '<TABLE bgColor=black border=0 cellPadding=0 cellSpacing=0 id=line style="DISPLAY: none; HEIGHT: 28px; LEFT: -270px; POSITION: absolute; TOP: 50px; WIDTH: 1px"><TR><TD></TD></TR></TABLE>';
+s1 = s1 + '<TABLE bgColor=black border=0 cellPadding=0 cellSpacing=0 id=lineH style="DISPLAY: none; HEIGHT: 1px; LEFT: -270px; POSITION: absolute; TOP: 50px; WIDTH: 35px"><TR><TD></TD></TR></TABLE>';
+
+s1 = s1 + '<div id=divconer style="POSITION: absolute;"></div>';
+s1 = s1 + '<div id=fchtcDiv1 style="HEIGHT: 100px; LEFT: 0px; POSITION: absolute; TOP: 0px; WIDTH: 14px;overflow:hidden;" ></div>';
+s1 = s1 + '<div id=fcButton1 class=grid_scrollshang onmouseover="this.className=\'grid_scrollshang-over\'" onmouseout="this.className=\'grid_scrollshang\'" style="' + sFlat + ';HEIGHT: 15px; LEFT: 0px; POSITION: absolute; TOP: 0px; WIDTH: 14px;overflow:hidden" ></div>';
+s1 = s1 + '<div id=fcButton2 class=grid_scrolltop  onmouseover="this.className=\'grid_scrolltop-over\'" onmouseout="this.className=\'grid_scrolltop\'"  onclick="this.className=\'grid_scrolltop-click\'"  style="' + sFlat + ';HEIGHT: 14px; LEFT: 0px; POSITION: absolute; TOP: 0px; WIDTH: 14px;overflow:hidden" ></div>';
+s1 = s1 + '<div id=fcButton3 class=grid_scrollxia  onmouseover="this.className=\'grid_scrollxia-over\'" onmouseout="this.className=\'grid_scrollxia\'" style="' + sFlat + 'HEIGHT: 14px; LEFT:0px; POSITION: absolute; TOP: 0px; WIDTH: 14px;overflow:hidden" ></div>';
+s1 = s1 + '<div id=fchtcDiv2 style="WIDTH: 100px; TOP: 0px; POSITION: absolute; LEFT: 0px; HEIGHT: 14px;overflow:hidden;"></div>';
+s1 = s1 + '<div  id=fcButton4 class=grid_scrollleft onmouseover="this.className=\'grid_scrollleft-over\'" onmouseout="this.className=\'grid_scrollleft\'" style="' + sFlat + 'HEIGHT: 14px; LEFT:0px; POSITION: absolute; TOP: 0px; WIDTH: 14px;overflow:hidden" ></div>';
+
+s1 = s1 + '<div id=fcButton5 class=grid_scrolldown  onmouseover="this.className=\'grid_scrolldown-over\'" onmouseout="this.className=\'grid_scrolldown\'" onclick="this.className=\'grid_scrolldown-click\'" style="' + sFlat + ';  HEIGHT: 14px; TOP: 0px; POSITION: absolute; LEFT: 0px; WIDTH: 17px;overflow:hidden"></div>';
+s1 = s1 + '<div id=fcButton6 class=grid_scrollright onmouseover="this.className=\'grid_scrollright-over\'" onmouseout="this.className=\'grid_scrollright\'" style="' + sFlat + 'HEIGHT: 14px; TOP: 0px; POSITION: absolute; LEFT: 0px; WIDTH: 14px;overflow:hidden" ></div>';
+
+s1 = s1 + '<fc:fc_code id="czFc"  onchange="window.event.srcElement.parentNode.curTD.innerText=window.event.afterchangevalue;window.event.position=88;window.event.srcElement.parentNode.Act_onDataChange(\'强行发生数据改变事件\')" ></fc:fc_code>';
+
+
+
+//}
+element.innerHTML = s1;
+//CopyToPub(s1);
+
+div1=element.children[0];
+tgrid=element.children[0].children[0];
+txtMyGrid=element.children[0].children[2];
+//对表格作预处理
+//加上列元素
+//if(element.isContentEditable==false){
+
+  var tmp1=sTab.toUpperCase().indexOf("COLGROUP");
+  if(tmp1<=0){
+	var cols=0;	//总列数
+	for(var i=0;i<tgrid.rows(0).cells.length;i++){
+		cols+=tgrid.rows(0).cells(i).colSpan;
+	}
+	var sColgroup="<colgroup>"	;//列信息串
+	for(var i=0;i<cols;i++){
+		sColgroup+="<col>";
+	}
+	sColgroup+="</colgroup>";
+	var sTabNew="";
+	var iPos=sTab.indexOf(">");
+	if(iPos>0){
+		sTabNew+=sTab.substring(0,iPos+1)+sColgroup+sTab.substring(iPos+1,sTab.length);
+	}
+	tgrid.outerHTML=sTabNew;
+	tgrid=element.children[0].children[0];
+    if(tgrid.style.display=="none")	tgrid.style.display="block";
+
+	tgrid.style.tableLayout="auto";
+
+	for(var i=0;i<cols;i++){
+		//try{
+			tgrid.childNodes(0).childNodes(i).style.width=tgrid.childNodes(0).childNodes(i).offsetWidth+1;
+		//}catch(e){}
+	}
+  }
+
+//给每行加上行高
+  if(tgrid.style.display=="none")	tgrid.style.display="block";
+//加上trueTotrue以防colshow.htm error
+  if(IsTrue(mSetRowHeight)){
+	for(var i=0;i<tgrid.rows.length;i++){
+		tgrid.rows(i).style.height=tgrid.rows(i).offsetHeight;
+	}
+  }
+
+/*
+	var tabAllHeight=0	//记录表格的总高度
+	for(var i=0;i<tgrid.rows.length;i++){
+		tabAllHeight+=tgrid.rows(i).offsetHeight
+		tgrid.rows(i).style.height=tgrid.rows(i).offsetHeight
+	}
+*/
+//自动表格高度和宽度
+	if(mautosize){
+		div1.style.height=tgrid.offsetHeight;
+		div1.style.width=tgrid.offsetWidth;
+	}
+	else {
+	//恢复到缺省值
+	 // 	div1.style.height=400
+	//	div1.style.width=550
+	}
+  //因报表未预设此属性
+  tgrid.style.tableLayout="fixed";
+  
+  tgrid.cellPadding=4;
+//}  ;
+//--------------
+
+line=element.children[1];
+lineH=element.children[2];
+divconer=element.children[3];
+fchtcDiv1=element.children[4];
+fcButton1=element.children[5];
+fcButton2=element.children[6];
+fcButton3=element.children[7];
+fchtcDiv2=element.children[8];
+fcButton4=element.children[9];
+fcButton5=element.children[10];
+fcButton6=element.children[11];
+//txtMyGrid=element.children[12]
+czFc=element.children[12];
+czFc.ParentPos=ParentPos ; 
+//if(element.isContentEditable==false){
+
+	divconer.attachEvent("ondblclick", scrollbar_ondblclick);
+	fchtcDiv1.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton1.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton2.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton3.attachEvent("ondblclick", scrollbar_ondblclick);
+	fchtcDiv2.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton4.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton5.attachEvent("ondblclick", scrollbar_ondblclick);
+	fcButton6.attachEvent("ondblclick", scrollbar_ondblclick);
+	line.attachEvent("onmousemove", line_onmousemove);
+	lineH.attachEvent("onmousemove", lineH_onmousemove);
+
+	fchtcDiv1.attachEvent("onclick", fchtcDiv1_onclick);
+	fchtcDiv2.attachEvent("onclick", fchtcDiv2_onclick);
+	fcButton1.attachEvent("onclick", fcButton1_onclick);
+	fcButton3.attachEvent("onclick", fcButton3_onclick);
+	fcButton4.attachEvent("onclick", fcButton4_onclick);
+	fcButton6.attachEvent("onclick", fcButton6_onclick);
+	fcButton2.attachEvent("onmousedown", fcButton2_onmousedown);
+	fcButton2.attachEvent("onmousemove", fcButton2_onmousemove);
+	fcButton2.attachEvent("onmouseup", fcButton2_onmouseup);
+	fcButton5.attachEvent("onmousedown", fcButton5_onmousedown);
+	fcButton5.attachEvent("onmousemove", fcButton5_onmousemove);
+	fcButton5.attachEvent("onmouseup", fcButton5_onmouseup);
+	
+	div1.attachEvent("onmousedown", div1_onmousedown);
+	div1.attachEvent("onmousemove", div1_onmousemove);
+	div1.attachEvent("onmouseup", div1_onmouseup);
+
+	div1.attachEvent("oncontextmenu", closeright);
+
+	tgrid.attachEvent("onclick", tgrid_onclick);
+	
+	div1.attachEvent("onmousewheel", div1_onmousewheel);
+
+
+
+	//txtMyGrid.attachEvent("onblur", txtMyGrid_onblur)
+	//txtMyGrid.attachEvent("onkeyup", txtMyGrid_onkeyup);
+	txtMyGrid.attachEvent("onkeydown", txtMyGrid_onkeydown);
+	txtMyGrid.attachEvent("onkeypress", txtMyGrid_onkeypress);
+	txtMyGrid.attachEvent("onfocusout", txtMyGrid_onfocusout);
+
+//	element.document.attachEvent("onkeydown", onkeydown)
+	tgrid.attachEvent("onkeydown", tgrid_onkeydown);
+	tgrid.attachEvent("onkeypress", tgrid_onkeypress);
+	var icont=1;
+		icont=13;
+
+		for(var i=0;i<icont;i++){
+			element.children[i].attachEvent("onfocusout", tgrid_onfocusout);
+			element.children[i].attachEvent("onfocusin", tgrid_onfocusin);
+		}
+
+	
+	curObj=tgrid.rows(0).cells(0);
+
+	tgrid.id="t";
+	//alert(mcoledit)
+	//fnPutcoledit(mcoledit,1)
+	
+	fnPutvisible(mvisible);
+	fnPutScrollBar(mScrollBar);
+	//onResize()
+			var d=new Date();
+			var t1 = d.getTime();
+			//alert("时间:"+(t1-t))	
+//} //if end
+			if (typeof sHTML == "undefined" && bInited == false) bInited = true;
+			
+}
+/**
+*表格滚轮事件
+*date 2005-02-15
+**/
+function div1_onmousewheel() {
+    if(txtMyGrid.style.display != "none") txtMyGrid_onfocusout();
+	if(IsTrue(mautosize) ) return;
+	//alert(event.wheelDelta)
+	if (event.wheelDelta >= 120)
+		fcButton1_onclick();
+	else if (event.wheelDelta <= -120)
+		fcButton3_onclick();
+
+}
+/**
+*另存到Excel文件到客户端
+*@param sFile 客户端的路径和文件名,如c:\1.csv
+*@date 2003-11-19
+**/
+//function SaveExcel(sFile,sHtml){
+//	try{
+//		var fso = new ActiveXObject("Scripting.FileSystemObject");
+//	}catch(e){
+//		alert("因当前IE禁止运行ActiveX控件,请调低IE的安全属性后再运行此功能!");
+//		return;
+//	}
+//	var char1=unescape("%5C"); //特殊字符\
+//	var sFile1=repStr(sFile,char1,char1+char1);
+//	try{
+//		var a = fso.CreateTextFile(sFile1, false);
+//	}catch(e){
+//		alert("文件"+sFile+"已存在.");
+//		return;
+//	}
+//	var s1="" ;
+//	if(typeof sHtml == "undefined" ){
+//		s1=t.outerHTML;
+//	}else {
+//		s1=sHtml;
+//	}
+//	a.WriteLine(s1);
+//	a.Close();
+//	alert("文件成功保存到: "+sFile);
+
+//}
+
+//对这一列的TD打勾
+function SetCheckBoxCol(curcol,isReadOnly) {
+    var ogrid_id = eval(uniqueID + ".id");
+    var ogrid = $id(ogrid_id);
+    var l = ogrid.tab.rows.length;
+    var istart = ogrid.FixRows;
+    for (var i = istart; i < l; i++) {
+        var oTd = ogrid.tab.rows(i).cells(curcol);
+        oTd.style.backgroundRepeat = "no-repeat";
+        if (IsTrue(oTd.innerText)) {
+            if (isReadOnly)
+                oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checkdisabled.gif)";
+            else
+                oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checked.gif)";
+        } else {
+            if (isReadOnly)
+                oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheckdisabled.gif)";
+            else
+                oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)";
+
+        }
+        oTd.style.backgroundPosition = "center center";
+        oTd.innerText = "";
+    }
+    if (isReadOnly)
+        ogrid.SetCol(curcol, "<checkbox_readonly></checkbox_readonly>");
+    else
+        ogrid.SetCol(curcol, "<checkbox></checkbox>");
+}
+/**
+* @func:拖动横向滚动条时把TD列也进行隐藏，因为只隐藏Col列时有中文会把列宽改变
+* @Date：2011-12-05 10:06  liuxr
+**/
+function SetTDAtt(lngCol, val) {
+    for (var i = lngFixRows; i < tgrid.rows.length; i++) {
+        tgrid.rows[i].cells[lngCol].style.visibility = val;
+        tgrid.rows[i].cells[lngCol].style.width = tgrid.childNodes.item(0).childNodes.item(lngCol).style.width;
+        if (val == "hidden") {
+            tgrid.rows[i].cells[lngCol].style.whiteSpace = "nowrap";
+            tgrid.rows[i].cells[lngCol].style.wordBreak = "keep-all";
+        }
+        else {
+            tgrid.rows[i].cells[lngCol].style.whiteSpace = "normal";
+            tgrid.rows[i].cells[lngCol].style.wordBreak = "normal";
+        }
+    }
+}
+
+
+</SCRIPT>

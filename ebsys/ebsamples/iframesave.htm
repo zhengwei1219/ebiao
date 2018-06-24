@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>在iframe中成批地保存报表运行结果</title>
+<script>
+	var arr = new Array();
+	//需要保存结果的报表文件列表,可以在URL带上报表参数值.
+	arr[0] = "../fceform/ereport/ebrun.htm?name=samples/s_simplelist&e_runsavefile=testsave";
+	arr[1] = "../fceform/ereport/ebrun.htm?name=samples/s_排名&e_runsavefile=testsave1";
+	arr[2] = "../fceform/ereport/ebrun.htm?name=samples/s_simplelist&e_runsavefile=s_simplelist";
+	var curNo = 0 ; //表示当前正在保存的报表文件号
+	function uf_start() {
+		document.all.iframe1.src=arr[curNo];
+
+	}
+	/* 运行报表结束后事件
+	* HandleAfterInitReport 函数名是固定名称,是在运行报表结束后就会调用此函数.
+	* oRet 用来返回一些报表运算结果数据给事件中供后续处理	
+	* 现有:  oRet.pages 可用来取得这个报表运算后的总页数	
+	*/
+	function HandleAfterInitReport(oRet){
+		//运行下一个报表文件.
+		//alert(oRet.pages); //一般来说,这个总页数要用程序保存起来,以便下次装入报表结果页面时要用.
+		curNo++;  
+		if(curNo < arr.length){
+			document.all.iframe1.src=arr[curNo];
+		}else{
+			window.frames("iframe1").toolbar.execScript("Print(4);");
+			//alert("运算完成!");
+		}
+	
+	}
+	
+</script>
+</head>
+<body>
+在iframe中成批地保存报表运行结果 <button onclick="uf_start()">开始</button> <br>
+<iframe id=iframe1 src="" width=0 height=0 ></iframe>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>layout控件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>layout控件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">layout控件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">layout控件用于把外部做好了表单样式的HTML页面(此页面一般是美工做的)直接装入到表单设计器的一个DIV元素中,不要在表单设计器中再修改layout控件中的内容,因为它来自外部的HTML页面.要修改可以直接修改外部的HTML页面.外部的HTML页面是放在 fceformext/html/目录下的.每次修改了外部的HTML页面后,点layout控件属性窗口中的 装入 按钮,便可以刷新layout控件中的内容. <br>
+外部的HTML页面的内容有如下特别规定: 需要输入的控件需要加上name属性,子表内容必须放在一个html table元素中,且这个table元素必须给一个本表单中唯一的id属性.子表中的输入控件必须直接放在TD元素中,中间不能加任何时候元素.<br>
+layout控件还需要设置控件的对应关系,即在外部的HTML页面中的有name属性的输入控件和eform表单设计器中画的控件之间的对应关系.在运行表单时,会将外部的HTML页面中的有name属性的输入控件隐藏(让 obj.style.visibility = "hidden" 方式隐藏,这个隐藏的控件的id="eb_cell_"加上它所对应的eform表单设计器中画的控件的id),然后将eform表单设计器中画的控件移到对应的隐藏了的控件的位置上.控件大小和原来的相同.<br>
+如果有子表,则需要设置子数据集每条记录所占行数属性.子表中的输入控件是采用动态显示的方式,即点到表格的TD中时才会显示相应的输入控件. 计算过程是由数据集是子表数据集,找到它所绑定的eform控件,由eform控件找到外部HTML页面中的控件,再找到TD及TABLE元素,以最小行号的TD当作子表的起始行. <br>
+
+ </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

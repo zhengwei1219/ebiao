@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>e表控件---列表加卡片表</title>
+ <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+   
+    <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";
+	        margin-left: 1cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+   
+    </head>
+
+<body leftmargin="0" topmargin="0">
+    <table  class="tableTitle">
+        <tr><td class="title">  e表控件---列表加卡片表</td></tr>
+        <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+        </tr>
+    </table>
+   <div  class=mainDiv>
+   <div class="divTitle">1.列表表单用于打开显示e表控件的表单</div>
+      
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       单击<a class="shili" 
+           href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=eb_cardinput">列表表单</a>进入列表表单设计界面，列表表单用来选择一条记录在打开表单的e表控件中显示，它需要设置数据集，表格控件。数据集中要设置显示数据的sql语句，sql语句如下：
+       <p class="MsoNormal">
+           <span lang="EN-US">select 
+           FCS_EMPLOYEE.semployeeid,FCS_EMPLOYEE.semployeecode,FCS_EMPLOYEE.semployeename,&#39;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">显示</span><span lang="EN-US">&#39; as show from 
+           FCS_EMPLOYEE</span></p>
+       添加了一个字段show（显示），用于查看报表内容，在数据集show字段的地址输入框中输入javascript:uf_href();void(0)，uf_href()函数定义如下：<br />
+       <p class="MsoNormal">
+           <span lang="EN-US">function uf_href(){</span></p>
+       <p class="MsoNormal">
+           <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           </span>
+           window.open(&#39;../../fceform/ereport/ebrun.htm?file=/ebfile/eformprint/eb_cardinput.htm&amp;urlpara=yes&amp;fcKeyValue=&#39;+dataset1.Field(&#39;semployeeid&#39;).Value);
+           </span>
+       </p>
+       <p class="MsoNormal">
+           <span lang="EN-US">}</span></p>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="divTitle">2. 给双击列表表单表格控件中的列时，弹出的表单添加e表控件</div>
+    
+    <div class="divTitle">2.1 在表单中添加e表控件并给e表控件装入报表文件</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单击 
+       <a class="shili" 
+           href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=eb_cardinput1">
+       卡片表单</a>进入卡片表单设计界面，在表单设计器中单击e表图标，在设计界面上弹出e表控件。双击e表控件弹出e表网页对话框，如果有现成的报表文件，就不用再设计报表文件，直接在e表网页对话框的页面中，单击打开文件图标，弹出报表文件选择页面，选中报表文件名单击【确定】按钮<br /><img  src ="images/help_13_1.gif"/><br />即可装入报表文件，单击e表网页对话框中的【确定】按钮，<br /><img  src ="images/help_13_1_2.gif"/><br />把报表文件保存到e表控件中。<br /><img  src ="images/help_13_3_6.gif"/>
+      
+       <div class="divTitle">2.2&nbsp; 给e表控件中添加控件</div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;<span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:
+12.0pt;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;mso-fareast-font-family:宋体;
+mso-font-kerning:1.0pt;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
+mso-bidi-language:AR-SA">单击e表控件，e表控件为选中状态，单击表单设计器的工具栏中的text控件图标，text控件被放入e表控件中，然后可以拖动text控件，拖入</span>=ds1.职员编号的位置，安照此方法添加其它控件。<br /><img  src ="images/help_13_4.gif"/><br />
+       表单中要添加数据集控件设置数据集字段，提交方式，保存表名，保存主键类型，e表控件中放入的控件要和数据集绑定，在表单属性页中设置自定义工具栏。<br /> <div class="divTitle">2.3&nbsp; 运行表单</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行列表表单，在列表中双击米丹丹，打开卡片表单,显示与米丹丹有关的信息，界面图如下<img  src ="images/help_13_3_6.gif"/>
+    </div>
+</html>
+       .

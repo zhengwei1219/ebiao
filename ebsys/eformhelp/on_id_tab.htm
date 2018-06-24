@@ -1,0 +1,25 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>tab页签控件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>tab页签控件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">tab页签控件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">tab页签控件是用多个DIV元素拼接而成的,在表单设计器中操作此控件要注意有两种选中状态,一种是选中了整个控件,在此时是和选中其它控件一样的功能,可以移动,调整控件大小,删除等功能.另一种是选中tab页签控件中除标题行外的下部,此时,再点表单设计器上工具栏的按钮,比如label,表示加一个label控件,就会将label控件加到tab页签控件的当前子页中.<br>
+tab页签控件的点击每个子页签事件是通过在表单设计器的自定义函数中定义一个function PubClickPageControl(index) 函数,在点击子页签时,会自动执行PubClickPageControl函数,并将当前点击的子页签顺序号赋给参数index,第一个子页签时index=0,第二个子页签时index=1,一般是在function PubClickPageControl(index)里用 if(index==0) ... 来分别写事件处理代码.
+ </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

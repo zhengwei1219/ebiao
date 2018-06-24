@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var type = parent.Request.QueryString('type').toString();
+function uf_open() {
+	 new Eform.SysForm().setButtonImage();
+	//new Eform.SysForm().setButtonImage();
+	document.getElementById("div1").innerHTML+='<table border=1 style="BORDER-LEFT:1PX; BORDER-RIGHT:1PX; BORDER-TOP:1PX; BORDER-BOTTOM:1PX;table-layout:fixed;  POSITION: absolute;  BORDER-COLLAPSE: collapse; LEFT: 51px; TOP: 160px;" bgcolor =#ffffff borderColor="#D6D3BD" ><tr><td valign=center align=middle  width="262" height="52" ><span id=displayfont style="FONT-SIZE: 12px; OVERFLOW: hidden; "><div nowrap=false>字体颜色</div></span></td></tr></table>';	
+	if(type != "2"){
+		labWidth.style.display = "none";
+		width.style.display = "none";
+		labWidthPx.style.display ="none";
+		labHeight.style.display = "none";
+		height.style.display = "none";
+		labHeightPx.style.display = "none";
+		labWH.style.display = "none";
+		shape1.style.display = "none";
+	}
+	
+	if(type == 1){  //布局模板table的样式
+		if(IsSpace(fcpubdata.obj[0]) == false){
+			SetTextValue(fcpubdata.obj[0], $id("className"));
+		}
+		if(IsSpace(fcpubdata.obj[1]) == false){
+			SetTextValue(fcpubdata.obj[1], $id("textareaStyle"));
+		}
+	}else if(type == 2){ //字段显示控件的样式
+		SetTextValue(fcpubdata.obj.width, $id("width"));
+		SetTextValue(fcpubdata.obj.height, $id("height"));
+		SetTextValue(fcpubdata.obj.classCont, $id("className"));
+		if(IsSpace(fcpubdata.obj.styleCont) == false){
+			SetTextValue(fcpubdata.obj.styleCont, $id("textareaStyle"));
+		}
+
+	}else{//字段所在的td的样式
+		SetTextValue(fcpubdata.obj.classTd, $id("className"));
+		if(IsSpace(fcpubdata.obj.styleTd) == false){
+			SetTextValue(fcpubdata.obj.styleTd, $id("textareaStyle"));
+		}
+	}
+}
+
+function uf_ok() {
+	var arr = new Array();
+	var retStyle = $id('textareaStyle').value;
+	//if(IsSpace($id('textareaStyle').value) == true) 
+		//retStyle = displayfont.style.cssText;
+	if(type == "1"){
+		arr[0] = $id("className").value;
+		arr[1] = retStyle;
+		window.returnValue = arr;
+	}else if(type == "2"){ 
+		fcpubdata.obj.width = $id("width").value;
+		fcpubdata.obj.height = $id("height").value;
+		fcpubdata.obj.classCont = $id("className").value;
+		fcpubdata.obj.styleCont = retStyle;
+
+	}else{
+		fcpubdata.obj.classTd = $id("className").value;
+		fcpubdata.obj.styleTd = retStyle;
+	}
+
+	window.close();
+}
+
+function uf_style(){	
+	textareaStyle.value = $id('displayfont').style.cssText;
+}
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/shape.css'  />
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml BLONopenBefore BLONclose center="居中" BLONopen="uf_open()" dj_sn="zk_style_prop" type="ZK" caption="样式属性窗口" window="有模式窗口" posleft postop poswidth="380" posheight="290" isfile="是" billtaborder="<root><taborder>className</taborder><taborder>textareaStyle</taborder><taborder>width</taborder><taborder>height</taborder><taborder>cmdNotBg</taborder><taborder>cmdBgcolor</taborder><taborder>cmdFont</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:3;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:0;div:1;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" contxml="<root><label><id>label2</id><id>label0</id><id>labWidth</id><id>labHeight</id><id>labWidthPx</id><id>labHeightPx</id><id>label3</id><id>labWH</id></label><textarea><id>textareaStyle</id></textarea><shape><id>shape0</id><id>shape1</id></shape><div><id>div1</id></div><button><id>cmdNotBg</id><id>cmdBgcolor</id><id>cmdFont</id><id>cmdOk</id><id>cmdClose</id></button><text><id>className</id><id>width</id><id>height</id></text></root>" userType alertType="1" isCheckPermit="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" allBrowser="否">&nbsp; 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 356px; HEIGHT: 212px; BORDER-TOP: 0px; TOP: 4px; BORDER-RIGHT: 0px; LEFT: 5px" id=div1 class=control-border-color onmovestart=moveStart() controltype="div"><LABEL style="POSITION: absolute; WIDTH: 85px; HEIGHT: 19px; TOP: 9px; LEFT: 12px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">样式class：</LABEL><INPUT style="POSITION: absolute; WIDTH: 262px; HEIGHT: 20px; TOP: 6px; LEFT: 80px" id=className onmovestart=moveStart() size=43 controltype="text"><TEXTAREA style="POSITION: absolute; WIDTH: 262px; HEIGHT: 85px; TOP: 32px; LEFT: 80px" id=textareaStyle onmovestart=moveStart() cols=52 controltype="textarea" induce="否" value="textarea1"></TEXTAREA><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 20px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 175px; BORDER-RIGHT: 0px; LEFT: 26px" id=cmdNotBg class=ef_run_button_notbg controltype="button" dropstyle="否" onclick='bill_onclick("PropWinClearBg();uf_style()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 24px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 160px; LEFT: 317px" id=cmdBgcolor class=ef_run_button_color title=设置背景色 controltype="button" dropstyle="否" onclick='bill_onclick("SelColor();uf_style()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 24px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 186px; LEFT: 317px" id=cmdFont class=ef_run_button_font title=删除背景色 controltype="button" dropstyle="否" onclick="bill_onclick(&quot;DjOpen('../../fceform/common/djframe.htm?djsn=fontlist&amp;djtype=ST',displayfont,'展现','有模式窗口','直接','字体属性');uf_style()&quot;)"></BUTTON> <LABEL style="POSITION: absolute; WIDTH: 85px; HEIGHT: 19px; TOP: 30px; LEFT: 12px" id=label0 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">样式style：</LABEL><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 57px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 128px; LEFT: 118px" id=width onchange="bill_onclick(&quot;$valid('整数');&quot;)" size=23 controltype="text" CanSelect="false"><SPAN style="POSITION: absolute; WIDTH: 56px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 14px; FONT-SIZE: 12px; TOP: 133px; LEFT: 79px" id=labWidth controltype="label" inputTag="否" value="Label7">宽度：</SPAN><SPAN style="POSITION: absolute; WIDTH: 38px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 16px; FONT-SIZE: 12px; TOP: 134px; LEFT: 229px" id=labHeight controltype="label" inputTag="否" value="Label8">高度：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 47px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 128px; LEFT: 268px" id=height onchange="bill_onclick(&quot;$valid('整数');&quot;)" controltype="text" CanSelect="false"><LABEL style="POSITION: absolute; WIDTH: 20px; HEIGHT: 15px; TOP: 131px; LEFT: 181px" id=labWidthPx onmovestart=moveStart() controltype="label" inputTag="否">px</LABEL><LABEL style="POSITION: absolute; WIDTH: 25px; HEIGHT: 15px; TOP: 132px; LEFT: 319px" id=labHeightPx onmovestart=moveStart() controltype="label" inputTag="否">px</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 148px; LEFT: 14px" id=label3 class=label_title onmovestart=moveStart() noWrap controltype="label" inputTag="否" NotBg="否" value="Label22">颜色</DIV><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 303px; DISPLAY: block; HEIGHT: 16px; TOP: 153px; LEFT: 44px" id=shape0 onresize="" controltype="shape" id1="3" from = "0,0" to = "214.5pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 224px; LEFT: 194px" id=cmdOk controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 224px; LEFT: 280px" id=cmdClose controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 121px; LEFT: 18px" id=labWH class=label_title onmovestart=moveStart() noWrap controltype="label" inputTag="否" NotBg="否" value="Label22">高宽</DIV><v:line style="POSITION: absolute; WIDTH: 303px; DISPLAY: block; HEIGHT: 16px; TOP: 127px; LEFT: 49px" id=shape1 onresize="" controltype="shape" id1="3" from = "0,0" to = "214.5pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV><script language="JavaScript"></script><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT>&#13;&#10;
+</body></html>

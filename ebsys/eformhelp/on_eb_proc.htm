@@ -1,0 +1,26 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>e表中运行存储过程来产生数据集</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width="99.8%" bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  e表<br> 
+<b><font style='font-size:13px;'>&nbsp;e表中运行存储过程来产生数据集</font></b></td>
+</tr>
+</table>
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;<b><FONT style="font-size:12px;">e表中运行存储过程来产生数据集</FONT></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">首先应将数据集的类型选为:存储过程,而不是默认的SQL语句,这表示由存储过程的运行结果来产生数据集。</FONT><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for Java版来说: 在下面的大的编辑框中的写法格式为：{call procName(?,?)} ,这表示有两个参数，
+然后必须在参数页签中按顺序加上两个参数。如果有输出参数，则应在参数定义时固定写上 @@result 。</FONT><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for .NET版，用oledb方式来连接数据库来说: 在下面的大的编辑框中的写法格式为：{call procName(?,?)} ,这表示有两个参数，
+然后必须在参数页签中按顺序加上两个参数。如果有输出参数，则应在参数定义时固定写上 @@result 。注意此时如连oracle库的话，因为无法产生cursor类型的输出参数，所以不能用。</FONT><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for .NET版，用sqlclient方式来连接sql server数据库来说: 在下面的大的编辑框中的写法格式为：procName ,
+在参数页签中应将此存储过程（如：procName）中的定义的参数一一写上，注意此时应写上参数名称，且参数名称必须和存储过程中定义的参数名称一样。如果有输出参数，
+则应在参数定义时固定写上 @@result 。</FONT><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for .NET版，用oracleclient方式来连接oracle数据库来说: 在下面的大的编辑框中的写法格式为：procName ,
+在参数页签中应将此存储过程（如：procName）中的定义的参数一一写上，注意此时应写上参数名称，且参数名称必须和存储过程中定义的参数名称一样。如果有输出参数，
+则应在参数定义时固定写上 @@result 。</FONT><br>
+
+<br>
+</body>
+</html>
+

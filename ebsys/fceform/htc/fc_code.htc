@@ -1,0 +1,1875 @@
+/**
+* 最后修改日期:2005-08-31
+**/
+<ATTACH EVENT="ondocumentready" HANDLER="fnInit" />
+<PUBLIC:PROPERTY NAME="ConnectString" /> //调用外部数据源时的连接串
+<PUBLIC:PROPERTY NAME="isAutoDropWin" /> //="是"时按键时自动弹出下拉窗口
+<PUBLIC:PROPERTY ID="leftID" NAME="left" PUT="fnPutleft" GET="fnGetleft"  />  //控件的Left属性
+<PUBLIC:PROPERTY ID="topID" NAME="top" PUT="fnPuttop" GET="fnGettop"  />      //控件的top属性
+<PUBLIC:PROPERTY ID="heightID" NAME="height" PUT="fnPutheight" GET="fnGetheight"  />  //控件的高度属性
+<PUBLIC:PROPERTY ID="widthID" NAME="width" PUT="fnPutwidth" GET="fnGetwidth"  />      //控件的宽度属性
+//加密后的SQL语句
+<PUBLIC:PROPERTY NAME="sqltrans"  />
+<PUBLIC:PROPERTY NAME="datasourceName"  /> //数据源名称
+//
+<PUBLIC:PROPERTY NAME="isShowTree"  /> //是否显示树,=1/0 =1表示显示树
+<PUBLIC:PROPERTY NAME="isTreeNewSql"  /> //是否是新格式的SQL, =1/0
+
+//控件参照的Sql语句
+<PUBLIC:PROPERTY ID="sql1ID" NAME="sql1" PUT="fnPutsql1" GET="fnGetsql1"  />
+<PUBLIC:PROPERTY ID="sqlID" NAME="sql" PUT="fnPutsql" GET="fnGetsql"  />
+<PUBLIC:PROPERTY ID="pagesizeID" NAME="pagesize" PUT="fnPutpagesize" GET="fnGetpagesize"  />    //一页的行数
+<PUBLIC:PROPERTY ID="formatID" NAME="format" PUT="fnPutformat" GET="fnGetformat"  />            //标题属性
+<PUBLIC:PROPERTY ID="multiselectID" NAME="multiselect" PUT="fnPutmultiselect" GET="fnGetmultiselect"  /> //多选属性
+<PUBLIC:PROPERTY ID="returnxmlID" NAME="returnxml" GET="fnGetreturnxml"  />//返回XML
+<PUBLIC:PROPERTY ID="valueID" NAME="value" PUT="fnPutvalue" GET="fnGetvalue"  />    //返回文本框的Value值
+<PUBLIC:PROPERTY ID="textID" NAME="text" PUT="fnPuttext" GET="fnGettext"  />         //返回文本框的显示值
+<PUBLIC:PROPERTY ID="positionID" NAME="position" PUT="fnPutposition" GET="fnGetposition"  />  // 控件的坐标属性position
+<PUBLIC:PROPERTY ID="alignID" NAME="align" PUT="fnPutalign" GET="fnGetalign"></PUBLIC:PROPERTY> //对齐方式
+
+<PUBLIC:PROPERTY Name="FieldNameList"/> // 字段名列表,以,分隔,用于常数数据源时设置字段名列表
+<PUBLIC:PROPERTY Name="ParentPos"/> //没有 用到
+//是否可见
+<PUBLIC:PROPERTY ID="visibleID" NAME="visible" PUT="fnPutvisible" GET="fnGetvisible"  />  
+<PUBLIC:PROPERTY ID="disabledID" NAME="enabled" PUT="fnPutdisabled" GET="fnGetdisabled"  /> //是否活动
+<PUBLIC:PROPERTY NAME="disabled" PUT="fnPutdisabled" GET="fnGetdisabled"  /> //是否活动
+
+
+<PUBLIC:PROPERTY ID="addrowID" NAME="addrow" PUT="fnPutaddrow" GET="fnGetaddrow"  />        //点击新增行,打开一张表单,给文本框赋值
+<PUBLIC:PROPERTY ID="blninputID" NAME="blninput" PUT="fnPutblninput" GET="fnGetblninput"  />//能否直接输入
+//要加一控制点界面上别处是否隐藏的属性
+//在电子表格中使用
+<PUBLIC:PROPERTY ID="blncellID" NAME="blncell" PUT="fnPutblncell"   />
+//是否有空行属性
+<PUBLIC:PROPERTY ID="blnemptyID" NAME="blnempty" PUT="fnPutblnempty"  GET="fnGetblnempty" />
+//单纯的XML数据作数据源
+<PUBLIC:PROPERTY ID="xmlID" NAME="xml" PUT="fnPutxml"  GET="fnGetxml" />
+//设置value属性为哪一列
+<PUBLIC:PROPERTY ID="keycolID" NAME="keycol" PUT="fnPutkeycol"  GET="fnGetkeycol" />
+//返回参照的表格
+<PUBLIC:PROPERTY ID="tabID" NAME="tab" GET="fnGettab"  />
+<PUBLIC:PROPERTY ID="txtID" NAME="txt" GET="fnGettxt"  />
+//返回当前选择的表格行号
+<PUBLIC:PROPERTY ID="selectrowID" NAME="selectrow" GET="fnGetselectrow"  />
+
+//返回第一个非空的列表值,此属性应在各属性后方能取出
+<PUBLIC:PROPERTY ID="firstvalueID" NAME="firstvalue" GET="fnGetfirstvalue" /> // not do
+
+
+//----------
+//鼠标点击对象时事件
+<PUBLIC:ATTACH EVENT="onmousedown" FOR="document" ONEVENT="hidelist()" />
+//onkeydown控件的按键事件
+<PUBLIC:EVENT NAME="onkeydown" ID="onkeyCodeID">
+//add点击参照按钮,打开一张表单,给文本框赋值
+<PUBLIC:EVENT NAME="onclickopen" ID="onclickopenID">
+//点击新增行,打开一张表单
+<PUBLIC:EVENT NAME="onclickadd" ID="onclickaddID">
+//填写事件
+<PUBLIC:EVENT NAME="oninterchange" ID="oninterchangeID">
+//选择事件
+<PUBLIC:EVENT NAME="onselchange" ID="onselchangeID">
+//填写选择事件
+<PUBLIC:EVENT NAME="onchange" ID="onchangeID">
+//输入文本框的获得焦点和失去焦点事件
+<PUBLIC:EVENT NAME="onblur" ID="onblurID">
+//文本框焦点
+<PUBLIC:METHOD NAME="onfocus"/>
+//装入XML数据作参照内容
+<PUBLIC:METHOD NAME="LoadXmlData"/>
+<PUBLIC:METHOD NAME="NextPage"/>
+<PUBLIC:METHOD NAME="PrevPage"/>
+<PUBLIC:METHOD NAME="ShowDropWin"/>
+<PUBLIC:METHOD NAME="fnInitstyle"/>
+
+<SCRIPT LANGUAGE=javascript>
+    var fc_tree; //下拉树
+var sPubFieldCol = "" ; //全局变量,保存用逗号分隔的字段名列表
+
+//----------------------------- 
+var fc_txtName;  //文本框
+var fc_cmdCz;	//参照按钮
+var fc_divList ; //div控件
+var fc_divListPage;	//翻页功能,表格ID
+var upsidepage;  //翻页按钮,上一页
+var currentpage ;//翻页功能,文本框
+var nextpage;    //下一页
+//var newfc_txtName ; 
+//var newfc_cmdCz;
+//var erectLine;    //翻页功能,控件文本框和上下页控件在div中
+var fc_list ;     //下拉框ID
+var mposition = "absolute"; //控件坐标
+var malign = "left"; //对齐方式
+
+var mleft=0,mtop=0,mwidth=20,mheight=20 ;//控件位置
+var mwidthButton=17; //按钮宽度
+var mLoadXmlData="" ;	//保存装入的XML数据
+//装入XML数据作参照内容
+function LoadXmlData(sXml) {
+	//分析format
+	//每列右边的第一个字符如为!表示可返回多列，影响returnxml属性
+	var arrAlign=new Array();  //对齐
+	var arrColWidth=new Array();  //列宽
+	
+	//format属性不为空,查找数组中是否包含|
+	if(sFormat!=""){
+		//将一个字符串分割为子字符串
+		var arrFormat=sFormat.split("|");
+		for(var i=0;i<arrFormat.length;i++){
+			//每列的左边第一个字符为对齐方式：<>^
+			if(arrFormat[i].substring(0,1)==">")
+				arrAlign[i]=" align='right' ";  //右对齐
+			else if(arrFormat[i].substring(0,1)=="^")
+				arrAlign[i]=" align='center' ";  //居中对齐
+			else
+				arrAlign[i]=" align='left' ";    //左对齐
+			//中间字符数的多少决定此列的列宽。
+			var charNum=arrFormat[i].length ; // 一列的长度
+			if(arrFormat[i].substring(0,1)=="^" || arrFormat[i].substring(0,1)==">" || arrFormat[i].substring(0,1)=="<")
+				charNum--;
+			if(arrFormat[i].substring(arrFormat[i].length-1,arrFormat[i].length)=="!")	
+				charNum--;
+			if(arrFormat[i].substring(arrFormat[i].length-1,arrFormat[i].length)=="")	
+				oXml.documentElement.childNodes(1).childNodes;
+				
+			arrColWidth[i]=" style='width:"+(charNum*10)+"' ";
+		}
+	}
+	//调用Microsoft的控件
+	var oXml=new ActiveXObject("Microsoft.XMLDOM");
+	//
+	oXml.async=false;
+	//装入sXml
+	oXml.loadXML (sXml);
+	var tabHtml=oXml.documentElement.xml;
+	//总记录行数
+	var cols=oXml.documentElement.childNodes(1).childNodes.length ; 
+	//loadtab为参照内容表格的前面数据。
+	var loadtab="<table id=fc_list cellPadding=0 cellSpacing=0  style='BORDER-COLLAPSE: collapse;TABLE-LAYOUT: fixed' frame='box'><colgroup>";
+	for(var i=0;i<cols;i++){
+		loadtab+="<col ";
+		if(sFormat!=""){
+			loadtab+=arrAlign[i]+arrColWidth[i];
+		}
+		loadtab+=">";
+	}
+	loadtab+="</colgroup>";
+	//装入XML数据
+	mLoadXmlData=loadtab+tabHtml+"</table><BR>";
+	fnInit(mLoadXmlData);
+	//使表格的底纹成斑马纹
+	for (var i=1;i<fc_list.rows.length;i=i+2){
+		fc_list.rows(i).style.backgroundColor="#dddddd";
+	}
+	//显示参照表格并计算其位置
+	var tmpWid = fc_list.offsetWidth > mwidth ? fc_list.offsetWidth:mwidth; 
+	//下拉框的宽度
+	fc_divList.style.width=tmpWid;
+	//下拉框的左坐标
+	fc_divList.style.left =mleft;		//fc_txtName.offsetLeft
+	//下拉框的top坐标
+	fc_divList.style.top =mtop ; //+mheight;
+}
+//表格取值
+function fnGettab(){
+	return fc_list;
+}
+//获取表格中的值,赋给文本框
+function fnGettxt(){
+	return fc_txtName;
+}
+
+//当前选择的行号
+var mselectrow=0;
+function fnGetselectrow(){
+	return mselectrow;
+}
+
+/**
+*控件的对齐方式 
+**/
+function fnPutalign(vValue) {
+	malign = vValue;
+	alignID.fireChange();
+
+} 
+function fnGetalign() {
+	return malign;
+}
+
+//获取控件坐标属性值
+function fnPutposition(vValue) {
+	mposition = vValue ;
+	positionID.fireChange() ;
+}
+//设置控件的坐标属性
+function fnGetposition() {
+	return mposition ;
+}
+
+//文本框的焦点
+function onfocus() {
+	fc_txtName.focus();
+}
+//获取控件left属性值
+function fnGetleft()
+{
+	return mleft;
+}
+//设置控件left属性值
+function fnPutleft(vValue)
+{
+	mleft=vValue;
+	leftID.fireChange();
+	fnInitstyle();　　//初实化函数
+}
+//获取控件top属性值
+function fnGettop()
+{
+	return mtop;
+}
+//设置控件top属性值
+function fnPuttop(vValue)
+{
+	mtop=vValue;
+	topID.fireChange();
+	fnInitstyle();
+}
+//获取控件高度属性值
+function fnGetheight()
+{
+	return mheight;
+}
+//设置控件高度属性值
+function fnPutheight(vValue)
+{
+	mheight=vValue;
+	heightID.fireChange();
+	fnInitstyle();
+}
+//获取控件宽度属性值
+function fnGetwidth()
+{
+	return mwidth;
+}
+//设置控件宽度属性值
+function fnPutwidth(vValue)
+{	
+	mwidth=vValue;
+	widthID.fireChange();
+	fnInitstyle();
+}
+//获取xml属性值
+var mxml="";
+function fnGetxml()
+{
+	return mxml;
+}
+//设置xml属性值,常数
+function fnPutxml(vValue)
+{
+	mxml=vValue;
+	xmlID.fireChange();
+}
+//获取sql1属性值
+function fnGetsql1()
+{
+	return sSql1;
+}
+//设置sql1属性值
+function fnPutsql1(vValue)
+{
+	sSql1=vValue;
+	sql1ID.fireChange();
+}
+//获取sql1属性值
+function fnGetsql()
+{
+	return sSql1;
+}
+//设置sql1属性值
+function fnPutsql(vValue)
+{
+	sSql1=vValue;
+	sqlID.fireChange();
+}
+//获取每页的行数
+function fnGetpagesize()
+{
+	return perpagerownum;
+}
+//设置每页行数值
+function fnPutpagesize(vValue)
+{
+	perpagerownum=vValue;
+	pagesizeID.fireChange();
+}
+//获取format属性值
+function fnGetformat()
+{
+	return sFormat;
+}
+//设置format属性值
+function fnPutformat(vValue)
+{
+	sFormat=vValue;
+	formatID.fireChange();
+}
+
+// 多选开关
+function fnGetmultiselect()
+{
+	return showcheckbox;
+}
+function fnPutmultiselect(vValue)
+{
+	//此属性为字符型 ,是否增加多选列，是为多选
+	if (vValue=="是")
+		showcheckbox=true;
+	else
+		showcheckbox=false;
+
+	multiselectID.fireChange();
+}
+//返回的结果串
+function fnGetreturnxml()
+{
+	return strXML;
+}
+//获取value属性用于返回ID之类的KEY值。
+var mvalue="";
+function fnGetvalue()
+{
+	//当没设置keycol时，value属性将和text属性一样
+	if(mkeycol==0)
+		mvalue=fc_txtName.value;
+	return mvalue;
+}
+//设置文本框的value属性
+function fnPutvalue(vValue)
+{
+	//当没设置keycol时，value属性将和text属性一样
+	mvalue=vValue;
+	if(mkeycol==0){
+		try{
+			fc_txtName.value=mvalue;
+		}catch(e){
+			
+		}
+	}
+	valueID.fireChange();
+}
+//获取文本框text属性值
+function fnGettext()
+{
+	return fc_txtName.value;
+}
+//设置文本框text属性值
+function fnPuttext(vValue)
+{
+	fc_txtName.value=vValue;
+	textID.fireChange();
+}
+
+//keycol用于当前显示名称，而要取得ID列，比如ID列在第2列，则keycol=2
+var mkeycol=0;
+function fnGetkeycol()
+{
+	return mkeycol;
+}
+//设置value属性为哪一列
+function fnPutkeycol(vValue)
+{
+	mkeycol=vValue;
+	keycolID.fireChange();
+}
+//在电子表格中使用
+var mblncell=false;
+function fnPutblncell(vValue)
+{
+	mblncell=vValue;
+	blncellID.fireChange();
+}
+//获取可见属性值
+var mvisible="是";
+function fnGetvisible()
+{
+	return mvisible;
+}
+//设置可见属性值
+function fnPutvisible(vValue)
+{
+	mvisible=vValue;
+	visibleID.fireChange();
+	try {
+	//是否显示下拉框，为是显示
+		eval(uniqueID).style.display = mvisible == "是"?"":"none";
+		//if (mvisible == "是") {
+			
+			//fc_txtName.style.display="block"; //fc_txtName
+			//fc_cmdCz.style.display="block"; //fc_cmdCz
+		//}
+		//else {
+		//隐藏文本框和控件
+			//fc_txtName.style.display="none"; //fc_txtName
+			//fc_cmdCz.style.display="none"; //fc_cmdCz
+		//}
+	}catch(e){}
+}
+//获取只读属性值
+var mdisabled=false; //"否"; //为空就是为否
+function fnGetdisabled()
+{
+	return mdisabled;
+}
+//设置只读属性值
+function fnPutdisabled(vValue)
+{
+	mdisabled=vValue;
+	try{
+	if(typeof fc_txtName != "undefined") {
+		//控件是否活动,文本框和按钮控件为不活动,否则移除disabled属性
+		//if(mdisabled=="是"){
+		if(IsTrue(mdisabled)){
+			fc_txtName.disabled=true;
+			fc_cmdCz.disabled=true;
+		}else {
+			//移除只读属性
+			fc_txtName.removeAttribute("disabled");
+			fc_cmdCz.removeAttribute("disabled");
+		}
+	}
+	}catch(e){}
+	disabledID.fireChange();
+}
+//获取能否在文本框中直接输入属性值
+var mblninput="是";
+function fnGetblninput()
+{
+	return mblninput;
+}
+//设置能否直接输入属性值
+function fnPutblninput(vValue)
+{
+    mblninput = vValue;
+    //alert(mblninput);
+    //2013-07-26 add
+    try {
+        //alert(typeof fc_txtName != "undefined")
+	    if (typeof fc_txtName != "undefined") {
+	        //alert(IsTrue(mblninput))
+	        if (!IsTrue(mblninput)) {
+	            //alert(fc_txtName.readOnly);
+	            fc_txtName.readOnly = true;
+	            //alert(fc_txtName.readOnly);
+	        } else {
+	            //移除只读属性
+	            fc_txtName.removeAttribute("readOnly");
+	        }
+	    }
+    }catch(e){}
+
+	blninputID.fireChange();
+}
+//获取增加行属性值
+var maddrow = "否";
+function fnGetaddrow() {
+	return maddrow;
+}
+//设置增加行属性值
+function fnPutaddrow(vValue) {
+	maddrow=vValue;
+	addrowID.fireChange();
+}
+//获取空行属性值
+var mblnempty="否";
+function fnGetblnempty()
+{
+	return mblnempty;
+}
+//设置空行属性值
+function fnPutblnempty(vValue)
+{
+	mblnempty=vValue;
+	blnemptyID.fireChange();
+}
+//返回第一个非空的列表值,此属性应在各属性后方能取出
+var mfirstvalue="";
+function fnGetfirstvalue()
+{
+	return mfirstvalue;
+}
+/**
+* 在本窗口的其它地方mousedown时
+**/
+function hidelist() { 
+	//当前对象
+	var curObj=event.srcElement;
+	var objSour = curObj;
+	if (curObj.tagName=="TD") {
+		//对象的父节点
+		curObj=curObj.parentNode;
+		curObj=curObj.parentNode;
+		curObj=curObj.parentNode;
+	}
+	if (curObj.tagName=="TR") {
+		curObj=curObj.parentNode;
+		curObj=curObj.parentNode;
+	}
+	//window.status=curObj.id ||  || curObj.id=="fc_cmdCz"curObj.id=="fc_txtName"  || 
+	
+	//当前控件id等于其中一个返回
+	if (curObj.id=="fc_list" || curObj.id=="fc_divList" || curObj.id=="upsidepage" || curObj.id=="currentpage"  || curObj.id=="nextpage"   ) return;
+
+	//多选时的复选框
+	if (curObj.tagName=="INPUT") {
+		curObj=curObj.parentNode;
+		if (curObj.tagName=="TD") {
+			curObj=curObj.parentNode;
+			curObj=curObj.parentNode;
+			curObj=curObj.parentNode;
+			if (curObj.id=="fc_list") return;	
+		}	
+	}
+	//当前控件id是否等于eval(uniqueID+".id"),如果不等于,下拉框隐藏
+	if(curObj.id != eval(uniqueID+".id") ) {  //取当前选中的控件id
+	//alert("empty4");
+		if(objSour.id != "fc_cmdCz"){
+			
+			fc_divList.style.display ="none";
+			fc_divList.innerHTML="";
+
+			fc_divListPage.style.display ="none";
+			
+		}
+	}
+	//if ( curObj.id==element.id) return;
+	//要加一控制点界面上别处是否隐藏的属性
+	//if (mblncell) {
+	//	mvisible="否";
+	//	fnPutvisible(mvisible);
+	//}
+	event.cancelBubble=false;
+	event.returnValue=false;
+
+}
+//----------------------------
+
+var sSql1="";//原始SQL语句
+var runtimesql="";//当前SQL语句
+var runtimetext="";//过滤时的过滤条件
+var findrownum=0;  //鼠标在下拉框的哪一行
+var findrowbgcolor="";//在找到该行并将该行背景色设置为"blue"之前,将此行的斑马色保存在该变量中,以便在鼠标移动时,将该色附回;
+var perpagerownum=50;//设置每页的行数
+var perpagenum=1;//页号
+var overallpagenum=1; //总页
+var Strsend="";	//"<root><percolnum>"+perpagenum+"</percolnum><sql>"+sSql+"</sql></root>"
+var sXml=""	;//<root><rec><fc>aaaa</fc><fc>222</fc></rec><rec><fc>wwww</fc><fc>2322</fc></rec><rec><fc>eeee</fc><fc>5222</fc></rec><rec><fc>ddd</fc><fc>1222</fc></rec><rec><fc>sss</fc><fc>2232</fc></rec></root>
+var sFormat="";	//< 用户名!|< 密码 `
+var tabcolnum=1;//表格的总列数,它等于sFormat分解后数组的个数.
+//是否返回多列值(多列值用数组分开,要返回的列在列串的最后一个字符为!)
+//用此串代表每列的标题\宽度\是否隐藏\对齐方式等信息
+//标题为空时隐藏
+//每列第一个字符表示对齐方式"<,^,>"
+var dblClick=false;
+var oldgroundcolor="";
+var oldcolor="";
+var changcol=0;//在第一行设置列宽时选择的是哪一列
+var formerLineleft=0;
+var moveQuantity=0;
+var strXML="<root>";//返回的结果串
+var showcheckbox=false;//多选开关
+
+//初始化函数
+function init() {	
+	var fc_list_width = 0; //表格的各列列宽之和
+	var maxWinHeight = 150 ; //最大的下拉窗口高度,最小高度是150
+	//
+	var ArrFormat=sFormat.split("|");
+	//format属性的长度
+	tabcolnum=ArrFormat.length;
+	//
+	//CopyToPub(sXml);
+	var oXML = SetDom(sXml);
+	if(oXML.documentElement == null){
+		if(IsSpace(sXml) == false) alert(sXml);
+		return;
+	}
+	//sXml是表格数据
+	//计算表格串
+	//记录数
+	var lngchildNodeone=oXML.documentElement.childNodes.length;
+	//sql语句作数据源时
+	if(IsSpace(sSql1)==false) {
+		lngchildNodeone--; //因加了一个fields子节点,所以-1
+		sPubFieldCol = oXML.documentElement.childNodes(lngchildNodeone).text;
+		oXML.documentElement.removeChild(oXML.documentElement.childNodes(lngchildNodeone));
+
+	}else { //常数数据源时
+		sPubFieldCol = FieldNameList; //逗号分隔的字段名,用于字段同名传递
+	
+	}
+	
+	//alert(lngchildNodeone)
+	//标题的长度
+	var iTitleLen = tabcolnum;   //parseInt(oXML.childNodes(0).childNodes(0).childNodes .length)
+	//loadtab为参照内容表格的前面数据。
+	//下拉表格 borderColor=#B8B7B7
+	var loadtab="<table border=1 id=fc_list  cellPadding=0 cellSpacing=0  style='BORDER-COLLAPSE: collapse;TABLE-LAYOUT: fixed' frame='box'><colgroup>";
+		//增加一个<col>元素
+		for (var j=0;j<iTitleLen;j++){
+				loadtab += "<col>";
+		}
+		if(showcheckbox) loadtab += "<col>";
+		loadtab += "</colgroup>";
+		//增加一个<td>元素
+		for (var i=0;i<iTitleLen;i++){
+			loadtab += "<td></td>";
+		}
+	//找到哪一行的值等于文本框的值,下拉框的哪一行
+	if (lngchildNodeone!=2){
+		for (var i=0;i<lngchildNodeone-2;i++){
+			//Format属性的长度
+			for (var k=0;k<iTitleLen;k++){
+				//找到下拉框的哪一行值等于文本框的值,如果相等,鼠标在一当前行加1
+				try{
+					if (new Eapi.Str().trim(oXML.childNodes(0).childNodes(i).childNodes(k).text) == new Eapi.Str().trim(runtimetext) && new Eapi.Str().trim(runtimetext) != ""){
+						findrownum = i + 1;
+						break;
+					}
+				}catch(e){
+					if (new Eapi.Str().trim(oXML.childNodes(0).childNodes(i).text) == new Eapi.Str().trim(runtimetext) && new Eapi.Str().trim(runtimetext) != ""){
+						findrownum = i + 1;
+						break;
+					}
+				}
+			}
+		}
+	}
+	//页号
+	perpagenum=oXML.documentElement.childNodes(lngchildNodeone-1).text;
+	//总页数
+	overallpagenum=oXML.documentElement.childNodes(lngchildNodeone-2).text;
+	//alert(overallpagenum)
+	//intpage是一个节点
+	var oChild = oXML.documentElement.childNodes(lngchildNodeone-1);
+	oXML.documentElement.removeChild(oChild);
+	//pagenumber是一个节点
+	oChild = oXML.documentElement.childNodes(lngchildNodeone-2);
+	oXML.documentElement.removeChild(oChild);
+	//替换字符串去掉<root>节点
+	sXml=RepStr(oXML.xml,"<root>","");
+	//替换字符串去掉</root>节点
+	sXml=RepStr(sXml,"</root>","");
+	//转码
+	sXml=unescape(sXml)	;
+	//恢复txt的值
+	var fc_txtNamebak=fc_txtName.value;
+	fnInit(loadtab+sXml+"</table>");
+	fc_txtName.value=fc_txtNamebak;
+
+	for (var k=0;k<iTitleLen;k++){
+		//标题为左对齐
+		if (ArrFormat[k].indexOf("<")!=-1){
+			fc_list.childNodes(0).childNodes(k).align="left";
+			ArrFormat[k]=RepStr(ArrFormat[k],"<","");
+		}
+		//标题居中对齐
+		if (ArrFormat[k].indexOf("^")!=-1){
+			fc_list.childNodes(0).childNodes(k).align="middle";
+			ArrFormat[k]=RepStr(ArrFormat[k],"^","");
+		}
+		//标题是否为空，如果为空，第一行宽度为0
+		if((ArrFormat[k]=="" || ArrFormat[k]=="!") && ( sFormat !="") ){
+			fc_list.childNodes(0).childNodes(k).style.Width="0";
+			fc_list.childNodes(0).childNodes(k).style.display="none";
+		}
+		//标题右对齐
+		if (ArrFormat[k].indexOf(">")!=-1){
+			fc_list.childNodes(0).childNodes(k).align="right";
+			ArrFormat[k]=RepStr(ArrFormat[k],">","");
+		}
+		//标题是否包含！符号，如果有！符号，替换！=""
+		if(ArrFormat[k].indexOf("!")!=-1){
+			ArrFormat[k]=RepStr(ArrFormat[k],"!","");
+		}
+		//标题的0行的一列等于ArrFormat[k]
+		try{
+			fc_list.rows(0).cells(k).innerText=ArrFormat[k];
+		}catch(e) {}
+		//标题是否为空,计算标题行的宽度
+		var itmp = parseInt(ArrFormat[k].length)*15  ;//+2 //+17 ;
+		fc_list.childNodes(0).childNodes(k).style.width=itmp;
+		fc_list_width += itmp;
+		
+	}
+	if(showcheckbox) {
+		fc_list.childNodes(0).childNodes(iTitleLen).style.width=22; //给checkbox的列宽
+		fc_list_width += 22 ;
+	}
+	//取两者的最大宽度作表格的宽度
+	//alert(fc_list_width + ">"+ (fc_txtName.offsetWidth+fc_cmdCz.offsetWidth))
+	/*var newWidth1 = fc_txtName.offsetWidth - 2 ; 
+	//if(IsSpace(sSql1) ) newWidth1 += fc_cmdCz.offsetWidth; //无滚动条时
+	if(fc_list_width> newWidth1)
+		fc_list.style.width = fc_list_width;
+	else
+		fc_list.style.width = newWidth1;
+	*/	
+	//标题居中
+	fc_list.rows(0).align="middle";
+
+	//摆好控件的位置
+	//初始化下拉表列的内容
+	//计算下拉表列的宽度
+	//使表格的底纹成斑马纹
+	for (var i=1;i<fc_list.rows.length;i=i+2){
+		//fc_list.rows(i).style.backgroundColor="#eeffee";
+		fc_list.rows(i).className = "pertworow";
+	}
+	//将找到的行变颜色
+	
+	if (fc_list.rows.length>findrownum) {
+		//找到鼠标在的当前行,改变当前行的字体颜色和背景色
+		if(parseInt(findrownum)!=0){
+			findrowbgcolor=fc_list.rows(findrownum).style.backgroundColor;
+			oldgroundcolor=fc_list.rows(findrownum).style.backgroundColor;
+			//改变表格findrownum行的背景色
+			//fc_list.rows(findrownum).style.backgroundColor="blue";
+			//表格的findrownum行字体变红色
+			//fc_list.rows(findrownum).style.color="red";
+			fc_list.rows(findrownum).className = "findrow";
+			//div的高度
+			fc_divList.scrollTop =fc_list.rows(findrownum).offsetTop;
+		}
+		/*
+		else{
+			//表格第一行的字体改为红色
+			try{
+				//fc_list.rows(1).style.color="red";
+				//fc_list.rows(1).style.backgroundColor="blue";
+				fc_list.rows(1).className = "findrow";
+			}catch(e){}
+		}*/
+		
+	}
+
+	//第一行底色为灰色,标题行有凹凸感
+	var sl=fc_list.rows(0).cells.length;
+	//标题的样式
+	fc_list.rows(0).className="firstrow";
+	//for(i=0;i<sl;i++){
+	//	fc_list.rows(0).cells(i).style.cssText="border-left:1px solid white; border-top: 2px solid white; border-bottom: 1px solid #818080; border-right:1px solid #B8B7B7;background-color: #D3D3D3;";
+	//}
+	var iTopOffset = 0 ;
+	//如果标题行为空,隐藏第一行的内容
+	if(format=="") {
+		fc_list.rows(0).style.display="none";
+		iTopOffset = -2 ;
+	}	
+	
+	//显示div
+	fc_divList.style.display ="block";
+	//计算下拉框的宽高.
+	//如果没有滚动条,div的宽度加17
+	var iScrollWidth = 17;
+	//alert(fc_list.offsetHeight)
+	if(fc_list.offsetHeight < maxWinHeight ) { //maxWinHeight是最大的下拉窗口的高度
+		$id("fc_ifra").style.height = fc_list.offsetHeight + 2 ;
+		fc_divList.style.height=$id("fc_ifra").style.height  ;
+		iScrollWidth = 0;
+	}else{
+		$id("fc_ifra").style.height=maxWinHeight ;
+		fc_divList.style.height=$id("fc_ifra").style.height  ;
+	}
+	//alert(fc_divList.offsetHeight+"aa"+fc_divList.offsetWidth);
+	var iBorder = 2+iTitleLen ;//边框的差值
+	var newWidth1 = fc_txtName.offsetWidth+fc_cmdCz.offsetWidth ; 
+	var newWidth2 = fc_list_width + iBorder +iScrollWidth ;
+	fc_divList.style.width = newWidth1>newWidth2?newWidth1:newWidth2;
+	fc_list.style.width = fc_divList.style.pixelWidth-iBorder-iScrollWidth;
+	//alert(fc_divList.offsetHeight+"aa"+fc_divList.offsetWidth);
+	//计算fc_divList出现的位置
+    iframeWinPos();	
+    
+	//是否显示翻页按钮
+	//显示页号的文本框的值
+	currentpage.value = perpagenum;
+	//如果总页数大于1时显示翻页按钮
+	if (overallpagenum>1){
+		fc_divListPage.style.display ="block";
+		fc_divListPage.style.top = parseInt(fc_divList.style.top)+parseInt(fc_divList.offsetHeight) -parseInt(fc_divListPage.offsetHeight);
+		fc_divListPage.style.left = parseInt(fc_divList.style.left)+1;
+		PageDisplayStatus();
+	}
+	else {
+	//隐藏翻页按钮
+		fc_divListPage.style.display ="none";
+		fc_divListPage.style.top = parseInt(fc_divList.style.top)+parseInt(fc_divList.offsetHeight) -parseInt(fc_divListPage.offsetHeight);
+		fc_divListPage.style.left = parseInt(fc_divList.style.left)+1;
+	}
+	if (mxml!="") {
+	//当数据源为常串时隐藏分页和过滤控件
+		fc_divListPage.style.display ="none";
+	}
+}
+/**
+* 计算下拉窗口的位置
+**/
+function iframeWinPos() {
+	//计算fc_divList出现的位置
+	var iToptmp = getAbsTop(fc_txtName)  + fc_txtName.style.pixelHeight ;
+	fc_divList.style.left = getAbsLeft(fc_txtName) ;
+	var ilen=element.document.body.clientHeight - iToptmp  ;
+	if(ilen < fc_divList.offsetHeight){
+		if(iToptmp>fc_divList.offsetHeight+fc_txtName.style.pixelHeight){ //显示到上面
+			fc_divList.style.top = iToptmp-(fc_divList.offsetHeight+fc_txtName.style.pixelHeight);
+		}else{
+			fc_divList.style.top = 0; //显示在中间
+		}
+	
+	} else { //正常显示到下面
+		//求div显示的top坐标
+		fc_divList.style.top = iToptmp;
+	
+	}
+
+}
+
+
+/*
+在下拉的表格中移动鼠标时变背景色
+*/
+function fc_listonmouse(){
+	var oMouseover=window.frames("fc_ifra").event.srcElement;
+	if (oMouseover.tagName=="TD") oMouseover=oMouseover.parentNode;
+	if (oMouseover.tagName=="TR"){
+		if (oMouseover.rowIndex!=0){
+			Sys.UI.DomElement.toggleCssClass(fc_list.rows(oMouseover.rowIndex), "selectrow");
+		}
+	}
+}
+/**
+* bFocus = true 时表示不要改动焦点
+//点击参照按钮
+**/
+function fc_cmdCz_onclick() {
+	
+	perpagenum=1;
+	//定义对象事件onclickopen点击参照按钮，打开一张表单，如果oEvent.showlist = true则点击参照按钮时显示下拉框，为false不显示,
+	var oEvent=createEventObject();
+	 //显示下拉框
+	oEvent.showlist=true ; 
+	onclickopenID.fire(oEvent);
+	if(typeof oEvent.ret != "undefined"){
+		fc_txtName.value = oEvent.ret;
+		//window.setTimeout('try {fc_czselchange()} catch (e) {} ', 10);
+		//发生改变事件以带动表格和数据集中相应的值的改变
+		var oEvent1=createEventObject();
+		oEvent1.afterchangevalue=fc_txtName.value;
+		
+		onchangeID.fire(oEvent1);
+	}
+	//下拉框不显示
+	if(oEvent.showlist == false) {
+		return ;
+	}
+	//文本框是否为只读,为只读返回
+	if(fc_txtName.disabled==true) return ;
+
+	strXML="";
+	if (fc_divList.style.display=="none"){
+        ShowDropWin();
+		//给下拉框表格加焦点
+		//if(bFocus != true){
+			try{
+				fc_list.focus();
+			}catch(e){}
+		//}
+		fc_divList.style.display ="block";
+	}else{
+		//alert(fc_divList.style.display)
+		//隐藏下拉框
+		fc_divList.style.display ="none";
+		fc_divList.innerHTML="";
+		fc_divListPage.style .display ="none";
+		try{
+			fc_txtName.focus();
+		}catch(e){}
+
+
+	}
+}
+
+//下一页
+function NextPage() {
+	//当前页号是否小于总页数
+	//alert(perpagenum+"<"+overallpagenum);
+	if (perpagenum<overallpagenum){
+		//打开下一页记录
+		perpagenum=parseInt(perpagenum)+1;
+		//显示页号的文本框的值
+		currentpage.value =perpagenum;
+		runtimesql = RepOpenSql(sSql1,fc_txtName.value);
+		//发到后台执行
+		Strsend="<percolnum>"+perpagenum+"</percolnum><sql>"+runtimesql+"</sql><strValue>###</strValue><perpagerownum>"+perpagerownum+"</perpagerownum><showcheckbox>"+showcheckbox+"</showcheckbox><blnempty>"+mblnempty+"</blnempty><addrow>"+maddrow+"</addrow>";
+		var sDsn = "" ;
+		if(IsSpace(datasourceName) == false) sDsn = "&datasourceName="+datasourceName;
+
+		sXml=new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=sqltoxml"+sDsn,Strsend);
+		
+		//init() ;
+		ShowDropWin(); //此处有问题
+		fc_list.focus() ; //给下拉框制焦点
+		PageDisplayStatus();
+	}
+	
+}
+
+//上一页
+function PrevPage() {
+	//如果当前页号大于1,点击时打开上一页记录
+	if(perpagenum>1){
+		//打开上一页记录
+		perpagenum=parseInt(perpagenum)-1;
+		//显示页号的文本框的值
+		currentpage.value =perpagenum;
+		//替代打开的sql语句中的
+		runtimesql = RepOpenSql(sSql1,fc_txtName.value);
+		Strsend="<percolnum>"+perpagenum+"</percolnum><sql>"+runtimesql+"</sql><strValue>###</strValue><perpagerownum>"+perpagerownum+"</perpagerownum><showcheckbox>"+showcheckbox+"</showcheckbox><blnempty>"+mblnempty+"</blnempty><addrow>"+maddrow+"</addrow>";
+		var sDsn = "" ;
+		if(IsSpace(datasourceName) == false) sDsn = "&datasourceName="+datasourceName;
+		sXml=new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=sqltoxml"+sDsn,Strsend);
+		//初实化函数
+		//init() ;
+		ShowDropWin();
+		fc_list.focus() ;
+		PageDisplayStatus();
+	}
+	
+}
+function PageDisplayStatus() {
+
+	//如果currentpage文本框的值等于1,上一页按钮为只读
+	if(currentpage.value <= 1) {
+		upsidepage.disabled = true ;
+	}else{
+		upsidepage.disabled = false ;
+		upsidepage.removeAttribute("disabled") ;
+	}
+	//如果currentpage文本框的值等于总页数,下一页按钮为只读
+	if(currentpage.value == overallpagenum) {
+		nextpage.disabled = true ;
+	}else{
+		nextpage.disabled = false ;
+		nextpage.removeAttribute("disabled") ;
+	}	
+}
+/**
+//双击表格返回时
+**/
+function cmdreturn_onclick(){
+	//指定窗口的对象事件
+	var iEvent=window.frames("fc_ifra").event.srcElement;
+	var rowobj;
+
+	if (iEvent.tagName=="TD")
+		rowobj=iEvent.parentNode;
+	if (iEvent.tagName=="TR")
+		rowobj=iEvent;
+	if (typeof rowobj=="undefined") return;
+	var strXML="<root>";
+	
+	//行数
+	var ss=rowobj.rowIndex;
+	//增加行
+	if(maddrow=="是") {
+			ss=1;
+		if(rowobj.rowIndex==1){
+			//创键对象事件onclickadd，条打开一张表单，难文本框赋值
+			var oEvent=createEventObject();
+			oEvent.ret="";
+			onclickaddID.fire(oEvent);
+			if(typeof oEvent.ret == "undefined"){
+			}else{
+				fc_txtName.value = oEvent.ret;
+			}
+			//隐藏下拉框
+			//alert("empty1");
+			fc_divList.style.display ="none";
+			fc_divList.innerHTML="";
+			fc_divListPage.style.display ="none";
+			return; //2007-08-01 add
+		}else{}
+	}else{
+		ss=0;
+	}
+	if (iEvent.tagName!="INPUT" && rowobj.rowIndex>ss){
+		
+		//如为LOADXMLDATA
+		if(sSql1=="" && mxml==""){
+			//如没设置format属性//text属性固定返回第一列
+			mselectrow=rowobj.rowIndex;
+			fc_txtName.value = fc_list.rows(mselectrow).cells(0).innerText;
+			mvalue=fc_list.rows(mselectrow).cells(mkeycol).innerText;
+			//每列右边的第一个字符如为!表示可返回多列，影响returnxml属性
+			if(sFormat!=""){
+				var arrFormat=sFormat.split("|");			
+				strXML=strXML+"<tr>";
+				//单选					
+				for (var k=0;k<arrFormat.length;k++){																
+					if(arrFormat[k].substring(arrFormat[k].length-1,arrFormat[k].length)=="!");
+						strXML=strXML+"<td>"+fc_list.rows(mselectrow).cells(k).innerText+"</td>";	
+				}
+				strXML=strXML+"</tr>";
+			}
+		}else{			
+			var ArrFormatnew=sFormat.split("|");
+			//下拉框的行数
+			var nodesNumber=fc_list.childNodes(1).childNodes.length	;
+			//下拉框的行数	
+			var rowsnum=fc_list.rows.length	;
+			if (showcheckbox==true){
+				//有多选
+				var j=1 ;			
+				//增加行的空行属性	是否等于是
+				if(addrow=="是" && mblnempty!="是"){
+					j=2;
+				}
+				if(addrow!="是" && mblnempty=="是"){
+					j=2;
+				}
+				if(addrow=="是" && mblnempty=="是"){
+					j=3;
+	            }
+	            var arrMulti = new Array(ArrFormatnew.length);
+	            var isCol0 = format.indexOf("!") == -1; 
+				//-4 是指减掉后面两个多余的节点<pagenumber><initpage>和一个标题	
+				var showxml = "" ; //多选的值
+				for (var i=j;i<nodesNumber;i++){	 //my去掉nodesNumber -4
+				    if (fc_list.childNodes(1).childNodes(i).childNodes(tabcolnum).childNodes(0).checked == true) {
+				        //format属性的长度
+				        var Arrlength = ArrFormatnew.length;
+				        strXML = strXML + "<tr>";
+			            for (var k = 0; k < Arrlength; k++) {
+			                if (ArrFormatnew[k].indexOf("!") != -1 || (isCol0 && k==0)) {
+			                    strXML = strXML + "<td>" + fc_list.childNodes(1).childNodes(i).childNodes(k).innerText + "</td>";
+			                    showxml += new Eapi.Str().trim(fc_list.childNodes(1).childNodes(i).childNodes(k).innerText) + ",";
+			                }
+			                //加上多选时,同名字段传递数据的规则的支持, 2011-06-16
+			                if (typeof (arrMulti[k]) == "undefined") arrMulti[k] = "";
+			                arrMulti[k] += new Eapi.Str().trim(fc_list.childNodes(1).childNodes(i).childNodes(k).innerText) + ",";
+			            }
+				        strXML = strXML + "</tr>";
+				    }
+						
+				}
+				fc_txtName.value = showxml.substring(0, showxml.length - 1);
+
+				CopyFieldsValue(arrMulti);
+			}
+			
+			else {
+				//单选		
+				//format属性的长度			
+				var Arrlength=ArrFormatnew.length;			
+				strXML=strXML+"<tr>";
+				var bfind=false	;					
+				for (var k=0;k<Arrlength;k++){																
+					if (ArrFormatnew[k].indexOf("!")!=-1){
+						strXML=strXML+"<td>"+fc_list.childNodes(1).childNodes(rowobj.rowIndex).childNodes(k).innerText+"</td>";	
+						if(bfind==false){
+							fc_txtName.value =	new Eapi.Str().trim(fc_list.childNodes(1).childNodes(rowobj.rowIndex).childNodes(k).innerText);
+							CopyFieldsValue(rowobj.rowIndex);
+							bfind=true;
+						}					
+					}
+				}
+				strXML=strXML+"</tr>";
+			}
+		}
+		
+		//如果控件中format属性不包括!返回第一列的值
+		var slen=format.length ;
+		var m=0 ;
+		if (showcheckbox==false){
+			//查找format属性是否包含!符号
+			for(i=0; i<slen; i++) {
+				if(format.substring(i,i+1)=="!"){
+					m++ ;	
+					break;			
+				}	
+				
+			}
+			if(m==0){
+				mselectrow=rowobj.rowIndex;
+				//如果为空，而在没有！符号时，返回第0列的值，不为空时，返回第一列的值
+					fc_txtName.value = fc_list.rows(mselectrow).cells(0).innerText;
+					mvalue=fc_list.rows(mselectrow).cells(mkeycol).innerText;
+					CopyFieldsValue(mselectrow);
+					
+			}
+		}
+		
+		strXML=strXML+"</root>";
+		//隐藏下拉框
+		//alert("empty2");
+		fc_divList.style.display ="none";
+		fc_divList.innerHTML="";
+		fc_divListPage.style.display ="none";
+		fc_txtName.disabled=false;
+		//将改变后的值传到前面
+		oEvent=createEventObject();
+		oEvent.afterchangevalue=fc_txtName.value;
+		oEvent.returnxml=strXML;
+		//选择填写事件
+		onchangeID.fire(oEvent);
+		//选择事件
+		onselchangeID.fire(oEvent);
+
+		//将参照的选择事件穿过WebGrid传到页面
+		if (oEvent.position == 88) {
+			window.setTimeout("try {fc_czselchange()} catch (e) {} ", 10);
+		}
+		
+		    fc_txtName.focus();
+		
+
+	}else {
+	}
+	
+}
+/**
+* 按同名字段方式返回值
+**/
+function CopyFieldsValue(curRow) {
+    
+	if(IsSpace(sPubFieldCol)) return false;
+	//alert(curRow[0] + ":" + curRow[1]);
+	var o = eval(uniqueID) ;
+	var s = o.dataset;
+	var oDs,oGrid;
+	var sTag="" ;
+	if(IsSpace(s) && o.id != "czFc" ) return false;
+	if(IsSpace(s) == false){
+		oDs = eval(s);
+    }else{
+        //oGrid = eval(o.parentNode);    
+		oDs = eval(o.parentNode.dataset); //在表格控件里
+		sTag="grid" ;
+	}
+	var arrField = sPubFieldCol.split(",");
+	var l = arrField.length;
+    
+	for(var i=0;i<l;i++){
+		//try{
+	    if (oDs.isFieldName(arrField[i])) {
+	        var sValue = "";
+	        if (IsTrue(isShowTree)) {
+	            sValue = curRow[i]; //树时,curRow是一个[value,code]
+	        } else if (showcheckbox == true) 
+	        {
+	            sValue = curRow[i];                     //多选时,curRow是一个数组
+	            if (IsSpace(sValue))
+	                sValue = "";
+	            else
+	                sValue = sValue.substring(0, sValue.length - 1);
+	        } else { 
+	            sValue = new Eapi.Str().trim(fc_list.childNodes(1).childNodes(curRow).childNodes(i).innerText);
+	        }
+
+	        oDs.Field(arrField[i]).Value = sValue;
+	    }
+		//}catch(e){}
+	}
+	if(sTag == ""){
+		oDs.fset_cont1();
+	}else{
+	    //oGrid.hide();
+		oDs.fset_cont();
+    }
+    return true;
+
+}
+//文本框的焦点事件
+function focus() {
+	
+	fc_txtName.focus();
+}
+//失去焦点事件
+function fc_txtName_onblur() {
+	onblurID.fire();
+}
+//文本框的焦点事件
+function fc_txtName_onfocus() {
+
+}
+//定义一个选择事件
+//将改变后的值传到前面
+function fc_txtName_onchange() {
+	oEvent=createEventObject();
+	oEvent.afterchangevalue=fc_txtName.value;
+	onchangeID.fire(oEvent);
+	oninterchangeID.fire(oEvent);
+}
+//定义一个onkeydown事件
+/*function fc_txtName_keyCode() {
+	oEvent=createEventObject();
+	oEvent.afterchangevalue=fc_txtName.value;
+	onkeyCodeID.fire(oEvent);
+}*/
+//文本框按键事件
+//如果不能输入，当前键等于0
+function fc_txtName_onkeydown() {
+	fc_txt_onkeydown();
+	if (mblninput == "否" && event.keyCode != 37 && event.keyCode != 39) event.returnValue = false;
+
+	fc_txtName_onkeyup();
+
+}
+//下面是真正的keyup事件代码
+function fc_txtName_keyup() {
+    var keycode1 = event.keyCode;
+    
+    if( keycode1 == 37 || keycode1 == 39) return; //left right 
+    if(event.shiftKey) return; 
+	if(isAutoDropWin != null && isTrue(isAutoDropWin))
+        ShowDropWin();
+}
+
+//将改变后的值传到前面
+function fc_txtName_onkeyup() {
+
+	oEvent=createEventObject();
+	oEvent.afterchangevalue=fc_txtName.value;
+	onchangeID.fire(oEvent);
+}
+//用户按字母键事件
+//return""
+function fc_txtName_onkeypress() {
+    if (mblninput == "否" || blninput == "否") {
+        event.returnValue = false;
+    }
+	
+}
+//剪贴事件
+function fc_txtName_onpaste() {
+	if (mblninput=="否") event.returnValue=false;
+	fc_txtName_onkeyup();
+}
+//复制事件
+function fc_txtName_oncut() {
+	fc_txtName_onpaste();
+}
+//单击客户区中的右鼠按钮,打开相关菜单
+function fc_txtName_oncontextmenu() {
+	if (mblninput=="否") event.returnValue=false;
+}
+function fnInitstyle() {
+	var mleftButton=parseInt(mwidth) + parseInt(mleft) - mwidthButton;
+	var mwidthText=mwidth-mwidthButton;
+	
+	if (mwidthText<=0)mwidthText=40;
+	try {  //未初始化时会出异常
+		fc_txtName.style.top = mtop;
+		
+		fc_txtName.style.left = mleft;
+		fc_txtName.style.width = mwidthText;
+		fc_txtName.style.height = mheight;
+		
+		mButtonRate = 10;
+		fc_cmdCz.style.top = mtop;
+		fc_cmdCz.style.left = mleftButton;
+
+	}catch(e) {}
+}
+
+//strHtml为参照表格的HTML串＋＜BR＞
+function fnInit(strHtml) {
+    var blnEnter = typeof(strHtml)!="undefined" && typeof(strHtml)!="object" && strHtml!="" ;
+	//alert("ondocumentReady");
+	//return ;
+	if(blnEnter == false){
+	    
+	var bmpPath = fcpubdata.path+fcpubdata.skinsPath+"/css/skins/"+fcpubdata.skins+"/images/ef_run_downarrow.gif";
+	//返原加密的sql语句
+	if(sSql1 == "" ){
+		if(sqltrans != "" && typeof sqltrans != "undefined"){
+			sSql1 = UnSqlPropTrans(sqltrans) ;
+		}
+	}
+
+	//按钮的Left坐标
+	var mleftButton=parseInt(mwidth) + parseInt(mleft) - mwidthButton;
+	//文本框的宽度
+	var mwidthText=mwidth-mwidthButton;
+
+
+	//计算百分比  
+	if(mposition == "static" ) {
+		var len = mwidth.length ;
+		//查找!
+		if(len != "" || typeof len != "undefined") {
+			var s2 = mwidth.substring(len-1,len);
+		}
+		if(s2 == "%") {
+			//固定按钮的宽度为17px,编辑框的宽度为%
+			//父节点的宽度
+			var tmpW = parentNode.offsetWidth;
+			//文本框的宽度
+			var txtWidth = (100 * ((tmpW * parseInt(mwidth) /100) - 17)/tmpW) + "%";
+			//按钮的宽度 
+			var mButtonWidth = 17;
+		}else{
+			txtWidth = parseInt(mwidth)-parseInt(mwidthButton) ;
+			txtWidth = (txtWidth)+"px"
+			mButtonWidth = "17px";
+		}
+	}else{
+		txtWidth = parseInt(mwidth)-parseInt(mwidthButton) ;
+		txtWidth = (txtWidth)+"px"
+		mButtonWidth = "17px";
+		var mleftButton = parseInt(mwidth) + parseInt(mleft) - mwidthButton	;
+	}	
+	//只读
+	var sdisabled="";
+	//是否活动	
+	if(mdisabled == "是" || mdisabled == true || mdisabled == "true"){
+		sdisabled =" disabled=true ";
+    }
+    //2013-07-26 add
+    var sReadOnly = "";
+    if (!IsTrue(mblninput)) sReadOnly = " readOnly=true ";
+	
+	//如果文本框的宽度<=0默认为40
+	if (mwidthText<=0)mwidthText=40   ;  
+	//文本框串
+//	var s1='<INPUT id=fc_txtName  '+ sdisabled +'  style="POSITION: '+mposition+'; TEXT-ALIGN:'+malign+'; border-left-width:1;border-right-width:1;border-top-width:1;border-bottom-width:2;LEFT: '+mleft+'px;  TOP: '+mtop+'px; WIDTH:'+txtWidth+';HEIGHT:'+mheight+'px; font-size:'+mfontsize+'; font-style:'+mfontstyle+'; font-family:'+mfontfamily+'; background-color:'+mbackgroundColor+'; font-weight:'+mfontweight+' ; color:'+mcolor+';';
+	var s1 = '<INPUT id=fc_txtName  ' + sdisabled+sReadOnly + '  style="POSITION: ' + mposition + '; LEFT: ' + mleft + 'px;  TOP: ' + mtop + 'px; WIDTH:' + txtWidth + ';HEIGHT:' + mheight + 'px;' +      
+	new Eapi.Css().getPart(element.style.cssText)+';';
+	//var s1='<INPUT id=fc_txtName  '+ sdisabled +' style="'+element.style.cssText+';';
+	//if(mvisible=="否") 
+	//	s1=s1+'display:none;';
+	s1=s1+'">';
+	//参照按钮串
+	s1 = s1 + '<INPUT id=fc_cmdCz type=button class="cmdDown" onmouseover="this.className=\'cmdDown-over\'" onmouseout="this.className=\'cmdDown\'" ' + sdisabled + ' style="BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; HEIGHT: 20px; WIDTH: ' + mButtonWidth + ';POSITION: ' + mposition + ' ;LEFT: ' + mleftButton + '; TOP: ' + mtop + 'px;';
+	//if(mvisible=="否")
+	//	s1=s1+'display:none;';
+	s1=s1+'">';
+
+	element.innerHTML=s1;
+	
+	//文本框的焦点事件
+	element.children[0].attachEvent("onfocus", fc_txtName_onfocus);
+	//方本框的失去焦点事件
+	element.children[0].attachEvent("onblur", fc_txtName_onblur);
+	//文本框的选择事件,在选择改变或填写改变时事件
+	element.children[0].attachEvent("onchange", fc_txtName_onchange);
+	//文本框的按键事件
+	//element.children[0].attachEvent("onkeydown", fc_txtName_onkeydown);
+	//文本框的按键事件 typeof(isAutoDropWin) != "undefined" 
+	//    element.children[0].attachEvent("onkeyup", fc_txtName_keyup);
+	//按字母键事件,控制不能输入
+	//element.children[0].attachEvent("onkeypress", fc_txtName_onkeypress);
+	//文本框剪贴事件
+	element.children[0].attachEvent("onpaste", fc_txtName_onpaste);
+	//文本框复制事件
+	element.children[0].attachEvent("oncut", fc_txtName_oncut);
+	//单击文本框右鼠按钮,打开相关菜单
+	element.children[0].attachEvent("oncontextmenu", fc_txtName_oncontextmenu);
+	//文本框的双击事件
+	element.children[0].attachEvent("ondblclick",dblclick_cmdCz_onclick);
+	//参照按钮的点击事件
+	element.children[1].attachEvent("onclick", fc_cmdCz_onclick);
+	//文本框
+	fc_txtName=element.children[0];
+	//参照按钮
+	fc_cmdCz = element.children[1];
+	//action_button_down(fc_cmdCz);
+	createDropWin();
+	//div
+	fc_divList=$id("fc_divList");//element.children[2];
+	//翻页表格
+	fc_divListPage=$id("fc_divListPage");//element.children[3];
+	//上一页
+	upsidepage=$id("upsidepage");//element.children[3].children[0].children[0].children[0].children[0];
+	//
+	currentpage=$id("currentpage");//element.children[3].children[0].children[0].children[1].children[0];
+	//下一页
+	nextpage=$id("nextpage");//element.children[3].children[0].children[0].children[2].children[0];
+	//加翻页事件
+	upsidepage.attachEvent("onclick", PrevPage);
+	nextpage.attachEvent("onclick", NextPage);
+
+	if(mposition == "static" ){
+		fc_txtName.attachEvent( "onresize",txt_onresize);
+	}
+	
+	} //
+	if (blnEnter) {
+	    var sTMP = "auto";
+//	    if (isShowTree == "1") sTMP = "no";
+	    //加一个iframe内联浮动框
+		fc_divList.innerHTML='<iframe id=fc_ifra style="WIDTH:100%; height:100%;border-Bottom:1 #818080 solid;border-Left:1 #818080 solid; border-right:1 #818080 solid; z-index:99999;" NORESIZE=NORESIZE SCROLLING='+sTMP+' MARGINWIDTH=0 MARGINHEIGHT=0 FRAMESPACING=0 FRAMEBORDER=0></iframe>';
+		//如 SCROLLING=auto 则下拉树时会空出滚动条的位置.
+		
+		//打开
+		window.frames("fc_ifra").document.open();
+		//给iframe加值
+		var skins=fcpubdata.skins;
+		if (skins == "") skins = "base"; //默认值
+		var strAdd = "";
+		if (IsTrue(isShowTree) ) {
+		    strAdd = '<script src="../../fceform/js/MicrosoftAjax.js" charset="' + fcpubdata.encoding + '"></scr' + 'ipt><script src="../../fceform/js/fcpub.js" charset="' + fcpubdata.encoding + '"></scr' + 'ipt><script src="../../fceform/js/fcrundj.js" charset="' + fcpubdata.encoding + '"></scr' + 'ipt><script src="../../fceform/js/xtree.js" charset="' + fcpubdata.encoding + '"></scr' + 'ipt><link type="text/css" rel="stylesheet" href="' + fcpubdata.path + fcpubdata.skinsPath + '/css/xtree.css" /><link type="text/css" rel="stylesheet" href="' + fcpubdata.path + fcpubdata.skinsPath + '/css/efdesign.css" />';
+		    
+		}
+		//alert(41)
+		
+		window.frames("fc_ifra").document.write(strAdd+'<LINK REL=stylesheet HREF="'+fcpubdata.path+fcpubdata.skinsPath+'/css/skins/'+skins+'/style/efiframe.css" type="text/css">'+strHtml);
+		//关闭
+		window.frames("fc_ifra").document.close();
+
+		if (IsTrue(isShowTree) == false) {
+		    //下拉表列的数据表
+		    fc_list = window.frames("fc_ifra").document.all.fc_list;
+		    fc_list.attachEvent("onmouseover", fc_listonmouse);
+		    fc_list.attachEvent("onmouseout", fc_listonmouse);
+		    //表格点击事件，把选中的一行记录值返回到文本框
+		    fc_list.attachEvent("onclick", cmdreturn_onclick);
+		    //表格的按键事件
+		    fc_list.attachEvent("onkeydown", tab_onkeydown);
+		} else {
+		    fc_tree = window.frames("fc_ifra").document.all.dropdownTree;
+		    fc_tree.attachEvent("onclick", treeReturn);
+		}
+	}
+
+
+}
+function action_button_down(oButton) {
+    if (oButton != null) {
+        var but = oButton;
+        but.className = "cmdDown";
+        but.style.width = "17px";
+        but.style.height = "20px";
+        but.attachEvent("onmouseout", function() { oButton.className = 'cmdDown'; });
+        but.attachEvent("onmouseover", function() { oButton.className = 'cmdDown-over'; });
+
+    }
+
+}
+//fc_list按键事件
+function tab_onkeydown() {
+    
+	//指定一个窗口按下键的Code值
+    var iEvent = window.frames("fc_ifra").event.keyCode;
+	//alert(iEvent)
+	//var oMouseout=window.frames("fc_ifra").event.srcElement
+
+	var ArrFormat=sFormat.split("|");
+	    //三个循环
+	    //按下箭头,
+	    for(var i=2; i<fc_list.rows.length;i++) {
+			//上剪头
+			if(iEvent == '38'){ 
+				//指定一个窗口没有返回值，控制滚动条不滚动
+				window.frames("fc_ifra").event.returnValue = false;
+				//找到字体为红色的一行记录 ;
+				if(fc_list.rows(i).style.color == 'red'){  
+					fc_list.rows(i-1).style.color = 'red'; 
+					fc_list.rows(i).style.color = 'black';
+					fc_list.rows(i-1).style.backgroundColor = "blue";
+					//使表格的底纹成斑马纹
+					if(fc_list.rows(i-2).style.backgroundColor == "#eeffee") {
+						fc_list.rows(i).style.backgroundColor = "#eeffee";
+					}else{
+						fc_list.rows(i).style.backgroundColor = "";
+					} 
+				}
+				
+			}
+		}
+		//按下箭头
+		for(var i=0; i<fc_list.rows.length-1;i++) {
+			//下剪头
+			if(iEvent == '40'){ 
+				//指定一个窗口没有返回值，控制滚动条不滚动
+				window.frames("fc_ifra").event.returnValue = false ;
+				//找出字体为红色的一行
+				if(fc_list.rows(i).style.color == 'red'){
+					//把字体为红色的下一行改为红色
+					fc_list.rows(i+1).style.color = 'red';
+					fc_list.rows(i).style.color = 'black';
+					fc_list.rows(i+1).style.backgroundColor = "blue";
+					//使表格的底纹成斑马纹
+					if(fc_list.rows(i-1).style.backgroundColor == "#eeffee") {
+						fc_list.rows(i).style.backgroundColor = "";
+					}else{
+						fc_list.rows(i).style.backgroundColor = "#eeffee";
+					}
+					//fc_list.rows(i).style.backgroundColor=oldgroundcolor
+					//fc_list.rows(i).style.color=oldcolor
+					break ;
+				}
+			}			
+		}
+		//按回车键,把选中一行值返回给文本框
+		for(var j=0; j<fc_list.rows.length; j++) {
+			//回车键
+			if(iEvent == "13") { 
+				//找到字体变红的一行
+				if(fc_list.rows(j).style.color == "red"){
+					for (var k=0;k<ArrFormat.length;k++){
+						//是否有！返回列，如果没有则返回第一列的其中一行															
+						if (ArrFormat[k].indexOf("!")!=-1){
+							fc_txtName.value = fc_list.childNodes(1).childNodes(j).childNodes(k).innerText ;
+						}else{
+							fc_txtName.value = fc_list.rows(j).cells(0).innerText;
+						}
+					}
+					//值返回文本框后，把下拉框隐藏
+					//alert("empty3");
+					fc_divList.style.display ="none";
+					fc_divList.innerHTML="";
+					//翻页表格隐藏
+					fc_divListPage.style.display ="none";
+					fc_txtName.disabled=false;
+					//传值到文本框
+					fc_txtName_onkeyup();
+
+					onchangeID.fire(oEvent);
+					onselchangeID.fire(oEvent);
+					//将参照的选择事件穿过WebGrid传到页面
+					if (oEvent.position == 88) {
+						window.setTimeout("try {fc_czselchange()} catch (e) {} ", 10);
+					}
+					fc_txtName.focus() ;
+				}
+			}
+		}
+		//pageup键
+	if(iEvent == "33") {
+		window.frames("fc_ifra").event.returnValue = false ;
+		if(currentpage.value == 1) return;
+		PrevPage() ;
+		fc_list.focus() ;
+	}
+	//pagedown键
+	if(iEvent == "34") {
+		window.frames("fc_ifra").event.returnValue = false ;
+		if(currentpage.value == overallpagenum) return ;
+		NextPage() ;
+		fc_list.focus() ;
+	}
+}
+//按Alt+↓键，同点击参照按钮一样效果
+function fc_txt_onkeydown() {
+	//当前按键
+	var scode = event.keyCode;
+	//alt键
+	var skey = event.altKey;
+	if(skey == true){
+		switch(scode){
+			case 40:{  //↓
+				event.returnValue = false ;
+  				fc_cmdCz_onclick();
+				//指定一个窗口,增加焦点并延时
+				try{
+				window.frames("fc_ifra").setTimeout("fc_list.focus();",10);
+				}catch(e){}
+				break;
+			}
+		}
+	}
+
+}
+/**
+双击文本框，弹出下拉框
+**/
+function dblclick_cmdCz_onclick() {
+		fc_cmdCz_onclick();
+		//指定一个窗口,增加焦点并延时
+		try{
+		window.frames("fc_ifra").setTimeout("fc_list.focus();",10);
+		}catch(e){}
+
+}
+//调整窗口的大小，改变文本框的大小和按钮的left坐标
+function txt_onresize() {
+	//父节点的宽度
+	var s_mwidth = mwidth+"";
+	var len = s_mwidth.length ;
+		//查找!
+//	if(len != "" || typeof len != "undefined") {
+	if(len > 0) var s2 = s_mwidth.substring(len-1,len);
+//	}
+	if(s2 == "%") {
+		var tmpW = parentNode.offsetWidth;
+		//fc_txtName的宽度
+		var tmp1 = (tmpW * parseInt(mwidth) /100) - 17 - 2;
+		if( fc_txtName.style.pixelWidth != tmp1 ) {
+			fc_txtName.style.pixelWidth = tmp1;
+		}
+	}
+}
+/**
+*找到一个对象的绝对位置
+**/
+function getContLeft(e){
+	var objFirstAbs=null;//上升过程中第一个绝对定位的元素
+	var obj = e;
+    var l = 0;
+	while(e != null){
+		if(e.style.position == "absolute"){
+			if(objFirstAbs == null) objFirstAbs=e;
+		}else{
+			l += e.offsetLeft;
+		}
+		e=e.offsetParent;
+	}
+	
+	if(objFirstAbs != null){
+//		if(objFirstAbs.tagName.toUpperCase() == "DIV" && objFirstAbs.style.className != "tab-pane" ){
+//		}
+		if(obj.style.position == "absolute"){
+			l += obj.style.pixelLeft;
+		}
+	}
+	return l;
+}
+function getContTop(e){
+	var objFirstAbs=null;//上升过程中第一个绝对定位的元素
+	var obj = e;
+    var l = 0;
+	while(e != null){
+		if(e.style.position == "absolute"){
+			if(objFirstAbs == null) objFirstAbs=e;
+		}else{
+			l += e.offsetTop;
+		}
+		e=e.offsetParent;
+	}
+	
+	if(objFirstAbs != null){
+//		if(objFirstAbs.tagName.toUpperCase() == "DIV" && objFirstAbs.style.className != "tab-pane" ){
+//		}
+		if(obj.style.position == "absolute"){
+			l += obj.style.pixelTop;
+		}
+	}
+	return l;
+}
+/**
+
+**/
+function createDropWin() {
+	var contid=eval(uniqueID+".id");
+	if ( $id("fc_divList") != null ) {
+		$id('fc_divListPage').contid = contid;
+		return;
+	} 
+	//做上下页的点击事件
+	var sEventNext = "";
+	var sEventPrev = ""; 
+		//下拉框串
+	var s1='<label id=fc_divList style="z-index:9998; DISPLAY: none; LEFT: 0px;  POSITION: absolute; TOP: 40px;" >';
+	s1=s1+'</label>';
+	//if (isShowTree == "1") {
+	//s1 = s1 + '<div id=fc_divTreeButton style="z-index:9999;DISPLAY: none; LEFT: 72px; POSITION: absolute; TOP: 157px"><button onclick="">确定</button><button>取消</button></div>';
+	//} else {
+	    //翻页功能表格串
+	    s1 = s1 + '<table border=0 id=fc_divListPage style="z-index:9999;DISPLAY: none; LEFT: 72px; POSITION: absolute; TOP: 157px"  cellPadding=0 cellSpacing=0>';
+	    s1 = s1 + '<tr><td><INPUT type="button" value="上" id=upsidepage style="BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; HEIGHT: 18px; WIDTH: 18px" value="上" onclick="' + sEventPrev + '" ></td>';
+	    s1 = s1 + '<td><INPUT id=currentpage style="BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; HEIGHT: 18px; TEXT-ALIGN: center; WIDTH: 18px" ></td>';
+	    s1 = s1 + '<td><INPUT type="button" value="下" id=nextpage style="BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; HEIGHT: 18px; WIDTH: 18px" value="下" onclick="' + sEventNext + '" ></td></tr></table>';
+	//}
+	window.document.body.insertAdjacentHTML("BeforeEnd", s1);
+	$id('fc_divListPage').contid = contid;
+	
+
+
+}
+/**
+* 用新的数据显示下拉窗口
+*@date 2007-10-11
+**/
+function ShowDropWin() {
+
+    //alert(isShowTree+"----"+IsTrue(isShowTree))
+    if (IsTrue(isShowTree)) {
+
+        var sStr = new Sys.StringBuilder();
+        sStr.append('<body onload=\'TreeRefresh($id("dropdownTree"), "", function() { TreeSetMultiValue($id("dropdownTree"),"' + fc_txtName.value + '",true);TreeRootNodeHide($id("dropdownTree"),"none"); });\' >');
+        sStr.append('<div id="dropdownTree" controltype="tree" ');
+        var sourceType = "0";
+        if (IsSpace(sSql1) == false) { 
+            if (isTreeNewSql == "1")
+                sourceType = "3";
+            else
+                sourceType = "1";    
+        }
+        sStr.append('sourcetype=' + sourceType + ' opentb="_self" clicknode="'); 
+        sStr.append('" ');
+        
+        sStr.append('roottext="" ');
+        if (IsSpace(mxml) == false) {
+            sStr.append('xml="' + escape(mxml) + '" ');
+        }
+        if (showcheckbox) {
+            sStr.append('ischecked="1" ');
+        }
+        sStr.append('isAll="1" ');
+        sStr.append('datasourceName="' + datasourceName + '" ');
+        
+        if (isTreeNewSql == "1") {
+            sStr.append('sql2="' + SqlPropTrans(sSql1) + '" ');
+        }else{
+            sStr.append('sql="' + SqlPropTrans(sSql1) + '" ');
+        }
+
+        sStr.append('style="'); //OVERFLOW: auto; width:100%; height:100%;
+        sStr.append('border-width:0;');
+        sStr.append(' background-color:#ffffff;  " ></div>');
+        sStr.append('<script language="JavaScript">');
+        sStr.append('var dropdownTree;');   //定义一个全局变量
+        
+        sStr.append('window.attachEvent( "onunload", function(){dropdownTree=null;});\r\n'); //清除内存
+        
+        sStr.append('</' + 'script>');
+//        sStr.append('<script language="JavaScript" for="onload">');
+  //      sStr.append('TreeRefresh($id("dropdownTree"), "", function() { });');
+    //    sStr.append('</' + 'script>');
+        sStr.append('</body>');
+        fnInit(sStr.toString());
+        
+    	var baseWidth = 150;
+    	var newWidth1 = fc_txtName.offsetWidth+fc_cmdCz.offsetWidth ; 
+        fc_divList.style.width = Math.max(baseWidth,newWidth1);
+        fc_divList.style.height = 250; //下拉高度固定为 250.
+        fc_divList.style.display = "";
+        iframeWinPos();
+
+        sPubFieldCol = FieldNameList; //逗号分隔的字段名,用于字段同名传递
+        
+     //   fc_divTreeButton.style.top = parseInt(fc_divList.style.top) + parseInt(fc_divList.offsetHeight) - parseInt(fc_divTreeButton.offsetHeight);
+     //   fc_divTreeButton.style.left = parseInt(fc_divList.style.left) + 1;
+     //   fc_divTreeButton.style.display = "";
+        return;
+    
+    }
+
+	//alert("bb")
+//	fc_divList.style.display ="none";
+//	fc_cmdCz_onclick();
+
+	    //当前sql语句
+	    runtimesql=sSql1; 
+	    //替代打开的sql语句
+	    runtimesql = RepOpenSql(sSql1,fc_txtName.value);
+		strX=fc_txtName.value;
+		runtimetext=fc_txtName.value;
+		Strsend="<percolnum>"+perpagenum+"</percolnum><sql>"+runtimesql+"</sql><strValue>"+strX+"</strValue><perpagerownum>"+perpagerownum+"</perpagerownum><showcheckbox>"+showcheckbox+"</showcheckbox><blnempty>"+mblnempty+"</blnempty><addrow>"+maddrow+"</addrow>";
+		//显示页号的文本框的值
+		currentpage.value =perpagenum;
+		if(mxml=="" || mxml==null ) {
+			if(runtimesql==""){
+				//显示参照表格并计算其位置
+				fc_divList.style.display ="block";
+				//alert("empty");
+				return;
+			}else {
+				var sDsn = "" ;
+				if(IsSpace(datasourceName) == false) sDsn = "&datasourceName="+datasourceName;
+				//用SQL语句生成数据
+				sXml=new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=sqltoxml"+sDsn,Strsend);
+			}
+		}else{
+			//直接的数据源
+			var s1="<root>"+mxml;
+			//是否有多选属性
+			if(showcheckbox==true){
+				s1=RepStr(s1,"</tr>","<td><input type='checkbox' style='width:20px;'></input></td></tr>");
+			}
+			//生成数据
+			//alert(s1)
+			sXml=s1+"<pagenumber>1</pagenumber><intpage>1</intpage></root>";
+			
+		}
+
+		//初实化函数
+		init();
+
+}
+/**
+*@para obj 树控件的HTML中的对象
+* 取树控件的选中的值 2011-01-11
+**/
+function getTreeSelNodeValue() {
+    var objRet = null;
+    var obj = window.frames("fc_ifra").$id("dropdownTree");
+    var sValue = "";
+    var sCode = "";
+
+    if (obj.ischecked == "1" || obj.ischecked == "是") {
+        var arr = window.frames("fc_ifra").TreeGetMultiValue(obj);
+        if (arr != null) {
+            for (var i = 0; i < arr.length; i++) {
+                sCode += arr[i].code + ",";
+                sValue += arr[i].text + ",";
+            }
+            if (arr.length > 0) {
+                sCode = sCode.substring(0, sCode.length - 1);
+                sValue = sValue.substring(0, sValue.length - 1);
+            }
+            objRet = [sValue, sCode];
+        } 
+
+    } else {
+        objRet = [window.frames("fc_ifra").Global.selectedItem.text, window.frames("fc_ifra").Global.selectedItem.code];
+    }
+    return objRet;
+}
+
+/**
+* 下拉树控件时,返回函数
+**/
+function treeReturn() {
+    var oEvent = window.frames("fc_ifra").event.srcElement;
+    //alert(oEvent.outerHTML);
+    if (oEvent.tagName != "A") {
+        
+        //alert(window.frames("fc_ifra").getTreeSelNodeValue()[0])
+        return;
+    }
+    var arrValues = getTreeSelNodeValue();
+    if (arrValues == null) return;
+    var bool = CopyFieldsValue(arrValues);
+    //if (bool == false) {
+        fc_txtName.value = arrValues[0];
+    //}
+    
+    fc_divList.style.display = "none";
+    fc_divList.innerHTML = "";
+    //将改变后的值传到前面
+    var oEvent = createEventObject();
+    oEvent.afterchangevalue = fc_txtName.value;
+    //oEvent.returnxml = strXML;
+    //选择填写事件
+    onchangeID.fire(oEvent);
+    //选择事件
+    onselchangeID.fire(oEvent);
+
+    //将参照的选择事件穿过WebGrid传到页面
+    if (oEvent.position == 88) {
+        window.setTimeout("try {fc_czselchange()} catch (e) {} ", 10);
+    }
+    
+        fc_txtName.focus();
+    
+    
+}
+function fnTest() {
+	//alert("oncontentReady");
+}
+
+</SCRIPT>

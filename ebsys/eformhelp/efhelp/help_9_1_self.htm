@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>引入自己的css文件</title>
+ <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";
+	        margin-left: 0cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+    </head>
+
+<body leftmargin="0" topmargin="0">
+    <table  class="tableTitle">
+        <tr><td class="title">  引入自己的css文件</td></tr>
+        <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+        </tr>
+    </table>
+   <div  class=mainDiv>
+   <div class="divTitle">1.添加或引用后所有表单都能使用</div>
+   <div class="divTitle">1.1 给fcpub.js中的fcpubdata的cssFiles属性赋值引入自己的css文件</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可以在fcpub.js的fcpubdata的cssFiles属性中引入,如果引入多个样式文件用逗号隔开,在这引入的css文件,eform中的表单都能调用到它的样式.如下图<br /><img  src ="images/help_9_1_1.gif"/><div class="divTitle">1.2在dj.css文件中添加css样式</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在ebsys/fceform/css/dj.css样式文件中添加你的css样式,eform中的所有表单都能应用到dj.css文件的样式,所以你在dj.css中添加的样式,所有表单都能引用到.
+    <div class="divTitle">2. 在表单的附加页面中定义样式只有当前表单能用</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       在表单的附加页面中定义的样式只有当前表单能用,如果双击控件,打开控件的属性窗口,选择设置了字体大小,颜色后,附加页面的的样式将不起作用,因为引用类名(class)没有在控件的属性窗口中选择产生的style=&quot;font-size:12px&quot;优先级高.定义样式界面如下:&lt;br&gt;<br /><img  src ="images/help_9_1_2.gif"/><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在控件属性页中可以直接输入类名,来设置控件的样式,或者在属性中定义类名.如下图 <br /><img  src ="images/help_9_1_3.gif"/>
+       <div class="divTitle">3. 引入自己的js文件</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 增加函数方式如下:<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;1 此函数只是当前表单用,可以直接在此表单的自定义函数中写即可. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 此函数是所有的表单共用.因为默认情况下所有的表单都引用了 fceformext/js/userfunc.js 文件.
+所以可以将函数加到 fceformext/js/userfunc.js 文件中.<br />  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 在fceformext/js/userfunc.js文件中直接引入自己的一个js文件.<p class="MsoNormal">
+           <span lang="EN-US" style="font-size:9.0pt;color:navy">// load some scripts 
+           (function() { var scripts = [ fcpubdata.Path + &quot;/fceform/js/fcvalid.js&quot; ]; var 
+           head = document.getElementsByTagName(&quot;head&quot;)[0]; for (var i = 0; i &lt; 
+           scripts.length; ++i) { var script = document.createElement(&quot;script&quot;); script.src 
+           = scripts[i]; head.appendChild(script); } })();<o:p></o:p></span></p>
+       <p class="MsoNormal">
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">&nbsp;&nbsp;&nbsp;
+           可以将上述代码写</span><span lang="EN-US" style="color:black;mso-themecolor:text1">function
+           </span>
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">的外面就可以引入的。</span><span 
+               lang="EN-US" style="color:black;mso-themecolor:text1"><o:p></o:p></span></p>
+       <p class="MsoNormal">
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">&nbsp;&nbsp;&nbsp; 上述代码是在</span><span 
+               lang="EN-US"> fcpub.js </span>
+           <span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;
+mso-themecolor:text1">中引入</span><span lang="EN-US"> /fceform/js/fcvalid.js </span>
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">的代码。你只要按这个样子写就行了</span></p>
+       <p class="MsoNormal">
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">&nbsp;&nbsp;&nbsp; 把那段代码拷到</span><span 
+               lang="EN-US">userfunc.js</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;
+mso-themecolor:text1">文件中？里面</span><span lang="EN-US">fcvalid.js</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">改成我自己写的</span><span 
+               lang="EN-US" style="color:black;mso-themecolor:text1">js</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">文件</span><span lang="EN-US">. </span></p>
+       <p class="MsoNormal">
+           <span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">&nbsp;&nbsp;&nbsp; 如果是多个，</span>
+           <span lang="EN-US">[ fcpubdata.Path + &quot;/fceform/js/fcvalid.js&quot; , fcpubdata.Path 
+           + &quot;/fceform/js/fcvalid.js&quot;],</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">中间加个</span><span 
+               lang="EN-US" style="color:black;mso-themecolor:text1">“,”</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">分开</span><span lang="EN-US">.</span></p>
+       <div class="divTitle">4. eform表单中的自定义函数能写那些东西</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在eform的自定义函数页面,所有js的东西都可以写,eform就是将自定义函数中写的所有东西外加上〈script〉 〈/script〉 后放到页面的body中的.所以在页面上的
+     
+       <span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:
+12.0pt;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;mso-fareast-font-family:宋体;
+mso-font-kerning:1.0pt;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
+mso-bidi-language:AR-SA">&lt;script&gt;中写的东西都可以写.</span></div>
+</html>
+       .

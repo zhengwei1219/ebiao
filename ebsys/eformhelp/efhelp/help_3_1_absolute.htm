@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>表单绝对定位布局</title>
+ <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ </head>
+
+<body leftmargin="0" topmargin="0">
+<table  class="tableTitle">
+<tr><td class="title">  
+    表单绝对定位布局</td>
+ </tr>
+  <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>
+         返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>  
+</table>
+  <div  class=mainDiv>
+  <div class="divTitle">1. 绝对定位</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;绝对定位是指控件的style.position="absolute",每个控件都有一个绝对的坐标,不受其它控件的影响,在表单设计器了可以自由拖拉控件,调整控件的大小及位置。也可以一次选中多个控件来一起调整。使用绝对定位的控件,当有一个以上控件的时候可以用对齐面板工具,执行左对齐,右对齐,上对齐,下对齐等等.还可以通过Ctrl键加上下左右键进行控件位置的微调,一次调一个像素.用shift键加方向键来微调控件的大小.在一个DIV这样的容器中放置了控件时，如在已选中DIV的情况下要选中里面的控件，则应先取消DIV的选中状态后，再直接点击DIV里面的控件来选中。绝对定位的优点是它很直观,很自由,可以直接拖.它的缺点是不会自动根据窗口和其它控件的大小位置来伸缩.
+    <br />
+    <img  src ="images/help_3_1_1.gif"/><br />
+    &nbsp;&nbsp;&nbsp;为了减少摆放控件的工作量，可以用 <a class="shili"  href='../../zk/common/wizardmain.htm'>用向导新建表单</a> 来建表单，来快速生成控件的位置。</br>
+    &nbsp;&nbsp;&nbsp;对于绝对定位的控件,不会自动根据窗口和其它控件的大小位置来伸缩的缺点，提供了自动布局的方法,例如设置控件居右边框多少像素或设置百分比,设置一个text控件,水平对齐,居窗口右边边框19像素,还有一个div控件垂直居中,离窗口下边50像素,如下图：<br />
+  <img  src ="images/help_3_1_2.gif"/>  <img  src ="images/help_3_1_3.gif"/> <br />
+ &nbsp;&nbsp;
+ 下面是一个运行界面：<br />
+ <img  src ="images/help_3_1_4.gif"/><br /><div class="divTitle">2. 引入table</div>&nbsp;&nbsp;&nbsp; 把在其它网页编辑工具中画好的table复制到eform设计器的html中<br /><img  src ="images/help_3_1_7.gif"/><br />&nbsp;&nbsp;&nbsp; 单击eform设计界面左下角的设计图片,进入设计状态。</br>
+ <img  src ="images/help_3_1_5.gif"/> <br />
+ &nbsp;&nbsp;&nbsp; 在设计器中通过拖拉控件来摆放控件的位置,相当于用外部网页工具产生的html界面作为底图，在其上摆放eform表单设计器中的控件，以避开在eform表单设计器中进行复杂的静态网页样式的设计。<br /><img  src ="images/help_3_1_6.gif"/> 
+ 
+           &nbsp;&nbsp;&nbsp;
+ 
+    
+</div>
+</body>
+</html>

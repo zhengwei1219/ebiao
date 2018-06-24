@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_leave_apply</meta>
+  <meta name="bs_desc_field">remark</meta>
+  <meta name="bs_id_field">leave_id</meta>
+  <initial-actions>
+    <action id="205" name="初始化动作">
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="9133" old-status="Finished" status="Underway" step="8525" owner="${caller}" ownername="执行者(caller)"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="3809" name="结束节点">
+    </step>
+    <step id="8525" name="填写步骤">
+      <actions>
+        <action id="7020" name="填写动作" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_new%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">仅允许的所有者条件</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="5498" old-status="Finished" status="Underway" step="3001">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将执行者保存到Caller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3001" name="审核步骤">
+      <tasks>
+        <task name="审核 ${oCaller.name}  的报销单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">部门经理</arg>
+          <arg name="taskTypeChn"></arg>
+          <arg name="taskType"></arg>
+          <arg name="role">ROL00000003</arg>
+          <arg name="stepId">3001</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="8180" name="审核通过" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_two_action_check%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="rolename">部门经理</arg>
+                <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+                <arg name="role">ROL00000003</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="5030" old-status="Finished" status="Underway" step="3809"/>
+          </results>
+        </action>
+        <action id="5754" name="审核拒绝" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_two_action_check%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="rolename">部门经理</arg>
+                <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+                <arg name="role">ROL00000003</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="1288" old-status="Finished" status="Underway" step="8525" owner="${mostRecentOwner}" ownername="步骤所有者(mostRecentOwner)">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的所有者保存到变量mostRecentOwner</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentOwner</arg>
+                  <arg name="stepchn">填写步骤</arg>
+                  <arg name="stepId">8525</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

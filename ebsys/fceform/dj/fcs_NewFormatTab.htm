@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//初实化函数
+function uf_open() {
+	SetRadioValue(rdoNewTab,'1')
+	NumEdit1.value = 5 ;
+	NumEdit2.value = 2;
+	NumEdit1.style.display = "none";
+	NumEdit2.style.display = "none";
+	Label2.style.display = "none" ;
+	Label3.style.display = "none" ;
+	SKDBRadioGroup2.style.display = "none"
+	Label4.style.top = "98"	
+	Image1.style.top= "119"
+	Image1.src = "../images/ef_run_FormatTab5.gif";
+	PropWinOnload();
+}
+//rdo控件选择表格样式图片
+function uf_SelNewTab() {
+	Image1.style.width = "315" ;
+	Image1.style.height = "52";
+	if(rdoNewTab.value == 5){
+		NumEdit1.style.display = "block";
+		NumEdit2.style.display = "block";
+		Label2.style.display = "block" ;
+		Label3.style.display = "block" ;
+		SKDBRadioGroup2.style.display = "block"
+		SetRadioValue(SKDBRadioGroup2,'1')
+		Label4.style.top = "171"	
+		Image1.style.top= "189"
+	}else{
+		NumEdit1.style.display = "none";
+		NumEdit2.style.display = "none";
+		Label2.style.display = "none" ;
+		Label3.style.display = "none" ;
+		SKDBRadioGroup2.style.display = "none"
+		Label4.style.top = "98"	
+		Image1.style.top= "119"
+	}
+	switch(rdoNewTab.value){
+		case '1':{
+			Image1.src = "../images/ef_run_FormatTab5.gif"
+			break;
+		}
+		case '2':{
+			Image1.src = "../images/ef_run_FormatTab1.gif"
+			break;
+		}
+		case '3':{
+			Image1.src = "../images/ef_run_FormatTab2.gif";
+			break;
+		}
+		case '4':{
+			Image1.src = "../images/ef_run_FormatTab3.gif" ;
+			break;
+		}
+		case '5':{
+			Image1.src = "../images/ef_run_FormatTab4.gif" ;
+			
+			break;
+		}
+		
+	}
+
+}
+function uf_SelTab() {
+	Image1.style.width = "350" ;
+	Image1.style.height = "110";
+	switch(SKDBRadioGroup2.value){
+		case '1':{
+			Image1.style.width = "315" ;
+			Image1.style.height = "52";
+			Image1.src = "../images/ef_run_FormatTab4.gif"
+			break;
+		}
+		case '2':{
+			Image1.src = "../images/ef_run_tab2.gif"
+			break;		
+		}
+		case '3':{
+			Image1.src = "../images/ef_run_tab3.gif"
+			break;		
+		}
+		case '4':{
+			Image1.src = "../images/ef_run_tab4.gif"
+			break;		
+		}
+		case '5':{
+			Image1.src = "../images/ef_run_tab5.gif"
+			break;		
+		}
+	}
+}
+//点击确定函数
+function uf_ok() {
+	var sHtml = "" ;
+	var sclassNameValue = ""
+	if(rdoNewTab.value == 5) {
+		switch(SKDBRadioGroup2.value){
+			case '1':{
+				sclassNameValue = "FormatTab" ;
+				break;
+			}
+			case '2':{
+				sclassNameValue = "TableTitle";
+				break;
+			}
+			case '3':{
+				sclassNameValue = "TableTitle1"
+				break;
+			}
+			case '4':{
+				sclassNameValue = "TableTitle2";
+				break;
+			}
+			case '5':{
+				sclassNameValue = "TableTitle1";
+				break;
+			}
+		}
+	}else{
+		sclassNameValue = "FormatTab" ;
+	}
+	
+	sHtml += "<table class='"+sclassNameValue+"' cellSpacing=0 cellPadding=0  width='75%'>" ;
+	switch(rdoNewTab.value){
+		case '1':{
+			sHtml += "<tr><td width='100%' height='30' style='font-size:16px;' class='FormatTabTD'></td></tr><tr><td class='FormatTabTD' width='100%' height='30' style='font-size:12px;'></td></tr>"
+			break ;
+		}
+		case'2':{
+			sHtml += "<tr><td width='100%' class='FormatTabTD'></td></tr>" ;
+			break;
+		}
+		case '3':{
+			sHtml += "<tr><td width='50%' class='FormatTabTD'></td><td class='FormatTabTD' width='50%'></td></tr>" ;
+			break;
+		}
+		case '4':{
+			sHtml += "<tr><td width='34%' class='FormatTabTD'></td><td width='33%' class='FormatTabTD'></td><td width='33%'></td></tr>" ;
+			break;
+		}
+		case '5':{
+			var cssValue = "" ;
+			switch(SKDBRadioGroup2.value){
+				case '1':{
+					cssValue = "FormatTab" ;
+					break;
+				}
+				case '2':{
+					cssValue = "TdStyle";
+					break;
+				}
+				case '3':{
+					cssValue = "TdStyle1"
+					break;
+				}
+				case '4':{
+					cssValue = "TdStyle4";
+					break;
+				}
+				case '5':{
+					cssValue = "TdStyle3";
+					break;
+				}
+			}
+			for(var i=0; i<NumEdit2.value; i++) {
+				sHtml += "<tr>"
+				for(var k=0; k<NumEdit1.value; k++){
+					var sWid = 100/NumEdit1.value;
+				
+					if(i == 0 && k != 0) {
+						switch(SKDBRadioGroup2.value){
+							case '1':{
+								//sclassNameValue = "FormatTab";
+								sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='FormatTab'></td>"
+								break;
+							}
+							case '2':{
+								sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='TdStyle2'></td>"
+								break;
+							}
+							case '3':{
+								sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='TdStyle2'></td>"
+								break;
+							}
+							case '4':{
+								sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='TdStyle3'></td>"
+								break;
+							}
+							case '5':{
+								sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='TdStyle3'></td>"
+								break;
+							}
+						}
+					}else{
+						sHtml += "<td width='"+sWid+"%'  style='height:25px ' class='"+cssValue+"'></td>"
+					}
+				}
+				sHtml += "</tr>"
+			}
+			break;
+		}
+	}
+	sHtml += "</table>"
+	window.returnValue = sHtml ;
+	window.close();
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet ondrop=bill_ondrop() jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="340" poswidth="450" entertype="修改" codeheader="BBB" mkbh caption="新建版式表格" type="LR" dj_sn="fcs_NewFormatTab" billtaborder="<root><taborder>rdoNewTab</taborder><taborder>SKDBRadioGroup2</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>NumEdit1</taborder><taborder>NumEdit2</taborder></root>" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label3</id><id>Label4</id></label><radio><id>rdoNewTab</id><id>SKDBRadioGroup2</id></radio><img><id>Image1</id></img><button><id>cmdOk</id><id>cmdClose</id></button><spin><id>NumEdit1</id><id>NumEdit2</id></spin></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><FIELDSET style="POSITION: absolute; WIDTH: 414px; DISPLAY: block; HEIGHT: 51px; FONT-SIZE: 12px; TOP: 39px; LEFT: 10px; backgroundColor1: #ffffff" id=rdoNewTab onmovestart=moveStart() contentEditable=false onclick='bill_onclick("uf_SelNewTab()")' controltype="radio" value="-1" china temptext="带标题的表格&#13;&#10;一列表格&#13;&#10;两列表格&#13;&#10;三列表格&#13;&#10;自定义表格" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5" legend="插入版式表格" aspect="横向" readOnly="false"><LEGEND>插入版式表格</LEGEND><INPUT value=1 type=radio name=RGrdoNewTab text="带标题的表格"><SPAN onclick=RGrdoNewTab[0].checked=true;rdoNewTab.value=RGrdoNewTab[0].value;RGrdoNewTab[0].focus();>带标题的表格</SPAN>&nbsp;<INPUT value=2 type=radio name=RGrdoNewTab text="一列表格"><SPAN onclick=RGrdoNewTab[1].checked=true;rdoNewTab.value=RGrdoNewTab[1].value;RGrdoNewTab[1].focus();>一列表格</SPAN>&nbsp;<INPUT value=3 type=radio name=RGrdoNewTab text="两列表格"><SPAN onclick=RGrdoNewTab[2].checked=true;rdoNewTab.value=RGrdoNewTab[2].value;RGrdoNewTab[2].focus();>两列表格</SPAN>&nbsp;<INPUT value=4 type=radio name=RGrdoNewTab text="三列表格"><SPAN onclick=RGrdoNewTab[3].checked=true;rdoNewTab.value=RGrdoNewTab[3].value;RGrdoNewTab[3].focus();>三列表格</SPAN>&nbsp;<INPUT value=5 type=radio name=RGrdoNewTab text="自定义表格"><SPAN onclick=RGrdoNewTab[4].checked=true;rdoNewTab.value=RGrdoNewTab[4].value;RGrdoNewTab[4].focus();>自定义表格</SPAN>&nbsp;</FIELDSET> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 24px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 10px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 8px; backgroundColor1: #c0c0c0" id=Label1 onmovestart=moveStart() noWrap controltype="label" value="Label1">版式表格</DIV><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 13px; LEFT: 260px" id=cmdOk onmovestart=moveStart() onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 13px; LEFT: 343px" id=cmdClose onmovestart=moveStart() onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 145px; LEFT: 15px" id=Label2 onmovestart=moveStart() noWrap controltype="label" value="Label2">行数:</DIV>
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 146px; LEFT: 121px" id=Label3 onmovestart=moveStart() noWrap controltype="label" value="Label3">列数:</DIV>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 140px; LEFT: 151px; align: left" id=NumEdit1 class=xpSpin align=left field="undefined" dataset="undefined" controltype="spin" value="" width="70px" height="22px" top="140px" left="151px" enabled="否" NextNum="1" Max="32000" Min="1" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 140px; LEFT: 45px; align: left" id=NumEdit2 class=xpSpin align=left field="undefined" dataset="undefined" controltype="spin" value="" width="70px" height="22px" top="140px" left="45px" enabled="否" NextNum="1" Max="32000" Min="1" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px"></DIV><IMG style="POSITION: absolute; WIDTH: 315px; DISPLAY: block; HEIGHT: 52px; TOP: 164px; LEFT: 12px" id=Image1 onmovestart=moveStart() src="http://localhost/WebBill/bill/design/pic/" controltype="img" srcsk> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 145px; LEFT: 12px" id=Label4 onmovestart=moveStart() noWrap controltype="label" value="Label4">表格样式图:</DIV>
+<FIELDSET style="POSITION: absolute; WIDTH: 307px; DISPLAY: block; HEIGHT: 45px; FONT-SIZE: 12px; TOP: 91px; LEFT: 12px; backgroundColor1: #ffffff" id=SKDBRadioGroup2 onmovestart=moveStart() contentEditable=false onclick='bill_onclick("uf_SelTab()")' controltype="radio" value="-1" china temptext="普通表格&#13;&#10;表格1&#13;&#10;表格2&#13;&#10;表格3&#13;&#10;表格4" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5" legend="表格样式" aspect="横向" readOnly="false"><LEGEND>表格样式</LEGEND><INPUT value=1 type=radio name=RGSKDBRadioGroup2 text="普通表格"><SPAN onclick=RGSKDBRadioGroup2[0].checked=true;SKDBRadioGroup2.value=RGSKDBRadioGroup2[0].value;RGSKDBRadioGroup2[0].focus();>普通表格</SPAN>&nbsp;<INPUT value=2 type=radio name=RGSKDBRadioGroup2 text="表格1"><SPAN onclick=RGSKDBRadioGroup2[1].checked=true;SKDBRadioGroup2.value=RGSKDBRadioGroup2[1].value;RGSKDBRadioGroup2[1].focus();>表格1</SPAN>&nbsp;<INPUT value=3 type=radio name=RGSKDBRadioGroup2 text="表格2"><SPAN onclick=RGSKDBRadioGroup2[2].checked=true;SKDBRadioGroup2.value=RGSKDBRadioGroup2[2].value;RGSKDBRadioGroup2[2].focus();>表格2</SPAN>&nbsp;<INPUT value=4 type=radio name=RGSKDBRadioGroup2 text="表格3"><SPAN onclick=RGSKDBRadioGroup2[3].checked=true;SKDBRadioGroup2.value=RGSKDBRadioGroup2[3].value;RGSKDBRadioGroup2[3].focus();>表格3</SPAN>&nbsp;<INPUT value=5 type=radio name=RGSKDBRadioGroup2 text="表格4"><SPAN onclick=RGSKDBRadioGroup2[4].checked=true;SKDBRadioGroup2.value=RGSKDBRadioGroup2[4].value;RGSKDBRadioGroup2[4].focus();>表格4</SPAN>&nbsp;</FIELDSET></DIV></body></html>

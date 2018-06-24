@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" /> 
+        <title>eWorkflow 移动登录</title>
+        <link rel="stylesheet" href="login_m.css" type="text/css"/>
+		<script type="text/javascript" src="../fceform/js/MicrosoftAjax.js"></script>
+		<script type="text/javascript" src="../fceform/js/fcpub.js"></script>
+		<script type="text/javascript" src="../fceform/js/csjsrequest.js"></script>
+		        
+		<script type="text/javascript" >
+		function login(){
+		    var usercode = txtUsercode.value;
+			var password = txtPassword.value;
+			var sXml = "<userName>" + usercode + "</userName><Password>" + password + "</Password><checkCode></checkCode>";
+		    var retValue = SendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=loginPassword", sXml);
+
+		    if (retValue == "ok") {		    	
+		    	 var ipad = Request.QueryString('ipad').toString();
+		    	 var mainUrl = location.protocol + "//" + location.host + fcpubdata.path + "/mobile/main.htm";
+		    	 //将登陆页名称传入，备退出时使用
+		    	 mainUrl += "?suffix=htm";
+
+		    	 if (!IsSpace(ipad) && ipad=="1")//是平板登录
+			    	 mainUrl +="&ipad=1";
+		    	 window.open(mainUrl,"_self");
+		    }
+		    else{
+		    	 alert(retValue);
+			}
+		}
+		function on_load(){
+		    txtUsercode.focus();
+		}
+		</script>         
+    </head>
+
+    <body onload="on_load();">
+   
+    	<div class="header"><div class="htitle">eworkflow登录</div></div>
+		<div class="container">
+	   
+				<div class="div_login">
+					<span><b>用户：</b></span><br/>
+					<input id="txtUsercode" type="text" value=""/><br/>	
+					<br/>		
+					<span><b>密码：</b></span><br/>
+					<input id="txtPassword" type="password" value="" /><br/>
+					<br/>
+				</div>
+				<div class="div_but" align="center">
+				<button class="loginBtn" onclick="login()">登 录</button>						
+				</div>
+			
+		</div>  
+		<div class="footer">
+	    	<a href="login.htm">手机登录</a><span style="margin:0 10px;">|</span><a href="login.htm?ipad=1">平板登录</a>
+	    	<div class="gray">Copyright &copy; 2013 www.fcsoft.com.cn</div>
+	    </div>    
+
+    </body>
+</html>

@@ -1,0 +1,548 @@
+<HTML>
+<HEAD>
+<TITLE>计算器</TITLE>
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=GB2312">
+<META NAME="description" CONTENT="EniG. Scientific Calculator is a fully-functioning JavaScript calculator that contain of practically any common and many advanced calculator functions: cosine, sine, tangent, power, square root, exponents, round numbers, etc.">
+<META NAME="keywords" CONTENT="javascript program scientific calculator mathematic sine cosine tangent power root logarithm percent memory round numbers">
+<META NAME="author" CONTENT="Eni Generalic (Department of Analitical Chemistry, Faculty of Chemical Technology, 21000 Split, Teslina 10, Croatia)">
+<META HTTP-EQUIV="reply-to" CONTENT="eni@ktf-split.hr">
+<script language=javascript>
+<!--
+// Scientific Calculator written by Eni Generalic - http://www.ktf-split.hr/~eni/
+// If you use a variant of this in your page, then please email me (eni@ktf-split.hr)
+
+var broj = "0"
+var tocka = 0
+var eksp = 0
+var eksponent = 3
+var rjesenje = 0
+var decimala = 0
+var enter = "";
+
+
+function memory(operator) {
+
+	document.racunalo.zadatak.focus();
+
+	if (operator == 1) {		// MS 
+		document.racunalo.memorija.value = document.racunalo.rezultat.value
+	}
+	else if (operator == 2)	{	// MR
+		var memorija = document.racunalo.memorija.value;
+		if (memorija==0 || slovo(memorija.charAt(0))) {memorija = ""};
+		document.racunalo.zadatak.value += memorija
+	}
+	else if (operator == 3) {	// CLS
+		if (document.racunalo.zadatak.value == "") {
+			document.racunalo.rezultat.value = ""
+		}
+		else {
+			document.racunalo.zadatak.value = ""
+		}
+	}
+}
+
+
+function display(noviznak) {
+	if (noviznak=="")
+		{document.racunalo.zadatak.focus()}
+	else
+		{document.racunalo.rezultat.select()}
+}
+
+
+function dodajBroj(noviznak) {
+	document.racunalo.zadatak.focus();
+	document.racunalo.zadatak.value += noviznak
+}
+
+
+function izracunaj(zarez) {
+	var pitanje = "";
+	var mem = 0;
+
+	if (zarez >= 1) {
+		if (document.racunalo.zadatak.value == "") {
+			broj = document.racunalo.rezultat.value
+		}
+		else {
+	 	broj = document.racunalo.zadatak.value;
+			if (ubacirezultat(broj.charAt(0))) {
+				broj = document.racunalo.rezultat.value + broj
+			}
+		}
+	}
+
+	for (var i=0; i<broj.length; i++) {
+		if (broj.charAt(i) == ",") {pitanje += "."}
+		else if (broj.charAt(i) == " ") {}
+		else {pitanje += broj.charAt(i)}
+	}
+
+	if (operator(broj.charAt(broj.length-1))) {return false};
+	
+	try{
+		pitanje = eval("1*" + pitanje);
+	} catch (e) { pitanje =0 }
+	if (zarez > 1) {
+		pitanje = matematika(zarez, pitanje)
+	}
+
+	document.racunalo.oldrezultat.value = pitanje;
+
+	zaokruzi(pitanje);
+
+	document.racunalo.zadatak.value = "";
+	document.racunalo.zadatak.focus()
+}
+
+
+function matematika(zarez, rjesenje) {
+with (Math)
+{
+	if (zarez == 2) {
+		rjesenje = pow(rjesenje, 2)
+	}
+	else if (zarez == 3) {
+		rjesenje = sqrt(rjesenje)
+	}
+	else if (zarez == 4) {
+		rjesenje = -rjesenje
+	}
+	else if (zarez == 5) {
+		rjesenje = log(rjesenje)
+	}
+	else if (zarez == 6) {
+		rjesenje = pow(E, rjesenje)
+	}
+	else if (zarez == 7) {
+		rjesenje = 1/rjesenje
+	}
+	else if (zarez == 8) {
+		rjesenje = log(rjesenje)/LN10
+	}
+	else if (zarez == 9) {
+		rjesenje = pow(10, rjesenje)
+	}
+	else if (zarez >= 10 && zarez <= 12) {
+		if (zarez == 10) {
+			rjesenje = atan(rjesenje)
+		}
+		else if (zarez == 11) {
+			rjesenje = acos(rjesenje)
+		}
+		else if (zarez == 12) {
+			rjesenje = asin(rjesenje)
+		}
+
+		if (document.racunalo.stupnjevi[1].checked) {rjesenje = (rjesenje * 180) / PI}
+	}
+	else if (zarez >= 14 && zarez <= 16) {
+		if (document.racunalo.stupnjevi[1].checked)
+			{radijani = (rjesenje / 180) * PI}
+		else
+			{radijani = rjesenje};
+
+		if (zarez == 14) {
+			rjesenje = tan(radijani)
+		}
+		else if (zarez == 15) {
+			rjesenje = cos(radijani)
+		}
+		else if (zarez == 16) {
+			rjesenje = sin(radijani)
+		}
+	}
+	else if (zarez == 17) {
+		rjesenje = rjesenje/100
+	}
+	else if (zarez == 18) {
+		rjesenje = rjesenje/1000000
+	}
+	else if (zarez == 20) {
+		rjesenje = factorial(rjesenje)
+	}
+	else if (zarez == 21) {
+		eksponent = prompt("Unesite eksponent / Please enter exponent", 3);
+		rjesenje = pow(rjesenje, eksponent)
+	}
+	else if (zarez == 22) {
+		eksponent = prompt("Unesite korijen / Please enter root", 3);
+		rjesenje = pow(rjesenje, (1/eksponent))
+	}
+	return rjesenje
+}
+}
+
+
+function zaokruzi(ebroj) {
+
+decimala=parseFloat(document.racunalo.izaZareza.options[document.racunalo.izaZareza.selectedIndex].value);
+	var strbroj = ebroj + " ";
+	if (strbroj.charAt(0) == ".") {strbroj = "0" + strbroj};
+	var intbroj = strbroj.length - 1;
+	deczarez(strbroj);
+
+	if (intbroj > 16 && eksp == -1) {
+		if (decimala == -1) {decimala = 14};
+		strbroj = izazareza(strbroj.substring(0,intbroj)) + " ";
+		intbroj = strbroj.length - 1;
+		deczarez(strbroj)
+	}
+
+	if (decimala >= 0 && decimala != 14) {
+		if (tocka > 0) {
+			var odgovor = izazareza(strbroj.substring(0,intbroj))
+		}
+		else {
+			ebroj = strbroj.substring(0,intbroj);
+			if (decimala > 0) {
+				ebroj += ".";
+				for (var n = 0; n < decimala; n++) {
+					ebroj += "0"
+				}
+			}
+			var odgovor = ebroj
+		}
+	}
+	else {
+		decimala = 14;
+		var odgovor = izazareza(strbroj)
+	}
+
+	if (odgovor.charAt(0) == ".") {odgovor = "0" + odgovor};
+
+	document.racunalo.rezultat.value = odgovor;
+}
+
+
+function deczarez(novibroj) {
+	tocka = 0;
+	eksp = 0;
+
+	tocka = novibroj.indexOf(".");
+	eksp = novibroj.indexOf("e")
+}
+
+
+function izazareza(novibroj) {
+with (Math) {
+
+	if (eksp == -1) {
+		var duzina = tocka;
+		if (duzina == -1) {duzina = novibroj.length};
+		var desni = "";
+
+		if (duzina > 16) {
+			var privremeni = round(novibroj*pow(10, 18)) + " ";
+			var novie = privremeni.indexOf("e");
+			var lijevi = (privremeni.substring(0,novie));
+
+			lijevi = round(lijevi*pow(10, 15))/pow(10, 15) + " ";
+			desni = (privremeni.substring(novie+2,privremeni.length-1));
+			desni = "e+" + (desni-18)
+		}
+		else {
+			var lijevi = round(novibroj*pow(10, decimala))/pow(10, decimala) + " "
+		}
+	}
+	else {
+		var lijevi = novibroj.substring(0,eksp);
+		var desni = novibroj.substring(eksp,novibroj.length);
+
+		lijevi = round(lijevi*pow(10, decimala))/pow(10, decimala) + " "
+	}
+
+	lijevi = lijevi.substring(0,lijevi.length - 1);
+
+	if (lijevi.charAt(0) == ".") {lijevi = "0" + lijevi};
+
+	if (decimala < 14) {
+		if (lijevi.indexOf(".") == -1 && decimala != 0) {lijevi += "."};
+		var nula = (tocka + decimala) - (lijevi.length - 1);
+		if (nula > 0 && decimala > 0) {
+			for (var n = 0; n < nula; n++) {
+				lijevi += "0"
+			}
+		}
+	}
+	return (lijevi + " " + desni)
+}
+}
+
+
+function factorial(n) {
+	if ((n == 0) || (n == 1)) {
+		return 1
+	}
+	else {
+		var odgovor = (n * factorial(n-1));
+		return odgovor
+	}
+}
+
+
+function slovo(znak) {
+	var slovo="(ABCDEFGHIKLMNOPRSTUVWXYZ";
+	for (var i=0; i<slovo.length; i++)
+		if (znak == slovo.charAt(i)) {return true} {return false}
+}
+
+
+function operator(znak) {
+	var matoperator="*/+-";
+	for (var i=0; i<matoperator.length; i++)
+		if (znak == matoperator.charAt(i)) {return true}
+	return false
+}
+
+function ubacirezultat(znak) {
+	var ubacirezultat="*/+";
+	for (var i=0; i<ubacirezultat.length; i++)
+		if (znak == ubacirezultat.charAt(i)) {return true}
+	return false
+}
+
+/**
+*返回值
+*@date 2004-01-09
+**/
+function setdata(){
+	
+	//执行等号
+	izracunaj(1)
+	
+	window.returnValue=racunalo.rezultat.value
+	self.close()
+}
+function getdata() {
+	racunalo.zadatak.value =window.dialogArguments
+}
+
+//Eni Generalic, Split, Create: 1999/10/14; Update: 2001/12/10
+-->
+</script>
+
+<style>
+<!--
+	a:link {color: #0000CC; text-decoration: none}
+	a:visited {color: #0000CC; text-decoration: none} 
+	a:hover {color: #123456; text-decoration: none}
+	body, td, th {font-family: "Arial", "Verdana"; font-size: 10pt}
+-->
+</style>
+</HEAD>
+
+<BODY TEXT="#234567" BGCOLOR="#EEEEEE" LINK="#0000CC" VLINK="#0000CC" ALINK="#0000FF" onLoad="document.racunalo.zadatak.focus()">
+<FORM NAME="racunalo">
+<INPUT TYPE="hidden" NAME="oldrezultat" VALUE="">
+<INPUT TYPE="hidden" NAME="memorija" VALUE="">
+
+<TABLE BORDER=4 CELLSPACING=0 CELLPADDING=1 ALIGN=CENTER BGCOLOR="#EFEFEF" WIDTH="280">
+<TR> 
+<TD ALIGN="center" VALIGN="middle"> 
+<TABLE BORDER=2 WIDTH="100%" CELLSPACING=3 CELLPADDING=1 BGCOLOR="#CCCCCC">
+<TR> 
+<TD ALIGN=CENTER VALIGN=MIDDLE WIDTH="100%" BGCOLOR="#EFEFEF"> 
+<INPUT TYPE="text" SIZE="13" NAME="rezultat" VALUE="" onFocus="display(document.racunalo.rezultat.value)" STYLE="BACKGROUND: #EFEFEF; FONT-SIZE: 14pt; HEIGHT: 30px; WIDTH: 260px">
+</TD>
+</TR>
+</TABLE>
+
+<TABLE BORDER=2 CELLSPACING=3 CELLPADDING=0 BGCOLOR="#EFEFEF">
+<TR> 
+<TD COLSPAN=3 ALIGN=left VALIGN=CENTER><NOBR><FONT> 小数位数: 
+<SELECT NAME=izaZareza SIZE="1" onChange="if (document.racunalo.oldrezultat.value != '') {zaokruzi(document.racunalo.oldrezultat.value)}; document.racunalo.zadatak.focus()">
+<OPTION VALUE=-1 SELECTED>不定</OPTION>
+<OPTION VALUE=0> 0 </OPTION>
+<OPTION VALUE=1> 1 </OPTION>
+<OPTION VALUE=2> 2 </OPTION>
+<OPTION VALUE=3> 3 </OPTION>
+<OPTION VALUE=4> 4 </OPTION>
+<OPTION VALUE=5> 5 </OPTION>
+<OPTION VALUE=6> 6 </OPTION>
+<OPTION VALUE=7> 7 </OPTION>
+<OPTION VALUE=8> 8 </OPTION>
+<OPTION VALUE=9> 9 </OPTION>
+<OPTION VALUE=10> 10 </OPTION>
+<OPTION VALUE=11> 11 </OPTION>
+<OPTION VALUE=12> 12 </OPTION>
+<OPTION VALUE=13> 13 </OPTION>
+<OPTION VALUE=14> 14 </OPTION>
+<OPTION VALUE=15> 15 </OPTION>
+</SELECT>
+</FONT><FONT SIZE="2" FACE="Arial" COLOR="#226622">
+<!--
+<INPUT TYPE="radio" NAME="stupnjevi" CHECKED TITLE="Radians" onClick="document.racunalo.zadatak.focus()"><A HREF="javascript:document.racunalo.stupnjevi[0].click()" onMouseOver="self.status='Radians'; return true">Rad</A><INPUT TYPE="radio" NAME="stupnjevi" TITLE="Stupnjevi" onClick="document.racunalo.zadatak.focus()"><A HREF="javascript:document.racunalo.stupnjevi[1].click()" onMouseOver="self.status='Degrees'; return true">Deg</A></FONT></NOBR></TD>
+<TD ALIGN=CENTER><A TITLE=" Eni Generalic " HREF="http://www.ktf-split.hr/~eni/" TARGET="myHome"><FONT FACE="Times" SIZE="2"><I><B>EniG.</B></I></FONT></A>
+-->
+</TD>
+<TD> 
+<INPUT HEIGHT="24" WIDTH="38" TYPE="button" NAME="Cls" VALUE="清空" TITLE="清空屏幕" onClick="memory(3)" STYLE="BACKGROUND: #EEEEEE; FONT-SIZE: 10pt; HEIGHT: 24px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="24" WIDTH="38" TYPE="button" VALUE="取数" TITLE="从界面上取数到计算器中!" onClick="getdata()" STYLE="BACKGROUND: #EEEEEE; FONT-SIZE: 10pt; HEIGHT: 24px; WIDTH: 38px">
+</TD>
+
+<TD> 
+<INPUT HEIGHT="24" WIDTH="38" TYPE="button" VALUE="回送" TITLE="将计算器的计算结果送回!" onClick="setdata()" STYLE="BACKGROUND: #EEEEEE; FONT-SIZE: 10pt; HEIGHT: 24px; WIDTH: 38px">
+</TD>
+
+</TR>
+<TR> 
+<TD COLSPAN=6></TD>
+</TR>
+<TR BGCOLOR="#EFEFEF"> 
+<TD ALIGN=CENTER VALIGN=MIDDLE WIDTH="100%" COLSPAN="6"><FONT COLOR="#0000FF" SIZE=3> 
+<INPUT TYPE="text" SIZE="17" NAME="zadatak" VALUE="" onChange="enter.click()" onKeyDown="if (event.keyCode==13) {enter.click()}" STYLE="FONT-SIZE: 10pt; FONT-WEIGHT: bold; HEIGHT: 25px; WIDTH: 260px">
+</FONT></TD>
+</TR>
+<!--
+<TR> 
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="sqrt" VALUE="sqrt" TITLE="Square root" onClick="izracunaj(3)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="root" VALUE="root" TITLE="Root" onClick="izracunaj(22)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="ln" VALUE="ln" TITLE="Natural logarithm" onClick="izracunaj(5)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="log" VALUE="log" TITLE="Common logarithm" onClick="izracunaj(8)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="tan" VALUE="tan" TITLE="Tangent" onClick="izracunaj(14)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="atan" VALUE="atan" TITLE="Arc tangent" onClick="izracunaj(10)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="kvadrat" VALUE="x^2" TITLE="Square" onClick="izracunaj(2)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="potencija" VALUE="x^y" TITLE="Power" onClick="izracunaj(21)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="aln" VALUE="e^x" TITLE="Natural antilogarithm" onClick="izracunaj(6)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="alog" VALUE="10^x" TITLE="Common antilogarithm" onClick="izracunaj(9)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="cos" VALUE="cos" TITLE="Cosine" onClick="izracunaj(15)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="acos" VALUE="acos" TITLE="Arc cosine" onClick="izracunaj(11)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 9pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="sign" VALUE="+/-" TITLE="Change sign" onClick="izracunaj(4)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="1/x" VALUE="1/x" onClick="izracunaj(7)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="fact" VALUE="x!" TITLE="Factorial" onClick="izracunaj(20)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<input height="28" width="38" type="button" name="PI" value="Pi" onClick="dodajBroj(Math.PI)" style="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="sin" VALUE="sin" TITLE="Sine" onClick="izracunaj(16)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="28" WIDTH="38" TYPE="button" NAME="asin" VALUE="asin" TITLE="Arc sine" onClick="izracunaj(12)" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 28px; WIDTH: 38px">
+</TD>
+</TR> -->
+<TR> 
+<TD COLSPAN=6></TD>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="7" VALUE="7" onClick="dodajBroj(7)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="8" VALUE="8" onClick="dodajBroj(8)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="9" VALUE="9" onClick="dodajBroj(9)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="djeljeno" VALUE="/" onClick="dodajBroj('/')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<td> 
+<input height="32" width="38" type="button" name="ppm" value="ppm" title="百万分之一" onClick="izracunaj(18)" style="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</td>
+<td> 
+<input height="32" width="38" type="button" name="MS" value="MS" title="临时保存值供以后调出使用" onClick="memory(1)" style="BACKGROUND: #EEEEEE; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</td>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="4" VALUE="4" onClick="dodajBroj(4)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="5" VALUE="5" onClick="dodajBroj(5)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="6" VALUE="6" onClick="dodajBroj(6)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="puta" VALUE="*" onClick="dodajBroj('*')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<td> 
+<input height="32" width="38" type="button" name="postotak" value="%" title="Percent" onClick="izracunaj(17)" style="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</td>
+<td> 
+<input height="32" width="38" type="button" name="MR" value="MR" title="调出保存值" onClick="memory(2)" style="BACKGROUND: #EEEEEE; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</td>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="1" VALUE="1" onClick="dodajBroj(1)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="2" VALUE="2" onClick="dodajBroj(2)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="3" VALUE="3" onClick="dodajBroj(3)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="minus" VALUE="-" onClick="dodajBroj('-')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="lijevo" VALUE="(" onClick="dodajBroj('(')" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="desno" VALUE=")" onClick="dodajBroj(')')" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+</TR>
+<TR> 
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="0" VALUE="0" onClick="dodajBroj(0)" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="." VALUE="." onClick="dodajBroj('.')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="exp" VALUE="E" onClick="dodajBroj('e')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 10pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD> 
+<INPUT HEIGHT="32" WIDTH="38" TYPE="button" NAME="plus" VALUE="+" onClick="dodajBroj('+')" STYLE="BACKGROUND: #DEDEDE; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 38px">
+</TD>
+<TD COLSPAN=2> 
+<INPUT HEIGHT="32" WIDTH="82" TYPE="button" NAME="enter" onClick="izracunaj(1)" VALUE="=" STYLE="BACKGROUND: #CDCDCD; FONT-SIZE: 12pt; HEIGHT: 32px; WIDTH: 83px">
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>
+

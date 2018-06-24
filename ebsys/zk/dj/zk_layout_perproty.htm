@@ -1,0 +1,231 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_Open(){
+	e_PropWinOnload();
+	SetTextValue(fcpubdata.obj[0].name, $id("txtDjsn"));
+	//SetTextValue(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/name").text, $id("txtDjsn"));
+	SetTextValue(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/chnname").text, $id("txtChnName"));
+	SetTextValue(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/classtable").text, $id("txtClassName"));
+	SetTextValue(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/styletable").text, $id("txtStyle"));
+	if(IsSpace(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isrunebiao").text) == false){
+		$id('comRunEbiao').value = fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isrunebiao").text;
+		if($id('comRunEbiao').value == "1"){
+			div1.style.display = "block";
+			SetCheckBoxValue($id("isPrint"), fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isprintfile").text);
+			SetCheckBoxValue($id("isFixRowCol"), fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isfixrowcol").text);
+			SetTextValue(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/showheight").text, $id("txtShowHeight"))		
+		}else{
+			var fixRow = 0;
+			if($id('comRunEbiao').value == "2") fixRow = 1;
+			div1.style.display = "none";
+			SetCheckBoxValue($id("isPrint"), 0);
+			SetCheckBoxValue($id("isFixRowCol"), fixRow )
+		}
+		
+	}else{
+		uf_hide();
+	}
+	if(IsSpace(fcpubdata.obj[0].isSaveFile == false)){
+		SetCheckBoxValue($id("isSaveFile"), fcpubdata.obj[0].isSaveFile);
+	}
+	if(IsSpace(fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/viewtype").text) == false){
+		SetRadioValue($id("viewType"), fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/viewtype").text);
+	}
+	uf_showViewHelp();//显示视图类型
+	var toolbarPermit = fcpubdata.obj[1].getAttribute("toolbarPermit")
+	if(IsSpace(toolbarPermit) == false){
+		var dsDom = SetDom("<root>"+unescape(toolbarPermit)+"</root>");
+		var trData = "";
+		for(var j=0;j<dsDom.documentElement.childNodes.length;j++){
+			var oDom = SetDom(dsDom.documentElement.childNodes[j].xml);
+			trData += "<tr><td>"+oDom.documentElement.getAttribute("id")+"</td><td>"+oDom.documentElement.getAttribute('controltype')+"</td><td>"+RepXml(dsDom.documentElement.childNodes[j].xml)+"</td></tr>";
+		}
+		var dsXml2 = dataset2.xml;
+		dsXml2 = "<root>"+ trData + dsXml2.substring(dsXml2.indexOf("<set><pages>"),dsXml2.length);
+		dataset2.OpenXmlData(dsXml2);
+	}
+}
+
+function uf_ok(){
+	
+	if(txtDjsn.value == ""){
+		alert("模板名不能为空");
+		return;
+	}
+	
+	if(txtChnName.value == ""){
+		txtChnName.value = txtDjsn.value;
+	}
+	if(div1.style.display == "block"){
+		var ret = IsInt($id('txtShowHeight').value);
+		if(ret == false){
+			alert('显示高度不是有效的整数');	
+			return;
+		}
+		
+	}else{
+		SetCheckBoxValue($id("isPrint"), '0');
+	}
+	var recordPermit = "";
+	var len = dataset2.oDom.documentElement.childNodes.length-1;	                   
+	if(len > 0){
+		// dsRecordData = escape(dataset2.RecordData); 
+		for(var i=0;i<len;i++){
+			recordPermit += dataset2.oDom.documentElement.childNodes[i].childNodes[2].text;	
+		}
+		recordPermit = escape(recordPermit);
+	}
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/name").text = $id("txtDjsn").value;
+	fcpubdata.obj[0].name = $id("txtDjsn").value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/chnname").text = $id("txtChnName").value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isprintfile").text = $id("isPrint").value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isrunebiao").text = $id("comRunEbiao").value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/classtable").text = $id('txtClassName').value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/styletable").text = $id('txtStyle').value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/showheight").text = $id('txtShowHeight').value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/isfixrowcol").text = $id('isFixRowCol').value;
+	fcpubdata.obj[0].oXml.documentElement.selectSingleNode("/record/viewtype").text = $id('viewType').value;
+	fcpubdata.obj[0].isSaveFile = $id("isSaveFile").value;
+	fcpubdata.obj[1].setAttribute("toolbarPermit",recordPermit);
+	$eform('关闭窗口');
+}
+//页签控件的点击事件
+function PubClickPageControl(index) {
+	if(index == 1){
+		grid1.ParentPos = "相对" ;
+		grid1.hideVscroll = false ;
+		grid1.hideHscroll = false ;
+		grid1.HScroll();  //重算滚动条
+		grid1.VScroll();
+	}
+}
+function uf_getStyle(){
+	 var ret = DjOpen('../../fceform/common/djframe.htm?djsn=zk_style_prop&djtype=ZK&type=1',[$id('txtClassName'). value,$id('txtStyle').value]); 
+	 if(IsSpace(ret) == false){
+	 	$id('txtClassName').value = ret[0];
+	 	$id('txtStyle').value = ret[1];	
+	 }	
+}
+
+
+function uf_hide(){
+	var display = "block";
+	var isPrint = 1;
+	var isFixRow = 1;
+	if(comRunEbiao.value =="3"){
+		display = "none";
+		isPrint = 0;
+		isFixRow = 0;
+	}else if(comRunEbiao.value =="2"){
+		display = "none";
+		isPrint = 0;
+		isFixRow = 1;
+	}
+	SetCheckBoxValue($id("isPrint"), isPrint);
+	SetCheckBoxValue($id("isFixRowCol"), isFixRow);
+	div1.style.display = display;	
+}
+
+function uf_fx(fieldName){
+	DjOpen("../../fceform/common/djframe.htm?djsn=toolbarPermit&djtype=LR",[dataset2,fieldName],"展现","有模式窗口","直接","选择");	
+
+}
+
+function uf_getPermit(){
+	var toolbarPermit = t.toolbarPermit;//e表设计器table中的toolbarPermit属性
+	var id="replace_Control_Id_NamePcm";//替身控件的id名,怕重名（pcm）
+	if(IsSpace(dataset2.Field('permitSet').Value) == false) {
+		var permitSet = dataset2.Field('permitSet').Value;
+		permitSet = permitSet.replace('id="'+ dataset2.Field('contId').Value+'"','id="'+ id + '"');//把contId字段的值变成替身控件的id
+		$id('lblTitle').roleXml = permitSet;
+	}else{
+		$id('lblTitle').roleXml = "";
+	}
+	if(IsSpace(dataset2.Field('contId').Value) == true){
+		alert("先输入控件id");
+		return;	
+	}
+	$id(id).controltype = dataset2.Field('contType').Value;
+	var param1 = fcpubdata.obj[0];
+	var param2 = fcpubdata.obj[1];
+    var arr = [$id(id),'', $id('lblTitle')];
+    fcpubdata.obj = arr;
+    EformActionButtonClick();
+    fcpubdata.obj[2].roleXml = fcpubdata.obj[2].roleXml.replace("id='"+ id + "'", "id='"+ dataset2.Field('contId').Value+"'");//替身控件id变contId字段的值
+    dataset2.Field('permitSet').Value = fcpubdata.obj[2].roleXml;
+	var ret = dataset2.Update();
+	if(!IsSpace(ret)){
+		alert(ret);
+		return;	
+	}
+	dataset2.fset_cont();
+	grid1.hide();
+	fcpubdata.obj[0] = param1;
+	fcpubdata.obj[1] = param2;
+}
+
+
+function uf_selContTypeAfter(){//选择改变控件类型后，修改控件权限字段的控件类型
+	if(IsSpace(dataset2.Field('permitSet').Value) == false) {
+		var oXml = SetDom(dataset2.Field('permitSet').Value);
+		//alert(dataset2.Field('contType').Value);
+		oXml.documentElement.setAttribute('controltype',dataset2.Field('contType').Value);
+		
+		dataset2.Field('permitSet').Value = oXml.xml;
+		var ret = dataset2.Update();
+		if(!IsSpace(ret)){
+			alert(ret);
+			return;	
+		}
+		dataset2.fset_cont();
+	}
+}
+
+function uf_showViewHelp(){
+	switch ($id('viewType').value)
+    {
+    	case "列表式" : $id('help').innerHTML="  列表式：是一个二维表显示，第一行为标题行，下面是记录行。在《选择表》界面中，查询信息类型要选择电脑或手机上用，明细数据集时一条记录所占的行数必须大于0。列表式属于多记录，所以修改和删除时需要知道行记录的id，所以要用无线按钮控件绑定id字段，或在行上设置删除或修改的button按钮设置id字段，或在行的开始单元格上直接添加一个id字段。";break;
+    	case "编辑式" :$id('help').innerHTML="编辑式：只一条记录，记录中的字段不像列表式受行列的限制，在《选择表》界面中，查询信息类型要选择电脑或手机上用，选择明细数据集所占的行数为0";break;
+    	case "查询式" : $id('help').innerHTML="查询式：在《选择表》界面中，选择的查询信息的类型一定要是电脑或手机上查询信息时用。";break;
+    	case "交叉表" :$id('help').innerHTML="交叉表：在布局模板设计器的e表设计器中，设置交叉报表。";break;
+		case "主从表" : $id('help').innerHTML="主从表：主表是卡片式，从表是列表式。";break;
+    	case " " :$id('help').innerHTML="";break;
+
+	}
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/js/fczk.js'></script><script src='../../fceform/js/../ereport/js/loadreport.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV onkeydown="" id=SKbillsheet class=dj ondblclick="" toolbar="不带工具栏" AutoResizeXml billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtDjsn</taborder><taborder>txtChnName</taborder><taborder>comRunEbiao</taborder><taborder>txtClassName</taborder><taborder>txtStyle</taborder><taborder>button5</taborder><taborder>isPrint</taborder><taborder>txtShowHeight</taborder><taborder>cmdAddRow</taborder><taborder>cmdDelRow</taborder><taborder>grid1</taborder><taborder>isFixRowCol</taborder><taborder>isSaveFile</taborder><taborder>replace_Control_Id_NamePcm</taborder><taborder>viewType</taborder></root>" dj_sn="zk_layout_perproty" caption="布局模版属性" type="ZK" isfile="是" center="居中" posleft postop poswidth="390" posheight="310" window="有模式窗口" BLONopen="uf_Open()" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" controlno="SKButton:7;SKDBedit:15;checkbox:7;label:11;radio:2;listbox:0;textarea:1;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:1;div:3;DsMain_field:0;a:1;button:13;text:15;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:1;dataset:2;spin:1;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><checkbox><id>isPrint</id><id>isFixRowCol</id><id>isSaveFile</id></checkbox><label><id>Label1</id><id>Label3</id><id>Label24</id><id>Label25</id><id>label5</id><id>label8</id><id>label9</id><id>label10</id><id>lblTitle</id></label><radio><id>viewType</id></radio><combobox><id>comRunEbiao</id></combobox><tab><id>PageControl1</id></tab><div><id>div1</id><id>help</id></div><button><id>button5</id><id>cmdAddRow</id><id>cmdDelRow</id><id>cmdOk</id><id>cmdClose</id><id>replace_Control_Id_NamePcm</id></button><text><id>txtDjsn</id><id>txtChnName</id><id>txtClassName</id><id>txtStyle</id><id>txtShowHeight</id></text><grid><id>grid1</id></grid><dataset><id>dataset2</id></dataset></root>" idtype="1" keyfield entertype="修改" codeheader OtherSave="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js&#13;&#10;fczk.js&#13;&#10;../ereport/js/loadreport.js&#13;&#10;" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp mkbh="E5" dj_id="245" para="<r></r>" blmode="其它" BLONresize><DIV style="POSITION: absolute; WIDTH: 382px; HEIGHT: 247px; TOP: 0px; LEFT: 1px" id=PageControl1 class=tab-pane controltype="tab" IsHideTitle="null" showtype="luna">
+<DIV style="WIDTH: 382px; HEIGHT: 229px" class=tab-page>
+<H2 class=tab>属性</H2><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 50px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #ff0000; FONT-SIZE: 12px; TOP: 9px; LEFT: 11px" id=Label1 controltype="label" inputTag="否" align="Left">英文名：</SPAN><SPAN style="POSITION: absolute; WIDTH: 75px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 48px; LEFT: 11px" id=Label3 controltype="label" inputTag="否" align="Left">中文名：</SPAN>&nbsp; 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; FONT-STYLE: normal; WIDTH: 126px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 27px; LEFT: 68px; backgroundColor1: #dbdbdb" id=Label24 onmovestart=moveStart() noWrap controltype="label" inputTag="否" value="Label24">注:英文名是运行布局模版时，用的名称</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 144px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 66px; LEFT: 68px" id=Label25 onmovestart=moveStart() noWrap controltype="label" inputTag="否" value="Label24">注:模版中文名是指模版显示名称,或称为模版中文名称</DIV><INPUT style="POSITION: absolute; WIDTH: 291px; HEIGHT: 20px; TOP: 5px; LEFT: 67px" id=txtDjsn onmovestart=moveStart() size=50 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 290px; HEIGHT: 20px; TOP: 44px; LEFT: 68px" id=txtChnName onmovestart=moveStart() size=49 controltype="text">&nbsp; <SELECT style="POSITION: absolute; WIDTH: 259px; HEIGHT: 25px; TOP: 102px; LEFT: 68px" id=comRunEbiao onmovestart=moveStart() onchange='bill_onclick("uf_hide()")' controltype="combobox" sqltrans async="否" temptext="运行E表来产生表单中数据集的数据&#13;&#10;运行E表但不产生表单中数据集的数据&#13;&#10;不运行E表" tempvalue="1&#13;&#10;2&#13;&#10;3" check="1" sql datasourceName backheight="25" backwidth="259"><OPTION value=1>运行E表来产生表单中数据集的数据</OPTION><OPTION value=2>运行E表但不产生表单中数据集的数据</OPTION><OPTION selected value=3>不运行E表</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 88px; HEIGHT: 19px; TOP: 106px; LEFT: 11px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">运行方式:</LABEL><INPUT style="POSITION: absolute; WIDTH: 110px; DISPLAY: none; HEIGHT: 20px; TOP: 207px; LEFT: 79px" id=txtClassName onmovestart=moveStart() controltype="text"><INPUT style="POSITION: absolute; WIDTH: 110px; DISPLAY: none; HEIGHT: 20px; TOP: 184px; LEFT: 80px" id=txtStyle onmovestart=moveStart() controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 80px; HEIGHT: 25px; TOP: 198px; LEFT: 295px" id=button5 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_getStyle()")'>设置样式</BUTTON> 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 355px; DISPLAY: none; HEIGHT: 95px; BORDER-TOP: 0px; TOP: 132px; BORDER-RIGHT: 0px; LEFT: 3px" id=div1 class=control-border-color onmovestart=moveStart() controltype="div">
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 43px; LEFT: 60px" id=isPrint onmovestart=moveStart() noWrap controltype="checkbox" value="1" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>是否生成供打印用的报表</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: -3px; LEFT: 6px" id=label8 onmovestart=moveStart() controltype="label" inputTag="否">显示高度:</LABEL><INPUT style="POSITION: absolute; WIDTH: 83px; HEIGHT: 20px; TOP: -6px; LEFT: 65px" id=txtShowHeight onmovestart=moveStart() onchange="bill_onclick(&quot;$valid('整数');&quot;)" value=1800 size=14 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: -3px; LEFT: 150px" id=label9 onmovestart=moveStart() controltype="label" inputTag="否">毫米</LABEL><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 298px; FONT-FAMILY: 宋体; HEIGHT: 30px; COLOR: #c0c0c0; FONT-SIZE: 12px; TOP: 16px; LEFT: 64px" id=label10 onmovestart=moveStart() controltype="label" inputTag="否">-1代表不分页显示所有记录，如果高度不是-1，记录大于你输入的高度时进行分页。</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 173px; HEIGHT: 18px; TOP: 65px; LEFT: 60px" id=isFixRowCol onmovestart=moveStart() noWrap controltype="checkbox" value="1" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>是否固定行列显示</SPAN></DIV></DIV>
+<DIV style="POSITION: absolute; WIDTH: 86px; HEIGHT: 20px; TOP: 78px; LEFT: 64px" id=isSaveFile onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>保存到文件</SPAN></DIV></DIV>
+<DIV style="WIDTH: 382px; HEIGHT: 229px" class=tab-page>
+<H2 class=tab>权限</H2>&nbsp;<?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' bodyrows="-1" bodyrowheight="-1" blRowNo="否" hideVscroll="否" hideHscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" dataset="dataset2" left="0" top="28" width="378" height="198" format="<cols><col><fname>contId</fname><cname>控件id</cname><width>50</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3EcmdOk%3C/td%3E%3Ctd%3E%u786E%u5B9A%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3EcmdClose%3C/td%3E%3Ctd%3E%u53D6%u6D88%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3EcmdSave%3C/td%3E%3Ctd%3E%u4FDD%u5B58%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3EcmdCloseWin%3C/td%3E%3Ctd%3E%u5173%u95ED%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%26amp%3Bnbsp%3Bid%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%21%7C%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%u63A7%u4EF6%u8BF4%u660E%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%3C/format%3E%3Cblninput%3E%u662F%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctempvalue%3E%u786E%u5B9A%0D%0A%u53D6%u6D88%0D%0A%u4FDD%u5B58%0D%0A%u5173%u95ED%3C/tempvalue%3E%3Ctemptext%3EcmdOk%0D%0AcmdClose%0D%0AcmdSave%0D%0AcmdCloseWin%3C/temptext%3E%3Cfieldnamelist%3EcontId%2CcontHelp%3C/fieldnamelist%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>85</columnwidth><align>left</align></col><col><fname>contType</fname><cname>控件类型</cname><width>50</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Ebutton%3C/td%3E%3Ctd%3Ebutton%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Edropdownlist%3C/td%3E%3Ctd%3Edropdownlist%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Ediv%3C/td%3E%3Ctd%3Ediv%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Eimg%3C/td%3E%3Ctd%3Eimg%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Etextarea%3C/td%3E%3Ctd%3Etextarea%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Echeckboxlist%3C/td%3E%3Ctd%3Echeckboxlist%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Eradiolist%3C/td%3E%3Ctd%3Eradiolist%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Echeckbox%3C/td%3E%3Ctd%3Echeckbox%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Etree%3C/td%3E%3Ctd%3Etree%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Egrid%3C/td%3E%3Ctd%3Egrid%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Etext%3C/td%3E%3Ctd%3Etext%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Ea%3C/td%3E%3Ctd%3Ea%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Elistbox%3C/td%3E%3Ctd%3Elistbox%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Echart%3C/td%3E%3Ctd%3Echart%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Edbimg%3C/td%3E%3Ctd%3Edbimg%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Ecombobox%3C/td%3E%3Ctd%3Ecombobox%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Eradio%3C/td%3E%3Ctd%3Eradio%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Etab%3C/td%3E%3Ctd%3Etab%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Eupload%3C/td%3E%3Ctd%3Eupload%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Eshape%3C/td%3E%3Ctd%3Eshape%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3Elabel%3C/td%3E%3Ctd%3Elabel%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%u63A7%u4EF6%u7C7B%u578B%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctempvalue%3Ebutton%0D%0Adropdownlist%0D%0Adiv%0D%0Aimg%0D%0Atextarea%0D%0Acheckboxlist%0D%0Aradiolist%0D%0Acheckbox%0D%0Atree%0D%0Agrid%0D%0Atext%0D%0Aa%0D%0Alistbox%0D%0Achart%0D%0Adbimg%0D%0Acombobox%0D%0Aradio%0D%0Atab%0D%0Aupload%0D%0Ashape%0D%0Alabel%3C/tempvalue%3E%3Ctemptext%3Ebutton%0D%0Adropdownlist%0D%0Adiv%0D%0Aimg%0D%0Atextarea%0D%0Acheckboxlist%0D%0Aradiolist%0D%0Acheckbox%0D%0Atree%0D%0Agrid%0D%0Atext%0D%0Aa%0D%0Alistbox%0D%0Achart%0D%0Adbimg%0D%0Acombobox%0D%0Aradio%0D%0Atab%0D%0Aupload%0D%0Ashape%0D%0Alabel%3C/temptext%3E%3Conselchange%3Ebill_onclick%28%22uf_selContTypeAfter%28%29%3B%22%29%3C/onselchange%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>permitSet</fname><cname>权限设置</cname><width>3000</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Conclickopen%3Euf_getPermit%28%29%3C/onclickopen%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>175</columnwidth><align>left</align></col></cols>" visible="是" controltype="grid" ParentPos="相对"> 
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 2px; LEFT: 0px" id=cmdAddRow onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;$eform('增加行')&quot;)"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 2px; LEFT: 83px" id=cmdDelRow onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;$eform('删除行')&quot;)"></BUTTON><fc:dataset id=dataset2 idtype="1" format="<fields><field><fieldname>contId</fieldname><datatype>字符</datatype><displaylabel>控件id</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>contType</fieldname><datatype>字符</datatype><displaylabel>控件类型</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>button</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>permitSet</fieldname><datatype>字符</datatype><displaylabel>权限设置</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" onSetText='bill_ondatasetsettext("<dsid><contId></contId><contType></contType><permitSet></permitSet></dsid>")' onGetText='bill_ondatasetgettext("<dsid><contId></contId><contType></contType><permitSet></permitSet></dsid>")' onValid='bill_ondatasetvalid("<dsid><contId>$valid(&amp;quot;字段值不重复&amp;quot;);</contId><contType></contType><permitSet></permitSet></dsid>")' async="否" isSubGrid="否" opensortno="1" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否"></fc:dataset><LABEL style="POSITION: absolute; WIDTH: 114px; DISPLAY: none; FONT-FAMILY: 楷体_GB2312; HEIGHT: 22px; COLOR: #000080; FONT-SIZE: 14pt; TOP: 5px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 268px" id=lblTitle onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">字段信息</LABEL></DIV>
+<DIV style="WIDTH: 382px; HEIGHT: 229px" class=tab-page>
+<H2 class=tab>视图类型</H2>
+<FIELDSET style="POSITION: absolute; WIDTH: 78px; HEIGHT: 141px; TOP: 0px; LEFT: 4px" id=viewType onmovestart=moveStart() contentEditable=false controltype="radio" legend aspect="纵向" value=" " onclick='bill_onclick("uf_showViewHelp()")' temptext="列表式&#13;&#10;编辑式&#13;&#10;查询式&#13;&#10;交叉表&#13;&#10;主从表&#13;&#10;其它" tempvalue="列表式&#13;&#10;编辑式&#13;&#10;查询式&#13;&#10;交叉表&#13;&#10;主从表&#13;&#10; "><LEGEND></LEGEND><INPUT id=RGviewType1 onclick=viewType.value=RGviewType[0].value; value=列表式 type=radio name=RGviewType text="列表式"><SPAN>列表式</SPAN>&nbsp;<BR><INPUT id=RGviewType2 onclick=viewType.value=RGviewType[1].value; value=编辑式 type=radio name=RGviewType text="编辑式"><SPAN>编辑式</SPAN>&nbsp;<BR><INPUT id=RGviewType3 onclick=viewType.value=RGviewType[2].value; value=查询式 type=radio name=RGviewType text="查询式"><SPAN>查询式</SPAN>&nbsp;<BR><INPUT id=RGviewType4 onclick=viewType.value=RGviewType[3].value; value=交叉表 type=radio name=RGviewType text="交叉表"><SPAN>交叉表</SPAN>&nbsp;<BR><INPUT id=RGviewType5 onclick=viewType.value=RGviewType[4].value; value=主从表 type=radio name=RGviewType text="主从表"><SPAN>主从表</SPAN>&nbsp;<BR><INPUT id=RGviewType6 onclick=viewType.value=RGviewType[5].value; value=" " CHECKED type=radio name=RGviewType text="其它"><SPAN>其它</SPAN>&nbsp;</FIELDSET> 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 285px; HEIGHT: 215px; BORDER-TOP: 1px solid; TOP: 6px; BORDER-RIGHT: 1px solid; LEFT: 89px" id=help class=control-border-color onmovestart=moveStart() controltype="div"></DIV></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+<BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 254px; LEFT: 197px" id=cmdOk controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 254px; LEFT: 281px" id=cmdClose controltype="button" dropstyle="否" onclick="bill_onclick(&quot;$eform('关闭窗口')&quot;)"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; DISPLAY: none; HEIGHT: 25px; TOP: 100px; LEFT: 294px" id=replace_Control_Id_NamePcm onmovestart=moveStart() controltype="button"></BUTTON></DIV><script></script></body></html>

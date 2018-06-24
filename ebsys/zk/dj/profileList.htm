@@ -1,0 +1,117 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+
+function uf_permitTable()
+{
+	if(dataset1.RecordCount < 1){alert("没有要添加表权限的简档");return}
+	DjOpen("profilesub",dataset1);
+}
+function uf_mainMenu()
+{
+	DjOpen("zk_menu_save");
+	
+}
+function uf_permitUnit()
+{
+	if(dataset1.RecordCount < 1){alert("没有要设置功能点的简档");return}
+	//DjOpen("zk_unit_permit",dataset1);
+	var selUnit = uf_open();	
+	if(selUnit == "ok"){
+		uf_save(dataset2.Field('id').Value.split(","),dataset1.Field('profileId').Value);
+	}
+	
+	
+	function uf_open()
+	{
+		var profile = dataset1.Field('profileid').Value;
+		var str = "";
+		var sql = "select FCQ_UNIT.id,name from  FCQ_UNIT left join fcq_profilesub on FCQ_UNIT.id = fcq_profilesub.detail where fcq_unit.deleteMark <> 1 and fcq_profilesub.profileid='"+profile+"'";
+		dataset2.Open(sql);
+		if(dataset1.oDom.documentElement.childNodes.length > 1){
+			var l=dataset2.oDom.documentElement.childNodes.length-1;
+			for(var i=0;i<l;i++)
+			{
+				var id=dataset2.oDom.documentElement.childNodes(i).childNodes(0).text;
+				str+=id+",";	
+			}
+		}
+		var r = CommonSelect({
+			width:"600px",
+			height:"660px",
+			istree: 1,//可选项, 弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度.
+			obj : txtName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.
+			istreenewsql:1,
+	        idfieldname : "id", //可选项, 前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效.
+			textfieldname : "name", //可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效
+			ismultisel : 1, //,//可选项, 是否多选,其值=0或1.
+	        selectedvalue : str ,//可选项,多选时,已选中的值,会用已选中的值来初始化弹出的选择输入窗口.
+			//roottext: "功能点", //树控件的根节点文本
+			sql : "select id,parentId,name ,id from  FCQ_UNIT where deleteMark=0 and modulexml is null and(winSize  is null or winSize='')  order by sortNo"  //必选项, 弹出窗口的显示数据用的SQL语句.
+		})	
+		
+		return r ;
+	}
+	
+	
+	function uf_save(unitIdArr,profile)
+	{
+		//var formtype=1;//1表单2报表
+		var sRet="";
+		//var unitname=GetDivCheckBoxValue(cheUnitName,'');
+		var sql = "select id,fromType from fcq_unit";
+		var xmlRet = SelectSql(sql,1,-1);
+		var oXml = SetDom(xmlRet);
+		if (oXml.documentElement == null) {
+		    alert(xmlRet);
+		    return;
+		}
+		
+		for(var i=0;i<unitIdArr.length;i++)
+		{
+			 var len = oXml.documentElement.childNodes.length - 1;
+             for (var j = 0; j < len; j++) {
+             	if(oXml.documentElement.childNodes[j].childNodes[0].text == unitIdArr[i]){//当前选中的功能点id等于功能点fcq_unit表中中的id，就获取功能点类型
+					sRet +="<insert tableName='FCQ_PROFILESUB'> <names>id,profileid,type,detail,permit</names> <values>'"+getMaxNo('PRO')+"','"+profile+"','1','"+unitIdArr[i]+"',1 </values> </insert>";
+				}
+			}
+		}
+		var del="<delete tableName='FCQ_PROFILESUB'><where> profileid = '"+profile +"'</where></delete>"
+		sRet=del+sRet;
+		doSaveData(sRet,function (){alert("保存成功")});
+		
+	}
+
+}
+
+
+function uf_delete(){
+	if(dataset1.RecordCount < 1){alert("没有要删除的记录");return}
+	$eform('标记方式删除')	
+}
+function uf_edit(){
+	if(dataset1.RecordCount < 1){alert("没有要修改的记录");return}
+	$eform('打开窗口修改记录');
+}
+
+function uf_contPermit(){
+	DjOpen("zk_control_permit",dataset1);	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" AutoResizeXml BLONopenBefore runsave BLONclose center="  " BLONopen="fcpubdata.cardWinUrl='profileCard'" dj_sn="profileList" type="ZK" caption="用户简档列表" codeheader="QXI" keyfield="id" window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>grid1</taborder><taborder>txtFind</taborder><taborder>txtName</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:11;text:3;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:2;dataset:2;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label2</id></label><text><id>txtFind</id><id>txtName</id></text><grid><id>grid1</id></grid><dataset><id>dataset1</id><id>dataset2</id></dataset></root>" userType alertType="1" isCheckPermit="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" runParams BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑" userToolbar="<tr rowstate=&quot;add&quot;><td>add</td><td>新增</td><td></td><td>$eform('打开窗口新增记录')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>edit</td><td>修改保存</td><td></td><td>uf_edit()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>del</td><td>删除</td><td></td><td>uf_delete()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>cmtTbPermit</td><td></td><td>表操作权限</td><td>uf_permitTable()</td><td>90px</td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>cmdUnitPermit</td><td></td><td>功能点权限</td><td>uf_permitUnit()</td><td>90px</td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>contPermit</td><td></td><td>控件权限</td><td>uf_contPermit()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>query</td><td>查询</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>upmove</td><td>上移</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>downmove</td><td>下移</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" format="<fields><field><fieldname>profileId</fieldname><datatype>字符</datatype><displaylabel>简档id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>profileName</fieldname><datatype>字符</datatype><displaylabel>角色名称</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>ISFIX</fieldname><datatype>整数</datatype><displaylabel>是否固定权限</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBAPP</fieldname><datatype>整数</datatype><displaylabel>应用程序默认权限</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBFIELD</fieldname><datatype>整数</datatype><displaylabel>字段的默认权限</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBIP</fieldname><datatype>字符</datatype><displaylabel>IP范围</displaylabel><size>100</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBTABLE</fieldname><datatype>整数</datatype><displaylabel>表的默认权限</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBTIME</fieldname><datatype>字符</datatype><displaylabel>时间范围</displaylabel><size>100</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PUBUNIT</fieldname><datatype>整数</datatype><displaylabel>功能点的默认权限</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sortNo</fieldname><datatype>整数</datatype><displaylabel>序列号</displaylabel><size>16</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>deleteMark</fieldname><datatype>整数</datatype><displaylabel>删除标记</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%B0%CC%AE%B2%AC%9A%A0%A6%98jbXrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%AE%B2%AC%9A%A0%A6%98Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4XrnXt%94Xt%98XrnpXrn%D0%EA%D6Xrn%EE%F2%EC%DA%E0%E6%D8%A0%D6XrnXt%94Xt%98XrnXr%7C%F4%u0100%F4%F6%D8%E8%D0%D6%E8%E0%EAXrnXr%7CXrn%D0%EA%D6Xrn%EE%F2%EC%DA%E0%E6%D8%AA%D0%E8%D8Xrn%A6%A0%A4%98Xr%7CXt%90X%7C%92%F6%FE%F6%9A%E0%EA%D6j%FA%D0%E6%F8%D8X%7C%96Xt%90XrxXr%7CXrn%AC%F2%D6%D8%F2Xrn%92%u0100Xrn%F4%EC%F2%F6%AA%EC" onSetText='bill_ondatasetsettext("<dsid><profileId></profileId><profileName></profileName><ISFIX></ISFIX><PUBAPP></PUBAPP><PUBFIELD></PUBFIELD><PUBIP></PUBIP><PUBTABLE></PUBTABLE><PUBTIME></PUBTIME><PUBUNIT></PUBUNIT><sortNo></sortNo><deleteMark></deleteMark></dsid>")' onGetText='bill_ondatasetgettext("<dsid><profileId></profileId><profileName></profileName><ISFIX></ISFIX><PUBAPP></PUBAPP><PUBFIELD></PUBFIELD><PUBIP></PUBIP><PUBTABLE></PUBTABLE><PUBTIME></PUBTIME><PUBUNIT></PUBUNIT><sortNo></sortNo><deleteMark></deleteMark></dsid>")' onValid='bill_ondatasetvalid("<dsid><profileId></profileId><profileName></profileName><ISFIX></ISFIX><PUBAPP></PUBAPP><PUBFIELD></PUBFIELD><PUBIP></PUBIP><PUBTABLE></PUBTABLE><PUBTIME></PUBTIME><PUBUNIT></PUBUNIT><sortNo></sortNo><deleteMark>$valid(&amp;quot;整数&amp;quot;);</deleteMark></dsid>")' opensortno="1" issubds="否" savetable="FCQ_PROFILE" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" saveastable="FCQ_PROFILE" isSubGrid="否" async="否" idparam="DDD" fieldtrans="<root><field><name>SORTNO</name><trans></trans><rtrans></rtrans></field></root>"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' left="9" top="26" height="165" width="343" format="<cols><col><fname>profileName</fname><cname>角色名称</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>150</columnwidth><align>left</align></col><col><fname>PUBIP</fname><cname>IP范围</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>PUBTIME</fname><cname>时间范围</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col></cols>" canselect="是" autoheight="是" autowidth="是" autoappend="否" readonly="否" visible="是" SetRowHeight="是" hideHscroll="auto" hideVscroll="auto" blRowNo="否" bodyrowheight="-1" bodyrows="-1" dataset="dataset1" controltype="grid">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 3px; LEFT: 10px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否">查找角色</LABEL><INPUT style="POSITION: absolute; WIDTH: 294px; HEIGHT: 20px; TOP: 0px; LEFT: 80px" id=txtFind onmovestart=moveStart() size=53 controltype="text"><fc:dataset id=dataset2 idtype="1" format="<fields><field><fieldname>ID</fieldname><datatype>字符</datatype><displaylabel>ID</displaylabel><size>11</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>NAME</fieldname><datatype>字符</datatype><displaylabel>NAME</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>type</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" onSetText='bill_ondatasetsettext("<dsid><ID></ID><NAME></NAME><type></type></dsid>")' onGetText='bill_ondatasetgettext("<dsid><ID></ID><NAME></NAME><type></type></dsid>")' onValid='bill_ondatasetvalid("<dsid><ID></ID><NAME></NAME><type></type></dsid>")' opensortno="1" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" isSubGrid="否" async="否"></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 272px; DISPLAY: none; HEIGHT: 20px; TOP: 67px; LEFT: 289px" id=txtName onmovestart=moveStart() size=49 dataset="dataset2" controltype="text" china="NAME" field="NAME"></DIV><script></script></body></html>

@@ -1,0 +1,1888 @@
+///<reference name="MicrosoftAjax.js" />
+
+//全局数据对象
+/**
+	servletPath			调用后台文件的基路径
+	Path				做发布的虚拟目录用
+	dotnetVersion		=""表示为java版本,=".aspx"为.net版本
+	databaseTypeName	数据库类型,sqlserver/mysql/oracle
+	pub_sendhttp_errmsg	特定的连后台出错信息
+	gridno_fieldname	主子表编辑时子表的顺序号字段名
+	BillOpenWinName		运行表单的帧窗口的名称
+	position			缺省的定位模式 =absolute/static
+	toolbarstyle		所有样式表的列表;red,yellow,light,Office,blue,green,CoolBlue,white 所有样式表的列表
+	toolbar				所列的控件按钮的列表,|是分隔符,br是换行
+	formtb				配置用eform画的表单的可用工具栏,内容为<option>格式的XML串,
+						节点属性path表示页面路径，~表示fcpubdata.path值
+						节点属性height表示工具栏占的高度，如不指定，则取默认值为31px
+						节点值为工具栏名称，在表单设计器的表单属性窗口中以列表形式显示，供操作员选择。
+**/
+
+var fcpubdata = {
+servletPath: "/servlet", 		//调用后台文件的基路径, for .NET的常用写法是: /ebsys/eformaspx ,eform for j2ee的常用写法是: /servlet
+    path: "/ebsys", 				//定位到fceform目录,不含虚拟目录的路径,常用写法是: /eformsys
+    dotnetVersion: "", 			//=""表示为java版本,=".aspx"为.net版本
+    databaseTypeName: "sqlserver", 		//数据库类型,sqlserver/mysql/oracle/db2
+    dbStruDict: "FC_ENTITY",         //="FC_DBSTRU" ="FC_FLDLIST" ="" 表示临时从数据库中取. ="FC_ENTITY" 表示在正康平台中用
+    cssFiles: ["/css/efdesign.css"],                   //在表单中加载的css文件,路径在fceform目录,一般写 /css/xx.css      "/css/tdm_main.css"
+    skins: "blue",                   //表单skin 可设值为: base/blue/light/green
+    skinsPath: "/fceform",                   //样式的基路径: fceform/fceformext 或是orgid
+    //toolbarStyle: "blue",                //设计器工具栏的样式 可设值为: base/blue/light/green,no use,统一用 skins
+    actionButtonDisplay: "",                   //控件属性框中的设置权限按钮的style.display属性值 "none"表示不显示
+    db2UserName: "EBORACLE", 		//db2数据库的用户名(即模式名 DB2ADMIN)
+    gridNoFieldName: "dj_sn", 			//主子表编辑时子表的顺序号字段名
+    billOpenWinName: "rightmain", 		//运行表单的帧窗口的名称
+    position: "absolute", 		//缺省的定位模式 =absolute/static
+    toolbar: "newempty,opendj,opendjfile,billtype,djpreview,directrun,save,saveas,|,cut,copy,paste,undo,redo,|,align,focus,front,behind,form,|,userfunction,userfunction1,addhtml,execute,showlist,listconfig,importconfig,setPosition,eformhelp,|,cbozoom,br,button,label,img,div,shape,|,tab,page,tree,a,spin,checkboxlist,radiolist,|,dataset,grid,htmltable,formattab,|,text,checkbox,radio,listbox,combobox,dropdownlist,textarea,|,dbimg,upload,layout,ebiao", //表单设计器工具栏按钮,|是分隔符,br是换行
+    formToolbar: "<option path=\"~/fceformext/common/toolbarform.htm?type=88\">自定义工具栏</option><option path=\"~/fceformext/common/toolbarform.htm?type=1\">确定_取消</option><option path=\"~/fceformext/common/toolbarform.htm?type=5\">确定_取消_保存后新增_清空</option><option path=\"~/fceformext/common/toolbarform.htm?type=3\">翻页组_增加_删除_保存</option><option path=\"~/fceformext/common/toolbarform.htm?type=4\">翻页组_增加行_删除行_增加_删除_保存</option><option path=\"~/fceformext/common/toolbarform.htm?type=2\">增加_删除</option><option path=\"~/fceformext/common/toolbarform.htm?type=7\">增加行_删除行_保存</option><option path=\"~/fceformext/common/toolbarform.htm?type=6\">查询组</option><option path=\"~/fceformext/common/toolbarform.htm?type=8\">查询组_增加行_删除行_保存</option><option path=\"~/fceformext/common/toolbarform.htm?type=9\">查询组_增加_删除</option><option path=\"~/fceformext/common/toolbarform.htm?type=10\">确定_取消_打印组</option><option path=\"~/workflow/sys_dj/wf_tools.htm\" height=\"60px\">工作流工具栏</option>", //配置用eform画的表单的可用工具栏,内容为<option>格式的XML串,节点属性path表示页面路径，~表示fcpubdata.path值,节点属性height表示工具栏占的高度，如不指定，则取默认值为31px,节点值为工具栏名称，在表单设计器的表单属性窗口中以列表形式显示，供操作员选择。
+    toolbarButtons: {
+        printpreview: ["55", "ef_preview_button.gif", "e表控件打印预览", "打印预览"],
+        selectprint: ["55", "ef_print_button.gif", "e表控件打印", "打印"],
+        directprint: ["20", "eb_printdirect.gif", "e表控件直接打印", "直接打印"],
+        directprintall: ["20", "eb_printall.gif", "e表控件直接打印所有页", "直接打印所有页"],
+        printall: ["20", "eb_printall.gif", "e表控件打印所有页", "打印所有页"],
+        expexcel: ["20", "ef_design_excel.gif", "分页导出到excel文件中", "导出excel"],
+        expexcelall: ["20", "eb_excelone.gif", "不分页导出到excel文件中", "导出excel"],
+        exppdf: ["20", "eb_exppdf.gif", "导出所有页到pdf文件中", "导出pdf"],
+
+
+        ok: ["55", "ef_run_button_ok1.gif", "提交数据成功后刷新上一窗口", "确定"],
+        close: ["55", "ef_run_button_close1.gif", "关闭窗口", "取消"],
+        openwinadd: ["55", "ef_run_button_add.gif", "打开窗口新增记录", "增加"],
+        add: ["55", "ef_run_button_add.gif", "新增", "新增"],
+        del: ["55", "ef_run_button_del.gif", "删除", "删除"],
+        griddel: ["55", "ef_run_button_del.gif", "删除行且删除记录", "删除"],
+        edit: ["55", "ef_run_button_edit.gif", "修改保存", "修改"],
+        save: ["55", "ef_run_button_save.gif", "提交数据成功后提示", "保存"],
+        saveadd: ["92", "ef_run_button_saveadd.gif", "提交数据成功后新增", "保存后新增"],
+
+        seeview: ["65", "ef_run_button_addrow.gif", "查看视图", "查看视图"],
+        addview: ["65", "ef_run_button_add.gif", "新增视图", "新增视图"],
+        editview: ["65", "ef_run_button_edit.gif", "编辑视图", "编辑视图"],
+
+        addrow: ["65", "ef_run_button_addrow.gif", "增加行", "增加行"],
+        deleterow: ["65", "ef_run_button_deleterow.gif", "删除行", "删除行"],
+        query: ["55", "ef_run_button_query.gif", "查询", "查询"],
+        first: ["64", "ef_run_button_first.gif", "第一页", "第一页"],
+        up: ["60", "ef_run_button_up1.gif", "上一页", "上一页"],
+        down: ["60", "ef_run_button_down1.gif", "下一页", "下一页"],
+        last: ["64", "ef_run_button_last.gif", "最后页", "最后页"],
+        upmove: ["60", "ef_run_button_up_move.gif", "上移", "上移"],
+        downmove: ["60", "ef_run_button_down_move.gif", "下移", "下移"],
+        closewin: ["64", "ef_run_button_closewin.gif", "关闭窗口", "关闭"],
+        wf_tempsave: ["64", "ef_run_button_closewin.gif", "只保存业务数据", "暂存"],
+        wf_save: ["64", "ef_run_button_closewin.gif", "提交业务数据并执行流程", "执行"],
+        wf_trace: ["64", "ef_run_button_closewin.gif", "流程的轨迹图", "轨迹"],
+        wf_free_select: ["64", "ef_run_button_closewin.gif", "请选择自由流", "自由流"]        
+
+    },      //运行表单的工具栏中的所有系统内置按钮.
+    repMark: { //界面名称替换标志
+        role: "简档",
+        role1: "角色",
+        group: "群组"
+
+    },
+    sendHttpErrMsg: ":与后台连接出错:", //特定的连后台出错信息
+
+    area: null, // eform的设计区,是个div元素.
+    dsMain: "DsMain", 	//主数据集即未绑定到表格的第一个数据集的ID
+    pubSession: "null", //取得session的标识,这是为了用同步方式取session的方法,常用写法是: username=&deptname=
+    autoAddField: "no", 	//为yes表示新建表单时是否自动加一个主数据集，以及加控件时自动加字段。 
+    pubdataSrc: "", 		//保存各子窗口的url,下同
+    topicSrc: "",
+    keyValue: "",       //原来的pubdjbh,用于跟踪主键字段的值
+    obj: null,     //原来的pubDataSet,用于在表单之间传递对象参数时用.
+    isEdit: false,    //原来的pubEdit,判断表单是否手动修改过的标志.
+    enterStatus: "OK", 	//判断能不能进入表单,为OK表示可以进入.
+    arrValidObj: new Array(), //保存校验失败的事件对象,用于在保存前再校验.
+    controls: new Object(),         //取表单上的所有控件,
+
+    //   reportTempFilePath : "/ebsys/ebtmpfile/file/", //报表临时文件路径
+    wfToolbar: "newwf,openfile,save,saveas,|,cut,copy,paste,undo,redo,|,front,behind,wfprop,|,cbozoom,br,wfstep,wfline", //流程设计器工具栏
+    labelInputTag: " <font color=red>*</font>", //必须输入时,在label上做的标识,一般为红色的 * 
+    userDir: "/fceformext", //用户自定义数据的基目录
+    keyFieldValueTag: ":get_keyfield", //用于替换主键字段值的标识 
+    cardWinUrl: "", //用于在列表式表单中传递要打开的卡片式表单的URL或djsn.
+    eventBefore: new Array(), //工具栏上按钮的事件
+    eventAfter: new Array(),
+    submitUserType: null, //传给提交函数的用户自用的分类
+    submitPubParam: null, //传给提交函数的全局参数
+    transRecNo: 0,   //数据集中用于保存前转换事件中取当前记录号
+    loadingHttpArr: new Array(), //
+    loadingHttpData: "",
+
+    loading: null,     //记录表单打开时的装入过程
+    encoding: "gb2312", //前台的字符集名称.
+    getServerTimeTag: ":get_server_time", // 取服务器时间的替换标识,
+    nullValue: ":null", //表示数据库中的null值
+
+    isDebug: true, //是否能进入用vs工具来调试js代码, 如为false则只是记录错误日志,不会显示错误,被try catch掉了.
+    loggerObj: null,
+    logger: function() { //日志
+        return {
+            debug: function(msg, _callee, e) {
+                if (parent.fcpubdata.loggerObj == null) return;
+                if (typeof (_callee) == "function") msg = " " + getCurRunFunctionName(_callee.caller) + "() " + getCurRunFunctionName(_callee) + "() " + msg;
+                parent.fcpubdata.loggerObj.debug(msg);
+            },
+            info: function(msg, _callee, e) {
+                if (parent.fcpubdata.loggerObj == null) return;
+                if (typeof (_callee) == "function") msg = " " + getCurRunFunctionName(_callee.caller) + "() " + getCurRunFunctionName(_callee) + "() " + msg;
+                parent.fcpubdata.loggerObj.info(msg, e);
+            },
+            warn: function(msg, _callee, e) {
+                if (parent.fcpubdata.loggerObj == null) return;
+                if (typeof (_callee) == "function") msg = " " + getCurRunFunctionName(_callee.caller) + "() " + getCurRunFunctionName(_callee) + "() " + msg;
+                parent.fcpubdata.loggerObj.warn(msg, e);
+            },
+            error: function(msg, _callee, e) {
+                if (parent.fcpubdata.loggerObj != null) {
+                    if (typeof (_callee) == "function") msg = " " + getCurRunFunctionName(_callee.caller) + "() " + getCurRunFunctionName(_callee) + "() " + msg;
+                    parent.fcpubdata.loggerObj.error(msg, e);
+                }
+                if (fcpubdata.isDebug && e != undefined) throw e;
+            }
+        }
+    },
+
+    eformPrintIframeName: "fcEbiaoPrnIframe", //在eform中打印ebiao控件时加的隐藏iframe名称
+
+	tmpDomainPath : "http://localhost/fcbug",
+    popup: null //window.createPopup() //等待窗口
+};
+
+(function() {
+	//计算路径	
+	var tmp12345 = GetUrlFirstPart();
+	fcpubdata.servletPath = tmp12345+fcpubdata.servletPath;
+	fcpubdata.path = tmp12345+fcpubdata.path;
+	//alert(fcpubdata.servletPath + "---" + fcpubdata.path );
+
+	var scripts = [fcpubdata.path + "/fceform/js/fcskins.js", fcpubdata.path + "/fceform/js/fcvalid.js"];
+	var heads = document.getElementsByTagName("head");
+	if(heads.length>0){
+	    for (var i = 0; i < scripts.length; ++i) {
+		    var script = document.createElement("script");
+		    //script.charset="gb2312";
+		    script.src = scripts[i];
+		    heads[0].appendChild(script);
+	    }
+    }
+/*
+    //建立日志对象
+    fcpubdata.loggerObj = log4javascript.getLogger();
+   // var popUpAppender = new log4javascript.PopUpAppender();
+   // var popUpLayout = new log4javascript.PatternLayout("%d{HH:mm:ss} %-5p - %m%n");
+   // popUpAppender.setLayout(popUpLayout);
+   // fcpubdata.logger.addAppender(popUpAppender);
+    var ajaxAppender = new log4javascript.AjaxAppender(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=logger");
+    ajaxAppender.setThreshold(log4javascript.Level.ERROR);
+    ajaxAppender.setTimed(true);
+    ajaxAppender.setTimerInterval(60000); //ms毫秒
+ //   ajaxAppender.setBatchSize(10); //一次10条
+    ajaxAppender.setSendAllOnUnload(true);
+
+    //alert(ajaxAppender.getBatchSize(3))
+    //var xmlLayout = new log4javascript.XmlLayout();
+   // ajaxAppender.setLayout(log4javascript.XmlLayout());
+    fcpubdata.loggerObj.addAppender(ajaxAppender);
+    //fcpubdata.logger.debug("Debugging message (appears in pop-up)");
+*/
+})();
+
+/**
+* 取当前URL的第一节内容,一般是虚拟目录的内容,如: /WebBill
+* 如直接发布到root目录下,不加虚拟目录的话,则让此函数固定返回"".
+**/
+function GetUrlFirstPart(){
+	var tmp12345 = location.pathname ;
+	tmp12345 = tmp12345.substring(0,tmp12345.indexOf("/",1));
+	if(tmp12345.substring(0,1) != "/") tmp12345 = "/" +tmp12345;
+	return tmp12345;
+}
+//------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------------------------------------------------------------
+//下面开始
+
+Type.registerNamespace("Eapi");
+Type.registerNamespace("Eform");
+Eapi.UserData = function() {}
+Eapi.UserData.prototype = 
+{
+    save : function (Main,Sub,strContent){
+        /**
+        *把数据存到数据缓存中
+        *@param Main 为主key, 如"List".
+        *@param Sub 为子key,如"CustomerFlag"
+        *@param strContent 为要存入的内容
+        *@return 无返回
+        */
+	    try{
+    	    userData=parent.pubdata.oForm.oInput ;
+	    }catch(e){return;}
+	    userData.setAttribute(Main+userData.value,strContent) ;
+	    userData.save(Sub+userData.value) ;
+    },
+    load : function (Main,Sub){
+        /**
+        *从数据缓存中装入到变量中
+        *@param Main 为主key, 如"List".
+        *@param Sub 为子key,如"CustomerFlag"
+        *@return 返回取出的内容
+        */
+	    try{
+		    userData=parent.pubdata.oForm.oInput ;
+	    }catch(e){return "";}
+	    userData.load(Sub+userData.value)   ;
+	    var sTmp=userData.getAttribute(Main+userData.value) ;
+	    if (sTmp==null) {sTmp="" ; } 
+	    return sTmp ;
+
+    }
+}
+Eapi.UserData.registerClass("Eapi.UserData");
+
+Eapi.Num = function(){}
+Eapi.Num.prototype = 
+{
+    toFloat : function (str1){
+        /// <summary>字符型变实数，用于用户自定义函数用，如字符为空则为0</summary>
+        /// <param name="str1" type="String" >要转换的字符串</param>
+        /// <returns type="Float" >转换后的数值</returns>
+	    var s1=new Eapi.Str().trim(str1);
+	    var f1=parseFloat(s1);
+	    if(isNaN(f1)) {return 0;}
+	    return f1;
+    },
+    toInt : function (str1){
+        /**
+        转换成整数
+        *@date 2004-08-17
+        **/
+	    var s1=new Eapi.Str().trim(str1);
+	    //if(s1.charAt(0)=="0") s1 = s1.substring(1,s1.length);
+	    var f1=parseInt(s1,10);
+	    if(isNaN(f1)) {return 0;}
+	    return f1;
+    },
+    format : function (sValue,sPointNum) {
+        /**
+        *按小数位数格式化字符
+        *@param sValue 为要格式化的字符串,
+        *@param sPointNum 为小数位数,整型
+        *@return 返回格式化后的字符串
+        */
+	    var dblValue=parseFloat(sValue) ;
+	    if (isNaN(dblValue)) {return sValue ;}
+	    var iPointNum=parseInt(sPointNum);
+	    if (isNaN(iPointNum)) { iPointNum=0 ;}
+	    if (iPointNum>9){ iPointNum=9 ;}
+	    if (iPointNum<0){ iPointNum=0 ;}
+	    var dbl1=Math.round(dblValue*Math.pow(10,iPointNum))/Math.pow(10,iPointNum) ;
+	    var s1=dbl1+"" ;
+	    var num0=0 ;
+	    if(s1.indexOf(".")==-1){
+		    num0=iPointNum ;
+	    }
+	    else {
+		    var num1=s1.length-s1.indexOf(".")-1 ;
+    		
+		    if(num1<iPointNum ){
+			    num0=iPointNum-num1 ; 
+		    }
+	    }
+
+	    if (num0>0) {
+		    var s2="000000000000000" ;
+		    if(num0==iPointNum) {
+			    s1=s1+"."+s2.substring(0,num0) ;
+		    }else {
+			    s1=s1+s2.substring(0,num0);
+		    }
+	    }
+	    //if (right(s1,1)==".")
+	    //	s1=s1.substring(s1.length-1,s1.length)
+	    return s1 ;
+    }
+}
+Eapi.Num.registerClass("Eapi.Num");
+
+Eapi.DateParse = function(){}
+Eapi.DateParse.prototype = 
+{
+    parse : function (strDate){
+        /// <summary>字符型变日期，支持几种常见的日期格式</summary>
+        /// <param name="strDate" type="String" >要转换成日期的字符串</param>
+        /// <returns type="Date" >转换后的日期</returns>
+        strDate = strDate.trim();
+        var format = ["yyyy-MM-dd","yyyy-M-d","yyyy/MM/dd","yyyy/M/d","yyyy.MM.dd","yyyy.M.d","yyyyMMdd","yyyyMd","yyyy年MM月dd日","yyyy年M月d日" ];
+        var timeFormat = ["HH:mm:ss","H:m:s","hh:mm:ss tt","hh:mm:ss t","h:m:s tt","h:m:s t","hh:mm:ss.f","hh:mm:ss.ff","hh:mm:ss.fff"];
+        var ret=null,i=0;
+        for(i=0;i<format.length;i++){
+	        ret = Date.parseInvariant(strDate,format[i]);
+	        if(ret != null) return ret;
+	    }
+        for(i=0;i<format.length;i++){
+	        for(var j=0;j<timeFormat.length;j++){
+	            ret = Date.parseInvariant(strDate,format[i]+" "+timeFormat[j]);
+	            if(ret != null) return ret;
+	        }
+	    }
+    }
+}
+Eapi.DateParse.registerClass("Eapi.DateParse");
+
+
+Eapi.Str = function(){}
+Eapi.Str.prototype =
+{
+    trim: function(strMain) {
+        //滤掉两边空格
+        if (strMain == null) { return ""; }
+        strMain = strMain + "";
+        return strMain.trim();
+    },
+    isTrue: function(svalue) {
+        /**
+        *判断是否为true值
+        *@date 2005-01-14
+        **/
+    if (svalue == false || svalue == "false" || svalue == "False" || svalue == "no" || svalue == 0 || svalue == "0" || svalue == "off" || svalue == "否" || svalue == "假" || svalue == "" || typeof (svalue) == "undefined" || svalue == "undefined" || svalue == null)
+            return false;
+        else
+            return true;
+    },
+    isSpace: function(strMain) {
+        /**
+        *判断是否为空
+        **/
+        var strComp = strMain;
+        try {
+            if (strComp == "　" || strComp == "" || strComp == " " || strComp == null || strComp == "null" || strComp.length == 0 || typeof strMain == "undefined" || strMain == "undefined") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch (e) { return false; }
+    },
+    isBackErrInfo: function(sRet) {
+        ///是否是后台返回的错误信息
+        return IsSpace(sRet) == false && sRet.substring(0, 12) == '{"errInfo":"';
+    },
+    repStr: function(mainStr, findStr, replaceStr) {
+        /**
+        //多次替代字符串
+
+        **/
+        if (typeof (mainStr) == "undefined" || mainStr == null) { return ""; }
+
+        var convertedString = mainStr.split(findStr);
+        convertedString = convertedString.join(replaceStr);
+        return convertedString;
+    },
+    repNewLine: function(sRun) {
+        /**
+        *替换换行符
+        **/
+        return RepStr(sRun, "\r\n", "&#13;&#10;");
+    },
+    unRepNewLine: function(sRun) {
+        return RepStr(sRun, "&#13;&#10;", "\r\n");
+    },
+    repXml: function(sRun) {
+        /**
+        //替代非法XML字符	
+        **/
+        sRun = RepStr(sRun, "&", "&amp;");
+        sRun = RepStr(sRun, ">", "&gt;");
+        sRun = RepStr(sRun, "<", "&lt;");
+        return sRun;
+    },
+    unRepXml: function(sSql) {
+        /**
+        //转回原串	
+        **/
+        sSql = RepStr(sSql, "&lt;", "<");
+        sSql = RepStr(sSql, "&gt;", ">");
+        sSql = RepStr(sSql, "&amp;", "&");
+        return sSql;
+    },
+    getDsnSql: function(oSql) {
+        ///取得sql及datasourceName
+        var sSql = "";
+        var sDsn = ""
+        if (typeof (oSql) == "object") {
+            sSql = oSql.sql;
+            if (IsSpace(oSql.datasourceName) == false)
+                sDsn = "&datasourceName=" + oSql.datasourceName;
+        } else {
+            sSql = oSql;
+        }
+        sSql = RepOpenSql(sSql);
+        return { sql: sSql, dsn: sDsn };
+    },
+    repMark: function(sTitle) {
+        var propName; //替换字段中文名中的特别标识.
+        for (propName in fcpubdata.repMark) {
+            sTitle = RepStr(sTitle, "${" + propName + "}", fcpubdata.repMark[propName])
+        }
+        return sTitle;
+    },
+
+    bigMoney: function(value) {
+        /**
+        *金额转换成大写
+        *@date 2003-12-10
+        **/
+        var intFen, i;
+        var strArr, strCheck, strFen, strDW, strNum, strBig, strNow;
+
+        if (new Eapi.Str().trim(value) == "") {   //数据为空时返回"零"
+            return "零";
+        }
+        if (isNaN(value))   //数据非法时提示，并返回空串
+        {
+            strErr = "数据" + value + "非法！";
+            alert(strErr);
+            return "";
+        }
+        strCheck = value + ".";
+        strArr = strCheck.split(".");
+        strCheck = strArr[0];
+        var len = strCheck.length;
+        if (len > 12)   //数据大于等于一万亿时提示无法处理
+        {
+            strErr = "数据" + value + "过大，无法处理！";
+            alert(strErr);
+            return "";
+        }
+        try {
+            i = 0;
+            strBig = "";
+            var s00 = "00";
+            var svalue = value + "";
+            var ipos = svalue.indexOf(".");
+            var iiLen = svalue.length;
+            if (ipos < 0) {  //没有小数位
+                strFen = svalue + "00";
+            } else if (ipos == iiLen - 2) { //只有一位小数
+                strFen = svalue.substring(0, iiLen - 2) + svalue.substring(iiLen - 1, iiLen) + "0";
+            } else if (ipos == iiLen - 3) { //只有2位小数
+                strFen = svalue.substring(0, iiLen - 3) + svalue.substring(iiLen - 2, iiLen);
+            } else { //有2位以上的小数位
+                strFen = svalue.substring(0, ipos) + svalue.substring(ipos + 1, ipos + 3);
+            }
+            //intFen = value*100;          //转换为以分为单位的数值
+            //strFen = intFen.toString();
+            //strArr = strFen.split(".");
+            //strFen = strArr[0];
+            intFen = strFen.length;      //获取长度
+            strArr = strFen.split(""); //将各个数值分解到数组内
+            while (intFen != 0)   //分解并转换
+            {
+                i = i + 1;
+                switch (i)              //选择单位
+                {
+                    case 1: strDW = "分"; break;
+                    case 2: strDW = "角"; break;
+                    case 3: strDW = "元"; break;
+                    case 4: strDW = "拾"; break;
+                    case 5: strDW = "佰"; break;
+                    case 6: strDW = "仟"; break;
+                    case 7: strDW = "万"; break;
+                    case 8: strDW = "拾"; break;
+                    case 9: strDW = "佰"; break;
+                    case 10: strDW = "仟"; break;
+                    case 11: strDW = "亿"; break;
+                    case 12: strDW = "拾"; break;
+                    case 13: strDW = "佰"; break;
+                    case 14: strDW = "仟"; break;
+                }
+                switch (strArr[intFen - 1])              //选择数字
+                {
+                    case "1": strNum = "壹"; break;
+                    case "2": strNum = "贰"; break;
+                    case "3": strNum = "叁"; break;
+                    case "4": strNum = "肆"; break;
+                    case "5": strNum = "伍"; break;
+                    case "6": strNum = "陆"; break;
+                    case "7": strNum = "柒"; break;
+                    case "8": strNum = "捌"; break;
+                    case "9": strNum = "玖"; break;
+                    case "0": strNum = "零"; break;
+                }
+
+                //处理特殊情况
+                strNow = strBig.split("");
+                //分为零时的情况
+                if ((i == 1) && (strArr[intFen - 1] == "0")) {
+                    strBig = "整";
+                }
+                //角为零时的情况
+                else if ((i == 2) && (strArr[intFen - 1] == "0")) {    //角分同时为零时的情况
+                    if (strBig != "整")
+                        strBig = "零" + strBig;
+                }
+                //元为零的情况
+                else if ((i == 3) && (strArr[intFen - 1] == "0")) {
+                    strBig = "元" + strBig;
+                }
+                //拾－仟中一位为零且其前一位（元以上）不为零的情况时补零
+                else if ((i < 7) && (i > 3) && (strArr[intFen - 1] == "0") && (strNow[0] != "零") && (strNow[0] != "元")) {
+                    strBig = "零" + strBig;
+                }
+                //拾－仟中一位为零且其前一位（元以上）也为零的情况时跨过
+                else if ((i < 7) && (i > 3) && (strArr[intFen - 1] == "0") && (strNow[0] == "零"))
+                { }
+                //拾－仟中一位为零且其前一位是元且为零的情况时跨过
+                else if ((i < 7) && (i > 3) && (strArr[intFen - 1] == "0") && (strNow[0] == "元"))
+                { }
+                //当万为零时必须补上万字
+                else if ((i == 7) && (strArr[intFen - 1] == "0")) {
+                    strBig = "万" + strBig;
+                }
+                //拾万－仟万中一位为零且其前一位（万以上）不为零的情况时补零
+                else if ((i < 11) && (i > 7) && (strArr[intFen - 1] == "0") && (strNow[0] != "零") && (strNow[0] != "万")) {
+                    strBig = "零" + strBig;
+                }
+                //拾万－仟万中一位为零且其前一位（万以上）也为零的情况时跨过
+                else if ((i < 11) && (i > 7) && (strArr[intFen - 1] == "0") && (strNow[0] == "万"))
+                { }
+                //拾万－仟万中一位为零且其前一位为万位且为零的情况时跨过
+                else if ((i < 11) && (i > 7) && (strArr[intFen - 1] == "0") && (strNow[0] == "零"))
+                { }
+                //万位为零且存在仟位和十万以上时，在万仟间补零
+                else if ((i < 11) && (i > 8) && (strArr[intFen - 1] != "0") && (strNow[0] == "万") && (strNow[2] == "仟")) {
+                    strBig = strNum + strDW + "万零" + strBig.substring(1, strBig.length);
+                }
+                //单独处理亿位
+                else if (i == 11) {
+                    //亿位为零且万全为零存在仟位时，去掉万补为零
+                    if ((strArr[intFen - 1] == "0") && (strNow[0] == "万") && (strNow[2] == "仟")) {
+                        strBig = "亿" + "零" + strBig.substring(1, strBig.length);
+                    }
+                    //亿位为零且万全为零不存在仟位时，去掉万
+                    else if ((strArr[intFen - 1] == "0") && (strNow[0] == "万") && (strNow[2] != "仟")) {
+                        strBig = "亿" + strBig.substring(1, strBig.length);
+                    }
+                    //亿位不为零且万全为零存在仟位时，去掉万补为零
+                    else if ((strNow[0] == "万") && (strNow[2] == "仟")) {
+                        strBig = strNum + strDW + "零" + strBig.substring(1, strBig.length);
+                    }
+                    //亿位不为零且万全为零不存在仟位时，去掉万	
+                    else if ((strNow[0] == "万") && (strNow[2] != "仟")) {
+                        strBig = strNum + strDW + strBig.substring(1, strBig.length);
+                    }
+                    //其他正常情况
+                    else {
+                        strBig = strNum + strDW + strBig;
+                    }
+                }
+                //拾亿－仟亿中一位为零且其前一位（亿以上）不为零的情况时补零
+                else if ((i < 15) && (i > 11) && (strArr[intFen - 1] == "0") && (strNow[0] != "零") && (strNow[0] != "亿")) {
+                    strBig = "零" + strBig;
+                }
+                //拾亿－仟亿中一位为零且其前一位（亿以上）也为零的情况时跨过
+                else if ((i < 15) && (i > 11) && (strArr[intFen - 1] == "0") && (strNow[0] == "亿"))
+                { }
+                //拾亿－仟亿中一位为零且其前一位为亿位且为零的情况时跨过
+                else if ((i < 15) && (i > 11) && (strArr[intFen - 1] == "0") && (strNow[0] == "零"))
+                { }
+                //亿位为零且不存在仟万位和十亿以上时去掉上次写入的零
+                else if ((i < 15) && (i > 11) && (strArr[intFen - 1] != "0") && (strNow[0] == "零") && (strNow[1] == "亿") && (strNow[3] != "仟")) {
+                    strBig = strNum + strDW + strBig.substring(1, strBig.length);
+                }
+                //亿位为零且存在仟万位和十亿以上时，在亿仟万间补零
+                else if ((i < 15) && (i > 11) && (strArr[intFen - 1] != "0") && (strNow[0] == "零") && (strNow[1] == "亿") && (strNow[3] == "仟")) {
+                    strBig = strNum + strDW + "亿零" + strBig.substring(2, strBig.length);
+                } else {
+                    strBig = strNum + strDW + strBig;
+                }
+                strFen = strFen.substring(0, intFen - 1);
+                intFen = strFen.length;
+                strArr = strFen.split("");
+            }
+            if (strBig == "整") { strBig = "零"; }
+            return strBig;
+        } catch (err) {
+            return "";      //若失败则返回原值
+        }
+    },
+
+    repOpenSql: function(sql, slikevalue) {
+        /**
+
+        替代打开的sql语句中的 :
+        查找方式: 以:号开头,结尾为) ,
+        取当前用户内码用 :get_userid
+        取当前日期用 :get_curdate
+        :DsMain.field1 
+        *@date 2004-03-23
+        **/
+
+        //alert("sql:"+sql)
+        if (isSpace(sql)) { return ""; }
+        if (fcpubdata.databaseTypeName == "mysql") {
+            sql = new Eapi.Str().trim(sql);
+            if (sql.substring(0, 4).toUpperCase() == "EXEC") {
+                alert("因mysql数据库不支持存储过程!故无法使用此功能!");
+                return sql;
+            }
+        }
+
+
+        //因正则表达式中用pubDataSet['DsMain']有问题,故用pubDsMain = fcpubdata.obj['DsMain'] pubdssub1 = fcpubdata.obj['dssub1']
+        /*
+        try{
+        var pubDsMain = fcpubdata.obj['DsMain'] ;
+        }catch(E){}
+        try{	
+        var pubdssub1 = fcpubdata.obj['dssub1'] ;
+        }catch(E){}
+        */
+        //将回车换行符变成空格,以免正则表达式匹配出错
+        //alert("a:"+sql)
+
+        sql = repStr(sql, "\r\n", " ");
+        //alert("s:"+sql);
+        //CopyToPub(sql)
+
+        //将关键字 {单引号}  ==> ' 2008-03-27 add
+        sql = repStr(sql, "{单引号}", "'");
+        //先替换掉以 :{ 和 }: 之间 js变量的值 2008-02-28
+
+        var arrTmp = sql.split(":{");
+        if (arrTmp.length > 1) {
+            var pos = 0;
+            var retSql = new Sys.StringBuilder();
+            retSql.append(arrTmp[0]);
+            for (var k = 1; k < arrTmp.length; k++) {
+                pos = arrTmp[k].indexOf("}:");
+                if (pos >= 0) {
+                    retSql.append(eval(arrTmp[k].substring(0, pos)));
+                    retSql.append(arrTmp[k].substring(pos + 2, arrTmp[k].length));
+                } else {
+                    alert("sql语句中的 :{ 没有和 }: 相匹配!");
+                    return sql;
+                }
+            }
+            sql = retSql.toString();
+        }
+
+        var posStart = 0;
+        var posEnd = 0;
+        var ret = "";
+        var re = new RegExp();
+        re.compile("(:[a-zA-Z0-9_\.\$]*)([), =+%']|$|\s)", "gi");
+        var sInput = sql;
+        var nextpoint = 0;
+        while ((arr = re.exec(sInput)) != null) {
+            //alert(arr.index + "-" + arr.lastIndex + " |" + arr[0]+"|"+ " |" + RegExp.$1+"|");
+            posEnd = arr.index;
+            var s1 = RegExp.$1;
+            var sRep = "";
+            //if(s1==":get_userid"){
+            //    sRep="'"+new Eapi.Str().trim(getuser())+"'";
+            //}else 
+
+            if (s1 == ":v_get") {
+                sRep = slikevalue;
+                //}else if(s1==":get_date"){
+                //    sRep="'"+getdate()+"'";
+                //}else if(s1==":get_time"){
+                //    sRep="'"+getTime()+"'";
+                //}else if(s1==":get_datetime"){
+                //    sRep="'"+getdatetime()+"'";
+                //}else if(s1==":get_jgid"){
+                //	sRep="'"+getCookie('jgid')+"'";
+                //}else if(s1==":get_bmid"){
+                //	sRep="'"+getCookie('bmid')+"'";
+                //}else if(s1.substring(0,2) == ":$"){
+                //支持变量名
+                //    sRep= eval(s1.substring(2,s1.length)) ;
+                //    sRep=sRep;
+            } else {
+                //alert(s1)
+                var arr2 = s1.split(".");
+                if (arr2.length == 1) {
+                    if (s1 == ":key_value") {
+                        sRep = "'" + fcpubdata.keyValue + "'";
+                    } else { //考虑到sql语句中如有 2006-01-01 01:01:01 时会出错,因而固定写法为 :key_value
+                        sRep = s1;
+                    }
+                } else {
+                    //前面为数据集名后面为字段名
+                    var stmp1 = arr2[0].substring(1, arr2[0].length);
+                    if (arr2.length == 3) stmp1 = stmp1 + "." + arr2[1];
+                    var oDs = eval(stmp1);
+                    if (oDs != null) {
+                        if (oDs.Empty == "null") {
+                            sRep = "''";
+                        } else {
+                            var stmpField = arr2[1];
+                            if (arr2.length == 3) stmpField = arr2[2];
+                            try {
+                                sRep = "'" + oDs.Field(stmpField).Value + "'";
+                            } catch (E) {
+                                //if(oDs.Empty == "null"){
+                                //	alert("数据集"+stmp1+"尚未打开,此时无法取其字段值.");
+                                //}else{
+                                alert(stmp1 + "中不存在字段" + stmpField); sRep = "'" + "'";
+                                //}
+                            }
+                        }
+                    }
+                }
+            }
+
+            ret += sql.substring(posStart + nextpoint, posEnd + nextpoint);
+            ret += sRep;
+            posStart = arr.index + s1.length;
+            //nextpoint=nextpoint+arr.index+s1.length
+            //sInput=sql.substr(nextpoint)
+
+        }
+        if (ret == "") {
+            ret = sql;
+        } else if (posStart <= sql.length) {
+            ret += sql.substring(posStart, sql.length);
+        }
+        //alert("ret:"+ret)
+        if (isSpace(ret)) { ret = ""; }
+        return ret;
+    },
+    removeRoot: function(strX) {
+        /**
+        * 去掉根结点标记
+        * 13==>15 -7==>-9 是指结尾用换行回车符
+        *@param strX 为要处理前的字符串,
+        *@return 返回处理后的字符串
+        */
+        if (strX.length > 13) {
+            strX = strX.substring(6, strX.length - 7);
+            return strX;
+        } else {
+            return "";
+        }
+    },
+    copyToPub: function(str) {
+        /**
+        *将字符串写到粘贴版上
+        *@date 2004-02-20
+        **/
+        window.clipboardData.setData("Text", str);
+    },
+    showHelp: function(htmlfile) {
+        /**
+        *显示帮助页面
+        *@para htmlfile 帮助页面的HTM文件名
+        *@date 2005-07-25
+        **/
+        //alert(fcpubdata.path+"/eformhelp/" + htmlfile + ".htm");
+        window.open(fcpubdata.path + "/eformhelp/" + htmlfile + ".htm", "_blank", "top=0,left=0,height=400,width=300,status=no,toolbar=yes,menubar=no,location=no,resizable=yes,scrollbars=yes")
+    },
+    showWait: function(displaystr) {
+        /**
+        *显示等待窗口
+        *@date 2003-12-29
+        **/
+        var oPubPopup = fcpubdata.popup;
+        var oPubPopupBody = oPubPopup.document.body;
+        if (displaystr == "end") {
+            oPubPopup.hide();
+        } else {
+            if (event != null) {
+                if (event.srcElement != null) {
+                    //alert(event.srcElement.tagName)
+                    if (event.srcElement.tagName.toUpperCase() == "SELECT") return;
+                }
+            }
+            //alert(event.srcElement.outerHTML)
+            var strHTML = ""; // "<html><head></head><body leftmargin=0 topmargin=0>";
+            strHTML += "<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><td width=0%></td>";
+            strHTML += "<TD bgcolor=#ff9900><TABLE WIDTH=100% height=60 BORDER=0 CELLSPACING=2 CELLPADDING=0>";
+            strHTML += "<TR><td bgcolor=#eeeeee align=center>" + displaystr + "</td></tr></table></td>";
+            strHTML += "<td width=0%></td></tr></table>";
+
+            oPubPopupBody.innerHTML = strHTML;
+            var iwidth = 300;
+            var iheight = 60;
+            var ileft = (screen.availWidth - iwidth) / 2;
+            var itop = (screen.availHeight - iheight) / 2;
+            oPubPopup.show(ileft, itop, iwidth, iheight);
+        }
+    },
+    setDisabled: function(obj, boolValue) {
+        if (boolValue) {
+            obj.disabled = true;
+        } else {
+            obj.disabled = false;
+            obj.removeAttribute("disabled");
+        }
+
+    },
+    comboToStr: function(lstSelField2) {
+        /**
+        *将一个combo控件的value生成,分隔的一个字符串
+        *@date 2006-02-10
+        **/
+        var sb = new Sys.StringBuilder();
+        var len = lstSelField2.options.length;
+        for (var i = 0; i < len; i++) {
+            var stmp = new Eapi.Str().trim(lstSelField2.options(i).value);
+            if (stmp == "") stmp = new Eapi.Str().trim(lstSelField2.options(i).text);
+            sb.append(stmp);
+            sb.append(",");
+        }
+        var sV = sb.toString();
+        sV = sV.substring(0, sV.length - 1);
+        return sV;
+    }
+
+}
+Eapi.Str.registerClass("Eapi.Str");
+
+Eapi.RunAjax = function(){}
+Eapi.RunAjax.prototype = 
+{
+    sendHttp : SendHttp ,
+    getAllPubParamName : function(){
+        ///取到所有全局参数名称
+        var pubAllValue = this.getAllPubParamValue();
+        if(IsSpace(pubAllValue)) return "";
+        var arrRet = new Array();
+        var arr = pubAllValue.split(",");
+        for(var i=0;i<arr.length;i++){
+            var arrSub = arr[i].split("=");
+            var sName = arrSub[0]; 
+            var arr1 = new Array();
+            arr1[0] = sName;
+            arr1[1] = "<span style='color:red;'>函数说明：</span><br/>取当前的"+sName+"<br/>";
+            arrRet[i] = arr1;
+        }
+        return arrRet;
+    },
+    getAllPubParamValue : function(){
+        ///取全局参数数据到前台   
+        var pubAllValue = top.eformPubParamValue;
+        if(typeof(pubAllValue) == "undefined"){
+            //需要到后台去取
+            pubAllValue = this.sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=getAllPubParamValue","");
+            if(new Eapi.Str().isBackErrInfo(pubAllValue)) {
+                alert(pubAllValue); //表示后台出错了
+                return "";
+            }
+            top.eformPubParamValue = pubAllValue;      
+        }
+        //if(pubAllValue == "") return ""; //表示无session变量或是没有设置全局参数名称
+        return pubAllValue;
+    },
+    sqlToField: function(oSql) {
+        /**
+        *通过SQL返回一个字段的第一个记录值,返回类型:字符
+        *@param sql 为要处理的字符串,
+        *@return 返回一个数组
+        */
+        var oDsn = new Eapi.Str().getDsnSql(oSql);
+        var sXml = "<No>" + RepXml(oDsn.sql) + "</No>";
+        var retX = this.sendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=SqlToField" + oDsn.dsn, sXml);
+        if(new Eapi.Str().isBackErrInfo(retX)){
+                //运行出错了
+                alert(retX);            
+        }
+        return retX	;
+    },
+    insertSqls : function (sSql) {
+        /**
+        *执行多SQL插入
+        *@param sSql 要执行的SQL语句
+        **/
+	    var retX=this.sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?inserts",sSql);
+	    return retX;
+    },
+    insertSql : function (sSql) {
+        /**
+        *执行插入
+        **/
+	    if(fcpubdata.databaseTypeName == "mysql" && sSql.substring(0,4).toUpperCase() == "EXEC" ){
+		    alert("因mysql数据库不支持存储过程!故无法使用此功能!");
+		    return "";
+	    }
+	    var sXml="<No>"+sSql+"</No>";
+	    var retX=this.sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?fc_insert",sXml);
+	    return retX;
+    },
+    selectSql : function (oSql,PageNo,PageSize,callback,context) {
+        /**
+        *执行查询
+        *@param PageNo 页码
+        *@param PageSize 页尺寸,即一页含多少行
+        *@return 查询结果
+        **/
+	    //if(fcpubdata.databaseTypeName == "mysql" && sSql.substring(0,4).toUpperCase() == "EXEC" ){
+		//    alert("因mysql数据库不支持存储过程!故无法使用此功能!");
+    		
+	    //}
+
+    	var oDsn = new Eapi.Str().getDsnSql(oSql);
+	    var sql1 = RepXml(oDsn.sql) ;
+	    //CopyToPub(sql1)
+	    //替代非法XML字符
+	    var sXml="<sql>"+sql1+"</sql>"+"<pageno>"+PageNo+"</pageno>"+"<pagesize>"+PageSize+"</pagesize>";
+	    var retX=this.sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=fc_select"+oDsn.dsn,sXml,callback,context);
+	    return retX;
+    },
+    getMaxNo : function (sTag,strMK) {
+        /**
+        *返回最大号
+        **/
+	    return this.sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=getRecnum","<no>"+sTag+"</no>");
+    },
+    getMaxIntNo : function (sTag) {
+        /**
+        *返回最大整数号
+        **/
+	    return this.sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=getMaxIntNo","<no>"+sTag+"</no>");
+    }
+
+}
+Eapi.RunAjax.registerClass("Eapi.RunAjax");
+Eapi.Dom = function () {}
+Eapi.Dom.prototype =
+{
+    setDom: function(sXml) {
+        /**
+        *建立XMLDOM对象
+        *@param sXml xml字符串
+        *@return XML对象
+        *@date 2004-03-27
+        **/
+        var oXml = new ActiveXObject("Microsoft.XMLDOM");
+        oXml.async = false;
+        oXml.loadXML(sXml);
+        return oXml;
+    },
+    setDomFile: function(sPath) {
+        /**
+        *建立XMLDOM对象
+        *@param sPath 服务器端文件的url
+        *@return XML对象
+        *@date 2005-02-17
+        **/
+        var oTopWin = getTopWin();
+        var isFindTopWin = typeof (oTopWin.fctopdata) != "undefined"; //表示找对了顶层主窗口
+        var isBillType = isFindTopWin && sPath.indexOf("billtype.xml") >= 0;
+        if (isBillType && oTopWin.fctopdata.billtype != null) return oTopWin.fctopdata.billtype;
+
+        var isBillPos = isFindTopWin && sPath.indexOf("billpos.xml") >= 0;
+        if (isBillPos && oTopWin.fctopdata.billpos[sPath] != null) return oTopWin.fctopdata.billpos[sPath];
+
+        var isEconfig = isFindTopWin && sPath.indexOf("econfig.xml") >= 0;
+        if (isEconfig && oTopWin.fctopdata.econfig != null) return oTopWin.fctopdata.econfig;
+
+        var bReRead = false;
+        var oXml;
+        try {
+            oXml = new ActiveXObject("Msxml2.DOMDocument");
+        } catch (e) {
+
+        }
+        try {
+            if (typeof oXml == "undefined") oXml = new ActiveXObject("Microsoft.XMLDOM");
+            oXml.async = false;
+            oXml.load(sPath);
+        } catch (e) {
+            //如出错则改为用ajax方式读 2011-05-06
+            bReRead = true;
+        }
+        if (bReRead || oXml.documentElement == null) {
+            sPath = Trim(sPath);
+            var sFind = location.protocol + "//" + location.host + fcpubdata.path;
+            var pos = sPath.indexOf(sFind);
+            if (pos == 0) sPath = sPath.substring(sFind.length, sPath.length);
+
+            var sFind = fcpubdata.path;
+            var pos = sPath.indexOf(sFind);
+            if (pos == 0) sPath = sPath.substring(sFind.length, sPath.length);
+
+            var sFind = "../..";
+            var pos = sPath.indexOf(sFind);
+            if (pos == 0) sPath = sPath.substring(sFind.length, sPath.length);
+
+            var retX = new Eapi.RunAjax().sendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=GetFileContent&pathfile=" + escape(sPath), "");
+
+            oXml = SetDom(retX);
+            if (oXml.documentElement == null) {
+                alert("读文件 " + sPath + " 出错,或它的内容不是合法的XML格式! 错误信息: " + retX);
+            } 
+        }
+        if (isBillType) oTopWin.fctopdata.billtype = oXml; //保存回去.
+        if (isBillPos) oTopWin.fctopdata.billpos[sPath] = oXml;
+        if (isEconfig) oTopWin.fctopdata.econfig = oXml;
+        return oXml;
+    }
+
+}
+Eapi.Dom.registerClass("Eapi.Dom");
+Eapi.Css = function(){}
+Eapi.Css.prototype =
+{
+    actionSkins : function(){
+        var oTopWin = top; //取顶层窗口
+        if (typeof parent.dialogArguments != "undefined") {
+            var arrDjOpen = parent.dialogArguments;
+            if (IsSpace(arrDjOpen.length) == false && arrDjOpen.length > 4) {
+                oTopWin = arrDjOpen[4];
+
+            }
+        }
+        if (IsSpace(oTopWin) == false && IsSpace(oTopWin.zkpub) == false) {
+            if (IsSpace(oTopWin.zkpub.skin) == false) {
+                fcpubdata.skins = oTopWin.zkpub.skin;
+
+            }
+        }
+        try {
+            var tmpSkins = parent.Request.QueryString("skins").toString();
+            if (tmpSkins != "undefined") fcpubdata.skins = tmpSkins;
+        } catch (ee) { }
+
+    },
+    setSkinsPath : function(sSkins){
+    ///动态调整样式所在路径.
+        if(sSkins != "base" && sSkins != "red" && sSkins != "green" && sSkins != "blue" && sSkins != "white" && sSkins != "yellow" && sSkins != "light" )
+            fcpubdata.skinsPath = fcpubdata.userDir;
+    },
+    getPart : function (csstext){
+        /**
+        分析出CSS中的字体颜色等信息
+        csstext1="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 18px; LEFT: 339px; WIDTH: 48px; COLOR: #000000; FONT-STYLE: italic; FONT-FAMILY: 楷体_GB2312; POSITION: absolute; TOP: 65px; HEIGHT: 12px; BACKGROUND-COLOR: #80ffff" 
+        *@date 2004-08-11
+        **/
+	    if(typeof csstext == "undefined" ) return "";
+	    var sRet=new Sys.StringBuilder();
+	    var arr=csstext.split(";");
+	    var l=arr.length;
+	    for(var i=0;i<l;i++){
+		    var arr1=arr[i].split(":");
+		    if(arr1.length != 2) continue ;
+		    var stitle=new Eapi.Str().trim(arr1[0]);
+		    var svalue=new Eapi.Str().trim(arr1[1]);
+		    if(stitle == "FONT-WEIGHT" || stitle == "FONT-SIZE" || stitle == "COLOR" || stitle == "FONT-STYLE" || stitle == "FONT-FAMILY" || stitle == "BACKGROUND-COLOR" || stitle =="TEXT-DECORATION" ){
+			    sRet.append(stitle+":"+svalue+";"	);	
+		    }
+	    }
+	    return sRet.toString();
+    },
+    clearPart : function (obj,attrNameJs,attrName) {
+        /**
+        *清空CSS中的一节
+        *@para obj 要处理的对象
+        *@para attrName 要清空的属性名
+        *@date 2005-04-26
+        **/
+	    if(typeof(obj) == "undefined" || typeof(attrName) == "undefined") return ;
+	    eval("obj.style."+attrNameJs+"='';") ;
+	    var s1 =  obj.style.cssText ;
+	    attrName = attrName.toUpperCase() ;
+	    obj.style.cssText = RepStr(s1,attrName,"") ;
+    	
+    },
+    changePosition : function (csstext,propName,adjustValue){
+    ///调节一个style字符串中的左顶高宽值,返回调后的结果字符串
+	    var sRet=new Sys.StringBuilder();
+	    var arr=csstext.split(";");
+	    var l=arr.length;
+	    for(var i=0;i<l;i++){
+		    var arr1=arr[i].split(":");
+		    if(arr1.length == 2) {
+		        var stitle=new Eapi.Str().trim(arr1[0]).toUpperCase();
+		        if(stitle == propName.toUpperCase() ){
+		            var svalue=parseInt(new Eapi.Str().trim(arr1[1]));
+		            if(isNaN(svalue)) svalue = 0;
+			        sRet.append(arr1[0]+":"+(svalue+adjustValue-1));	
+		        }else{
+		            sRet.append(arr[i]);
+		        }
+		    }else{
+		        sRet.append(arr[i]);
+		    }
+		    sRet.append(";");
+	    }
+	    return sRet.toString();
+    
+    }
+
+}
+Eapi.Css.registerClass("Eapi.Css");
+
+Eapi.Upload = function(){}
+Eapi.Upload.prototype =
+{
+    isHave: function() {
+        /**
+        *判断是否有上传控件
+        *@date 2005-01-13
+        **/
+        try {
+            var s1 = upload1.id;
+            if (s1 != "upload1") { return false; }
+        } catch (e) {
+            //出错表示表单上不存在上传附件的控件.
+            return false;
+        }
+        return true;
+
+    },
+    uploadImg: function() {
+        /**
+        //在图形字段上双击时显示上传模式窗口
+        **/
+
+        //还有传UPDATE语句的参数问题
+        var oImg = event.srcElement;
+        //表示表单设计状态
+        if (oImg.isContentEditable) return;
+        //alert("out:"+oImg.id)
+        var arr = window.showModalDialog(fcpubdata.path + "/fceform/common/uploadimgmain.htm", oImg, "scroll:no;status:no;dialogHeight:150px;dialogWidth:350px;dialogTop:180;dialogLeft:250px");
+        if (typeof arr == "undefined") return;
+        //alert(arr[2]);
+        //考虑到IE8可能无法直接显示客户端的图片,所以改用显示服务器端的图片, 2010-12-16 my add
+        oImg.src = "../.." + arr[2];  
+        
+        //alert(oImg.field+":"+oImg.src)
+        var ods = $id(oImg.dataset);
+        if (ods != null) {
+            if (ods.bAdd == false) ods.bEdit = true;
+            ods.Field(oImg.field).Value = arr[2]; //后台的文件名+/fceformext/res路径
+            ods.Field(oImg.field).valid = "变"; //表示此图片已改动了,要重新上传.
+
+        }
+
+    }
+
+}
+Eapi.Upload.registerClass("Eapi.Upload");
+
+Eapi.GetPos = function(){}
+Eapi.GetPos.prototype =
+{
+    getAbsLeft: function(e) {
+        /**
+        *找到一个对象的绝对位置
+        **/
+        var l = e.offsetLeft;
+        while (e = e.offsetParent) {
+            if (e.style.position != "absolute") {
+                l += e.offsetLeft;
+            } else {
+                l += e.style.pixelLeft;
+            }
+        }
+        return l;
+    },
+    getAbsTop: function(e) {
+        var t = e.offsetTop;
+        while (e = e.offsetParent) {
+            if (e.style.position != "absolute") {
+                t += e.offsetTop;
+            } else {
+                var scrollValue = 0;
+                if (e.tagName == "DIV") scrollValue = e.scrollTop; // 2011-06-21
+                t += e.style.pixelTop-scrollValue;
+            }
+        }
+        return t;
+    },
+    getPosLeft: function(e) {
+        var t = 0;
+        while (e = e.parentNode) {
+            if (e.style != null && e.style.position == "absolute") break;
+            var t1 = e.offsetLeft;
+            if (isNaN(t1)) t1 = 0;
+            t += t1;
+        }
+        //        alert("t=" + t);
+        return t;
+    },
+    getPosTop: function(e) {
+        var t = 0;
+        while (e = e.parentNode) {
+            if (e.style != null && e.style.position == "absolute") break;
+            var t1 = e.offsetTop;
+            if (isNaN(t1)) t1 = 0;
+            t += t1;
+        }
+        //      alert("t=" + t);
+        return t;
+    }
+
+}
+Eapi.GetPos.registerClass("Eapi.GetPos");
+
+Eapi.Session = function(){}
+Eapi.Session.prototype =
+{
+    setSession: function(strQueryString, callback) {
+        //设置一个或多个Session变量值
+        //strQueryString 如:userid=12&username=liuxm
+        //返回值:无
+        /*if (document.all("ifrSession") == null) {
+            document.body.insertAdjacentHTML("BeforeEnd", "<IFRAME id=ifrSession name=ifrSession src='' width=0 height=0></IFRAME>");
+
+        }
+        document.all.ifrSession.src = location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=setSession&" + strQueryString;
+
+        document.all.ifrSession.onreadystatechange = function() {
+            if (document.all.ifrSession.readyState != "complete") return;
+            if (typeof callback == "function") {
+                callback(); //将值传出
+            }
+        }
+        */
+
+        SendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=setSession&" + strQueryString, callback);
+    },
+
+    getSession: function(strQueryString, callback) {
+        //取到一个或多个Session变量值
+        //strQueryString 如:userid=&username=
+        //返回数组对象:arrRet["userid"]
+        /*	    if(typeof callback == "function"){
+        if(strQueryString.substring(strQueryString.length-1,strQueryString.length) != "=") {
+        strQueryString = strQueryString+"=";
+        }
+        if ( document.all("ifrSession") == null ){
+        document.body.insertAdjacentHTML("BeforeEnd", "<IFRAME id=ifrSession name=ifrSession src='' width=0 height=0></IFRAME>");
+        }
+        fcpubdata.pubSession = "null" ; //清空全局变量的值.
+        document.all.ifrSession.src=location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion + "?key=getSession&"+strQueryString;
+    		
+		    document.all.ifrSession.onreadystatechange= function () {
+        if(document.all.ifrSession.readyState != "complete") return;
+        var arrRet=new Array();
+        var arr=fcpubdata.pubSession.split("&");
+        var ilen=arr.length;
+        for(i=0;i<ilen;i++){
+        var arr1=arr[i].split("=");
+        arrRet[arr1[0]]=arr1[1];	
+        }			
+        if(typeof callback == "function"){
+        callback(arrRet); //将值传出
+        }
+        }
+        }else{  //取固定的session变量值
+        //下面:"userid=12&username=liu" ==> arr
+        var arrRet=new Array();
+        var arr=parent.fcpubdata.pubSession.split("&");
+        var ilen=arr.length;
+        for(i=0;i<ilen;i++){
+        var arr1=arr[i].split("=");
+        arrRet[arr1[0]]=arr1[1];	
+        }
+        return arrRet;
+        }
+        */
+
+        if (strQueryString.substring(strQueryString.length - 1, strQueryString.length) != "=") {
+            strQueryString = strQueryString + "=";
+        }
+        if (typeof callback == "function") {
+            SendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=getSession&" + strQueryString, "", function(result) {
+                var sRetValue = result.value;
+                //alert(sRetValue)
+                var arrRet = new Array();
+                var arr = sRetValue.split("&");
+                var ilen = arr.length;
+                for (var i = 0; i < ilen; i++) {
+                    var arr1 = arr[i].split("=");
+                    arrRet[arr1[0]] = arr1[1];
+                }
+                callback(arrRet); //将值传出
+            })
+        } else {
+            var sRetValue = SendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=getSession&" + strQueryString, "");
+            var arrRet = new Array();
+            var arr = sRetValue.split("&");
+            var ilen = arr.length;
+            for (var i = 0; i < ilen; i++) {
+                var arr1 = arr[i].split("=");
+                arrRet[arr1[0]] = arr1[1];
+            }
+            return arrRet;
+
+        }
+
+    },
+    getSessionOne: function(name) {
+        /**
+        *取单个session值
+        *@date 2006-01-26
+        **/
+        return GetSession(name + "=")[name];
+    },
+    iframeRun: function(iframeId, src, callback) {
+        ///用iframe来调用后台程序,    
+        if (document.all(iframeId) == null) {
+            document.body.insertAdjacentHTML("BeforeEnd", "<IFRAME id='" + iframeId + "' name='" + iframeId + "' src='' width=0 height=0></IFRAME>");
+
+        }
+        document.all(iframeId).src = src;
+
+        document.all(iframeId).onreadystatechange = function() {
+            if (document.all(iframeId).readyState != "complete") return;
+            if (typeof callback == "function") {
+                callback(); //将值传出
+            }
+        }
+    }
+
+
+}
+
+
+
+/**
+*采用ajax的异步回调方式
+*@date 2005-10-14
+*/
+
+var requests = new Array();
+
+if(typeof(XMLHttpRequest) == 'undefined')
+var XMLHttpRequest = function()
+{
+	var request = null;
+	try
+	{
+		request = new ActiveXObject('Msxml2.XMLHTTP');
+		request.setTimeouts(20000, 20000, 50000,100000);  
+	}
+	catch(e)
+	{
+		try
+		{
+			request = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		catch(ee)
+		{}
+	}
+	return request;
+}
+
+function ajax_stop()
+{
+	for(var i=0; i<requests.length; i++)
+	{
+		if(requests[i] != null){
+			requests[i].obj.abort();
+			//requests[i] = null ;
+		}
+	}
+}
+
+function ajax_create_request(context)
+{
+	for(var i=0; i<requests.length; i++)
+	{
+		if(requests[i].readyState == 4)
+		{
+			requests[i].abort();
+			requests[i].context = null;
+			return requests[i];
+		}
+	}
+
+	var pos = requests.length;
+	
+	requests[pos] = Object();
+	requests[pos].obj = new XMLHttpRequest();
+	requests[pos].context = context;
+	
+	return requests[pos];
+}
+
+function ajax_request(url, data, callback, context,noRoot)
+{
+	var request = ajax_create_request(context);
+	var async = typeof(callback) == 'function';
+
+	if(async) request.obj.onreadystatechange = function()
+	{
+		if(request.obj.readyState == 4)
+			callback(new ajax_response(request));
+		//异步时对象作为回调函数的参数,有三个属性: value,context,error	
+	}
+	
+	request.obj.open('POST', url, async);
+	//兼容以前的同步写法
+	if(noRoot == "noRoot" ){
+		request.obj.send(data);
+	}else{
+		request.obj.send("<root>"+data+"</root>");
+	}
+	if(!async){
+		//如同步时则直接返回值,
+		var o = new ajax_response(request);
+		//if(o.error != null) alert(o.error.description)
+		return o.value ;
+	}
+}
+
+function ajax_response(request)
+{
+	this.request = request.obj;
+	this.error = null;
+	this.value = null;
+	this.context = request.context;
+	
+	if(request.obj.status == 200)
+	{
+		try
+		{
+			this.value = object_from_json(request);
+			
+			if(this.value && this.value.error)
+			{
+				this.error = this.value.error;
+				this.value = null;
+			}
+		}
+		catch(e)
+		{
+			this.error = new ajax_error(e.name, e.description, e.number);
+		}
+	}
+	else
+	{
+		this.error = new ajax_error('HTTP request failed with status: ' + request.obj.status, request.obj.status);
+		//alert(request.obj.status);
+	}
+	
+	return this;
+}
+
+//function enc(s)
+//{
+//	return s.toString().replace(/\%/g, "%26").replace(/=/g, "%3D");
+//}
+
+function object_from_json(request)
+{
+	if(request.obj.responseXML != null && request.obj.responseXML.xml != null && request.obj.responseXML.xml != '')
+		return request.obj.responseXML;
+	
+	//var r = null;	
+	//eval('r=' + request.obj.responseText + ';');
+	//return r;
+	return request.obj.responseText ;
+}
+
+function ajax_error(name, description, number)
+{
+	this.name = name;
+	this.description = description;
+	this.number = number;
+
+	return this;
+}
+
+ajax_error.prototype.toString = function()
+{
+	return this.name + " " + this.description;
+}
+
+function SendHttp(url, data, callback, context, noRoot) {
+    
+    if (typeof (callback) != 'function') {
+        showWaitIframe();
+        var retValue = ajax_request(url, data, callback, context, noRoot);
+
+        showWaitIframe("end");
+//        if (retValue == "relogin") {
+//            top.close();
+//            top.location.replace("../../fceform/common/djframe.htm?djsn=ZK_login&djtype=ZK");
+//            return;
+//        }              
+        return retValue;
+    }
+    if (fcpubdata.loadingStatus == "start") {
+        var urlStart = location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?";
+        var urlEnd = url.substring(urlStart.length, url.length);
+        var arrP = urlEnd.split("&");
+        var arrP1 = arrP[0].split("=");
+        if (arrP1[1] == "fillcombox" || arrP1[1] == "getDsns" || arrP1[1] == "fc_select" || arrP1[1] == "dataset_fields1" || arrP1[1] == "dataset_select" || arrP1[1] == "sqltotreedata" || arrP1[1] == "getTreeXml") {
+            var iLen = fcpubdata.loadingHttpArr.length;
+            fcpubdata.loadingHttpArr[iLen] = new Object();
+            fcpubdata.loadingHttpArr[iLen].callback = callback;
+            fcpubdata.loadingHttpArr[iLen].context = context;
+            var curXml = '<root key="' + arrP1[1] + '" ';
+            if (arrP.length > 1) {
+                var arrP2 = arrP[1].split("=");
+                curXml += arrP2[0] + '="' + arrP2[1] + '"'; //此处加datasourceName
+            }
+            curXml += '>' + data + '</root>';
+            fcpubdata.loadingHttpData += curXml;
+            return;
+        }
+        if (arrP1[1] == "loadingBatchAction") 
+        {
+            data = fcpubdata.loadingHttpData;
+            
+        }
+    }
+    showWaitIframe();
+	var wRequest =  new Sys.Net.WebRequest();
+    // Set the request Url.  
+    wRequest.set_url(url); 
+
+    // Set the request verb.
+    wRequest.set_httpVerb("POST");
+    wRequest.set_userContext(context);
+    var sdata=data;
+	if(noRoot != "noRoot" ){
+		sdata = "<root>"+data+"</root>";
+	}
+    wRequest.set_body(sdata);
+    wRequest.callback = callback;
+    wRequest.get_headers()['Content-Type'] = 'text/xml; charset=utf-8';
+    //
+    var handle = function(executor) {
+        if (executor.get_responseAvailable()) {
+            showWaitIframe("end");
+
+            var sRet = executor.get_responseData();
+//            if (sRet == "relogin") {
+//                top.close();
+//                top.location.replace("../../fceform/common/djframe.htm?djsn=ZK_login&djtype=ZK");
+//                return;
+//            }                     
+            var result = new Object();
+            var wRequest = executor.get_webRequest();
+            var iLen = fcpubdata.loadingHttpArr.length;
+            if (iLen == 0) {
+                result.context = wRequest.get_userContext();
+                try {
+                    var oJson = Sys.Serialization.JavaScriptSerializer.deserialize(sRet);
+                    result.value = oJson.value;
+                    result.errmsg = oJson.errmsg;
+                    //还可以加权限提示信息.
+                    //result.permitmsg = oJson.permitmsg;
+                } catch (e) {
+                    result.value = sRet;
+                }
+                //callback(result);
+
+                wRequest.callback(result);
+            }
+            else { //成批发送返回时
+
+                var oDom = SetDom(sRet);
+                if (oDom.documentElement == null) {
+                    //CopyToPub(sRet);
+                    alert(sRet); //后台发生异常,报出异常信息.
+                    return;
+                }
+                for (var j = 0; j < oDom.documentElement.childNodes.length; j++) {
+                    var sXmlOne = oDom.documentElement.childNodes(j).xml;
+                    sXmlOne = new Eapi.Str().removeRoot(sXmlOne);
+                    result.value = sXmlOne;
+                    result.context = fcpubdata.loadingHttpArr[j].context;
+                    fcpubdata.loadingHttpArr[j].callback(result);
+                }
+                wRequest.callback(result); //再次调用一下当前的回调函数, 此时 result参数没有用到 
+                fcpubdata.loadingHttpArr = new Array(); //清空
+            }
+
+        } else {
+            showWaitIframe("end");
+            if (executor.get_timedOut())
+                alert("Timed Out");
+            else
+                if (executor.get_aborted())
+                alert("Aborted");
+        }
+
+    }
+    wRequest.add_completed(handle);
+    wRequest.invoke();
+    
+    function showWaitIframe(sTag) {
+        var sDivFrameName = "showWaitIframeDiv";
+        var sFrameName = "showWaitIframe";
+        if ($id(sDivFrameName) == null) {
+            if (sTag == "end" || document.body == null) return;
+            document.body.insertAdjacentHTML("BeforeEnd", "<DIV id=" + sDivFrameName + " style='position:absolute;left:30px;top:30px'><IFRAME id=" + sFrameName + " name=" + sFrameName + " width='32' height='32' border=0 NORESIZE=NORESIZE SCROLLING=no MARGINWIDTH=0 MARGINHEIGHT=0 FRAMESPACING=0 FRAMEBORDER=0 src='../../fceform/images/ef_wait.gif' ></IFRAME></DIV>");
+            //$id(sDivFrameName).innerHTML = ""
+            //var strHTML = "<img src='../../fceform/images/ef_wait.gif'>" allowTransparency='true' 
+            //window.frames(sFrameName).document.open();
+            //window.frames(sFrameName).document.write(strHTML);
+            //window.frames(sFrameName).document.close();
+
+        } else {
+     
+            if (sTag == "end")
+                $id(sDivFrameName).style.display = "none";
+            else
+                $id(sDivFrameName).style.display = "";
+        }
+    
+    }   
+}
+
+function $id(elementID)
+{
+    return document.getElementById(elementID);
+}
+///取客户端的当前日期,返回 2008-08-08 格式
+function getdate()
+{
+    var curDate = new Date();
+    return curDate.format("yyyy-MM-dd");
+}
+///取客户端的当前时间,返回 2008-08-08 17:05:15 格式
+function GetTime() {
+    var curDate = new Date();
+    return curDate.format("yyyy-MM-dd HH:mm:ss"); 
+}
+
+/**
+*函数兼容
+*@date 2004-03-01
+**/
+function Trim(strMain){return new Eapi.Str().trim(strMain);}
+function SelectSql(sSql,PageNo,PageSize,callback,context){return new Eapi.RunAjax().selectSql(sSql,PageNo,PageSize,callback,context);}
+function InsertSql(sSql){return fc_insert(sSql);}
+function InsertSqls(sSql){return inserts(sSql);}
+function GetDate(){return getdate();}
+function RepStr(mainStr,findStr,replaceStr){return repStr(mainStr,findStr,replaceStr);}
+function IsSpace(strMain){return isSpace(strMain);}
+function RepXml(sSql){return repXml(sSql);}
+function unRepXml(sSql){return UnRepXml(sSql);}
+function Num(str1){return num(str1);}
+function IsTrue(svalue){ return isTrue(svalue);}
+
+
+
+//新的兼容函数,2008-01-18
+
+function SaveUserData(Main,Sub,strContent){ return new Eapi.UserData().save(Main,Sub,strContent); }
+function LoadUserData(Main,Sub){return new Eapi.UserData().load(Main,Sub);}
+function num(str1){return new Eapi.Num().toFloat(str1);}
+function ToInt(str1){return new Eapi.Num().toInt(str1);}
+function ContDec(sValue,sPointNum) {return new Eapi.Num().format(sValue,sPointNum);}
+function isTrue(svalue) { return new Eapi.Str().isTrue(svalue);}
+function isSpace(strMain){return new Eapi.Str().isSpace(strMain);}
+function repStr(mainStr,findStr,replaceStr){return new Eapi.Str().repStr(mainStr,findStr,replaceStr);}
+function repNewLine(sRun) {return new Eapi.Str().repNewLine(sRun);}
+function unRepNewLine(sRun) {return new Eapi.Str().unRepNewLine(sRun);}
+function repXml(sRun) {return new Eapi.Str().repXml(sRun);}
+function UnRepXml(sSql) {return new Eapi.Str().unRepXml(sSql);}
+function ChangeToBig(value){return new Eapi.Str().bigMoney(value);}
+function SqlToField(sql) {return new Eapi.RunAjax().sqlToField(sql);}
+function RepOpenSql(sql,slikevalue) {return new Eapi.Str().repOpenSql(sql,slikevalue);}
+function inserts(sSql) {return new Eapi.RunAjax().insertSqls(sSql);}
+function fc_insert(sSql) {return new Eapi.RunAjax().insertSql(sSql);}
+function fc_select(sSql,PageNo,PageSize) {return new Eapi.RunAjax().selectSql(sSql,PageNo,PageSize);}
+function CopyToPub(str){return new Eapi.Str().copyToPub(str);}
+function SetDom(sXml) {return new Eapi.Dom().setDom(sXml);}
+function SetDomFile(sPath) {return new Eapi.Dom().setDomFile(sPath);}
+function RemoveRoot(strX){return new Eapi.Str().removeRoot(strX);}
+function CssPart(csstext){return new Eapi.Css().getPart(csstext);}
+function ClearCssPart(obj,attrNameJs,attrName) {return new Eapi.Css().clearPart(obj,attrNameJs,attrName);}
+function HaveUpload() {return new Eapi.Upload().isHave();}
+function getMaxNo(sTag,strMK) {return new Eapi.RunAjax().getMaxNo(sTag,strMK);}
+function getMaxIntNo(sTag) {return new Eapi.RunAjax().getMaxIntNo(sTag);}
+function getAbsLeft(e){return new Eapi.GetPos().getAbsLeft(e);}
+function getAbsTop(e){return new Eapi.GetPos().getAbsTop(e);}
+function getPosLeft(e){return new Eapi.GetPos().getPosLeft(e);}
+function getPosTop(e){return new Eapi.GetPos().getPosTop(e);}
+function uploadImg(){return new Eapi.Upload().uploadImg();}
+function SetSession(strQueryString,callback){return new Eapi.Session().setSession(strQueryString,callback);}
+function GetSession(strQueryString,callback){return new Eapi.Session().getSession(strQueryString,callback);}
+function GetSessionOne(name) {return new Eapi.Session().getSessionOne(name);}
+function ShowHelp(htmlfile) {return new Eapi.Str().showHelp(htmlfile);}
+function ComboToStr(lstSelField2){return new Eapi.Str().comboToStr(lstSelField2);}
+
+//全局的$函数
+//function $isTrue(svalue) { return new Eapi.Str().isTrue(svalue);}
+//function $isSpace(strMain){return new Eapi.Str().isSpace(strMain);}
+//function $repStr(mainStr,findStr,replaceStr){return new Eapi.Str().repStr(mainStr,findStr,replaceStr);}
+//function $toFloat(str1){return new Eapi.Num().toFloat(str1);}
+//function $toInt(str1){return new Eapi.Num().toInt(str1);}
+function $if(bool,trueValue,falseValue){if(bool) {return trueValue; } else { return falseValue; }}
+
+function getDomNodeValue(oXml,nodeName){
+///取Dom中指定节点的值
+	var oNode = oXml.documentElement.selectSingleNode("/root/"+nodeName);	
+	if(oNode != null)
+	{
+		return oNode.text;
+	}		
+	return null;
+}
+
+function getpubvalue(sName){
+///取用户的全局参数信息
+///sName == "用户.名称" 格式
+    var pubAllValue = new Eapi.RunAjax().getAllPubParamValue();
+    if(IsSpace(pubAllValue)) return "";
+    var arr = pubAllValue.split(",");
+    for(var i=0;i<arr.length;i++){
+        var arrSub = arr[i].split("=");
+        if(arrSub[0] == sName){
+            return arrSub[1];
+        }
+    }
+    return "";
+}
+function DelayRunCommand(iTime,callback) {
+///延时执行命令,直到表单窗口加载完成
+    if (IsSpace(fcpubdata.idTime) == false) window.clearTimeout(fcpubdata.idTime);
+    if (typeof(callback) != "undefined") {
+        if (parent.fcpubdata.loading == "finish") {
+            callback();
+        } else {
+            
+            fcpubdata.idTime = window.setTimeout("DelayRunCommand(" + iTime + "," + callback + ")", iTime);
+        }
+    }
+}
+//function GetCodeOrName(sqlOrArr,colNo,sValue) {
+//    ///由ID取得Name,或是由Name取得Id,可用于数据集的读出时转换事件中
+//    if (typeof (sqlOrArr) == "array") {
+
+//    } else { //sql语句
+//        var sXml = SelectSql(sqlOrArr, 1, -1);
+//        var oXml = SetDom(sXml);
+//        if (oXml.documentElement == null) {
+//            alert("SQL语句 " + sqlOrArr + " 运行出错! 错误信息是 " + sXml);
+//            return "";
+//        }
+//        fcpubdata.codeToNameXml = 
+//    }
+//}
+
+/*****************************************************/
+function setCookie(name, value) {
+    var Days = 7;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+}
+function getCookie(name) {
+    var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+    if (arr != null) return unescape(arr[2]); return null;
+}
+function delCookie(name) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(name);
+    if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
+/**
+*判断IE版本
+*@return 返回数值型:5.5
+*@date 2003-06-18
+*/
+function getIEVersion() {
+    var sVer = navigator.appVersion;
+    var l = sVer.indexOf("MSIE");
+    sVer = sVer.substring(l + 5, l + 8);
+    var dbl = parseFloat(sVer);
+    if (isNaN(dbl))
+        return 0;
+    else
+        return dbl;
+
+}
+/**
+取当前运行的函数名.
+如果当前函数是有名函数，则返回其名字，如果是匿名函数则返回被赋值的函数变量名，如果是闭包中匿名函数则返回“anonymous”。
+使用：在要调查的函数内部执行此函数，传入一个参数，为arguments.callee。
+**/
+function getCurRunFunctionName(callee) {
+    if (callee == null) return "";
+    var _callee = callee.toString().replace(/[\s\?]*/g,""),
+    comb = _callee.length >= 50 ? 50 :_callee.length;
+    _callee = _callee.substring(0,comb);
+    var name = _callee.match(/^function([^\(]+?)\(/);
+    if(name && name[1]){
+        return name[1];
+    }
+    var caller = callee.caller;
+    if(caller != null){
+        _caller = caller.toString().replace(/[\s\?]*/g,"");
+        var last = _caller.indexOf(_callee),
+        str = _caller.substring(last-30,last);
+        name = str.match(/var([^\=]+?)\=/);
+        if(name && name[1]){
+            return name[1];
+        }
+    }
+    return "anonymous"
+}
+/**
+* 取窗口的宽度,高度 2011-02-25
+**/
+function getClientBounds(oWin) {
+    if (typeof (oWin) == "undefined") oWin = window;
+    
+    var clientWidth;
+    var clientHeight;
+    switch (Sys.Browser.agent) 
+    {
+        case Sys.Browser.InternetExplorer:
+            
+            //if (typeof(oWin.dialogArguments)=="undefined" || typeof (oWin.dialogWidth) == "undefined") {
+               // clientWidth = oWin.document.compatMode == "CSS1Compat" ? oWin.document.documentElement.clientWidth : oWin.document.body.clientWidth;
+                clientWidth = oWin.document.body.offsetWidth;
+            //} else {
+             //   clientWidth = ToInt(oWin.dialogWidth) - 2;
+                
+            //}
+            //if (typeof (oWin.dialogArguments) == "undefined" || typeof (oWin.dialogHeight) == "undefined") {
+               // clientHeight = oWin.document.compatMode == "CSS1Compat" ? oWin.document.documentElement.clientHeight : oWin.document.body.clientHeight;
+                clientHeight = oWin.document.body.offsetHeight;    
+           // } else {
+           //     clientHeight = ToInt(oWin.dialogHeight)-2;
+           // }
+
+
+            break;
+        case Sys.Browser.Safari:
+            clientWidth = oWin.innerWidth;
+            clientHeight = oWin.innerHeight;
+            break;
+        case Sys.Browser.Opera:
+            clientWidth = Math.min(oWin.innerWidth, oWin.document.body.clientWidth);
+            clientHeight = Math.min(oWin.innerHeight, oWin.document.body.clientHeight);
+            break;
+        default: //firefox 等
+            clientWidth = Math.min(oWin.innerWidth, oWin.document.documentElement.clientWidth);
+            clientHeight = Math.min(oWin.innerHeight, oWin.document.documentElement.clientHeight);
+            break;
+    }
+    
+    return { width: clientWidth, height: clientHeight };
+    
+}
+/**
+* 取顶层主窗口, 2011-03-05
+**/
+function getTopWin() {
+    var oTopWin = top;
+    if (typeof window.dialogArguments != "undefined") {
+        var arrDjOpen = window.dialogArguments;
+        if (IsSpace(arrDjOpen.length) == false && arrDjOpen.length > 4) {
+            if (IsSpace(arrDjOpen[4]) == false)
+                oTopWin = arrDjOpen[4];
+        }
+    }
+    return oTopWin;
+}

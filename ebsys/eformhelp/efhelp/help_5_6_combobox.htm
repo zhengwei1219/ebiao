@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>combobox控件</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">combobox控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. combobox控件</div>
+      &nbsp;&nbsp;&nbsp; combobox控件是标准的html的SELECT元素，它的下拉窗口可以显示到当前窗口之外，只能显示一列信息，返回最多两列信息，一个是显示值，一个是隐藏值．不支持多选(多选是变成listbox控件了)，只能返回一行信息，不支持分页显示．不能直接输入，只能选择输入．它可以实现控件显示为显示值，而控件的值（．value时）是隐藏值的效果.可以JS代码来动态的初始化选项列表的内容.演示了动态增加一个选项,动态指定一个sql语句的查询结果作为可选内容.单击<a href='http://localhost/webbill/ebsys/fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_6_combobox'>combobox示例</a>进入combobox示例设计界面.
+       <div class="divTitle">2. combobox控件</div>
+      <p>函数 SqlCombo(obj,sql) 作用:用一个sql语句的结果填充选项列表</p> &nbsp;&nbsp;&nbsp; obj为listbox或combox对象,sql为要运行的新的SQL语句. 还有一个类似功能的函数:<p> SqlCombo1(obj,sql)</p>&nbsp;&nbsp;&nbsp; 它和 SqlCombo(obj,sql)的差异是 SqlCombo1 是采用动态加option元素的方法来改变选项列表,SqlCombo是替换整个outerHTML串的方式.如表单打开之后事件中用SqlCombo则会使本控件的绑定数据集的状态丢失.此时应用SqlCombo1,如当选项列表的内容较多时,SqlCombo1比SqlCombo的运行速度会慢很多.我们在表单的自定义函数中定义了两个函数,一个用到了SqlCombo(obj,sql),一个用到了SqlCombo1(obj,sql).<p>function uf_SqlSel() {<br />
+	combobox2.options.length=0;<br />
+	var whereValue = combobox1.value ;<br />
+	var sql = "select areaname from FCS_AREA where father_id='"+whereValue+"'" ;<br />
+	SqlCombo(combobox2,sql);<br />
+}<br />
+
+
+function uf_SqlSel1() {<br />
+	var whereValue1 = combobox3.value ;<br />
+	var sql1 = "select areaname from FCS_AREA where father_id='"+whereValue1+"'" ;<br />
+	SqlCombo1(combobox4,sql1);<br />
+	combobox4.fireEvent("onchange");<br />
+}</p>
+       <div class="divTitle">3. 运行combobox控件示例</div>
+       &nbsp;&nbsp;&nbsp; 在combobox控件的改变事件中使用了SqlCombo方法的数据集，单击【查看数据集AREANAME字段的值】显示空,使本控件的绑定数据集的状态丢失.在combobox控件的改变事件中使用了SqlCombo1方法的数据集，单击【查看数据集AREANAME字段的值】显示静安区,控件绑定数据集的状态没丢失.<br />
+       <img  src ="images/help_5_6_1.gif"/>
+       
+</div>
+</body>
+</html>
+

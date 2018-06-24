@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<title>成批打印示例</title>
+<script src="../fceform/js/MicrosoftAjax.js"></script>	
+<script src="../fceform/js/fcpub.js"></script>
+<script src="../fceform/ereport/js/loadreport.js"></script>
+<script>
+	function uf_start() {
+        //配置要打印的报表文件列表.
+	    var arr = new Array();
+	  
+	    arr[0] = fcpub.rootPath+"samples/s_simplelist.htm";
+	    arr[1] = fcpub.rootPath+"samples/s_cross0.htm"; 
+	    arr[2] = fcpub.rootPath+"samples/s_报表区域.htm";
+
+//        //组织要打印配置的XML数据
+		var sb = new Sys.StringBuilder("<filenames>");
+		for(var i=0;i<arr.length;i++){
+		    sb.append("<fn><in>" + arr[i] + "</in><out></out><params></params><rate>1.0</rate></fn>");
+		}
+		var sPaths = "</filenames><paths><gen>/ebtmpfile/printtemp/</gen><fromdb>no</fromdb><exptype>htm</exptype><orderpageno>no</orderpageno></paths>"; //fromdb=yes 表示报表文件保存在数据库中,orderpageno = yes 表示页号跨报表文件地按顺序排 
+		sb.append(sPaths);
+		var sXml = sb.toString();
+        
+        //调用成批打印文件的全局函数
+        batchPrint(sXml)
+
+	}
+</script>
+</head>
+<body>
+成批打印示例 <button onclick="uf_start()">开始打印</button> <br>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>数据集中的数据项</title></head>
+
+<body leftmargin="0" topmargin="0">
+<table id="title" border="1" cellpadding='0' cellspacing='0' width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;"><FONT style="font-size:13px;">  eForm自定义表单</FONT><br>
+&nbsp;<b><font style='font-size:13px;'>数据集中的数据项</font></b></td></tr>
+</table>
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a></span><br>
+&nbsp;<span style='left:15px;'><b><FONT style="font-size:12px;">在数据集中选择数据项:</FONT></b></span><br>
+
+<span style='position:absolute;left:7px;'>
+<table width="96%" border=1 style='border-collapse:collapse;'>
+<tr style='height:21px;'><td style='width:100px;'><FONT style="font-size:12px;"><center>实际计算项</center></FONT></td><td><FONT style="font-size:12px;">常可用于列间增加记录的计算,例如 金额=数量*单价 就可
+在默认值处输入$f_value('shl')*$f_value('dj') 表示此字段等于shl字段值*dj字段值,如同时shl字段的值也为公式则可能会运算错误。此处也支持写标准的javascript的表达式.</FONT></td>
+</tr>
+
+<tr style='height:21px;'><td style='width:100px;'><FONT style="font-size:12px;"><center>变量默认值</center></FONT></td><td><FONT style="font-size:12px;">用一个javascript表达式的计算结果作为字段的默认值，它和设置为数据项的区别是：数据项是在下面的默认值编辑框中设置一个常数作为字段的默认值，变量默认值是指在下面的默认值编辑框中设置一个javascript的表达式，由此表达式的运算结果作为字段的默认值。注意：字段的默认值只有在数据集新增记录后才会起作用，在修改时是不会起作用的，或是由一个SQL命令的运行结果作为数据集的数据时，默认值的设置也是不会起作用的。</FONT></td></tr>
+
+<tr style='height:21px;'><td style='width:100px;'><FONT style="font-size:12px;"><center>汇总项</center></FONT></td><td><FONT style="font-size:12px;">常可用于跨行计算,在默认值处输入sum('je') 表示此字段自动为je字段的合计值。此处的sum('je')也可以改为avg('je')表示取平均值,max('je')表示取最大值,min('je')表示取最小值.</FONT></td></tr>
+
+<tr style='height:21px;'><td style='width:100px;'><FONT style="font-size:12px;"><center>数据项</center></FONT></td><td><FONT style="font-size:12px;">字段的类型选数据项表示为常规字段，可以直接设置常数默认值。</FONT></td></tr>
+</table>
+</span>
+
+</body>
+</html>

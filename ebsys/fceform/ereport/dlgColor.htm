@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+<meta name=ProgId content=VisualStudio.HTML>
+<meta name=Originator content="Microsoft Visual Studio .NET 7.1">
+        <script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcopendj.js"></script>
+		<script src="../js/fcselfuse.js"></script>
+<script>
+	function window_onload() {
+		var sColor="";
+		var sInitColor = window.dialogArguments;
+		if (isSpace(sInitColor ))
+			sColor = dlgHelper.ChooseColorDlg();
+		else
+			sColor = dlgHelper.ChooseColorDlg(sInitColor);
+		sColor = sColor.toString(16);
+        //add extra zeroes if hex number is less than 6 digits
+		if (sColor.length < 6) {
+			var sTempString = "000000".substring(0,6-sColor.length);
+			sColor = sTempString.concat(sColor);
+		}
+		window.returnValue = sColor ;
+		window.close();
+	}	
+</script>
+
+</head>
+<body onload=window_onload()>
+
+<OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" style="position:absolute:left:200px;" width="0px"  height="0px" left="100px" VIEWASTEXT></OBJECT>
+
+</body>
+</html>

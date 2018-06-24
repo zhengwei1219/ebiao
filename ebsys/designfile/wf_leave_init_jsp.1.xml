@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_leave_apply</meta>
+  <meta name="bs_desc_field">remark</meta>
+  <meta name="bs_id_field">leave_id</meta>
+  <initial-actions>
+    <action id="4960" name="初始化动作" remark="启动了流程.">
+      <restrict-to>
+        <conditions>
+          <condition type="class">
+            <arg name="rolename">普通职员</arg>
+            <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+            <arg name="role">ROL00000001</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="4732" old-status="Finished" status="Underway" step="735"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="2828" name="结束节点">
+    </step>
+    <step id="735" name="请假登记" compensate="cn.com.fcsoft.extend.ReturnAddCallerToTask">
+      <tasks>
+        <task name="请假登记" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">执行者(caller)</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">735</arg>
+          <arg name="user">${caller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="4926" name="请假登记" view="/workflow/jsp_dj/leave_init.jsp%3F1%3D1" remark="您提交了请假单，正在等待经理审批.">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">4926</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">735</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="9138" old-status="Finished" status="Underway" step="2091">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将执行者保存到Caller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2091" name="经理审核">
+      <tasks>
+        <task name="审核${oCaller.name}的请假申请" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">部门经理</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000003</arg>
+          <arg name="stepId">2091</arg>
+          <arg name="signScale">100</arg>
+          <var-classes>
+            <var-class type="class">
+              <arg name="copy_username">执行者</arg>
+              <arg name="copy_user">${caller}</arg>
+              <arg name="class">cn.com.fcsoft.workflow.util.Caller</arg>
+            </var-class>
+          </var-classes>
+        </task>
+      </tasks>
+      <actions>
+        <action id="4127" name="经理审核" view="/workflow/jsp_dj/leave_check.jsp%3F1%3D1" remark="经理审批完成.">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">4127</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">2091</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="1185" old-status="Finished" status="Underway" step="3653">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getDouble("leave_days") > 3  &&  propertySet.getString("result").Equals("1")]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="2970" old-status="Finished" status="Underway" step="1057">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">请假登记</arg>
+                  <arg name="stepId">735</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3653" name="总经理审核">
+      <tasks>
+        <task name="审核请假单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">总经理</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000005</arg>
+          <arg name="stepId">3653</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="3097" name="总经理审核" view="/workflow/jsp_dj/leave_check.jsp%3F1%3D1" remark="总经理审批完成.">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">3097</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">3653</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="3912" old-status="Finished" status="Underway" step="1057">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">请假登记</arg>
+                  <arg name="stepId">735</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1057" name="结果查看">
+      <tasks>
+        <task name="查看请假申请审批结果" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">步骤执行者(mostRecentCaller)</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">1057</arg>
+          <arg name="user">${mostRecentCaller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="7917" name="结果查看" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_leave_view%26djtype%3DWF_EX" remark="请假申请的结果已查看.">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">7917</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">1057</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="6817" old-status="Finished" status="Underway" step="2828"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

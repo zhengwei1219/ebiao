@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open()
+{
+	DivCheckBoxInitLoad(divcheckbox1,fcpubdata.obj[0]);
+	var fieldList=fcpubdata.obj[1];
+	if(fieldList!="")
+	{
+		SetDivCheckBoxValue(divcheckbox1,fieldList);	
+	}	
+}
+function uf_ok() 
+{
+ 	window.returnValue = [GetDivCheckBoxValue(divcheckbox1,'text'),GetDivCheckBoxValue(divcheckbox1)];
+	window.close();
+}
+
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userType BLONclose BLONopenBefore="uf_open()" BLONopen="new Eform.SysForm().setButtonImage()" center="居中" contxml="<root><button><id>cmdClose</id><id>cmdOk</id></button><checkboxlist><id>divcheckbox1</id></checkboxlist></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:0;hr:0;checkboxlist:2;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>cmdClose</taborder><taborder>cmdOk</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight="232" poswidth="380" postop posleft entertype="修改" window="有模式窗口" keyfield codeheader caption="multiSel" type="ZK" dj_sn="multiSel" toolbar="不带工具栏" alertType="1" isCheckPermit="否" AutoResizeXml runsave><DIV class=control-border-color id=divcheckbox1 style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; FONT-SIZE: 12px; LEFT: 5px; OVERFLOW: auto; BORDER-LEFT: 1px solid; WIDTH: 349px; BORDER-BOTTOM: 1px solid; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 33px; HEIGHT: 211px" onmovestart=moveStart() datasourceName controltype="checkboxlist" sql temptext tempvalue check="2" async="否" NotBg="是" rows="2" sqltrans></DIV><BUTTON id=cmdClose style="LEFT: 77px; WIDTH: 66px; POSITION: absolute; TOP: 4px; HEIGHT: 21px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON><BUTTON id=cmdOk style="LEFT: 5px; WIDTH: 66px; POSITION: absolute; TOP: 4px; HEIGHT: 21px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON> </DIV></body></html>

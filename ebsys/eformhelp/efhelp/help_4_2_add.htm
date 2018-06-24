@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>新增视图</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">新增视图</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.新增视图</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;用户需要对某个表新增一条记录时,我们就要用新增视图,它在表单上显示一条空白记录,用户添加数据,然后保存.也有主从关系的新增视图即主表新增一条记录,从表不受限制,一条多条都行.有关主从表的设置请参考表单保存分类下的主从关系保存.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_2_add'>新增视图</A> 进入新增视图设计界面.
+       <div class="divTitle">2.新增视图的设置</div>
+       <div class="divTitle">2.1 单表新增视图的设置</div>
+                  &nbsp;&nbsp;&nbsp; 新增视图表单需要在数据集的字段页中选中semployeeid字段,给主键的复选框画勾来设置semployeeid字段为主键<br />  <img  src ="images/help_4_2_3.gif"/><br />&nbsp;&nbsp;&nbsp; 如下图在数据集的ssex字段的数据项中,选择数据类型为变量默认值,设置它的值为男,数据集每次新增加一条空记录,都会给ssex字段赋一个默认值为男.新增记录时,数据集字段的数据项的可选项中起作用的是：数据项和变量默认值.选数据项表示设置默认值为常数.选变量默认值表示用一个javascript表达式的计算结果作为字段的默认值,它和设置为数据项的区别是：数据项是在下面的默认值编辑框中设置一个常数作为字段的默认值,变量默认值是指在下面的默认值编辑框中设置一个javascript的表达式,由此表达式的运算结果作为字段的默认值.注意：字段的默认值只有在数据集新增记录后才会起作用,在修改记录时是不会起作用的,或是由一个SQL命令的运行结果作为数据集的数据时,默认值的设置也是不会起作用的. <br /><img  src ="images/help_4_2_4.gif"/><br />&nbsp;&nbsp;&nbsp; 在数据集的提交页中设置保存表名,主键标识,主键类别,提交数据类型如下图.这是一个新增一条记录的表单,不需要在数据集设置用来查询数据的sql语句.<br /><img  src ="images/help_4_2_2.gif"/>
+            <div class="divTitle">2.2 主从表新增视图的设置</div>
+            &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_2_addmainsub'>主从新增视图</A> 进入主从新增视图设计界面.数据集属性页中不用设置sql语句,在数据集的字段页中设置要保存的字段,设置主键,在数据集的提交页中选择提交类型为：只提交一条记录,设置保存表名为fcs_employee,设置主键类别,id,控件与数据集一一绑定.表示如下图:<br /><br />
+       <img  src ="images/help_4_2_5.gif"/><br />
+           &nbsp;&nbsp;&nbsp;
+           从表数据集属性页中不用设置sql语句,在从表数据集的字段页中设置要保存的字段,设置主键,在数据集的提交页中设置保存表名为fcs_employee2,设置主键类别,id,控件与数据集一一绑定.表示如下图:<br /><br />
+       <img  src ="images/help_4_2_6.gif"/><br /> 
+        <div class="divTitle">3.与查看视图对比</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;查看视图需要设置数据集打开页的sql语句来获取查看信息,而不需要设置与保存相关的设置.新增视图需要设置保存表名,主键标识,主键类别,提交数据类型,主键而不需要设置sql语句获取查看信息.
+       <div class="divTitle">4.运行新增视图</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;这是一个单表新增视图界面:<br />
+       <img  src ="images/help_4_2_1.gif"/><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;这是一个主从新增视图运行界面:<br />
+       <img  src ="images/help_4_2_7.gif"/><br />
+</div>
+</body>
+</html>

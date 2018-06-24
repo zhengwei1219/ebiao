@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="1711" name="初始化动作">
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="3942" old-status="Finished" status="Underway" step="8213"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="3258" name="结束节点">
+    </step>
+    <step id="8213" name="填写用车申请单">
+      <tasks>
+        <task name="填写用车申请" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="user">${caller},${mostRecentCaller}</arg>
+          <arg name="stepId">8213</arg>
+          <arg name="taskType">2</arg>
+          <arg name="username">执行者(caller),步骤执行者(mostRecentCaller)</arg>
+          <arg name="signScale">100</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="4064" name="填写用车申请单" view="/fceform/common/djframe.htm%3Fdjsn%3Dcar_approve%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="action_id">4064</arg>
+                <arg name="step_id">8213</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="3148" old-status="Finished" status="Underway" step="1942">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getLong("CAR_NUM") > 2]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="9316" old-status="Finished" status="Underway" step="449"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1942" name="行政审批">
+      <tasks>
+        <task name="行政领导审批用车申请单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">人事经理</arg>
+          <arg name="stepId">1942</arg>
+          <arg name="taskType">2</arg>
+          <arg name="signScale">100</arg>
+          <arg name="role">ROL_0000002</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="544" name="行政审批" view="/fceform/common/djframe.htm%3Fdjsn%3Dcar_approve%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="action_id">544</arg>
+                <arg name="step_id">1942</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+            <function type="class">
+              <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+              <arg name="stepchn">填写用车申请单</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+              <arg name="stepId">8213</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="9160" old-status="Finished" status="Underway" step="8213">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("CHECK_RESULT").equals("0")]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="1937" old-status="Finished" status="Underway" step="9408"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="449" name="部门审批">
+      <tasks>
+        <task name="部门领导审批用车申请单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">部门经理</arg>
+          <arg name="stepId">449</arg>
+          <arg name="taskType">2</arg>
+          <arg name="signScale">100</arg>
+          <arg name="role">ROL_0000003</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="5236" name="部门审批" view="/fceform/common/djframe.htm%3Fdjsn%3Dcar_approve%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="action_id">5236</arg>
+                <arg name="step_id">449</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+            <function type="class">
+              <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+              <arg name="stepchn">填写用车申请单</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+              <arg name="stepId">8213</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="1998" old-status="Finished" status="Underway" step="8213">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("CHECK_RESULT").equals("0")]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="2039" old-status="Finished" status="Underway" step="9408"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9408" name="车库取车">
+      <tasks>
+        <task name="车库取出" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">普通职员</arg>
+          <arg name="stepId">9408</arg>
+          <arg name="taskType">2</arg>
+          <arg name="signScale">100</arg>
+          <arg name="role">ROL_0000001</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="7484" name="车库取车" view="/fceform/common/djframe.htm%3Fdjsn%3Dcar_approve%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="action_id">7484</arg>
+                <arg name="step_id">9408</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="9127" old-status="Finished" status="Underway" step="3258"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

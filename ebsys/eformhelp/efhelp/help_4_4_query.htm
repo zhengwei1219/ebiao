@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>查询视图</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">查询视图</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.查询视图</div>
+                   &nbsp;&nbsp;&nbsp;&nbsp;查询视图是在grid控件上显示多条记录的查询结果,grid控件上的记录不能修改,如要在grid控件上能删除记录的话，需要设置保存表名和主键,能对数据进行分页显示和设置每页显示多少条记录.可以在查询视图上通过点击按钮或超链接的方式打开查看视图,编辑视图,新增视图等等.
+       <div class="divTitle">2.不同设置的查询视图</div>
+       <div class="divTitle">2.1 不带条件的查询视图</div>
+       &nbsp;&nbsp;&nbsp;  单击 
+           <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_query'>不带条件的查询视图</A> 进入不带条件的查询视图设计界面.在表单上添加一个数据集控件和一条表格控件.双击表单中的数据集控件,在弹出的数据集属性的打开页中,输入要查询的sql语句,字段设置为只读.<br /><img  src ="images/help_4_4_1.gif"/><br />&nbsp;&nbsp;&nbsp;&nbsp;设置保存表名为FCS_EMPLOYEE,提交类型,智能提交变动过的记录.这是因为删除记录时需要这些记录.<br />
+       <img  src ="images/help_4_4_3.gif"/><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;在表单属性窗口的事件页中的打开之后输入：<p>fcpubdata.viewWinSee='help_4_4_query1';fcpubdata.viewWinAdd='help_4_4_query2';fcpubdata.viewWinEdit='help_4_4_query3';</p>&nbsp;&nbsp;&nbsp;&nbsp;fcpubdata.viewWinSee是查看视图表单的djsn,fcpubdata.viewWinAdd编辑视图表单的djsn,fcpubdata.viewWinEdit编辑视图表单的djsn.<br />
+        <img  src ="images/help_4_4_4.gif"/><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;在表单属性窗口中设置表单的工具栏为自定义工具栏,单击【设置】按钮进入自定义工具栏页面,单击【添加】按钮,增加行,单击行中的单元格,单击查看视图，就选择了查看视图按钮,如下图设置自己需要的按钮.<br />
+         <img  src ="images/help_4_4_5.gif"/><br />
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;不带查询条件的查询视图的运行界面图如下：<br />
+       <img  src ="images/help_4_4_6.gif"/><br />
+       &nbsp;&nbsp;&nbsp;&nbsp;下面是一个选中洪成海单击查看视图按钮的界面<br /><img  src ="images/help_4_4_7.gif"/><br />
+       <div class="divTitle">2.2 带查询条件的查询视图</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;带条件的查询视图就是在不带条件的查询视图的基础上,加一个text控件,数据集sql语句的查询条件的值等于text控件的值.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_queryCondition'>带条件的查询视图</A> 进入带条件的查询视图设计界面.
+           数据集的sql语句如下<p>select FCS_EMPLOYEE.semployeeid,FCS_EMPLOYEE.semployeecode,FCS_EMPLOYEE.semployeename,FCS_EMPLOYEE.sphone,FCS_EMPLOYEE.ssex,FCS_EMPLOYEE.sculture from FCS_EMPLOYEE
+where semployeename=':{txtName.value}:';</p>
+&nbsp;&nbsp;&nbsp;&nbsp;运行界面图如下<br /><img  src ="images/help_4_4_8.gif"/>
+        <div class="divTitle">2.3 弹出窗口输入查询条件的查询视图</div>&nbsp;&nbsp;&nbsp;&nbsp;单击【查询】按钮打开选择条件网页,选择查询条件后返回条件,在用数据集的Open方法查询sql语句,重新刷新界面数据.【查询】按钮调用的自定义函数如下,单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_queryOpenWin'>弹出窗口选择条件的查询视图</A> 进入弹出窗口选择条件的查询视图界面.<p>function uf_openWin(){<br />
+	&nbsp;&nbsp;&nbsp;
+	var sRet=DjOpen('queryCondition');<br />
+	&nbsp;&nbsp;&nbsp;
+	if(IsSpace(sRet) == false)<br />
+	&nbsp;&nbsp;&nbsp;
+	{<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataset1.Open("select FCS_EMPLOYEE.semployeeid,FCS_EMPLOYEE.semployeecode,FCS_EMPLOYEE.semployeename,FCS_EMPLOYEE.sphone,FCS_EMPLOYEE.ssex,FCS_EMPLOYEE.sculture from FCS_EMPLOYEE where sculture ='"+sRet[0]+"' or ssex='"+sRet[1]+"'");</p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;
+	}<br />
+} </p>&nbsp;&nbsp;&nbsp;&nbsp;单击【查询】按钮进入选择查询条件页面.单击【确定】按钮返回选择的数据.【确定】按钮的自定义函数uf_ok()代码如下.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_queryCondition1'>带条件的查询视图</A> 进入带条件的查询视图界面.<p>
+        function uf_ok() <br />
+{<br />
+ 	&nbsp;&nbsp;&nbsp;&nbsp;window.returnValue = [combobox1.value,combobox2.value];<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;window.close();<br />
+}<br />
+</p>&nbsp;&nbsp;&nbsp;&nbsp单击【查询】按钮运行选择查询条件界面<br /><img src='images/help_4_4_9.gif' /><br />&nbsp;&nbsp;&nbsp;&nbsp单击【确定】按钮返回符合选择条件的记录.<br /><img src='images/help_4_4_10.gif' />
+<div class="divTitle">2.4 弹出窗口输入查询条件的查询视图</div>&nbsp;&nbsp;&nbsp;&nbsp;单击【查询】按钮打开选择条件网页,选择查询条件后返回条件,在执行sql查询语句列出数据.【查询】按钮调用的自定义函数如下,单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_queryOpenWindow'>弹出窗口选择条件的查询视图</A> 进入弹出窗口选择条件的查询视图设计界面.<p>function uf_openWin(){<br />
+	&nbsp;&nbsp;&nbsp;
+	var sRet=DjOpen('../../fceform/common/djframe.htm?djsn=help_4_4_queryCondition2&tablename=FCS_EMPLOYEE&djtype=FT');<br />
+	&nbsp;&nbsp;&nbsp;
+	if(IsSpace(sRet) == false)<br />
+	&nbsp;&nbsp;&nbsp;
+	{<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		dataset1.Open("select FCS_EMPLOYEE.semployeeid,FCS_EMPLOYEE.semployeecode,FCS_EMPLOYEE.semployeename,FCS_EMPLOYEE.sphone,FCS_EMPLOYEE.ssex,FCS_EMPLOYEE.sculture from FCS_EMPLOYEE where "+sRet[0]);
+	}<br />
+}</p>
+           <br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_4_queryCondition2'>选择条件窗口</A> 进入选择条件窗口设计界面.自定义函数如下 
+           <br />
+           <p class="MsoNormal">
+               <span lang="EN-US">var tablename=&quot;&quot;; //</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">表名</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_open() {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>tablename=parent.Request.QueryString('tablename').toString(); </span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>e_PropWinOnload();<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_ok(){//</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">单击确定按钮返回选择的查询条件</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sRet = '';</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sRet = new Eapi.Str().trim( uf_where());</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(sRet == &quot;&quot;){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">生成的</span><span lang="EN-US">SQL</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">语句为空</span><span lang="EN-US">!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>window.returnValue = [sRet];</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>CloseBill();</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_where(){//</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">拼接条件语句</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var l = grid2.Rows;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sWhere = &quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var zifu=&quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>for(var i=1;i&lt;l;i++){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var fdtype = grid2.tab.rows(i).cells(8).innerText;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var fdName = grid2.tab.rows(i).cells(7).innerText;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(fdtype == &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">字符</span><span 
+                   lang="EN-US">&quot;) zifu=&quot;'&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sOr = &quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(i&lt;l-1) {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(grid2.tab.rows(i).cells(6).innerText == &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">或者</span><span 
+                   lang="EN-US">&quot;){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sOr =<span style="mso-spacerun:yes">&nbsp; </span>&quot; or &quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}else<span style="mso-spacerun:yes">&nbsp; </span>{</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sOr = &quot; and &quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sWhere += grid2.tab.rows(i).cells(1).innerText + fdName + 
+               _OpNameTo(grid2.tab.rows(i).cells(3).innerText)+ zifu + 
+               grid2.tab.rows(i).cells(4).innerText + zifu 
+               +grid2.tab.rows(i).cells(5).innerText + sOr;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sWhere = new Eapi.Str().trim(sWhere);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return sWhere;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function _OpNameTo(sName) {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sRet1 = &quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>switch (sName) {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">＝</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot;=&quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">＞</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot;&gt;&quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">＜</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot;&lt;&quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">＞＝</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot;&gt;=&quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">！＝</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot;!=&quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>case &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">开始于</span><span 
+                   lang="EN-US">&quot; : sRet1 = &quot; like &quot;; break;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return sRet1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           &nbsp;&nbsp;&nbsp;&nbsp;运行弹出窗口选择条件的查询视图界面,单击【查询】按钮弹出选择条件窗口<br /><img src='images/help_4_4_11.gif' /><br />&nbsp;&nbsp;&nbsp;&nbsp;选择条件为职员名称等于林冲,单击【确定】按钮返回查询视图界面<br /><img src='images/help_4_4_12.gif' />
+           <div class="divTitle">3.与其它视图对比</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;查询视图是表格控件显示多条只读记录,单击【查看】【添加】【编辑】按钮在当前页弹出相关的查看视图表单、新增视图表单、编辑视图表单.查询视图主要是根据条件生成数据集的SQL语句。
+</div>
+</body>
+</html>

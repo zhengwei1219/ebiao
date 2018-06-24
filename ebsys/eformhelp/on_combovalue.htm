@@ -1,0 +1,18 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>可选项的取值方式</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width="99.8%" bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="  TOP:4px;left:10px;">  eForm自定义表单<br>
+<b><font style='font-size:13px;'>&nbsp;可选项的取值方式</font></b></td>
+</tr>
+</table>
+<span>&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a></span><br>
+&nbsp;<b><FONT style="font-size:12px;">可选项的取值方式</FONT></b><br>
+
+&nbsp;&nbsp;<FONT style="font-size:12px;"> 可选项的取值方式分为标准格式、SQL语句。</FONT><br>
+&nbsp;&nbsp;<FONT style="font-size:12px;">标准格式：由常数组成的值；例如单个，多个，1，2，a,b 。</FONT><br>
+&nbsp;&nbsp;<FONT style="font-size:12px;">SQL语句：由标准的SQL生成的值；例如Select sdwname from dw where sdwcode not like '门%' , 标准的SQL语句都支持,但输出的字段常为一个或是两个.输出字段数大于两个的情况只在dropdownlist控件中有用.当输出一个字段时表示隐藏值和显示值都是这个字段的值,输出为两个字段时表示第一个字段为隐藏值,第二个字段为显示值. 此处的SQL语句也可以通过点 通过选择产生SQL语句 超链接来自动生成. 可以选择的SQL语句列表的内容是预先保存在系统表: fc_query 中的.如果可选内容为空,则需要进入 数据库中的表信息 ==> 点 查询信息 按钮 ==> 来选择输入这方面的内容. 也可以通过选择输入数据源名称,来达到取别的数据库中的可选列表. 也可以进行 初始进入时是否异步加载列表 的开关控制,如勾上它,则表示是异步加载,它的好处是进入表单的速度加快,坏处是在打开时可能无法对它进行取值和赋值,因为它此时还没有加载完成 。</FONT><br>
+
+</body>
+</html>
+

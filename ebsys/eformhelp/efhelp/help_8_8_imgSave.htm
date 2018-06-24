@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>图片字段保存</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+	</head>
+	<body leftmargin="0" topmargin="0">
+		<table class="tableTitle">
+			<tr>
+				<td class="title">图片字段保存</td>
+			</tr>
+			<tr>
+				<td class="aTd ">
+					<a class="aDwHomepage" href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+			</tr>
+		</table>
+		<div class="mainDiv" id="DIV1">
+			<div class="divTitle">1. 图片字段保存</div>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			图片字段的类型决定保存图片的方式，数据集中字段类型是图片会把图片的二进制数据保存到数据库中，如果数据集中字段类型是文本把图片路径保存到数据库中。保存图片的二进制数据到数据库中(图象字段在sqlserver数据库中的类型是image, 在oracle数据库中的类型是 
+			long raw 或者blob).如果你想保存图片路径到数据库中，数据集中字段的类型是文本，数据库中字段的类型是varchar型。图片保存单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=imageUpload'>
+				职员列表</a> 进入职员列表设计界面.
+			<div class="divTitle">2. 图片字段保存与显示</div>
+			<div class="divTitle">2.1 图片字段保存</div>
+			&nbsp;&nbsp;&nbsp; 单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=imageUpload1'>
+				职员图片保存</a> 进入职员图片保存表单设计界面,dbimg控件与数据集绑定.<br>
+			<img src="images/help_8_8_1.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;我们在dbimg控件上双击,弹出上传图片界面,单击【预览】按钮,选择图片,单击上传图片把图片上放在fceformext/res目录下,<br>
+			<img src='images/help_8_8_2.gif'><br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			单击表单上的保存按钮把图片保存到数据库表中的图片字段中,fceformext/res目录下的图片文件自动删除.<div class="divTitle">2.2 
+				图片显示</div>
+			&nbsp;&nbsp;&nbsp; 
+			读出图片字段中的图片，是在后台获取图片字段的数据流后,发送到前台,然后dbimg控件的src属性接收数据流显示图片,ajax请求每次只能获取一个图片的数据流.<br>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,111 @@
+/**
+*grid控件的样式 
+**/
+a.a02:link,a.a02:active,a.a02:visited{ color:#5AA5E6; text-decoration:none;}
+a.a02:hover{color:#EE8E06; text-decoration:underline;}
+.tdfilter { 
+	/*progid:DXImageTransform.Microsoft.BasicImage(invert=1);
+    */
+	filter: Invert;
+	background-color:#ffff32 ;
+ }  
+.tdfilter1 
+{
+	color:#ffffff ;
+	background-color:#0000cd ;
+ }   
+/* table的外框的样式 */
+#SKbillsheet #fcwebgriddiv  
+{
+	BACKGROUND: url(../images/ef_run_grid_bg1.gif) bottom repeat-x; BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid;BORDER-COLOR:#5AA5E6;
+}
+
+/* table的样式 */
+#SKbillsheet #fcwebgriddiv #t  
+{
+	BACKGROUND-COLOR:#FFFFFF;FONT-FAMILY:MS Sans Serif;FONT-SIZE:11px;color:#000000;BORDER-RIGHT: 1px solid #5AA5E6;BORDER-BOTTOM: 1px solid #5AA5E6;
+}
+/* 表格的首行 */
+#SKbillsheet #fcwebgriddiv #t .fcGridFirstRow 
+{
+	BACKGROUND: url(../images/ef_run_grid_bg.gif) repeat-x; FONT-SIZE:12px; color:#1073CB;
+}
+/* 表格的首行td */
+#SKbillsheet #fcwebgriddiv #t .fcGridFirstRow td
+{
+	BORDER-RIGHT: #5AA5E6 1px solid;  BORDER-bottom: #5AA5E6 1px solid;
+}
+
+/* table的td样式 */
+#SKbillsheet #fcwebgriddiv #t td
+{
+ BORDER-bottom: #5AA5E6 1px solid; BORDER-RIGHT: #5AA5E6 1px solid;	
+}
+
+/* 表格控件内的编辑框 */
+#SKbillsheet #txtMyGrid 
+{
+	BACKGROUND-COLOR: white; BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none;
+}
+/* 垂直滚动条的样式 */
+#SKbillsheet #fchtcDiv1
+{
+	BACKGROUND-COLOR: #EEEDE5; BORDER-RIGHT: gray 0px solid; 
+}
+/* 水平滚动条的样式 */
+#SKbillsheet #fchtcDiv2
+{
+	BACKGROUND-COLOR: #EEEDE5; BORDER-RIGHT: gray 0px solid; 
+}
+/*表格右下角的填补块*/
+#SKbillsheet #divconer {
+	BACKGROUND-COLOR: #EEEDE5; BORDER-BOTTOM: 0px solid; BORDER-RIGHT: 0px solid;font-size:9px;
+}
+
+.eform-table{font-size: 12px; border-bottom:1px  #5AA5E6 solid;
+  border-right:1px  #5AA5E6 solid;}
+.eform-table1{font-size: 12px; BACKGROUND: url(../images/ef_run_grid_bg2.gif) repeat-x; }
+.eform-title {
+  height:43px;
+  width: 793px;
+  BACKGROUND: url(images/bg_title.gif) no-repeat;
+  padding-left: 60px;
+  font-size: 14px;
+  color: #000033;
+  font-weight: bold;
+}
+.eform-Td1 {
+  height:26px;
+  background:url(../images/bg_1.gif) repeat-y;
+  padding-right: 10px;
+  border-top:1px  #5AA5E6 solid;
+  border-left:1px  #5AA5E6 solid;
+  text-align: right;
+  background-color:#000;
+  color: #1073CB;
+}
+.eform-Td2 {
+  padding-left: 10x;
+   height:26px;
+  border-top:1px  #5AA5E6 solid;
+  border-left:1px  #5AA5E6 solid;
+ 
+}
+
+.eform-Td3 {
+  height:26px;
+ 
+  padding-right: 10px;
+  text-align: right;
+  color: #1073CB;
+}
+.eform-Td4 {
+  padding-left: 10x;
+   height:26px;   
+ 
+}
+.eform_button{ background:url(../images/ef_run_button_center.gif) repeat-x; border:1px #4397E0 solid;}
+.oa-TdBottomLine{BACKGROUND: url(../images/ef_run_grid_bg.gif) repeat-x;  border-top:1px  #5AA5E6 solid;
+  border-right:1px  #5AA5E6 solid;border-bottom:1px  #5AA5E6 solid;height:30px;}
+.oa-TdBottomLine2{border-right:1px  #5AA5E6 solid;border-bottom:1px  #5AA5E6 solid;height:40px;}
+

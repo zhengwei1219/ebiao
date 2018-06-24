@@ -1,0 +1,67 @@
+*{padding:0;margin:0;}
+ul,li{ list-style:none;}
+img{ border:0;}
+
+body {
+	margin:0px;
+	font-family:"microsoft yahei", Verdana, Arial, Helvetica, sans-serif;
+	font-size:0.81em;
+	overflow-x:hidden;
+	}
+a {	color: #FF6600;	font-weight:bold;}
+a:link {text-decoration:none;}
+
+a:hover {color: #3366CC;}
+	
+.header{ position:relative;width:100%; margin:0 auto;}	
+.bananer{ background-color:#3366CC;height:78px;width:100%; background:url(mm_tree.jpg) #3366CC no-repeat;}
+
+#logo 	{
+	font:18px Verdana, Arial, Helvetica, sans-serif;
+	color: #CCFF99;
+	text-align:center;
+	letter-spacing:.01em;
+	line-height:26px;
+	position:absolute;
+	left:100px;
+	top:20px;
+	width:170px;
+	height:24px;
+	
+	}
+
+#tagline 	{
+	font:14px Verdana, Arial, Helvetica, sans-serif;
+	color: #FF9933;
+	letter-spacing:.01em;
+	line-height:20px;
+	text-align:center;
+	position:absolute;
+	left:100px;
+	top:44px;
+	width:170px;
+	height:24px;
+
+	}
+
+.nav{height:33px; overflow:hidden; background: url(nav.jpg) repeat-x;}
+.nav li{ float:right; padding-right:24px; font-size:15px; margin-top:6px; }
+.nav li.welcome{ list-style:none; color:#0000CC; padding-right:24px;}
+
+.content{width:100%;height:500px; margin:0 auto;} /* background-color:#C0DFFD; */
+.main{ width:100%; margin:0 auto;background-color:#C0DFFD; padding:10px 0 10px 0px;}
+
+.mylabel{ color:#339933;width:80%; margin:0 auto;height:20px; padding:4px 10px 4px 10px;}
+
+.iconmenu { width:80%;height:1%; overflow:hidden; margin:0 auto;}
+.iconmenu ul{ margin:0 auto;}
+.iconmenu li{ float:left; list-style:none; line-height:20px; padding-right:20px; margin:10px 10px 15px 13px; text-align:center; }
+.iconmenu img{ display:block;}
+
+
+
+
+
+	
+
+	

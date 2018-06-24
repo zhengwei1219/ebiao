@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>radio</title>
+    <style type="text/css">
+        .style1
+        {
+            width: 97px;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table id="title" border="1" cellpadding='0' cellspacing='0' width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px"><FONT style="font-size:13px;">  
+    eForm自定义表单</FONT><br></td></tr>
+</table>
+&nbsp;<a href='http://www.fcsoft.com.cn'><FONT style="font-size:12px;FONT-WEIGHT: bold;">返回公司首页</FONT></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='efhelp_index.htm'><FONT style="font-size:12px;FONT-WEIGHT: bold;">返回帮助首页</FONT></a><br>
+    &nbsp;<span style='left:15px;'><b><FONT style="font-size:12px;">查看视图查看视图:</FONT></b></span><br>
+
+<span style='position:absolute;left:8px; top: 83px;'>
+<table width="96%" border=1 style='border-collapse:collapse;'>
+<tr style='height:21px;'><td class="style1"><FONT style="font-size:12px;"><center>
+    查看视图：</center></FONT></td><td><FONT style="font-size:12px;">
+        查看视图一般由两个表单组成，一个是list表单，供用户选择要查看那条信息。另一个是卡片表单，它详细显示用户选择的信息。当用户双击列表表单中的信息，弹出一个与列表信息有关的只读的卡片表单，用户不能对它进行任何操作，只能查看。</FONT></td>
+</tr>
+<tr style='height:21px;'><td class="style1"><FONT style="font-size:12px;"><center>
+        查看表单设置：</center></FONT></td><td><FONT style="font-size:12px;">
+        1.要在列表表单属性页的表单打开之后事件中添加fcpubdata.cardWinUrl='卡片表的表单英文名'，在列表表单数据集字段的双击事件中输入：$eform('打开窗口修改记录')。</FONT><br />
+        <FONT style="font-size:12px;">2.要在列表表单数据集属性页设置查询的sql语句，字段设置为只读，不需要保存有关的设置。</FONT><br />
+        <FONT style="font-size:12px;">
+        3.在卡片表单的数据集中不需要操作与保存有关的设置，但要设置查询sql语句。卡片表的sql语句的条件部分中用冒号和大括号（:{}:）号来标识表示要替换的内容， 
+        在送到后台数据库执行此SQL语句之前,eform会先用正则表达式将冒号和大括号（:{}:）中间的相关内容还原成真正的值后再运行替换后的SQL语句。</FONT><br /><FONT style="font-size:12px;">
+        4.在卡片表单数据集的打开页中输入要查询的sql语句select * from FCS_DW where 
+        sdwid=':{fcpubdata.obj.Field('sdwid').Value}:'，注意条件部分的写法sdwid是表的id字段，数据集与控件一一绑定。</FONT></td>
+</tr>
+<tr><td colspan ='2'> <img  src ="images/help_5_1_1.gif"/><img  src ="images/help_5_1_2.gif"/></td>
+</tr>
+<tr><td>&nbsp;<a href='http://localhost/webbill/ebsys/fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_1_radio'><FONT style="font-size:12px;">返回示例</FONT></a></td></tr>
+</table>
+</span>
+
+</body>
+</html>

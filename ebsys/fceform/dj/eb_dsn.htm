@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../../fceform/css/dj.css); 
+	</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../../fceform/images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>/*
+<ds dbencoding="GBK" dbtype="sqlserver" drivername="com.newatlanta.jturbo.driver.Driver" 
+encodesql="false" name="sqlserver1" password="" 
+url="jdbc:JTurbo://localhost/mytest/charset=GBK" userid="sa" /> 
+
+*/
+function uf_open() {
+	uf_refresh();
+	e_PropWinOnload();
+}
+function uf_refresh() {
+	var oXml = SetDomFile("../.."+fcpubdata.userDir+"/xml/econfig.xml");
+	var sOption="";
+	for(var i=0;i<oXml.documentElement.childNodes(0).childNodes.length;i++){
+		sOption += "<option>" + oXml.documentElement.childNodes(0).childNodes(i).getAttribute("name") + "</option>";
+	}
+	lstDsn.outerHTML = SelectAddOption(lstDsn,sOption);
+	if(sOption != "") lstDsn.selectedIndex=0;
+}
+function uf_savexml(oXml){
+		//alert(oXml.documentElement.xml);
+	var sContent ='<?xml version="1.0" encoding="GB2312" ?>'+ oXml.documentElement.xml ;
+	sContent = "<![CDATA"+"["+sContent +"]"+"]>";
+	var sXml = "<file>"+fcpubdata.userDir+"/xml/econfig.xml</file><text>"+sContent+"</text>";
+	var ret=savedesignhtml(sXml);
+	return ret;	
+}
+function uf_del() {
+	if(lstDsn.selectedIndex<0) return;
+	var ret = window.confirm("按 [确定] 则真的删除？");		
+	if (ret == false) return;
+	
+	var oXml = SetDomFile("../.."+fcpubdata.userDir+"/xml/econfig.xml");
+	oXml.documentElement.childNodes(0).removeChild(oXml.documentElement.childNodes(0).childNodes(lstDsn.selectedIndex));
+	var ret=uf_savexml(oXml);
+	if(ret == "") {
+		lstDsn.remove(lstDsn.selectedIndex);
+	}else{
+		alert(ret);
+	}	
+}
+function uf_add() {
+	var sRet = DjOpen("eb_dsn1",null,"展现","有模式窗口","直接","数据源设置");
+	if(IsSpace(sRet)==false){
+		var oSub = SetDom(sRet);
+		var sName = oSub.documentElement.getAttribute("name");
+		var oXml = SetDomFile("../.."+fcpubdata.userDir+"/xml/econfig.xml");
+		oXml.documentElement.childNodes(0).appendChild(oSub.documentElement);
+		var ret=uf_savexml(oXml);
+		if(ret == "") {
+			var oOpt=document.createElement("option")
+			oOpt.text=sName;
+			lstDsn.add(oOpt);
+		}else{
+			alert(ret);
+		}	
+	}
+}
+function uf_edit() {
+	if(lstDsn.selectedIndex<0) return;
+	var oXml = SetDomFile("../.."+fcpubdata.userDir+"/xml/econfig.xml");
+	var sRet = DjOpen("eb_dsn1",oXml.documentElement.childNodes(0).childNodes(lstDsn.selectedIndex),"展现","有模式窗口","直接","数据源设置");
+	if(IsSpace(sRet)==false){
+		var oSub = SetDom(sRet);
+		var sName = oSub.documentElement.getAttribute("name");
+		oXml.documentElement.childNodes(0).replaceChild(oSub.documentElement,oXml.documentElement.childNodes(0).childNodes(lstDsn.selectedIndex));
+		var ret=uf_savexml(oXml);
+		if(ret == "") {
+			lstDsn.options(lstDsn.selectedIndex).text = sName;
+		}else{
+			alert(ret);
+		}	
+	}
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script src='../js/design.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;design.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:1;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="210" poswidth="260" entertype="修改" codeheader="BBB" mkbh caption="数据源配置" type="PR" dj_sn="eb_dsn" billtaborder="<root><taborder>lstDsn</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder><taborder>cmdEdit</taborder></root>" contxml="<root><label><id>label1</id></label><listbox><id>lstDsn</id></listbox><button><id>cmdAdd</id><id>cmdDel</id><id>cmdEdit</id></button></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" AutoResizeXml><DIV id=label1 style="LEFT: 3px; WIDTH: 36px; POSITION: absolute; TOP: 5px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">数据源列表:</DIV><SELECT id=lstDsn style="LEFT: 1px; WIDTH: 164px; POSITION: absolute; TOP: 21px; HEIGHT: 153px" onmovestart=moveStart() size=8 controltype="listbox" tempvalue temptext check="1" sql sqltrans></SELECT><BUTTON id=cmdAdd style="LEFT: 175px; WIDTH: 55px; POSITION: absolute; TOP: 9px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_add()")' dropstyle="否"></BUTTON><BUTTON id=cmdDel style="LEFT: 175px; WIDTH: 55px; POSITION: absolute; TOP: 41px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_del()")' dropstyle="否"></BUTTON><BUTTON id=cmdEdit style="LEFT: 175px; WIDTH: 55px; POSITION: absolute; TOP: 72px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_edit()")' dropstyle="否"></BUTTON></DIV></body></html>

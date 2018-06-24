@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrPub = new Array();
+function uf_open(){
+	var arr=fcpubdata.obj;
+	new Eform.SysForm().setButtonImage();
+	//xml串付值到数组
+	if(IsSpace(arr[1])){
+		uf_checked();
+		return;
+	}
+	var oXml = SetDom(arr[1]) ;
+//	var l=oXml.documentElement.childNodes.length ;
+	arrPub[0]=UnRepXml(oXml.documentElement.childNodes(0).text);
+	arrPub[1]=UnRepXml(oXml.documentElement.childNodes(1).text);
+	arrPub[2]=UnRepXml(oXml.documentElement.childNodes(2).text);
+	arrPub[3]=UnRepXml(oXml.documentElement.childNodes(3).text);
+	arrPub[4]=UnRepXml(oXml.documentElement.childNodes(4).text);
+	arrPub[5]=UnRepXml(oXml.documentElement.childNodes(5).text);
+	SKDBMemo1.value=arrPub[0];
+	FCDBedit1.value=arrPub[4];
+	uf_checked();
+}
+//添加数据验证
+function uf_addVal(){
+	var arr1 = new Array()
+	arr1[0]=fcpubdata.obj[0]
+	var arr=DjOpen('validate',arr1,'展现','有模式窗口','直接','数据验证')  ;
+	if(typeof(arr)=="undefined"){
+		return;
+	}
+	arrPub=arr;
+	SKDBMemo1.value=arr[0];
+	FCDBedit1.value=arr[4];
+	uf_checked();
+}
+//修改数据验证
+function uf_amendVal(){
+	var arr1 = new Array();
+	arr1[0]=fcpubdata.obj[0];
+	arr1[1]=arrPub;
+	var arr=DjOpen('validate',arr1,'展现','有模式窗口','直接','数据验证');	
+	if(typeof(arr)=="undefined"){
+		return;
+	}
+	arrPub = arr; 
+	SKDBMemo1.value=arr[0];
+	FCDBedit1.value=arr[4];
+	uf_checked();
+}
+//删除数据验证
+function uf_delVal(){
+	SKDBMemo1.value="";
+	FCDBedit1.value="";	
+	arrPub.length=0;
+	uf_checked();
+}
+//设置Button.disabled属性
+function uf_checked(){
+	
+	if(IsSpace(SKDBMemo1.value)){
+		FCButton1.disabled=false;
+		FCButton2.disabled=true;
+		FCButton3.disabled=true;	
+	}else{
+		FCButton1.disabled=true;
+		FCButton2.disabled=false;
+		FCButton3.disabled=false;	
+	}	
+}
+
+function uf_ok(){
+	//将树组转为xml
+	var sxml="";
+	var sxml0="";
+	var sxml1="";
+	var sxml2="";
+	var sxml3="";
+	var sxml4="";
+	var sxml5="";
+	//for(i=0;i<arrPub.length;i++){
+	if(arrPub.length>1){
+		sxml0="<Node0>"+RepXml(arrPub[0])+"</Node0>"
+		sxml1="<Node1>"+RepXml(arrPub[1])+"</Node1>"
+		sxml2="<Node2>"+RepXml(arrPub[2])+"</Node2>"
+		sxml3="<Node3>"+RepXml(arrPub[3])+"</Node3>"
+		sxml4="<Node4>"+RepXml(arrPub[4])+"</Node4>"
+		sxml5="<Node5>"+RepXml(arrPub[5])+"</Node5>"
+		sxml="<field>"+sxml0+sxml1+sxml2+sxml3+sxml4+sxml5+"<name>"+fcpubdata.obj[2]+"</name></field>"
+		 ;
+	}else{
+		sxml = "del" ;
+	}
+	window.returnValue=sxml;
+	window.close();
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="210" poswidth="295" entertype="修改" codeheader="BBB" mkbh caption="添加数据验证" type="LR" dj_sn="validatecard" billtaborder="<root><taborder>SKDBMemo1</taborder><taborder>FCButton1</taborder><taborder>FCButton2</taborder><taborder>FCButton3</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>FCDBedit1</taborder></root>" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label3</id></label><textarea><id>SKDBMemo1</id></textarea><shape><id>Shape1</id><id>Shape2</id></shape><button><id>FCButton1</id><id>FCButton2</id><id>FCButton3</id><id>cmdOk</id><id>cmdClose</id></button><text><id>FCDBedit1</id></text></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><SPAN style="POSITION: absolute; WIDTH: 28px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 16px; LEFT: 20px" id=Label1 class=label_title controltype="label" value="Label1" inputTag="否" NotBg="否">验证</SPAN><SPAN style="POSITION: absolute; WIDTH: 65px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 50px; LEFT: 36px" id=Label2 controltype="label" value="Label2">条件：</SPAN><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 227px; DISPLAY: block; HEIGHT: 18px; TOP: 23px; LEFT: 45px" id=Shape1 onresize="" controltype="shape" id1="3" from = "0,0" to = "167.25pt,0" fillcolor = "white" strokecolor = "gray"><v:stroke></v:stroke></v:line><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 178px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 40px; FONT-SIZE: 12px; TOP: 35px; LEFT: 93px" id=SKDBMemo1 onchange='bill_onclick("uf_checked()")' cols=29 readOnly controltype="textarea" value="SKDBMemo1" china induce="否"></TEXTAREA><SPAN style="POSITION: absolute; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 28px; FONT-SIZE: 12px; TOP: 81px; LEFT: 36px" id=Label3 controltype="label" value="Label3">内嵌警告：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 177px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 76px; LEFT: 93px" id=FCDBedit1 readOnly controltype="text" china CanSelect="false"></INPUT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 105px; LEFT: 29px" id=FCButton1 onclick='bill_onclick("uf_addVal()")' dropstyle="否" controltype="button">添 加</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 105px; LEFT: 110px" id=FCButton2 onclick='bill_onclick("uf_amendVal()")' dropstyle="否" controltype="button">修 改</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 105px; LEFT: 191px" id=FCButton3 onclick='bill_onclick("uf_delVal()")' dropstyle="否" controltype="button">删 除</BUTTON><v:line style="POSITION: absolute; WIDTH: 253px; DISPLAY: block; HEIGHT: 18px; TOP: 141px; LEFT: 19px" id=Shape2 onresize="" controltype="shape" id1="3" from = "0,0" to = "188.25pt,0" fillcolor = "white" strokecolor = "gray"><v:stroke></v:stroke></v:line><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 147px; LEFT: 110px" id=cmdOk onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 147px; LEFT: 192px" id=cmdClose onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON></DIV></body></html>

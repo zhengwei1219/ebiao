@@ -1,0 +1,34 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>upload多附件上传控件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>upload多附件上传控件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">upload多附件上传控件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">upload多附件上传控件用一个html的table元素来管理多个附件.一个表单只能画一个本控件.它用于多个附件的上传,显示,及超链接来打开.上传的附件内容以文件的方式保存在 /fceformext/res/目录下,会生成一个新的GUID格式的唯一的文件名.同时,在数据集的 fc_attach表中会保存关联信息. 详细说明为:<br>
+ CREATE TABLE FC_ATTACH ( <br>
+	extend varchar(255) NULL, //附件的文件扩展名，如：.txt <br>
+	djbh char(15) NOT NULL, //关联主键值，比如当前附件属于职员张三的，而职员张三的ID为 ZBF00000014，则此字段的值就保存ZBF00000014，由此字段来建立附件与附件所属者之间的关联。因为一次可以上传多个附件（即一个职员可能会有多个附件），所以此字段在当前表中并不是唯一的。<br>
+	dj_sn int NULL, //多附件时的顺序号，可空。 <br>
+	filename varchar(255) NULL, //附件的原始文件名，如：D:\1.txt ，表示这个附件是从客户端的D:\1.txt 处上传而来的。 <br>
+	attachid char(11) NOT NULL, //本表的主键字段，唯一标识。<br>
+	bz varchar(255) NULL, //附件备注信息<br>
+	djsn varchar(40) NULL, //表示本附件是由哪张表上传来的，此字段保存表名<br>
+	filepos varchar(250) NULL //附件上传后在服务器端保存的位置，如：/fceformext/res/c7f3dbc4-41ed-453e-a820-91569f2f57d7.txt<br>
+);<br>
+ </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

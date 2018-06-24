@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="8597" name="初始化动作">
+      <results>
+        <unconditional-result id="5716" old-status="Finished" status="Underway" step="7701"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="5460" name="结束节点">
+    </step>
+    <step id="7701" name="编制两卡">
+      <actions>
+        <action id="6575" name="编制两卡">
+          <results>
+            <result id="3838" old-status="Underway" status="Underway" step="4713">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[false]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="1035" old-status="Finished" status="Underway" step="9498"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4713" name="专责审批">
+      <actions>
+        <action id="8567" name="专责审批">
+          <results>
+            <unconditional-result id="5530" old-status="Finished" status="Underway" step="7214"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9498" name="所长审批">
+      <actions>
+        <action id="5973" name="所长审批">
+          <results>
+            <unconditional-result id="9185" old-status="Finished" status="Underway" step="5460"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8953" name="主任审批">
+      <actions>
+        <action id="5354" name="主任审批">
+          <results>
+            <unconditional-result id="9181" old-status="Finished" status="Underway" join="7204"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4837" name="局长审批">
+      <actions>
+        <action id="8472" name="局长审批">
+          <results>
+            <unconditional-result id="9240" old-status="Finished" status="Underway" split="2229"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7214" name="动态分配">
+      <actions>
+        <action id="1797" name="动态分配">
+          <results>
+            <unconditional-result id="1361" old-status="Finished" status="Underway" split="7979"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8867" name="浏览(供电所)">
+      <actions>
+        <action id="7041" name="浏览(供电所)">
+          <results>
+            <unconditional-result id="190" old-status="Finished" status="Underway" join="5110"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4878" name="浏览(生产技术)">
+      <actions>
+        <action id="3863" name="浏览(生产技术)">
+          <results>
+            <unconditional-result id="3340" old-status="Finished" status="Underway" join="5110"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8914" name="浏览(安监)">
+      <actions>
+        <action id="3588" name="浏览(安监)">
+          <results>
+            <unconditional-result id="2558" old-status="Finished" status="Underway" join="5110"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="816" name="浏览(营销)">
+      <actions>
+        <action id="8474" name="浏览(营销)">
+          <results>
+            <unconditional-result id="9668" old-status="Finished" status="Underway" join="5110"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="7979"
+ name="动态分支"
+ is-dynamic="1"
+>
+      <params>
+<param 
+ name="owner_a"
+ desc="主任审核人"
+ />
+</params>
+        <unconditional-result id="8605" old-status="Finished" status="Underway" step="8953"/>
+      </split>
+    <split id="2229"
+ name="静态分支"
+ is-dynamic="0"
+>
+      <unconditional-result id="9645" old-status="Finished" status="Underway" step="8867"/>
+      <unconditional-result id="153" old-status="Finished" status="Underway" step="4878"/>
+      <unconditional-result id="345" old-status="Finished" status="Underway" step="8914"/>
+      <unconditional-result id="4811" old-status="Finished" status="Underway" step="816"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="7204"
+ name="动态合并"
+ is-dynamic="1"
+>
+      <conditions>
+        <condition type="class">
+          <arg name="class.chn">判断所有动态创建的分支是否都完成了</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.DynamicJoinCondition</arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="550" old-status="Finished" status="Underway" step="4837"/>
+    </join>
+    <join id="5110"
+ name="静态合并"
+ is-dynamic="0"
+>
+      <unconditional-result id="4333" old-status="Finished" status="Underway" step="5460"/>
+    </join>
+  </joins>
+</workflow>

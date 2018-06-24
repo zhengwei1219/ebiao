@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field"></meta>
+  <initial-actions>
+    <action id="3205" name="动作节点">
+      <results>
+        <unconditional-result id="1574" old-status="Finished" status="Underway" step="5607"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="8875" name="结束节点">
+    </step>
+    <step id="5607" name="处理节点2">
+      <tasks>
+        <task name="vvvvvv" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">普通职员</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000001</arg>
+          <arg name="stepId">5607</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9400" name="处理节点2">
+          <results>
+            <unconditional-result id="1161" old-status="Finished" status="Underway" step="6016"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6016" name="步骤节点">
+      <tasks>
+        <task name="bbb" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="copy_username">李明</arg>
+          <arg name="rolename">人事经理</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="copy_user">USR00000001</arg>
+          <arg name="role">ROL00000002</arg>
+          <arg name="stepId">6016</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="7707" name="动作节点">
+          <results>
+            <unconditional-result id="169" old-status="Finished" status="Underway" step="8875"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

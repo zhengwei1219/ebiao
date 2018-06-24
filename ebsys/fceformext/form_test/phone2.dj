@@ -1,0 +1,36 @@
+<script></script> 
+<DIV oncontrolselect=controlselect() id=SKbillsheet contentEditable=true jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="phone2" caption="phone2" type="TT" isfile="是" center="  " posleft postop poswidth posheight toolbar="不带工具栏" window="当前窗口" BLONopen BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" allBrowser="是" billtaborder="<root></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:1;layout:0;page:0" contxml="<root><ebiao><id>ebiao1</id></ebiao></root>"><DIV onresizeend=resizeEnd() oncontrolselect=controlselect() style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 500px; HEIGHT: 360px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 30px; BORDER-RIGHT: 1px solid; LEFT: 10px" ondragstart="new Eapi.EformEbiao().dragStart();" id=ebiao1 onresize=resize() onmove=move() ondragend="new Eapi.EformEbiao().dragExit();" class=control-border-color ondrop="new Eapi.EformEbiao().dragEnter();" onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="ebiao" isOnloadRun="是">
+<TABLE style="Z-INDEX: -5; BORDER-BOTTOM: 1px solid; POSITION: static; BORDER-LEFT: 1px solid; MARGIN-TOP: 0px; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; MARGIN-LEFT: 0px; FONT-SIZE: 13px; BORDER-TOP: 1px solid; TOP: 0px; BORDER-RIGHT: 0px solid; LEFT: 0px" id=t border=1 cellSpacing=0 borderColor=lightgrey borderColorDark=white cellPadding=0 frame=box e_paper_margin_left="8" e_paper_margin_top="8" e_paper_margin_right="8" e_paper_margin_bottom="8" e_page_size="4" e_page_orientation="1" e_page_style="1">
+<COLGROUP>
+<COL style="WIDTH: 70px">
+<COL style="WIDTH: 112px">
+<COL style="WIDTH: 70px">
+<COL style="WIDTH: 70px">
+<TBODY>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD style="BORDER-BOTTOM: black 1px solid"></TD>
+<TD style="BORDER-BOTTOM: black 1px solid"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD style="BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid">中国</TD>
+<TD style="BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-LEFT: black 1px solid"></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD style="BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-LEFT: black 1px solid"></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD style="BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid" rowSpan=2 colSpan=2 e_merge="4,2-5,3">好的.</TD>
+<TD style="BORDER-LEFT: black 1px solid"></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD style="BORDER-RIGHT: black 1px solid"></TD>
+<TD style="BORDER-LEFT: black 1px solid"></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD style="BORDER-TOP: black 1px solid"></TD>
+<TD style="BORDER-TOP: black 1px solid"></TD>
+<TD></TD></TR></TBODY></TABLE></DIV></DIV>

@@ -1,0 +1,26 @@
+<html >
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<script src="../../fceform/js/csjsrequest.js"></script>
+        <script>
+            function window_onresize() {
+                oTitle.style.width = document.body.offsetWidth;
+                
+                oBody.style.width = document.body.offsetWidth;
+                oBody.style.height = document.body.offsetHeight - 30;
+                
+            }
+
+        </script>
+        <title>字段信息</title>
+    </HEAD>
+	<body onresize="window_onresize()">
+		<div id=oTitle style="position:absolute;top:0px;left:0px;height:30px;width:100%">
+            <iframe  width=100% height=100% id="toolbar" name="toolbar" src="wizfieldtb.htm" scrolling=auto frameborder=0  bordercolor=LightGrey noresize></iframe>
+		</div>
+		<div id=oBody style="position:absolute;left:0px;top:32px;height:693px;" >
+	        <iframe  width=100% height=90% id="mainform" name="mainform"  src="../../fceform/common/null.htm" scrolling=auto frameborder=0  bordercolor=LightGrey noresize></iframe>
+	    </div>
+	</body>
+
+</html>

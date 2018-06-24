@@ -1,0 +1,75 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_newsql1() {
+	var s1='';
+	alert(s1)
+	//新的sql语句
+	var newsql = "select sdeptcode,sdeptname from FCS_DEPT where sdeptname like '销%' order by sdeptcode " ;
+	//清空原来的树数据
+	$id("tree1").innerHTML="";
+	TreeRefresh($id("tree1"),newsql);	
+}
+function uf_newsql2() {
+	$id("tree1").innerHTML="";
+	TreeRefresh($id("tree1"));	
+	
+}
+function uf_newsql() {
+	//新的sql语句 
+	var newsql = "select sdeptcode,sdeptname,sdeptid from FCS_DEPT where sdeptname like '库%'  order by sdeptcode " ;
+	//由SQL语句得到新的树数据
+	var tmp1 = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath +"/WebBill"
+		+fcpubdata.dotnetVersion+"?key=getTreeXml","<sql>" + RepXml(newsql) + "</sql>") ;
+	
+	//清空原来的树数据
+	document.getElementById("tree1").innerHTML="";
+	
+	//构建新的树
+	var tree1=new xtreeItem("","根","","","","",true,"",""); 
+	
+	Global.checkedType = 3;
+	
+	tree1.setup(document.getElementById("tree1"));
+	tree1.loadXmlStr('<TreeNode >'+tmp1+'</TreeNode>');
+}
+//取多选时选中的值
+function uf_getvalue(){
+	var arr = TreeGetMultiValue($id("tree1"));
+	if(arr == null){
+		alert("没有选中任何节点");
+	}else{
+		var s = "";
+		for(var i=0;i<arr.length;i++){
+			s +="选中的第"+i+"节点: "
+			s += "code值:"+arr[i].code;	
+			s += "text值:"+arr[i].text;
+		}
+		alert(s);
+	}
+}
+//设置多选
+function uf_setvalue(){
+	TreeSetMultiValue($id("tree1"),"ZAB00000103,ZAB00000105");
+}
+function uf_select() {
+		//tree1.select();
+		//tree1.FindNode(tree1,"text","库房二部");
+		tree1.FindNode(tree1,"code","005033")
+
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  /><script src='../../fceform/js/xtree.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" toolbar="不带工具栏" dj_sn="sh_007_tree8" type="SH1" caption="动态SQL语句生成树" mkbh codeheader="BBB" keyfield window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>button2</taborder><taborder>button3</taborder><taborder>button4</taborder><taborder>button5</taborder><taborder>button6</taborder><taborder>button7</taborder><taborder>button8</taborder><taborder>button9</taborder><taborder>button10</taborder><taborder>button11</taborder><taborder>text1</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:11;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:2;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label2</id></label><button><id>button2</id><id>button3</id><id>button4</id><id>button5</id><id>button6</id><id>button7</id><id>button8</id><id>button9</id><id>button10</id><id>button11</id></button><text><id>text1</id></text><tree><id>tree1</id></tree></root>" AutoResizeXml><DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 213px; DISPLAY: block; HEIGHT: 350px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 42px; BORDER-RIGHT: 1px solid; LEFT: 11px" id=tree1 sql="%F4%D8%E6%D8%D4%F6Xrn%F4%D6%D8%EE%F6%D4%EC%D6%D8Xr%94%F4%D6%D8%EE%F6%EA%D0%E8%D8Xr%94%F4%D6%D8%EE%F6%D4%EC%D6%D8Xrn%D0%F4Xrn%E0%D6Xrn%DA%F2%EC%E8Xrn%9A%94%B4%CC%96%98%AE%B6XrnXrn%EC%F2%D6%D8%F2Xrn%D2%u0100Xrn%F4%D6%D8%EE%F6%D4%EC%D6%D8" opentb="_self" isAll="否" ischecked="否" sourcetype="1" roottext="根" clicknode="alert%28Global.selectedItem.childNodes.length%29%3B" xml="%3CTreeNode%20id%3D%221%22%20text%3D%22aa%22%20roottarget%3D%22_blank%22%20rootaction%3D%22%22%20%20target%3D%22_blank%22%20title%3D%22aa%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22%3E%3CTreeNode%20id%3D%222%22%20text%3D%22%u8282%u70B91%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B91%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3CTreeNode%20id%3D%223%22%20text%3D%22%u8282%u70B92%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B92%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22%3E%3CTreeNode%20id%3D%224%22%20text%3D%22%u8282%u70B921%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B921%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3CTreeNode%20id%3D%225%22%20text%3D%22%u8282%u70B922%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B922%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3CTreeNode%20id%3D%226%22%20text%3D%22%u8282%u70B923%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B923%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22%3E%3CTreeNode%20id%3D%227%22%20text%3D%22%u589E%u52A0%u8282%u70B9%22%20%20target%3D%22_blank%22%20title%3D%22%u589E%u52A0%u8282%u70B9%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3C/TreeNode%3E%3C/TreeNode%3E%3CTreeNode%20id%3D%228%22%20text%3D%22%u8282%u70B93%22%20%20target%3D%22_blank%22%20title%3D%22%u8282%u70B93%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3CTreeNode%20id%3D%229%22%20text%3D%22%u589E%u52A0%u8282%u70B9%22%20%20target%3D%22_blank%22%20title%3D%22%u589E%u52A0%u8282%u70B9%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3C/TreeNode%3E" controltype="tree" datasourceName="" xmlpath="null"></DIV>&nbsp;<BUTTON style="POSITION: absolute; WIDTH: 202px; HEIGHT: 25px; TOP: 56px; LEFT: 292px" id=button2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_newsql1()")'>用新的sql语句来产生树数据</BUTTON><INPUT style="POSITION: absolute; WIDTH: 123px; HEIGHT: 20px; TOP: 142px; LEFT: 295px" id=text1 onmovestart=moveStart() value=库 size=22 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 140px; LEFT: 427px" id=button3 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_newsql2()")'>直接刷新</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 36px; HEIGHT: 15px; TOP: 120px; LEFT: 296px" id=label2 onmovestart=moveStart() noWrap controltype="label" NotBg="否" value="label2">模糊查询值:</DIV><BUTTON style="POSITION: absolute; WIDTH: 205px; HEIGHT: 25px; TOP: 86px; LEFT: 291px" id=button4 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_newsql()")'>变成可以多选的树</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 120px; HEIGHT: 25px; TOP: 86px; LEFT: 503px" id=button5 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_getvalue()")'>取多选时选中的值</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 109px; HEIGHT: 25px; TOP: 86px; LEFT: 632px" id=button6 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_setvalue()")'>设置多选</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 190px; LEFT: 294px" id=button7 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("tree1.expandAll()")'>expandall</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 190px; LEFT: 381px" id=button8 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("tree1.collapseAll();")'>收缩all</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 143px; HEIGHT: 25px; TOP: 190px; LEFT: 479px" id=button9 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_select()")'>选中某个节点</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 128px; HEIGHT: 25px; TOP: 250px; LEFT: 290px" id=button10 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;TreeRootNodeHide($id('tree1'), 'none')&quot;)">隐藏树根节点</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 121px; HEIGHT: 25px; TOP: 250px; LEFT: 447px" id=button11 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;TreeRootNodeHide($id('tree1'), '')&quot;)">显示树根节点</BUTTON></DIV><script>var tree1;NavJs.addEvent(window, "onunload", function(){tree1=null;});</script></body></html>

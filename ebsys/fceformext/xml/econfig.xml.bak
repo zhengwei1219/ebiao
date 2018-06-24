@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="gb2312" ?><root><datasources>
+		<ds dbencoding="GBK" dbtype="2" drivername="Provider=SQLOLEDB" encodesql="false" name="sqlserver1" password="" url="Data Source=localhost;Initial Catalog=eformtest" userid="sa"/><ds dbencoding="GBK" dbtype="2" drivername="Provider=SQLOLEDB" encodesql="false" name="eb" password="" url="Data Source=localhost;Initial Catalog=ebtest" userid="sa" schemaPattern=""/><ds dbencoding="GBK" dbtype="1" drivername="Provider=OraOLEDB.Oracle" encodesql="false" name="oracle1" password="eboracle" url="Data Source=sys" userid="eboracle"/></datasources>
+	<options><fromdb>no</fromdb><rows>6</rows><cols>4</cols><rowheight>18</rowheight><colwidth>70</colwidth><firstcolwidth>35</firstcolwidth><shiftf>yes</shiftf></options>
+</root>

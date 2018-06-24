@@ -1,0 +1,419 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>// JScript source code
+var xmlSql = "";
+var clickUnitId = ""; //树控件单击的功能点id
+function uf_open() {
+    e_PropWinOnload();
+    uf_openTree();
+    TreeRootNodeHide($id('tree1'), 'none');
+}
+
+function uf_radioValue() {
+    var sql = "select id,name from  FCQ_UNIT where deleteMark=0 and envType='电脑' and (sFName is null or sFName='')"
+    if ($id("cheIsAll").value == "是") sql = "select id,name from  FCQ_UNIT where deleteMark=0 and envType='电脑'"
+    if (IsSpace($id('txtQuery').value) == false) {
+        sql = "select id,name from  FCQ_UNIT where deleteMark=0 and name like'" + $id('txtQuery').value + "%'"
+    }
+    $id('radiolist1').innerHTML = "";
+    DivRadioInitLoad($id('radiolist1'), sql, "", "");
+
+}
+function uf_selAll() {
+    var sql = "select id,name from  FCQ_UNIT where deleteMark=0 "
+    if ($id("cheIsAll").value == "否") sql = "select id,name from  FCQ_UNIT where deleteMark=0 and envType='电脑' and (sFName is null or sFName='')"
+    $id('radiolist1').innerHTML = "";
+    DivRadioInitLoad($id('radiolist1'), sql, "", "");
+}
+function uf_AddNode() {
+	if (Global.selectedItem == null) {
+        alert("请选择要添加子菜单的节点！");
+        return;
+    }
+    if (Global.selectedItem.parent != null && Global.selectedItem.parent.parent != null && Global.selectedItem.parent.parent.parent != null) return alert("最多只能添加到三级菜单");
+
+    if (Global.selectedItem != null) {
+        var sNodeName = GetDivRadioValue(radiolist1, 'text');
+        if (IsSpace(sNodeName) == false) {
+            uf_validOther(Global.selectedItem, sNodeName, "add"); //查看是否是其它选项并加入节点
+            //Global.selectedItem.add(obj);
+            TreeRootNodeHide($id('tree1'), 'none');
+        } /*else {
+            alert("请在右边区域选择菜单功能");
+            return;
+        }*/
+    }
+    else {
+        alert("请选择要增加节点的位置！");
+        return;
+    }
+}
+//删除节点
+function uf_DelNode() {
+    if (Global.selectedItem == null) {
+        alert("请选择要删除的节点！");
+        return;
+    }
+    if (Global.selectedItem == Global.selectedItem.root()) {
+        alert("不能删除根节点！");
+        return;
+    }
+    if (tree1.childNodes.length == 1 && Global.selectedItem.parent.parent == null) { alert("必须保留一个节点"); return } // && tree1.childNodes[0].childNodes.length == 0
+    uf_createSql(Global.selectedItem)//删除节点时生成xml格式的sql语句
+
+    for (var g = 0; g < Global.selectedItem.childNodes.length; g++) {
+        uf_createSql(Global.selectedItem.childNodes[g]);
+    }
+    Global.selectedItem.remove(Global.selectedItem);
+
+}
+
+function uf_createSql(nodeObj) {
+    var nodeCode = nodeObj.code.split(','); //code变成数组
+    if (nodeCode.length > 4) {//超链接是第五个
+        if (IsSpace(nodeCode[4])) {
+            xmlSql += "<delete tableName='fcq_unit'><where>  id= '" + nodeCode[0] + "'</where></delete>"; //删除其他项添加的功能点
+        } else {//修改功能点的父节点和全路径为空
+            xmlSql += "<update tableName='fcq_unit'><set>parentId='',sFName=''</set><where> id = '" + nodeCode[0] + "'</where></update>";
+        }
+    }
+}
+//修改保存
+function uf_edit() {
+    if (Global.selectedItem == null) {
+        alert("请选择要修改的节点！");
+        return;
+    }
+    var arr = new Array();
+    var sNodeName = GetDivRadioValue(radiolist1, 'text');
+    if (IsSpace(sNodeName) == false) {
+        if (sNodeName.indexOf('other|&|', 0) != '-1') {//当前节点的新功能点为其他类型的功能点
+            sNodeName = RepStr(sNodeName, 'other|&|', '');
+            //Global.selectedItem.href = "javascript:void(0)";
+            //Global.selectedItem.code = "";
+            //var unitId = getMaxNo("UNI");
+            //var sortNo = getMaxIntNo("SOR");
+            arr[1] = "";
+            arr[2] = sNodeName;
+            //arr[3] = unitId;
+            arr[3] = "";
+            //xmlSql += "<insert tableName='fcq_unit'>" + "<names>id,name,sortNo,deleteMark</names>" + "<values>'" + unitId + "','" + sNodeName + "'," + sortNo + ",0</values> </insert>";
+        } else {//当前节点的新功能点不是其他类型的功能点
+            //Global.selectedItem.code = uf_url();
+            arr = uf_url();
+            //Global.selectedItem.href = arr[1];
+            //Global.selectedItem.code = arr[1];
+        }
+        if (Global.selectedItem.parent == Global.selectedItem.root()) {//在根节点下的第一级修改
+            uf_createSql(Global.selectedItem); //如果是其他类型功能点就生成deletesql语句，否则生成update语句
+            //Global.selectedItem.code = arr[3] + "," + arr[2] + ",,/" + sNodeName + "," + escape(arr[1]);
+            Global.selectedItem.code = arr[3] + "," + arr[2] + escape($id('txtPosition').value) + ",/" + sNodeName + "," + escape(arr[1]);
+            xmlSql += "<update tableName='fcq_unit'><set>sFName='/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+
+        } else {//不是一级菜单，要获取上级菜单的父id，和全路径名
+            uf_createSql(Global.selectedItem);
+            if (IsSpace(Global.selectedItem.parent.code) == false) parNodeObj = Global.selectedItem.parent.code.split(",");
+            //xmlSql += "<update tableName='fcq_unit'><set>parentId='" + parNodeObj[0] + "',sFName='" + parNodeObj[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+            xmlSql += "<update tableName='fcq_unit'><set> sFName='" + parNodeObj[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+            //Global.selectedItem.code = arr[3] + "," + arr[2] + "," + parNodeObj[0] + "," + parNodeObj[3] + "/" + arr[2] + "," + escape(arr[1]) ;
+            Global.selectedItem.code = arr[3] + "," + arr[2] + "," + escape($id('txtPosition').value) + "," + parNodeObj[3] + "/" + arr[2] + "," + escape(arr[1]); 
+        }
+        Global.selectedItem.setText(sNodeName);
+        if (arr != null && IsSpace(arr[0]) == false) sNodeName = arr[0];
+        Global.selectedItem.setTitle(sNodeName);
+
+        var nodeCode = Global.selectedItem.code.split(','); //code变成数组
+        for (var g = 0; g < Global.selectedItem.childNodes.length; g++) {//修改节点下有子节点
+            var childNode = Global.selectedItem.childNodes[g];
+            var code = childNode.code.split(',')//子节点的code属性值
+            if (code.length > 4) {//新的code属性值id,name parentId,sFName,href
+                xmlSql += "<update tableName='fcq_unit'><set>parentId='" + nodeCode[0] + "',sFName='" + nodeCode[3] + "/" + code[1] + "'</set><where> id = '" + code[0] + "'</where></update>";
+            } else {//以前的只有连接地址
+                var unitId = childNode.code.substring(childNode.code.indexOf("&unitid=") + 8, childNode.code.length)
+                xmlSql += "<update tableName='fcq_unit'><set>parentId='" + nodeCode[0] + "',sFName='" + nodeCode[3] + "/" + childNode.text + "'</set><where> id = '" + unitId + "'</where></update>";
+            }
+        }
+    } else {
+        alert("请在右边区域选择菜单功能");
+    }
+	$id("tree1").setAttribute("rootaction", escape("uf_clickTree(Global.selectedItem.code)"));
+}
+//保存
+function uf_save() {
+    if (tree1.childNodes.length == 0) {
+        alert("没有可保存的节点");
+        return;
+    }
+    //var treeNodeX = tree1.getNodeXml();
+    /*var menuDesign = escape(treeNodeX);
+    var menuRunning = escape(RepStr(treeNodeX,' code="',' href="'));
+    var xmlSql = "<update tableName='FCQ_PROFILE'>"+"<set>menuDesign='"+menuDesign+"',menuRunning='"+menuRunning+"' </set>"+" <where>   profileId='systemadmin'</where>"+"</update>";
+    doSaveData(xmlSql,function(){alert("保存成功")});//*/
+    /*var xmlRet = SelectSql("select id,imgPos from fcq_unit where deleteMark=0", 1, -1);
+    var oXml = SetDom(xmlRet);
+    if (oXml.documentElement == null) {
+    alert(xmlRet1);
+    return;
+    }
+    if (oXml.documentElement.childNodes.length < 1) return;
+    var arr = new Array();
+    for(var x=0;x<oXml.documentElement.childNodes.length-1;x++){
+    arr[oXml.documentElement.childNodes[x].childNodes[0].text] = oXml.documentElement.childNodes[x].childNodes[1].text;	
+    }*/
+    //if (havImgPos == 0) { uf_getImgPos() }; //没有查询过功能点表的图片坐标
+    var menuDesign = tree1.getNodeXml();
+    var menuRunning = "";
+    for (var i = 0; i < tree1.childNodes.length; i++) {
+        menuRunning += tree1.childNodes[i].getMenuXml();
+    }
+    var arrMenu = new Array(menuDesign, menuRunning);
+    var ret = "";
+    for (var ii = 0; ii < arrMenu.length; ii++) {
+        var newXml = arrMenu[ii];
+        var shead = '<?xml version="1.0" encoding="utf-8"?>';
+        var filePath = "<file>" + "/zk/main/admin_design_menu.xml</file>";
+        if (ii == 1) {
+            filePath = "<file>" + "/zk/workflat/MainMenu.xml</file>";
+            newXml = "<root><NavigationBar>" + newXml + "</NavigationBar></root>";
+        }
+        var sxml = filePath + "<text><![" + "CDATA[" + shead + newXml + "]]" + "></text>";
+        ret += savedesignhtml(sxml)
+    }
+    if (ret == "") {
+        //alert("文件保存成功");
+        doSaveData(xmlSql, function() { xmlSql = ""; alert("保存成功"); });
+    } else { alert(ret) }
+
+}
+//增加节点
+function uf_insertNode() {
+    if (Global.selectedItem == null) {
+        alert("请选择要增加节点的位置！");
+        return;
+    }
+    if (Global.selectedItem == Global.selectedItem.root()) {
+        alert("不能增加根节点！");
+        return;
+    }
+
+    if (Global.selectedItem != null) {
+        var sNodeName = GetDivRadioValue(radiolist1, 'text');
+        if (IsSpace(sNodeName) == false) {
+            uf_validOther(Global.selectedItem, sNodeName, "inset"); //查看是否是其它选项并插入节点
+            TreeRootNodeHide($id('tree1'), 'none');
+        } else {
+            alert("请在右边区域选择菜单功能");
+            return;
+        }
+    }
+    else {
+        alert("请选择要增加节点的位置！");
+        return;
+    }
+
+}
+//取出树控件的xml数据
+function uf_openTree() {
+    /*var sql = "select menuDesign from FCQ_PROFILE where profileId='systemadmin'";
+    var sqlRet = SqlToField(sql);
+    tree1.loadXmlStr(unescape(sqlRet));
+    tree1.expand(); //*/
+    var xmlpath = location.protocol + "//" + location.host + fcpubdata.path + "/zk/main/admin_design_menu.xml";
+    //tree1.loadXmlFile(xmlpath);//调用树控件中的装入xml文件生成树也可以用下两行代码把xml文件生成dom对象然后在装入树
+    var oXml = SetDomFile(xmlpath);
+    oXml.documentElement.setAttribute("rootaction", escape("uf_clickTree(Global.selectedItem.code)"));
+    tree1.loadXmlStr(oXml.documentElement.xml);
+    tree1.expand();
+}
+
+//取fcq_unit表的url字段的值
+function uf_url() {
+    var arr = new Array();
+    var sId = GetDivRadioValue(radiolist1);
+    var sSql = "select name,url,fromType,fromName,id,paramUrl,title from fcq_unit where id='" + sId + "'";
+    var xmlRet = SelectSql(sSql, 1, 1);
+    //var sqlRet = SqlToField(sSql);
+    var oXml = SetDom(xmlRet);
+    var name = oXml.documentElement.childNodes(0).childNodes(0).text;
+    var sUrl = oXml.documentElement.childNodes(0).childNodes(1).text;
+    var fromtype = oXml.documentElement.childNodes(0).childNodes(2).text; //判断是表单还是报表
+    var djsn = oXml.documentElement.childNodes(0).childNodes(3).text;
+    var unitId = oXml.documentElement.childNodes(0).childNodes(4).text;
+    var paramUrl = oXml.documentElement.childNodes(0).childNodes(5).text;
+    arr[0] = oXml.documentElement.childNodes(0).childNodes(6).text; //功能点说明
+    if ((fromtype == 1) || (fromtype == 2)) {
+        /*var reportInForm = false; //报表文件在表单中运行
+        if(tbName=='ebr_file' || tbName == 'ebr_m_file' || tbName=='ebr_db' || tbName == 'ebr_m_db') reportInForm = true;
+        if(!(IsSpace(sUrl) == true && reportInForm == false) ){alert("没有表单的路径");return;}
+        //if(reportInForm) paramUrl = unescape(paramUrl);
+        //if(tbName=='ebr_db' || tbName == 'ebr_m_db') paramUrl += "&fromdb=yes";*/
+        sUrl = "../../fceform/common/djframe.htm?djsn=" + djsn + sUrl + paramUrl + "&unitid=" + unitId;
+    }
+    if (fromtype == 3) sUrl = "../../fceform/ereport/ebrun.htm?file=" + djsn + "&fromdb=yes&unitid=" + unitId;
+    if (fromtype == 4) sUrl = "../../fceform/ereport/ebrun.htm?file=/ebfile/" + djsn + "&unitid=" + unitId;
+    if (fromtype == 5) {
+        var link = "?";
+        if (sUrl.indexOf('?') != -1) link = "&";
+        sUrl = sUrl + link + "unitid=" + unitId;
+    }
+    if (fromtype == 6) sUrl = "../../fceform/common/djframe.htm?djsn=" + djsn + sUrl + paramUrl + "&unitid=" + unitId;
+    //sUrl="javascript:zkLoadMod('"+tbName+"','"+sUrl+"')";
+    arr[1] = sUrl;
+    arr[2] = name;
+    arr[3] = unitId;
+    return arr;
+
+}
+function uf_moveNode(isUp) {
+    var oNode = Global.selectedItem;
+    if (oNode != null) {
+        oNode.moveNode(isUp);
+        TreeRootNodeHide($id('tree1'), 'none');
+
+    }
+
+}
+//检查是否是其他选项，nodeName是节点值，addWay是增加节点的方式：子节点或同级节点
+
+function uf_validOther(nodeObj, nodeName, addWay) {
+    var obj;
+    var arr = new Array();
+    //var idNameHrefArr = new Array();//id,父id，名称，全名称，超链接
+    var idNameHrefArr = ""; //id,父id，名称，全名称，超链接
+    var title = "";
+    if (nodeName.indexOf('other|&|', 0) != '-1') {
+        nodeName = RepStr(nodeName, 'other|&|', '');
+        //obj = new xtreeItem("", nodeName, "", "_parent", "", "", "", "");
+        arr[0] = nodeName;
+        arr[1] = "";
+        arr[2] = nodeName;
+        //var unitId = getMaxNo("UNI");
+        //var sortNo = getMaxIntNo("SOR");
+        //xmlSql += "<insert tableName='fcq_unit'>" + "<names>id,name,sortNo,deleteMark</names>" + "<values>'" + unitId + "','" + nodeName + "'," + sortNo + ",0</values> </insert>";
+        //arr[3] = unitId;
+        arr[3] = "";
+    } else {//不是选择其它功能点
+        arr = uf_url();
+    }
+
+    idNameHref = arr[3] + "," + arr[2] + ","; //id + name
+    var nodeObjArr = new Array();
+    if (IsSpace(nodeObj.code) == false) nodeObjArr = nodeObj.code.split(",");
+    var parNodeObj = new Array();
+    $id('txtPosition').value = "";//清空图标坐标
+    if (nodeObj.parent == Global.selectedItem.root()) {//在根节点下增加
+        if (addWay != "add") {//跟节点增加节点
+            //idNameHref += "," + "/" + arr[2]; //parentId sFname
+            idNameHref += $id('txtPosition').value +"," + "/" + arr[2]; //parentId sFname
+            xmlSql += "<update tableName='fcq_unit'><set>sFName='/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+        } else {//根节点加子节点
+            //idNameHref += nodeObjArr[0] + "," + nodeObjArr[3] + "/" + arr[2]; //parentId sFname
+            idNameHref += $id('txtPosition').value + "," + nodeObjArr[3] + "/" + arr[2]; //parentId sFname
+            if (IsSpace(nodeObjArr[0])) nodeObjArr[0] = "";
+            //xmlSql += "<update tableName='fcq_unit'><set>parentId='" + nodeObjArr[0] + "',sFName='" + nodeObjArr[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+            xmlSql += "<update tableName='fcq_unit'><set> sFName='" + nodeObjArr[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+        }
+    } else {
+        if (addWay != "add") {//节点增加节点
+            if (IsSpace(nodeObj.parent.code) == false) parNodeObj = nodeObj.parent.code.split(",");
+            //idNameHref += parNodeObj[0] + "," + parNodeObj[3] + "/" + arr[2]; //parentId sFname
+            idNameHref += $id('txtPosition').value + "," + parNodeObj[3] + "/" + arr[2]; //parentId sFname
+            if (IsSpace(parNodeObj[0])) parNodeObj[0] = "";
+            //xmlSql += "<update tableName='fcq_unit'><set>parentId='" + parNodeObj[0] + "',sFName='" + parNodeObj[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+            xmlSql += "<update tableName='fcq_unit'><set> sFName='" + parNodeObj[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+        } else {//节点加子节点
+            //idNameHref += nodeObjArr[0] + "," + nodeObjArr[3] + "/" + arr[2]; //parentId sFname
+            idNameHref += $id('txtPosition').value + "," + nodeObjArr[3] + "/" + arr[2]; 
+            if (IsSpace(nodeObjArr[0])) nodeObjArr[0] = "";
+            //xmlSql += "<update tableName='fcq_unit'><set>parentId='" + nodeObjArr[0] + "',sFName='" + nodeObjArr[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+        	xmlSql += "<update tableName='fcq_unit'><set> sFName='" + nodeObjArr[3] + "/" + arr[2] + "'</set><where> id = '" + arr[3] + "'</where></update>";
+        }
+    }
+    idNameHref += "," + escape(arr[1]); //href
+    //idNameHref += "," + escape($id('txtPosition').value);//图标坐标
+    if (arr != null && IsSpace(arr[0]) == false) title = arr[0];
+    obj = new xtreeItem("", nodeName, "javascript:uf_clickTree(Global.selectedItem.code);", "_parent", title, "", "", idNameHref);
+
+    if (addWay == "add") {//判断是增加子节点还是同级节点
+        Global.selectedItem.add(obj);
+    } else {
+        Global.selectedItem.insert(obj, true);
+    }
+    //$id("tree1").setAttribute("rootaction", escape("uf_clickTree(Global.selectedItem.code)"));
+}
+
+
+function uf_show() {
+    if (Global.selectedItem == null) return alert("先选择主菜单上的功能点");
+    var href = Global.selectedItem.code;
+    var unitId = href.split(",")[0];
+    if (Global.selectedItem.code != "") {
+        DjOpen("../../fceform/common/djframe.htm?djsn=zk_menu_unit&djtype=ZK&unitId=" + unitId);
+    } else {
+        alert("请查看此节点下的功能点");
+    }
+
+}
+
+
+
+function uf_editImg() {
+	if (Global.selectedItem == null) {
+        alert("请选择要修改菜单图标的节点！");
+        return;
+    }
+    var ret = DjOpen('zk_set_menu_img', $id('txtPosition').value, '展现');
+    if (IsSpace(ret) == false) {
+        //var xmlSql = "<update tableName='fcq_unit'><set>imgPos='" + ret + "'</set><where> id = '" + clickUnitId + "'</where></update>";
+       //doSaveData(xmlSql); //修改功能点表的坐标
+        //arrImgPos[clickUnitId] = ret; //修改功能点图片坐标数组中的坐标
+         $id('txtPosition').value = ret;
+        var arrCode = Global.selectedItem.code.split(",");
+        Global.selectedItem.code = arrCode[0] + "," + arrCode[1] + "," + escape(ret)+","+arrCode [3]+","+arrCode[4];
+        uf_initImg(ret);
+    }
+}
+
+
+
+function uf_clickTree(sCode) {//单击树控件显示菜单图标
+    var arr = sCode.split(',');
+    var unitId = arr[0];
+    clickUnitId = unitId;
+    // if (havImgPos == 0) { uf_getImgPos() };
+    $id('txtPosition').value = unescape(arr[2]); //给txtPposition控件赋值
+    //if (IsSpace($id('txtPosition').value)) $id('txtPosition').value = "10,9";
+    uf_initImg($id('txtPosition').value);
+}
+function uf_initImg(pos) {
+    var arrPos = pos.split(",");
+    var imgPosX = -40 * parseInt(arrPos[0]) + "px";
+    var imgPosY = -30 * parseInt(arrPos[1]) + "px";
+    if(imgPosX == "NaNpx" && imgPosY == "NaNpx"){
+    	checkedImg.style.cssText="cursor:hand;position:absolute;left:0px;top=0px;";
+    }else{
+    	checkedImg.style.cssText = "cursor:hand;position:absolute;left:0px;top=0px; z-index:1000;background-image:url(../workflat/img/menu-all.png); background-position:" + imgPosX + " " + imgPosY + "; background-repeat:no-repeat; width:16px; height:16px;";
+	}
+}
+
+
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/design.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  /><script src='../../fceform/js/xtree.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" userToolbar='<tr rowstate="add"><td>add</td><td>新增</td><td></td><td>uf_insertNode()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>cmdAddSub</td><td></td><td>添加子</td><td>uf_AddNode()</td><td>52px</td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>edit</td><td>修改保存</td><td></td><td>uf_edit()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>del</td><td>删除</td><td></td><td>uf_DelNode();</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>save</td><td>提交数据成功后提示</td><td></td><td>uf_save()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>upmove</td><td>上移</td><td></td><td>uf_moveNode(true)</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>downmove</td><td>下移</td><td></td><td>uf_moveNode(false)</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>show</td><td></td><td>详细信息</td><td>uf_show()</td><td></td><td></td><td></td><td></td><td></td></tr>' jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;design.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType contxml="<root><checkbox><id>cheIsAll</id></checkbox><label><id>label11</id><id>label13</id><id>label14</id></label><div><id>div4</id><id>checkedImg</id></div><button><id>cmdQuery</id><id>button21</id></button><text><id>txtQuery</id><id>txtPosition</id></text><radiolist><id>radiolist1</id></radiolist><tree><id>tree1</id></tree></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:14;radio:0;listbox:0;textarea:0;combobox:4;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:3;div:0;DsMain_field:0;a:1;button:21;text:11;hr:0;checkboxlist:0;radiolist:1;dropdownlist:3;grid:0;dataset:3;spin:0;excel:0;tree:5;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" billtaborder="<root><taborder>cmdQuery</taborder><taborder>txtQuery</taborder><taborder>cheIsAll</taborder><taborder>button21</taborder><taborder>txtPosition</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight="720" poswidth="850" postop posleft entertype="展现" window="当前窗口" keyfield="sid" codeheader="CSM" caption="主菜单设置" type="ZK" dj_sn="zk_menu_save" BLONopen="uf_open()" center="  " BLONclose runsave BLONopenBefore AutoResizeXml="<record id ='radiolist1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>10</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>10</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record><record id ='tree1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height>90</Height><HExt>10</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore mkbh><DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 332px; HEIGHT: 622px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 24px; BORDER-RIGHT: 1px solid; LEFT: 7px" id=tree1 class=control-border-color controltype="tree" datasourceName="" sql="%F4%D8%E6%D8%D4%F6Xrn%AA%90%A8%98Xr%94%EE%D0%F2%D8%EA%F6%E0%D6Xr%94%B8%B2%A6Xr%94%DA%F2%EC%E8%AA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%B8%AA%A0%B6" xml="%3CTreeNode%20id%3D%221%22%20text%3D%22%22%20roottarget%3D%22_self%22%20rootaction%3D%22uf_clickTree%2528Global.selectedItem.code%2529%22%20%20target%3D%22_self%22%20title%3D%22%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E" xmlpath="" opentb="_self" isAll="是" ischecked="否" sourcetype="0" roottext="" clicknode="uf_clickTree%28Global.selectedItem.code%29"></DIV>&nbsp; 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; FONT-STYLE: normal; WIDTH: 777px; FONT-FAMILY: 宋体; HEIGHT: 595px; FONT-SIZE: 12px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 49px; BORDER-RIGHT: 1px solid; LEFT: 344px" id=radiolist1 class=control-border-color onmovestart=moveStart() controltype="radiolist" async="否" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%E0%D6Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8XrnXrn%9A%94%B0%CC%B8%AA%A0%B6Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xt%96nXrn%D0%EA%D6XrnXr%7E%F4%9A%AA%D0%E8%D8Xrn%E0%F4Xrn%EA%F8%E6%E6Xrn%EC%F2Xrn%F4%9A%AA%D0%E8%D8Xt%96Xr%7CXr%7CXr%80" datasourceName sql check="2" temptext tempvalue other="是" rows="3" AutoSizeXml="<record id ='radiolist1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>10</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>10</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>">radiolist</DIV><LABEL style="POSITION: absolute; WIDTH: 71px; FONT-FAMILY: 宋体; HEIGHT: 21px; COLOR: #000040; FONT-SIZE: 16px; TOP: 2px; FONT-WEIGHT: bold; LEFT: 7px" id=label11 onmovestart=moveStart() controltype="label" inputTag="否">主菜单</LABEL><LABEL style="POSITION: absolute; WIDTH: 127px; FONT-FAMILY: 宋体; HEIGHT: 19px; COLOR: #000040; FONT-SIZE: 16px; TOP: 2px; FONT-WEIGHT: bold; LEFT: 348px" id=label13 onmovestart=moveStart() controltype="label" inputTag="否">选择菜单功能</LABEL><INPUT style="POSITION: absolute; WIDTH: 309px; HEIGHT: 20px; TOP: 25px; LEFT: 344px" id=txtQuery onmovestart=moveStart() size=55 controltype="text" onkeydown='bill_onkeydown("uf_radioValue()")'><BUTTON style="POSITION: absolute; WIDTH: 63px; HEIGHT: 25px; TOP: 24px; LEFT: 657px" id=cmdQuery onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_radioValue()")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 24px; LEFT: 748px" id=cheIsAll onmovestart=moveStart() noWrap controltype="checkbox" onclick='bill_onclick("uf_selAll()")' value="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>显示全部功能点</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 69px; HEIGHT: 21px; TOP: 29px; LEFT: 892px" id=label14 onmovestart=moveStart() controltype="label" inputTag="否">菜单图标：</LABEL> 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 18px; HEIGHT: 18px; BORDER-TOP: 1px solid; TOP: 25px; BORDER-RIGHT: 1px solid; LEFT: 949px" id=div4 class=control-border-color onmovestart=moveStart() controltype="div">
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 18px; HEIGHT: 18px; BORDER-TOP: 1px solid; TOP: 0px; BORDER-RIGHT: 1px solid; LEFT: 0px" id=checkedImg class=control-border-color onmovestart=moveStart() controltype="div"></DIV></DIV><BUTTON style="POSITION: absolute; WIDTH: 63px; HEIGHT: 25px; TOP: 23px; LEFT: 990px" id=button21 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_editImg()")'>修改图标</BUTTON><INPUT style="POSITION: absolute; WIDTH: 73px; HEIGHT: 20px; TOP: 3px; LEFT: 810px" id=txtPosition onmovestart=moveStart() size=13 controltype="text"></DIV><script>var tree1;NavJs.addEvent(window, "onunload", function(){tree1=null;});</script></body></html>

@@ -1,0 +1,22 @@
+.syntax{
+	BACKGROUND-COLOR:#EEECEB;  WIDTH:expression(document.body.clientWidth-50); BORDER-RIGHT:1px solid; BORDER-TOP:1px solid;  BORDER-LEFT:1px solid; BORDER-BOTTOM:1px solid;  height:30px;
+}
+TD {
+	FONT-SIZE: 12px;
+	}
+.title1{
+	FONT-SIZE: 12px
+}
+.paratable1 TD{
+	BORDER-BOTTOM:1px solid black; BORDER-Right:1px solid black;
+}
+.title22{
+    BACKGROUND-COLOR:#EEECEB; 
+}
+.paratable2{
+	BORDER-COLLAPSE: collapse;width:100%;BORDER-TOP:1px solid black;BORDER-LEFT:1px solid black;
+		
+}
+.sample{
+	color:darkblue;
+}

@@ -1,0 +1,174 @@
+
+<HTML xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml" >
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<title>e表</title>
+		<link rel="stylesheet" type="text/css" href="../css/menu.css">
+		<link rel="stylesheet" type="text/css" href="../css/efdesign.css">
+		<STYLE> 
+		 .userData{behavior:url(#default#userData);}
+			@import url( ./css/webreport.css ); 
+			@media All { v\:* { BEHAVIOR: url(#default#VML) }}
+		</STYLE>
+		<script src="../js/csjsrequest.js"></script>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcopendj.js"></script>
+		<script src="../js/fcselfuse.js"></script>
+		<script src="../js/fcebiao.js"></script>
+		
+		<script src="./js/events.js"></script>
+		<script src="./js/adjust.js"></script>
+		<script src="./js/selrange.js"></script>
+		<script src="./js/insrow.js"></script>
+		<script src="./js/fontcolor.js"></script>
+		<script src="./js/loadreport.js"></script>
+		<script src="./js/htm_ebdesign.js">
+	    </script>
+
+		<SCRIPT >
+		</SCRIPT>
+	</HEAD>
+	<BODY  onload="return window_onload()" onbeforeunload="return window_onbeforeunload()"
+		onresize="window_onresize()"
+		
+		 topmargin="0" leftmargin="0" style="overflow:hidden;">
+		 
+		
+		
+		<TABLE onmousemove=line_onmousemove() bgColor=black border=0 cellPadding=0 cellSpacing=0 id=line style="DISPLAY: none; HEIGHT: 28px; LEFT: -270px; POSITION: absolute; TOP: 50px; WIDTH: 1px;z-index:10;"><TR><TD></TD></TR></TABLE>
+<TABLE onmousemove=lineH_onmousemove() bgColor=black border=0 cellPadding=0 cellSpacing=0 id=lineH style="DISPLAY: none; HEIGHT: 1px; LEFT: -270px; POSITION: absolute; TOP: 50px; WIDTH: 35px;z-index:10;"><TR><TD></TD></TR></TABLE>
+		
+		
+		
+		
+	
+	
+		<div id="divAll" style="position:absolute;left:0;top:0;" >	
+
+	
+		
+		<div id="divTopLeft" style="z-index:5;position:absolute;top:70px;width:35px;height:21px;" 
+		onclick=divTopLeft_onclick()
+		></div>
+		<div id="divTopHead" style="z-index:5;position:absolute;top:70px;left:37px;height:21px;width:500px;overflow:hidden"
+		onmousedown=div1_onmousedown("是") onmousemove=div1_onmousemove("是") onmouseup=div1_onmouseup("是")
+		onclick=divTopHead_onclick()
+		>
+		</div>
+		<div id="divLeftHead" style="z-index:5;position:absolute;top:92px;width:36px;overflow:hidden"
+		onmousedown=div1_onmousedown("") onmousemove=div1_onmousemove("") onmouseup=div1_onmouseup("")
+		onclick=divLeftHead_onclick()
+		>
+		</div>
+		<div id="divMain" onScroll=divMain_onScroll() onbeforeeditfocus111=main_onbeforeeditfocus() onclick=divMain_onmousedown() 
+			
+		onclick="divMain_onclick()"
+		onkeydown=divMain_onkeydown() 
+		ondrag="event.returnValue = false;" 
+		oncontrolselect="event.returnValue=false;"
+		oncontextmenu="RightMenu.showMenu(window,RightMenu.dataSource.documentElement.selectSingleNode('//MenuItem'),window.document.body,event.x,event.y) ;"
+
+		style="z-index:-5;position:absolute;top:91px;left:36px;overflow:scroll;background-color:white;padding:0px;">
+		
+		<table id="t" ><tr><td></td></tr></table>		
+		
+		
+		<input type=text  id="txtEdit" style="position:absolute;z-index:0;overflow:hidden;border-left:none;border-right:none;border-top:none;border-bottom:none;" 
+		onmouseup=t_onmouseup() onkeydown=divMain_onkeydown() onkeyup=txtEdit_onkeyup() onfocus="this.select()" 
+		onmousewheel=txtEdit_onmousewheel() 
+		onkeypress=txtEdit_keyPress() 
+		oncontextmenu="RightMenu.showMenu(window,RightMenu.dataSource.documentElement.selectSingleNode('//MenuItem'),window.document.body,event.x,event.y) ;"
+
+		 NAME="txtEdit">
+		
+		<TABLE border=0 bgColor=blue cellSpacing=0 id="tLine" style="z-index:0; LEFT: 4px; POSITION: absolute; TOP: 50px;" ><TR><TH></TH></TR></TABLE>
+		<TABLE border=0 bgColor=blue cellSpacing=0 id="tLine" style="z-index:0; LEFT: 4px; POSITION: absolute; TOP: 50px;" ><TR><TH></TH></TR></TABLE>
+		<TABLE border=0 bgColor=blue cellSpacing=0 id="tLine" style="z-index:0; LEFT: 4px; POSITION: absolute; TOP: 50px;" ><TR><TH></TH></TR></TABLE>
+		<TABLE border=0 bgColor=blue cellSpacing=0 id="tLine" style="z-index:0; LEFT: 4px; POSITION: absolute; TOP: 50px;" ><TR><TH></TH></TR></TABLE>
+		
+		
+		
+		</div>
+
+		</div>
+		
+
+
+		<div id="divBottom" style="z-index:5;position:absolute;top:67px;left:0px;width:500px;height:80px;">
+		<span id="imgDesign" class=ef_design_designmode style="position:absolute;top:5;left:3;" onclick="design_click()"></span> <span id="imgHtml" class=ef_design_htmlmode1 style="position:absolute;top:5;left:63;" onclick="html_click()"></span>
+		<span  style="position:absolute;top:10px;left:620px;font-size:12px;color:blue;"><a href="javascript:void(0)" id="itemInfo" ></a></span>
+
+		<a id="recentFile1" href="javascript:void(0);" style="position:absolute;top:1;left:130;font-size:12px;" ></a><a id="recentFile2" href="javascript:void(0);" style="position:absolute;top:14;left:130;font-size:12px;"></a>
+		
+		</div> 
+		
+		<div id=tCopy style="DISPLAY: none; "></div>
+
+		
+		
+		
+		<textarea rows="17" id="srcHtml" cols="73" style="display:none;position:absolute;left:1px;top:70px;" NAME="srcHtml">
+		</textarea>
+
+
+		<form id="oForm" >
+			<input Class="userData" style="DISPLAY: none" ID="oInput" NAME="oInput">
+		</form>
+		
+		
+		<WebMenu DataSource="txtMenuLine.value" class="WebMenu" id="MenuLine" Width="100" Effect="3" MenuType="1" curId="cmdMenuLine"></WebMenu>
+		<textarea rows="17" id="txtMenuLine" cols="73" style="display:none" NAME="txtMenuLine">
+				
+				<Root>
+					<MenuItem  hasSub="1" subWidth="100" HeadColumn="3" >
+							<MenuItem Func="javascript:setLineStyle(1);" Text="%3Chr%20style%3D%27border-style%3Adotted%3Bborder-color%3Ablack%3B%27%3E"  />  
+							<MenuItem Func="javascript:setLineStyle(2);" Text="%3Chr%20style%3D%27border-style%3Adashed%3Bborder-color%3Ablack%3B%27%3E"  />  
+							<MenuItem Func="javascript:setLineStyle(3);" Text="%3Chr%20style%3D%27border%3A%201px%20solid%20%23000000%27%20size%3D%271%27%20%3E"  />
+							<MenuItem Func="javascript:setLineStyle(4);" Text="%3Chr%20style%3D%27border%3A%203px%20double%20%23000000%27%20size%3D3%3E"  />
+							<MenuItem Func="javascript:setLineStyle(5);" Text="%3Chr%20style%3D%27border%3A%202px%20solid%20%23000000%27%20size%3D%272%27%20%3E"  />
+							<MenuItem Func="javascript:setLineStyle(6);" Text="%3Chr%20style%3D%27border%3A%203px%20solid%20%23000000%27%20size%3D%273%27%20%3E"  />
+							<MenuItem Func="javascript:setLineStyle(7);" Text="%3Chr%20style%3D%27border%3A%204px%20solid%20%23000000%27%20size%3D%274%27%20%3E"  />
+							<MenuItem Func="javascript:setLineStyle(8);" Text="%3Chr%20style%3D%27border%3A%205px%20solid%20%23000000%27%20size%3D%275%27%20%3E"  />
+					</MenuItem>
+				</Root>
+
+		</textarea>
+		
+		<WebMenu DataSource="txtMenuLineStyle.value" class="WebMenu" id="MenuLineStyle" Width="100" Effect="3" MenuType="1" curId="cmdMenuLineStyle"></WebMenu>
+		<textarea rows="17" id="txtMenuLineStyle" cols="73" style="display:none" NAME="txtMenuLineStyle">
+				
+				<Root>
+					<MenuItem  hasSub="1" subWidth="50" HeadColumn="3" >
+							<MenuItem Func="javascript:setLineType(1);" Text="%3Cimg%20src%3D%27../images/eb_line1.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(2);" Text="%3Cimg%20src%3D%27../images/eb_line2.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(3);" Text="%3Cimg%20src%3D%27../images/eb_line3.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(4);" Text="%3Cimg%20src%3D%27../images/eb_line4.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(5);" Text="%3Cimg%20src%3D%27../images/eb_line5.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(6);" Text="%3Cimg%20src%3D%27../images/eb_line6.gif%27%20%3E" />  
+							<MenuItem Func="javascript:setLineType(7);" Text="%3Cimg%20src%3D%27../images/eb_line7.gif%27%20%3E" />  
+							
+					</MenuItem>
+				</Root>
+
+		</textarea>
+		<WebMenu DataSource="MenuCode.value" class="WebMenu" id="RightMenu" Width="180" Effect="3" MenuType="1" ></WebMenu>
+		<textarea rows="17" id="MenuCode" cols="100" style="display:none" NAME="MenuCode">
+				<Root>
+					<MenuItem  hasSub="1" subWidth="180" >
+							<MenuItem Func="javascript:cmdFormula();" Text="设置公式" img="../images/eb_fx.gif" />
+							<MenuItem Func="javascript:OpenSetWin('eb_cell','cellstyle');" Text="单元格属性" img="../images/ef_tab_cell_prop.gif" />
+							<MenuItem Func="javascript:setReportProp();" Text="报表属性" img="../images/ef_tab_table_prop.gif" />
+							<MenuItem Func="javascript:OpenSetWin('eb_dataset');" Text="数据集设置" img="../images/ef_design_dataset.gif" hasLine="1" />
+
+							<MenuItem Func="javascript:divMain_onkeydown(46,true,false);" Text="清除内容 ctrl+del" img="../images/ef_design_cut.gif" />  
+							<MenuItem Func="javascript:divMain_onkeydown(46,false,true);" Text="清除格式 shift+del" img="../images/ef_design_delete.gif"  />  
+						</MenuItem>
+				</Root>
+
+		</textarea>
+<OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b"  width="0px"  height="0px" VIEWASTEXT></OBJECT>
+
+	</BODY>
+</HTML>

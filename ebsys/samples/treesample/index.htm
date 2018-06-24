@@ -1,0 +1,26 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title></title>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+<link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  />
+<script src='../../fceform/js/xtree.js'></script>
+			<script language="javascript">
+//装入XML
+function LoadXml()
+{
+	//Global.selectedItem.loadXmlStr('<TreeNode><TreeNode text="无限级XML树型"  /><TreeNode text="fason"/><TreeNode text="功能"><TreeNode text="异步加载/一次加载"/><TreeNode text="静态/数据库方式加载"><TreeNode text="XML数据文件"/><TreeNode text="数据库"/></TreeNode><TreeNode text="Arrow键操作"/></TreeNode></TreeNode>') ;
+	//Global.selectedItem.loadXmlFile("http://localhost/tree/r.xml")
+
+    var root = new xtreeItem(0, "sss", "javascript:alert(Global.selectedItem.text)", "", "", "", "", "", "http://localhost/webbill/ebsys/samples/treesample/r.xml");
+	root.setup(document.getElementById("div1"));
+}
+
+			</script>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<input type="button" id="LoadXml" value="LoadXml" onclick="LoadXml()"> 
+	</body>
+</html>

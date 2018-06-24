@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>保存时执行其它sql语句</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";
+	        margin-left: 1cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">保存时执行其它sql语句</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.保存时执行其它sql语句说明</div>
+      &nbsp;&nbsp;&nbsp;  在执行表单保存函数的同时执行其它的sql语句，是在同一事务中保存。执行其它sql时分两种情况1.数据集保存一条记录(之前，之后)2.整个数据集保存(之前，之后).
+<div class="divTitle">2.保存时执行其它sql语句设置</div>
+<div class="divTitle">2.1 数据集保存记录之前执行其它sql语句设置</div><p>DsMain.eventSaveRecordBefore是数据集DsMain保存记录之前执行其它sql语句</p>
+<div class="divTitle">2.2 数据集保存记录之后执行其它sql语句设置</div>
+&nbsp;&nbsp;&nbsp; 查看数据集保存记录之后执行其它sql语句，单击 <a href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_8_6_saveSql'> 数据集保存记录之后执行其它sql语句</a>进入数据集保存记录之后执行其它sql语句设计界面.
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <b>
+               <span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:blue;mso-font-kerning:0pt;mso-no-proof:yes">function</span></b><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:
+0pt;mso-no-proof:yes"> uf_save()<b><span style="color:blue">{<o:p></o:p></span></b></span></p>
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b><span style="color:blue">var</span></b> xmlSql<span 
+                   style="color:red">=</span><span style="color:purple">&quot;&lt;update 
+               tableName='fcs_dw'&gt;&lt;set&gt;sdwname='&quot;</span><span style="color:red">+</span>DsMain.Field(<span 
+                   style="color:purple">&quot;sdwname&quot;</span>).Value<span style="color:red">+</span><span 
+                   style="color:purple">&quot;_sql</span></span><span style="font-size:11.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&quot;Courier New&quot;;
+mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;
+mso-no-proof:yes">加</span><span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">'&lt;/set&gt;&lt;where&gt;sdwid='&quot;</span><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;color:red;
+mso-font-kerning:0pt;mso-no-proof:yes">+</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:0pt;
+mso-no-proof:yes">fcpubdata.keyFieldValueTag<span style="color:red">+</span><span 
+                   style="color:purple">&quot;'&lt;/where&gt;&lt;/update&gt;&quot;</span>;<o:p></o:p></span></p>
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><span style="color:green">//</span></span><span style="font-size:
+11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&quot;Courier New&quot;;
+mso-bidi-font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:0pt;mso-no-proof:
+yes">此</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;
+color:green;mso-font-kerning:0pt;mso-no-proof:yes">sql</span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:
+0pt;mso-no-proof:yes">实现将</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:0pt;mso-no-proof:yes">sdwname</span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:
+0pt;mso-no-proof:yes">字段在输入的值后加上</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:0pt;mso-no-proof:yes"> &quot;_sql</span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+&quot;Courier New&quot;;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;
+color:green;mso-font-kerning:0pt;mso-no-proof:yes">加</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;color:green;mso-font-kerning:
+0pt;mso-no-proof:yes">&quot;<o:p></o:p></span></p>
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>DsMain.<b><span style="color:blue">event</span></b>SaveRecordAfter
+               <span style="color:red">=</span> xmlSql;<o:p></o:p></span></p>
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b><span style="color:blue">var</span></b> sErr <span style="color:red">
+               =</span> <b><span style="color:blue">do</span></b>SubmitData(<b><span 
+                   style="color:blue">function</span></b>()<b><span style="color:blue">{alert</span></b>(<span 
+                   style="color:purple">&quot;</span></span><span style="font-size:11.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&quot;Courier New&quot;;
+mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;
+mso-no-proof:yes">提交数据成功</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">!&quot;</span><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:
+0pt;mso-no-proof:yes">);<b><span style="color:blue">CloseBill</span></b>();<b><span 
+                   style="color:blue">}</span></b>); <o:p></o:p></span>
+           </p>
+         
+           <p class="MsoNormal">
+               <b>
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;color:blue;mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+
+           <br />
+&nbsp;
+           <p align="left" class="MsoNormal" style="text-align:left;mso-layout-grid-align:
+none;text-autospace:none">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b><span style="color:blue">var</span></b> xmlSql<span 
+                   style="color:red">=</span><span style="color:purple">&quot;&lt;update 
+               tableName='fcs_dw'&gt;&lt;set&gt;sdwname='&quot;</span><span style="color:red">+</span>DsMain.Field(<span 
+                   style="color:purple">&quot;sdwname&quot;</span>).Value<span style="color:red">+</span><span 
+                   style="color:purple">&quot;_sql</span></span><span style="font-size:11.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&quot;Courier New&quot;;
+mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;
+mso-no-proof:yes">加</span><span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">'&lt;/set&gt;&lt;where&gt;sdwid='&quot;</span><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;color:red;
+mso-font-kerning:0pt;mso-no-proof:yes">+</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:0pt;
+mso-no-proof:yes">fcpubdata.keyFieldValueTag<span style="color:red">+</span><span 
+                   style="color:purple">&quot;'&lt;/where&gt;&lt;/update&gt;&quot;</span>;<o:p>是把执行的sql语句转换成xml格式</o:p></span></p>
+           <p> fcpubdata.keyFieldValueTag&nbsp;&nbsp; 是用于替换主键字段值的标识。</p><p>DsMain.eventSaveRecordAfter 是数据集DsMain保存记录之后执行sql语句</p>
+           <p>doSubmitData是保存函数</p>
+           <div class="divTitle">2.3 数据集保存完之前执行其它sql语句设置</div><p>DsMain.eventSaveDsBefore是数据集DsMain保存完之前执行其它sql语句</p>
+<div class="divTitle">2.4 数据集保存完之后执行其它sql语句设置</div><p>DsMain.eventSaveDsAfter是数据集DsMain保存完之后执行其它sql语句</p>
+</body>
+</html>

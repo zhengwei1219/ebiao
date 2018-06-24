@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>
+    准备数据库中的表信息</title>
+<link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+
+
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class=" tableTitle ">
+<tr><td  class ="title"> 
+    准备数据库中的表信息</td></tr>
+    <tr><td class="aTd"> 
+     <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a> <a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td></tr>
+</table>
+ 
+<div class="mainDiv">
+       &nbsp;&nbsp;&nbsp;&nbsp;用eform设计的表单主要是用于对数据库中的表进行增删改查的操作,通常：表单中的数据是来自数据库,表单的数据也要保存到数据库中.所以在做表单前,应先在数据库建表结构，准备好数据库的表信息。当然，也可以先建表单,再建数据库的表结构。如这样做的话，在表单设计器中设计表单时，就无法用选择的方式来成批输入了，只能手工输入，使设计表单时会做一些重复录入的操作，所以一般是应先准备数据库中的表信息，然后再到表单设计器中设计表单。另外，在运行表单之前必须在数据库中有相应的物理表结构,否则会运行报错。如果有一个dw单位表,你在几个表单都用到dw表,你不用为每个表单都做一个dw表,在数据库中一个dw表就可以了。<br /> 
+        <div class ="divTitle">1. 分类</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;一类是物理数据库中用户的业务表,另一类是表单要用到的实体表信息(fc_entity,fc_entitysub,fc_query).<br />
+       &nbsp;&nbsp;&nbsp;&nbsp;例如：需要做一个职员管理系统时,就要做一个职员(fcs_employee)表,这个职员表就是物理数据库中的业务表. 实体表是的对fc_entity,fc_entitysub,fc_quert表的统称.实体表用于保存数据库中的业务表结构信息及元数据信息。<br />
+<div class ="divTitle">1.1 FC_ENTITY表</div>
+&nbsp;&nbsp;&nbsp; FC_ENTITY表结构<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           CREATE TABLE FC_ENTITY ( <br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           orgid char(11) NULL <br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           tbname varchar(50) NOT NULL, //表名<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           tbchnname varchar(50) NULL,//表中文名<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           ownerid char(11) NULL,<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           keyP refix char(3) NULL<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;fc_entity表用于保存数据库中业务表的表英文名和表中文名,
+       假如数据库中已有一个dw表，需要产生实体表fc_entity的信息，可以用 <a class="shili"  href='../../fceform/common/djframe.htm?djsn=data_dbentity&amp;djtype=ST'>表结构数据导入到实体表</a> 把dw表的表结构数据导入到实体表中,那fc_entity表就会增加tbname字段值是dw,tbchnname字段值是dw的一条记录,可以从 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 中修改表中文名.数据库中的一个业务表对应fc_entity表中一条记录.如下图显示:<br /><img   src ="images/help_1_3_4.gif"/><br />
+    <div class ="divTitle">1.2 FC_ENTITYSUB表</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FC_ENTITYSUB表结构:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CREATE TABLE FC_ENTITYSUB (<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	orgid char(11) NULL,<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	tbname varchar(50) NOT NULL, //表名<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	fdname varchar(50) NOT NULL,	//字段名<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	chnname varchar(50) NULL,	//字段中文名<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	fdtype char(4) NULL,	//字段类型,取值：字符/整数/实数/文本/图像<br /> 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	fdsize int NULL,	//字段长度<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	fddec int NULL,	//小数位数<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	type char(10) NULL, //字段详细类型<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	detailxml varchar(7000) NULL //详细信息,XML格式的<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; );<br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;FC_ENTITYSUB表用于保存数据库中的表的字段名和字段中文名和字段类型长度等.当你导入dw表结构到实体表<br />
+       比如dw表有四个字段(sdwid,sdwcode,sdwname,sphone),那fc_entitysub表会添加四条记录,即每个字段产生一条记录,在导入表结构数据到实体表时,会把字段名赋给fc_entitysub表的fdname(英文名)字段和chnname(中文名)字段,除了chnname字段外,下图中其它画红圈的字段是不会赋值的,下图中画红圈的字段是在 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 中去修改的。<br />
+       <img   src ="images/help_1_3_5.gif"/><br />
+       <div class ="divTitle">1.3 FC_ QUERY表</div> &nbsp;&nbsp;&nbsp;&nbsp; FC_ QUERY表结构<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CREATE TABLE FC_QUERY (<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type int NOT NULL, //类别<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tbname varchar(50) NOT NULL,//表名<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fdlist varchar(2000) NULL,//字段名列表,用逗号分隔<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fdchnlist varchar(3000) NULL//字段中文名列表,用逗号分隔<br />
+&nbsp;&nbsp;&nbsp;
+);
+       <br />
+&nbsp;&nbsp;&nbsp; FC_ QUERY表保存是一些常用的查询语句，在表单设计器中要输入SQL语句时，便可以从此表中查出来用于选择输入SQL语句。如需要用sql语句的执行结果来初始化数据的控件(combobox,dropdwwnlist,checkboxlist,radiolist,tree).如下图中,在fcs_employee表中,为每种控件选择在fcs_employee表中要查询的字段信息.<br />
+       <img src ="images/help_1_4_11.gif"/><br />
+       &nbsp;&nbsp;&nbsp; 如下图中,在combobox控件属性页中,单击【通过选择产生sql语句】超链接,在打开的资料选择对话框中,会显示出FC_QUERY表中类型是combobox控件的所有记录,当你选择单位表,单击确定后,在combobox控件的sql语句输入框,会返回 
+    select sdwid,sdwname from FCS_DW的sql语句.<br /><font style=" font-size :14">&nbsp;&nbsp;&nbsp;<font style='color:Red'> 注意:你选择的是表中文名及字段中文名，返回的是英文名的SQL语句.</font><br /> <br /><img  src ="images/help_1_4_12.gif"/><br />
+    <div class ="divTitle">2. 维护工具</div> 
+
+&nbsp;&nbsp;&nbsp; 批量执行sql命令：可以一次对数据库中的多表进行增删改,和在查询分析器运行sql一样,是在线在网页界面上批量执行SQL语句.<br />
+       &nbsp;&nbsp;&nbsp; 库结构维护：是在网页上在线对数据库中的表结构进行编辑,像是在数据库的企业管理器里操作.它与批量执行sql命令的不同是批量执行sql命令可以一次对数据库中的多表进行增删改,而它是一次对一个表的增删改.<br />
+       &nbsp;&nbsp;&nbsp;&nbsp;表结构数据导入到实体表：将数据库中的业务表结构信息导入到实体表中。<br />
+       &nbsp;&nbsp;&nbsp;&nbsp;数据库中的表信息：将数据库中的业务表结构信息导入到实体表中。<br />
+       <div class ="divTitle">3. 流程图</div> <img  src ="images/help_1.gif"/><br />
+      &nbsp;&nbsp;&nbsp; 批量执行sql命令和查询分析器都可以用来批量产生数据库中的数据.批量执行sql命令是为eform开发的工具页面，可以在线运行,查询分析器是sqlserver本身带的工具.库结构维护和企业管理器中建表结构用于一次编辑一个表的结构.库结构维护是为eform开发的工具页面,企业管理器是sql server本身带的工具.
+      
+      物理数据库的表结构做好后,就可以用 <a class="shili"  href='../../fceform/common/djframe.htm?djsn=data_dbentity&amp;djtype=ST'>表结构数据导入到实体表</a> 将数据库中的业务表结构信息导入到实体表中.
+      
+      <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 用于日常维护数据库中的业务表结构和实体表中的记录.<br />
+      &nbsp;&nbsp;&nbsp;
+      这个流程图说明了用批量执行sql命令,查询分析器,库结构维护,企业管理器中建表,来给物理数据库建表结构------然后把数据库中的业务表结构信息导入到实体表--------用数据库中的表信息来维护数据库中的业务表结构和实体表中的记录.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</body>
+</html>

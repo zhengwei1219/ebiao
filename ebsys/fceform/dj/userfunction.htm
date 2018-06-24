@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+	SKDBMemo1.value=fcpubdata.keyValue
+	uf_onresize()
+	window.attachEvent( "onresize", uf_onresize )
+	new Eform.SysForm().setButtonImage();
+}
+function uf_ok(){
+   window.returnValue=SKDBMemo1.value ;
+   window.close() ;
+
+}
+function uf_onresize(){
+  SKbillsheet.style.width=document.body.clientWidth-SKbillsheet.style.pixelLeft-2
+  SKbillsheet.style.height=document.body.clientHeight-SKbillsheet.style.pixelTop-33
+  SKDBMemo1.style.width=SKbillsheet.style.posWidth-2
+  SKDBMemo1.style.height=SKbillsheet.style.posHeight-1
+  //alert("dddd")
+}
+function uf_maxwin(){
+   window.dialogLeft=0
+   window.dialogTop=0
+
+   window.dialogWidth= screen.availWidth+"px"
+   window.dialogHeight=screen.availHeight+"px"
+
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV onkeydown="" id=SKbillsheet class=dj ondblclick="" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" para="<r></r>" dj_id="330" center="居中" keyfield controlno="SKButton:3;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="543" poswidth="761" entertype="修改" codeheader mkbh="E5" caption="自定义函数" type="LR" dj_sn="userfunction" billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>SKButton3</taborder></root>" contxml="<root><button><id>cmdOk</id><id>cmdClose</id><id>SKButton3</id></button></root>" blmode="其它" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><SPAN style="POSITION: absolute; WIDTH: 169px; DISPLAY: block; FONT-FAMILY: 楷体_GB2312; HEIGHT: 19px; COLOR: #0000ff; FONT-SIZE: 19px; TOP: 8px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 8px" id=Label1 align="Left">用户自定义的函数</SPAN><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 752px; DISPLAY: block; HEIGHT: 480px; FONT-SIZE: 12px; TOP: 34px; LEFT: 0px" id=SKDBMemo1 onkeydown='bill_onkeydown("")' onblur='bill_onexit("")' onfocus='bill_onenter("")' field="" onclick='bill_onclick("")' dataset=""></TEXTAREA><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 72px; DISPLAY: block; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 4px; LEFT: 332px" id=cmdOk type=button onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 72px; DISPLAY: block; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 4px; LEFT: 405px" id=cmdClose type=button onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 3px; LEFT: 251px" id=SKButton3 value=最大化 type=button onclick='bill_onclick("uf_maxwin()")' dropstyle="否" controltype="button"></DIV></body></html>

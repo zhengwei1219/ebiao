@@ -1,0 +1,46 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+ <title>无标题文档</title>
+ <script language="javascript">
+ function pp()
+ {
+ var w=window.document.body.offsetWidth;
+ var h = window.document.documentElement.offsetHeight;
+ if (document.documentElement)
+     h = document.documentElement.offsetHeight
+ else
+     h = document.body.offsetHeight
+ 
+ alert(h);
+ var z=10;
+ var x=parseInt(document.getElementById("l1").style.left);
+ var y=parseInt(document.getElementById("l1").style.top);
+ document.getElementById("l1").style.left=x+3;
+ document.getElementById("l1").style.top=y+z;
+
+ //setTimeout("pp()",200);
+ }
+ </script>
+ <style type="text/css">
+ <!--
+ body {
+ background-color: #FF9900;
+ }
+ #l1 {
+ position:absolute;
+ left:51px;
+ top:19px;
+ width:320px;
+ height:201px;
+ z-index:1;
+ }
+ -->
+ </style></head>
+ 
+<body onload="pp()">
+ <div id="l1" style="left:0px;top:0px"><img src="矛.gif" width="323" height="242" /></div>
+ </body>
+</html>

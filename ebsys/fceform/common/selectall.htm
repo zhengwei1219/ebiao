@@ -1,0 +1,304 @@
+<html xmlns:fc>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<STYLE type=text/css>
+    @import url(../../fceform/css/dj.css);
+  fc\:dataset  {  behavior: url(../../fceform/htc/dataset.htc) ;  }
+  fc\:webgrid {  behavior: url(../../fceform/htc/webgrid.htc) ; }
+  
+</STYLE> 
+<script src="../../fceform/js/MicrosoftAjax.js"></script>
+<script src="../../fceform/js/fcpub.js"></script>
+<script src="../../fceform/js/fcdataset.js"></script>
+<script src="../../fceform/js/fcwebgrid.js"></script>
+<style>
+.btn {
+    BORDER-BOTTOM:#8B8B7A 2px solid; 
+    border-right:#8B8B7A 2px solid;
+}
+</style> 
+</head>
+<body onload="window_onload()" onkeydown="form_onkeydown()"  >
+<br style="font-size:5px;">
+
+<table cellpadding="0" cellspacing="0" width="98%" align="center" bordercolor="#336699" border="1"  bgcolor="#336699">
+<tr bgcolor="#e8f4ff">
+<td bgcolor="336699" >
+      <TABLE  cellSpacing=1 cellPadding=0 width="100%">
+        <TBODY>
+        <TR>
+        <TD><BUTTON language=javascript id=button_ok  class="btn"
+            onclick="return gridDblClick('点击确定')" attrib="button" style="background-image:url(../../fceform/images/ef_run_button_ok.gif);WIDTH: 79px;HEIGHT: 25px;cursor:hand;"></BUTTON>&nbsp;&nbsp;
+            
+            <BUTTON language=javascript id=button_cancel  class="btn"
+            onclick="javascript:window.close();" attrib="button" style="background-image:url(../../fceform/images/ef_run_button_close.gif);WIDTH: 79px;HEIGHT: 25px;cursor:hand;"></BUTTON></TD>
+      <td align="right">
+      <table border="0" cellSpacing=0 cellPadding=0>
+      <tr>
+      <TD><BUTTON language=javascript id=button_first style="font-Family:Webdings; " disabled
+            onclick="return pagemove(1)" attrib="button">&nbsp;9&nbsp;</BUTTON></TD>
+          <TD><BUTTON language=javascript id=button_pre style="font-Family:Webdings; "  disabled
+            onclick="return pagemove(2)" attrib="button">&nbsp;7&nbsp;</BUTTON></TD>
+          <TD><BUTTON language=javascript id=button_next style="font-Family:Webdings; " disabled
+            onclick="return pagemove(3)" attrib="button">&nbsp;8&nbsp;</BUTTON></TD>
+          <TD><BUTTON language=javascript id=button_last style="font-Family:Webdings; " disabled
+            onclick="return pagemove(4)" attrib="button">&nbsp;:&nbsp;</BUTTON></TD>
+      </tr>
+      </table>
+      </td>
+      </TR></TBODY></TABLE>
+</td>
+</tr>
+<tr bgcolor="#FFFCEE">
+<td height="246" align="left" ></td>
+</tr>
+</table>
+<div id="SKbillsheet">
+<fc:dataset id="dsSel" ></fc:dataset>
+<fc:webgrid id="grid" dataset="dsSel" left=10 top=199 height=220 width=438  onDblClick="gridDblClick()"  >
+<table id=t cellPadding=0 cellSpacing=0  frame=box   style="BORDER-COLLAPSE: collapse;  TABLE-LAYOUT: fixed ;LEFT: 0px; POSITION:  absolute; TOP: 0px;font-size:12px;"  > <tr class="fcGridFirstRow"><td></td></tr>  </table> 
+</fc:webgrid>
+</div>
+</body>
+</html>
+<script language="JavaScript" type="text/javascript">
+    document.writeln("<link href='"+fcpubdata.path+"/fceform/css/skins/"+fcpubdata.skins+"/style/efskin.css"+"' type=text/css rel=stylesheet>")
+    
+ 	var Parent //定义了传递过来的参数（window）
+    Parent=window.dialogArguments[0]
+ 	var sql=window.dialogArguments[1]
+ 	var ogrid=window.dialogArguments[2]
+ 	//带,分隔的隐藏字段
+ 	var undispflds=window.dialogArguments[3]
+ 	//是否允许多选
+ 	var multisel=window.dialogArguments[4]
+	var stmp = window.dialogArguments[6];
+ 	if(stmp.length > 40 ) stmp = "" ; // >40 表示是一个xml串,则不显示到标题上
+        window.document.title="资料选择方案："+stmp;
+
+function FindAll(){    
+	var bln=dsSel.FindAll(txtFind.value,true)
+	
+	//alert(bln)
+} 
+function window_onload(){  
+	//var wait=new Eapi.Str().showWait('正在装入....');
+
+		//	var d=new Date()
+		//	var t = d.getTime();
+
+   // initDocument();
+    grid.top=39;   
+    grid.left=10;
+    grid.ReadOnly=false;
+    dsSel.opensql=sql ;
+    dsSel.PageSize=50 ;
+    dsSel.HideField=undispflds ;
+    dsSel.Open(sql,"",function (result) { 
+		adjugebutton();
+		window.setTimeout("try {grid.SetFocus(null,'程序给焦点');grid.curTD.focus();if(dsSel.RecordCount==1)gridDblClick('点击确定');} catch (e){}", 10);
+    }) ;
+    //hidefield()
+   // new Eapi.Str().showWait("end");
+}
+/**
+*处理隐藏字段
+*@date 2003-08-21
+**/
+function hidefield(){
+
+    if(isSpace(undispflds)==false && isSpace(grid.format)==false){
+		var oXml=new ActiveXObject("Microsoft.XMLDOM")
+		oXml.async=false
+		oXml.loadXML (grid.format) 
+
+    	var arr=undispflds.split(",")
+    	for(var i=0;i<arr.length;i++){
+    		for(var j=0;j<oXml.documentElement.childNodes.length;j++){
+    			if(new Eapi.Str().trim(arr[i].toUpperCase())==new Eapi.Str().trim(oXml.documentElement.childNodes(j).childNodes(0).text.toUpperCase()) ){
+    				grid.tab.children(0).children(j+1).style.width=0
+    				break
+    			}
+    		}
+    	}
+    	
+    }
+}
+/**
+*param sTag =点击确定 表示点击确定按钮时调用它
+**/
+function gridDblClick(sTag){
+	if(multisel == "是" && sTag != "点击确定" ){
+		//在第一列打勾
+		GridMultiSel(grid,dsSel)
+		return
+	} 
+
+	var oDs 
+	if(dsSel.RecordCount>0){
+		//表格
+		if(typeof ogrid!="undefined"){
+			var oParentDataSet=eval("Parent."+ogrid.dataset)
+			if(multisel == "是" && sTag == "点击确定" ){
+				if(copydatasetsel(dsSel,oParentDataSet)){
+					self.close(); 
+					return;
+				}
+			}else{
+				copydataset(dsSel,oParentDataSet);
+				//下面两行为2005-07-27时加，因为表格单选不能提交到数据集
+				oParentDataSet.bEdit = true;
+				oParentDataSet.Update("不检查")  ;
+
+				oParentDataSet.fset_cont();
+				ogrid.RefreshEdit()
+				//如为最后行,则将最后行状态改为编辑状态
+				if(ogrid.Row==ogrid.Rows-1){
+				ogrid.EndRowState="edit"
+				}
+			}
+		} else { //DsMain数据集及零散控件
+			//var odstmp = eval("Parent."+GetDsMain(true))
+		var odstmp = Parent.$id(Parent.fcpubdata.dsMain);
+			if(odstmp != null){
+			    copydataset(dsSel,odstmp);
+			    odstmp.fset_cont1();
+			}
+		    window.returnValue=dsSel.Field(0).Value; //用于元数据中通过选择产生SQL语句.
+		
+		}
+
+		//定义返回用于打开单据时
+		//window.returnValue="openbill"
+
+	}
+	self.close(); 
+}
+/**
+*页面的KEYDOWN事件处理,处理pagedown pageup,up,down,enter键
+**/
+function form_onkeydown(){
+	if (event.keyCode ==33){		//pageup
+		dsSel.PrevPage()
+			hidefield()
+	}
+	if (event.keyCode ==34){		//pagedown
+		dsSel.NextPage()
+			hidefield()
+	}
+
+	/*	
+	if (event.keyCode ==40){		//向下键
+		dsSel.MoveNext()
+			hidefield()
+	}
+	if (event.keyCode ==38){		//向上键
+		dsSel.MovePrev()
+			hidefield()
+	}
+
+	*/
+	if (event.keyCode ==13){		//回车键
+		gridDblClick()
+	}
+	if (event.keyCode ==27){		//ESC键
+		self.close()
+	}
+
+	if ( event.keyCode ==13 ){
+		event.returnValue=false
+	}
+	if ( event.keyCode == 9 ){  //tab 键
+		var o=event.srcElement
+		switch (o.id) {
+			case "button_ok" : button_cancel.focus();break;
+			case "button_cancel" : 
+				if(button_first.disabled){
+					button_next.focus();
+				}else {
+					button_first.focus();
+				}
+				break;
+			case "button_first" : button_pre.focus();break;
+				
+			case "button_pre" : 
+				if(button_next.disabled){
+					grid.SetFocus(null,"程序给焦点")
+				}else {
+					button_next.focus();
+				}
+				break;
+			case "button_next" : button_last.focus();break;
+			case "button_last" : grid.SetFocus(null,"程序给焦点");break;
+			default : button_ok.focus(); break;
+			
+		}
+		event.returnValue=false
+	}
+
+}
+
+function pagemove(moveindex){
+  if(moveindex==1){
+    dsSel.FirstPage();
+  }else if(moveindex==2){
+    dsSel.PrevPage();
+  }else if(moveindex==3){
+    dsSel.NextPage();
+  }else if(moveindex==4){
+    dsSel.LastPage();
+  }
+  hidefield()
+  adjugebutton();
+  grid.SetFocus()
+}
+function adjugebutton(){
+   //判断当前数据集的页面数
+   var curpage=dsSel.PageNo;
+   var countpage=dsSel.PageCount;
+   var buttonfirst=document.getElementById("button_first");
+   var buttonpre=document.getElementById("button_pre");
+   var buttonnext=document.getElementById("button_next");
+   var buttonlast=document.getElementById("button_last");
+
+     /*--为了恢复按钮没有被按下时的颜色--*/
+     setButtonDown(buttonfirst,false);
+     setButtonDown(buttonpre,false);
+     setButtonDown(buttonnext,false);
+     setButtonDown(buttonlast,false);
+
+     buttonfirst.disabled=true;
+     buttonpre.disabled=true;
+     buttonnext.disabled=true;
+     buttonlast.disabled=true;   
+
+   if(countpage>1){
+       if(curpage>1){
+         buttonfirst.disabled=false;
+         buttonpre.disabled=false;
+       }
+       if(curpage<countpage){
+         buttonlast.disabled=false;
+         buttonnext.disabled=false;
+       }
+   }
+}
+function setButtonDown(button, down){
+	button.down=isTrue(down);
+	refreshButtonColor(button);
+	/*--按钮事件函数--*/
+	function refreshButtonColor(button){
+		if (isTrue(button.getAttribute("down"))){
+			button.className="button_down";
+			button.style.backgroundColor="#fff1da";
+		}
+		else{
+			button.className="button";
+			button.style.backgroundColor="#d4d0c8";
+		}
+	}
+
+}
+
+</script>

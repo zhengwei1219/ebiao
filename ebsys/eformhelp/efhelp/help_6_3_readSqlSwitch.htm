@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>读出时sql转换</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">读出时sql转换</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 为什么要读出时sql转换</div>
+      &nbsp;&nbsp;&nbsp;  当数据集的SQL语句中需要通过外键关联来查询多个表时，会造成SQL语句的写法较复杂，如多个ID类的字段需要转成名称类。使用读出时sql转换,就是让ID类的字段转成名称类的工作用另外的一个SQL语句实现，从而使数据集的sql语句变简单,避免了复杂的多表关联.下面示例演示了查看职员部门信息时,职员表没有关联部门表而是通过 读出时sql转换 来获取职员的部门信息.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_6_2_readSqlSwitch'>读出时sql转换</a> 进入读出时sql转换设计界面.
+       
+       <div class="divTitle">2. 设置数据集中的sql语句</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;在数据集的sql语句中输入sql语句<p>select sdeptid, sdeptid as sdeptname ,semployeecode,semployeeid,semployeename,ssex,sculture from FCS_EMPLOYEE</p>&nbsp;&nbsp;&nbsp;&nbsp;把部门id(sdeptid)的值赋给部门名称(sdeptname)字段.<br />
+        <img  src ="images/help_6_3_1.gif"/><br />   &nbsp;&nbsp;&nbsp;&nbsp;在数据集的字段页中的部门名称(sdeptname)字段中的读出时sql转换中输入sql语句<p>select sdeptid,sdeptname from fcs_dept</p>&nbsp;&nbsp;&nbsp;&nbsp;这个SQL语句的格式是只能输出两个字段的值，其它部分不限。转换时是根据第一个字段的值返回第二个字段的值。此条SQL语句会在运行数据集的打开SQL语句之前执行，只会执行一次，将执行结果放到哈希表中供以后比较用.使用这种方法，如读出时SQL转换处的SQL语句运行结果的记录数据太多的话，可能会占用太多的后台服务器的资源。总体而言，这种方式的运行效率不如直接在数据集的打开SQL语句中写复杂的SQL语句的运行效率高。<br />
+        <img  src ="images/help_6_3_2.gif"/>
+       <div class="divTitle">3. 运行界面图</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;单击表单运行按钮进入运行页面<br />
+       <img  src ="images/help_6_3_3.gif"/>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var obj ;
+function uf_open(){
+	//CopyToPub(dataset1.xml);
+	//return;
+	var sds = fcpubdata.obj ; 
+	if(IsSpace(sds) == false)
+		dataset1.OpenXmlData("<root>"+sds+"<set><pages>0</pages><fields><field><fieldname>argname</fieldname><datatype>字符</datatype><displaylabel>参数名</displaylabel><size>50</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>'arg'+(mRecordCount+1)</defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>argvalue</fieldname><datatype>字符</datatype><displaylabel>参数值</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields></set></root>");
+	else
+		dataset1.Delete();
+	
+	e_PropWinOnload();
+}
+//"aaa=在某些方面,ww; bbb=口子,b"
+
+function uf_ok() {
+	if(DsBeforeSave(dataset1,grid1)) return;
+	
+	if(CheckFieldRepeat(dataset1,"argname")) return;
+	//alert(dataset1.xml);
+	var sds = new Sys.StringBuilder();
+	var ll = dataset1.oDom.documentElement.childNodes.length-1 ;
+	for(var i=0;i<ll;i++){
+		var oo = dataset1.oDom.documentElement.childNodes(i);
+		sds.append(oo.xml);
+	}
+	var s1 = sds.toString();
+
+	//dataset1.oDom.documentElement.removeChild(dataset1.oDom.documentElement.lastChild);
+	window.returnValue = s1 ;
+	CloseBill();
+	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../js/fcdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fcdate.js&#13;&#10;~userfunc.js" userType dj_sn="eb_dataset3" caption="自定义数据集" type="PR" isfile="是" center="居中" posleft postop poswidth="450" posheight="250" toolbar="不带工具栏" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose idtype="1" entertype="修改" keyfield codeheader="BBB" OtherSave="否" billtaborder="<root><taborder>grid1</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" contxml="<root><button><id>cmdOk</id><id>cmdClose</id><id>cmdAdd</id><id>cmdDel</id></button><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" mkbh AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" controltype="dataset" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" format="<fields><field><fieldname>argname</fieldname><datatype>字符</datatype><displaylabel>参数名</displaylabel><size>50</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>'arg'+(mRecordCount+1)</defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>argvalue</fieldname><datatype>字符</datatype><displaylabel>参数值</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><argname></argname><argvalue></argvalue></dsid>")' onGetText='bill_ondatasetgettext("<dsid><argname></argname><argvalue></argvalue></dsid>")' onSetText='bill_ondatasetsettext("<dsid><argname></argname><argvalue></argvalue></dsid>")'></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" visible="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" format="<cols><col><fname>argname</fname><cname>参数名</cname><width>50</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>argvalue</fname><cname>参数值</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>280</columnwidth><align>left</align></col></cols>" width="437" height="173" top="32" left="2">
+<TABLE style="POSITION: absolute; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 143px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 214px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 1px" id=cmdAdd onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("dataset1.Append();dataset1.fset_cont();")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 72px" id=cmdDel onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("dataset1.Delete()")'></BUTTON></DIV></body></html>

@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>在数据集的数据验证事件中验证</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">在数据集的数据验证事件中验证</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.在数据集的数据验证事件中验证</div>
+       &nbsp;&nbsp;&nbsp; 数据集的数据验证事件中验证是对数据集中的字段值是否合法的一个检查,当你在数据集中选择字段后,根据fcs_entitysub表中type字段的信息会在数据集的数据验证中自动生成数据验证函数,例如你是一个电话类型的字段会自动生成一个$valid('电话号码')的验证函数,来验证此字段的值是不是有效的电话号码.是一个整数字段自动生成一个整数验证函数$valid('整数'),你也可以直接输入验证函数.
+       <div class="divTitle">2.在数据集的数据验证事件中验证设置</div>
+       &nbsp;&nbsp;&nbsp; 单击 <a href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_7_2_dbEventValid'>在数据集的数据验证事件中验证</a> 进入在数据集的数据验证事件中验证示例.如下图,在数据集的字段页中,电话字段(sdphone)的数据验证中输入了验证函数$valid('电话号码'),保存时进行验证,验证不通过提示错误信息.数据验证事件是在控件的值传到数据集当前记录的数组是发生，如验证不通过，则不会将控件上的值传到数据集的当前记录的数组上.<br /><img  src ="images/help_7_2_1.gif"/>
+     <div class="divTitle">3. 在数据集的数据验证事件中验证运行界面</div>&nbsp;&nbsp;&nbsp; 保存时表单进行验证,电话字段验证不通过提示了错误信息.验证不通过的字段都会被记录起来,在保存时还会进行再验证.<br /><img  src ="images/help_7_2_2.gif"/></div>
+</body>
+</html>

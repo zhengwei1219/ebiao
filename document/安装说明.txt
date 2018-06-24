@@ -1,0 +1,26 @@
+你的机器中必须安装有 .net framework 1.1 或以上的版本.
+
+1、将ebiao目录及其中所有内容copy到Inetpub\wwwroot目录下, 将Inetpub\wwwroot\ebiao目录发布为虚拟目录,虚拟目录名称为ebiao
+
+2 将databasebak.rar解压出来,根据其中的说明.txt文件的内容建好sqlserver的eform示例数据库(或是oracle的示例数据库).
+  e表示例数据库是和eform示例数据库共用一个.
+
+  缺省情况下是连sqlserver数据库的,如你想用oracle数据库,不用sql server数据库.应作如下修改:
+    用记事本打开ebiao\ebsys\fceform\js\fcpub.js 文件,将第6行的
+    	databaseTypeName	: "sqlserver",
+    	改成
+    	databaseTypeName	: "oracle",
+    	然后保存即可.
+   找到ebiao\bin\fcconfig.xml文件，第一个ds节点,默认为
+   机器名:localhost,数据库名:eformtest 用户名 sa 口令 空
+   如你的机器配置得和默认值不一样则应相应修改数据库链接字符串参数
+   
+  * 注: 如果不恢复数据库,则e表中会有少量功能无法运行.但大部分的报表文件示例还是可以正常运行的.
+   	如果你连不上示例数据库的话，可以将数据库连接串中的localhost改为(local)或.来试试。  
+   
+3、在winxp中,要先到资源管理器的工具下的文件夹选项的查看页中将简单文件共享的勾去掉, 从资源管理器中选中C:\Inetpub\wwwroot\ebiao目录(假如你的IIS装在C:\下),按右键,点属性菜单,点安全页签,在名称列表中选中Everyone,然后将下面的权限列表中的允许这一列都勾上,按确定即可. (注：此步不做的话，则无法保存报表文件)
+
+4、在IE中输入http://localhost/ebiao (或是 http://localhost/ebiao/index.html )  即可进入e表3.2 for .net的主页。 
+5、要想测试手机或平板，需要将服务器的ip设置为 192.168.1.161
+  然后在手机或平板的浏览器中输入：http://192.168.1.161/ebiao/ebsys/mobile/content.htm 即可进入。
+

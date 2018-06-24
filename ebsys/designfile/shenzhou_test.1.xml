@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field"></meta>
+  <initial-actions>
+    <action id="9425" name="动作节点">
+      <results>
+        <unconditional-result id="5815" old-status="Finished" status="Underway" sub-flow="3556"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1987" name="结束节点">
+    </step>
+    <step id="6921" name="处理节点">
+      <actions>
+        <action id="4883" name="处理节点">
+          <results>
+            <result id="3576" old-status="Finished" sub-flow="3556">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[true]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="6985" old-status="Finished" status="Underway" step="1987"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <sub-flows>
+    <sub-flow id="3556" name="子流程节点" is-sync="1" unique="true" sub-flowname="shenzhou_sub1" sub-flowdesc="shenzhou_sub1" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="4659" old-status="Finished" status="Underway" sub-flow="9400"/>
+      </results>
+    </sub-flow>
+    <sub-flow id="9400" name="子流程节点" is-sync="1" unique="true" sub-flowname="shenzhou_sub2" sub-flowdesc="shenzhou_sub2" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="4144" old-status="Finished" status="Underway" step="6921"/>
+      </results>
+    </sub-flow>
+  </sub-flows>
+</workflow>

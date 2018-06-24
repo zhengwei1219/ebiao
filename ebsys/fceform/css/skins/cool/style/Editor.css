@@ -1,0 +1,22 @@
+
+TABLE.Toolbar
+{
+}
+TABLE.Toolbar TD
+{
+	BACKGROUND-COLOR: #D0D0C8;
+	BORDER-BOTTOM: #D0D0C8	1px solid;
+	BORDER-RIGHT: #D0D0C8 1px solid;
+	BORDER-TOP:	#D0D0C8	1px solid;
+	HEIGHT: 27px;
+	LEFT: 0px;
+	POSITION: relative;
+	TOP: 0px;
+}
+
+BODY
+{
+	BACKGROUND-COLOR:#D0D0C8;
+	MARGIN: 0px;
+	PADDING: 0px;
+}

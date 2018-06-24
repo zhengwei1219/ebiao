@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_sel() {
+	var sRet=""
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for(var i=0;i<l;i++){
+		//选择列在第0列.
+		if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == "是"){
+			sRet += dataset1.oDom.documentElement.childNodes(i).xml;
+		}	
+	}
+	alert("你选中了: "+sRet);
+}
+function uf_selAll() {
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for(var i=0;i<l;i++){
+		//选择列在第0列.
+		dataset1.oDom.documentElement.childNodes(i).childNodes(0).text = "是";
+		var oTd = grid1.tab.rows(i+1).cells(1);
+		oTd.style.backgroundImage="url("+fcpubdata.path+"/fceform/images/ef_run_grid_checked.gif)";
+		oTd.style.backgroundRepeat="no-repeat";
+		
+	}
+	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/fcdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/htc/webgrid.js'></script><script src='../../fceform/js/fcwebgrid.js'></script><script src='../../fceform/htc/fc_code.js'></script><script src='../../fceform/htc/dataset.js'></script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fcdate.js&#13;&#10;~userfunc.js" runsave BLONclose BLONopen center="  " toolbar="不带工具栏" dj_sn="fc_gridMultiSel" type="OF" caption="表格多选" mkbh codeheader="BBB" keyfield="sdwid" window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder><taborder>grid1</taborder><taborder>button4</taborder><taborder>button5</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>label1</id><id>label2</id></label><button><id>button1</id><id>button2</id><id>button3</id><id>button4</id><id>button5</id></button><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" BLONopenBefore userType alertType="1" isCheckPermit="否" allBrowser="是" AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 48px; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14pt; TOP: 14px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 13px" id=label1 onmovestart=moveStart() noWrap NotBg="是" controltype="label" value="label1">在表格上选择行</DIV><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col>uf_sel()</col><col></col><col></col></grid1>")' controltype="grid" autosize="否" hideHscroll="否" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="是" canselect="是" visible="是" dataset="dataset1" format="<cols><col><fname>sel</fname><cname>选</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>20</columnwidth><align>left</align></col><col><fname>sdwcode</fname><cname>单位编号</cname><width>15</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sdwname</fname><cname>单位名称</cname><width>40</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>200</columnwidth><align>left</align></col></cols>" width="433" height="362" top="48" left="3">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" controltype="dataset" issubds="否" idparam="ZCF" savetable="FCS_DW" submitno="1" submittype="1" isSubGrid="否" isaddemptyrec="否" saveastable="FCS_DW" pubpara="否" opensortno="1" format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sdwid</fieldname><datatype>字符</datatype><displaylabel>单位内码</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sdwcode</fieldname><datatype>字符</datatype><displaylabel>单位编号</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sdwname</fieldname><datatype>字符</datatype><displaylabel>单位名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sel></sel><sdwid></sdwid><sdwcode></sdwcode><sdwname></sdwname></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><sdwid></sdwid><sdwcode></sdwcode><sdwname></sdwname></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sel></sel><sdwid></sdwid><sdwcode></sdwcode><sdwname></sdwname></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%F4%D6%FC%E0%D6Xr%94%F4%D6%FC%D4%EC%D6%D8Xr%94%F4%D6%FC%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%9A%94%B4%CC%96%BC"></fc:dataset><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 52px; LEFT: 458px" id=button1 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("dataset1.Append()")'>增加</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 91px; LEFT: 458px" id=button2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;$eform('删除行且删除记录')&quot;)">删除</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 128px; LEFT: 458px" id=button3 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_sel()")'>显示选中行</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 96px; HEIGHT: 25px; TOP: 18px; LEFT: 458px" id=button4 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("alert(dataset1.xml)")'>show ds.xml</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 24px; LEFT: 571px" id=label2 onmovestart=moveStart() noWrap NotBg="否" controltype="label" value="label2">说明: 选择列字段的值为是表示选中,为否或空表示未选中.</DIV><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 162px; LEFT: 459px" id=button5 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_selAll()")'>全选</BUTTON></DIV><script language="JavaScript">var grid1=new webgrid("grid1"); $obj("grid1").fnInit(); var dataset1=new dataset("dataset1"); </script></body></html>

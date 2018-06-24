@@ -1,0 +1,24 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>读出时SQL转换</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>读出时SQL转换</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">读出时SQL转换</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">此属性在打开数据集时起作用,此属性的值应设置为一个输出为两个字段的SQL语句,如: select id,name from tableName ... ,只限输出为两个字段,其它部分为标准SQL语句,即SQL语句能支持的语法都可以写. 此SQL语句会在数据集打开时执行(只执行一次而不会随记录条数执行多次.),它的执行结果应是一个两列的多条记录的词典.这个词典供转换字段值来用.转换前的字段值应为第一列的值,如上的id字段的值.转换后的字段值将为第二列的值,如上的name字段的值. 由此设置将数据集上的字段值进行转换.此转换是在读出时(即打开数据集时)才起作用的,是用SQL语句来转换的,所以叫:读出时SQL转换. </FONT><p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">常用场合,如职员表中有部门ID字段,希望要通过部门表转换成部门名称,则可以在职员表所对应的数据集的部门ID字段上设置此属性,写成 select 部门ID,部门名称 from 部门表.这样就可以转换成部门名称了,如本数据集还需要部门ID字段的话,可以这样做,数据集的SQL语句写成: select *,部门ID as 部门名称 from 职员表 , 数据集的字段设置中除了职员表的所有字段,另多加一个部门名称的字段.然后在部门名称字段上设置此属性为 select 部门ID,部门名称 from 部门表 即可. </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

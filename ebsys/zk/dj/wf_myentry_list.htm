@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var oWorkflow;
+function uf_onload_before(){
+	ds1.PageSize=20;	
+	
+	var sKey = "?operate=get_all_workflows" ;
+
+
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	
+	var oDom=SetDom(strReturn);
+	
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	var sXml = oDom.childNodes(0).childNodes(1).xml;
+	oWorkflow = SetDom(sXml);
+	
+	
+}
+//读出时转换出流程描述
+function uf_getWorflowDesc(flowname,flowversion){
+	
+	if (oWorkflow.documentElement==null) 	return "";
+	var desc = "";
+	
+	var node = oWorkflow.documentElement.selectSingleNode("//tr[name='" + flowname + "'  and version='" + flowversion + "']"); 
+	
+	if (node!=null){
+		desc = node.selectSingleNode("desc").text;
+	}
+	return desc;
+		
+}
+
+function setStateCondition(sField,sValue){
+	var str = "";
+	if (!IsSpace(sValue))
+		str = " and " +  sField + " =" + sValue ;
+	else	
+		str = " and " +  sField + " =1" ;
+	return str;	
+}
+
+function uf_getStateName(state){
+	//var state = $f_value('state');
+	
+	var statename="";
+	if (state==0)
+		statename = "创建";
+	else if (state==1)
+		statename = "激活";	
+	else if (state==2)
+		statename = "挂起";
+	else if (state==3)
+		statename = "终止";
+	else if (state==4)
+		statename = "完成";
+	else
+		statename = "未知";			
+					
+	return statename;	
+}
+
+function uf_showFlow(instanceId){
+	var surl = location.protocol+'//'+location.host + fcpubdata.path +"/fceform/common/djframe.htm?djsn=wf_history_list&djtype=WF";
+	surl +="&wf_id=" + instanceId;
+	window.open(surl);	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" alertType="1" isCheckPermit="否" BLONopenBefore="uf_onload_before()" BLONclose BLONopen center="  " toolbar="查询组" dj_sn="wf_myentry_list" type="ZK" caption="我发起的流程实例" window="当前窗口" posleft postop poswidth posheight isfile="是" billtaborder="<root><taborder>grid1</taborder><taborder>cboState</taborder><taborder>wfname</taborder><taborder>wfversion</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:5;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:2;dataset:2;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>Label15</id><id>label0</id><id>label4</id><id>label5</id></label><combobox><id>cboState</id></combobox><text><id>wfname</id><id>wfversion</id></text><grid><id>grid1</id></grid><dataset><id>ds1</id></dataset></root>" userType AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=ds1 fieldtrans="<root><field><name>state_name</name><trans></trans><rtrans>uf_getStateName%28%20%24f_value%28%27state%27%29%29%3B</rtrans><sql></sql></field><field><name>desc</name><trans></trans><rtrans>uf_getWorflowDesc%28%24f_value%28%27name%27%29%2C%24f_value%28%27version%27%29%29</rtrans><sql></sql></field></root>" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" controltype="dataset" idtype="1" format="<fields><field><fieldname>id</fieldname><datatype>整数</datatype><displaylabel>实例id</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>name</fieldname><datatype>字符</datatype><displaylabel>流程名称</displaylabel><size>255</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>desc</fieldname><datatype>字符</datatype><displaylabel>流程描述</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>version</fieldname><datatype>整数</datatype><displaylabel>流程版本</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>state</fieldname><datatype>整数</datatype><displaylabel>流程实例状态</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>state_name</fieldname><datatype>字符</datatype><displaylabel>实例状态</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>create_date</fieldname><datatype>时间</datatype><displaylabel>发起日期</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat>yyyy.MM.dd hh:mm:ss</displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>show_trace</fieldname><datatype>字符</datatype><displaylabel>运行轨迹</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>是</link><target>_self</target><href>javascript:uf_showFlow(ds1.Field('id').Value)</href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bug_title</fieldname><datatype>字符</datatype><displaylabel>提问标题</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><id></id><name></name><desc></desc><version></version><state></state><state_name></state_name><create_date></create_date><show_trace></show_trace><bug_title></bug_title></dsid>")' onGetText='bill_ondatasetgettext("<dsid><id></id><name></name><desc></desc><version></version><state></state><state_name></state_name><create_date></create_date><show_trace></show_trace><bug_title></bug_title></dsid>")' onSetText='bill_ondatasetsettext("<dsid><id></id><name></name><desc></desc><version></version><state></state><state_name></state_name><create_date></create_date><show_trace></show_trace><bug_title></bug_title></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D8jbXr%94Xr%7CX%F8z%7C%98xX%F8%7C%7Cn%92X%F8%7E%9Az%7EX%F8%7E%9A%9A%80Xr%7CXrn%D0%F4Xrn%F4%DE%EC%FC%CC%F6%F2%D0%D4%D8Xr%94%D2%F8%DC%CC%F6%E0%F6%E6%D8XrnXn%96Xn%90Xrn%DA%F2%EC%E8Xrn%FC%DA%CC%FC%DA%D8%EA%F6%F2%u0100Xrn%D8Xrn%E0%EA%EA%D8%F2Xrn%E2%EC%E0%EAXrn%DA%D4%F0%CC%D2%F8%DCXrn%EC%EAXrn%D8j%E0%D6Xt%96%DA%D4%F0%CC%D2%F8%DCj%FC%DA%CC%E0%D6XrnXn%96Xn%90Xrn%FC%DE%D8%F2%D8Xrn%D8j%D4%F2%D8%D0%F6%D8%CC%F8%F4%D8%F2%CC%E0%D6XrnXt%96XrnXr%7CXt%90X%7C%92%9C%D8%F6%B4%D8%F4%F4%E0%EC%EA%AC%EA%D8Xr%7EXr%7C%F8%F4%D8%F2%E0%D6Xr%7CXr%80X%7C%96Xt%90Xr%7CXn%96Xn%90XrnXrnXrnXrnXrnXrnXt%90X%7C%92%F4%D8%F6%B4%F6%D0%F6%D8%94%EC%EA%D6%E0%F6%E0%EC%EAXr%7EXr%7C%D8j%F4%F6%D0%F6%D8Xr%7CXr%94%D4%D2%EC%B4%F6%D0%F6%D8j%FA%D0%E6%F8%D8Xr%80X%7C%96Xt%90Xn%96Xn%90XrnXrnXrnXrnXrnXrnXt%90X%7C%92%F4%D8%F6%A6%E0%E4%D8%94%EC%EA%D6%E0%F6%E0%EC%EAXr%7EXr%7C%D8j%EA%D0%E8%D8Xr%7CXr%94%FC%DA%EA%D0%E8%D8j%FA%D0%E6%F8%D8Xr%80X%7C%96Xt%90Xn%96Xn%90XrnXrnXrnXrnXrnXrnXt%90X%7C%92%F4%D8%F6%A0%EA%F6%94%EC%EA%D6%E0%F6%E0%EC%EAXr%7EXr%7C%D8j%FA%D8%F2%F4%E0%EC%EAXr%7CXr%94%FC%DA%FA%D8%F2%F4%E0%EC%EAj%FA%D0%E6%F8%D8Xr%80X%7C%96Xt%90Xn%96Xn%90Xrn%EC%F2%D6%D8%F2Xrn%D2%u0100Xrn%D8j%D4%F2%D8%D0%F6%D8%CC%D6%D0%F6%D8Xrn%D6%D8%F4%D4"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' controltype="grid" bodyrowheight="-1" bodyrows="-1" hideVscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" visible="是" hideHscroll="auto" blRowNo="否" dataset="ds1" format="<cols><col><fname>id</fname><cname>实例id</cname><width>50</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>state_name</fname><cname>实例状态</cname><width>10</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>100</columnwidth><align>left</align></col><col><fname>create_date</fname><cname>发起日期</cname><width>30</width><dtype>时间</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>140</columnwidth><align>left</align></col><col><fname>show_trace</fname><cname>运行轨迹</cname><width>10</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>bug_title</fname><cname>提问标题</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>320</columnwidth><align>left</align></col></cols>" width="787" height="650" top="56" left="4">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><SPAN style="POSITION: absolute; WIDTH: 213px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 28px; COLOR: #0000ff; FONT-SIZE: 12pt; TOP: 31px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 7px" id=Label15 controltype="label" align="Center" NotBg="否" inputTag="否">我的流程实例</SPAN><LABEL style="POSITION: absolute; WIDTH: 57px; HEIGHT: 16px; TOP: 9px; LEFT: 7px" id=label0 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">模版名称</LABEL><INPUT style="POSITION: absolute; WIDTH: 149px; HEIGHT: 20px; TOP: 5px; LEFT: 63px" id=wfname onmovestart=moveStart() size=27 controltype="text" china="模版名称"><LABEL style="POSITION: absolute; WIDTH: 36px; HEIGHT: 15px; TOP: 8px; LEFT: 227px" id=label4 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">版本</LABEL><INPUT style="POSITION: absolute; WIDTH: 150px; HEIGHT: 20px; TOP: 5px; LEFT: 256px" id=wfversion onmovestart=moveStart() size=27 controltype="text" china="版本"><LABEL style="POSITION: absolute; WIDTH: 58px; HEIGHT: 18px; TOP: 9px; LEFT: 423px" id=label5 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">实例状态</LABEL><SELECT style="POSITION: absolute; WIDTH: 145px; HEIGHT: 25px; TOP: 5px; LEFT: 480px" id=cboState onmovestart=moveStart() async="否" datasourceName controltype="combobox" china="实例状态" check="1" sql tempvalue="0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4" temptext="创建&#13;&#10;激活&#13;&#10;挂起&#13;&#10;终止&#13;&#10;完成" sqltrans><OPTION value=0>创建</OPTION><OPTION selected value=1>激活</OPTION><OPTION value=2>挂起</OPTION><OPTION value=3>终止</OPTION><OPTION value=4>完成</OPTION></SELECT></DIV></body></html>

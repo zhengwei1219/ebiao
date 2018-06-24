@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="2478" name="初始化">
+      <results>
+        <unconditional-result id="9428" old-status="Finished" status="Underway" split="183"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="3591" name="结束节点">
+    </step>
+    <step id="8917" name="步骤A1">
+      <actions>
+        <action id="6529" name="动作A1">
+          <results>
+            <unconditional-result id="5853" old-status="Finished" status="Underway" step="2299"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6873" name="步骤B1">
+      <actions>
+        <action id="8563" name="动作B1">
+          <results>
+            <unconditional-result id="3270" old-status="Finished" status="Underway" step="9768"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2299" name="步骤A2">
+      <actions>
+        <action id="8808" name="动作A2">
+          <results>
+            <unconditional-result id="1858" old-status="Finished" status="Underway" join="3191"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9768" name="步骤B2">
+      <actions>
+        <action id="3494" name="动作B21">
+          <results>
+            <unconditional-result id="7724" old-status="Finished" status="Underway" join="3191"/>
+          </results>
+        </action>
+        <action id="5554" name="动作B22">
+          <results>
+            <unconditional-result id="9477" old-status="Queued" status="Underway" step="6873"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8310" name="步骤节点">
+      <actions>
+        <action id="8533" name="动作节点">
+          <results>
+            <unconditional-result id="6293" old-status="Finished" status="Underway" step="3591"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="183"
+ name="分支节点"
+ is-dynamic="0"
+>
+      <unconditional-result id="7672" old-status="Finished" status="Underway" step="8917"/>
+      <unconditional-result id="1403" old-status="Finished" status="Underway" step="6873"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="3191"
+ name="协同节点"
+ is-dynamic="null"
+>
+      <conditions>
+        <condition type="beanshell">
+          <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+          <arg name="class.name"><![CDATA[beanshell]]></arg>
+          <arg name="script"><![CDATA["Finished".Equals(jn.getStep(2299).getStatus()) && "Finished".Equals(jn.getStep(9768).getStatus())]]></arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="1777" old-status="Finished" status="Underway" step="8310"/>
+    </join>
+  </joins>
+</workflow>

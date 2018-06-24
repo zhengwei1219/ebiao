@@ -1,0 +1,204 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var t
+function uf_open() {
+	t = fcpubdata.obj;
+	//e_SetComboValue(t.e_size_unit,cboSizeUnit); 
+	e_SetComboValue(t.e_page_style,cboPageStyle); 
+	//e_SetComboValue(t.e_print_layout_index,cboPrintLayoutIndex); 
+	//e_SetComboValue(t.e_header_footer_setup,cboHeaderFooterSetup); 
+	e_SetComboValue(t.e_page_size,cboPageSize); 
+
+	e_SetComboValue(t.e_rows_per_page,txtRowsPerPage); 
+	//e_SetComboValue(t.e_print_layout_row,txtPrintLayoutRow); 
+	//e_SetComboValue(t.e_print_layout_col,txtPrintLayoutCol); 
+
+	e_SetComboValue(t.e_paper_width,txtPaperWidth); 
+	e_SetComboValue(t.e_paper_height,txtPaperHeight); 
+	e_SetComboValue(t.e_paper_margin_left,txtPaperMarginLeft); 
+	e_SetComboValue(t.e_paper_margin_top,txtPaperMarginTop); 
+	e_SetComboValue(t.e_paper_margin_right,txtPaperMarginRight); 
+	e_SetComboValue(t.e_paper_margin_bottom,txtPaperMarginBottom); 
+
+	e_SetComboValue(t.e_columns,txtColumns); 
+	
+	e_SetRadioValue(t.e_page_orientation,rdoPageOrientation);
+
+	e_SetComboValue(t.e_print_rate,txtPrintRate); 
+	e_SetComboValue(t.e_printer_name,txtPrinterName);
+	e_SetComboValue(t.e_pageno_area,txtPageNoArea);
+	
+	e_PropWinOnload();
+	uf_PageBreakChange();
+	uf_PageSizeChange();
+}
+function uf_ok() {
+	if(cboPageSize.value == "13" ){
+		if(IsSpace(txtPaperWidth.value)){
+			alert("自定义纸张的宽度不能为空!");
+			return;
+		}
+		if(IsSpace(txtPaperHeight.value)){
+			alert("自定义纸张的高度不能为空!");
+			return;
+		}
+		if(IsNum(txtPaperWidth.value) == false){
+			alert("自定义纸张的宽度应为数字!");
+			return;
+		}
+		if(IsNum(txtPaperHeight.value) == false){
+			alert("自定义纸张的高度应为数字!");
+			return;
+		}
+		if(Num(txtPaperWidth.value) <= 0 ){
+			alert("自定义纸张的宽度应为正数!");
+			return;
+		}
+		if(Num(txtPaperHeight.value) <= 0 ){
+			alert("自定义纸张的高度应为正数!");
+			return;
+		}
+		
+	}
+	if(IsSpace(txtPaperMarginLeft.value)){
+		alert("左边距不能为空!");
+		return;
+	}
+	if(IsSpace(txtPaperMarginTop.value)){
+		alert("上边距不能为空!");
+		return;
+	}
+	if(IsSpace(txtPaperMarginRight.value)){
+		alert("右边距不能为空!");
+		return;
+	}
+	if(IsSpace(txtPaperMarginBottom.value)){
+		alert("下边距不能为空!");
+		return;
+	}
+	if(IsNum(txtPaperMarginLeft.value) == false){
+		alert("左边距应为数字!");
+		return;
+	}
+	if(IsNum(txtPaperMarginTop.value) == false){
+		alert("上边距应为数字!");
+		return;
+	}
+	if(IsNum(txtPaperMarginRight.value) == false){
+		alert("右边距应为数字!");
+		return;
+	}
+	if(IsNum(txtPaperMarginBottom.value) == false){
+		alert("下边距应为数字!");
+		return;
+	}
+
+	if(Num(txtPaperMarginLeft.value) <0 ){
+		alert("左边距不能为负数!");
+		return;
+	}
+	if(Num(txtPaperMarginTop.value) <0 ){
+		alert("上边距不能为负数!");
+		return;
+	}
+	if(Num(txtPaperMarginRight.value) <0 ){
+		alert("右边距不能为负数!");
+		return;
+	}
+	if(Num(txtPaperMarginBottom.value) <0 ){
+		alert("下边距不能为负数!");
+		return;
+	}
+	
+	//t.e_size_unit = cboSizeUnit.value;
+	t.e_page_style = cboPageStyle.value;
+	//t.e_print_layout_index = cboPrintLayoutIndex.value;
+	//t.e_header_footer_setup = cboHeaderFooterSetup.value;
+	t.e_page_size = cboPageSize.value;
+	t.e_rows_per_page = txtRowsPerPage.value;
+	//t.e_print_layout_row = txtPrintLayoutRow.value;
+	//t.e_print_layout_col = txtPrintLayoutCol.value;
+	
+	t.e_paper_width = txtPaperWidth.value;
+	t.e_paper_height = txtPaperHeight.value;
+
+	t.e_printer_name = txtPrinterName.value;
+
+	t.e_pageno_area = txtPageNoArea.value;
+	
+	
+	t.e_paper_margin_left = txtPaperMarginLeft.value;
+	t.e_paper_margin_top = txtPaperMarginTop.value;
+	t.e_paper_margin_right = txtPaperMarginRight.value;
+	t.e_paper_margin_bottom = txtPaperMarginBottom.value;
+
+	t.e_columns = txtColumns.value;
+
+	t.e_page_orientation = rdoPageOrientation.value;
+	
+	var rate = parseFloat(txtPrintRate.value);
+	if(isNaN(rate) || rate == 0) rate = 1.0;
+	t.e_print_rate = rate;
+	
+	window.returnValue = t ;
+	//if(IsSpace(txtUrl.value)==false)
+	window.close();
+	
+}
+function uf_PageBreakChange() {
+	if(cboPageStyle.value == "2"){
+		txtRowsPerPage.enabled ="是";
+	}else{
+		txtRowsPerPage.enabled ="否";
+	}	
+}
+function uf_PageSizeChange() {
+	if(cboPageSize.value == "13"){
+		txtPaperWidth.disabled = false;
+		txtPaperHeight.disabled = false;
+		
+	}else{
+		txtPaperWidth.value = "";
+		txtPaperHeight.value = "";
+		txtPaperWidth.disabled = true;
+		txtPaperHeight.disabled = true;
+	}	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../js/fcdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml dj_sn="eb_pageset" caption="页面设置" type="ST" isfile="是" posleft postop poswidth="330" posheight="330" window="有模式窗口" idtype="1" entertype="修改" keyfield codeheader="BBB" OtherSave="否" billtaborder="<root><taborder>cboPageStyle</taborder><taborder>txtRowsPerPage</taborder><taborder>rdoPageOrientation</taborder><taborder>cboPageSize</taborder><taborder>txtColumns</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtPaperWidth</taborder><taborder>txtPaperHeight</taborder><taborder>txtPaperMarginTop</taborder><taborder>txtPaperMarginBottom</taborder><taborder>txtPaperMarginRight</taborder><taborder>txtPaperMarginLeft</taborder><taborder>txtPrintRate</taborder><taborder>txtPrinterName</taborder><taborder>txtPageNoArea</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:30;radio:1;listbox:0;textarea:0;combobox:8;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:5;tab:1;div:0;DsMain_field:0;a:0;button:2;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:11;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label5</id><id>lblRowsPerPage</id><id>label26</id><id>label28</id><id>label29</id><id>Label24</id><id>label17</id><id>label18</id><id>label19</id><id>label20</id><id>label21</id><id>label22</id><id>label23</id><id>label24</id><id>label25</id><id>label31</id><id>label30</id></label><radio><id>rdoPageOrientation</id></radio><combobox><id>cboPageStyle</id><id>txtPrintRate</id><id>cboPageSize</id></combobox><shape><id>shape5</id><id>shape4</id></shape><tab><id>tab1</id></tab><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtPageNoArea</id><id>txtPaperWidth</id><id>txtPaperHeight</id><id>txtPaperMarginTop</id><id>txtPaperMarginBottom</id><id>txtPaperMarginRight</id><id>txtPaperMarginLeft</id><id>txtPrinterName</id></text><spin><id>txtRowsPerPage</id><id>txtColumns</id></spin></root>" mkbh jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fcdate.js&#13;&#10;~userfunc.js" runParams envType="电脑" useHelp allBrowser="否" isCheckPermit="否" alertType="1" BLONresizeAfter BLONresizeBefore userType center="居中" BLONopen="uf_open()" BLONopenBefore BLONclose><DIV style="POSITION: absolute; WIDTH: 311px; HEIGHT: 263px; TOP: 1px; LEFT: 3px" id=tab1 class=tab-pane controltype="tab" IsHideTitle="null" showtype="luna">
+<DIV style="WIDTH: 311px; HEIGHT: 245px" class=tab-page>
+<H2 class=tab>分页</H2>&nbsp; 
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 24px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 18px; LEFT: 10px" id=label5 onmovestart=moveStart() noWrap value="label5" NotBg="否" controltype="label">分页方式</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 54px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 45px; LEFT: 10px" id=lblRowsPerPage onmovestart=moveStart() noWrap value="label7" NotBg="否" controltype="label">每页显示的数据行数</DIV><SELECT style="POSITION: absolute; WIDTH: 120px; HEIGHT: 25px; TOP: 14px; LEFT: 65px" id=cboPageStyle onmovestart=moveStart() onchange='bill_onclick("uf_PageBreakChange()")' controltype="combobox" check="1" sql tempvalue="1&#13;&#10;2" temptext="按纸张尺寸分页&#13;&#10;按数据行数分页" backwidth="120" backheight="25" sqltrans><OPTION selected value=1>按纸张尺寸分页</OPTION><OPTION value=2>按数据行数分页</OPTION></SELECT> 
+<DIV style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 38px; LEFT: 136px; align: undefined" id=txtRowsPerPage class=xpSpin value="1" controltype="spin" enabled="否" NextNum="1" Max="32000" Min="1" height="22px" width="47px" top="38" left="136" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="" dataset="null" field="null"></DIV>&nbsp;&nbsp; 
+<DIV style="POSITION: absolute; WIDTH: 18px; HEIGHT: 15px; TOP: 80px; LEFT: 11px" id=label26 onmovestart=moveStart() noWrap value="label26" NotBg="否" controltype="label">分栏数</DIV>
+<DIV style="POSITION: absolute; WIDTH: 39px; HEIGHT: 22px; TOP: 75px; LEFT: 55px; align: undefined" id=txtColumns class=xpSpin value="1" controltype="spin" enabled="否" NextNum="1" Max="32000" Min="1" height="22px" width="39px" top="75" left="55" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="" dataset="null" field="null"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 147px; LEFT: 10px" id=label28 onmovestart=moveStart() noWrap value="label28" NotBg="否" controltype="label">放缩打印比例:</DIV><SELECT style="POSITION: absolute; WIDTH: 93px; HEIGHT: 25px; TOP: 144px; LEFT: 98px" id=txtPrintRate onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="1.0&#13;&#10;-1&#13;&#10;-2&#13;&#10;0.1&#13;&#10;0.35&#13;&#10;0.5&#13;&#10;0.75&#13;&#10;1.25&#13;&#10;1.5&#13;&#10;2.0&#13;&#10;5.0" temptext="不放缩&#13;&#10;适合宽度&#13;&#10;适合高度&#13;&#10;10%&#13;&#10;35%&#13;&#10;50%&#13;&#10;75%&#13;&#10;125%&#13;&#10;150%&#13;&#10;200%&#13;&#10;500%" backwidth="93" backheight="25" sqltrans><OPTION selected value=1.0>不放缩</OPTION><OPTION value=-1>适合宽度</OPTION><OPTION value=-2>适合高度</OPTION><OPTION value=0.1>10%</OPTION><OPTION value=0.35>35%</OPTION><OPTION value=0.5>50%</OPTION><OPTION value=0.75>75%</OPTION><OPTION value=1.25>125%</OPTION><OPTION value=1.5>150%</OPTION><OPTION value=2.0>200%</OPTION><OPTION value=5.0>500%</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 173px; LEFT: 9px" id=label29 onmovestart=moveStart() controltype="label" inputTag="否">页码范围</LABEL><INPUT style="POSITION: absolute; WIDTH: 124px; HEIGHT: 20px; TOP: 170px; LEFT: 66px" id=txtPageNoArea onmovestart=moveStart() controltype="text"> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; FONT-STYLE: normal; WIDTH: 88px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 192px; LEFT: 65px; backgroundColor1: #dbdbdb" id=Label24 onmovestart=moveStart() noWrap value="Label24" controltype="label" inputTag="否">格式: 1,3,5-9 为空表示打印所有页</DIV></DIV>
+<DIV style="WIDTH: 311px; HEIGHT: 245px" class=tab-page>
+<H2 class=tab>纸张</H2><?xml:namespace prefix = v /><v:Rect style="POSITION: absolute; WIDTH: 247px; HEIGHT: 46px; TOP: 40px; LEFT: 11px" id=shape5 onmovestart=moveStart() controltype="shape" coordsize = "21600,21600" fillcolor = "white" strokecolor = "black"><v:stroke></v:stroke></v:Rect><v:Rect style="POSITION: absolute; WIDTH: 182px; HEIGHT: 71px; TOP: 163px; LEFT: 11px" id=shape4 onmovestart=moveStart() controltype="shape" coordsize = "21600,21600" fillcolor = "white" strokecolor = "black"><v:stroke></v:stroke></v:Rect>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 12px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 13px; LEFT: 16px" id=label17 onmovestart=moveStart() noWrap value="label17" NotBg="否" controltype="label">纸张</DIV><SELECT style="POSITION: absolute; WIDTH: 100px; HEIGHT: 25px; TOP: 7px; LEFT: 52px" id=cboPageSize onmovestart=moveStart() onchange='bill_onclick("uf_PageSizeChange()")' controltype="combobox" check="1" sql tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10&#13;&#10;11&#13;&#10;12&#13;&#10;13&#13;&#10;14&#13;&#10;15" temptext="A1&#13;&#10;A2&#13;&#10;A3&#13;&#10;A4&#13;&#10;A5&#13;&#10;B1&#13;&#10;B2&#13;&#10;B3&#13;&#10;B4&#13;&#10;B5&#13;&#10;A0&#13;&#10;B0&#13;&#10;自定义&#13;&#10;B4 JIS&#13;&#10;B5 JIS" backwidth="100" backheight="25" sqltrans><OPTION value=1>A1</OPTION><OPTION value=2>A2</OPTION><OPTION value=3>A3</OPTION><OPTION selected value=4>A4</OPTION><OPTION value=5>A5</OPTION><OPTION value=6>B1</OPTION><OPTION value=7>B2</OPTION><OPTION value=8>B3</OPTION><OPTION value=9>B4</OPTION><OPTION value=10>B5</OPTION><OPTION value=11>A0</OPTION><OPTION value=12>B0</OPTION><OPTION value=13>自定义</OPTION><OPTION value=14>B4 JIS</OPTION><OPTION value=15>B5 JIS</OPTION></SELECT> 
+<DIV style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; FONT-STYLE: normal; WIDTH: 42px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 33px; LEFT: 16px" id=label18 onmovestart=moveStart() noWrap value="label18" NotBg="否" controltype="label">自定义纸张尺寸（毫米）</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 12px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 59px; LEFT: 17px" id=label19 onmovestart=moveStart() noWrap value="label19" NotBg="否" controltype="label">宽度</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 12px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 59px; LEFT: 136px" id=label20 onmovestart=moveStart() noWrap value="label20" NotBg="否" controltype="label">高度</DIV>
+<FIELDSET style="POSITION: absolute; WIDTH: 112px; HEIGHT: 43px; COLOR: #000000; TOP: 97px; LEFT: 11px" id=rdoPageOrientation onmovestart=moveStart() contentEditable=false value="1" NotBg="否" controltype="radio" tempvalue="0&#13;&#10;1&#13;&#10;" temptext="横向&#13;&#10;纵向&#13;&#10;" aspect="横向" legend="方向"><LEGEND>方向</LEGEND><INPUT name=RGrdoPageOrientation value=0 type=radio text="横向"><SPAN onclick=RGrdoPageOrientation[0].checked=true;rdoPageOrientation.value=RGrdoPageOrientation[0].value;RGrdoPageOrientation[0].focus();>横向</SPAN>&nbsp;<INPUT name=RGrdoPageOrientation value=1 CHECKED type=radio text="纵向"><SPAN onclick=RGrdoPageOrientation[1].checked=true;rdoPageOrientation.value=RGrdoPageOrientation[1].value;RGrdoPageOrientation[1].focus();>纵向</SPAN>&nbsp;</FIELDSET> 
+<DIV style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; FONT-STYLE: normal; WIDTH: 42px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 157px; LEFT: 15px" id=label21 onmovestart=moveStart() noWrap value="label21" NotBg="否" controltype="label">页边距（毫米）</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 6px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 183px; LEFT: 20px" id=label22 onmovestart=moveStart() noWrap value="label22" NotBg="否" controltype="label">上</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 6px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 205px; LEFT: 19px" id=label23 onmovestart=moveStart() noWrap value="label23" NotBg="否" controltype="label">左</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 6px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 183px; LEFT: 113px" id=label24 onmovestart=moveStart() noWrap value="label24" NotBg="否" controltype="label">下</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 6px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 206px; LEFT: 114px" id=label25 onmovestart=moveStart() noWrap value="label25" NotBg="否" controltype="label">右</DIV><INPUT style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 58px; LEFT: 45px" id=txtPaperWidth onmovestart=moveStart() size=11 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 57px; LEFT: 165px" id=txtPaperHeight onmovestart=moveStart() size=11 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 58px; HEIGHT: 20px; TOP: 181px; LEFT: 36px" id=txtPaperMarginTop onmovestart=moveStart() value=8 size=7 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 58px; HEIGHT: 20px; TOP: 181px; LEFT: 128px" id=txtPaperMarginBottom onmovestart=moveStart() value=8 size=7 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 58px; HEIGHT: 20px; TOP: 203px; LEFT: 128px" id=txtPaperMarginRight onmovestart=moveStart() value=8 size=7 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 58px; HEIGHT: 20px; TOP: 205px; LEFT: 36px" id=txtPaperMarginLeft onmovestart=moveStart() value=8 size=7 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 138px; HEIGHT: 21px; TOP: 99px; LEFT: 149px" id=label31 onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">设置默认打印机名称:</LABEL><INPUT style="POSITION: absolute; WIDTH: 140px; HEIGHT: 20px; TOP: 114px; LEFT: 149px" id=txtPrinterName onmovestart=moveStart() size=25 controltype="text"> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; FONT-STYLE: normal; WIDTH: 88px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 138px; LEFT: 149px; backgroundColor1: #dbdbdb" id=label30 onmovestart=moveStart() noWrap value="Label24" controltype="label" inputTag="否">为空表示取系统默认打印机</DIV></DIV></DIV>
+<SCRIPT>var tab1 = new WebFXTabPane( document.getElementById( "tab1" ) );</SCRIPT>
+<BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 271px; LEFT: 170px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 271px; LEFT: 241px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV><script></script></body></html>

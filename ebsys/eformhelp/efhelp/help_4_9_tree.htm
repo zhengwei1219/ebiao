@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>tree树控件</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">tree树控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.树控件初始化数据方法</div>
+       <div class="divTitle">1.1 树控件用sql语句装入数据</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;树控件用sql语句装入数据有两种sql语句,分为新sql语句和sql新格式,如下图.<br /><img  src ="images/help_4_9_1.gif"/>
+        
+        <div class="divTitle">1.1.1 树控件用sql语句装入数据</div>
+        <p>select sdeptcode,sdeptname from FCS_DEPT order by sdeptcode</p>
+        &nbsp;&nbsp;&nbsp;&nbsp;其中sdepcode字段为分类编号字段,应为002,003,004之类的值,name字段为显示值,id字段为隐藏值,id字段可以不要。如下图.<br ><img  src ="images/help_4_9_6.gif"/>
+        
+        <div class="divTitle">1.1.2 树控件用sql新格式装入数据</div><p>select 
+           new_areaid,father_id,areaname from FCS_AREA</p>
+           &nbsp;&nbsp;&nbsp;&nbsp;其中areaid字段为当前的分类编号字段,father_id为上级分类编号字段,areaname字段为显示值,id字段为隐藏值,id字段可以不要.<br /><img  src ="images/help_4_9_7.gif"/>
+       <div class="divTitle">1.2 树控件用loadXmlStr(sXml)方法装入数据</div> &nbsp;&nbsp;&nbsp; sXml是xml数据,它的格式如下<br />
+           <span lang="EN-US" 
+               style="font-size:10.5pt;mso-bidi-font-size: 
+11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;
+mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA; padding-left: 30px;">
+           &lt;TreeNode&gt;&lt;TreeNode text=&quot;</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;
+font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;
+mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">无限级</span><span 
+               lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">XML</span><span style="font-size:10.5pt;
+mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">树型</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;<span style="mso-spacerun:yes">&nbsp; </span>/&gt;&lt;TreeNode 
+           text=&quot;fason&quot;/&gt;&lt;TreeNode text=&quot;</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">功能</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;&gt;&lt;TreeNode text=&quot;</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">异步加载</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">/</span><span style="font-size:10.5pt;
+mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">一次加载</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;/&gt;&lt;TreeNode text=&quot;</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">静态</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">/</span><span style="font-size:10.5pt;
+mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">数据库方式加载</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;&gt;&lt;TreeNode text=&quot;XML</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">数据文件</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;/&gt;&lt;TreeNode text=&quot;</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;
+mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">数据库</span><span lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;/&gt;&lt;/TreeNode&gt;&lt;TreeNode text=&quot;Arrow</span><span style="font-size:10.5pt;mso-bidi-font-size:11.0pt;
+font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-bidi-theme-font:minor-bidi;
+mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA">键操作</span><span 
+               lang="EN-US" style="font-size:10.5pt;mso-bidi-font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-US;mso-fareast-language:
+ZH-CN;mso-bidi-language:AR-SA">&quot;/&gt;&lt;/TreeNode&gt;&lt;/TreeNode&gt;</span><br />&nbsp;&nbsp;&nbsp; 树控件id为tree1,它要装入xml数据写法如下:
+<p>tree1.loadXmlStr(sXml)</p>
+    <div class="divTitle">1.3 自定义</div>
+&nbsp;&nbsp;&nbsp; 在树控件中通过插入、增加、增加子、删除、编辑来树控件在显示的数据。如下图.<br /><img src ="images/help_4_9_2.gif" />
+
+       <div class="divTitle">2.tree树控件的单击事件</div>
+       &nbsp;&nbsp;&nbsp; 事件代码不支持双引号,在单击事件中用: Global.selectedItem.code 可以取到当前选中的树节点的ID,用: 
+           Global.selectedItem.text 可以取到当前选中的树节点的标题. 只是 Global.selectedItem.code 
+           不能在函数中直接写,比如:树控件的单击事件中调用自定义函数: uf_click() , 此时就不能在 
+           uf_click()中用Global.selectedItem.code 
+           ,只能将Global.selectedItem.code用函数传参的方式传递到uf_click()中去用. 即: 在树的单击事件中写: 
+           uf_click(Global.selectedItem.code) , Global.selectedItem.text也是如此.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_007_tree5'>树控件与表格控件联动</A> 进入树控件与表格控件联动设计界面.<div class="divTitle">
+               2.1 表格与树控件联动表单设置</div>&nbsp;&nbsp;&nbsp;&nbsp;打开表单后,树控件的数据来自树控件的sql语句<p>select sdeptcode,sdeptname,sdeptid from FCS_DEPT order by sdeptcode</p><img src="images/help_4_9_3.gif" /><br />&nbsp;&nbsp;&nbsp;&nbsp;树控件的单击事件调用表单的自定义函数<p>uf_clickTree(Global.selectedItem.code) </p><img src="images/help_4_9_4.gif" /><br />&nbsp;&nbsp;&nbsp;&nbsp;Global.selectedItem.code是当前选中节点的id,自定义函数如下,也就是每单击树控件的节点时，数据集都dssub1都执行一次sql查询语句.<p>function uf_clickTree(sCode){<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;dssub1.Open("select * from fcs_employee where sdeptid='"+sCode+"'");	<br/>
+}</p>&nbsp;&nbsp;&nbsp;&nbsp;树控件界面图如下<br /><img src="images/help_4_9_5.gif" />
+        <div class="divTitle">3.树控件功能</div>
+        下面是常用到的树控件的方法,假定树控件id为tree1.
+        <p>树控件隐藏根节点:TreeRootNodeHide($id('tree1'), 'none')</p>
+        <p>树控件显示根节点:TreeRootNodeHide($id('tree1'), '')</p>
+        <p>树控件选中某个节点:tree1.FindNode(tree1,"code","005033")</p>
+        <p>树控件收缩节点:tree1.collapseAll();)</p>
+        <p>树控件展开节点:tree1.expandAll() '')</p>
+        <p>刷新或重新装载树:TreeRefresh($id("tree1"),sql语句)</p>
+        
+       <br />
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var objNav=new Object();
+objNav.prevPage = "wizard_inputstyle" ;
+objNav.nextPage = "" ;
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+function uf_open() {
+	objNav.config = parent.parent.toolbar.WizardConfig ;
+	
+	
+	
+	if(objNav.config.isHaveSub == "是") 
+		objNav.nextPage	= "wizard_subinput";
+	else
+		objNav.nextPage = "" ;
+
+	uf_DisabledButton();
+		
+}
+//保存配置信息,由工具栏来调用
+function saveConfig(){
+	objNav.isOk = true;
+}
+function uf_DisabledButton(){
+	var cmdPrev	 = parent.parent.toolbar.cmdPrev;
+	var cmdNext	 = parent.parent.toolbar.cmdNext;
+	var cmdOk	 = parent.parent.toolbar.cmdOk;
+	if(objNav.prevPage == "") {
+		cmdPrev.disabled = true;
+	}else{
+		cmdPrev.removeAttribute("disabled");
+	}
+	
+	if(objNav.nextPage == "") {
+		cmdNext.disabled = true;
+		cmdOk.removeAttribute("disabled");
+	}else{
+		cmdNext.removeAttribute("disabled");
+		cmdOk.disabled = true;
+	}
+}
+
+
+
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" contxml="<root><label><id>Label21</id></label></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0" billtaborder="<root></root>" idtype="1" OtherSave="否" isfile="是" posheight poswidth postop posleft entertype="修改" window="当前窗口" BLONopen="uf_open()" keyfield codeheader="BBB" mkbh caption="wizard_css" type="ST" dj_sn="wizard_css" toolbar="不带工具栏">&nbsp; 
+<DIV id=Label21 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 31px; WIDTH: 24px; FONT-FAMILY: ; POSITION: absolute; TOP: 29px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="Label21" NotBg="否">用户在集成eform时可以象本表单一样来扩充新建表单向导的内容.</DIV></DIV></body></html>

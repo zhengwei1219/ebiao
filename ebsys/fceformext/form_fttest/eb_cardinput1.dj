@@ -1,0 +1,96 @@
+<script></script> 
+<DIV oncontrolselect=controlselect() id=SKbillsheet contentEditable=true jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>directprint</td><td>e表控件直接打印</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>expexcelall</td><td>不分页导出到excel文件</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>exppdf</td><td>导出所有页到pdf文件</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' unselectable="on" contxml="<root><combobox><id>combobox8</id></combobox><button><id>button3</id></button><text><id>text9</id><id>text13</id><id>text10</id><id>text12</id></text><dropdownlist><id>dropdownlist2</id><id>dropdownlist6</id></dropdownlist><dataset><id>dataset3</id></dataset><ebiao><id>ebiao1</id></ebiao></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:0;combobox:8;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:3;text:14;hr:0;checkboxlist:0;radiolist:0;dropdownlist:6;grid:0;dataset:3;spin:0;excel:0;tree:0;ebshow:0;ebiao:1;layout:0;page:0" billtaborder="<root><taborder>combobox8</taborder><taborder>text9</taborder><taborder>text12</taborder><taborder>text13</taborder><taborder>text10</taborder><taborder>dropdownlist2</taborder><taborder>dropdownlist6</taborder><taborder>button3</taborder></root>" BLONclose BLONopenBefore BLONopen window="有模式窗口" toolbar="自定义工具栏" posheight="280" poswidth="630" postop posleft center="居中" isfile="是" type="FT" caption="eb_cardinput" dj_sn="eb_cardinput1" runsave OtherSave="否" codeheader keyfield entertype="修改" idtype="1" userType alertType="1" isCheckPermit="否" allBrowser="是"><DIV onresizeend=resizeEnd() oncontrolselect=controlselect() style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; OVERFLOW-X: visible; OVERFLOW-Y: visible; BACKGROUND-COLOR: #ffffff; WIDTH: 606px; HEIGHT: 180px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 1px; BORDER-RIGHT: 1px solid; LEFT: 1px" ondragstart="new Eapi.EformEbiao().dragStart();" id=ebiao1 onresize=resize() onmove=move() ondragend="new Eapi.EformEbiao().dragExit();" ondrop="new Eapi.EformEbiao().dragEnter();" onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="ebiao" AutoSizeXml="<record id ='ebiao1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt>10</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt>10</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" isOnloadRun="是" NotBg="否" isContentSize="undefined" recRows printFile="/ebfile/eformprint/eb_cardinput.htm">
+<TABLE style="Z-INDEX: -5; BORDER-BOTTOM: 1px solid; POSITION: static; BORDER-LEFT: 1px solid; MARGIN-TOP: 0px; WIDTH: 555px; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; HEIGHT: 140px; MARGIN-LEFT: 0px; FONT-SIZE: 13px; BORDER-TOP: 1px solid; TOP: 0px; BORDER-RIGHT: 0px solid; LEFT: 0px" id=t border=1 cellSpacing=0 borderColor=lightgrey borderColorDark=white cellPadding=0 frame=box e_args="en%3D%22fcKeyValue%22%2Cch%3D%22%u53C2%u65701%22%2Ctp%3D6%2Cw%3D%2Cfmt%3D%22%22%2Cval%3D%22%22" e_argsbak="%3Ctr%20rowstate%3D%22add%22%3E%3Ctd%3EfcKeyValue%3C/td%3E%3Ctd%3E%u53C2%u65701%3C/td%3E%3Ctd%3E%u5B57%u7B26%u4E32%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3C/tr%3E" e_paper_margin_left="8" e_paper_margin_top="8" e_paper_margin_right="8" e_paper_margin_bottom="8" e_page_size="4" e_page_orientation="1" e_page_style="1" e_datasource="default" e_datasetbak="%3Ctr%20rowstate%3D%22add%22%3E%3Ctd%3Eds1%3C/td%3E%3Ctd%3ESQL%u8BED%u53E5%3C/td%3E%3Ctd%3Eselect%20FCS_EMPLOYEE.semployeeid%2CFCS_EMPLOYEE.semployeecode%2CFCS_EMPLOYEE.sculture%2CFCS_EMPLOYEE.ssex%2CFCS_EMPLOYEE.semployeename%2CFCS_EMPLOYEE.sphone%2CFCS_EMPLOYEE.sbirthday%20from%20FCS_EMPLOYEE%20where%20semployeeid%3D%3F%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3EfcKeyValue%3A6%3A%3C/td%3E%3Ctd%3E%u804C%u5458id%3A%u804C%u5458%u7F16%u53F7%3A%u5B66%u5386%3A%u6027%u522B%3A%u804C%u5458%u540D%u79F0%3A%u7535%u8BDD%3A%u51FA%u751F%u65E5%u671F%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3C/tr%3E" e_dataset="name%3Dds1%2Csql%3D%22select%20FCS_EMPLOYEE.semployeeid%2CFCS_EMPLOYEE.semployeecode%2CFCS_EMPLOYEE.sculture%2CFCS_EMPLOYEE.ssex%2CFCS_EMPLOYEE.semployeename%2CFCS_EMPLOYEE.sphone%2CFCS_EMPLOYEE.sbirthday%20from%20FCS_EMPLOYEE%20where%20semployeeid%3D%3F%22%2Ctype%3Dnormal%2Cparam%3D%22fcKeyValue%3A6%3A%22%2CfieldText%3D%u804C%u5458id%3A%u804C%u5458%u7F16%u53F7%3A%u5B66%u5386%3A%u6027%u522B%3A%u804C%u5458%u540D%u79F0%3A%u7535%u8BDD%3A%u51FA%u751F%u65E5%u671F%2Ccached%3D0%2CindexSorted%3D%2CindexIsUnique%3D%3B">
+<COLGROUP>
+<COL style="WIDTH: 13px">
+<COL style="WIDTH: 28px" e_hide_col="1" e_col_type="10" e_page_break_col="0">
+<COL style="WIDTH: 43px">
+<COL style="WIDTH: 77px">
+<COL style="WIDTH: 124px">
+<COL style="WIDTH: 10px">
+<COL style="WIDTH: 89px">
+<COL style="WIDTH: 126px">
+<COL style="WIDTH: 55px">
+<TBODY>
+<TR style="HEIGHT: 19px">
+<TD></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 0px; VERTICAL-ALIGN: middle" e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3"></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 33px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: center; BACKGROUND-COLOR: #d7ebff; PADDING-LEFT: 0px; FONT-FAMILY: 宋体; COLOR: #000000; FONT-SIZE: 20px; VERTICAL-ALIGN: bottom; FONT-WEIGHT: bold" colSpan=5 e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3" e_merge="2,4-2,8">职&nbsp; 员&nbsp; 表</TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 22px">
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 0px; VERTICAL-ALIGN: middle; 0: " rowSpan=5 e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3" e_merge="4,2-8,2" backupValue="=ds1.get(职员id)"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; DISPLAY: none; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text9 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="text" dataset="dataset3" field="semployeeid" china="职员id"></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal" e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">职员编号</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal; 0: " backupValue="=ds1.职员编号"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text13 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=职员编号 controltype="text" dataset="dataset3" field="semployeecode" china="职员编号"></TD>
+<TD rowSpan=5 e_merge="4,6-8,6"></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle" e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">职员名称</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; 0: " backupValue="=ds1.职员名称"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text10 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=职员名称 controltype="text" dataset="dataset3" field="semployeename" china="职员名称"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 6px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal"></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 22px">
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal">职员性别</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal; 0: " backupValue="=ds1.性别"><SELECT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=combobox8 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="combobox" datasourceName temptext="男&#13;&#10;女" tempvalue="男&#13;&#10;女" check="1" sql async="否"><OPTION selected value=男>男</OPTION><OPTION value=女>女</OPTION></SELECT></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle" e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">职员电话</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; 0: " backupValue="=ds1.电话"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text12 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=电话 controltype="text" dataset="dataset3" field="sphone" china="电话"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 4px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal"></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 21px">
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal">文化程度</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; FONT-WEIGHT: normal; 0: " backupValue="=ds1.学历"><IMG onresizeend=resizeEnd() style="POSITION: static; BORDER-LEFT: black 1px solid; WIDTH: 100%; HEIGHT: 100%; BORDER-TOP: black 1px solid; TOP: 0px; BORDER-RIGHT: black 0px solid; LEFT: 0px; ButtonWidth: 10" id=dropdownlist2 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_fccode.gif" controltype="dropdownlist" dataset="dataset3" field="sculture" china="学历" datasourceName temptext tempvalue check="2" sql="select distinct sculture from fcs_employee" visible="是" format xml multiselect="否" addrow="否" blnempty="否" blninput="是"></TD>
+<TD style="TEXT-ALIGN: left; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">出生日期</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 1px; VERTICAL-ALIGN: middle; 0: " backupValue="=ds1.出生日期"><IMG onresizeend=resizeEnd() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px; ButtonWidth: 10" id=dropdownlist6 class=only_bottom5_border onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_fccode.gif" controltype="dropdownlist" dataset="dataset3" field="sbirthday" china="出生日期" datasourceName temptext tempvalue check="1" sql visible="是" format xml multiselect="否" addrow="否" blnempty="否" blninput="是" isShowTree="0" isTreeNewSql="0" FieldNameList onclickopen="bill_onclick(&quot;$eform('选择日期')&quot;)"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 19px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR></TBODY></TABLE></DIV><IMG onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 39px; HEIGHT: 47px; TOP: 70px; LEFT: 621px" id=dataset3 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_dataset.gif" idtype="1" controltype="dataset" datasourceName async="否" formatxml='<root><tr rowstate="add"><td>semployeeid</td><td>职员id</td><td>字符</td><td>11</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>否</td><td>否</td><td>否</td><td>是</td><td>否</td><td>是</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>semployeecode</td><td>职员编号</td><td>字符</td><td>15</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>sculture</td><td>学历</td><td>字符</td><td>20</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>ssex</td><td>性别</td><td>字符</td><td>2</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>sphone</td><td>电话</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>semployeename</td><td>职员名称</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>sbirthday</td><td>出生日期</td><td>字符</td><td>50</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></root>' AfterScroll BeforeScroll AfterPost BeforePost AfterOpen masterdsfield masterds subdsfield issubds="否" idparam="ZCA" savetable="FCS_EMPLOYEE" submitno="1" submittype="2" BeforeOpen opensql isaddemptyrec="否" pubpara="否" saveastable opensortno="1" isSubGrid="否"><BUTTON onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 212px; LEFT: 123px" id=button3 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" fc_onclick="bill_onclick(&quot;alert($id('dropdownlist2').offsetWidth)&quot;)">button3</BUTTON></DIV><p id=splitaddhtml /><style>
+    .txtborder{
+          BORDER-RIGHT: black 0px solid; BORDER-TOP: black 1px solid; LEFT: 0px; BORDER-LEFT: black 1px solid; WIDTH: 100.38%; BORDER-BOTTOM: black 0px solid; POSITION: 
+     }
+</style>

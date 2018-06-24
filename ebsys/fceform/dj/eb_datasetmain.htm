@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>fcpubdata.eventAfter["增加行"] = function (){
+	dataset1.fset_cont();
+	grid1.EndRowState='edit';			
+}
+
+function uf_open(){
+	
+	//设置表格中的下拉列表
+	getDsnList(grid1.tab.children[0].children[4]);	
+}
+function uf_other() {
+	if(grid1.tab.rows.length <= 1 ) return;
+	if(dataset1.Field('dstype').Value=="内建数据集"){
+		var o = [dataset1.Field("dsinStru").Value,dataset1.Field("param").Value];
+		var oRet = DjOpen("eb_dataset2",o,"展现","有模式窗口","直接","编辑内置数据集");
+		if(IsSpace(oRet)==false){
+			dataset1.bEdit = true;
+			dataset1.Field("dsinStru").Value=oRet[0];
+			dataset1.Field("param").Value=oRet[1];
+			dataset1.Update("不检查");
+		}
+	}else if(dataset1.Field('dstype').Value=="自定义数据集"){
+		var sxml1 = dataset1.Field("sqlstr").Value;
+		sxml1 = new Eapi.Str().trim(sxml1);
+		//检查是否是合法的xml串
+		if(sxml1.substring(0,6) == "select") sxml1 = "";
+		if(sxml1.substring(0,3) != "<tr") sxml1 = "";
+
+		var oRet = DjOpen("eb_dataset3",sxml1,"展现","有模式窗口","直接","自定义数据集");
+		if(typeof oRet != "undefined"){
+			dataset1.bEdit = true;
+			dataset1.Field("sqlstr").Value=oRet;
+			dataset1.Update("不检查");
+			grid1.hide();
+			dataset1.fset_cont();
+		}
+		
+	}else{
+		var o = new Object();
+		o.stext = dataset1.Field("sqlstr").Value ;
+		o.param = dataset1.Field("param").Value ;
+		o.fieldchn = dataset1.Field("fieldchn").Value ;
+		//o.beginrow = dataset1.Field("beginrow").Value ;
+		//o.endrow = dataset1.Field("endrow").Value ;
+		//o.indexcols = dataset1.Field("indexcols").Value ;
+		//o.indexsorted = dataset1.Field("indexsorted").Value ;
+		//o.indexunique = dataset1.Field("indexunique").Value ;
+		//找数据源连接串
+		o.datasourceName = dataset1.Field("dsn").Value;
+		var oRet = DjOpen("eb_dataset1",o,"展现","有模式窗口","直接","设置数据集的其它属性");
+		if(IsSpace(oRet) == false){
+			dataset1.bEdit = true;
+			dataset1.Field("sqlstr").Value = oRet.stext  ;
+			dataset1.Field("param").Value = oRet.param  ;
+			dataset1.Field("fieldchn").Value = oRet.fieldchn  ;
+			//dataset1.Field("beginrow").Value = oRet.beginrow ;
+			//dataset1.Field("endrow").Value = oRet.endrow ;
+			//dataset1.Field("indexcols").Value = oRet.indexcols ;
+			//dataset1.Field("indexsorted").Value = oRet.indexsorted  ;
+			//dataset1.Field("indexunique").Value = oRet.indexunique ;
+			dataset1.Update("不检查");
+			grid1.hide();
+			dataset1.fset_cont();
+		}
+	}
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userType BLONclose BLONopenBefore BLONopen="uf_open()" contxml="<root><label><id>label1</id></label><text><id>txtName</id></text><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>grid1</taborder><taborder>txtName</taborder></root>" isfile="是" posheight poswidth postop posleft window="当前窗口" caption="常用数据集维护" type="ST" dj_sn="eb_datasetmain" center="  " toolbar="自定义工具栏" AutoResizeXml userToolbar='<tr rowstate="add"><td>query</td><td>查询</td><td></td><td></td><td></td></tr><tr rowstate="add"><td>addrow</td><td>增加行</td><td></td><td></td><td></td></tr><tr rowstate="add"><td>griddel</td><td>删除行且删除记录</td><td></td><td></td><td></td></tr><tr rowstate="add"><td>save</td><td>提交数据成功后提示</td><td></td><td></td><td></td></tr><tr rowstate="add"><td>cmdOther</td><td>设置详细属性</td><td>详细属性</td><td>uf_other()</td><td>80px</td></tr><tr rowstate="add"><td>upmove</td><td>上移</td><td></td><td></td><td></td></tr><tr rowstate="add"><td>downmove</td><td>下移</td><td></td><td></td><td></td></tr>' alertType="1" isCheckPermit="否"><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" savetable="FC_EBDS" idparam="RPD" issubds="否" isSubGrid="否" controltype="dataset" format="<fields><field><fieldname>id</fieldname><datatype>字符</datatype><displaylabel>id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>name</fieldname><datatype>字符</datatype><displaylabel>名称</displaylabel><size>50</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>'数据集'+(dataset1.RecordCount+1)</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dstype</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>SQL语句</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sqlstr</fieldname><datatype>字符</datatype><displaylabel>sql语句</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>select</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dsn</fieldname><datatype>字符</datatype><displaylabel>数据源</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldchn</fieldname><datatype>字符</datatype><displaylabel>字段中文名列表</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>param</fieldname><datatype>字符</datatype><displaylabel>参数</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sortNo</fieldname><datatype>整数</datatype><displaylabel>顺序号</displaylabel><size>10</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>getMaxIntNo('RPD')</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dsinStru</fieldname><datatype>字符</datatype><displaylabel>内建数据集结构串</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><id></id><name></name><dstype></dstype><sqlstr></sqlstr><dsn></dsn><fieldchn></fieldchn><param></param><sortNo></sortNo><dsinStru></dsinStru></dsid>")' onGetText='bill_ondatasetgettext("<dsid><id></id><name></name><dstype></dstype><sqlstr></sqlstr><dsn></dsn><fieldchn></fieldchn><param></param><sortNo></sortNo><dsinStru></dsinStru></dsid>")' onSetText='bill_ondatasetsettext("<dsid><id></id><name></name><dstype></dstype><sqlstr></sqlstr><dsn></dsn><fieldchn></fieldchn><param></param><sortNo></sortNo><dsinStru></dsinStru></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6XrnbXrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%D2%D6%F4Xrn%FC%DE%D8%F2%D8Xrn%EA%D0%E8%D8Xrn%E6%E0%E4%D8XrnXr%7CXt%90X%7C%92%F6%FE%F6%AA%D0%E8%D8j%FA%D0%E6%F8%D8X%7C%96Xt%90XrxXr%7C%EC%F2%D6%D8%F2Xrn%D2%u0100Xrn%F4%EC%F2%F6%AA%EC"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" hideHscroll="auto" blRowNo="否" format="<cols><col><fname>name</fname><cname>名称</cname><width>50</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>150</columnwidth><align>left</align></col><col><fname>dstype</fname><cname>类型</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3ESQL%u8BED%u53E5%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u5B58%u50A8%u8FC7%u7A0B%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u5185%u5EFA%u6570%u636E%u96C6%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u81EA%u5B9A%u4E49%u6570%u636E%u96C6%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3ESQL%u8BED%u53E5%0D%0A%u5B58%u50A8%u8FC7%u7A0B%0D%0A%u5185%u5EFA%u6570%u636E%u96C6%0D%0A%u81EA%u5B9A%u4E49%u6570%u636E%u96C6%3C/temptext%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sqlstr</fname><cname>sql语句</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>300</columnwidth><align>left</align></col><col><fname>dsn</fname><cname>数据源</cname><width>10</width><dtype>字符</dtype><readonly>选</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>fieldchn</fname><cname>字段中文名列表</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>300</columnwidth><align>left</align></col></cols>" width="460" height="377" top="21" left="1">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 3px; LEFT: 4px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">模糊查找:</LABEL><INPUT style="POSITION: absolute; WIDTH: 122px; HEIGHT: 20px; TOP: 0px; LEFT: 70px" id=txtName onmovestart=moveStart() size=22 controltype="text"></DIV></body></html>

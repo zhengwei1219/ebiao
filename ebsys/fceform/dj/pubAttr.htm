@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var isChangeBg=false;
+function uf_open(){
+	SetButtonImage(FCButton1,"../images/ef_run_button_color.gif");
+	SetButtonImage(FCButton2,"../images/ef_run_button_font.gif");
+	new Eform.SysForm().setButtonImage();
+}
+function uf_ok(){
+	var arr=fcpubdata.obj[0] ;
+	var obj1=displayfont ;
+	var slen=arr.length;
+	for(var i=0;i<slen;i++){
+		if(isChangeBg) arr[i].style.backgroundColor=obj1.style.backgroundColor;
+		arr[i].style.color=obj1.style.color ;
+		arr[i].style.fontStyle=obj1.style.fontStyle;
+		arr[i].style.textDecoration=obj1.style.textDecoration;
+		arr[i].style.fontFamily=obj1.style.fontFamily;
+		arr[i].style.fontSize=obj1.style.fontSize;
+		arr[i].style.fontWeight=obj1.style.fontWeight;
+		if(SKDBcheckbox1.value=="是"){
+			arr[i].disabled=false;	
+		}else{
+			arr[i].disabled=true;
+		}
+		if(SKDBcheckbox2.value=="是"){
+			arr[i].style.display="block";	
+		}else{
+			arr[i].style.display="none";
+		}
+	}
+	window.close();
+}</script><script src='../js/fcopendj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" posheight="180" poswidth="300" entertype="修改" codeheader="BBB" mkbh caption="设置多个控件属性" type="LR" dj_sn="pubAttr" billtaborder="<root><taborder>FCButton1</taborder><taborder>FCButton2</taborder><taborder>SKDBcheckbox1</taborder><taborder>SKDBcheckbox2</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>cmdAutoSize</taborder><taborder>cmdNotBg</taborder><taborder>cmdActionSet</taborder><taborder>cmdActionFcBug</taborder></root>" contxml="<root><checkbox><id>SKDBcheckbox1</id><id>SKDBcheckbox2</id></checkbox><shape><id>Shape1</id></shape><button><id>FCButton1</id><id>FCButton2</id><id>cmdOk</id><id>cmdClose</id><id>cmdAutoSize</id><id>cmdNotBg</id><id>cmdActionSet</id><id>cmdActionFcBug</id></button></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONclose AutoResizeXml userType BLONopenBefore alertType="1" isCheckPermit="否"><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 21px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 17px; BORDER-RIGHT: 0px; LEFT: 258px" id=FCButton1 title=设置背景色 controltype="button" onclick='bill_onclick("SelColor();isChangeBg=true;")' dropstyle="否"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 21px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 45px; BORDER-RIGHT: 0px; LEFT: 258px" id=FCButton2 title=设置字体 controltype="button" onclick="bill_onclick(&quot;DjOpen('fontlist',displayfont,'展现','有模式窗口','直接','字体属性')&quot;)" dropstyle="否"></BUTTON> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 51px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 77px; LEFT: 159px; backgroundColor1: #000000" id=SKDBcheckbox1 noWrap value="是" controltype="checkbox" china divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>活动</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 47px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 77px; LEFT: 206px; backgroundColor1: #ffffff" id=SKDBcheckbox2 noWrap value="是" controltype="checkbox" china divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>可见</SPAN></DIV><?xml:namespace prefix = v /><v:Rect style="POSITION: absolute; WIDTH: 269px; DISPLAY: block; HEIGHT: 0px; TOP: 73px; LEFT: 7px" id=Shape1 controltype="shape" coordsize = "21600,21600" fillcolor = "white" strokecolor = "black"><v:stroke></v:stroke></v:Rect><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 116px; LEFT: 114px" id=cmdOk controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 116px; LEFT: 196px" id=cmdClose controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 76px; LEFT: 4px" id=cmdAutoSize onmovestart=moveStart() controltype="button" onclick='bill_onclick("PropWinClickAutoSize();")' dropstyle="否">自动布局</BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 21px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 78px; BORDER-RIGHT: 0px; LEFT: 258px" id=cmdNotBg controltype="button" onclick='bill_onclick("PropWinClearBg()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 76px; LEFT: 81px" id=cmdActionSet onmovestart=moveStart() controltype="button" onclick='bill_onclick("EformActionButtonClick()")' dropstyle="否">权限设置</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 50px; HEIGHT: 25px; TOP: 117px; LEFT: 5px" id=cmdActionFcBug onmovestart=moveStart() controltype="button" onclick='bill_onclick("PropWinActionFcBug()")'>提问</BUTTON></DIV><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT><table border=1 style="table-layout:fixed; LEFT:15px; POSITION: absolute; TOP: 15px; BORDER-COLLAPSE: collapse; " bgcolor =#ffffff><tr><td valign=center align=middle  width="221" height="50" ><span id=displayfont style="FONT-SIZE: 12px; OVERFLOW: hidden; background-Color:white;"><div nowrap=false>字体颜色</div></span></td></tr></table>
+</body></html>

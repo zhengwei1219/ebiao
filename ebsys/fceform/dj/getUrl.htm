@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var initPath ; //初始路径,无论是否为绝对路径
+var offsetPath ="" ; //通过在此界面上操作产生的偏移路径
+var strType = "file"; //=url表示只返回和显示目录
+var isVir = "yes" //是否虚拟目录.yes:虚拟根目录则传“../”或“”或“..”,其它按目录结构列../JHSoft.Web.Module ；no:E:\ 
+var displayType = "list";	//显示方式, =list 表示多列且只显示名称
+var fileExts = ""; //显示的文件扩展名 htm|js|txt|jpg|gif
+var curSel = null ; //当前选中即变了颜色的span对象.
+var isWriteName = "no"; //是否写文件名
+function uf_open()
+{
+	initPath = fcpubdata.obj[0];
+	if(typeof initPath =="undefined"){
+		alert("初始路径未定义!");
+		window.close();
+		return;	
+	}
+	var sEnd = initPath.substring(initPath.length-1,initPath.length) ; 
+	if(sEnd == "/" || sEnd == "\\") initPath = initPath.substring(0,initPath.length-1);
+	
+	if(IsSpace(fcpubdata.obj[1]) == false)	strType = fcpubdata.obj[1];
+	if(IsSpace(fcpubdata.obj[2]) == false)	isVir = fcpubdata.obj[2];
+	if(IsSpace(fcpubdata.obj[3]) == false)	fileExts = fcpubdata.obj[3];
+	if(IsSpace(fcpubdata.obj[4]) == false)	isWriteName = fcpubdata.obj[4];
+	if(isWriteName == "yes"){
+		lblFileName.style.display = "";
+		txtFileName.style.display = "";
+	}
+
+	SetButtonImage(btnUp,"../../fceform/images/ef_open_up.gif");
+	//SetButtonImage(btnOK,"../../fceform/images/ef_run_button_ok.gif");
+	//SetButtonImage(btnCancel,"../../fceform/images/ef_run_button_close.gif");
+	
+	if (displayType == "")
+		SetButtonImage(btnList,"../../fceform/images/ef_open_list1.gif");
+	else
+		SetButtonImage(btnList,"../../fceform/images/ef_open_list.gif");
+
+
+	txtInitPath.value = initPath;
+	div1.ondblclick = uf_GetSub ;
+	div1.onclick = uf_changBgColor ;
+	
+	var strXml = "<Scope>"+initPath+"</Scope><ReturnType>"+strType+"</ReturnType><IsVir>"+isVir+"</IsVir><DisplayType>"+displayType+"</DisplayType><Files>"+fileExts+"</Files>";
+	
+	new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=GetUrl",strXml,function (result){
+		
+		var sRet = result.value;
+		if(sRet != null){
+			if(sRet.substring(0,7) != "<table "){
+				alert(sRet);
+				window.close();	
+				return;
+			}
+			$id("div1").innerHTML = sRet;
+		}
+		uf_tableStyle();
+		uf_ctrlDisabled(false);
+		
+	});
+	
+	uf_ctrlDisabled(true);
+	PropWinOnload();
+	window.attachEvent("onresize",uf_ResizeDiv);
+}
+//确定返回
+function uf_ok()
+{
+	var strTemp ;
+	var strReturn = "";
+	if(curSel != null) {
+		strReturn =  curSel.innerText;
+		if(curSel.type == "Dir" && strType == "file" && strReturn.length > 0 ){
+			uf_GetSub(curSel);
+			return;
+		}
+	}
+	if(strType == "url" && tab1.rows.length == 0){
+		strTemp = offsetPath;
+	}else if (strType == "file" && strReturn.length == 0 && isWriteName == "no"){
+		alert("请选择文件。");
+		return; 
+	}else if (strType == "file" && strReturn.length == 0 && isWriteName == "yes"){
+		strTemp = offsetPath;
+	}else{
+		strTemp = offsetPath+"/"+strReturn;
+	}
+	//alert(strTemp+"=="+curSel.innerText);
+	if(isWriteName == "yes") {
+		if(IsSpace(txtFileName.value)){
+			alert("请输入文件名");
+			return;
+		}
+		strTemp = strTemp +"/" +  txtFileName.value ;
+	}
+	window.returnValue = strTemp;
+	window.close();
+}
+
+function uf_ctrlDisabled(blDisabled)
+{
+	$id("btnUp").disabled = blDisabled ;
+	$id("btnList").disabled = blDisabled ;
+	$id("div1").disabled = blDisabled ;
+}
+
+//表格样式
+function uf_tableStyle()
+{
+	if ($id("div1").innerHTML.length>0)
+		$id("tab1").style.fontSize = "12px";	
+}
+//替换背景色
+function uf_changBgColor()
+{
+	var spanColor = "#f6f6f6";
+	if (displayType != "") 	spanColor = "#FFFFFF";
+
+	var obj = event.srcElement;
+	if (obj.tagName.toLowerCase() != "span") {
+		if (obj.parentNode.tagName.toLowerCase() != "span") {
+			return;
+		}else{
+			obj = obj.parentNode;			
+		}		
+	}
+
+	if(curSel != null ){
+		curSel.style.backgroundColor = spanColor;
+		curSel.style.color = "#000000";
+	}
+
+	obj.style.backgroundColor = "#3300cc";
+	obj.style.color = spanColor;
+	curSel = obj;
+}
+
+//查询子目录及文件
+function uf_GetSub(objSpan)
+{
+	if(typeof objSpan == "undefined"){
+		var obj = event.srcElement;
+		if (obj.tagName.toLowerCase() != "span") {
+			if (obj.parentNode.tagName.toLowerCase() != "span") {
+				return;
+			}else{
+				obj = obj.parentNode;			
+			}		
+		}
+	}else{
+		var obj = objSpan;
+	}
+	if (obj.type == "Dir")
+	{
+		var tmp1 = offsetPath+"/"+obj.innerText ;
+		var strXml = "<Scope>"+(initPath+tmp1)+"</Scope><ReturnType>"+strType+"</ReturnType><IsVir>"+isVir+"</IsVir><DisplayType>"+displayType+"</DisplayType><Files>"+fileExts+"</Files>";
+		new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=GetUrl",strXml,function (result){
+			var sRet = result.value;
+			if(sRet.substring(0,7) != "<table "){
+				alert(sRet);
+				return;
+			}
+			$id("div1").innerHTML = sRet;
+			//alert(tmp1);
+			offsetPath =tmp1;
+			txtInitPath.value = initPath +offsetPath;
+			uf_tableStyle();
+			
+		});	
+		
+	}
+	if (obj.type == "File")
+	{
+		uf_ok();	
+	}	
+}
+
+//返回上级目录
+function uf_GoUp()
+{
+	if(offsetPath == "") {
+		alert("已到根目录!");
+		return;
+	}
+	var ipos = offsetPath.lastIndexOf("/");
+	if(ipos<0) return;
+	var sTmp = offsetPath.substring(0,ipos);
+	
+	var strXml = "<Scope>"+(initPath+sTmp)+"</Scope><ReturnType>"+strType+"</ReturnType><IsVir>"+isVir+"</IsVir><DisplayType>"+displayType+"</DisplayType><Files>"+fileExts+"</Files>";
+	new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=GetUrl",strXml,function (result){
+		var sRet = result.value;
+		if(sRet.substring(0,7) != "<table "){
+			alert(sRet);
+			return;
+		}
+		$id("div1").innerHTML = sRet;
+		offsetPath = sTmp;
+		txtInitPath.value = initPath +offsetPath;
+		uf_tableStyle();
+		
+	});	
+	
+		
+}
+
+
+//列表式装载文件
+function uf_LoadList()
+{
+	if (displayType == "")
+	{
+		displayType = "list";
+		SetButtonImage(btnList,"../../fceform/images/ef_open_list.gif");
+	}
+	else
+	{
+		displayType = "";
+		SetButtonImage(btnList,"../../fceform/images/ef_open_list1.gif");
+	}
+	
+	var strPath = initPath + offsetPath;
+	var strXml = "<Scope>"+strPath+"</Scope><ReturnType>"+strType+"</ReturnType><IsVir>"+isVir+"</IsVir><DisplayType>"+displayType+"</DisplayType><Files>"+fileExts+"</Files>";
+	//alert(strXml);
+	new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=GetUrl",strXml,function (result){
+			var sRet = result.value;
+			uf_ctrlDisabled(false);
+			if(sRet.substring(0,7) != "<table "){
+				alert(sRet);
+				return;
+			}
+			$id("div1").innerHTML = sRet;
+			uf_tableStyle();
+			
+		});
+	uf_ctrlDisabled(true);
+}
+/**
+ * 功能：窗口发生变化时调整显示内容的div的大小
+ * 日期：2010-4-29 14:50
+ * 作者：刘欣茹
+**/
+function uf_ResizeDiv()
+{
+   var winWidth = document.body.clientWidth;      //510
+   var winHeight = document.body.clientHeight;    //411
+   if (winHeight> 411 || winHeight <400 ) window.dialogHeight = "411px";
+   if (winWidth >1000) window.dialogWidth = "1000px";
+   if (winWidth <500) window.dialogWidth = "510px";
+   
+   div1.style.width = winWidth-10;
+   cmdClose.style.left = winWidth-86;
+   cmdOk.style.left = winWidth-178;
+   
+   //alert(winWidth);
+   //alert(winHeight);
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userType BLONclose BLONopenBefore idtype="1" OtherSave="否" isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_open();" contxml="<root><label><id>label2</id><id>lblFileName</id></label><div><id>btnUp</id><id>div1</id><id>btnList</id></div><button><id>cmdClose</id><id>cmdOk</id></button><text><id>txtInitPath</id><id>txtFileName</id></text></root>" billtaborder="<root><taborder>cmdClose</taborder><taborder>txtInitPath</taborder><taborder>txtFileName</taborder><taborder>cmdOk</taborder><taborder>btnUp</taborder></root>" dj_sn="getUrl" type="ST" caption="选择文件" mkbh codeheader="BBB" entertype="修改" poswidth="500" posheight="410" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:5;radio:0;listbox:0;textarea:2;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:1;SKBILLgrid:0;shape:0;tab:0;div:3;DsMain_field:0;a:0;button:4;text:5;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield center="居中" AutoResizeXml><DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 24px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 22px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 2px; BORDER-RIGHT: 0px; LEFT: 419px" id=btnUp title=向上一级 controltype="div" dropstyle="否" onclick='bill_onclick("uf_GoUp();")' NotBg="否"></DIV>
+<DIV style="BORDER-BOTTOM: #d6d3bd 1px solid; POSITION: absolute; BORDER-LEFT: #d6d3bd 1px solid; OVERFLOW-X: auto; OVERFLOW-Y: auto; BACKGROUND-COLOR: #ffffff; FONT-STYLE: normal; WIDTH: 483px; FONT-FAMILY: 宋体; HEIGHT: 315px; FONT-SIZE: 10pt; OVERFLOW: auto; BORDER-TOP: #d6d3bd 1px solid; TOP: 28px; BORDER-RIGHT: #d6d3bd 1px solid; LEFT: 3px" id=div1 onmovestart=moveStart() controltype="div" NotBg="否"></DIV><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 76px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 347px; LEFT: 400px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("window.close();")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 35px; HEIGHT: 15px; TOP: 7px; LEFT: 15px" id=label2 onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">路径：</DIV><INPUT style="POSITION: absolute; WIDTH: 361px; HEIGHT: 20px; TOP: 4px; LEFT: 52px" id=txtInitPath onmovestart=moveStart() readOnly size=62 controltype="text"> 
+<DIV style="POSITION: absolute; WIDTH: 45px; DISPLAY: none; HEIGHT: 15px; TOP: 353px; LEFT: 8px" id=lblFileName onmovestart=moveStart() noWrap controltype="label" value="label4" NotBg="否">文件名:</DIV><INPUT style="POSITION: absolute; WIDTH: 225px; DISPLAY: none; HEIGHT: 20px; TOP: 350px; LEFT: 59px" id=txtFileName onmovestart=moveStart() size=40 controltype="text"><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 76px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 347px; LEFT: 318px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON> 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 21px; HEIGHT: 22px; BORDER-TOP: 0px; TOP: 3px; BORDER-RIGHT: 0px; LEFT: 454px" id=btnList title=切换排列方式 onmovestart=moveStart() controltype="div" onclick='bill_onclick("uf_LoadList();")' NotBg="否"></DIV></DIV></body></html>

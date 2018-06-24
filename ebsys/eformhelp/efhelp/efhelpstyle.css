@@ -1,0 +1,81 @@
+﻿body
+{
+	
+}
+.title   /*顶部table中显示的文档标题*/
+{
+	HEIGHT:40px;
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
+	font-size:16px; 
+	font-weight :bold ;
+	padding-left :5px;
+}
+.aTd   /*顶部table中第二行放置超链接*/
+{
+	HEIGHT:22px;
+	font-size:16px; 
+	font-weight :bold ;
+	padding-left :5px;
+}
+.divTitle  /* 文档中的标题*/
+{
+	vertical-align:middle;
+	line-height:30px ;
+	font-size:14px; 
+	font-weight :bold ;
+	padding-left:5px;
+}
+.aHelpHomePage /*帮助首页超链接*/
+{
+	position :absolute;
+	left :150px;
+	font-size:14px;
+	font-weight :bold;	
+	padding-top :3px;
+	right: 731px;
+	top: 47px;
+	height: 19px;
+	width:100px;
+}
+.aDwHomepage /*公司首页超链接超链接*/
+{
+	position:absolute;
+	font-size:14px;
+	font-weight :bold;
+	padding-top :3px;
+	padding-left:5px;
+	top: 47px;
+	left: 3px;
+	height: 23px;
+	width :100px;
+}
+.shili /*示例超链接超链接*/
+{
+	font-size:13px;
+	font-weight :bold ;
+	padding-top :3px;
+	padding-left:5px;
+}
+
+.mainDiv /*显示文档的主要区域的div*/
+{
+	 width:99.8%;height:600px;padding-left:5px;padding-top:0px;
+}
+
+img /*所以图片*/
+{
+	padding:  5px 5px 10px 30px;	
+}
+.tableTitle {/*顶部显示标题的table*/
+	border:1;
+	width:100%;
+}
+.tishi
+{
+	color:Red ;	
+	padding-left :30px;
+}
+p{
+	margin-left: 40px;
+	color: #080c5c;
+}

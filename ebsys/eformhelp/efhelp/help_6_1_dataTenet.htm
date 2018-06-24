@@ -1,0 +1,543 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>数据集原理</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+       <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";
+	        margin-left: 1cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">数据集原理</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 为什么要用数据集</div>
+           &nbsp;&nbsp;&nbsp; 一般来说，数据都是保存在后台数据库中，这是数据库这一层，另外表单界面主要由一些控件组成，在这些控件上输入数据到数据库，或是从数据库中查出数据到这些控件上来显示，表单上的这些控件常称之为界面层。表单主要是处理这两层之间的数据交换，如只有这两层，那么在处理一些复杂的数据转换存储等功能时就被迫需要定制特别的代码来实现，程序的灵活性，易用性和可扩展性都会较差。所以需要在这两层中间加上一层：数据集层，数据集层的表示形式就是一个数据集控件，它用于在数据库层和界面层之间中转数据，作用非常大，它设计的好坏直接关系到表单工具的价值。使用数据集可以使数据与样式分离，数据保存在数据集中，样式是由界面层的控件组成。一般来说，一个表单界面上都会要用到一个或多个数据集控件。界面上的数据都是通过数据集与后台进行交互,界面上的值先存到数据集上,数据集提交到数据库,反之从数据库中执行的一些sql语句查询到的数据生成xml串,传到前台的数据集上,然后数据集把数据分发到各个控件上.<br />
+           <div class="divTitle">
+               2. dataset的数据结构</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面的一个数据集中的数据的XML结构，可以由dataset1.xml 命令来得到下面的XML数据 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">&lt;root&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;tr&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">北京海淀区</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;<span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;B0022&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;ZAF00000002&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">北京海淀区</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;<span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/tr&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;tr&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">天津富康区</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;<span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;B0023&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;ZAF00000003&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">天津富康区</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;td&gt;<span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/td&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/tr&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>...<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;set&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;pages&gt;17&lt;/pages&gt;<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">记录总数</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fields&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;field&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldname&gt;beactive&lt;/fieldname&gt; <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">字段名</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;datatype&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">字符</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/datatype&gt;<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">数据类型</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">分</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">字符</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">实数</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">整数</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">文本</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">图象</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;displaylabel&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是否活动</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/displaylabel&gt;<span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">中文名</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;size&gt;2&lt;/size&gt;<span style="mso-tab-count:5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">长度</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;precision&gt;0&lt;/precision&gt;<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">小数位数</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldkind&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">数据项</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/fieldkind&gt;<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">分类为</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">数据项</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">实际计算项</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">汇总项</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">变量默认值</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;defaultvalue&gt;&lt;/defaultvalue&gt;<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">缺省值</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;displayformat&gt;&lt;/displayformat&gt;<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">显示格式</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;isnull&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/isnull&gt;<span style="mso-tab-count:
+4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是否可空</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">填值</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;iskey&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/iskey&gt;<span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是否唯一</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">填值</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">否</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;valid&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/valid&gt;<span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是否执行常规校验</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">填值</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">否</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;procvalid&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/procvalid&gt;<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是否执行存储过程校验</span><span lang="EN-US" style="mso-bidi-font-size:
+9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">填值</span><span 
+                   lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;link&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/link&gt;<span style="mso-tab-count:5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是否带超级链接</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">填值</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">否</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;target&gt;&lt;/target&gt;<span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">打开超级链接的窗口</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;href&gt;&lt;/href&gt;<span style="mso-tab-count:5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">超级链接地址</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;visible&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/visible&gt;<span style="mso-tab-count:
+4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是否显示此列</span><span lang="EN-US" style="mso-bidi-font-size:
+9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">填值</span><span 
+                   lang="EN-US" style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:
+9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;primarykey&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/primarykey&gt;<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是否为主键</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">,</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">填值</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">:</span><span style="mso-bidi-font-size:9.0pt;
+font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">是</span><span lang="EN-US" style="mso-bidi-font-size:9.0pt">/</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldvalid&gt;&lt;/fieldvalid&gt;<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">字段验证的内容</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;tag&gt;&lt;/tag&gt;<span style="mso-tab-count:5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">供用户扩展用</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt"><o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;/field&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;field&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldname&gt;bz&lt;/fieldname&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;datatype&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">字符</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/datatype&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;displaylabel&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">备注</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/displaylabel&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;size&gt;60&lt;/size&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;precision&gt;0&lt;/precision&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldkind&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">数据项</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/fieldkind&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;defaultvalue&gt;&lt;/defaultvalue&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;displayformat&gt;&lt;/displayformat&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;isnull&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/isnull&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;iskey&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/iskey&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;valid&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/valid&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;procvalid&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/procvalid&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;link&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/link&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;target&gt;&lt;/target&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;href&gt;&lt;/href&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;visible&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/visible&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;primarykey&gt;</span><span style="mso-bidi-font-size:9.0pt;font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">否</span><span lang="EN-US" 
+                   style="mso-bidi-font-size:9.0pt">&lt;/primarykey&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;fieldvalid&gt;&lt;/fieldvalid&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;tag&gt;&lt;/tag&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;/field&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>...<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>&lt;/fields&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">
+               <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/set&gt;<o:p></o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US" style="mso-bidi-font-size:9.0pt">&lt;/root&gt;<o:p></o:p></span></p>
+           <br />
+           &nbsp;&nbsp;&nbsp;&nbsp;数据集本身的数据是一个XML格式的数据，其结构见上一节：数据集的XML数据结构，可以由dataset1.xml 
+           命令来得到，它保存了一个数据集的完整数据，是一个二维的表格状数据。 
+          dataset是表单开发的数据层,后台数据库中的数据和前台界面上的控件之间通过dataset来进行数据交互.读数据时,执行数据集属性窗口中的SQL语句,其运行结果以XML串方式来初始化数据集,由数据集将数据分发到它所绑定的控件上.这样便实现了将数据库中的数据读出到界面上的过程了.写数据时,先将数据集所绑定的控件上的数据保存到数据集中,即用数据集来收集表单上所有要保存的数据,然后将一个表单的所有数据集的数据提交到后台,在后台将数据转换成SQL命令,然后再执行这些SQL命令保存数据到数据库中.这样便实现 
+           了将界面上的输入数据保存到数据库中了.<br />
+           <div class="divTitle">
+               3. dataset的数据同名字段传递规则</div>
+       
+           &nbsp;&nbsp;&nbsp;&nbsp;当数据集打开时（比如用ds.Open()命令），一般是运行数据集的SQL语句，将SQL语句的运行结果当作本数据集的数据（是数据集的XML数据，可以通过ds.xml来取到）。数据集的SQL语句的SELECT节会有一些字段名，这些字段名不需要和数据集的字段名（在数据集属性窗口的数据项中定义）一一对应。即数据集的SQL语句输出的字段名有可能在数据集的字段名中存在，也可能不存在。比如下图中数据集的SQL语句为：select F1,F3,F5,F7 from t1 ，即输出的字段名为：F1,F3,F5,F7这四个字段。而数据集的字段名为：F1,F2,F3,F4这四个字段。其中只有F1,F3这两个字段是两边都有的。根据字段同名来传递数据的规则，在数据集打开时只会将 select F1,F3,F5,F7 from t1 运行结果中的 F1,F3 这两个字段的数据传递到数据集中。数据集中的F2,F4字段的值就是空着的（或为默认值）。</br>            <img src="images/help_6_2.gif" /> </br>
+           &nbsp;&nbsp;&nbsp;&nbsp;当保存时，一般需要将数据集中的数据（是数据集的XML数据，可以通过ds.xml来取到）保存到数据集的保存表名（可以通过ds.savetable来存取）处指定的物理表中。数据集的字段名和要保存的物理表的字段名也同样不需要一一对应。 保存时只会将数据集和物理表中同时存在的字段保存。如图所示数据集中的字段为F1,F2,F3,F4这四个字段，而要保存的物理表的字段名为：F1,F2,F5,F6这四个字段。此时只会将数据集中的F1,F2这两个字段的数据保存。
+	因为使用了同名字段传递数据的规则，使得在设置数据集的SQL语句时常常可以直接写上: select * from table1 之类的SQL语句。因为SQL语句可以通过字段别名的方式（如： select f1 as othername …）来改变字段名，而数据集中的字段名也是可以随意修改的，只有数据集的保存表名属性中的物理表的字段名是无法修改的。这样就可以很方便地通过改变字段名的方式，控制读出哪些字段的数据，以及保存哪些字段的数据。
+
+           
+           <div class="divTitle">
+               4. dataset的数据控制结构</div>
+           <img src="images/help_6_1.gif" />
+           <br />
+           &nbsp;&nbsp;&nbsp;&nbsp;数据集中的数据用xml属性来取得,即ds.xml便可取得整个数据集的数据,它是XML格式的,包含字段信息.也可以用ds.oDom来取得数据集中数据的dom对象. 
+           数据集绑定到界面上的控件分两类,一个是grid控件,另一个是其它零散控件,如text,radio,dropdownlist等.数据集中还含有一个当前行记录的数组，表示数据集的当前行数据，固定最多只有一条记录，刚打开数据集时是指第一条记录。它是由一个javascript的数组来保存的。可用 
+           dataset1.Field(‘字段名’).Value 命令来存取它的值，数据集中的数据(指 
+           ds.xml)先取出当前行记录到这个记录当前行的数组中,可以用ds.MoveFirst() ds.MovePrev() ds.MoveNext() 
+           ds.MoveLast() ds.SetPos(pos) 等方法来移动当前行记录, 每次记录移动时都会改变它的值,把当前行记录回写到数据集中时用 
+           dataset1.Update() 命令。表格(grid)控件，用数据集的 dataset1.dset_cont() 
+           命令直接将整个数据集的数据都放入到表格控件中。用 dataset1.fset_cont() 命令将最新的当前行记录刷新表格控件的当前行记录，用 
+           dataset1.cont_onDataChange() 
+           命令将表格控件上改动在当前行记录回写到数据集的当前行记录中。零散控件，如编辑框，combobox等，它是相对表格控件而言的，指非表格控件。因为它们的机制差不多，所以就在一起说明。用 
+           dataset1.fset_cont1() 命令用数据集的最新的当前行记录刷新此数据集所绑定的所有零散控件，用 dataset1.cont1_fset() 
+           命令则是将绑定的零散控件上的变动后的值回写到数据集的当前行记录中。<br />
+           <div class="divTitle">
+               5. dataset的数据流向</div>
+           &nbsp;&nbsp;&nbsp;&nbsp; 数据集的XML结构的数据 --> 数据集的当前行记录 --> 数据集所绑定的零散控件上，反向也是如此。<br />
+           &nbsp;&nbsp;&nbsp;&nbsp; 数据集的XML结构的数据 --> 数据集的当前行记录 --> 数据集所绑定的表格控件上，反向也是如此。<br />
+           &nbsp;&nbsp;&nbsp;&nbsp; 数据集的XML结构的数据 --> 数据集所绑定的表格控件上。<div class="divTitle">
+               6. 数据集控件与其它控件交互</div>
+          &nbsp;&nbsp;&nbsp;&nbsp; 在下面的例子中通过dataset1.OpenXmlData(xml数据)和dataset2.Open(sql语句)给数据集装入数据.<br />
+          <div class="divTitle">6.1.1 数据集的OpenXmlData方法给数据集装入数据</div>&nbsp;&nbsp;&nbsp;&nbsp;<img  src ="images/help_6_1_2.gif"/><br />&nbsp;&nbsp;&nbsp;&nbsp;我们把画红圈的text控件与数据集绑定，在自定义函数中通过dataset1.OpenXmlData("xml串")给数据集控件的xml数据区装入数据.dataset1.dset_fset()将dataset的当前行记录传给当前行数组中，通过dataset1.fset_cont1()将field字段集传递给text控件.你修改text控件的之后触发了onchange事件,将零散控件上的当前行的值保存到数据集的当前行数组中.它是通过执行 ds.cont1_fset()方法,将零散控件上的当前行的值保存到数据集的当前行数组中,并执行 ds.cont_onDataChange()方法.<br /><img  src ="images/help_6_1_1.gif"/><br />
+       <div class="divTitle">6.1.2 数据集的Open方法给数据集装入数据</div> &nbsp;&nbsp;&nbsp;&nbsp;我们通过dataset2.Open的方法给数据集装入数据.<p>function uf_open(){<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;dataset2.Open ("select top 1 FCS_DEPT.sdeptid,FCS_DEPT.sdeptcode,FCS_DEPT.sdeptname from FCS_DEPT")	<br />
+}</p>
+        <div class="divTitle">6.1.3 直接给数据集的dom对象装入数据</div>&nbsp;&nbsp;&nbsp;&nbsp;我们在自定义函数中直接给dom对象添加数据. <p>function domv(){//dom<br />
+	var oRoot =dataset3.oDom.documentElement;<br />
+		dataset3.Append();<br />
+		oRoot.childNodes(0).childNodes(0).text = "商品编号" <br />
+		oRoot.childNodes(0).childNodes(1).text = "商品名称" ;<br />
+		dataset3.dset_fset()<br />
+		dataset3.fset_cont1()<br />
+}</p>
+       <div class="divTitle">6.2 其它控件绑定数据集什么事件传值</div>
+     &nbsp;&nbsp;&nbsp;&nbsp;textarea控件:当用户在textarea控件中修改了数据，就触发了onchange事件把值传到数据集上.<br />
+     &nbsp;&nbsp;&nbsp;&nbsp;combobox控件:当用户在combobox控件中修改了数据，就触发了onchange事件把值传到数据集上.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;listbox控件:当用户在listbox控件中修改了数据，就触发了onchange事件把值传到数据集上.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;dropdownlist:当用户在控件在dropdownlist控件中修改了数据，就触发了onchange事件把值传到数据集上.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;checkbox控件:当用户在checkbox控件上单击时触发了onclick事件把值传到数据集上.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;checkboxlist控件:当用户在checkboxlist控件中单击时触发onclick事件中传值.<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;radiolist控件:当用户在radiolist控件上单击的时候触发onclick事件中传值. <br />
+      &nbsp;&nbsp;&nbsp;&nbsp;grid控件:用在grid控件上修改数据时,触发在onDataChange事件传值到数据集上.<br />
+</div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+        var obj=fcpubdata.obj;
+      SetRadioValue(SKDBRadioGroup1,"无变化")
+      SetRadioValue(SKDBRadioGroup2,"无变化")
+      SetRadioValue(SKDBRadioGroup3,"无变化")
+      SetRadioValue(SKDBRadioGroup4,"无变化")
+	  SetRadioValue(SKDBRadioGroup8,"1")
+	  SetRadioValue(SKDBRadioGroup9,"1")
+	  new Eform.SysForm().setButtonImage();
+}
+function uf_ok(){
+         var obj=fcpubdata.obj;
+		  if(SKDBRadioGroup1.value == '左对齐'){
+		  	for(var i=1; i<obj.length; i++){
+		  		obj[i].style.left = obj[0].style.pixelLeft ;	
+		  	}	
+		  }
+          if(SKDBRadioGroup1.value == '右对齐'){
+            for(var i=1;i<obj.length;i++){
+               obj[i].style.left=obj[0].style.pixelLeft+(obj[0].style.pixelWidth-obj[i].style.pixelWidth)
+            }
+          }
+          if(SKDBRadioGroup1.value == '水平居中'){
+            for(var i=1;i<obj.length;i++){
+               obj[i].style.left=obj[0].style.pixelLeft+(obj[0].style.pixelWidth-obj[i].style.pixelWidth)/2
+            }
+          }
+         if(SKDBRadioGroup2.value == '上对齐'){
+            for(var i=1;i<obj.length;i++){
+               obj[i].style.top=obj[0].style.top
+            }
+         }
+          if(SKDBRadioGroup2.value == '下对齐'){
+            for(var i=1;i<obj.length;i++){
+               obj[i].style.top=obj[0].style.pixelTop+obj[0].style.pixelHeight-obj[i].style.pixelHeight
+            }
+          }
+          if(SKDBRadioGroup2.value == '垂直居中'){
+            for(var i=1;i<obj.length;i++){
+               obj[i].style.top=obj[0].style.pixelTop+(obj[0].style.pixelHeight-obj[i].style.pixelHeight)/2
+            }
+          }
+          if(SKDBRadioGroup3.value != '无变化')  var objsortwidth = obj.sort(cmpwidth);
+	     if(SKDBRadioGroup3.value == '压缩到最小'){
+            for(var i=1;i<objsortwidth.length;i++){
+                 objsortwidth[i].style.width=objsortwidth[0].style.width
+            }
+
+         }
+         if(SKDBRadioGroup3.value == '压缩到最大'){
+            for(var i=0;i<objsortwidth.length-1;i++){
+                 objsortwidth[i].style.width=objsortwidth[objsortwidth.length-1].style.width
+            }
+         }
+         if(SKDBRadioGroup4.value != '无变化')  var objsortheight = obj.sort(cmpheight);
+          if(SKDBRadioGroup4.value == '压缩到最小'){
+            for(var i=1;i<objsortheight.length;i++){
+                 objsortheight[i].style.height=objsortheight[0].style.height
+            }
+
+         }
+         if(SKDBRadioGroup4.value == '压缩到最大'){
+            for(var i=0;i<objsortheight.length-1;i++){
+                 objsortheight[i].style.height=objsortheight[objsortheight.length-1].style.height
+            }
+         }
+         
+		uf_aa() ;
+				
+
+         window.close();
+	function cmpwidth(a,b){
+		return a.style.pixelWidth - b.style.pixelWidth;	
+	}
+	function cmpheight(a,b){
+		return a.style.pixelHeight - b.style.pixelHeight;	
+	}         
+}
+function uf_aa() {
+		var obj=fcpubdata.obj;
+		//垂直的最大间距和最小间距
+		if(SKDBRadioGroup9.value == "2" || SKDBRadioGroup9.value=="3"){
+			var objTopSort = obj.sort(cmp)	
+			//alert(obj.sort(cmp))
+			if(SKDBRadioGroup9.value == "2") {
+				var s = objTopSort[1].style.pixelTop -objTopSort[0].style.pixelTop - objTopSort[0].style.pixelHeight;
+				for(var i=0; i<objTopSort.length-1; i++)	{
+					var slen=objTopSort[i+1].style.pixelTop -objTopSort[i].style.pixelTop - objTopSort[i].style.pixelHeight ;
+					if(s<slen) s=slen ;
+					
+				}
+				for(var k=0; k<objTopSort.length-1; k++){
+					objTopSort[k+1].style.pixelTop = objTopSort[k].style.pixelTop +objTopSort[k].style.pixelHeight + s ;
+
+				}
+			}
+			if(SKDBRadioGroup9.value== "3") {
+				var s = objTopSort[1].style.pixelTop -objTopSort[0].style.pixelTop - objTopSort[0].style.pixelHeight ;
+				for(var i=0; i<objTopSort.length-1; i++) {
+					var slen = objTopSort[i+1].style.pixelTop -objTopSort[i].style.pixelTop - objTopSort[i].style.pixelHeight ;
+					if(s>slen) s = slen ;
+				}
+				for(var k=0; k<objTopSort.length-1; k++){
+					objTopSort[k+1].style.pixelTop = objTopSort[k].style.pixelTop +objTopSort[k].style.pixelHeight + s ;	
+	
+				}
+			}
+		}
+		
+	else				
+		//控件的最大间距和最小间距
+		if(SKDBRadioGroup8.value == "2" || SKDBRadioGroup8.value == "3"){
+			var objLeftSort = obj.sort(par);	
+
+			if(SKDBRadioGroup8.value == "2"){			
+				var j=0 
+				for (var i=0; i<objLeftSort.length-1; i++ ){
+					var slen=objLeftSort[i+1].style.pixelLeft - objLeftSort[i].style.pixelLeft - objLeftSort[i].style.pixelWidth ;
+					if(j<slen) j=slen 
+				}			
+				for(var k=0; k<objLeftSort.length-1; k++) {
+					//var x = objLeftSort[k+1].style.pixelLeft ;
+					objLeftSort[k+1].style.pixelLeft = objLeftSort[k].style.pixelLeft + objLeftSort[k].style.pixelWidth + j ;				
+	
+				}
+			}
+			if(SKDBRadioGroup8.value == "3") {
+				var j=objLeftSort[1].style.pixelLeft - objLeftSort[0].style.pixelLeft - objLeftSort[0].style.pixelWidth ;
+				for(var i=1; i<objLeftSort.length-1; i++ ) {
+					var slen=objLeftSort[i+1].style.pixelLeft - objLeftSort[i].style.pixelLeft - objLeftSort[i].style.pixelWidth ;
+					if(j>slen) {
+						j = slen ;
+					}else{
+						j = j ;
+					}
+				
+				}
+				for(var k=0; k<objLeftSort.length-1; k++){
+					objLeftSort[k+1].style.pixelLeft = objLeftSort[k].style.pixelLeft + objLeftSort[k].style.pixelWidth + j ;		
+				}
+			
+			}
+		}	
+}
+
+function cmp(a,b){
+	return a.style.pixelTop - b.style.pixelTop;
+}
+
+function par(a,b){
+	return a.style.pixelLeft - b.style.pixelLeft;	
+}
+
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV onkeydown="" id=SKbillsheet class=dj ondblclick="" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" userType BLONclose BLONopenBefore idtype="1" OtherSave="否" isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_open()" blmode="其他" contxml="<root><radio><id>SKDBRadioGroup1</id><id>SKDBRadioGroup2</id><id>SKDBRadioGroup3</id><id>SKDBRadioGroup4</id><id>SKDBRadioGroup8</id><id>SKDBRadioGroup9</id></radio><tab><id>PageControl1</id></tab><button><id>cmdOk</id><id>cmdClose</id></button></root>" billtaborder="<root><taborder>SKDBRadioGroup1</taborder><taborder>SKDBRadioGroup2</taborder><taborder>SKDBRadioGroup3</taborder><taborder>SKDBRadioGroup4</taborder><taborder>SKDBRadioGroup8</taborder><taborder>SKDBRadioGroup9</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" dj_sn="SKDBalign" type="LR" caption="对齐面板" mkbh="E5" codeheader entertype="修改" poswidth="290" posheight="238" controlno="SKButton:3;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield center="居中" dj_id="253" para="<r></r>" AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 274px; HEIGHT: 162px; TOP: 6px; LEFT: 5px" id=PageControl1 class=tab-pane controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV style="WIDTH: 274px; HEIGHT: 144px" class=tab-page>
+<H2 class=tab>对齐面板</H2>
+<FIELDSET style="POSITION: absolute; WIDTH: 89px; DISPLAY: block; HEIGHT: 106px; FONT-SIZE: 12px; TOP: 10px; LEFT: 29px" id=SKDBRadioGroup1 value="水平居中" controltype="radio" aspect="纵向" legend="水平" tempvalue="无变化&#13;&#10;左对齐&#13;&#10;右对齐&#13;&#10;水平居中" temptext="无变化&#13;&#10;左对齐&#13;&#10;右对齐&#13;&#10;水平居中" NotBg="否" onkeydown='bill_onkeydown("")'><LEGEND>水平</LEGEND><INPUT id=RGSKDBRadioGroup11 onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[0].value; value=无变化 type=radio name=RGSKDBRadioGroup1 text="无变化"><SPAN>无变化</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup12 onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[1].value; value=左对齐 type=radio name=RGSKDBRadioGroup1 text="左对齐"><SPAN>左对齐</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup13 onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[2].value; value=右对齐 type=radio name=RGSKDBRadioGroup1 text="右对齐"><SPAN>右对齐</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup14 onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[3].value; value=水平居中 CHECKED type=radio name=RGSKDBRadioGroup1 text="水平居中"><SPAN>水平居中</SPAN>&nbsp;</FIELDSET> 
+<FIELDSET style="POSITION: absolute; WIDTH: 88px; DISPLAY: block; HEIGHT: 105px; FONT-SIZE: 12px; TOP: 10px; LEFT: 139px; backgroundColor1: #ffffff" id=SKDBRadioGroup2 value="-1" controltype="radio" aspect="纵向" legend="垂直" tempvalue="无变化&#13;&#10;上对齐&#13;&#10;下对齐&#13;&#10;垂直居中" temptext="无变化&#13;&#10;上对齐&#13;&#10;下对齐&#13;&#10;垂直居中" NotBg="否" onkeydown='bill_onkeydown("")'><LEGEND>垂直</LEGEND><INPUT id=RGSKDBRadioGroup21 onclick=SKDBRadioGroup2.value=RGSKDBRadioGroup2[0].value; value=无变化 type=radio name=RGSKDBRadioGroup2 text="无变化"><SPAN>无变化</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup22 onclick=SKDBRadioGroup2.value=RGSKDBRadioGroup2[1].value; value=上对齐 type=radio name=RGSKDBRadioGroup2 text="上对齐"><SPAN>上对齐</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup23 onclick=SKDBRadioGroup2.value=RGSKDBRadioGroup2[2].value; value=下对齐 type=radio name=RGSKDBRadioGroup2 text="下对齐"><SPAN>下对齐</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup24 onclick=SKDBRadioGroup2.value=RGSKDBRadioGroup2[3].value; value=垂直居中 type=radio name=RGSKDBRadioGroup2 text="垂直居中"><SPAN>垂直居中</SPAN>&nbsp;</FIELDSET></DIV>
+<DIV style="WIDTH: 274px; HEIGHT: 144px" class=tab-page>
+<H2 class=tab>大 小</H2>
+<FIELDSET style="POSITION: absolute; WIDTH: 102px; DISPLAY: block; HEIGHT: 89px; FONT-SIZE: 12px; TOP: 6px; LEFT: 29px; backgroundColor1: #ffffff" id=SKDBRadioGroup3 value="-1" controltype="radio" aspect="纵向" legend="宽度" tempvalue="无变化&#13;&#10;压缩到最小&#13;&#10;压缩到最大" temptext="无变化&#13;&#10;压缩到最小&#13;&#10;压缩到最大" NotBg="否" onkeydown='bill_onkeydown("")'><LEGEND>宽度</LEGEND><INPUT value=无变化 type=radio name=RGSKDBRadioGroup3 text="无变化"><SPAN onclick=RGSKDBRadioGroup3[0].checked=true;SKDBRadioGroup3.value=RGSKDBRadioGroup3[0].value;RGSKDBRadioGroup3[0].focus();>无变化</SPAN>&nbsp;<BR><INPUT value=压缩到最小 type=radio name=RGSKDBRadioGroup3 text="压缩到最小"><SPAN onclick=RGSKDBRadioGroup3[1].checked=true;SKDBRadioGroup3.value=RGSKDBRadioGroup3[1].value;RGSKDBRadioGroup3[1].focus();>压缩到最小</SPAN>&nbsp;<BR><INPUT value=压缩到最大 type=radio name=RGSKDBRadioGroup3 text="压缩到最大"><SPAN onclick=RGSKDBRadioGroup3[2].checked=true;SKDBRadioGroup3.value=RGSKDBRadioGroup3[2].value;RGSKDBRadioGroup3[2].focus();>压缩到最大</SPAN>&nbsp;</FIELDSET> 
+<FIELDSET style="POSITION: absolute; WIDTH: 100px; DISPLAY: block; HEIGHT: 87px; FONT-SIZE: 12px; TOP: 7px; LEFT: 134px" id=SKDBRadioGroup4 value="-1" controltype="radio" aspect="纵向" legend="高度" tempvalue="无变化&#13;&#10;压缩到最小&#13;&#10;压缩到最大" temptext="无变化&#13;&#10;压缩到最小&#13;&#10;压缩到最大" NotBg="否" onkeydown='bill_onkeydown("")'><LEGEND>高度</LEGEND><INPUT value=无变化 type=radio name=RGSKDBRadioGroup4 text="无变化"><SPAN onclick=RGSKDBRadioGroup4[0].checked=true;SKDBRadioGroup4.value=RGSKDBRadioGroup4[0].value;RGSKDBRadioGroup4[0].focus();>无变化</SPAN>&nbsp;<BR><INPUT value=压缩到最小 type=radio name=RGSKDBRadioGroup4 text="压缩到最小"><SPAN onclick=RGSKDBRadioGroup4[1].checked=true;SKDBRadioGroup4.value=RGSKDBRadioGroup4[1].value;RGSKDBRadioGroup4[1].focus();>压缩到最小</SPAN>&nbsp;<BR><INPUT value=压缩到最大 type=radio name=RGSKDBRadioGroup4 text="压缩到最大"><SPAN onclick=RGSKDBRadioGroup4[2].checked=true;SKDBRadioGroup4.value=RGSKDBRadioGroup4[2].value;RGSKDBRadioGroup4[2].focus();>压缩到最大</SPAN>&nbsp;</FIELDSET></DIV>
+<DIV style="WIDTH: 274px; HEIGHT: 144px" class=tab-page>
+<H2 class=tab>间 距</H2>
+<FIELDSET style="POSITION: absolute; WIDTH: 102px; DISPLAY: block; HEIGHT: 114px; FONT-SIZE: 12px; TOP: 7px; LEFT: 25px; backgroundColor1: #ffffff" id=SKDBRadioGroup8 contentEditable=false value="2" controltype="radio" aspect="纵向" legend="水平" tempvalue="1&#13;&#10;2&#13;&#10;3" temptext="无变化&#13;&#10;最大间距&#13;&#10;最小间距" NotBg="否"><LEGEND>水平</LEGEND><INPUT id=RGSKDBRadioGroup81 onclick=SKDBRadioGroup8.value=RGSKDBRadioGroup8[0].value; value=1 type=radio name=RGSKDBRadioGroup8 text="无变化"><SPAN>无变化</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup82 onclick=SKDBRadioGroup8.value=RGSKDBRadioGroup8[1].value; value=2 CHECKED type=radio name=RGSKDBRadioGroup8 text="最大间距"><SPAN>最大间距</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup83 onclick=SKDBRadioGroup8.value=RGSKDBRadioGroup8[2].value; value=3 type=radio name=RGSKDBRadioGroup8 text="最小间距"><SPAN>最小间距</SPAN>&nbsp;</FIELDSET> 
+<FIELDSET style="POSITION: absolute; WIDTH: 102px; DISPLAY: block; HEIGHT: 114px; FONT-SIZE: 12px; TOP: 7px; LEFT: 134px; backgroundColor1: #ffffff" id=SKDBRadioGroup9 contentEditable=false value="-1" controltype="radio" aspect="纵向" legend="垂直" tempvalue="1&#13;&#10;2&#13;&#10;3" temptext="无变化&#13;&#10;最大间距&#13;&#10;最小间距" NotBg="否"><LEGEND>垂直</LEGEND><INPUT id=RGSKDBRadioGroup91 onclick=SKDBRadioGroup9.value=RGSKDBRadioGroup9[0].value; value=1 type=radio name=RGSKDBRadioGroup9 text="无变化"><SPAN>无变化</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup92 onclick=SKDBRadioGroup9.value=RGSKDBRadioGroup9[1].value; value=2 type=radio name=RGSKDBRadioGroup9 text="最大间距"><SPAN>最大间距</SPAN>&nbsp;<BR><INPUT id=RGSKDBRadioGroup93 onclick=SKDBRadioGroup9.value=RGSKDBRadioGroup9[2].value; value=3 type=radio name=RGSKDBRadioGroup9 text="最小间距"><SPAN>最小间距</SPAN>&nbsp;</FIELDSET></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+<BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 172px; LEFT: 111px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 172px; LEFT: 194px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV></body></html>

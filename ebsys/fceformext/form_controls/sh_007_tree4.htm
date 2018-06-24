@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../../fceform/css/dj.css); 
+	</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../../fceform/images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//增加节点
+function AddNode()
+{
+	if(Global.selectedItem!=null)
+	{
+		//alert(new treeItem("增加节点","","","","","","bbb").toString().outerHTML);
+		Global.selectedItem.add(new xtreeItem(Global.getId(),"增加节点","","","","","",""));
+	}
+	else
+	{
+		window.alert("请选择要增加节点的位置！");
+		return;
+	}
+}
+//删除节点
+function DelNode()
+{
+	if(Global.selectedItem==null)
+	{
+		alert("请选择要删除的节点！");
+		return;
+	}
+	if(Global.selectedItem==Global.selectedItem.root())
+	{
+		alert("不能删除根节点！");
+		return;
+	}
+	
+	Global.selectedItem.remove(Global.selectedItem);
+}
+//编辑节点
+function uf_edit()
+{
+	if(Global.selectedItem==null)
+	{
+		alert("请选择要编辑的节点！");
+		return;
+	}
+	var obj = new Object() ;
+	obj.text = Global.selectedItem.text;
+	obj.code = Global.selectedItem.code;
+	obj.title = Global.selectedItem.title;
+	
+	var oNode = DjOpen('TreeEdit',obj,'展现','有模式窗口');
+	//alert(sVal);
+	if (Global.selectedItem!=null && typeof oNode != "undefined")
+	{
+		Global.selectedItem.setText(oNode.text);
+		Global.selectedItem.code = oNode.code ;
+		Global.selectedItem.title = oNode.title;
+	}
+}
+//增加子节点
+function insertNode(bAfter) {
+	if(Global.selectedItem!=null)
+	{
+		Global.selectedItem.insert(new xtreeItem(Global.getId(),"增加节点","","","","","",""),bAfter);
+	}
+	else
+	{
+		window.alert("请选择要增加节点的位置！");
+		return;
+	}
+}
+//删除子节点
+function DelSubNode()
+{
+	if(Global.selectedItem==null)
+	{
+		alert("请选择要删除的节点！");
+		return;
+	}
+	var p = Global.selectedItem;
+	var len = Global.selectedItem.childNodes.length;
+	for(var i=len-1;i>=0;i--){
+		Global.selectedItem = p.childNodes[i];
+		Global.selectedItem.remove();
+	}
+	Global.selectedItem = p;	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  /><script src='../../fceform/js/xtree.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" contxml="<root><button><id>FCButton7</id><id>FCButton8</id><id>FCButton4</id><id>FCButton5</id><id>FCButton6</id><id>button1</id></button><tree><id>tree1</id></tree></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:1;ebshow:0;ebiao:0;layout:0" billtaborder="<root><taborder>FCButton7</taborder><taborder>FCButton8</taborder><taborder>FCButton4</taborder><taborder>FCButton5</taborder><taborder>FCButton6</taborder><taborder>button1</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight poswidth postop posleft entertype="修改" window="当前窗口" keyfield codeheader="BBB" mkbh caption="可编辑的树控件" type="SH1" dj_sn="sh_007_tree4" toolbar="不带工具栏" AutoResizeXml><DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 205px; DISPLAY: block; HEIGHT: 270px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 34px; BORDER-RIGHT: 1px solid; LEFT: 21px" id=tree1 controltype="tree" xml="%3CTreeNode%20id%3D%221%22%20text%3D%22treeItem%22%20roottarget%3D%22_self%22%20rootaction%3D%22%22%20%20target%3D%22_self%22%20title%3D%22treeItem%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22%3E%3CTreeNode%20id%3D%222%22%20text%3D%22%u589E%u52A0%u8282%u70B9%22%20%20target%3D%22_self%22%20title%3D%22%u589E%u52A0%u8282%u70B9%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3C/TreeNode%3E" clicknode="" roottext="根" sourcetype="0" ischecked="false" isAll="true" opentb="_self" xmlpath="undefined"></DIV><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 32px; LEFT: 248px" id=FCButton7 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("insertNode()")' dropstyle="否">插入</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 60px; LEFT: 248px" id=FCButton8 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("insertNode(true)")' dropstyle="否">增加</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 88px; LEFT: 248px" id=FCButton4 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("AddNode()")' dropstyle="否">增加子</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 116px; LEFT: 248px" id=FCButton5 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("DelNode()")' dropstyle="否">删除节点</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 144px; LEFT: 248px" id=FCButton6 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("uf_edit()")' dropstyle="否">编辑</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 174px; LEFT: 247px" id=button1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("DelSubNode()")' dropstyle="否">删除子节点</BUTTON></DIV><script language="JavaScript">var tree1;window.attachEvent( "onunload", function(){tree1=null;})</script></body></html>

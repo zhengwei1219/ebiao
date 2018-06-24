@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="4659" name="动作节点">
+      <results>
+        <unconditional-result id="6678" old-status="Finished" status="Underway" split="3537"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="2890" name="结束节点">
+    </step>
+  </steps>
+  <splits>
+    <split id="3537"
+ name="分支节点"
+ is-dynamic="0"
+>
+      <unconditional-result id="9837" old-status="Finished" status="Underway" sub-flow="3268"/>
+      <unconditional-result id="5406" old-status="Finished" status="Underway" sub-flow="7706"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="7660"
+ name="协同节点"
+ is-dynamic="0"
+>
+      <conditions>
+        <condition type="beanshell">
+          <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+          <arg name="class.name"><![CDATA[beanshell]]></arg>
+          <arg name="script"><![CDATA["Finished".Equals(jn.getStep(3268).getStatus()) && "Finished".Equals(jn.getStep(4790).getStatus())]]></arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="282" old-status="Finished" status="Underway" step="2890"/>
+    </join>
+  </joins>
+  <sub-flows>
+    <sub-flow id="3268" name="子流程1" is-sync="1" sub-flowname="shenzhou_sub1" sub-flowdesc="shenzhou_sub1" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="3586" old-status="Finished" status="Underway" join="7660"/>
+      </results>
+    </sub-flow>
+    <sub-flow id="7706" name="子流程2" is-sync="1" unique="true" sub-flowname="shenzhou_sub2" sub-flowdesc="shenzhou_sub2" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="3704" old-status="Finished" status="Underway" sub-flow="4790"/>
+      </results>
+    </sub-flow>
+    <sub-flow id="4790" name="子流程3" is-sync="1" sub-flowname="shenzhou_sub3" sub-flowdesc="shenzhou_sub3" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="4984" old-status="Finished" status="Underway" join="7660"/>
+      </results>
+    </sub-flow>
+  </sub-flows>
+</workflow>

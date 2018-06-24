@@ -1,0 +1,1663 @@
+<PUBLIC:EVENT NAME="afterblur" ID="oabID" />
+<PUBLIC:EVENT NAME="onincomplete" ID="oicID" />
+<PUBLIC:EVENT NAME="onpfkeydown" ID="okdID" />
+<PUBLIC:EVENT NAME="onpfkeyup" ID="okuID" />
+<PUBLIC:EVENT NAME="onpfkeypress" ID="okpID" />
+<PUBLIC:EVENT NAME="onpfpaste" ID="opaID" />
+<PUBLIC:PROPERTY NAME="mask" ID="MaskID" PUT="PutMask" GET="GetMask" />
+<PUBLIC:PROPERTY NAME="minYear" ID="MinYearID" PUT="SaveMinYear" GET="GetMinYear" />
+<PUBLIC:PROPERTY NAME="maxYear" ID="MaxYearID" PUT="SaveMaxYear" GET="GetMaxYear" />
+<PUBLIC:PROPERTY NAME="commasOnFocus" ID="CommasOnFocusID" PUT="SaveCommasOnFocus" GET="GetCommasOnFocusID" />
+<PUBLIC:PROPERTY NAME="flexMask" ID="FlexMaskID" PUT="SaveFlexMask" GET="GetFlexMask" />
+<PUBLIC:PROPERTY NAME="curPos" ID="CursorPosID" PUT="SetCurPos" GET="GetCurPos" />
+<PUBLIC:PROPERTY NAME="maskText" />
+<PUBLIC:PROPERTY NAME="isEmpty" />
+<PUBLIC:PROPERTY NAME="maskChars" ID="MaskCharsID" PUT="PutMaskChars" GET="GetMaskChars" />
+<PUBLIC:PROPERTY NAME="CheckForComplete" ID="CheckForCompleteID" PUT="PutCheckForComplete" GET="GetCheckForComplete" />
+<PUBLIC:PROPERTY NAME="Raw" ID="RawID" PUT="PutRaw" GET="GetRaw" />
+<PUBLIC:METHOD NAME="clear" />
+<PUBLIC:METHOD NAME="isComplete" />
+<PUBLIC:METHOD NAME="resetAll" />
+<PUBLIC:METHOD NAME="resetClass" />
+<PUBLIC:METHOD NAME="nextField" />
+<PUBLIC:METHOD NAME="priorField" />
+<PUBLIC:ATTACH EVENT="onfocus" ONEVENT="EpFocus()" />
+<PUBLIC:ATTACH EVENT="onpaste" ONEVENT="EpPaste()" />
+<PUBLIC:ATTACH EVENT="oncut" ONEVENT="EpCut()" />
+<PUBLIC:ATTACH EVENT="oncopy" ONEVENT="EpCopy()" />
+<PUBLIC:ATTACH EVENT="onselect" ONEVENT="EpSelect()" />
+<PUBLIC:ATTACH EVENT="onclick" ONEVENT="EpClick()" />
+<PUBLIC:ATTACH EVENT="onkeyup" ONEVENT="EpKeyUp()" />
+<PUBLIC:ATTACH EVENT="onkeydown" ONEVENT="EpKeyDown()" />
+<PUBLIC:ATTACH EVENT="onkeypress" ONEVENT="EpKeyPress()" />
+<PUBLIC:ATTACH EVENT="onblur" ONEVENT="EpBlur()" />
+<PUBLIC:ATTACH EVENT="ondocumentready" FOR="element" ONEVENT="EpOnDocumentReady()" />
+ 
+<SCRIPT language="JScript">
+
+	function BlurNotOKEvent(FieldValue)
+	{
+		objEvent = createEventObject();
+		objEvent.result = FieldValue;
+		oicID.fire(objEvent);
+	}
+
+	function AfterBlurEvent()
+	{
+		objEvent = createEventObject();
+		oabID.fire(objEvent);
+	}
+
+	function BeforePaste()
+	{
+		objEvent = createEventObject();
+		opaID.fire(objEvent);
+	}
+
+	function OnPfKeyDownEvent(objPfKeys)
+	{
+		objEvent = createEventObject();
+		objEvent.pfKeyCode=objPfKeys.keyCode;
+		objEvent.pfReturnValue = objPfKeys.returnValue;
+		objEvent.pfShiftKey = objPfKeys.shiftKey;
+		objEvent.pfCtrlKey = objPfKeys.ctrlKey;
+		objEvent.pfAltKey = objPfKeys.altKey;
+		okdID.fire(objEvent);
+		
+		objPfKeys.keyCode=objEvent.pfKeyCode;
+		objPfKeys.returnValue=objEvent.pfReturnValue;
+	}
+
+	function OnPfKeyUpEvent(objPfKeys)
+	{
+		objEvent = createEventObject();
+		objEvent.pfKeyCode=objPfKeys.keyCode;
+		objEvent.pfReturnValue = objPfKeys.returnValue;
+		objEvent.pfShiftKey = objPfKeys.shiftKey;
+		objEvent.pfCtrlKey = objPfKeys.ctrlKey;
+		objEvent.pfAltKey = objPfKeys.altKey;
+		okuID.fire(objEvent);
+
+		objPfKeys.keyCode=objEvent.pfKeyCode;
+		objPfKeys.returnValue=objEvent.pfReturnValue;
+	}
+
+	function OnPfKeyPressEvent(objPfKeys)
+	{
+		objEvent = createEventObject();
+		objEvent.pfKeyCode=objPfKeys.keyCode;
+		objEvent.pfReturnValue = objPfKeys.returnValue;
+		objEvent.pfShiftKey = objPfKeys.shiftKey;
+		objEvent.pfCtrlKey = objPfKeys.ctrlKey;
+		objEvent.pfAltKey = objPfKeys.altKey;
+		okpID.fire(objEvent);
+
+		objPfKeys.keyCode=objEvent.pfKeyCode;
+		objPfKeys.returnValue=objEvent.pfReturnValue;
+	}
+	//-->
+	
+	
+</SCRIPT>
+
+<SCRIPT language="VBScript">
+<!--
+
+Option Explicit
+class PfKeys 
+ public keyCode
+public shiftKey
+public ctrlKey
+public altKey
+public returnValue
+end class
+Dim x1
+Dim x3
+Set x1 = new clsMask
+x1.MaskChars = "_#mdyHMn~&{}[]"
+x1.Mask = Mask
+set x1.Field = Element
+x1.MinYear = 1900
+x1.MaxYear = 2099
+x1.CommasOnFocus = True
+x1.FlexMask = False
+x1.CheckForComplete = True
+x1.Raw = False
+Function PutMask(val)
+dim x6
+x1.NegParens = false
+x1.AllowNeg = false
+x6 = val
+x6 = x1.SetupEscCharArray(x6)
+x6 = x1.RemoveEscChars(x6)
+if (instr(x6, "n")>0 and instr(x6, "-")>0) then
+x1.AllowNeg = true
+val = replace(val, "-", "")
+if instr(val, "(")>0 then
+x1.NegParens = true
+val = replace(val, "(", "")
+end if
+end if
+x1.Mask = val
+MaskID.fireChange
+End Function
+Function GetMask()
+GetMask = x1.Mask
+End Function
+Function SaveMinYear(val)
+x1.MinYear = clng(val)
+MinYearID.firechange
+End Function
+Function GetMinYear()
+GetMinYear = x1.MinYear
+End Function
+Function SaveMaxYear(val)
+x1.MaxYear = clng(val)
+MaxYearID.firechange
+End Function
+Function GetMaxYear()
+GetMaxYear = x1.MaxYear
+End Function
+Function SaveCommasOnFocus(val)
+x1.CommasOnFocus = cbool(val)
+CommasOnFocusID.firechange
+End Function
+Function GetCommasOnFocus()
+GetCommasOnFocus = x1.CommasOnFocus
+End Function
+Function GetCurPos()
+GetCurPos = x1.GetCursor(x1.Field)
+End Function
+Function SetCurPos(CursorPosition)
+x1.SetCursor x1.Field, CursorPosition, "", False
+End Function
+Function SaveFlexMask(val)
+x1.FlexMask = cbool(val)
+FlexMaskID.firechange
+End Function
+Function GetFlexMask()
+GetFlexMask = x1.FlexMask
+End Function
+Function MaskText()
+MaskText = replace(x1.Field.value, "_", " ")
+End Function
+Function IsEmpty()
+IsEmpty = x1.IsEmpty()
+End Function
+Function Clear()
+x1.Clear
+End Function
+Function IsComplete()
+IsComplete = x1.OnBlurOK()
+End Function
+Function ResetAll()
+Dim x
+dim x11
+if parent.document.frames.length > 0 then
+for x11 = 0 to (parent.document.frames.length-1)
+for x = 0 to (parent.document.frames(x11).document.all.length - 1)
+if lcase(parent.document.frames(x11).document.all(x).classname)="perform" then
+parent.document.frames(x11).document.all(x).value=""
+end if
+next
+next
+end if
+with parent.document
+for x = 0 to (.all.length-1)
+if lcase(.all(x).classname)="perform" then 
+.all(x).value=""
+end if
+next
+end with
+End Function
+Function PriorField()
+x1.PriorField
+End Function 
+Function NextField()
+x1.NextField
+End Function 
+Function ResetClass(ClassName)
+Dim x
+dim x11
+if parent.document.frames.length > 0 then
+for x11 = 0 to (parent.document.frames.length-1)
+for x = 0 to (parent.document.frames(x11).document.all.length - 1)
+if lcase(parent.document.frames(x11).document.all(x).classname)=lcase(ClassName) then
+parent.document.frames(x11).document.all(x).value=""
+end if
+next
+next
+end if
+with parent.document
+for x = 0 to (.all.length-1)
+if lcase(.all(x).classname)=lcase(ClassName) then 
+.all(x).value=""
+end if
+next
+end with
+End Function
+sub EpFocus()
+x1.OnFocus
+if x1.IsEmpty then x1.Clear
+Element.select
+end sub
+sub EpPaste()
+BeforePaste
+x1.Paste
+end sub
+sub EpCut()
+EpCopy
+x1.Clear
+end sub
+sub EpCopy()
+Dim x16
+window.event.keycode = 0
+window.event.returnValue = false
+x16 = element.value
+x1.OnBlurOK
+window.clipboardData.setData "Text", element.value
+element.value = x16
+end sub
+sub EpSelect()
+x1.Selected = True
+x1.OnSelect
+end sub
+sub EpClick()
+x1.OnClick
+end sub
+sub EpKeyUp()
+Set x3 = new PfKeys
+with window.event
+x3.altKey=.altKey
+x3.ctrlKey=.ctrlKey
+x3.keyCode=.keyCode
+x3.shiftKey=.shiftKey
+x3.returnValue=.returnValue
+OnPfKeyUpEvent x3
+.keyCode=x3.keyCode
+.returnValue=x3.returnValue
+end with
+x1.OnKeyUp
+end sub
+sub EpKeyDown()
+Set x3 = new PfKeys
+with window.event
+x3.altKey=.altKey
+x3.ctrlKey=.ctrlKey
+x3.keyCode=.keyCode
+x3.shiftKey=.shiftKey
+x3.returnValue=.returnValue
+OnPfKeyDownEvent x3
+.keyCode=x3.keyCode
+.returnValue=x3.returnValue
+end with
+x1.OnKeyDown
+end sub
+sub EpKeyPress()
+Set x3 = new PfKeys
+with window.event
+x3.altKey=.altKey
+x3.ctrlKey=.ctrlKey
+x3.keyCode=.keyCode
+x3.shiftKey=.shiftKey
+x3.returnValue=.returnValue
+OnPfKeyPressEvent x3
+.keyCode=x3.keyCode
+.returnValue=x3.returnValue
+end with
+x1.OnKeyPress
+end sub
+sub EpBlur()
+if x1.OnBlurOK() = False then
+x1.Field.value = replace(x1.Field.value, "_", " ")
+BlurNotOKEvent x1.Field.Value
+else
+x1.Field.value = replace(x1.Field.value, "_", " ")
+if x1.IsEmpty then x1.Field.value = ""
+end if
+AfterBlurEvent
+end sub
+sub EpOnDocumentReady()
+EpFocus
+end sub
+Function PutMaskChars(Val)
+x1.MaskChars = Val
+End Function
+Function GetMaskChars()
+GetMaskChars = x1.MaskChars
+End Function
+Function PutCheckForComplete(Val)
+x1.CheckForComplete=Val
+End Function
+Function GetCheckForComplete()
+GetCheckForComplete=x1.CheckForComplete
+End Function
+Function PutRaw(Val)
+x1.Raw=Val
+End Function
+Function GetRaw()
+GetRaw=x1.Raw
+End Function
+Class clsMask
+Private x242
+Private x244
+Private x247
+Private x251
+Private x254
+Private x258
+Private x262
+Private x266
+Private x270
+Private x279
+Private x285
+Private x288
+Private x301
+Private x303
+Private x310
+Private x315
+Private x322
+Private x326
+Private x336
+Private x341
+Private x346
+Private x353
+Private x358
+Private x362(100)
+Private x368(100)
+Private x370
+Private x378
+'*M*
+Public Property Let CheckForComplete(Val)
+x279 = Val
+End Property
+Public Property Get CheckForComplete()
+CheckForComplete = x279
+End Property
+Public Property Let Raw(Val)
+x285 = Val
+End Property
+Public Property Get Raw()
+Raw = x285
+End Property
+Public Property Let MaxYear(Val)
+x262 = Val
+End Property
+Public Property Get MaxYear()
+MaxYear = x262
+End Property
+Public Property Let MinYear(Val)
+x258 = Val
+End Property
+Public Property Get MinYear()
+MinYear = x258
+End Property
+Public Property Let CommasOnFocus(Val)
+if x315 then x270=False
+x270 = Val
+End Property
+Public Property Get CommasOnFocus()
+CommasOnFocus = x270
+End Property
+Public Property Let FlexMask(Val)
+x315 = Val
+if len(x242) > 0 then x444
+End Property
+Public Property Get FlexMask()
+FlexMask = x315
+End Property
+Public Property Let AllowNeg(Val)
+x251 = Val
+End Property
+Public Property Get AllowNeg()
+AllowNeg = x251
+End Property
+Public Property Let NegParens(Val)
+x254 = Val
+End Property
+Public Property Get NegParens()
+NegParens = x254
+End Property
+Public Property Let Selected(Val)
+x247 = Val
+End Property
+Public Property Get Selected()
+Selected = x247
+End Property
+
+Public Property Let Mask(Val)
+x378 = Val
+SetupEscCharArray Val
+x242 = x438(Val)
+if x315 then x444
+	if len(Val) = 2 then
+		if Val = "yy" then
+			x303 = False
+		else
+			x303 = True
+		end if
+	elseif len(Val) > 2 then
+		if ((right(Val,3) = "-yy") or (right(Val,3) = "/yy")) then
+			x303 = False
+		else
+			x303 = True
+		end if
+else
+	x303 = True
+end if
+End Property
+
+Public Property Get Mask()
+	Mask = x378
+End Property
+Public Property Set Field(Ref)
+set x244 = Ref
+End Property
+Public Property Get Field()
+set Field = x244
+End Property
+Public Property Let MaskChars(Val)
+x358 = Val
+End Property
+Public Property Get MaskChars()
+MaskChars = x358
+End Property
+Public Sub OnKeyUp()
+x406
+End Sub
+Public Sub OnClick()
+dim x18
+x406
+x18 = x1.GetCursor(x1.Field)
+if x18 = 1 then x1.PriorField
+OnKeyDown
+End Sub
+Public Sub OnSelect()
+x406
+End Sub
+Public Function SetupEscCharArray(ByRef MaskIn)
+Dim x20
+Dim x22
+x370=0
+for x20 = 1 to len(MaskIn)
+if mid(MaskIn, x20, 1) = "\" then
+x370=x370+1
+x368(x370) = mid(MaskIn, x20+1, 1)
+x362(x370)=len(x22)+1
+else
+x22 = x22 & mid(MaskIn, x20, 1)
+end if
+next
+MaskIn = x22
+SetupEscCharArray = x22
+End Function
+Public Function RemoveEscChars(ByVal DataIn)
+Dim x20
+for x20 = 1 to x370
+DataIn = left(DataIn, x362(x20)-x20) & mid(DataIn, x362(x20)+2-x20)
+next
+RemoveEscChars=DataIn
+End Function
+Public Function IsEscChar()
+Dim x20
+dim x27
+IsEscChar = false
+x27 = GetCursor(x244)
+for x20 = 1 to x370
+if x362(x20) = x27 then
+IsEscChar = True
+exit function
+end if
+next
+End Function
+Public Sub OnFocus()
+dim x30
+dim x27
+dim x33
+dim x37
+dim x42
+dim x44
+dim x51
+dim x59
+dim x6
+x266 = false
+x6 = RemoveEscChars(x242)
+if instr(x6, "n")>0 then
+if not x270 then
+if len(x310)=0 then
+x310=x242
+end if
+x242=replace(x242, ",", "")
+end if
+x30 = trim(x392(x244.value, 1, len(x244.value)))
+if len(x30) > 0 then
+x244.value = replace(x244.value, "$", "")
+x244.value = replace(x244.value, ",", "")
+x244.value = replace(x244.value, ".", "")
+if NegParens then
+if instr(x244.value, "(")>0 then
+x244.value = replace(x244.value, "(", "")
+x244.value = replace(x244.value, ")", "")
+x244.value = "-" & x244.value
+end if
+end if
+x244.value = x390(x244.value)
+end if
+elseif instr(x6, "@")>0 then
+x30 = trim(x244.value)
+if instr(x30, "@") > 0 then
+x384 x30, x44, x51
+x30 = x242
+x384 x30, x33, x37
+x33=string(len(x33)-len(x44), " ")
+x37=string(len(x37)-len(x51), " ")
+x244.value=x44 & x33 & "@" & x51 & x37
+end if
+end if
+x244.value = x426(x244.value, " ", "_")
+if len(x244.value) = 0 then x244.value = string(len(x242), "_")
+End Sub
+Private Function x384(ByVal x447, ByRef x449, ByRef x451)
+dim x27
+x27=instr(x447, "@")
+if x27 > 0 then
+x449=trim(left(x447, x27-1))
+x451=trim(mid(x447, x27+1))
+end if
+End Function
+Public Function OnBlurOK()
+dim x64
+dim x67
+dim x70
+dim x75
+dim x80
+dim x84
+dim x91
+dim x96
+dim x101
+dim x105
+dim x109
+dim x113
+dim x116
+dim x44
+dim x51
+dim x59
+dim x6
+OnBlurOK = True
+if (cbool(x279)=False) then exit function
+x6 = RemoveEscChars(x242)
+if (x244.value <> x388(string(len(x242), "_")) and (len(x244.value)<>0)) then
+if instr(x6, "yyyy")>0 then
+if instr(x242, "dd") = 0 then
+if instr(x242, "mm") = 0 then
+x70 = x402(mid(x244.value,1,4))
+if (instr(mid(x244.value,1,4),"0") = 0) and x70 = 0 then OnBlurOK = False
+else
+x64 = x402(mid(x244.value,1,2))
+x70 = x402(mid(x244.value,4,4))
+if (x64 = 0) or ((instr(mid(x244.value,4,4),"0") = 0) and x70 = 0) then OnBlurOK = False
+end if
+else
+ if left(x242 & "  ", 2) = "mm" then
+ x64 = x402(mid(x244.value,1,2))
+ x67 = x402(mid(x244.value,4,2))
+           else
+ x67 = x402(mid(x244.value,1,2))
+ x64 = x402(mid(x244.value,4,2))
+           end if
+x70 = x402(mid(x244.value,7,4))
+if (x64 = 0) or (x67 = 0) or ((instr(mid(x244.value,7,4),"0") = 0) and x70 = 0) then OnBlurOK = False
+end if
+if OnBlurOK = False then
+exit function
+else
+if x70 > 999 then
+OnBlurOK = x428(x70)
+elseif x70 > 99 then
+OnBlurOK = False
+else
+if (x70 >= 30) and (x70 <= 99) then
+x70 = 1900+x70
+else
+x70 = 2000+x70
+end if
+end if
+if x242 = "yyyy" then
+x244.value = x70
+OnBlurOK = x428(x70)
+exit function
+end if
+if not OnBlurOK then exit function
+ if left(x242 & "  ", 2) = "mm" then
+ if x64 < 10 then x244.value = "0" & x64 & mid(x244.value,3)
+           else
+             if x67 < 10 then x244.value = "0" & x67 & mid(x244.value,3)
+           end if
+if x67 > 0 then
+   if left(x242 & "  ", 2) = "mm" then
+ if x67 < 10 then x244.value = left(x244.value,3) & "0" & x67 & right(x244.value,5)
+             else
+ if x64 < 10 then x244.value = left(x244.value,3) & "0" & x64 & right(x244.value,5)
+             end if
+x244.value = left(x244.value,6) & x70
+if (x64 = 2) and (x67 = 29) and (x70 mod 4 <> 0) then
+OnBlurOK = False
+exit function
+end if
+else
+x244.value = left(x244.value,3) & x70
+end if
+OnBlurOK = x428(x70)
+end if
+elseif instr(x6, "yy")>0 then
+if instr(x242, "dd") = 0 then
+if instr(x242, "mm") = 0 then
+x70 = x402(mid(x244.value,1,2))
+if (instr(mid(x244.value,1,2),"0") = 0) and x70 = 0 then OnBlurOK = False
+else
+x64 = x402(mid(x244.value,1,2))
+x70 = x402(mid(x244.value,4,2))
+if (x64 = 0) or ((instr(mid(x244.value,4,2),"0") = 0) and x70 = 0) then OnBlurOK = False
+end if
+else
+ if left(x242 & "  ", 2) = "mm" then
+ x64 = x402(mid(x244.value,1,2))
+ x67 = x402(mid(x244.value,4,2))
+           else
+ x67 = x402(mid(x244.value,1,2))
+ x64 = x402(mid(x244.value,4,2))
+           end if
+x70 = x402(mid(x244.value,7,2))
+if (x64 = 0) or (x67 = 0) or ((instr(mid(x244.value,7,2),"0") = 0) and x70 = 0) then OnBlurOK = False
+end if
+if OnBlurOK = False then
+exit function
+else
+if (x70 >= 30) and (x70 <= 99) then
+x70 = 1900+x70
+else
+x70 = 2000+x70
+end if
+if x242 = "yy" then
+x244.value = x70
+OnBlurOK = x428(x70)
+if OnBlurOK then x244.value=right(x244.value,2)
+exit function
+end if
+if not OnBlurOK then exit function
+ if left(x242 & "  ", 2) = "mm" then
+ if x64 < 10 then x244.value = "0" & x64 & mid(x244.value,3)
+           else
+ if x67 < 10 then x244.value = "0" & x67 & mid(x244.value,3)
+           end if
+if x67 > 0 then
+   if left(x242 & "  ", 2) = "mm" then
+ if x67 < 10 then x244.value = left(x244.value,3) & "0" & x67 & right(x244.value,3)
+             else
+               if x64 < 10 then x244.value = left(x244.value,3) & "0" & x64 & right(x244.value,3)
+             end if
+x244.value = left(x244.value,6) & x70
+if (x64 = 2) and (x67 = 29) and (x70 mod 4 <> 0) then
+x244.value=left(x244.value, len(x244.value)-4) & right(x70,2)
+OnBlurOK = False
+exit function
+end if
+else
+x244.value = left(x244.value,3) & x70
+end if
+x244.value=left(x244.value, len(x244.value)-4) & right(x70,2)
+OnBlurOK = x428(x70)
+end if
+elseif instr(x6, "HH")>0 then
+x75 = x402(mid(x244.value,1,2))
+x80 = x402(mid(x244.value,4,2))
+if (x75 = 0) then
+OnBlurOK = False
+exit function
+else
+if x75 < 10 then x244.value = "0" & x75 & mid(x244.value,3)
+if x80 < 10 then x244.value = left(x244.value,3) & "0" & x80
+end if
+elseif instr(x6, "n")>0 then
+x244.value = Replace(x244.value,"_"," ")
+x84 = instr(x244.value,".")
+x91 = len(x244.value)-x84
+if x84 > 0 then
+x96 = trim(left(x244.value, x84-1))
+else
+x96 = x244.value
+end if
+if x84>0 then 
+x101 = trim(mid(x244.value, x84+1))
+x101 = x101 & string(x91-len(x101), "0")
+x96 = x96 & "." & x101
+end if
+x244.value = x96
+x244.value = Replace(x244.value," ","")
+x244.value = Replace(x244.value,"_","")
+x244.value = Replace(x244.value,".","")
+x244.value = Replace(x244.value,",","")
+if not x270 then
+x242=x310
+end if
+x244.value = x390(x244.value)
+x105 = false
+x109 = left(x244.value & " ",1) = "$"
+if AllowNeg then
+if instr(x244.value, "-") > 0 then 
+x244.value = replace(x244.value, "-", "")
+x105 = true
+end if
+end if
+Do
+x113 = mid(x244.value,1,1)
+if (x113 = "_") or (x113 = ",") or (x113 = "$") or (x113 = "0") then
+x244.value = mid(x244.value, 2)
+else
+exit do
+end if
+Loop
+if x105 then 
+if Not NegParens then
+x244.value = "-" & x244.value
+end if
+end if
+if x109 then x244.value = "$" & x244.value
+if x105 then 
+if NegParens then
+x244.value = "(" & x244.value & ")"
+end if
+end if
+elseif (instr(x6, "@")>0) then
+x244.value = Replace(x244.value,"_"," ")
+x384 x244.value, x44, x51
+if ((len(x44)=0) OR (len(x51)=0)) then
+OnBlurOK=False
+exit function
+end if
+x244.value = Replace(x244.value," ","")
+else
+for x116 = 1 to len(x242)
+if x408(mid(x242,x116,1), x116) then
+if mid(x244.value,x116,1) = "_" then
+OnBlurOK = False
+exit function
+end if
+end if
+next
+end if
+else
+if instr(x6, "n")>0 then
+if not x270 then
+x242=x310
+x244.value=""
+if x315 then 
+x353=False
+x444
+end if
+end if
+end if
+end if
+End Function
+Public Function IsEmpty()
+Dim x116
+IsEmpty = True
+if len(x244.value)>0 then
+for x116 = 1 to len(x242)
+if x408(mid(x242,x116,1), x116) then
+if len(x244.value) >= x116 then
+if (mid(x244.value,x116,1)<>"_") AND (mid(x244.value,x116,1)<>" ") then
+IsEmpty = False
+exit for
+end if
+end if
+end if
+next
+end if
+End Function
+Public Sub Clear()
+x244.value = x388(string(len(x242), "_"))
+SetCursor x244, 1, "", false
+end sub
+Public Sub OnKeyDown()
+dim x18
+dim x119
+dim x122
+dim x126
+dim x131
+dim x137
+dim x6
+x6 = RemoveEscChars(x242)
+if window.event.keyCode = 13 then
+window.event.returnValue = false
+exit sub
+end if
+x18 = GetCursor(x244)
+with window.event
+if .keycode = 9 then exit Sub
+' Pasting (paste only if matches mask)
+if (((.keycode = 86) and (.ctrlKey)) or ((.keycode = 45) and (.shiftKey))) then
+Paste
+exit Sub
+end if
+x119 = .keycode
+if .altKey or .ctrlKey then 
+if (.ctrlKey and ((x119 = 39) or (x119 = 37))) then
+if x119 = 39 then
+.keycode = 0
+.returnValue = false
+NextField
+exit sub
+end if
+if x119 = 37 then
+.keycode = 0
+.returnValue = false
+PriorField
+exit sub
+end if
+else
+exit sub
+end if
+end if
+.keycode = 0
+if x119 = 45 then x266 = not x266
+if x119 = 113 then
+element.select
+Selected = true
+exit sub
+end if
+if x247 then
+x247 = False
+select case x119
+case 16,27,33,34,35,36,37,38,39,40,112,113,114,115,116,117,118,119,120,121,122,123,144
+case else
+if not ((x119 = 0 ) AND (.ctrlKey=false) AND (.altKey=false)) then
+Clear
+end if
+end select
+end if
+if x119 = 8 then
+.returnValue = false
+if GetCursor(x244) > 1 then
+x18 = GetCursor(x244)
+x424 x244, x18-1
+if GetCursor(x244) = x18 then exit sub
+x18 = GetCursor(x244)
+x122 = x392(x244.value, 1, x18-1)
+if instr(x6, "mm")>0 then
+x126 = ""
+elseif instr(x6, "HH")>0 then
+x126 = ""
+else
+x126 = x392(x244.value, x422(x244, x18)+1, len(x244.value))
+end if
+x18 = GetCursor(x244)
+x244.value = x415(x388(x122 & x126), len(x242))
+SetCursor x244, x18, "", false
+end if
+elseif x119 = 39 then
+.returnValue = false
+if x408(x288, x18) then SetCursor x244, x18, mid(x244.value,x18,1), True
+x18 = GetCursor(x244)
+x422 x244, x18
+elseif x119 = 37 then
+.returnValue = false
+x122 = x392(x244.value, 1, x18)
+x126 = x392(x244.value, x18+1, len(x244.value))
+x244.value = x415(x388(x122 & x126), len(x242))
+x424 x244, x18-1
+elseif x119 = 46 then
+.returnValue = false
+x122 = x392(x244.value, 1, x18-1)
+if instr(x6, "mm")>0 then
+x126 = ""
+elseif instr(x6, "HH")>0 then
+x126 = ""
+else
+x126 = x392(x244.value, x422(x244, x18)+1, len(x244.value))
+end if
+x244.value = x415(x388(x122 & x126), len(x242))
+x424 x244, x18
+elseif x119 = 36 then
+.returnValue = false
+SetCursor x244, x411(x244), "", false
+elseif x119 = 35 then
+.returnValue = false
+SetCursor x244, x413(x244)+1, "", false
+end if
+end with
+end sub
+Public Sub OnKeyPress()
+dim x119
+dim x18
+dim x143
+dim x145
+dim x30
+dim x148
+dim x6
+x6 = RemoveEscChars(x242)
+x148=False
+if window.event.keyCode = 13 then 
+window.event.returnValue = false
+exit sub
+end if
+x406
+if not(IsEscChar) then
+if instr("mdyHM", x288) > 0 then x266 = false
+end if
+x18 = GetCursor(x244)
+with window.event
+x119 = .keycode
+.keycode = 0
+end with
+if ((chr(x119) = "/") or (chr(x119) = "-")) then
+if (x288 = "m") or (x288 = "d") then
+SetCursor x244, x18 + 4 - x404(x18, x288), "", False
+x18 = GetCursor(x244)
+end if
+end if
+if chr(x119) = ":" then
+if (x288 = "H") then
+SetCursor x244, x18+4-x404(x18, x288), "", False
+x18 = GetCursor(x244)
+end if
+end if
+if chr(x119) = "." then
+if ((instr(x6,".")>0) AND (instr(x6, "@")=0)) then
+SetCursor x244, instr(x242,".")+1 , "", False
+x18 = GetCursor(x244)
+end if
+end if
+if chr(x119) = "@" then
+if instr(x6,"@")>0 then
+SetCursor x244, instr(x242,"@")+1 , "", False
+exit sub
+end if
+end if
+if chr(x119) = "-" then
+if AllowNeg then
+if instr(x244.value, "-")>0 then
+exit sub
+else
+if (x411(x244)<>x18) and (x18<>1) then 
+exit sub
+else
+x148=true
+end if
+end if
+else
+if x315 then 
+x422 x244, x18
+exit sub
+end if
+end if
+end if
+if x18 = 1 then x422 x244, x18
+if x18 > x413(x244) then
+SetCursor x244, x413(x244)+1, "", False
+exit sub
+end if
+if not x408(x288, x18) then x422 x244, x18
+if x396(x119, x18, x288) then
+if x266 then
+x143 = x392(x244.value, 1, x18-1)
+x145 = x392(x244.value, x18, len(x242))
+x244.value = x388(x143 & " " & x145)
+end if
+SetCursor x244, x18, chr(x119), True
+else
+exit sub
+end if
+x18 = GetCursor(x244)
+if x315 then
+if ((x386(x119)) or (x148)) then
+if len(x326)>0 then
+x242 = x341 & right(x326,1) & x346 & x336
+x346=right(x326,1) & x346
+x326=left(x326, len(x326)-1)
+end if
+end if
+if ((x386(x119)) or (x148)) then
+if len(x244.value) < x322 then
+x30 = x430(-1)
+x244.value = x390(x30)
+SetCursor x244, x18, "", false
+end if
+end if
+end if
+x422 x244, x18
+end sub
+Private Function x386(x452)
+dim x18
+dim x153
+x386=true
+if chr(x452)="." then
+x386=false
+end if
+' Or not if last pos in FLEX part of field
+x18=GetCursor(x244)
+if instr(x244.value,".") then
+x153 = instr(x18,x244.value,".")
+if x153 = 0 then 
+x386=false
+else 
+if x18 <> x153 then x386=false
+end if
+else
+if x18 <> len(x244.value) then x386=false
+end if
+End Function
+Public Sub Paste()
+dim x131
+dim x137
+dim x6
+window.event.returnValue = false
+x6 = RemoveEscChars(x242)
+if instr(x6, "n")>0 then
+x131 = window.clipboardData.getData("Text")
+if AllowNeg then
+if ((left(x131,1) = "(") and (right(x131,1) = ")")) then
+x131 = mid(x131, 2, len(x131)-2)
+x131 = "-" & x131
+end if
+end if
+x131 = x416(x131)
+x131 = replace(x131, "$", "")
+x131 = replace(x131, ",", "")
+x131 = replace(x131, ".", "")
+else
+if cbool(x285) then
+x131 = window.clipboardData.getData("Text")
+else
+x131 = x392(window.clipboardData.getData("Text"),1,len(window.clipboardData.getData("Text")))
+end if
+end if
+x137 = x244.value
+x6 = RemoveEscChars(x242)
+if instr(x6, "n")>0 then
+x244.value = x390(x131)
+else
+x244.value = x388(x131)
+end if
+If x1.OnBlurOK() then 
+'x6 = RemoveEscChars(x242)
+'x244.value = x390(x131)
+'x244.value = x388(x131)
+if not x394() then x244.value = x137
+else
+x244.value = x137
+element.select
+Selected = true
+end if
+end sub
+Private Function x388(x453)
+dim x116
+dim x27
+dim x161
+dim x165
+for x116 = 1 to len(x242)
+if not x408(mid(x242,x116,1), x116) then
+x388 = x388 & mid(x242,x116,1)
+else
+x27 = x27+1
+if x27<= len(x453) then
+x161 = mid(x453,x27,1)
+if instr("}]", mid(x242,x116,1)) > 0 then
+x165=asc(x161)
+if ((x165 >= 97) and (x165 <= 122)) then 
+x165 = (x165-32)
+x161=chr(x165)
+end if
+elseif instr("{[", mid(x242,x116,1)) > 0 then
+x165=asc(x161)
+if ((x165 >= 65) and (x165 <= 90)) then 
+x165 = (x165+32)
+x161=chr(x165)
+end if
+end if
+x388 = x388 & x161
+else
+x388 = x388 & "_"
+end if
+end if
+next
+End Function
+Private Function x390(x454)
+dim x27
+dim x116
+x27 = len(x454)+1
+for x116 = len(x242) to 1 step -1
+if not x408(mid(x242,x116,1), x116) then
+x390 = mid(x242,x116,1) & x390
+else
+x27 = x27-1
+if x27 >= 1 then
+x390 = mid(x454,x27,1) & x390
+else
+x390 = "_" & x390
+end if
+end if
+next
+End Function
+Private Function x392(x455, x456, x457)
+dim x116
+for x116 = x456 to x457
+if x408(mid(x242,x116,1), x116) then x392 = x392 & mid(x455,x116,1)
+next
+End Function
+Private Function x394()
+dim x116
+x394 = true
+for x116 = 1 to (len(x242)-1)
+if x408(mid(x242,x116,1), x116) then
+if not x396(asc(mid(x244.value,x116,1)), x116, mid(x242,x116,1)) then
+if not mid(x244.value,x116,1) = "_" then
+x394 = false
+exit for
+end if
+end if
+end if
+next
+End Function
+Private Function x396(ByRef x459, x460, x461)
+dim x64
+dim x67
+dim x70
+dim x75
+dim x80
+dim x27
+dim x180
+x396 = False
+if x408(x461, x460) then
+select case x461
+case "#", "n"
+if ((x459 = 45) and AllowNeg) then
+x396 = true
+elseif (x459 >= 48) and (x459 <= 57) then
+x396 = true
+end if
+case "~"
+if (((x459 >= 48) and (x459 <= 57)) or _
+((x459 >= 65) and (x459 <= 90)) or ((x459 >= 97) and (x459 <= 122))) then
+x396 = true
+end if
+case "&"
+if (((x459 >= 65) and (x459 <= 90)) or ((x459 >= 97) and (x459 <= 122))) then
+x396 = true
+end if
+case "}"
+if ((x459 >= 97) and (x459 <= 122)) then x459 = (x459-32)
+if (((x459 >= 48) and (x459 <= 57)) or ((x459 >= 65) and (x459 <= 90))) then
+x396 = true
+end if
+case "{"
+if ((x459 >= 65) and (x459 <= 90)) then x459 = (x459+32)
+if (((x459 >= 48) and (x459 <= 57)) or ((x459 >= 97) and (x459 <= 122))) then
+x396 = true
+end if
+case "]"
+if ((x459 >= 97) and (x459 <= 122)) then x459 = (x459-32)
+if ((x459 >= 65) and (x459 <= 90)) then x396 = true
+case "["
+if ((x459 >= 65) and (x459 <= 90)) then x459 = (x459+32)
+if ((x459 >= 97) and (x459 <= 122)) then x396 = true
+case "m"
+ if left(x242 & "  ", 2) = "mm" then
+ if (x459 >= 48) and (x459 <= 57) then
+ if x404(x460, x461) = 1 then
+ x64 = x402(chr(x459) & mid(x244.value,2,1))
+ elseif x404(x460, x461) = 2 then
+ x64 = x402(mid(x244.value,1,1) & chr(x459))
+ end if
+ x70 = x402(mid(x244.value,7,4))
+ if x64 <= 12 then
+ if instr(";" & x400(mid(x244.value,4,2),x70) & ";", ";" & cstr(x64) & ";") > 0 then
+ if NOT (x404(x460, x461) = 2 and x64 = 0) then x396 = true
+ end if
+ end if
+ end if
+           else
+ if (x459 >= 48) and (x459 <= 57) then
+ if x404(x460, x461) = 1 then
+ x64 = x402(chr(x459) & mid(x244.value,5,1))
+ elseif x404(x460, x461) = 2 then
+ x64 = x402(mid(x244.value,4,1) & chr(x459))
+ end if
+ x70 = x402(mid(x244.value,7,4))
+ if x64 <= 12 then
+ if instr(";" & x400(mid(x244.value,1,2),x70) & ";", ";" & cstr(x64) & ";") > 0 then
+ if NOT (x404(x460, x461) = 2 and x64 = 0) then x396 = true
+ end if
+ end if
+ end if
+           end if
+case "d"
+ if left(x242 & "  ", 2) = "mm" then
+ if (x459 >= 48) and (x459 <= 57) then
+ if x404(x460, x461) = 1 then
+ x67 = x402(chr(x459) & mid(x244.value,5,1))
+ elseif x404(x460, x461) = 2 then
+ x67 = x402(mid(x244.value,4,1) & chr(x459))
+ end if
+ x64 = x402(mid(x244.value,1,2))
+   x70 = x402(mid(x244.value,7,4))
+   if x67<= x398(x64, x70) then
+   if NOT (x404(x460, x461) = 2 and x67 = 0) then x396 = true
+   end if
+ end if
+           else
+ if (x459 >= 48) and (x459 <= 57) then
+ if x404(x460, x461) = 1 then
+ x67 = x402(chr(x459) & mid(x244.value,2,1))
+ elseif x404(x460, x461) = 2 then
+ x67 = x402(mid(x244.value,1,1) & chr(x459))
+ end if
+ x64 = x402(mid(x244.value,4,2))
+   x70 = x402(mid(x244.value,7,4))
+   if x67<= x398(x64, x70) then
+   if NOT (x404(x460, x461) = 2 and x67 = 0) then x396 = true
+   end if
+ end if
+           end if
+case "y"
+if (x459 >= 48) and (x459 <= 57) then
+x27 = GetCursor(x244)
+if x27 = 7 then
+x70 = x402(chr(x459) & mid(x244.value,8,3))
+elseif x27 = 8 then
+x70 = mid(x244.value,7,1) & x402(chr(x459) & mid(x244.value,9,2))
+elseif x27 = 9 then
+x70 = mid(x244.value,7,2) & x402(chr(x459) & mid(x244.value,10,1))
+elseif x27 = 10 then
+x70 = mid(x244.value,7,3) & x402(chr(x459))
+end if
+   if left(x242 & "  ", 2) = "mm" then
+ x67 = x402(mid(x244.value,4,2))
+ x64 = x402(mid(x244.value,1,2))
+   else
+ x64 = x402(mid(x244.value,4,2))
+ x67 = x402(mid(x244.value,1,2))
+   end if
+x180 = False
+if x303 then
+if len(cstr(x70)) = 4 then x180 = True
+else
+if len(cstr(x70)) = 2 then x180 = True
+end if
+if x180 then
+if not ((x64 = 2) and (x67 = 29) and (x402(x70) mod 4 <> 0)) then x396 = true
+else
+x396 = true
+end if
+end if
+case "H"
+if (x459 >= 48) and (x459 <= 57) then
+if x404(x460, x461) = 1 then
+x75 = x402(chr(x459) & mid(x244.value,2,1))
+elseif x404(x460, x461) = 2 then
+x75 = x402(mid(x244.value,1,1) & chr(x459))
+end if
+if x75 <= 24 then
+if x404(x460, x461) = 2 then
+if NOT (x75 = 0) then x396 = true
+else
+x396 = true
+end if
+end if
+end if
+case "M"
+if (x459 >= 48) and (x459 <= 57) then
+if x404(x460, x461) = 1 then
+x80 = x402(chr(x459) & mid(x244.value,5,1))
+elseif x404(x460, x461) = 2 then
+x80 = x402(mid(x244.value,4,1) & chr(x459))
+end if
+if x80 < 60 then x396 = true
+end if
+case "_"
+x396 = true
+end select
+end if
+End Function
+Private Function x398(x462,x463)
+x462 = x402(x462)
+x463 = x402(x463)
+Select Case CLng(x462)
+Case 0,1,3,5,7,8,10,12
+x398 = 31
+Case 4,6,9,11
+x398 = 30
+Case 2
+if x463 mod 4 = 0 then
+x398 = 29
+else
+x398 = 28
+end if
+end select
+End Function
+Private Function x400(x464, x465)
+x465 = x402(x465)
+x464 = x402(x464)
+Select Case CLng(x464)
+Case 31
+x400 = ";0;1;3;5;7;8;10;12;"
+Case 30
+x400 = ";0;1;3;4;5;6;7;8;9;10;11;12;"
+Case 29
+if (x465 mod 4 = 0) then
+x400 = ";0;1;2;3;4;5;6;7;8;9;10;11;12;"
+else
+x400 = ";0;1;3;4;5;6;7;8;9;10;11;12;"
+end if
+Case else
+x400 = ";0;1;2;3;4;5;6;7;8;9;10;11;12;"
+end select
+End Function
+Private Function x402(x466)
+on error resume next
+x466 = replace(x466, "_", " ")
+x402 = clng("0" & trim(x466))
+End Function
+Private Function x404(x467, x468)
+if x467 > 1 then
+if mid(x242, x467-1, 1) = x468 then x404 = 2
+end if
+if x467 < len(x242) then
+if mid(x242, x467+1, 1) = x468 then x404 = 1
+end if
+End Function
+Private Function x406()
+x288 = mid(x242, GetCursor(x244),1)
+End Function
+Private Function x408(x469, x470)
+dim x20
+x408=False
+if len(x469)>0 then 
+if instr(x358, x469) > 0 then
+x408 = True
+for x20 = 1 to x370
+if x362(x20) = x470 then
+x408 = False
+exit function
+end if
+next
+end if
+end if
+End Function
+Private Function x411(x471)
+dim x116
+for x116 = len(x242) to 1 step -1
+if x408(mid(x242, x116,1), x116) then 
+x411 = x116
+end if
+next
+End Function
+Private Function x413(x472)
+dim x116
+for x116 = 1 to len(x242)
+if x408(mid(x242, x116,1), x116) then 
+x413 = x116
+end if
+next
+End Function
+Private Function x415(x473, x474)
+dim x189
+if len(x473) > x474 then x473 = left(x473, x474)
+x415 = x473
+x189 = x474-Len(x473)
+if x189 > 0 then x415 = x473 & space(x189)
+End Function
+Private Function x416(x475)
+dim x191
+dim x193
+on error resume next
+if instr(x242, ".") > 0 then
+if instr(x475, ".") = 0 then x475 = x475 & "."
+x191 = len(x242)-instr(x242, ".")
+x193 = len(x475)-instr(x475, ".")
+x475 = x475 & string(x191-x193,"0")
+end if
+x416 = x475
+End Function
+Private Function x418(x476)
+dim x116
+dim x27
+x27 = x476
+for x116 = 1 to x476
+if Not x408(mid(x242,x116,1), x116) then x27 = x27-1
+next
+RelativeCurPos = x27
+End Function
+Private Function x420(x477, x478)
+dim x198
+dim x116
+set x198 = me.field.parentelement.document.body.createTextRange
+x198.moveToElementText x477
+x198.collapse
+for x116 = 1 to (x478 - 1)
+x198.moveStart "Character", 1
+next
+x198.moveEnd "Character", 1
+x420 = x198.text
+End Function
+Public Function GetCursor(TextRef)
+dim x198
+dim x202
+dim x27
+set x198 = me.field.parentelement.document.body.createTextRange
+x198.moveToElementText TextRef
+set x202 = me.field.parentelement.document.selection.createRange
+do while (x198.compareEndPoints("StartToStart",x202) < 0)
+x198.moveStart "Character",1
+x27 = x27+1
+Loop
+GetCursor = x27+1
+End Function
+Public Sub SetCursor(TextRef, Position, char, overwrite)
+dim x198
+dim x116
+set x198 = me.field.parentelement.document.body.createTextRange
+x198.moveToElementText TextRef
+x198.collapse
+for x116 = 1 to (Position - 1)
+x198.moveStart "Character", 1
+next
+if overwrite then x198.moveEnd "Character", 1
+x198.text = char
+x198.select
+end sub
+Private Function x422(x479, x480)
+if x480 < 0 then 
+SetCursor x244, x411(x479), "", false
+x480 = GetCursor(x244)
+end if
+x422 = x480
+If x413(x479) < x480 then
+SetCursor x244, x413(x479)+1, "", false
+else
+x288 = mid(x242, x480,1)
+do while ((not x408(x288, x480)) and (x480<len(x479.value)))
+SetCursor x479, x480+1, "", false
+x480 = x480+1
+x288 = mid(x242, x480,1)
+x422 = x480
+loop
+end if
+End Function
+Public Sub NextField()
+dim x18
+x18=GetCursor(x244)
+x18 = x18+1
+do while ((x408(x288, x18)) and (x18<len(x244.value)))
+SetCursor x244, x18+1, "", false
+x18 = x18+1
+loop
+x422 x244, x18
+end sub
+Public Sub PriorField()
+dim x18
+x18=GetCursor(x244)
+x18 = x18-1
+do while (x408(x288, (x18+1))) and (x18>1)
+SetCursor x244, x18+1, "", false
+x18 = x18-1
+loop
+x424 x244, x18
+do while (x408(x288, (x18+1))) and (x18>1)
+SetCursor x244, x18+1, "", false
+x18 = x18-1
+loop
+x422 x244, x18
+end sub
+Private Function x424(x481, x482)
+x482 = x482-1
+If x411(x481) > x482 then
+SetCursor x244, x411(x481), "", false
+else
+SetCursor x481, x482+1, "", false
+x288 = mid(x242, x482+1,1)
+do while (not x408(x288, (x482+1))) and (x482>1)
+x482 = x482-1
+SetCursor x481, x482+1, "", false
+x288 = mid(x242, x482+1,1)
+x424 = x482
+loop
+end if
+if x482 > 0 then
+if (x482 = 1) AND (not x408(mid(x242, x482+1,1), x482+1)) then 
+SetCursor x481, x482, "", false
+end if
+end if
+End Function
+Private Function x426(x483, x484, x485)
+dim x210
+dim x212
+dim x116
+for x116 = 1 to len(x483)
+if x408(mid(x242,x116,1), x116) then
+if mid(x483,x116,1) = x484 then
+x210 = left(x483, x116-1)
+x212 = mid(x483, x116+1)
+x483 = x210 & x485 & x212
+end if
+end if
+next
+x426 = x483
+End Function
+Private Function x428(x486)
+x428 = ((x486 <= x262) AND (x486 >= x258))
+End Function
+Private Sub x444()
+dim x27
+dim x217
+if x315 then
+if not x353 then
+x353=True
+x270=False
+x310=x242
+x242=replace(x242, ",", "")
+x217=x242
+x242=""
+x322=len(x217)
+x27=instr(x217, ".")
+if x27 > 0 then
+x336=mid(x217, x27)
+x217 = left(x217, x27-1)
+else
+x336=""
+end if
+x27=instr(x217, "n")
+if x27 > 0 then
+x341=left(x217, x27-1)
+x217=mid(x217, x27)
+end if
+if len(x217) > 0 then
+if right(x217,1)="n" then
+x346=right(x217,1)
+x217=left(x217, len(x217)-1)
+end if
+end if
+x326=x217
+x242=x341 & x346 & x336
+end if
+end if
+end sub
+Private Function x430(x487)
+dim x30
+dim x84
+dim x91
+dim x101
+dim x96
+x430 = x244.value
+x430 = Replace(x430," ","")
+x430 = Replace(x430,"_"," ")
+x84 = instr(x242,".")
+x91 = len(x242)-x84
+if x84 > 0 then
+x96 = trim(left(x430, x84-1+x487))
+else
+x96 = x430
+end if
+if x84>0 then 
+x101 = trim(mid(x430, x84+1+x487))
+x101 = x101 & string(x91-len(x101), "0")
+x96 = x96 & " ." & x101
+end if
+x430 = x96
+x430 = Replace(x430,".","")
+x430 = Replace(x430,",","")
+x430 = Replace(x430,"$","")
+x430 = Replace(x430," ","_")
+end function
+Private Function x432()
+'此处返回公司名称
+x432 = location.hostname '"localhost"  //x436("4576616E7350726F6772616D6D696E672E636F6D")
+End Function
+Private Function x434(x488)
+Dim x225
+Dim x227
+Dim x228
+Dim x232
+Dim x234
+x434 = 0
+x228 = 1
+For x227 = Len(x488) To 1 Step -1
+x232 = Mid(x488, x227, 1)
+If InStr("ABCDEF", x232) Then
+x234 = Asc(x232) - 64 + 9
+Else
+x234 = x232
+End If
+x225 = x225 + (x234 * x228)
+If x227 > 1 Then x228 = x228 * 16
+Next
+x434 = x225
+End Function
+Private Function x436(x489)
+Dim x235
+Dim x161
+Dim x238
+For x235 = 1 To Len(x489) Step 2
+x161 = Chr(x434(Mid(x489, x235, 2)))
+x238 = x238 & x161
+Next
+x436 = x238
+End Function
+Private x382
+Private Function x438(x490)
+if instr(lcase(x442), lcase(x432)) = 0  then
+x440
+else
+x438=x490
+end if
+End Function
+Private Function x440()
+Dim x240
+x240 = x436("5065726665637420466F726D6174206973206E6F74207265676973746572656420666F7220757365206F6E2074686973207365727665722E20506C6561736520636F6E74616374204576616E732050726F6772616D6D696E6720666F722064657461696C732E0D0A0D0A5065726665637420466F726D61740D0A436F707972696768742032303032204576616E732050726F6772616D6D696E670D0A416C6C205269676874732052657365727665640D0A0D0A5765623A20687474703A2F2F7777772E4576616E7350726F6772616D6D696E672E636F6D0D0A454D61696C3A2053616C6573404576616E7350726F6772616D6D696E672E636F6D0D0A50686F6E653A20312D3834372D3838322D313337380D0A") : if right("    " & parent.document.cookie,4) = "pf=1" then exit function else parent.document.cookie = parent.document.cookie + "pf=1;" : if x382 <> false then exit function else MsgBox x240, vbExclamation, "Informational Message" : x382=true
+End Function
+Private Function x442()
+x442=parent.location.href
+End Function
+End Class
+-->
+</SCRIPT>
+

@@ -1,0 +1,100 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var tbName = "";
+var keyFieldName = "";
+function uf_open(){
+	if(listbox1.options.length > 0){
+		listbox1.options[0].selected=true;
+		if(IsSpace(listbox1.value) == false) uf_click();
+	}
+}
+
+function uf_click(){
+	tbName = listbox1.value;
+	keyFieldName = SqlToField("select fdname from fc_entitysub where tbname='"+tbName+"' and type='ID字段'");
+	var sql1="select * from "+tbName +"  where  deleteMark='1'";
+	dataset1.HideField = keyFieldName+",deleteMark,orgid,sortNo";   //隐藏掉id字段和删除字段,序列号，orgid
+	addCheckBoxCol(grid1,sql1,uf_colWidth);	
+}
+
+function uf_colWidth(){//设置表格列宽
+	for(i=2;i<grid1.tab.childNodes(0).childNodes.length;i++){
+		grid1.tab.childNodes(0).childNodes(i).style.width = "100px";
+	}
+}
+
+function uf_handleData(param){
+	if(listbox1.options.length == 0) {alert("没有要恢复或删除数据的表");return}
+	if(IsSpace(keyFieldName) == true) {alert("fc_entitysub表中，没有"+tbName+"表id字段的记录");return}
+	var xmlSql="";
+	var isExist="";//是否有恢复或删除的数据；
+	var sb = new Sys.StringBuilder();
+	
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for(i=0;i<l;i++){
+		var fieldNum = dataset1.FieldNameToNo(keyFieldName);//由字段名得到字段号
+		if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == "是"){
+			isExist="is";
+			var keyFieldValue = dataset1.oDom.documentElement.childNodes(i).childNodes(fieldNum).text;//主键字段值
+			if(param == 1){
+				sb.append("<update tableName='"+tbName+"'> <set>deleteMark='0'</set> <where>"+ keyFieldName +"= '"+keyFieldValue+"'</where> </update>  ");
+			}else{
+				sb.append("<delete tableName='"+tbName+"'><where> "+ keyFieldName +"= '"+keyFieldValue+"'</where> </delete>   ");
+			}
+		}
+	}
+	xmlSql= sb.toString();
+	if((param == 2) && (IsSpace(tbName) == false) && (isExist == "is")){
+		var ret = window.confirm("你确定删除选中的数据吗？");
+		if (ret==false) return;
+	}
+	if((isExist == "is") && (IsSpace(tbName) == false)){
+		doSaveData(xmlSql,function(){if(param == 1){alert("恢复成功");} else{alert("删除成功");}});
+		uf_click();
+	}else{
+		if(param == 1){alert("请在右边的选择列中的复选框中，选中要恢复的数据,或"+listbox1.options[listbox1.selectedIndex].text+",表中没有要恢复的数据");} else{alert("请在右边的选择列中的复选框中，选中要删除的数据,或"+listbox1.options[listbox1.selectedIndex].text+",表中没有要删除的数据");}
+	}
+		
+}      
+
+function uf_selAll() {//判断全选按钮函数
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for (var i = 0; i < l; i++) {	
+		//选择列在第0列.
+		dataset1.oDom.documentElement.childNodes(i).childNodes(0).text = "是";
+		var oTd =  grid1.tab.rows(i + 1).cells(1);
+        oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checked.gif)";
+        oTd.style.backgroundRepeat = "no-repeat";
+	}
+}
+
+function uf_noSelAll() {//判断不全选按钮函数
+    var l = dataset1.oDom.documentElement.childNodes.length - 1;
+    for (var i = 0; i < l; i++) {
+        //选择列在第0列.
+        dataset1.oDom.documentElement.childNodes(i).childNodes(0).text = "否";
+        var oTd = grid1.tab.rows(i + 1).cells(1);
+        oTd.style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)";
+        oTd.style.backgroundRepeat = "no-repeat";
+
+    }
+}
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" AutoResizeXml="<record id ='listbox1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>0</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" contxml="<root><listbox><id>listbox1</id></listbox><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:2;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" billtaborder="<root><taborder>listbox1</taborder><taborder>grid1</taborder></root>" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen="uf_open()" window="当前窗口" posheight poswidth postop posleft center="  " isfile="是" type="ZK" caption="删除或恢复数据" dj_sn="zk_delete_data" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userToolbar='<tr rowstate="add"><td>cmdRecover</td><td></td><td>恢复</td><td>uf_handleData(1)</td><td>43px</td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>del</td><td>删除</td><td></td><td>uf_handleData(2)</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>cmdsel</td><td></td><td>全选</td><td>uf_selAll()</td><td>42px</td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>cmdSelNo</td><td></td><td>全不选</td><td>uf_noSelAll()</td><td>52px</td><td></td><td></td><td></td><td></td></tr>'><SELECT style="POSITION: absolute; WIDTH: 213px; HEIGHT: 327px; TOP: 0px; LEFT: 5px" id=listbox1 onmovestart=moveStart() onchange='bill_onclick("uf_click()")' size=8 controltype="listbox" async="否" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100j%F6%D2%EA%D0%E8%D8Xr%94Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100j%F6%D2%D4%DE%EA%EA%D0%E8%D8XrnXrnXrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100Xrn%E6%D8%DA%F6Xrn%E2%EC%E0%EAXrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100%F4%F8%D2Xrn%EC%EAXrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100j%F6%D2%EA%D0%E8%D8Xt%96%DA%D4%CC%D8%EA%F6%E0%F6%u0100%F4%F8%D2j%F6%D2%EA%D0%E8%D8Xrn%FC%DE%D8%F2%D8XrnXrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100%F4%F8%D2j%DA%D6%EA%D0%E8%D8Xt%96Xr%7C%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xr%7C" datasourceName sql check="2" AutoSizeXml="<record id ='listbox1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>0</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" temptext tempvalue></SELECT><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1></grid1>")' onclick='bill_ongridclick("<grid1></grid1>")' format="<cols></cols>" controltype="grid" dataset="dataset1" visible="是" height="316" width="579" top="0" left="221" bodyrows="-1" bodyrowheight="-1" hideVscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" blRowNo="否" hideHscroll="auto">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 format="<fields></fields>" onSetText='bill_ondatasetsettext("<dsid></dsid>")' onGetText='bill_ondatasetgettext("<dsid></dsid>")' onValid='bill_ondatasetvalid("<dsid></dsid>")' controltype="dataset" idtype="1" async="否" isSubGrid="否" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" opensortno="1" pubpara="否"></fc:dataset></DIV><script></script></body></html>

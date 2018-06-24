@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>同名字段传递数据规则</title>
+<link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+
+
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">同名字段传递数据规则</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+<div  class="mainDiv">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同名字段传递数据规则是指一个或多个数据在不同控件之间，或一个控件的不同位置不同属性之间需要传递时，按照字段名称相同来自动匹配传递，不需要额外指定。 例如表单打开数据集后,通过字段名相同把后台执行sql语句的查询结果传递给数据集的字段上,数据集中的数据保存到数据库的表中时，也是比较数据集的字段和要保存的表的字段，只保存两边都有的同名的字段。还有dropdownlist控件的选择值通过同名字段传递数据规则传到数据集上,表格中的dropdownlist控件可以把它查询的值传递到数据集字段上,再通过数据集字段传递到表格的控件的其他列的字段中,CommonSelect函数也是将弹出的窗口的数据用同名字段传递数据规则返回到当前页面上， 它只传递同名字段,不同名的不管,一次可以传递一个或多个字段值或多条记录.sql语句中可以用字段别名的方式来改变字段名,例如<p>select semployeename sdwid, sdwid as sdwname from fcs_employee</p>就在职员表中做了一个sdwname字段,数据集中的字段名也可以改,只有物理表的字段名不能改.因为字段名可以随意改名以适应自己的传递数据的要求，使用同名字段传递数据规则可以极大的方便数据的传递。实际上，在做表单的工作中，有很大一部分工作就是数据在各个地方的传递了。使用同名字段传递数据规则使数据传递简洁，高效，易于学习，扩展性好，灵活掌握后事半功倍。
+    </div>
+</body>
+</html>
+>

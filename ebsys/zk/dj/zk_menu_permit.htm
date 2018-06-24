@@ -1,0 +1,87 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	 var xmlpath = location.protocol + "//" + location.host + fcpubdata.path + "/zk/main/admin_design_menu.xml";
+    var oXml = SetDomFile(xmlpath);
+    var docE = oXml.documentElement;
+    uf_editCode(docE);
+    docE.setAttribute("rootaction", escape("uf_clickTree(Global.selectedItem.code)"));
+    tree1.loadXmlStr(docE.xml);	
+    TreeRootNodeHide($id('tree1'), 'none');
+    tree1.expandAll();
+    e_PropWinOnload() ;
+    
+}
+
+function uf_editCode(oNode){
+	for(var i = 0; i < oNode.childNodes.length;i++){
+    	codeArr = oNode.childNodes[i].getAttribute("code").split(',');
+    	if(codeArr.length < 1) codeArr[0] = "";
+    	oNode.childNodes[i].setAttribute("code", codeArr[0]); 
+    	if(oNode.childNodes.length > 0){
+    		uf_editCode(oNode.childNodes[i])
+    	}
+    }
+}
+   
+
+function uf_clickTree(code){
+	dataset1.Open("select fcq_profilesub.profileid ,fcq_profilesub.profileid as profileName,type,detail,permit from fcq_profilesub inner join fcq_profile  on fcq_profile.profileid=fcq_profilesub.profileid where fcq_profilesub.type=1 and fcq_profilesub.detail='"+ code +"'");
+}
+
+function uf_addPermit(){
+	if(Global.selectedItem == null){
+		alert("请先选中菜单中的功能点后，在添加授权角色");
+		return;	
+	}
+	if(IsSpace(Global.selectedItem.code)){
+		alert("您选中的功能点为上级节点或没有功能点id");
+		return;	
+	}
+	$eform('增加行')
+	var roles = fcUserFunc.selectProfiles(grid1,'profileId','profileName');
+	if(IsSpace(roles)){
+		$eform('删除行');		
+	}else{
+		$eform('提交数据');
+		uf_clickTree(Global.selectedItem.code);
+	}	
+		
+}
+
+
+function uf_del(){
+
+	if (Global.selectedItem == null) {
+        alert("请选择要删除角色权限的功能点！");
+        return;
+	}
+	var xmlSql = "";
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for(var i=0;i<l;i++){
+		if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == "是"){
+			xmlSql += "<delete tableName='fcq_profilesub'><where>  profileId= '"+ dataset1.oDom.documentElement.childNodes(i).childNodes(1).text+"' and type=1 and detail='"+ Global.selectedItem.code +"'</where></delete>";
+		}	
+	}
+	doSaveData(xmlSql,function(){alert("成功删除选中角色功能点权限");uf_clickTree(Global.selectedItem.code)})
+}	
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  /><script src='../../fceform/js/xtree.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" runParams envType="电脑" dj_sn="zk_menu_permit" caption="主菜单权限设置" type="ZK" isfile="是" center="  " posleft postop poswidth posheight window="当前窗口" BLONopen="uf_open()" BLONopenBefore BLONclose billtaborder="<root><taborder>grid1</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:4;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:1;dataset:1;spin:0;excel:0;tree:5;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><button><id>cmdAdd</id><id>cmdDel</id></button><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset><tree><id>tree1</id></tree></root>" userToolbar='<tr rowstate="add"><td>add</td><td>新增</td><td></td><td>uf_addPermit()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>del</td><td>删除</td><td></td><td>uf_del()</td><td></td><td></td><td></td><td></td><td></td></tr>' useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore userType alertType="1" isCheckPermit="否" AutoResizeXml="<record id ='tree1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>5</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"><?xml:namespace prefix = fc /><fc:dataset id=dataset1 isSubGrid="否" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" opensortno="1" savetable="FCQ_PROFILESUB" idparam="PRO" fieldtrans="<root><field><name>profileName</name><trans></trans><rtrans></rtrans><sql>select%20profileId%20%20%2CprofileName%20%20from%20FCQ_PROFILE</sql></field></root>" async="否" controltype="dataset" idtype="1" format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>profileid</fieldname><datatype>字符</datatype><displaylabel>角色id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>profileName</fieldname><datatype>字符</datatype><displaylabel>角色名称</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>detail</fieldname><datatype>字符</datatype><displaylabel>详细</displaylabel><size>100</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>Global.selectedItem.code</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>id</fieldname><datatype>字符</datatype><displaylabel>id字段</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>permit</fieldname><datatype>整数</datatype><displaylabel>权限</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>1</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>type</fieldname><datatype>整数</datatype><displaylabel>类型</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>1</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sel></sel><profileid></profileid><profileName></profileName><detail></detail><id></id><permit>$valid(&amp;quot;整数&amp;quot;);</permit><type>$valid(&amp;quot;整数&amp;quot;);</type></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><profileid></profileid><profileName></profileName><detail></detail><id></id><permit></permit><type></type></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sel></sel><profileid></profileid><profileName></profileName><detail></detail><id></id><permit></permit><type></type></dsid>")'></fc:dataset>
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 570px; HEIGHT: 536px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 3px; BORDER-RIGHT: 1px solid; LEFT: 3px" id=tree1 class=control-border-color controltype="tree" datasourceName="" xml="%3CTreeNode%20id%3D%221%22%20text%3D%22%22%20roottarget%3D%22_self%22%20rootaction%3D%22%22%20%20target%3D%22_self%22%20title%3D%22%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E" clicknode="" roottext="全选" sourcetype="0" ischecked="否" isAll="是" opentb="_self" xmlpath="null"></DIV><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" format="<cols><col><fname>sel</fname><cname>选</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>30</columnwidth><align>left</align></col><col><fname>profileName</fname><cname>角色名称</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>380</columnwidth><align>left</align></col></cols>" visible="是" dataset="dataset1" readonly="否" canselect="是" autoappend="否" autoheight="是" autowidth="否" SetRowHeight="是" hideHscroll="auto" hideVscroll="auto" blRowNo="否" bodyrowheight="-1" bodyrows="-1" width="433" height="512" top="28" left="579">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 1px; LEFT: 580px" id=cmdAdd onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_addPermit()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 1px; LEFT: 662px" id=cmdDel onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_del()")'></BUTTON></DIV><script>var tree1;NavJs.addEvent(window, "onunload", function(){tree1=null;});</script></body></html>

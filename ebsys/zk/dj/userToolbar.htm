@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	e_PropWinOnload();
+	var sData = fcpubdata.obj;
+	if(IsSpace(sData) == false){
+		var dsAll = dataset1.xml;
+		var pos = dsAll.indexOf("<set><pages>");
+		sData = "<root>"+sData+dsAll.substring(pos,dsAll.length);
+		dataset1.OpenXmlData(sData);
+	}
+	var sXml="";
+	var sHtml0 = "<code><format> ID | 提示信息 </format><sql1></sql1><xml>"
+	var sHtml1 = "<code><format> ID | 提示信息! </format><sql1></sql1><xml>"
+	var sHtml2 = "</xml><blninput>是</blninput><blnempty>否</blnempty><check>2</check></code>"
+	for(var key in fcpubdata.toolbarButtons){
+		sXml += "<tr><td>"+key+"</td><td>"+fcpubdata.toolbarButtons[key][2]+"</td></tr>";
+	
+	}
+	
+	grid1.tab.children[0].children[1].cz  = sHtml0+sXml+sHtml2 ;
+	grid1.tab.children[0].children[2].cz  = sHtml1+sXml+sHtml2 ;
+	grid1.cz.FieldNameList="ID,msg";
+		
+}
+function uf_ok(){
+	if(dataset1.RecordCount>0){
+		window.returnValue = dataset1.RecordData;	
+	}
+	window.close();
+}
+function uf_sel_function(){
+	SelFunction(grid1.cz);
+	dataset1.Field('code').Value=grid1.cz.value;
+	dataset1.fset_cont();	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" toolbar="不带工具栏" dj_sn="userToolbar" type="ZK" caption="自定义工具栏" mkbh codeheader keyfield window="有模式窗口" entertype="修改" posleft postop poswidth="670" posheight="400" isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>grid1</taborder><taborder>button4</taborder><taborder>button5</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:7;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" contxml="<root><button><id>button4</id><id>button5</id><id>cmdOk</id><id>cmdClose</id><id>cmdAdd</id><id>cmdDel</id></button><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" center="居中" BLONopen="uf_open()" BLONopenBefore BLONclose userType AutoResizeXml><?xml:namespace prefix = fc /><fc:webgrid id=grid1 onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col></grid1>")' readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" dataset="dataset1" visible="是" controltype="grid" SetRowHeight="是" hideHscroll="否" hideVscroll="否" blRowNo="否" bodyrowheight="-1" bodyrows="-1" format="<cols><col><fname>ID</fname><cname>控件ID</cname><width>11</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u662F%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>msg</fname><cname>提示信息</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u662F%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>text</fname><cname>按钮上文字</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>code</fname><cname>调用代码</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u662F%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Conclickopen%3Euf_sel_function%28%29%3C/onclickopen%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>230</columnwidth><align>left</align></col><col><fname>width</fname><cname>宽度</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>50</columnwidth><align>left</align></col></cols>" width="570" height="262" top="31" left="10">
+<TABLE id=t style="TABLE-LAYOUT: fixed; FONT-SIZE: 12px; LEFT: 0px; POSITION: absolute; TOP: 0px; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow style="FONT-SIZE: 12px; BACKGROUND-COLOR: #c0c0c0">
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" controltype="dataset" pubpara="否" opensortno="1" isSubGrid="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" format="<fields><field><fieldname>ID</fieldname><datatype>字符</datatype><displaylabel>控件ID</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>msg</fieldname><datatype>字符</datatype><displaylabel>提示信息</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>text</fieldname><datatype>字符</datatype><displaylabel>按钮上文字</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>code</fieldname><datatype>字符</datatype><displaylabel>调用代码</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>width</fieldname><datatype>字符</datatype><displaylabel>宽度</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><ID>$valid(&amp;quot;字段值不重复&amp;quot;);</ID><msg></msg><text></text><code></code><width></width></dsid>")' onGetText='bill_ondatasetgettext("<dsid><ID></ID><msg></msg><text></text><code></code><width></width></dsid>")' onSetText='bill_ondatasetsettext("<dsid><ID></ID><msg></msg><text></text><code></code><width></width></dsid>")'></fc:dataset><BUTTON id=button4 style="LEFT: 316px; WIDTH: 61px; POSITION: absolute; TOP: 1px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("GridChangeRow(true,grid1)")'>上 移</BUTTON><BUTTON id=button5 style="LEFT: 383px; WIDTH: 61px; POSITION: absolute; TOP: 1px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("GridChangeRow(false,grid1)")'>下 移</BUTTON><BUTTON id=cmdOk style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 158px; WIDTH: 69px; FONT-FAMILY: ; POSITION: absolute; TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON id=cmdClose style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 230px; WIDTH: 69px; FONT-FAMILY: ; POSITION: absolute; TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><BUTTON id=cmdAdd style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 14px; WIDTH: 69px; FONT-FAMILY: ; POSITION: absolute; TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("dataset1.Append()")' dropstyle="否"></BUTTON><BUTTON id=cmdDel style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 86px; WIDTH: 69px; FONT-FAMILY: ; POSITION: absolute; TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("dataset1.Delete()")' dropstyle="否"></BUTTON></DIV></body></html>

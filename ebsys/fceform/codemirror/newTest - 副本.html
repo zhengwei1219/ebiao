@@ -1,0 +1,134 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <title>编辑代码</title>
+    <link rel="stylesheet" href="codemirror.css">
+    <script src="codemirror.js"></script>
+    
+    <script src="jshint-2.1.9.js"></script>
+    <script src="addon.js"></script>
+    <script src="tern.js"></script>
+    <script src="ecma5.js"></script>
+    
+  </head>
+  <body>
+    <div>&nbsp;<button id="cmdOk" onclick="cmdOk_onclick()">确 定</button>&nbsp;<span id="lblTitle"></span></div>
+
+<div><textarea id="code" name="code">
+
+</textarea></div>
+
+    <script>
+        var editor = null;
+        function cmdOk_onclick() {
+            var oWin = window.opener;
+            if (oWin != null) {
+                if (typeof (oWin.textarea_code) == "undefined" || oWin.textarea_code == null) {
+                    oWin.textarea_code = new Object();
+                }
+                if (typeof (oWin.textarea_code.title) != "undefined" && oWin.textarea_code.title != null) {
+                    oWin.textarea_code.title = document.getElementById("lblTitle").innerText;
+                }
+                if (typeof (oWin.textarea_code.value) != "undefined" && oWin.textarea_code.value != null) {
+                    oWin.textarea_code.value = document.getElementById("code").value;
+                }
+            }
+        }
+        function getHeight() {
+            var winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
+            //var oCode = document.getElementById("code");
+            //oCode.CodeMirror.getWrapperElement().style.height = (winHeight - 40) + "px";
+            //alert((winHeight - 40))
+            //oCode.style.height = (winHeight - 40) + "px";
+            return (winHeight - 30) + "px";
+        }
+
+        window.onload = function() {
+
+            var oWin = window.opener;
+            if (oWin != null && typeof (oWin.textarea_code) != "undefined" && oWin.textarea_code != null) {
+                if (typeof (oWin.textarea_code.title) != "undefined" && oWin.textarea_code.title != null) {
+                    document.getElementById("lblTitle").innerText = oWin.textarea_code.title;
+                }
+                if (typeof (oWin.textarea_code.value) != "undefined" && oWin.textarea_code.value != null) {
+                    document.getElementById("code").value = oWin.textarea_code.value;
+                }
+            }
+
+            //           CodeMirror.commands.autocomplete = function(cm) {
+            //            CodeMirror.showHint(cm, CodeMirror.hint.javascript);
+            //            CodeMirror.showHint(cm, CodeMirror.hint.anyword);
+
+            //           }
+            //setHeight();
+            var ternServer = new CodeMirror.TernServer({ defs: [ecma5] });
+            editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                mode: "javascript",
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                showTrailingSpace: true,
+                lint: true,
+                continueComments: "Enter",
+
+                lineWrapping: true,
+                extraKeys: {},
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "CodeMirror-lint-markers"],
+                highlightSelectionMatches: { showToken: /\w/ },
+                styleActiveLine: true,
+                tabSize: 4,
+                indentUnit: 4,
+                indentWithTabs: true,
+
+                extraKeys: {
+                    "Shift-/": function(cm) { cm.foldCode(cm.getCursor()); },
+                    //"Ctrl-Enter": "autocomplete",
+                    "Ctrl-Enter": function(cm) { ternServer.complete(cm); },
+                    "Ctrl-I": function(cm) { ternServer.showType(cm); },
+                    "Alt-.": function(cm) { ternServer.jumpToDef(cm); },
+                    "Alt-,": function(cm) { ternServer.jumpBack(cm); },
+                    "Ctrl-R": function(cm) { ternServer.rename(cm); },
+                    "Ctrl-/": "toggleComment"
+                }
+            });
+            try {
+                editor.foldCode(CodeMirror.Pos(8, 0));
+            } catch (e) { }
+            editor.on("cursorActivity", function(cm) { ternServer.updateArgHints(cm); });
+            editor.setSize("100%", getHeight());
+            CodeMirror.on(window, "resize", function() {
+                //setHeight();
+                editor.setSize("100%", getHeight());
+            });
+        }
+        
+    </script>
+
+ <!--
+    <p><strong>MIME types defined:</strong> <code>text/javascript</code>, <code>application/json</code>, <code>text/typescript</code>, <code>application/typescript</code>.</p>
+        <dl>
+      <dt>Ctrl-F</dt><dd>开始查找</dd>
+      <dt>Ctrl-G</dt><dd>查找下一个</dd>
+      <dt>Shift-Ctrl-G</dt><dd>查找上一个</dd>
+      <dt>Shift-Ctrl-F</dt><dd>替换</dd>
+      <dt>Shift-Ctrl-R</dt><dd>替换全部</dd>
+      
+      <dt>Shift-/</dt><dd>折叠/展开代码</dd>
+      <dt>Ctrl-Enter</dt><dd>自动完成</dd>
+      <dt>Ctrl-I</dt><dd>查看数据类型</dd>
+      <dt>Alt-.</dt><dd>跳转到函数的定义处</dd>
+      <dt>Alt-,</dt><dd>跳转回来</dd>
+      <dt>Ctrl-R</dt><dd>变量改名</dd>
+      <dt>Ctrl-/</dt><dd>注释/取消注释当前行</dd>
+         <dt> "Ctrl-A": "selectAll", "Ctrl-D": "deleteLine", "Ctrl-Z": "undo", "Shift-Ctrl-Z": "redo", "Ctrl-Y": "redo",
+    "Ctrl-Home": "goDocStart", "Alt-Up": "goDocStart", "Ctrl-End": "goDocEnd", "Ctrl-Down": "goDocEnd",
+    "Ctrl-Left": "goGroupLeft", "Ctrl-Right": "goGroupRight", "Alt-Left": "goLineStart", "Alt-Right": "goLineEnd",
+    "Ctrl-Backspace": "delGroupBefore", "Ctrl-Delete": "delGroupAfter", "Ctrl-S": "save", "Ctrl-F": "find",
+    "Ctrl-G": "findNext", "Shift-Ctrl-G": "findPrev", "Shift-Ctrl-F": "replace", "Shift-Ctrl-R": "replaceAll",
+    "Ctrl-[": "indentLess", "Ctrl-]": "indentMore",
+</dt>
+    </dl>
+    -->
+  </body>
+</html>

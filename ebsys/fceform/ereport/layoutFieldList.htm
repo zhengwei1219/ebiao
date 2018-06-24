@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script src="../js/fcbasecont.js"></script>
+
+<script>
+
+
+
+/**
+* 双击选择字段
+**/
+function selectField() {
+    var obj = event.srcElement;
+    var index = obj.selectedIndex % 2;
+    var currentTd = parent.ebiaoWin.SelObj.curTD.oTD;
+    var arr = obj.options(cboField.selectedIndex).value.split('.');
+    if (index == 1) {
+        parent.delProperty(); //清除其它属性
+        if(tdRepeatField(arr,1) == false)   return;
+        //currentTd.title = obj.options(cboField.selectedIndex - 1).value;
+        currentTd.title = arr[0] + "(" + arr[2] + ")." + arr[1] + "(" + arr[3] + ")"; 
+        //if (currentTd.controlId != "") currentTd.removeAttribute("controlId"); //清除controlId属性
+        currentTd.contType = "field";
+        currentTd.style.backgroundRepeat = "no-repeat";
+        currentTd.style.backgroundPosition = "right";
+        currentTd.style.backgroundImage = "url(../../fceform/ereport/images/ef_ebiao_text.gif)";
+        //parent.ebiaoWin.txtEdit.value = "";
+
+    } else {
+        parent.delProperty(); //清除其它属性
+        if(tdRepeatField(arr) == false) return;
+        parent.ebiaoWin.$id('txtEdit').value = obj.options(cboField.selectedIndex).text;
+        currentTd.contType = "label";
+        //currentTd.id = "TD_" + arr[0] + "_" + arr[1];
+    }
+    currentTd.tableName = arr[0];
+    currentTd.fieldName = arr[1];
+
+}
+/**
+**检查单元格重复字段
+fieldType = 1是field否则是label
+**/
+function tdRepeatField(arr,fieldType) {
+
+    var t = parent.ebiaoWin.$id('t');
+    for (var i = 0; i < t.rows.length; i++) {
+        for (var j = 0; j < t.rows[i].cells.length; j++) {
+            var obj =  t.rows[i].cells[j];
+            var l;
+            if (fieldType == 1) {
+                if (obj.contType == "field" && obj.tableName == arr[0] && obj.fieldName == arr[1]) {
+                    l = parent.ebiaoWin.eval("IntToLbl("+(j+1)+")");
+                    alert("“" + arr[3] + "”字段在 " + l + (i + 1) + "单元格已设置，不能重复设置")
+                    return false;
+                }
+            } else {
+                if (obj.contType == "label" && obj.tableName == arr[0] && obj.fieldName == arr[1]) {
+                    l = parent.ebiaoWin.eval("IntToLbl("+(j+1)+")");
+                    alert("“"+arr[3] + "”字段在 " + l + (i + 1) + "单元格已设置，不能重复设置")
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+</script>
+</HEAD>
+<BODY style="margin:0" >
+<label style="top: 8px; left: 5px; font-weight: bold; position: absolute; FONT-SIZE: 14px;">字段列表:</label><br />
+<SELECT size=2 id="cboField" style="position: absolute;width:225;height:95%; TOP: 26px; left: 0px;" ondblclick=selectField() >
+</SELECT>
+
+
+</BODY>
+</HTML>

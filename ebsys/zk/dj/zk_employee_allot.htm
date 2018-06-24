@@ -1,0 +1,100 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var sFID,sFCode,sFName,sParent;
+var oXml = null;
+var renewDel = "";//恢复标记删除的记录
+var idSame =false;//id字段值不相同
+function uf_open(){//
+	if(IsSpace(fcpubdata.obj.Field('SID').Value) == false){//获取当前父节点的全路径名，id等信息
+		sFID = fcpubdata.obj.Field('sFID').Value;//全路径id
+		sFCode = fcpubdata.obj.Field('sFCode').Value;//全路径编号
+		sFName = fcpubdata.obj.Field('SFNAME').Value;//全路径名称
+		sParent = fcpubdata.obj.Field('SID').Value;//父id
+	}	
+}
+function uf_save() {
+	var l=dataset1.oDom.documentElement.childNodes.length-1;	
+	var xmlSql = "";
+	for(var i=0;i<l;i++){
+		if(dataset1.oDom.documentElement.childNodes[i].childNodes[0].text == "是"){
+			if(uf_check(dataset1.oDom.documentElement.childNodes[i].childNodes[3].text,'name',dataset1.oDom.documentElement.childNodes[i].childNodes[1].text) == false) return;
+			if(uf_check(dataset1.oDom.documentElement.childNodes[i].childNodes[2].text,'code',dataset1.oDom.documentElement.childNodes[i].childNodes[1].text) == false) return;
+			var sId = dataset1.oDom.documentElement.childNodes[i].childNodes[1].text+"@"+sParent;
+			var sortNo = getMaxIntNo('SOR');
+			var sFIDNew = sFID +"/"+dataset1.oDom.documentElement.childNodes[i].childNodes[1].text+".psm";
+			var sFNameNew = sFName +"/"+dataset1.oDom.documentElement.childNodes[i].childNodes[3].text;
+			var sFCodeNew = sFCode +"/"+dataset1.oDom.documentElement.childNodes[i].childNodes[2].text;	
+			xmlSql += "<insert tableName='FCQ_ORG'><names> SID,SCODE,SNAME,SFID,SFCODE,SFNAME,SPERSONID,SPARENT,SORGKINDID,DELETEMARK,sortNo  </names><values>'"+sId+"','"+dataset1.oDom.documentElement.childNodes[i].childNodes[2].text+"','"+dataset1.oDom.documentElement.childNodes[i].childNodes[3].text+"','"+sFIDNew+"','"+sFCodeNew+"','"+sFNameNew+"','"+dataset1.oDom.documentElement.childNodes[i].childNodes[1].text+"','"+sParent+"','psm',0,"+sortNo+" </values></insert>";	//dataset1.Field('SLEVEL').Value
+		}	
+	}
+	doSaveData(renewDel+xmlSql,function(){alert("分配职员成功");window.returnValue="ok";window.close(); });
+}
+
+function uf_check(addValue,type,id){//检查名称编号字段重名
+	if(oXml == null){//如果保存时刚产生dom对象，就不要再执行sql语句了，保存后dom对象会null
+		var sql = "select SCODE,SNAME ,deleteMark,sID,sParent from FCQ_ORG where sParent='"+fcpubdata.obj.Field('SID').Value+"'"
+		var xmlRet = SelectSql(sql,1,-1);
+		oXml = SetDom(xmlRet);
+		if (oXml.documentElement == null) {
+		    alert(xmlRet);
+		    return;
+		}
+		if (oXml.documentElement.childNodes.length < 1) return;
+	}
+	for(var i=0;i< oXml.documentElement.childNodes.length-1;i++){//循环dom检查，先检查id，后检查名称和编码
+		idSame =false;
+		uf_checkId(oXml.documentElement.childNodes[i].childNodes[3].text,id,oXml.documentElement.childNodes[i].childNodes[4].text);//检查id如果数据库中有相同id就删除后新增
+		if(idSame == true) { return true; continue};//如果id重名就不要检查名称和编号字段了
+		if((addValue == oXml.documentElement.childNodes[i].childNodes[1].text) && type == "name" && oXml.documentElement.childNodes[i].childNodes[2].text == "0"){
+			alert("同级节点下，名称字段值'"+addValue+"'重名");
+			return false;//名称重名
+		}
+		
+		if((addValue == oXml.documentElement.childNodes[i].childNodes[0].text) && type == "code"  && oXml.documentElement.childNodes[i].childNodes[2].text == "0"){
+			alert("同级节点下，编号字段值'"+addValue+"'重名");
+			return false;//编号重名
+		}
+		/*var typeName = "名称字段为：";
+		if(type == "code") typeName = "编号字段为";
+		var s = uf_checkId(oXml.documentElement.childNodes[i].childNodes[2].text,oXml.documentElement.childNodes[i].childNodes[3].text,id,oXml.documentElement.childNodes[i].childNodes[4].text)
+		if(s == false) {alert(typeName + addValue+"的记录生成的id与组织权限表的id重名"); return false;}//id重名
+		*///上面是分id重名是删除标记删除的和没有删除的几种情况
+	}
+	return true;
+}
+
+
+
+/*function uf_checkId(dbDelMark,dbId,id,sParent){//检查fcq_org 表的id是否与现在生成的id同门
+	if(dbDelMark == "1" && dbId == (id+"@"+sParent)){//记录的id值相同，并且有删除标记
+		renewDel += "<delete tableName='FCQ_ORG'>  <where> SID = '"+id +"@"+sParent+"'</where></delete>";
+	}else if(dbDelMark == "0" && dbId == (id+"@"+sParent)){//新生成的id与数据库中表fcq_org的id重名
+		return false;
+	}
+}*/
+function uf_checkId(dbId,id,sParent){//检查fcq_org 表的id是否与现在生成的id同门
+	if(dbId == (id+"@"+sParent)){//记录的id值相同，并且有删除标记
+		renewDel += "<delete tableName='FCQ_ORG'>  <where> SID = '"+id +"@"+sParent+"'</where></delete>";
+		idSame = true;//id值相同
+	}
+}
+function uf_find(){
+	dataset1.Open("select EMPLOYEEID,EMPLOYEECODE,EMPLOYEENAME from FCQ_EMPLOYEE where deleteMark=0 and  (employeecode like '"+$id('txtfind').value+"%' or employeename like '"+$id('txtfind').value+"%')");	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" contxml="<root><button><id>button2</id></button><text><id>txtfind</id></text><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:1;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen="uf_open()" window="有模式窗口" posheight="500" poswidth="320" postop posleft center="居中" isfile="是" type="ZK" caption="分配职员" dj_sn="zk_employee_allot" billtaborder="<root><taborder>grid1</taborder><taborder>button2</taborder><taborder>txtfind</taborder></root>" AutoResizeXml userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_save()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' envType="电脑" useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' controltype="grid" blRowNo="否" hideHscroll="是" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" dataset="dataset1" format="<cols><col><fname>sel</fname><cname>选</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>20</columnwidth><align>left</align></col><col><fname>EMPLOYEECODE</fname><cname>编号</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>100</columnwidth><align>left</align></col><col><fname>EMPLOYEENAME</fname><cname>名称</cname><width>10</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>145</columnwidth><align>left</align></col></cols>" width="295" height="408" top="26" left="9">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" controltype="dataset" format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>EMPLOYEEID</fieldname><datatype>字符</datatype><displaylabel>id</displaylabel><size>100</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>EMPLOYEECODE</fieldname><datatype>字符</datatype><displaylabel>编号</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>EMPLOYEENAME</fieldname><datatype>字符</datatype><displaylabel>名称</displaylabel><size>10</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" opensortno="1" isSubGrid="否" async="否" onValid='bill_ondatasetvalid("<dsid><sel></sel><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sel></sel><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98j%98%A8%AE%A6%AC%C0%98%98%A0%96Xr%94%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98j%98%A8%AE%A6%AC%C0%98%98%94%AC%96%98Xr%94%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98j%98%A8%AE%A6%AC%C0%98%98%AA%90%A8%98Xrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xt%96n"></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 182px; HEIGHT: 20px; TOP: 1px; LEFT: 10px" id=txtfind onmovestart=moveStart() size=30 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 107px; HEIGHT: 24px; TOP: -1px; LEFT: 197px" id=button2 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_find()")'>名称编号模糊查找</BUTTON></DIV><script></script></body></html>

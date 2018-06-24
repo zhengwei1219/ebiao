@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eworkflow手机版桌面</title>
+<link rel="stylesheet"  href="jquery/jquery.mobile-1.2.0.css" />
+
+<script src="jquery/jquery.js"></script>
+
+<script src="jquery/jquery.mobile-1.2.0.js"></script>
+
+
+<script src="../fceform/js/MicrosoftAjax.js"></script>
+<script src="../fceform/js/fcpub.js"></script>
+<script src="../fceform/js/csjsrequest.js"></script>
+<script language="javascript" >
+		$(document).ready(function() { 
+			//装入menu_m.xml文件内容
+		    var oXml = SetDomFile("menu.xml");	
+			
+			var ipad = parent.Request.QueryString('ipad').toString();
+
+
+	    	if (!IsSpace(ipad) && ipad=="1")//是平板登录
+		    	ipad="ipad=1";//加到菜单链接后面
+		    else
+			    ipad="1=1";
+
+			if (oXml.documentElement){
+		    	var sub = oXml.documentElement.childNodes;
+				var sHtml="";
+				var ifirst=0;
+		    	for (i=0;i<sub.length;i++)
+		    	{ 
+			    	var node = sub[i];
+			    	if (node.nodeType==1){// only process element nodes 	
+											
+						var l = node.childNodes.length;
+						var firstmenu = node.getAttribute("desc");
+						if (ifirst==0)
+						
+							sHtml ="<div data-role='collapsible' data-content-theme='c' data-collapsed='false'>";
+						else
+							sHtml ="<div data-role='collapsible'  data-content-theme='c'>";
+						ifirst++;
+						sHtml +="<h3>" + firstmenu + "</h3>";
+						//sHtml +="<h3>哦的任务</h3>";	
+						sHtml +='<div class="content-primary">';
+						
+						sHtml +="<ul data-role='listview'>";												
+						for (j=0;j<l;j++){					
+							var menu = node.childNodes[j];
+							if (menu.nodeType==1){
+								var href = menu.getAttribute("href");
+								var icon = menu.getAttribute("icon");
+								var desc = menu.getAttribute("desc");
+								if (href.indexOf("?")>0)
+									href +="&amp;" + ipad;
+								else
+									href +="?" + ipad;
+										//<li><a href="index.html"><img src="images/gf.png" alt="France" class="ui-li-icon">France <span class="ui-li-count">4</span></a></li>
+//								sHtml +="<li><a href='" + href + "' rel='external'><img src='" + icon + "' alt='"+ desc + "' class='ui-li-icon' >" + desc + "<span class='ui-li-count'>我的" + desc + "</span></a></li>";
+								sHtml += "<li><a href='" + href + "' rel='external'><img src='" + icon + "' alt='" + desc + "' class='ui-li-icon' >" + desc + "</a></li>";
+				}	
+				
+						}
+						sHtml +="</ul>";						
+						sHtml +="</div>";	
+
+						$("#listset").append($(sHtml));		
+						$("#listset").collapsibleset("refresh"); 
+						//$("#listset").trigger("create");													
+			    	} 
+		    	}
+				if (sHtml.length>0){
+					$("#listset").trigger("create");				
+					//$("#listset").collapsibleset( "refresh" ); 
+					
+				}
+				//menuli.innerHTML = liHtml;
+		    }
+			
+			
+			$("#username").text("欢迎您：" + GetSessionOne("username"));
+			//var obj=$("#username")[0];
+			//obj.children[0].children[0].innerText = "欢迎：" + GetSessionOne("username");
+			
+
+		})
+		
+
+		
+		function doExit() {
+		    var loginsuffix = parent.Request.QueryString('suffix').toString();
+		    //var url = "login.htm";
+		    var url = "login.";
+		    if (IsSpace(loginsuffix))
+		        url += "htm";
+		    else
+		        url += loginsuffix;
+			var ipad = parent.Request.QueryString('ipad').toString();
+				
+	    	if (!IsSpace(ipad) && ipad=="1")
+		    	url +="?ipad=1";
+	    	window.open(url,"_parent");
+			
+		}
+
+		</script>
+</head>
+<body>
+<div data-role="page" data-theme="b" >
+	<div data-role="header" data-theme="b" >
+		<a href="desktop.htm" data-icon="arrow-r" data-role="button" rel='external'>桌面</a>  
+		<h1 id="username"></h1>
+		
+		<a class="ui-btn-right" href="javascript:doExit();" data-role="button" data-icon="gear" data-transition="slideup">退出</a>
+
+		
+	</div>
+	<!-- /header -->
+	<div data-role="content">
+
+		<div data-role="collapsible-set" id="listset">				
+		</div>
+	
+
+	</div>
+	<!-- /content -->
+	<div data-role="footer" data-theme="b">
+		<h4>Copyright &copy; 2013 www.fcsoft.com.cn</h4>
+		
+	</div>
+	<!-- /footer -->
+</div>
+<!-- /page -->
+</body>
+</html>

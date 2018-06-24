@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_gen(){
+	var sRet = "";
+	var arr = txtS.value.split("\r\n");
+	for(var i=0;i<arr.length;i++){
+		var tmp = new Eapi.Str().trim(arr[i]);
+		if(IsSpace(tmp)) continue;
+		tmp = RepStr(tmp,"\"","\\\"");
+		tmp +="\\r\\n";
+		sRet += "sb.Append(\""+tmp+"\");\r\n";	
+	}	
+	txtD.value = sRet;
+}
+
+function uf_escape(){
+	var sRet = "";
+	var arr = txtS.value.split("\r\n");
+	for(var i=0;i<arr.length;i++){
+		var tmp = new Eapi.Str().trim(arr[i]);
+		if(IsSpace(tmp)) continue;
+		tmp = escape(tmp);
+		sRet += "sb.Append(Escape.unescape(\""+tmp+"\"));\r\n";	
+		sRet += "sb.Append(\"\\r\\n\");\r\n";	
+	}	
+	txtD.value = sRet;
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" idtype="1" OtherSave="否" isfile="是" postop posleft window="当前窗口" toolbar="不带工具栏" contxml="<root><textarea><id>txtS</id><id>txtD</id></textarea><button><id>button1</id><id>button2</id></button></root>" billtaborder="<root><taborder>txtS</taborder><taborder>txtD</taborder><taborder>button1</taborder><taborder>button2</taborder></root>" dj_sn="lt_cs_script" type="LT" caption="生成cs程序中的脚本" mkbh codeheader="BBB" entertype="修改" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:2;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield AutoResizeXml><TEXTAREA onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 788px; HEIGHT: 175px; TOP: 43px; LEFT: 8px" id=txtS onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() rows=3 cols=155 induce="否" value="textarea1" controltype="textarea"></TEXTAREA><TEXTAREA onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 791px; HEIGHT: 198px; TOP: 234px; LEFT: 8px" id=txtD onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() rows=4 cols=157 induce="否" value="textarea2" controltype="textarea"></TEXTAREA><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 8px; LEFT: 365px" id=button1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_gen()")'>生成</BUTTON><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 6px; LEFT: 171px" id=button2 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_escape()")'>escape</BUTTON></DIV></body></html>

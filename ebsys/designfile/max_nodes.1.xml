@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="1135" name="初始化动作">
+      <results>
+        <unconditional-result id="3034" old-status="Finished" status="Underway" step="7529"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="4562" name="结束节点">
+    </step>
+    <step id="7529" name="节点一">
+      <actions>
+        <action id="9622" name="节点一">
+          <results>
+            <unconditional-result id="6060" old-status="Finished" status="Underway" step="7069"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7069" name="节点二">
+      <actions>
+        <action id="7736" name="节点二">
+          <results>
+            <unconditional-result id="5571" old-status="Finished" status="Underway" step="7424"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7424" name="节点二节点二">
+      <actions>
+        <action id="6788" name="节点二节点二">
+          <results>
+            <unconditional-result id="3283" old-status="Finished" status="Underway" step="6496"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6496" name="节点三">
+      <actions>
+        <action id="980" name="节点三">
+          <results>
+            <unconditional-result id="4960" old-status="Finished" status="Underway" step="844"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="844" name="节点四">
+      <actions>
+        <action id="2028" name="节点四">
+          <results>
+            <unconditional-result id="7466" old-status="Finished" status="Underway" step="7063"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7063" name="节点五">
+      <actions>
+        <action id="9727" name="节点五">
+          <results>
+            <unconditional-result id="6449" old-status="Finished" status="Underway" split="6803"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2061" name="节点六">
+      <actions>
+        <action id="8159" name="节点六">
+          <results>
+            <unconditional-result id="7122" old-status="Finished" status="Underway" join="8297"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="638" name="节点七个">
+      <actions>
+        <action id="9071" name="节点七个">
+          <results>
+            <unconditional-result id="875" old-status="Finished" status="Underway" join="8297"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6829" name="节点八">
+      <actions>
+        <action id="1492" name="节点八">
+          <results>
+            <unconditional-result id="4242" old-status="Finished" status="Underway" step="203"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="203" name="节点九">
+      <actions>
+        <action id="5567" name="节点九">
+          <results>
+            <unconditional-result id="3100" old-status="Finished" status="Underway" step="2124"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2124" name="复合节点10">
+      <actions>
+        <action id="1164" name="复合节点10">
+          <results>
+            <unconditional-result id="9990" old-status="Finished" status="Underway" step="8236"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8236" name="节点11">
+      <actions>
+        <action id="956" name="节点11">
+          <results>
+            <unconditional-result id="4610" old-status="Finished" status="Underway" step="2065"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2065" name="节点12">
+      <actions>
+        <action id="9261" name="节点12">
+          <results>
+            <unconditional-result id="8739" old-status="Finished" status="Underway" step="4469"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4469" name="节点13">
+      <actions>
+        <action id="6289" name="节点13">
+          <results>
+            <unconditional-result id="161" old-status="Finished" status="Underway" step="9808"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9808" name="节点14">
+      <actions>
+        <action id="5619" name="节点14">
+          <results>
+            <unconditional-result id="4503" old-status="Finished" status="Underway" step="5439"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5439" name="节点15">
+      <actions>
+        <action id="5180" name="节点15">
+          <results>
+            <unconditional-result id="2875" old-status="Finished" status="Underway" step="9976"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9976" name="节点16">
+      <actions>
+        <action id="6668" name="节点16">
+          <results>
+            <unconditional-result id="9828" old-status="Finished" status="Underway" step="3040"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3040" name="节点17">
+      <actions>
+        <action id="2216" name="节点17">
+          <results>
+            <unconditional-result id="5059" old-status="Finished" status="Underway" step="2735"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2735" name="节点18">
+      <actions>
+        <action id="3914" name="节点18">
+          <results>
+            <unconditional-result id="4506" old-status="Finished" status="Underway" step="103"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="103" name="节点19">
+      <actions>
+        <action id="1283" name="节点19">
+          <results>
+            <unconditional-result id="2472" old-status="Finished" status="Underway" step="69"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="69" name="节点20">
+      <actions>
+        <action id="4793" name="节点20">
+          <results>
+            <unconditional-result id="530" old-status="Finished" status="Underway" step="6980"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6980" name="复合节点21">
+      <actions>
+        <action id="4328" name="复合节点21">
+          <results>
+            <unconditional-result id="354" old-status="Finished" status="Underway" step="3450"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3450" name="复合节点22">
+      <actions>
+        <action id="4119" name="复合节点22">
+          <results>
+            <unconditional-result id="6245" old-status="Finished" status="Underway" step="4687"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4687" name="复合节点23">
+      <actions>
+        <action id="9698" name="复合节点23">
+          <results>
+            <unconditional-result id="6442" old-status="Finished" status="Underway" step="5166"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5166" name="复合节点24">
+      <actions>
+        <action id="2436" name="复合节点24">
+          <results>
+            <unconditional-result id="4666" old-status="Finished" status="Underway" step="9664"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9664" name="复合节点25">
+      <actions>
+        <action id="5538" name="复合节点25">
+          <results>
+            <unconditional-result id="4983" old-status="Finished" status="Underway" step="1687"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1687" name="复合节点26">
+      <actions>
+        <action id="8010" name="复合节点26">
+          <results>
+            <unconditional-result id="6771" old-status="Finished" status="Underway" step="9152"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9152" name="复合节点27">
+      <actions>
+        <action id="9222" name="复合节点27">
+          <results>
+            <unconditional-result id="6445" old-status="Finished" status="Underway" step="793"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="793" name="复合节点28">
+      <actions>
+        <action id="5726" name="复合节点28">
+          <results>
+            <unconditional-result id="1353" old-status="Finished" status="Underway" step="7876"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7876" name="复合节点29">
+      <actions>
+        <action id="7697" name="复合节点29">
+          <results>
+            <unconditional-result id="3827" old-status="Finished" status="Underway" step="8455"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8455" name="复合节点30">
+      <actions>
+        <action id="8650" name="复合节点30">
+          <results>
+            <unconditional-result id="9081" old-status="Finished" status="Underway" step="1530"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1530" name="复合节点31">
+      <actions>
+        <action id="4981" name="复合节点31">
+          <results>
+            <unconditional-result id="8979" old-status="Finished" status="Underway" step="2238"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2238" name="复合节点32">
+      <actions>
+        <action id="9437" name="复合节点32">
+          <results>
+            <unconditional-result id="3338" old-status="Finished" status="Underway" step="2746"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2746" name="复合节点33">
+      <actions>
+        <action id="7601" name="复合节点33">
+          <results>
+            <unconditional-result id="6346" old-status="Finished" status="Underway" step="4565"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4565" name="复合节点34">
+      <actions>
+        <action id="9204" name="复合节点34">
+          <results>
+            <unconditional-result id="2742" old-status="Finished" status="Underway" step="4185"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4185" name="复合节点35">
+      <actions>
+        <action id="4198" name="复合节点35">
+          <results>
+            <unconditional-result id="5736" old-status="Finished" status="Underway" step="224"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="224" name="复合节点36">
+      <actions>
+        <action id="7464" name="复合节点36">
+          <results>
+            <unconditional-result id="2567" old-status="Finished" status="Underway" step="4830"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4830" name="复合节点37">
+      <actions>
+        <action id="3540" name="复合节点37">
+          <results>
+            <unconditional-result id="2831" old-status="Finished" status="Underway" step="2957"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="2957" name="复合节点38">
+      <actions>
+        <action id="3038" name="复合节点38">
+          <results>
+            <unconditional-result id="52" old-status="Finished" status="Underway" step="4647"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4647" name="复合节点39">
+      <actions>
+        <action id="5043" name="复合节点39">
+          <results>
+            <unconditional-result id="8722" old-status="Finished" status="Underway" step="8942"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8942" name="复合节点40">
+      <actions>
+        <action id="3369" name="复合节点40">
+          <results>
+            <unconditional-result id="9316" old-status="Finished" status="Underway" step="141"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="141" name="复合节点41">
+      <actions>
+        <action id="58" name="复合节点41">
+          <results>
+            <unconditional-result id="1494" old-status="Finished" status="Underway" step="8403"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8403" name="复合节点42">
+      <actions>
+        <action id="2029" name="复合节点42">
+          <results>
+            <unconditional-result id="9834" old-status="Finished" status="Underway" step="7561"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7561" name="复合节点43">
+      <actions>
+        <action id="6386" name="复合节点43">
+          <results>
+            <unconditional-result id="3108" old-status="Finished" status="Underway" step="8836"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8836" name="复合节点44">
+      <actions>
+        <action id="1751" name="复合节点44">
+          <results>
+            <unconditional-result id="3870" old-status="Finished" status="Underway" step="9349"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9349" name="复合节点45">
+      <actions>
+        <action id="8698" name="复合节点45">
+          <results>
+            <unconditional-result id="5033" old-status="Finished" status="Underway" step="7554"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7554" name="复合节点46">
+      <actions>
+        <action id="6207" name="复合节点46">
+          <results>
+            <unconditional-result id="4951" old-status="Finished" status="Underway" step="6256"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6256" name="复合节点47">
+      <actions>
+        <action id="1511" name="复合节点47">
+          <results>
+            <unconditional-result id="2185" old-status="Finished" status="Underway" step="3613"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3613" name="复合节点48">
+      <actions>
+        <action id="953" name="复合节点48">
+          <results>
+            <unconditional-result id="5748" old-status="Finished" status="Underway" step="4591"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4591" name="复合节点49">
+      <actions>
+        <action id="2592" name="复合节点49">
+          <results>
+            <unconditional-result id="5525" old-status="Finished" status="Underway" step="414"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="414" name="复合节点50">
+      <actions>
+        <action id="2463" name="复合节点50">
+          <results>
+            <unconditional-result id="6434" old-status="Finished" status="Underway" step="5240"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5240" name="复合节点51">
+      <actions>
+        <action id="7881" name="复合节点51">
+          <results>
+            <unconditional-result id="3983" old-status="Finished" status="Underway" step="6587"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6587" name="复合节点52">
+      <actions>
+        <action id="8578" name="复合节点52">
+          <results>
+            <unconditional-result id="8192" old-status="Finished" status="Underway" step="9995"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9995" name="复合节点53">
+      <actions>
+        <action id="9792" name="复合节点53">
+          <results>
+            <unconditional-result id="2581" old-status="Finished" status="Underway" step="8512"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8512" name="复合节点54">
+      <actions>
+        <action id="8253" name="复合节点54">
+          <results>
+            <unconditional-result id="8323" old-status="Finished" status="Underway" step="6360"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="6360" name="复合节点55">
+      <actions>
+        <action id="8532" name="复合节点55">
+          <results>
+            <unconditional-result id="4868" old-status="Finished" status="Underway" step="5761"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5761" name="复合节点56">
+      <actions>
+        <action id="2245" name="复合节点56">
+          <results>
+            <unconditional-result id="8123" old-status="Finished" status="Underway" step="4562"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="6803"
+ name="分支节点"
+ is-dynamic="0"
+>
+      <unconditional-result id="7374" old-status="Finished" status="Underway" step="2061"/>
+      <unconditional-result id="1177" old-status="Finished" status="Underway" step="638"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="8297"
+ name="协同节点"
+ is-dynamic="0"
+>
+      <unconditional-result id="9246" old-status="Finished" status="Underway" step="6829"/>
+    </join>
+  </joins>
+</workflow>

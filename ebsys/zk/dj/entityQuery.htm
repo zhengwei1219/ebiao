@@ -1,0 +1,125 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+var tbname="";
+function uf_init()
+{
+	tbname=fcpubdata.obj.Field('tbname').Value;
+}	
+function uf_open()
+{
+	//labTableName.value=fcpubdata.obj.Field('tbname').Value;
+	labTbchnname.innerText=fcpubdata.obj.Field('tbchnname').Value;
+	SetButtonImage($id("cmdSelect"),fcpubdata.path+"/fceform/css/skins/"+fcpubdata.skins+"/images/ef_run_downarrow.gif");		
+}
+function linkMultiSel()
+{	
+	var  where = "";
+	var ret = SelectSql("select detailxml ,fdname from fc_entitysub where type='取累计汇总' and tbname='"+tbname+"'",1,-1);
+	var oXml = SetDom(ret);
+	if(oXml.documentElement == null){
+		alert(ret);	
+		return;
+	}
+	if(oXml.documentElement.childNodes.length > 0){
+		var oXml1 = SetDom("<root>"+oXml.documentElement.childNodes[0].childNodes[0].text+"</root>");
+		if(oXml1.selectSingleNode("/root/isNotExist").text == "0"){
+			where = " and fdname <> '"+ oXml.documentElement.childNodes[0].childNodes[1].text	+"'"
+		}
+	}
+	var sRet = DjOpen("../../fceform/common/djframe.htm?djsn=multiSel&djtype=ZK",["select fdname,chnname  from fc_entitysub where  tbname='"+tbname+"' "+where +" order by sortNo",txtRetV1.value],"展现","有模式窗口","直接","选择字段名");	
+	if(IsSpace(sRet) == false)
+	{
+		txtRetV.value=sRet[0];
+		txtRetV1.value=sRet[1];
+		txtRetV.fireEvent("onchange");
+		txtRetV1.fireEvent("onchange");
+		dataset1.Update() ;
+	}
+}
+
+	
+	
+function uf_checkField(sAlert){	
+	var dsObj = dataset1.oDom.documentElement;
+	var tableName = dataset1.Field('TBNAME').Value;
+	var l=dsObj.childNodes.length-1;
+	var ret = true;
+	for(var i = 0;i<l;i++){
+		var fieldList = dsObj.childNodes[i].childNodes[1].text;	
+		var chnFieldList = dsObj.childNodes[i].childNodes[2].text;
+		if(IsSpace(fieldList) == false){
+			var fieldArr = fieldList.split(",");
+			var chnFieldArr = chnFieldList.split(",");
+			var retXml = SelectSql("select fdname,detailxml,type from fc_entitysub where tbname='"+tableName+"'",1,-1);
+			var oXml = SetDom(retXml);
+			if(oXml.documentElement == null){
+				alert(retXml);
+				ret = false;
+				return ret;	
+			}
+			for(var f=0;f<fieldArr.length;f++){
+				var isRet = uf_check(fieldArr[f],chnFieldArr[f],i,oXml.documentElement)
+				if(isRet == false){
+					ret = false;
+					return ret;
+				}
+			}
+		}
+	}	
+	if(ret == true && sAlert == "1") alert("字段列表信息正常");
+}
+
+function uf_check(selectfield,chnSelectField,i,xmlObj){
+	for(var j = 0;j<xmlObj.childNodes.length;j++){
+		if(selectfield.toUpperCase() == xmlObj.childNodes[j].childNodes[0].text.toUpperCase()){
+			if(xmlObj.childNodes[j].childNodes[2].text != "取累计汇总"){
+				return true;
+			}else {
+				var oXml1 = SetDom("<root>"+xmlObj.childNodes[j].childNodes[1].text+"</root>");
+				if(oXml1.selectSingleNode("/root/isNotExist").text == "0"){
+					alert("第"+(i+1)+"行的字段名："+chnSelectField+"("+selectfield+")在数据库中不存在，请修改");
+					return false;	
+				}else{
+					return true;
+				}
+			}
+		}
+		
+		if((j == xmlObj.childNodes.length-1) && (selectfield.toUpperCase() != xmlObj.childNodes[j].childNodes[0].text.toUpperCase())){
+			alert("第"+(i+1)+"行的字段名："+chnSelectField+"("+selectfield+")在数据库中不存在，请修改");
+			return false;
+		}
+	}
+}
+
+function uf_save(){
+	 if(uf_checkField("0") != false) {
+	 	var l=dataset1.oDom.documentElement.childNodes.length-1;
+		for(var i=0;i<l;i++){
+			var listField = dataset1.oDom.documentElement.childNodes(i).childNodes(1).text;
+			if((dataset1.oDom.documentElement.childNodes(i).getAttribute("rowstate") == "edit") && IsSpace(listField)){
+				dataset1.oDom.documentElement.childNodes(i).removeAttribute("rowstate");	
+			}
+		}
+	 	$eform('提交数据成功后刷新上一窗口');
+	 }
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" toolbar="自定义工具栏" BLONopenBefore="uf_init()" BLONclose center="居中" BLONopen="uf_open()" dj_sn="entityQuery" type="ZK" caption="查询表" codeheader keyfield window="有模式窗口" entertype="修改" posleft postop poswidth="642" posheight="330" isfile="是" OtherSave="否" idtype="5" billtaborder="<root><taborder>grid1</taborder><taborder>cmdSelect</taborder><taborder>txtRetV</taborder><taborder>txtRetV1</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:7;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:6;text:6;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label1</id><id>label2</id><id>label5</id><id>labTableName</id><id>labTbchnname</id></label><button><id>cmdSelect</id></button><text><id>txtRetV1</id><id>txtRetV</id></text><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" userType alertType="1" isCheckPermit="否" useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore AutoResizeXml="<record id ='label2'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record><record id ='labTableName'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record><record id ='labTbchnname'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" userToolbar="<tr rowstate=&quot;add&quot;><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_save()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>checkField</td><td></td><td>字段检查</td><td>uf_checkField('1')</td><td></td><td></td><td></td><td></td><td></td></tr>" runsave><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 21px; TOP: 7px; LEFT: 10px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">表名：</LABEL><LABEL style="POSITION: absolute; WIDTH: 83px; HEIGHT: 21px; TOP: 7px; LEFT: 270px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否" AutoSizeXml="<record id ='label2'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>">表中文名：</LABEL><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" canselect="是" autoheight="否" autowidth="否" autoappend="否" readonly="否" visible="是" SetRowHeight="是" hideHscroll="auto" hideVscroll="auto" blRowNo="否" bodyrowheight="-1" bodyrows="-1" dataset="dataset1" format="<cols><col><fname>fdchnlist</fname><cname>字段中文名列表</cname><width>3000</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>410</columnwidth><align>left</align></col><col><fname>typecode</fname><cname>中文类型</cname><width>30</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>170</columnwidth><align>left</align></col></cols>" width="615" height="192" top="28" left="9">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="5" controltype="dataset" async="否" opensortno="1" issubds="否" savetable="FC_QUERY" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" isSubGrid="否" format="<fields><field><fieldname>TBNAME</fieldname><datatype>字符</datatype><displaylabel>表名</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdlist</fieldname><datatype>字符</datatype><displaylabel>字段名列表</displaylabel><size>2000</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdchnlist</fieldname><datatype>字符</datatype><displaylabel>字段中文名列表</displaylabel><size>3000</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>TYPE</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>16</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>typecode</fieldname><datatype>字符</datatype><displaylabel>中文类型</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><TBNAME></TBNAME><fdlist></fdlist><fdchnlist></fdchnlist><TYPE></TYPE><typecode></typecode></dsid>")' onGetText='bill_ondatasetgettext("<dsid><TBNAME></TBNAME><fdlist></fdlist><fdchnlist></fdchnlist><TYPE></TYPE><typecode></typecode></dsid>")' onSetText='bill_ondatasetsettext("<dsid><TBNAME></TBNAME><fdlist></fdlist><fdchnlist></fdchnlist><TYPE></TYPE><typecode></typecode></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%F4%EC%F2%F6%AA%ECXr%94Xn%96Xn%90%D4%D0%F4%D8Xrn%FC%DE%D8%EAXrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6j%D4%EC%D6%D8XrnXrn%E0%F4Xrn%EA%EC%F6Xrn%EA%F8%E6%E6Xrn%F6%DE%D8%EAXrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6j%EA%D0%E8%D8Xrn%D8%EA%D6Xrn%D0%F4Xrn%F6%u0100%EE%D8%D4%EC%D6%D8Xr%94Xn%96Xn%90%D4%EC%D6%D8Xrn%D0%F4Xrn%F6%u0100%EE%D8Xr%94Xn%96Xn%90Xr%7CXt%90X%7C%92%F6%D2%EA%D0%E8%D8X%7C%96Xt%90Xr%7CXrn%D0%F4Xrn%F6%D2%EA%D0%E8%D8Xr%94Xn%96Xn%90%DA%D6%E6%E0%F4%F6Xr%94%DA%D6%D4%DE%EA%E6%E0%F4%F6Xn%96Xn%90Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6Xrn%E6%D8%DA%F6Xrn%E2%EC%E0%EAXrn%DA%D4%CC%F0%F8%D8%F2%u0100Xrn%EC%EAXrn%DA%D4%CC%F0%F8%D8%F2%u0100j%F6%u0100%EE%D8Xt%96%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6j%D4%EC%D6%D8Xn%96Xn%90%D0%EA%D6Xrn%DA%D4%CC%F0%F8%D8%F2%u0100j%F6%D2%EA%D0%E8%D8Xt%96Xr%7CXt%90X%7C%92%F6%D2%EA%D0%E8%D8X%7C%96Xt%90Xr%7CXn%96Xn%90%FC%DE%D8%F2%D8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6j%F6%u0100%EE%D8%EA%D0%E8%D8Xt%96Xr%7CX%F8%7Cxr%7EX%F8%80npvX%F8%7C%94%7C%92X%F8xrr%92Xr%7CXrn%EC%F2%D6%D8%F2Xrn%D2%u0100XrnXrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6j%F4%EC%F2%F6%AA%EC"></fc:dataset><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 228px; BORDER-RIGHT: 0px; LEFT: 605px" id=cmdSelect onmovestart=moveStart() controltype="button" onclick='bill_onclick("linkMultiSel()")' dropstyle="否"></BUTTON><INPUT style="POSITION: absolute; WIDTH: 516px; DISPLAY: none; HEIGHT: 20px; TOP: 249px; LEFT: 71px" id=txtRetV1 onmovestart=moveStart() size=91 controltype="text" dataset="dataset1" field="fdlist" china="字段名列表"><LABEL style="POSITION: absolute; WIDTH: 62px; HEIGHT: 16px; TOP: 232px; LEFT: 12px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">字段列表</LABEL><INPUT style="POSITION: absolute; WIDTH: 534px; HEIGHT: 20px; TOP: 228px; LEFT: 71px" id=txtRetV onmovestart=moveStart() size=91 controltype="text" dataset="dataset1" field="fdchnlist" china="字段中文名列表"><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 156px; FONT-FAMILY: 宋体; HEIGHT: 15px; TOP: 6px; TEXT-DECORATION: underline; LEFT: 46px" id=labTableName onmovestart=moveStart() controltype="label" inputTag="否" dataset="dataset1" field="TBNAME" AutoSizeXml="<record id ='labTableName'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" china="表名"></LABEL> <LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 254px; FONT-FAMILY: 宋体; HEIGHT: 15px; TOP: 6px; TEXT-DECORATION: underline; LEFT: 345px" id=labTbchnname onmovestart=moveStart() controltype="label" inputTag="否" AutoSizeXml="<record id ='labTbchnname'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"></LABEL></DIV><script></script></body></html>

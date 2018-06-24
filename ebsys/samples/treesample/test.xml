@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="gb2312"?>
+<TreeNode>
+<TreeNode text="客户服务部" /><TreeNode text="YEMINA" /><TreeNode text="办公室" ><TreeNode text="办公室总部" ><TreeNode text="办公室总部一室" /></TreeNode></TreeNode><TreeNode text="库管部" ><TreeNode text="库房一部" /><TreeNode text="库房二部" /><TreeNode text="库房三部" /></TreeNode><TreeNode text="财务部" ><TreeNode text="销售部门" /></TreeNode><TreeNode text="质检部" /><TreeNode text="销售部" ><TreeNode text="销售一部" /><TreeNode text="销售二部" /></TreeNode><TreeNode text="生产部" ><TreeNode text="生产二部" /><TreeNode text="生产一部" /><TreeNode text="生产三部" /><TreeNode text="部门名称二" /></TreeNode>
+</TreeNode>

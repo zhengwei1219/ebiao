@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var iPageno=1;
+var iPageCount = 1;
+function uf_first(){
+	iPageno = 1;
+	uf_search();
+}
+function uf_prev(){
+	if (iPageno>1){
+		iPageno = iPageno -1;
+		uf_search();	
+	}
+}
+function uf_next(){
+	if (iPageno <iPageCount){
+		iPageno = iPageno +1;
+		uf_search();
+	}
+}
+function uf_last(){
+	iPageno = iPageCount;
+	uf_search();
+}
+function uf_change(){
+	iPageno = 1;
+	uf_search();
+}
+
+function uf_search(){
+
+	if (txtPageSize.value=="" || txtPageSize.value=="0"){
+		alert("请设置页尺寸，不能设置为0！");
+		return;
+	}	
+	
+	//var searchType = parent.Request.QueryString('search_type').toString();
+	var searchWfid = parent.Request.QueryString('wf_id').toString();
+	var searchStepid = parent.Request.QueryString('step_id').toString();
+	var searchActionid = parent.Request.QueryString('action_id').toString();
+	var sKey = "?operate=get_sign_task_list";
+	sKey +="&wf_id=" + searchWfid;
+	sKey +="&step_id=" + searchStepid;
+	sKey +="&action_id=" + searchActionid;
+	
+		//增加当前页，页尺寸	
+	sKey +="&page_size=" + txtPageSize.value;	
+	sKey +="&page_no=" + iPageno ;
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	
+	var oDom=SetDom(strReturn);
+	
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	iPageCount = oDom.childNodes(0).childNodes(1).text;
+	txtPageInfo.value = iPageno + "/" + iPageCount;
+
+	
+	var sXml = oDom.childNodes(0).childNodes(2).xml;
+	sXml = sXml.substring(3,sXml.length-4);//去掉<n></n>
+	
+	OpenDsAddSql(ds1,sXml,"SELECT wf_id,FCQ_BUG.bug_title, FCQ_BUG_USER.org_name, FCQ_BUG_USER.item_name FROM FCQ_BUG INNER JOIN FCQ_BUG_USER ON FCQ_BUG.create_user_id = FCQ_BUG_USER.fcbug_user_id WHERE FCQ_BUG.wf_id IN (:v_get) ");
+	
+	//var s = ds1.xml;	
+	//s= "<root>"+sXml+s.substring(6,s.length);
+//var ss = ds1.xml;	
+//CopyToPub(ss);
+/*	var ss = ds1.xml;
+	var pos = ss.indexOf("<set><pages>");
+	if (pos>=0){
+		ss = ss.substring(pos,ss.length);	
+	}else{
+		ss = ss.substring(6,ss.length);
+	}
+	ss= "<root>"+sXml+ss;	
+	
+	ds1.OpenXmlData(ss);
+*/
+
+}
+
+//装入表格数据
+function uf_onload(){
+	//设置查询组button的背景图片
+	wf_setQueryImage();
+	txtPageSize.value = 20;	
+	uf_search();
+}
+
+
+function uf_doSignTask(taskid,taskname){
+	if (!confirm("确定签收任务“" + taskname + "”吗？" )){
+		return;
+	}
+	//签收，生成workitem表记录
+	var sKey = "?operate=set_task_workitem";
+
+	sKey +="&task_id=" + taskid;
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	var oDom=SetDom(strReturn);
+
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	else{
+		alert("签收成功！");
+		uf_search();
+	}		
+	
+}
+
+function uf_doActionList(wfid,stepid,wfName,wfDesc,wfVersion,fieldkey,fieldkeyvalue){
+	//任务列表－》流程实例步骤－》动作
+	var sKey = "?operate=get_task_action_list&wf_id=" + wfid +"&step_id=" + stepid;
+
+	
+	var strReturn=new Eapi.RunAjax().sendHttp(location.protocol+'//'+location.host + fcpubdata.servletPath + '/WorkflowPortal'+fcpubdata.dotnetVersion + sKey,"");
+	var oDom=SetDom(strReturn);
+
+	var bResult=oDom.childNodes(0).childNodes(0).text;
+	var surl,wfName
+	if (bResult=="false") {
+		alert(oDom.childNodes(0).childNodes(1).text);
+		return;	
+	}
+	else{
+		var stage = oDom.childNodes(0).childNodes(1).text; //="step" 到达了步骤了
+		var num = oDom.childNodes(0).childNodes(2).text; //步骤的当前可执行的 action数量
+		var wfId = oDom.childNodes(0).childNodes(3).text;//流程实例id
+		if (num==1){//直接链接到action的view中
+			var action = oDom.getElementsByTagName("action");
+			var actionId = action.item(0).getAttribute("id");
+			var actionName = action.item(0).getAttribute("name");
+			var view = action.item(0).getAttribute("view");
+			if (view==""){//没有view,则出现action选择页，点击action名字，执行doAction				
+				var sXml = "<root>";
+				sXml +="<wfname>" + wfName +"</wfname>";
+				sXml +="<wfdesc>" + wfDesc +"</wfdesc>";
+				sXml +="<wfversion>" + wfVersion +"</wfversion>";
+				sXml +="<fieldkey>" + fieldkey + "</fieldkey>";
+				sXml +="<fieldkeyvalue>" + fieldkeyvalue + "</fieldkeyvalue>";
+				
+
+				sXml +="<action name ='" + escape(actionName) + "' id='" + actionId +"'/>";
+				sXml+="</root>";
+				
+				var surl = location.protocol+'//'+location.host + fcpubdata.path +"/fceform/common/djframe.htm?djsn=wf_action_list&djtype=WF";
+				surl +="&domxml=" + sXml;
+				surl +="&wfId=" + wfId;
+				
+				window.open(surl);
+				return;				
+			}
+			else{//有view的直接进入view链接的表单页面，表单提交的时候，同时做流程doAction
+				var surl = unescape(view) ;
+				surl = surl + "&wfName=" + wfName ;
+				surl = surl + "&wfDesc=" + wfDesc;
+				surl = surl + "&wfVersion=" + wfVersion;				
+				surl = surl + "&wfId=" + wfId
+				surl = surl + "&actionId=" + actionId;
+				
+				surl = surl + "&"+fieldkey+"="+fieldkeyvalue;
+				window.open(location.protocol+'//'+location.host + fcpubdata.path + surl);	
+				return;			
+			}			
+		}
+		else{//多个action，用户选择一个执行
+			var sXml = "<root>";
+			sXml +="<wfname>" + wfName +"</wfname>";
+			sXml +="<wfdesc>" + wfDesc +"</wfdesc>";
+			sXml +="<wfversion>" + wfVersion +"</wfversion>";
+			sXml +="<fieldkey>" + fieldkey + "</fieldkey>";
+			sXml +="<fieldkeyvalue>" + fieldkeyvalue + "</fieldkeyvalue>";
+			
+		
+			var oActionList = oDom.getElementsByTagName("action");
+			var name,id,view;
+			for (var i=0;i<oActionList.length;i++){
+				name = escape(oActionList.item(i).getAttribute("name"));
+				id = oActionList.item(i).getAttribute("id");
+				view = oActionList.item(i).getAttribute("view");
+				
+				sXml +="<action name ='" + name + "' id='" + id + "' view='" + view + "'/>";
+			}
+			sXml+="</root>";
+			
+			var surl = location.protocol+'//'+location.host + fcpubdata.path +"/fceform/common/djframe.htm?djsn=wf_action_list&djtype=WF";
+			surl +="&wfId=" + wfId;
+			surl +="&domxml=" + sXml;
+			
+			window.open(surl);
+			return;
+		}
+	
+		
+	}
+
+	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType BLONclose BLONopen="uf_onload()" center="  " toolbar="不带工具栏" dj_sn="wf_sign_task_list" type="ZK" caption="待签收任务列表" window="当前窗口" posleft postop poswidth posheight isfile="是" billtaborder="<root><taborder>grid1</taborder><taborder>btnSearch</taborder><taborder>btnFirst</taborder><taborder>btnPrev</taborder><taborder>btnNext</taborder><taborder>btnLast</taborder><taborder>txtPageInfo</taborder><taborder>txtPageSize</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>label1</id><id>Label15</id></label><button><id>btnSearch</id><id>btnFirst</id><id>btnPrev</id><id>btnNext</id><id>btnLast</id></button><text><id>txtPageInfo</id><id>txtPageSize</id></text><grid><id>grid1</id></grid><dataset><id>ds1</id></dataset></root>" BLONopenBefore idtype="1" runsave codeheader keyfield entertype="修改" OtherSave="否" AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=ds1 idtype="1" isSubGrid="否" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" controltype="dataset" format="<fields><field><fieldname>wfid</fieldname><datatype>整数</datatype><displaylabel>流程实例id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfname</fieldname><datatype>字符</datatype><displaylabel>流程名称</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfdesc</fieldname><datatype>字符</datatype><displaylabel>流程描述</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>wfversion</fieldname><datatype>字符</datatype><displaylabel>流程版本</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskid</fieldname><datatype>字符</datatype><displaylabel>任务id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>stepid</fieldname><datatype>字符</datatype><displaylabel>步骤id</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>actionid</fieldname><datatype>字符</datatype><displaylabel>动作id</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskname</fieldname><datatype>字符</datatype><displaylabel>任务名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tasktype</fieldname><datatype>字符</datatype><displaylabel>任务类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>taskstatus</fieldname><datatype>字符</datatype><displaylabel>任务状态</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>createuser</fieldname><datatype>字符</datatype><displaylabel>任务创建人</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>createdate</fieldname><datatype>字符</datatype><displaylabel>任务创建时间</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>operate</fieldname><datatype>字符</datatype><displaylabel>操作</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>是</link><target>_self</target><href>javascript:uf_doSignTask(ds1.Field('taskid').Value,ds1.Field('taskname').Value)</href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bug_title</fieldname><datatype>字符</datatype><displaylabel>提问标题</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>org_name</fieldname><datatype>字符</datatype><displaylabel>单位名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>item_name</fieldname><datatype>字符</datatype><displaylabel>项目名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><taskname></taskname><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><operate></operate><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")' onGetText='bill_ondatasetgettext("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><taskname></taskname><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><operate></operate><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")' onSetText='bill_ondatasetsettext("<dsid><wfid></wfid><wfname></wfname><wfdesc></wfdesc><wfversion></wfversion><taskid></taskid><stepid></stepid><actionid></actionid><taskname></taskname><tasktype></tasktype><taskstatus></taskstatus><createuser></createuser><createdate></createdate><operate></operate><bug_title></bug_title><org_name></org_name><item_name></item_name></dsid>")'></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' controltype="grid" dataset="ds1" bodyrows="-1" bodyrowheight="-1" hideVscroll="auto" SetRowHeight="是" visible="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" blRowNo="否" hideHscroll="auto" format="<cols><col><fname>wfid</fname><cname>流程实例id</cname><width>10</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>taskname</fname><cname>任务名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>160</columnwidth><align>center</align></col><col><fname>createuser</fname><cname>任务创建人</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>center</align></col><col><fname>createdate</fname><cname>任务创建时间</cname><width>30</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>operate</fname><cname>操作</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>center</align></col><col><fname>bug_title</fname><cname>提问标题</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>250</columnwidth><align>left</align></col><col><fname>org_name</fname><cname>单位名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>item_name</fname><cname>项目名称</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col></cols>" width="714" height="254" top="58" left="5">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 66px; HEIGHT: 21px; TOP: 1px; LEFT: 6px" id=btnSearch onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_search()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 76px" id=btnFirst onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_first()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 100px" id=btnPrev onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_prev()")' dropstyle="否"></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: center; WIDTH: 37px; HEIGHT: 20px; TOP: 2px; LEFT: 124px" id=txtPageInfo onmovestart=moveStart() value=1/1 readOnly size=5 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 165px" id=btnNext onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_next()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 20px; HEIGHT: 20px; TOP: 2px; LEFT: 189px" id=btnLast onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_last()")' dropstyle="否"></BUTTON><LABEL style="POSITION: absolute; WIDTH: 41px; HEIGHT: 16px; TOP: 6px; LEFT: 213px" id=label1 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">页尺寸</LABEL><INPUT style="POSITION: absolute; WIDTH: 32px; HEIGHT: 20px; TOP: 2px; LEFT: 258px" id=txtPageSize onmovestart=moveStart() onchange='bill_onclick("uf_change()")' value=20 size=7 controltype="text"><SPAN style="POSITION: absolute; WIDTH: 213px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 28px; COLOR: #0000ff; FONT-SIZE: 12pt; TOP: 34px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 7px" id=Label15 controltype="label" NotBg="否" inputTag="否" align="Center">我的待签收任务列表</SPAN></DIV></body></html>

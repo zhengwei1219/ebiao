@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var pagesize = 10;
+var pageno = 1;
+	
+function initload()
+{
+	
+	var sql = "Form_test "+pagesize+","+ pageno;
+	
+	dataset1.Open(sql);	
+}
+
+function MovePage(strIndex)
+{
+	if (strIndex == "Up")
+	{
+		pageno--;
+		//alert(pageno)
+		var sql = "Form_test "+pagesize+","+ pageno;
+		dataset1.Open(sql);		
+	}
+	
+	if (strIndex == "Down")
+	{
+		pageno++;
+		var sql = "Form_test "+pagesize+","+ pageno;
+		dataset1.Open(sql);		
+	}
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/js/fcdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js&#13;&#10;fcdate.js" dj_sn="proc_page" type="TT" caption="用存储过程分页示例" billtaborder="<root><taborder>grid1</taborder><taborder>button1</taborder><taborder>button2</taborder></root>" center="  " entertype="修改" window="当前窗口" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:1;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><button><id>button1</id><id>button2</id></button><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" mkbh codeheader="BBB" keyfield posleft postop poswidth posheight isfile="否" OtherSave="否" idtype="1" IsEncrypt="否" BLONopen="initload()" toolbar="不带工具栏" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=dataset1 pubpara="否" controltype="dataset" opensortno="1" format="<fields><field><fieldname>userid</fieldname><datatype>字符</datatype><displaylabel>用户编号</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>username</fieldname><datatype>字符</datatype><displaylabel>用户名称</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sumpages</fieldname><datatype>字符</datatype><displaylabel>总页数</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><userid></userid><username></username><sumpages></sumpages></dsid>")' onGetText='bill_ondatasetgettext("<dsid><userid></userid><username></username><sumpages></sumpages></dsid>")' onSetText='bill_ondatasetsettext("<dsid><userid></userid><username></username><sumpages></sumpages></dsid>")' isSubGrid="undefined"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' controltype="grid" visible="是" readonly="否" canselect="是" autoappend="否" autowidth="否" autoheight="否" SetRowHeight="是" hideVscroll="否" hideHscroll="否" blRowNo="否" autosize="否" bodyrowheight="-1" bodyrows="-1" dataset="dataset1" format="<cols><col><fname>userid</fname><cname>用户编号</cname><width>100</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>username</fname><cname>用户名称</cname><width>100</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sumpages</fname><cname>总页数</cname><width>100</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" width="755" height="444" top="62" left="37">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 29px; LEFT: 428px" id=button1 onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;MovePage('Up');&quot;)">上一页</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 28px; LEFT: 514px" id=button2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;MovePage('Down');&quot;)">下一页</BUTTON></DIV></body></html>

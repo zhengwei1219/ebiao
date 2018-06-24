@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var pstrUserFunction ;
+function uf_read(){
+	pstrUserFunction = readdesignhtml("<file>/fceformext/js/userfunc.js</file>");
+}
+function uf_save(){
+
+	var sXml = "<file>/fceformext/js/userfunc.js</file><text>"+"<![CD"+"ATA["+pstrUserFunction+"]"+"]>"+"</text>";
+	var ret=savedesignhtml(sXml);
+	if(IsSpace(ret)) {
+		alert("/fceformext/js/userfunc.js文件保存成功!");
+	}else{
+		alert(ret);
+		
+	}						
+}</script><script src='../js/fcopendj.js'></script><script src='../js/design.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;design.js" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label6</id></label><button><id>button1</id><id>button2</id><id>button3</id><id>button4</id></button></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:6;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder><taborder>button4</taborder></root>" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen window="当前窗口" toolbar="不带工具栏" posheight poswidth postop posleft center="  " isfile="是" type="ST" caption="编辑JS文件" dj_sn="editJsFile" AutoResizeXml><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 7px; LEFT: 54px" id=button1 onmovestart=moveStart() onclick='bill_onclick("uf_read()")' controltype="button">读 出</BUTTON><LABEL style="POSITION: absolute; WIDTH: 40px; HEIGHT: 15px; TOP: 12px; LEFT: 13px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">先点</LABEL><LABEL style="POSITION: absolute; WIDTH: 209px; HEIGHT: 20px; TOP: 12px; LEFT: 139px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否">按钮读出要编辑的JS文件的内容,</LABEL><LABEL style="POSITION: absolute; WIDTH: 305px; HEIGHT: 19px; TOP: 44px; LEFT: 13px" id=label3 onmovestart=moveStart() controltype="label" inputTag="否">如果客户端安装了使代码变颜色的控件的话,请点击</LABEL><BUTTON style="POSITION: absolute; WIDTH: 77px; HEIGHT: 25px; TOP: 38px; LEFT: 314px" id=button2 onmovestart=moveStart() onclick="bill_onclick(&quot;Addobj('userfunction1')&quot;)" controltype="button">打 开</BUTTON><LABEL style="POSITION: absolute; WIDTH: 210px; HEIGHT: 19px; TOP: 75px; LEFT: 13px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">如果客户端没有安装控件,请点击</LABEL><BUTTON style="POSITION: absolute; WIDTH: 77px; HEIGHT: 25px; TOP: 70px; LEFT: 214px" id=button3 onmovestart=moveStart() onclick="bill_onclick(&quot;Addobj('userfunction')&quot;)" controltype="button">打 开</BUTTON><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 107px; LEFT: 15px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">最后,点</LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 101px; LEFT: 68px" id=button4 onmovestart=moveStart() onclick='bill_onclick("uf_save()")' controltype="button">保 存</BUTTON><LABEL style="POSITION: absolute; WIDTH: 233px; HEIGHT: 28px; TOP: 108px; LEFT: 155px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">保存修改后的JS文件到后台服务器上.</LABEL></DIV></body></html>

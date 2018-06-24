@@ -1,0 +1,43 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>编辑视图</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">编辑视图</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.编辑视图</div>
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;用户需要对某个表修改一条记录时,我们就要用编辑视图,编辑视图同样有单表编辑视图和主从表的编辑视图.它在表单上显示你要修改的一条记录,用户修改记录,然后保存. 
+       <div class="divTitle">2.编辑视图的设置</div>
+        <div class="divTitle">2.1 单表编辑视图设置</div>
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;在数据集中需要设置sql语句来显示修改的信息，数据集的字段页中设置主键字段,在数据集的提交页中设置保存表名,提交数据类型,它不需要主键类别和主键id标识,因为修改的这条记录已经产生了主键.数据集属性窗口中字段的数据项可选项：实际计算项和汇总项只有编辑记录时才有作用，请参考主从编辑视图中实际计算项和汇总项的设置。
+          <div class="divTitle">2.2 主从编辑视图的设置</div>
+       <div class="divTitle">2.2.1 主数据集设置</div>
+       &nbsp;&nbsp;&nbsp; 单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_3_editmainsub'>主从编辑视图</A> 进入主从编辑视图设计界面.单击 <a  class="shili" href='../../fceform/common/djframe.htm?djsn=help_4_3_editmainsub&djtype=FT&paravalue=DAA00000064'>运行主从编辑视图</a> 进入主从编辑视图运行界面.还需要在主数据集上设置用来查询修改数据的sql语句,在主数据集和子数据集的字段页中设置主键字段,在数据集的提交页中设置保存表名,提交数据类型,但不需要主键类别和主键id标识,因为修改的这条记录已经产生了主键.<br /> <img  src ="images/help_4_3_5.gif"/><br />&nbsp;&nbsp;&nbsp; 在主数据集的事件页签中的打开之后之后输入框输入:fcpubdata.keyValue=DsMain.Field('djbh').Value ; dssub1.Open('select FCS_BILLSUB1.*,FCS_ITEM.sitemcode,FCS_ITEM.sitemname from FCS_BILLSUB1 inner join FCS_ITEM on FCS_BILLSUB1.sitemid=FCS_ITEM.sitemid where djbh=:key_value' ) 用于显示从表数据集的记录.<br /><img  src ="images/help_4_3_6.gif"/><div class="divTitle">2.2.2 子数据集设置</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;子数据集不需要设置查询数据的sql语句,在主数据集的打开之后事件中已经输入sql查询语句.需要在子数据集中字段页中设置表中的字段,设置字段的主键,字段的数据项中是实际计算项还是汇总项.实际计算项 常可用于列间计算,例如 金额=数量*单价 就可在默认值处输入$f_value('shl')*$f_value('dj') 表示此字段等于shl字段值*dj字段值,如同时shl字段的值也为公式则可能会运算错误.此处也支持写标准的javascript的表达式.<br /><img  src ="images/help_4_3_7.gif"/><br />
+        &nbsp;&nbsp;&nbsp; 子数据集中的dmoney字段是实际计算项,在数据集的字段页中,选择dmoney字段,在dmoney字段的数据项中选择实际计算项,单击默认值的下拉按钮进入设置公式页,单击数量字段,在单击乘号在单击金额字段,生成实际计算项的公式$f_value('dprice')*$f_value('dnum'),单击【确定】按钮,返回默认值输入框.<br />  <img  src ="images/help_4_3_8.gif"/><br />
+        &nbsp;&nbsp;&nbsp;
+        汇总项 常可用于跨行计算,在默认值处输入sum('je') 表示此字段自动为je字段的合计值.此处的sum('je')也可以改为avg('je')表示取平均值,max('je')表示取最大值,min('je')表示取最小值. 
+        选中子数据集中的汇总项字段jehj,在默认值中的输入框中输入sum('dmoney')对金额字段进行汇总.
+        
+       <br />  <img  src ="images/help_4_3_9.gif"/>
+        <div class="divTitle">2.2.3 主从数据集关联字段设置</div>
+         &nbsp;&nbsp;&nbsp;&nbsp;在从表数据集中的提交页中，不需要设置数据集为从表数据集，如果是新增需要设置此数据集为从表数据集.</br>
+        <img  src ="images/help_4_3_1.gif"/><br />
+        <div class="divTitle">3.与查看视图对比</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;查看视图需要设置数据集打开页的sql语句来获取查看信息,而不需要设置与保存相关的设置.新增视图需要设置保存数据的设置和字段的数据项中有数据项和变量默认值设置.而不需要设置查询数据的sql语句.编辑视图需要设置查询数据的sql语句也需要相关的保存设置,它不需要主键类别和主键id标识,编辑视图的字段数据项中有汇总项和实际计算项.
+       <div class="divTitle">4.运行后编辑视图界面</div>
+       <img  src ="images/help_4_3_2.gif"/><br />
+</div>
+</body>
+</html>

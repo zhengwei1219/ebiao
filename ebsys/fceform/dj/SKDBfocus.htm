@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+	SetButtonImage($id("cmdGridRowUp"),"../../fceform/images/ef_run_button_up.gif") ;
+	SetButtonImage($id("cmdGridRowDown"),"../../fceform/images/ef_run_button_down.gif") ;
+        var obj=fcpubdata.keyValue ;
+        //alert(obj)
+         var oXml=SetDom(obj);
+         var sLen=oXml.documentElement.childNodes.length;
+         SKDBListBox1.options.length=0
+
+         for(var i=0;i<sLen;i++){
+
+           sid=oXml.documentElement.childNodes(i).text;
+           cboTarget=document.createElement ("option")  //创建option元素
+           cboTarget.value=sid
+           cboTarget.text=sid
+
+           SKDBListBox1.add(cboTarget)
+         }
+		new Eform.SysForm().setButtonImage();
+         //alert(SKDBListBox1.value)
+}
+function uf_up(){
+     for (var i=SKDBListBox1.length-1;i>0;i--){
+      if (SKDBListBox1.options(i).selected){
+        var s
+        var d
+        s=SKDBListBox1.options(i-1).text ;
+        d=SKDBListBox1.options(i-1).value ;
+        SKDBListBox1.options(i-1).text=SKDBListBox1.options(i).text ;
+        SKDBListBox1.options(i-1).value=SKDBListBox1.options(i).value ;
+        SKDBListBox1.options(i).text=s ;
+        SKDBListBox1.options(i).value=d ;
+        SKDBListBox1.options(i-1).selected=true ;
+        break ;
+      }
+    }
+  }
+function uf_down(){
+   for (var i=0;i<SKDBListBox1.length-1;i++){
+    if (SKDBListBox1.options(i).selected){
+      var s
+      var d
+      s=SKDBListBox1.options(i+1).text ;
+      d=SKDBListBox1.options(i+1).value ;
+      SKDBListBox1.options(i+1).text=SKDBListBox1.options(i).text ;
+      SKDBListBox1.options(i+1).value=SKDBListBox1.options(i).value ;
+      SKDBListBox1.options(i).text=s ;
+      SKDBListBox1.options(i).value=d ;
+      SKDBListBox1.options(i+1).selected=true ;
+      break ;
+    }
+  }
+}
+function uf_ok() {
+      var obj="<root>" ;
+      for(var i=0; i<SKDBListBox1.length ;i++){
+          obj=obj+'<taborder>'+SKDBListBox1.options(i).value+'</taborder>';
+
+
+      }
+      obj=obj+"</root>"
+      // alert(obj)
+      window.returnValue=obj ;
+       window.close();
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV onkeydown="" id=SKbillsheet class=dj ondblclick="" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" para="<r></r>" dj_id="254" center="居中" keyfield controlno="SKButton:4;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="241" poswidth="339" entertype="修改" codeheader mkbh="E5" caption="焦点编辑框" type="LR" dj_sn="SKDBfocus" billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" contxml="<root><div><id>cmdGridRowUp</id><id>cmdGridRowDown</id></div><button><id>cmdOk</id><id>cmdClose</id></button></root>" blmode="其它" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 232px; DISPLAY: block; HEIGHT: 192px; FONT-SIZE: 12px; TOP: 6px; LEFT: 5px" id=SKDBListBox1 size=8 onkeydown='bill_onkeydown("")' onclick='bill_onclick("")' dataset="" field="" onfocus='bill_onenter("")' onblur='bill_onexit("")'><OPTION value=""></OPTION></SELECT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 8px; LEFT: 246px" id=cmdOk controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 38px; LEFT: 246px" id=cmdClose controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON> 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 19px; HEIGHT: 17px; BORDER-TOP: 0px; TOP: 109px; BORDER-RIGHT: 0px; LEFT: 241px" id=cmdGridRowUp title=上移一行 onmovestart=moveStart() controltype="div" NotBg="否" onclick='bill_onclick("uf_up()")'></DIV>
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 19px; HEIGHT: 17px; BORDER-TOP: 0px; TOP: 135px; BORDER-RIGHT: 0px; LEFT: 241px" id=cmdGridRowDown title=下移一行 onmovestart=moveStart() controltype="div" NotBg="否" onclick='bill_onclick("uf_down()")'></DIV></DIV></body></html>

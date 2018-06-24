@@ -1,0 +1,769 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_InitPage()
+{
+	var win = fcpubdata.obj;
+	div1.innerHTML = getFormInfo(win);
+}
+
+function uf_maxwin(){
+   window.dialogLeft=0
+   window.dialogTop=0
+
+   window.dialogWidth= screen.availWidth+"px"
+   window.dialogHeight=screen.availHeight+"px"
+
+}
+
+/**
+ *@func:获取表单上各个控件的配制信息
+ *@param:表单窗口
+ *@date:2008-4-9 
+ *@return:表单各个控件配制信息的字符串
+**/
+function getFormInfo(win)
+{
+	var strXml = new Sys.StringBuilder();
+	//strXml.append("<table cellpadding=\"0\" id=\"tab\" name=\"tab\" cellspacing=\"0\"  height=\"25\" width=\"100%\"  border='1'>");
+   // strXml.append("<tr bgcolor='#99CCFF'><td width='120'>控件ID</td><td width='100'>绑定数据集</td><td width='80'>绑定字段</td><td width='100'>字段中文名</td><td width='60'>活动</td><td width='60'>只读</td><td width='60'>可见</td></tr>");
+        
+	var oContXml = win.oContXml;//SetDom(win.document.all.SKbillsheet.contxml);
+	var objForm = win.document.all.SKbillsheet;		
+	var FromAttr = "";
+	
+	var sdjsn = objForm.dj_sn;			//表单SN
+	var sdjName = (typeof objForm.caption == "undefined")?"":objForm.caption;			//表单名称 
+	var sinit = (typeof objForm.BLONopen == "undefined")?"":objForm.BLONopen;			//打开事件
+	var sclose = (typeof objForm.BLONclose == "undefined")?"":objForm.BLONclose;		//关闭事件
+	var sidtype = (typeof objForm.idtype == "undefined")?"":objForm.idtype;				//主键字段类别
+	switch (sidtype)
+	{
+		case "1":
+			sidtype = "特定格式值";
+		break;
+		case "2":
+			sidtype = "自动编号ID值";
+		break;
+		case "3":
+			sidtype = "oracle序列作ID";
+		break;
+		case "4":
+			sidtype = "单个字段作主键";
+		break;
+		case "5":
+			sidtype = "多个字段作主键";
+		break;
+		case "6":
+			sidtype = "自定义主键的值";
+		break;
+	}
+	var sentertype = (typeof objForm.entertype == "undefined")?"":objForm.entertype; 	//表单进入状态
+	var skeyfield = (typeof objForm.keyfield == "undefined")?"":objForm.keyfield;		//主键字段名
+	var sIDhead = (typeof objForm.codeheader == "undefined")?"":objForm.codeheader;		//ID标识
+	var sjslib = (typeof objForm.jslib == "undefined")?"":objForm.jslib;				//启用函数库
+	
+	if (sdjsn != "")
+		FromAttr += "<span>表单SN(dj_sn)：</span><span style='COLOR: #0000ff;'>"+sdjsn+"</span>；&nbsp;&nbsp;";
+	if (sdjName != "")
+		FromAttr += "<span>表单名称(caption)：</span><span style='COLOR: #0000ff;'>"+sdjName+"</span>；&nbsp;&nbsp;";
+	if (sinit != "")
+		FromAttr += "<span>打开事件(BLONopen)：</span><span style='COLOR: #0000ff;'>"+sinit+"</span>；&nbsp;&nbsp;";
+	if (sclose != "")
+		FromAttr += "<span>关闭事件(BLONclose)：</span><span style='COLOR: #0000ff;'>"+sclose+"</span>；&nbsp;&nbsp;";	
+	if (sidtype != "")
+		FromAttr += "<span>主键字段类别(idtype)：</span><span style='COLOR: #0000ff;'>"+sidtype+"</span>；&nbsp;&nbsp;";
+	if (sentertype != "")
+		FromAttr += "<span>表单进入状态(entertype)：</span><span style='COLOR: #0000ff;'>"+sentertype+"</span>；&nbsp;&nbsp;";
+	if (skeyfield != "")
+		FromAttr += "<span>主键字段名(keyfield)：</span><span style='COLOR: #0000ff;'>"+skeyfield+"</span>；&nbsp;&nbsp;";
+	if (sIDhead != "")
+		FromAttr += "<span>ID标识(codeheader)：</span><span style='COLOR: #0000ff;'>"+sIDhead+"</span>；&nbsp;&nbsp;";	
+	if (sjslib != "")
+		FromAttr += "<span>启用函数库(jslib)：</span><span style='COLOR: #0000ff;'>"+sjslib+"</span>；&nbsp;&nbsp;";				
+	
+	strXml.append("<table cellpadding=\"0\" cellspacing=\"0\"   border='1'>");
+	strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+	strXml.append("<td width='80' align='center'><b>控件ID</b></td>");
+	strXml.append("<td align='center'><b>配置信息</b></td>");
+	strXml.append("</tr>");
+	
+	strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+	//strXml.append("<td width='80'>控件ID</td>");
+	strXml.append("<td width='80'>SKbillsheet&nbsp;</td>");
+	//strXml.append("<td width='80'>属性</td>");
+	strXml.append("<td>"+FromAttr+"</td>");
+	strXml.append("</tr>");
+						
+	if (IsSpace(oContXml.xml) == false)
+	{
+		var iLen = oContXml.documentElement.childNodes.length;
+		for(var i=0;i<iLen;i++)
+		{
+			var Node = oContXml.documentElement.childNodes(i);
+			
+			for(var j=0;j<Node.childNodes.length;j++)
+			{
+				try
+				{
+					var obj = eval("win.document.all."+Node.childNodes(j).text);
+					var sid = obj.id;					//控件ID
+					var strAttr = "";
+					//var ilen = 14;
+					
+					switch(Node.nodeName.toLowerCase())
+					{
+						case "button":																									
+							//var slabel = obj.value;																				//标签
+							
+							//if (slabel != "")
+								//strAttr += "<span>标签(value)：</span><span style='COLOR: #0000ff;'>"+slabel+"</span>；&nbsp;&nbsp;";
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+						break;
+						case "text":
+							
+							var svalue = obj.value;																				//默认值
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";
+								
+							strAttr += getBindInfo(obj);			//绑定数据集信息
+							strAttr += getCustomAttr(obj);			//自定义属性							
+							strAttr += getStyleInfo(obj,"0");		//活动、可见、只读;	
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"双击");	//双击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件
+							strAttr += getEventInfo(obj,"按键");	//按键事件
+							strAttr += getEventInfo(obj,"改变");	//改变事件
+						break;
+						case "img":
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+						break;
+						case "tree":
+							var sroot = (typeof obj.roottext == "undefined")?"":obj.roottext;									//根节点标题
+							var ssql = (typeof obj.sql == "undefined")?"":obj.sql;												//Sql语句
+							var ssql2 = (typeof obj.sql2 == "undefined")?"":obj.sql2;											//SQL新格式
+							var sxmlpath = (typeof obj.xmlpath == "undefined")?"":obj.xmlpath;									//XML文件
+
+							if (sroot != "")
+								strAttr += "<span>根节点标题(roottext)：</span><span style='COLOR: #0000ff;'>"+sroot+"</span>；&nbsp;&nbsp;";
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";
+							if (ssql2 != "")
+								strAttr += "<span>SQL新格式(sql2)：</span><span style='COLOR: #0000ff;'>"+ssql2+"</span>；&nbsp;&nbsp;";
+							if (sxmlpath != "")
+								strAttr += "<span>XML文件(xmlpath)：</span><span style='COLOR: #0000ff;'>"+sxmlpath+"</span>；&nbsp;&nbsp;";		
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+						
+						break;
+						case "spin":
+							var svalue = (typeof obj.value =="undefined")?"":obj.value;											//默认值
+							var smax = (typeof obj.Max == "undefined")?"":obj.Max;												//最大值
+							var smin = (typeof obj.Min == "undefined")?"":obj.Min;												//最小值
+							var snextnum = (typeof obj.NextNum == "undefined")?"":obj.NextNum;									//微调值
+							
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							if (smax != "")
+								strAttr += "<span>最大值(Max)：</span><span style='COLOR: #0000ff;'>"+smax+"</span>；&nbsp;&nbsp;";	
+							if (smin != "")
+								strAttr += "<span>最小值(Min)：</span><span style='COLOR: #0000ff;'>"+smin+"</span>；&nbsp;&nbsp;";	
+							if (snextnum != "")
+								strAttr += "<span>微调值(NextNum)：</span><span style='COLOR: #0000ff;'>"+snextnum+"</span>；&nbsp;&nbsp;";	
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";			
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+								
+						break;
+						case "checkboxlist":
+							var srows = (typeof obj.rows =="undefined")?"":obj.rows;											//列数
+							var ssql = (typeof obj.sql == "undefined")?"":obj.sql;												//Sql语句
+							
+							if (srows != "")
+								strAttr += "<span>列数(rows)：</span><span style='COLOR: #0000ff;'>"+srows+"</span>；&nbsp;&nbsp;";
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";	
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+						break;
+						case "radiolist":
+							var srows = (typeof obj.rows =="undefined")?"":obj.rows;											//列数
+							var ssql = (typeof obj.sql == "undefined")?"":obj.sql;												//Sql语句
+														
+							if (srows != "")
+								strAttr += "<span>列数(rows)：</span><span style='COLOR: #0000ff;'>"+srows+"</span>；&nbsp;&nbsp;";
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";	
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+						break;
+						case "grid":
+							
+							var sdataset = (typeof obj.dataset == "undefined")?"":obj.dataset;									//绑定数据集
+							if (sdataset != "")
+								strAttr += "<span>数据集(dataset)：</span><span style='COLOR: #0000ff;'>"+sdataset+"</span>；&nbsp;&nbsp;";
+							
+							var scanselect = (typeof obj.canselect == "undefined")?"":obj.canselect;							//允许选中单元格
+							if (scanselect != "")
+								strAttr += "<span>允许选中单元格(canselect)：</span><span style='COLOR: #0000ff;'>"+scanselect+"</span>；&nbsp;&nbsp;";
+							
+							var sautoheight = (typeof obj.autoheight == "undefined")?"":obj.autoheight;							//表格自适应高度
+							if (sautoheight != "")	
+								strAttr += "<span>表格自适应高度(autoheight)：</span><span style='COLOR: #0000ff;'>"+sautoheight+"</span>；&nbsp;&nbsp;";
+							
+							var sreadonly = (typeof obj.readonly == "undefined")?"":obj.readonly;								//只读；
+							if (sreadonly != "")
+								strAttr += "<span>只读(readonly)：</span><span style='COLOR: #0000ff;'>"+sreadonly+"</span>；&nbsp;&nbsp;";
+							
+							var sautoappend = (typeof obj.autoappend == "undefined")?"":obj.autoappend;							//自动增加新记录
+							if (sautoappend != "")
+								strAttr += "<span>自动增加新记录(autoappend)：</span><span style='COLOR: #0000ff;'>"+sautoappend+"</span>；&nbsp;&nbsp;";
+							
+							var sautowidth = (typeof obj.autowidth == "undefined")?"":obj.autowidth;							//表格自适应宽度
+							if (sautowidth != "")
+								strAttr += "<span>表格自适应宽度(autowidth)：</span><span style='COLOR: #0000ff;'>"+sautowidth+"</span>；&nbsp;&nbsp;";
+							
+							var svisible = (typeof obj.visible == "undefined")?"":obj.visible;									//可见
+							if (svisible != "")
+								strAttr += "<span>可见(visible)：</span><span style='COLOR: #0000ff;'>"+svisible+"</span>；&nbsp;&nbsp;";
+							
+							var sSetRowHeight = (typeof obj.SetRowHeight == "undefined")?"":obj.SetRowHeight;					//固定行高
+							if (sSetRowHeight != "")
+								strAttr += "<span>固定行高(SetRowHeight)：</span><span style='COLOR: #0000ff;'>"+sSetRowHeight+"</span>；&nbsp;&nbsp;";
+								
+							var shideVscroll = (typeof obj.hideVscroll == "undefined")?"":obj.hideVscroll;						//隐藏滚动条
+							if (shideVscroll != "")
+								strAttr += "<span>隐藏滚动条(hideVscroll)：</span><span style='COLOR: #0000ff;'>"+shideVscroll+"</span>；&nbsp;&nbsp;";
+							
+							var sbodyrowheight = (typeof obj.bodyrowheight == "undefined")?"":obj.bodyrowheight;				//表格内容行的高度值
+							if (sbodyrowheight != "" && sbodyrowheight != "-1")
+								strAttr += "<span>表格内容行的高度值(bodyrowheight)：</span><span style='COLOR: #0000ff;'>"+sbodyrowheight+"</span>；&nbsp;&nbsp;";
+							
+							var sbodyrows = (typeof obj.bodyrows == "undefined")?"":obj.bodyrows;								//表格内容行的行数值
+							if (sbodyrows != "" && sbodyrows != "-1")
+								strAttr += "<span>表格内容行的行数值(bodyrows)：</span><span style='COLOR: #0000ff;'>"+sbodyrows+"</span>；&nbsp;&nbsp;";
+							
+							var susertitle = (typeof obj.usertitle == "undefined")?"":obj.usertitle;							//自定义标题
+							if (susertitle != "")
+								strAttr += "<span>自定义标题(usertitle)：</span><span style='COLOR: #0000ff;'>"+susertitle+"</span>；&nbsp;&nbsp;";
+							
+							var stitlerowheight = (typeof obj.titlerowheight == "undefined")?"":obj.titlerowheight;				//标题行高
+							if (stitlerowheight != "")
+								strAttr += "<span>标题行高(titlerowheight)：</span><span style='COLOR: #0000ff;'>"+stitlerowheight+"</span>；&nbsp;&nbsp;";
+							
+							if (susertitle == "是")
+							{
+								var stitlerows = (typeof obj.titlerows == "undefined")?"":obj.titlerows;					//标题行数
+								if (stitlerows != "")
+									strAttr += "<span>标题行数(titlerows)：</span><span style='COLOR: #0000ff;'>"+stitlerows+"</span>；&nbsp;&nbsp;";
+								var susertitlehtml = (typeof obj.usertitlehtml == "undefined")?"":obj.usertitlehtml;		//标题HTML
+								if (susertitlehtml != "")
+									strAttr += "<span>标题HTML(usertitlehtml)：</span><span style='COLOR: #0000ff;'>"+susertitlehtml+"</span>；&nbsp;&nbsp;";
+							}
+							
+							
+						break;
+						case "checkbox":
+							//var slabel = obj.childNodes(1).innerText;															//标签
+							var struevalue = (typeof obj.truevalue == "undefined")?"":obj.truevalue;							//选中
+							var sfalsevalue = (typeof obj.falsevalue == "undefined")?"":obj.falsevalue;							//未选中
+							var svalue = (typeof obj.value == "undefined")?"":obj.value;										//默认值
+												
+							//if (slabel != "")
+								//strAttr += "<span>标签：</span><span style='COLOR: #0000ff;'>"+slabel+"</span>；&nbsp;&nbsp;";	
+							if (struevalue != "")
+								strAttr += "<span>选中(truevalue)：</span><span style='COLOR: #0000ff;'>"+struevalue+"</span>；&nbsp;&nbsp;";	
+							if (sfalsevalue != "")
+								strAttr += "<span>未选中(falsevalue)：</span><span style='COLOR: #0000ff;'>"+sfalsevalue+"</span>；&nbsp;&nbsp;";	
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";	
+								
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							strAttr += getCustomAttr(obj);			//自定义属性						
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"双击");	//双击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件
+							
+						break;
+						case "radio":
+							//var slabel = (typeof obj.legend == "undefined")?"":obj.legend;										//标签
+							//var stempvalue = (typeof obj.tempvalue == "undefined")?"":obj.tempvalue;							//取值
+							//var stemptext = (typeof obj.temptext == "undefined")?"":obj.temptext;								//显示
+							var svalue = (typeof obj.value == "undefined")?"":obj.value;										//默认值							
+							//if (slabel != "")
+								//strAttr += "<span>标签(legend)：</span><span style='COLOR: #0000ff;'>"+slabel+"</span>；&nbsp;&nbsp;";	
+							/*if (stempvalue != "")
+								strAttr += "<span>取值(tempvalue)：</span><span style='COLOR: #0000ff;'>"+stempvalue+"</span>；&nbsp;&nbsp;";	
+							if (stemptext != "")
+								strAttr += "<span>显示(temptext)：</span><span style='COLOR: #0000ff;'>"+stemptext+"</span>；&nbsp;&nbsp;";	*/
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";	
+								
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							strAttr += getCustomAttr(obj);			//自定义属性						
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件		
+						break;
+						case "listbox":
+							//var stempvalue = (typeof obj.tempvalue == "undefined")?"":obj.tempvalue;							//取值
+							//var stemptext = (typeof obj.temptext == "undefined")?"":obj.temptext;								//显示
+							var ssql = (typeof obj.sql == "undefined")?"":obj.sql;												//SQL语句
+							var svalue = (typeof obj.value == "undefined")?"":obj.value;										//默认值
+							
+							
+							/*if (stempvalue != "")
+								strAttr += "<span>取值(tempvalue)：</span><span style='COLOR: #0000ff;'>"+stempvalue+"</span>；&nbsp;&nbsp;";	
+							if (stemptext != "")
+								strAttr += "<span>显示(temptext)：</span><span style='COLOR: #0000ff;'>"+stemptext+"</span>；&nbsp;&nbsp;";	*/
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";	
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";	
+									
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							strAttr += getCustomAttr(obj);			//自定义属性						
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"双击");	//双击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件
+							strAttr += getEventInfo(obj,"改变");	//改变事件
+								
+						break;
+						case "combobox":
+							//var stempvalue = (typeof obj.tempvalue == "undefined")?"":obj.tempvalue;							//取值
+							//var stemptext = (typeof obj.temptext == "undefined")?"":obj.temptext;								//显示
+							var ssql = (typeof obj.sql == "undefined")?"":obj.sql;												//SQL语句
+							var svalue = (typeof obj.value == "undefined")?"":obj.value;										//默认值
+							
+							/*if (stempvalue != "")
+								strAttr += "<span>取值(tempvalue)：</span><span style='COLOR: #0000ff;'>"+stempvalue+"</span>；&nbsp;&nbsp;";	
+							if (stemptext != "")
+								strAttr += "<span>显示(temptext)：</span><span style='COLOR: #0000ff;'>"+stemptext+"</span>；&nbsp;&nbsp;";	*/
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";	
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";
+									
+							strAttr += getBindInfo(obj);			//绑定数据集信息
+							strAttr += getCustomAttr(obj);			//自定义属性							
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件
+							strAttr += getEventInfo(obj,"改变");	//改变事件
+							
+						break;
+						case "dropdownlist":
+							//var stempvalue = (typeof obj.tempvalue == "undefined")?"":obj.tempvalue;							//取值
+							//var stemptext = (typeof obj.temptext == "undefined")?"":obj.temptext;								//显示
+							var ssql = (typeof obj.sql1 == "undefined")?"":obj.sql1;											//SQL语句
+							var sformat = (typeof obj.format == "undefined")?"":obj.format;										//标题
+							
+							/*if (stempvalue != "")
+								strAttr += "<span>取值(tempvalue)：</span><span style='COLOR: #0000ff;'>"+stempvalue+"</span>；&nbsp;&nbsp;";	
+							if (stemptext != "")
+								strAttr += "<span>显示(temptext)：</span><span style='COLOR: #0000ff;'>"+stemptext+"</span>；&nbsp;&nbsp;";	*/
+							if (sformat != "")
+								strAttr += "<span>标题(format)：</span><span style='COLOR: #0000ff;'>"+sformat+"</span>；&nbsp;&nbsp;";	
+							if (ssql != "")
+								strAttr += "<span>SQL语句(sql1)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";	
+								
+							strAttr += getBindInfo(obj);				//绑定数据集信息	
+							strAttr += getCustomAttr(obj);				//自定义属性						
+							strAttr += getStyleInfo(obj,"1");			//活动、可见
+							strAttr += getEventInfo(obj,"单击");		//单击新增行
+							strAttr += getEventInfo(obj,"选择改变");	//选择改变
+							strAttr += getEventInfo(obj,"填写改变");	//填写改变
+							strAttr += getEventInfo(obj,"改变");		//改变事件
+							strAttr += getEventInfo(obj,"按键");		//改变事件
+							
+						break;
+						case "textarea":
+							var svalue = obj.value;																				//默认值
+							if (svalue != "")
+								strAttr += "<span>默认值(value)：</span><span style='COLOR: #0000ff;'>"+svalue+"</span>；&nbsp;&nbsp;";
+								
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							strAttr += getCustomAttr(obj);			//自定义属性						
+							strAttr += getStyleInfo(obj,"0");		//活动、可见、只读;	
+							strAttr += getEventInfo(obj,"单击");	//单击事件
+							strAttr += getEventInfo(obj,"双击");	//双击事件
+							strAttr += getEventInfo(obj,"进入");	//进入事件
+							strAttr += getEventInfo(obj,"退出");	//退出事件
+							strAttr += getEventInfo(obj,"按键");	//按键事件
+							strAttr += getEventInfo(obj,"改变");	//改变事件
+							
+						break;
+						case "dbimg":
+							strAttr += getBindInfo(obj);			//绑定数据集信息	
+							strAttr += getCustomAttr(obj);			//自定义属性						
+							strAttr += getStyleInfo(obj,"1");		//活动、可见
+							
+						break;
+						case "chart":
+							
+						break;
+						case "upload":
+							var spath = (typeof obj.setpath == "undefined")?"":obj.setpath;					//位置
+							var sExtfiles = (typeof obj.extfiles == "undefined")?"":obj.extfiles;			//允许上传的扩展名
+							
+							if (spath != "")
+								strAttr += "<span>位置(setpath)：</span><span style='COLOR: #0000ff;'>"+spath+"</span>；&nbsp;&nbsp;";
+							if (sExtfiles != "")
+								strAttr += "<span>允许上传的文件扩展名(extfiles)：</span><span style='COLOR: #0000ff;'>"+sExtfiles+"</span>；&nbsp;&nbsp;";
+							strAttr += getCustomAttr(obj);			//自定义属性
+							strAttr += getStyleInfo(obj,"0");		//活动、可见、只读
+						break;
+						case "dataset":
+							var stable = (typeof obj.saveastable == "undefined")?"":obj.saveastable;			//保存表名
+							var ssql = (typeof obj.opensql == "undefined")?"":obj.opensql;						//SQL语句
+							var sbeforeopen = (typeof obj.BeforeOpen == "undefined")?"":obj.BeforeOpen;			//打开之前
+							var safteropen = (typeof obj.AfterOpen == "undefined")?"":obj.AfterOpen;			//打开之后
+							var sbeforepost = (typeof obj.BeforePost ==  "undefined")?"":obj.BeforePost;		//提交之前
+							var safterpost = (typeof obj.AfterPost == "undefined")?"":obj.AfterPost;			//提交之后
+							var sbeforescroll = (typeof obj.BeforeScroll == "undefined")?"":obj.BeforeScroll;	//滚动之前
+							var safterscroll = (typeof obj.AfterScroll == "undefined")?"":obj.AfterScroll;		//滚动之后
+							
+							if (stable != "")
+								strAttr += "<span>保存表名(saveastable)：</span><span style='COLOR: #0000ff;'>"+stable+"</span>；&nbsp;&nbsp;";
+							if (ssql != "")
+								strAttr += "<span>SQL语句(opensql)：</span><span style='COLOR: #0000ff;'>"+ssql+"</span>；&nbsp;&nbsp;";
+								
+							if (sbeforeopen != "")
+								strAttr += "<span>打开之前(BeforeOpen)：</span><span style='COLOR: #0000ff;'>"+sbeforeopen+"</span>；&nbsp;&nbsp;";	
+							if (safteropen != "")
+								strAttr += "<span>打开之后(AfterOpen)：</span><span style='COLOR: #0000ff;'>"+safteropen+"</span>；&nbsp;&nbsp;";	
+							if (sbeforepost != "")
+								strAttr += "<span>提交之前(BeforePost)：</span><span style='COLOR: #0000ff;'>"+sbeforepost+"</span>；&nbsp;&nbsp;";	
+							
+							if (safterpost != "")
+								strAttr += "<span>提交之后(AfterPost)：</span><span style='COLOR: #0000ff;'>"+safterpost+"</span>；&nbsp;&nbsp;";	
+							if (sbeforescroll != "")
+								strAttr += "<span>滚动之前(BeforeScroll)：</span><span style='COLOR: #0000ff;'>"+sbeforescroll+"</span>；&nbsp;&nbsp;";	
+							if (safterscroll != "")
+								strAttr += "<span>滚动之后(AfterScroll)：</span><span style='COLOR: #0000ff;'>"+safterscroll+"</span>；&nbsp;&nbsp;";		
+							
+							strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+							strXml.append("<td width='80'>"+sid+"&nbsp;</td>");
+							strXml.append("<td>"+strAttr+"</td>");
+							strXml.append("</tr>")
+							
+							strXml.append(getDsXmlInfo(obj));
+							strAttr = "";
+							
+						break;
+					}
+					if (strAttr != "")
+					{
+						strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+						//strXml.append("<td width='80'>控件ID</td>");
+						strXml.append("<td width='80'>"+sid+"&nbsp;</td>");
+						//strXml.append("<td width='80'>属性</td>");
+						strXml.append("<td>"+strAttr+"</td>");
+						strXml.append("</tr>")	
+					}	
+				}
+				catch(e){continue;}
+			}
+		}
+	}
+	strXml.append("</table>");
+	//alert(strXml.toString());
+	return strXml.toString();
+	
+}
+
+/**
+ *@func:获取某个控件的样式信息(display,disabled,readonly)
+ *@param:flag:0表示取readonly信息;1表示不取,也就是控件没有只读信息
+ *@date:2008-4-24
+**/
+function getStyleInfo(obj,flag)
+{
+	var sStyleInfo = "";
+	var sdisabled = ( typeof obj.disabled == "undefined")?"":(obj.disabled)?"否":"是";					//活动
+	var sdisplay = (typeof obj.style.display =="undefined")?"":(obj.style.display == "none")?"否":"是";	//可见
+	if (sdisabled != "" && sdisabled !="是")
+		sStyleInfo += "<span>活动(disabled)：</span><span style='COLOR: #0000ff;'>"+sdisabled+"</span>；&nbsp;&nbsp;";	
+	if (sdisplay != "" && sdisplay != "是")
+		sStyleInfo += "<span>可见(display)：</span><span style='COLOR: #0000ff;'>"+sdisplay+"</span>；&nbsp;&nbsp;";
+	
+	if (flag == "0")
+	{	
+		var sreadonly = (typeof obj.readOnly == "undefined")?"":(obj.readOnly)?"是":"否";					//只读
+		if (sreadonly != "" && sreadonly != "否")
+			sStyleInfo += "<span>只读(readOnly)：</span><span style='COLOR: #0000ff;'>"+sreadonly+"</span>；&nbsp;&nbsp;";	
+	}
+	return sStyleInfo;
+}
+
+/**
+ *@func:获取某个控件的绑定数据集的情况(dataset,field)
+ *@param:obj控件对象
+ *@date:2008-4-24
+**/
+function getBindInfo(obj)
+{
+	var sBindInfo = "";
+	var sdataset = (typeof obj.dataset == "undefined")?"":obj.dataset;									//绑定数据集
+	var sfield = (typeof obj.field =="undefined")?"":obj.field;											//绑定字段
+	//var schina = (typeof obj.china == "undefined")?"":obj.china;										//字段中文名
+	if (sdataset != "")
+		sBindInfo += "<span>数据集(dataset)：</span><span style='COLOR: #0000ff;'>"+sdataset+"</span>；&nbsp;&nbsp;";
+	if (sfield != "")
+		sBindInfo += "<span>字段名(field)：</span><span style='COLOR: #0000ff;'>"+sfield+"</span>；&nbsp;&nbsp;";
+	//if (schina != "")
+		//strAttr += "<span>中文名(china)：</span><span style='COLOR: #0000ff;'>"+schina+"</span>；&nbsp;&nbsp;";
+	return sBindInfo;
+}
+
+function getEventInfo(obj,EventType)
+{
+	var sEventInfo = "";
+	var ilen = 14;
+	switch(EventType)
+	{
+		case "单击":
+			var sclick = (typeof obj.fc_onclick == "undefined")?"":obj.fc_onclick;								
+			ilen = BillEventHeadOpenTmp(sclick);
+			sclick = sclick.substring(ilen,sclick.length-2);														//单击事件
+			if (sclick != "")
+				sEventInfo += "<span>单击事件(fc_onclick)：</span><span style='COLOR: #0000ff;'>"+sclick+"</span>；&nbsp;&nbsp;";
+		break;
+		case "双击":
+			var sdblclick = (typeof obj.fc_ondblclick == "undefined")?"":obj.fc_ondblclick;			
+			ilen = BillEventHeadOpenTmp(sdblclick);
+			sdblclick = sdblclick.substring(ilen,sdblclick.length-2);												//双击事件
+			if (sdblclick != "")
+				sEventInfo += "<span>双击事件(fc_ondblclick)：</span><span style='COLOR: #0000ff;'>"+sdblclick+"</span>；&nbsp;&nbsp;";
+		break;
+		case "进入":
+			var sfocus = (typeof obj.fc_onfocus == "undefined")?"":obj.fc_onfocus;
+			ilen = BillEventHeadOpenTmp(sfocus);
+			sfocus = sfocus.substring(ilen,sfocus.length-2);														//进入事件
+			if (sfocus != "")
+				sEventInfo += "<span>进入事件(fc_onfocus)：</span><span style='COLOR: #0000ff;'>"+sfocus+"</span>；&nbsp;&nbsp;";
+		break;
+		case "退出":
+			var sblur = (typeof obj.fc_onblur == "undefined")?"":obj.fc_onblur;
+			ilen = BillEventHeadOpenTmp(sblur);
+			sblur = sblur.substring(ilen,sblur.length-2);															//退出事件 
+			if (sblur != "")
+				sEventInfo += "<span>退出事件(fc_onblur)：</span><span style='COLOR: #0000ff;'>"+sblur+"</span>；&nbsp;&nbsp;";
+		break;
+		case "按键":
+			var skeydown = (typeof obj.fc_onkeydown == "undefined")?"":obj.fc_onkeydown;
+			ilen = BillEventHeadOpenTmp(skeydown);
+			skeydown = skeydown.substring(ilen,skeydown.length-2);												//按键事件
+			if (skeydown != "")
+				sEventInfo += "<span>按键事件(fc_onkeydown)：</span><span style='COLOR: #0000ff;'>"+skeydown+"</span>；&nbsp;&nbsp;";
+		break;
+		case "改变":
+			var sonchange = (obj.onchange == null)?"":obj.onchange;												//改变事件
+			if(typeof sonchange == "function"){
+				var sonchange=sonchange.toString();
+				ilen=BillEventHeadOpenTmp(sonchange);
+				sonchange=sonchange.substring(ilen+23,sonchange.length-4);
+			}else{
+				ilen=BillEventHeadOpenTmp(sonchange);
+				sonchange = sonchange.substring(ilen,sonchange.length-2);
+			}
+			if (sonchange != "")
+				sEventInfo += "<span>改变事件(onchange)：</span><span style='COLOR: #0000ff;'>"+sonchange+"</span>；&nbsp;&nbsp;";
+		break;
+		case "填写改变":
+			var sinterchange = (typeof obj.oninterchange == "undefined")?"":obj.oninterchange;
+			ilen=BillEventHeadOpenTmp(sinterchange);
+			sinterchange = sinterchange.substring(ilen,sinterchange.length-2);									//填写改变
+			if (sinterchange != "")
+				sEventInfo += "<span>填写改变(oninterchange)：</span><span style='COLOR: #0000ff;'>"+sinterchange+"</span>；&nbsp;&nbsp;";
+					
+		break;
+		case "选择改变":
+			var sselonchange = (typeof obj.onselchange == "undefined")?"":obj.onselchange;
+			ilen=BillEventHeadOpenTmp(sselonchange);
+			sselonchange = sselonchange.substring(ilen,sselonchange.length-2);									//选择改变
+			if (sselonchange != "")
+				sEventInfo += "<span>选择改变(onselchange)：</span><span style='COLOR: #0000ff;'>"+sselonchange+"</span>；&nbsp;&nbsp;";
+		break;
+		case "单击新增行":
+			var sclick = (typeof obj.fc_onclick == "undefined")?"":obj.fc_onclick;								
+			ilen = BillEventHeadOpenTmp(sclick);
+			sclick = sclick.substring(ilen,sclick.length-2);														//单击事件
+			if (sclick != "")
+				sEventInfo += "<span>单击新增行(fc_onclick)：</span><span style='COLOR: #0000ff;'>"+sclick+"</span>；&nbsp;&nbsp;";
+		break;	
+	}
+	return sEventInfo;
+}
+
+/**
+ *@func:取控件的自定义属性
+ *@param:控件对象
+ *@date:2008-4-24
+**/
+function getCustomAttr(obj)
+{
+	var sCustomAttr = (typeof obj.CustomAttr == "undefined")?"":obj.CustomAttr;
+	if (sCustomAttr != "")
+		sCustomAttr = "<span>自定义属性(CustomAttr)：</span><span style='COLOR: #0000ff;'>"+sCustomAttr+"</span>；&nbsp;&nbsp;";
+	return sCustomAttr;
+}
+
+/**
+ *@func:取数据集中的数据项的详细信息
+ *@param:数据集对象
+ *@date:2008-4-25
+**/
+function getDsXmlInfo(obj)
+{
+	var sDsInfo = "";
+	var dsXml = SetDom(obj.formatxml);
+	
+	if (IsSpace(dsXml.xml) == false)
+	{
+		var ilen = dsXml.documentElement.childNodes.length;
+		for(var i=0;i<ilen;i++)
+		{
+			var oNode = dsXml.documentElement.childNodes(i);
+			var sFieldInfo = "";
+			
+			var sfield = oNode.childNodes(0).text;					//字段名
+			if (sfield != "")
+				sFieldInfo += "<span>字段名：</span><span style='COLOR: #0000ff;'>"+sfield+"</span>；&nbsp;&nbsp;";
+				
+			var schina = oNode.childNodes(1).text;					//中文名
+			if (schina != "")
+				sFieldInfo += "<span>中文名：</span><span style='COLOR: #0000ff;'>"+schina+"</span>；&nbsp;&nbsp;";
+				
+			var sfieldtype = oNode.childNodes(2).text;				//字段类型
+			if (sfieldtype != "")
+				sFieldInfo += "<span>字段类型：</span><span style='COLOR: #0000ff;'>"+sfieldtype+"</span>；&nbsp;&nbsp;";
+				
+			var sfieldlen = oNode.childNodes(3).text;				//字段长度
+			if (sfieldlen != "")
+				sFieldInfo += "<span>字段长度：</span><span style='COLOR: #0000ff;'>"+sfieldlen+"</span>；&nbsp;&nbsp;";
+			
+			var sfieldDec = oNode.childNodes(4).text;				//小数位
+			if (sfieldDec != "")
+				sFieldInfo += "<span>小数位：</span><span style='COLOR: #0000ff;'>"+sfieldDec+"</span>；&nbsp;&nbsp;";
+				
+			var sdatatype = oNode.childNodes(5).text;				//数据项
+			if (sdatatype != "" && sdatatype != "数据项")
+				sFieldInfo += "<span>数据项：</span><span style='COLOR: #0000ff;'>"+sdatatype+"</span>；&nbsp;&nbsp;";
+				
+			var sdefaultvalue = oNode.childNodes(6).text;			//默认值
+			if (sdefaultvalue != "")
+				sFieldInfo += "<span>默认值：</span><span style='COLOR: #0000ff;'>"+sdefaultvalue+"</span>；&nbsp;&nbsp;";
+				
+			var sdataformat = oNode.childNodes(7).text;				//数据格式
+			if (sdataformat != "")
+				sFieldInfo += "<span>数据格式：</span><span style='COLOR: #0000ff;'>"+sdataformat+"</span>；&nbsp;&nbsp;";
+				
+			var sreadonly = oNode.childNodes(8).text;				//只读
+			//if (sreadonly != "")
+				//sFieldInfo += "<span>只读：</span><span style='COLOR: #0000ff;'>"+sreadonly+"</span>；&nbsp;&nbsp;";
+			var sdisplay = oNode.childNodes(9).text;				//显示
+			if (sdisplay != "是")
+				sFieldInfo += "<span>显示：</span><span style='COLOR: #0000ff;'>"+sdisplay+"</span>；&nbsp;&nbsp;";
+				
+			var ssole = oNode.childNodes(10).text;					//唯一
+			//if (ssole != "")
+				//sFieldInfo += "<span>唯一：</span><span style='COLOR: #0000ff;'>"+ssole+"</span>；&nbsp;&nbsp;";
+				
+			var snotnull = oNode.childNodes(11).text;				//不能为空
+			if (snotnull != "否")
+				sFieldInfo += "<span>不能为空：</span><span style='COLOR: #0000ff;'>"+snotnull+"</span>；&nbsp;&nbsp;";
+				
+			var scheck = oNode.childNodes(12).text;					//常规校验
+			if (scheck != "是")
+				sFieldInfo += "<span>常规校验：</span><span style='COLOR: #0000ff;'>"+scheck+"</span>；&nbsp;&nbsp;";
+				
+			var spcheck = oNode.childNodes(13).text;				//过程校验
+			//if (spcheck != "")
+				//sFieldInfo += "<span>过程校验：</span><span style='COLOR: #0000ff;'>"+spcheck+"</span>；&nbsp;&nbsp;";
+			
+			var skey = oNode.childNodes(14).text;					//主键
+			if (skey != "否")
+				sFieldInfo += "<span>主键：</span><span style='COLOR: #0000ff;'>"+skey+"</span>；&nbsp;&nbsp;";
+				
+			var slink = oNode.childNodes(15).text;					//超链接
+			if (slink != "否")
+				sFieldInfo += "<span>超链接：</span><span style='COLOR: #0000ff;'>"+slink+"</span>；&nbsp;&nbsp;";
+				
+			var swind = oNode.childNodes(16).text;					//窗口
+			if (swind != "" && swind != "_self")
+				sFieldInfo += "<span>窗口：</span><span style='COLOR: #0000ff;'>"+swind+"</span>；&nbsp;&nbsp;";
+				
+			var surl = oNode.childNodes(17).text;					//地址
+			if (surl != "")
+				sFieldInfo += "<span>地址：</span><span style='COLOR: #0000ff;'>"+surl+"</span>；&nbsp;&nbsp;";
+				
+			var salign = oNode.childNodes(18).text;					//对齐方式
+			if (salign != "left")
+				sFieldInfo += "<span>对齐方式：</span><span style='COLOR: #0000ff;'>"+salign+"</span>；&nbsp;&nbsp;";
+				
+			var swidth = oNode.childNodes(19).text;					//列宽
+			if (swidth != "" && sdisplay == "是")
+				sFieldInfo += "<span>列宽：</span><span style='COLOR: #0000ff;'>"+swidth+"</span>；&nbsp;&nbsp;";
+				
+			var sdata = oNode.childNodes(20).text;					//表现数据
+			//if (sdata != "")
+				//sFieldInfo += "<span>表现数据：</span><span style='COLOR: #0000ff;'>"+sdata+"</span>；&nbsp;&nbsp;";
+				
+			var sreturndata = oNode.childNodes(21).text;			//回写数据
+			if (sreturndata != "")
+				sFieldInfo += "<span>回写数据：</span><span style='COLOR: #0000ff;'>"+sreturndata+"</span>；&nbsp;&nbsp;";
+				
+			var sdatacheck = oNode.childNodes(22).text;				//数据验证
+			if (sdatacheck != "")
+				sFieldInfo += "<span>数据验证：</span><span style='COLOR: #0000ff;'>"+sdatacheck+"</span>；&nbsp;&nbsp;";
+				
+			var skeydown = oNode.childNodes(23).text;				//按键事件
+			if (skeydown != "")
+				sFieldInfo += "<span>按键事件：</span><span style='COLOR: #0000ff;'>"+skeydown+"</span>；&nbsp;&nbsp;";
+			
+			var sclick = oNode.childNodes(24).text;					//鼠标单击
+			if (sclick != "")
+				sFieldInfo += "<span>鼠标单击：</span><span style='COLOR: #0000ff;'>"+sclick+"</span>；&nbsp;&nbsp;";
+				
+			var sdblclick = oNode.childNodes(25).text;				//鼠标双击
+			if (sdblclick != "")
+				sFieldInfo += "<span>鼠标双击：</span><span style='COLOR: #0000ff;'>"+sdblclick+"</span>；&nbsp;&nbsp;";
+			
+			sDsInfo += "<tr style=\"font-size:12px; font-family:'宋体';\">";
+			sDsInfo += "<td width='80'>"+obj.id + "．"+sfield+"&nbsp;</td>";
+			sDsInfo += "<td>"+sFieldInfo+"</td>";
+			sDsInfo += "</tr>";
+			
+		}
+	}
+	return sDsInfo;
+}
+
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="400" poswidth="600" entertype="修改" codeheader caption="表单元素配制信息" type="LR" dj_sn="FormElementInfo" billtaborder="<root><taborder>button1</taborder><taborder>SKButton3</taborder></root>" contxml="<root><label><id>label2</id></label><div><id>div1</id></div><button><id>button1</id><id>SKButton3</id></button></root>" BLONopen="uf_InitPage();" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType runsave AutoResizeXml><DIV style="BORDER-BOTTOM: black 1px solid; POSITION: absolute; BORDER-LEFT: black 1px solid; OVERFLOW-X: hidden; OVERFLOW-Y: auto; WIDTH: 98%; HEIGHT: 90%; BORDER-TOP: black 1px solid; TOP: 30px; BORDER-RIGHT: black 1px solid; LEFT: 6px" id=div1 onmovestart=moveStart() controltype="div" NotBg="否"></DIV><LABEL style="POSITION: absolute; WIDTH: 193px; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12pt; TOP: 5px; FONT-WEIGHT: bold; LEFT: 7px" id=label2 onmovestart=moveStart() controltype="label" NotBg="否">表单元素配置信息</LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 3px; LEFT: 288px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("window.close();")' dropstyle="否">关闭</BUTTON><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 3px; LEFT: 208px" id=SKButton3 value=最大化 type=button controltype="button" onclick='bill_onclick("uf_maxwin()")' dropstyle="否"></DIV></body></html>

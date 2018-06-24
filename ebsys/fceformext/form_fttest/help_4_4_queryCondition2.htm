@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var tablename=""; //表名
+
+function uf_open() {
+	tablename=parent.Request.QueryString('tablename').toString(); 
+	e_PropWinOnload();
+	
+}
+function uf_ok(){//单击确定按钮返回选择的查询条件
+	var sRet = '';
+	sRet = new Eapi.Str().trim( uf_where());
+	if(sRet == ""){
+		alert("生成的SQL语句为空!");
+		return;
+	}
+	window.returnValue = [sRet];
+	CloseBill();
+}
+function uf_where(){//拼接条件语句
+	var l = grid2.Rows;
+	var sWhere = "";
+	var zifu="";
+	for(var i=1;i<l;i++){
+		var fdtype = grid2.tab.rows(i).cells(8).innerText;
+		
+		var fdName = grid2.tab.rows(i).cells(7).innerText;
+		if(fdtype == "字符") zifu="'";
+		var sOr = "";
+		if(i<l-1) {
+			if(grid2.tab.rows(i).cells(6).innerText == "或者"){
+				sOr =  " or ";
+			}else  {
+				sOr = " and ";
+			}
+		}
+		var reg =  /[\']/;
+		var ret = !reg.test(grid2.tab.rows(i).cells(4).innerText);
+		if(ret == false){
+			alert('不能有单引号');
+			return;
+		}
+        if(grid2.tab.rows(i).cells(1).innerText.length != grid2.tab.rows(i).cells(5).innerText.length) return alert("括号"+grid2.tab.rows(i).cells(1).innerText+"和括号"+grid2.tab.rows(i).cells(5).innerText+"个数不匹配");
+        
+		sWhere += grid2.tab.rows(i).cells(1).innerText + fdName + _OpNameTo(grid2.tab.rows(i).cells(3).innerText)+ zifu + grid2.tab.rows(i).cells(4).innerText + zifu +grid2.tab.rows(i).cells(5).innerText + sOr;
+	}
+	sWhere = new Eapi.Str().trim(sWhere);
+	return sWhere;
+}
+
+function _OpNameTo(sName) {
+	var sRet1 = "";
+	switch (sName) {
+		
+		case "＝" : sRet1 = "="; break;
+		case "＞" : sRet1 = ">"; break;
+		case "＜" : sRet1 = "<"; break;
+		case "＞＝" : sRet1 = ">="; break;
+		case "！＝" : sRet1 = "!="; break;
+		case "开始于" : sRet1 = " like "; break;
+	}
+	return sRet1;
+}	
+
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/fcgensql.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fcgensql.js&#13;&#10;~userfunc.js" AutoResizeXml isCheckPermit="否" alertType="1" contxml="<root><button><id>cmdClose</id><id>cmdOk</id><id>FCButton10</id><id>FCButton11</id></button><grid><id>grid2</id></grid><dataset><id>dataset2</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:4;radio:0;listbox:1;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:2;tab:2;div:2;DsMain_field:0;a:0;button:7;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:5;dataset:3;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>cmdClose</taborder><taborder>cmdOk</taborder><taborder>FCButton10</taborder><taborder>FCButton11</taborder><taborder>grid2</taborder></root>" OtherSave="否" codeheader="BBB" keyfield entertype="修改" idtype="1" BLONclose BLONopenBefore BLONopen="uf_open()" window="有模式窗口" toolbar="不带工具栏" posheight="230" poswidth="620" postop posleft center="居中" isfile="是" type="FT" caption="sql语句条件生成器" dj_sn="help_4_4_queryCondition2" userType mkbh>&nbsp; <?xml:namespace prefix = fc /><fc:dataset id=dataset2 idtype="1" controltype="dataset" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" opensortno="4" pubpara="否" format="<fields><field><fieldname>sign1</fieldname><datatype>字符</datatype><displaylabel>(</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnname</fieldname><datatype>字符</datatype><displaylabel>字段中文名</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere1</fieldname><datatype>字符</datatype><displaylabel>条件</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>svalue</fieldname><datatype>字符</datatype><displaylabel>字段或值</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sign2</fieldname><datatype>字符</datatype><displaylabel>)</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere2</fieldname><datatype>字符</datatype><displaylabel>或与</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>字段英文名</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sign1></sign1><chnname></chnname><swhere1></swhere1><svalue></svalue><sign2></sign2><swhere2></swhere2><fdname></fdname><fdtype></fdtype></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sign1></sign1><chnname></chnname><swhere1></swhere1><svalue></svalue><sign2></sign2><swhere2></swhere2><fdname></fdname><fdtype></fdtype></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sign1></sign1><chnname></chnname><swhere1></swhere1><svalue></svalue><sign2></sign2><swhere2></swhere2><fdname></fdname><fdtype></fdtype></dsid>")'></fc:dataset><BUTTON id=cmdClose style="LEFT: 94px; WIDTH: 55px; POSITION: absolute; TOP: 1px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><BUTTON id=cmdOk style="LEFT: 12px; WIDTH: 55px; POSITION: absolute; TOP: 1px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON> <fc:webgrid id=grid2 onkeydown='bill_ongridkeydown("<grid2><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid2>")' ondblclick='bill_ongriddblclick("<grid2><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid2>")' onclick='bill_ongridclick("<grid2><col></col><col></col><col></col><col></col><col></col><col></col><col></col><col></col></grid2>")' blRowNo="否" hideHscroll="auto" canselect="是" autoheight="是" autowidth="否" autoappend="否" readonly="否" SetRowHeight="是" hideVscroll="auto" bodyrowheight="-1" bodyrows="-1" visible="是" dataset="dataset2" controltype="grid" autosize="否" format="<cols><col><fname>sign1</fname><cname>(</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%28%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%28%28%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%28%28%28%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%28%28%28%28%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%28%28%28%28%28%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u662F%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%28%0D%0A%28%28%0D%0A%28%28%28%0D%0A%28%28%28%28%0D%0A%28%28%28%28%28%3C/temptext%3E%3Cfieldnamelist%3Esign1%3C/fieldnamelist%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>32</columnwidth><align>left</align></col><col><fname>chnname</fname><cname>字段中文名</cname><width>100</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%u7F16%u53F7%7C%u7C7B%u578B%7C%u540D%u79F0%20%21%3C/format%3E%3Csql1%3Eselect%20fdname%2Cfdtype%2Cchnname%20from%20fc_entitysub%20where%20tbname%3D%27%3A%7Btablename%7D%3A%27%3C/sql1%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E2%3C/check%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>160</columnwidth><align>left</align></col><col><fname>swhere1</fname><cname>条件</cname><width>20</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF1D%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF1E%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF1C%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF1E%uFF1D%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF1C%uFF1D%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%uFF01%uFF1D%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u5F00%u59CB%u4E8E%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%uFF1D%0D%0A%uFF1E%0D%0A%uFF1C%0D%0A%uFF1E%uFF1D%0D%0A%uFF1C%uFF1D%0D%0A%uFF01%uFF1D%0D%0A%u5F00%u59CB%u4E8E%3C/temptext%3E%3Cfieldnamelist%3Eswhere1%3C/fieldnamelist%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>svalue</fname><cname>字段或值</cname><width>20</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>160</columnwidth><align>left</align></col><col><fname>sign2</fname><cname>)</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%29%3C/td%3E%3Ctd%3E%29%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%29%29%3C/td%3E%3Ctd%3E%29%29%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%29%29%29%3C/td%3E%3Ctd%3E%29%29%29%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%29%29%29%29%3C/td%3E%3Ctd%3E%29%29%29%29%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%29%29%29%29%29%3C/td%3E%3Ctd%3E%29%29%29%29%29%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u662F%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctempvalue%3E%29%0D%0A%29%29%0D%0A%29%29%29%0D%0A%29%29%29%29%0D%0A%29%29%29%29%29%3C/tempvalue%3E%3Ctemptext%3E%29%0D%0A%29%29%0D%0A%29%29%29%0D%0A%29%29%29%29%0D%0A%29%29%29%29%29%3C/temptext%3E%3Cfieldnamelist%3Esign2%3C/fieldnamelist%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>32</columnwidth><align>left</align></col><col><fname>swhere2</fname><cname>或与</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u4E0E%3C/td%3E%3C/tr%3E%3Ctr%20height%3D%2716px%27%20%3E%3Ctd%3E%u6216%u8005%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%u4E0E%0D%0A%u6216%u8005%3C/temptext%3E%3Cfieldnamelist%3Eswhere2%3C/fieldnamelist%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>40</columnwidth><align>left</align></col><col><fname>fdname</fname><cname>字段英文名</cname><width>100</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>0</columnwidth><align>left</align></col><col><fname>fdtype</fname><cname>类型</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>0</columnwidth><align>left</align></col></cols>" width="523" height="142" top="30" left="9">
+<TABLE id=t style="TABLE-LAYOUT: fixed; LEFT: 0px; TOP: 0px; BORDER-COLLAPSE: collapse" cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON id=FCButton10 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 538px; WIDTH: 58px; FONT-FAMILY: ; POSITION: absolute; TOP: 41px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("dataset2.Append()")' dropstyle="否">新增行</BUTTON><BUTTON id=FCButton11 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 538px; WIDTH: 58px; FONT-FAMILY: ; POSITION: absolute; TOP: 73px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" onclick='bill_onclick("dataset2.Delete()")' dropstyle="否">删除行</BUTTON></DIV><link type='text/css' rel='stylesheet' href='../css/shape.css'  />
+</body></html>

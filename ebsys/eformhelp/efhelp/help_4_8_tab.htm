@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>tab页签控件</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">tab页签控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.tab页签控件</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;tab页签控件和page页控件很类似，两者的差异是：page页控件的子页中不能在表单设计器上增减控件，子页是用iframe来运行另外一个URL的内容，是在另一个窗口中，和当前表单不在同一窗口。tab页签控件的子页是一个DIV，可以在表单设计器中对子页增减控件，子页和当前表单是在同一窗口中运行。当界面上控件比较多的时候，用tab页签控件可以节省空间.tab页签控件是用多个DIV元素拼接而成的,在表单设计器中操作此控件要注意有两种选中状态,一种是选中了整个控件,在此时是和选中其它控件一样的功能,可以移动,调整控件大小,删除等功能.如下图：<br> <img  src ="images/help_4_8_2.gif"/><br />&nbsp;&nbsp;&nbsp;&nbsp;另一种是选中tab页签控件中除标题行外的下部,此时,再点表单设计器上工具栏的按钮,比如label,表示加一个label控件,就会将label控件加到tab页签控件的当前子页中.如下图：<br /> <img  src ="images/help_4_8_3.gif"/> 
+       <div class="divTitle">2.页签控件设置</div>   &nbsp;&nbsp;&nbsp;&nbsp;tab页签控件的点击每个子页签事件是通过在表单设计器的自定义函数中定义一个function PubClickPageControl(index) 函数,在点击子页签时,会自动执行PubClickPageControl函数,并将当前点击的子页签顺序号赋给参数index,第一个子页签时index=0,第二个子页签时index=1,一般是在function PubClickPageControl(index)里用 if(index==0) ... 来分别写事件处理代码. 
+  单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_005_tab3'>页签控件</A> 进入页签控件设计界面.<br />
+       <img  src ="images/help_4_8_1.gif"/><br />&nbsp;&nbsp;&nbsp;  
+           上面是一个页签控件的图片,按钮对页签进行控制.假如：页签控件的id是PageControl1,下面的常用的方法说明：<br />
+&nbsp;&nbsp;&nbsp; 隐藏页签控件标题的方法<p>PageControl1.HideTitle()</p> &nbsp;&nbsp;&nbsp;&nbsp;显示页签标题的方法<p>PageControl1.ShowTitle()</p>  &nbsp;&nbsp;&nbsp; 
+           增加页签页的方法<p>PageControl1.AddPage()</p>&nbsp;&nbsp;&nbsp;&nbsp;删除页签页的方法<p>PageControl1.DelPage()</p>&nbsp;&nbsp;&nbsp; 
+           页签控件的页上移一页的方法<p>PageControl1.PrevPage()</p>&nbsp;&nbsp;&nbsp; 
+           页签控件的页下移一页的方法<p>PageControl1.NextPage()</p>&nbsp;&nbsp;&nbsp; 
+           页签控件的当前页向上移动一个位置的方法<p>PageControl1.Move(0)</p>&nbsp;&nbsp;&nbsp; 
+           页签控件的当前页向下移动一个位置的方法<p>PageControl1.Move(1)</p>&nbsp;&nbsp;&nbsp; 
+           取当前页号的方法<p>alert(PageControl1.selectedIndex)</p>&nbsp;&nbsp;&nbsp; 
+           设置当前页号的方法<p>PageControl1.setSelectedIndex(1)</p>&nbsp;&nbsp;&nbsp; 
+           设置页签控件的宽度的方法<p>setTabWidth($id('PageControl1'),800)</p>
+           
+              &nbsp;&nbsp;&nbsp; 设置页签控件的高度的方法
+           <p>setTabHeight($id('PageControl1'),800)</p><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;<br /><br />
+</div>
+</body>
+</html>

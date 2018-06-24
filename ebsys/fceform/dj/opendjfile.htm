@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body bgcolor="#d4d0c8" background="../images/ef_run_background.gif" onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>
+   
+   			
+      
+
+pub_djhtm()
+		</script>
+<script>function uf_open() {
+	var ss = SKDBListBox1.outerHTML ;
+	var sHtml = GetAllDjFileName() ;
+	SetButtonImage(FCButton1,"../images/ef_run_button_ok.gif");
+	SKDBListBox1.outerHTML=ss.substring(0,ss.length-9)+sHtml+"</select>"		
+}
+function uf_clicklistbox() {
+	if(SKDBListBox1.selectedIndex >=0){
+		FCDBedit2.value = SKDBListBox1.children[SKDBListBox1.selectedIndex].innerText
+	}
+}
+function uf_ok() {
+	var s = new Eapi.Str().trim(FCDBedit2.value)
+	if(IsSpace(s)){
+		alert("文件名不能为空!")
+		return
+	}
+	window.returnValue = s
+	window.close()	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet>
+<DIV id=SKbillsheet toolbar="不带工具栏" BLONopen="uf_open()" blmode="其他" contxml="<root></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" billtaborder="<root></root>" dj_sn="opendjfile" type="LR" caption="打开表单文件" mkbh codeheader entertype="修改" poswidth="400" posheight="400" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;SKDBTreeView:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0" window="当前窗口" posleft postop isfile="否" center="居中"><SELECT id=SKDBListBox1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 2px; WIDTH: 367px; FONT-FAMILY: ; POSITION: absolute; TOP: 43px; HEIGHT: 329px; BACKGROUND-COLOR: #ffffff" size=8 check="1" tempvalue temptext china sql onclick='bill_onclick("uf_clicklistbox()")' ondblclick='bill_ondblclick("uf_ok()")'></SELECT><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 4px; WIDTH: 75px; FONT-FAMILY: ; POSITION: absolute; TOP: 21px; HEIGHT: 16px;  " value="Label1">选择文件名:</SPAN><BUTTON id=FCButton1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 284px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 15px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><INPUT type=text id=FCDBedit2 style=" DISPLAY: block; FONT-SIZE: 12px; LEFT: 71px; WIDTH: 207px; POSITION: absolute; TOP: 17px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" value china CanSelect="false"></INPUT></DIV></body></html>

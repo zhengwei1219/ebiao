@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>/*
+<ds dbencoding="GBK" dbtype="sqlserver" drivername="com.newatlanta.jturbo.driver.Driver" 
+encodesql="false" name="sqlserver1" password="" 
+url="jdbc:JTurbo://localhost/mytest/charset=GBK" userid="sa" /> 
+
+*/
+function uf_open() {
+	var obj = fcpubdata.obj ;
+	if(IsSpace(obj) == false ){
+		txtName.value = obj.getAttribute("name");
+		cboDbtype.value = obj.getAttribute("dbtype");
+		cboDbencoding.value = obj.getAttribute("dbencoding");
+		SetCheckBoxValue(chkEncodesql , obj.getAttribute("encodesql"));
+		txtDrivername.value = obj.getAttribute("drivername");
+		txtUrl.value = obj.getAttribute("url");
+		txtUserid.value = obj.getAttribute("userid");
+		txtPassword.value = obj.getAttribute("password");
+		
+		//扩展属性
+		var sExpand="";
+		var oMap = obj.attributes;
+		for(var i=0;i<oMap.length;i++){
+			var sName = oMap.item(i).name;
+			if(sName == "name" || sName == "dbtype" || sName == "dbencoding" || sName == "encodesql" || sName == "drivername" || sName == "url" || sName == "userid" || sName=="password")	continue;
+			sExpand += sName+"="+oMap.item(i).value+"\r\n";
+		}
+		if(sExpand != "") sExpand = sExpand.substring(0,sExpand.length-2);
+		txtExpand.value = sExpand;
+	}
+	if(fcpubdata.dotnetVersion == ""){
+		lblDriver.value = "Sql Server写法:com.newatlanta.jturbo.driver.Driver";
+		lblDriver1.value = "oracle写法:oracle.jdbc.driver.OracleDriver";
+		lblUrl.value = "SqlServer写法:jdbc:JTurbo://localhost/数据库名/charset=GBK";
+		lblUrl1.value = "oracle写法:jdbc:oracle:thin:@localhost:1521:数据库名";
+	}
+	e_PropWinOnload();
+}
+function uf_ok() {
+	if(IsSpace(txtName.value)){
+		alert("数据源名称不能为空!");
+		return;
+	}
+	if(IsSpace(txtDrivername.value)){
+		alert("驱动程序不能为空!");
+		return;
+	}
+	if(IsSpace(txtUrl.value)){
+		alert("数据源URL不能为空!");
+		return;
+	}
+	if(IsSpace(txtUserid.value)){
+		alert("用户名不能为空!");
+		return;
+	}
+	//扩展属性
+	var sRetExp="";
+	var sExpand = txtExpand.value;
+	if(IsSpace(sExpand) == false){
+		var arr = sExpand.split("\r\n");
+		for(var i=0;i<arr.length;i++){
+			var pos = arr[i].indexOf("=");
+			if(pos > 0){
+				var propName = arr[i].substring(0,pos);	
+				var propValue = arr[i].substring(pos+1);
+				sRetExp += propName+"=\""+propValue+"\" ";
+			}	
+		}	
+	}
+	var sRet = "<ds ";
+	sRet += "dbencoding=\"" +cboDbencoding.value +"\" ";
+	sRet += "dbtype=\"" +cboDbtype.value +"\" ";
+	sRet += "drivername=\"" +txtDrivername.value +"\" ";
+	sRet += "encodesql=\"" +chkEncodesql.value +"\" ";
+	sRet += "name=\"" +txtName.value +"\" ";
+	sRet += "password=\"" +txtPassword.value +"\" ";
+	sRet += "url=\"" +txtUrl.value +"\" ";
+	sRet += "userid=\"" +txtUserid.value +"\" ";
+	sRet += sRetExp;
+	sRet += "/>";
+	window.returnValue=sRet;
+	//alert(sRet);
+	CloseBill();
+
+
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:1;label:9;radio:0;listbox:1;textarea:1;combobox:2;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:1;div:0;DsMain_field:0;a:0;button:4;text:6;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0" posheight="320" poswidth="390" entertype="修改" codeheader="BBB" mkbh caption="数据源修改" type="PR" dj_sn="eb_dsn1" billtaborder="<root><taborder>chkEncodesql</taborder><taborder>cboDbtype</taborder><taborder>cboDbencoding</taborder><taborder>txtName</taborder><taborder>txtDrivername</taborder><taborder>lblDriver</taborder><taborder>lblDriver1</taborder><taborder>txtUrl</taborder><taborder>lblUrl</taborder><taborder>txtUserid</taborder><taborder>txtPassword</taborder><taborder>lblUrl1</taborder><taborder>txtExpand</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" contxml="<root><checkbox><id>chkEncodesql</id></checkbox><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label6</id><id>label7</id><id>label9</id></label><textarea><id>txtExpand</id></textarea><combobox><id>cboDbtype</id><id>cboDbencoding</id></combobox><tab><id>tab1</id></tab><a><id>SKDBLike2</id></a><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtName</id><id>txtDrivername</id><id>lblDriver</id><id>lblDriver1</id><id>txtUrl</id><id>lblUrl</id><id>txtUserid</id><id>txtPassword</id><id>lblUrl1</id></text></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" AutoResizeXml BLONopenBefore BLONclose runsave>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<DIV class=tab-pane id=tab1 style="LEFT: 1px; WIDTH: 378px; POSITION: absolute; TOP: 1px; HEIGHT: 274px" controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV class=tab-page style="WIDTH: 378px; HEIGHT: 256px">
+<H2 class=tab>基本</H2>
+<DIV id=label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 14px; WIDTH: 36px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 10px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">数据源名称:</DIV><INPUT id=txtName style="LEFT: 97px; WIDTH: 142px; POSITION: absolute; TOP: 6px; HEIGHT: 20px" onmovestart=moveStart() size=25 controltype="text"> 
+<DIV id=label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 14px; WIDTH: 18px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 29px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">类型:</DIV><SELECT id=cboDbtype style="LEFT: 56px; WIDTH: 105px; POSITION: absolute; TOP: 28px; HEIGHT: 25px" onmovestart=moveStart() controltype="combobox" tempvalue="0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10" temptext="未知&#13;&#10;oracle&#13;&#10;sqlserver&#13;&#10;sybase&#13;&#10;sqlany&#13;&#10;informix&#13;&#10;foxpro&#13;&#10;access&#13;&#10;foxbase&#13;&#10;db2&#13;&#10;mysql" check="1" sql backwidth="105" backheight="25" sqltrans><OPTION value=0>未知</OPTION><OPTION value=1>oracle</OPTION><OPTION value=2 selected>sqlserver</OPTION><OPTION value=3>sybase</OPTION><OPTION value=4>sqlany</OPTION><OPTION value=5>informix</OPTION><OPTION value=6>foxpro</OPTION><OPTION value=7>access</OPTION><OPTION value=8>foxbase</OPTION><OPTION value=9>db2</OPTION><OPTION value=10>mysql</OPTION></SELECT> 
+<DIV id=label3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 14px; WIDTH: 18px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 54px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">编码:</DIV><SELECT id=cboDbencoding style="LEFT: 56px; WIDTH: 105px; POSITION: absolute; TOP: 52px; HEIGHT: 25px" onmovestart=moveStart() controltype="combobox" tempvalue="GBK&#13;&#10;iso-8859-1" temptext="GBK&#13;&#10;iso-8859-1" check="1" sql backwidth="105" backheight="25" sqltrans><OPTION value=GBK selected>GBK</OPTION><OPTION value=iso-8859-1>iso-8859-1</OPTION></SELECT> 
+<DIV id=label4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 15px; WIDTH: 30px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 81px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label4" NotBg="否">驱动程序:</DIV><INPUT id=txtDrivername style="LEFT: 15px; WIDTH: 350px; POSITION: absolute; TOP: 96px; HEIGHT: 20px" onmovestart=moveStart() size=43 controltype="text"><INPUT id=lblDriver style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 12px; LEFT: 17px; BORDER-LEFT: 0px; WIDTH: 306px; COLOR: #b2b2b2; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 118px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=55 value="Sql Server写法: Provider=SQLOLEDB" controltype="text"><INPUT id=lblDriver1 style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 12px; LEFT: 17px; BORDER-LEFT: 0px; WIDTH: 306px; COLOR: #b2b2b2; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 135px; HEIGHT: 16px" onmovestart=moveStart() readOnly size=54 value=oracle写法:Provider=OraOLEDB.Oracle controltype="text"> 
+<DIV id=label5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 14px; WIDTH: 42px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 152px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label5" NotBg="否">数据源URL:</DIV><INPUT id=txtUrl style="LEFT: 14px; WIDTH: 352px; POSITION: absolute; TOP: 166px; HEIGHT: 20px" onmovestart=moveStart() size=42 controltype="text"><INPUT id=lblUrl style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 12px; LEFT: 11px; BORDER-LEFT: 0px; WIDTH: 360px; COLOR: #b2b2b2; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 188px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=64 value="Sql Server写法:Data Source=机器名;Initial Catalog=数据库名" controltype="text"> 
+<DIV id=label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 12px; WIDTH: 24px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 225px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label6" NotBg="否">用户名:</DIV><INPUT id=txtUserid style="LEFT: 59px; WIDTH: 89px; POSITION: absolute; TOP: 222px; HEIGHT: 20px" onmovestart=moveStart() size=16 controltype="text"> 
+<DIV id=label7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 241px; WIDTH: 18px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 226px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label7" NotBg="否">口令:</DIV><INPUT id=txtPassword style="LEFT: 276px; WIDTH: 89px; POSITION: absolute; TOP: 223px; HEIGHT: 20px" onmovestart=moveStart() size=16 controltype="text"><A id=SKDBLike2 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 340px; WIDTH: 12px; COLOR: #0000ff; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 123px; HEIGHT: 18px; backgroundColor1: #ffffff" onmovestart=moveStart() href="javascript:ShowHelp('on_eb_dsn')" target=_self controltype="a" NotBg="否" href1="javascript:ShowHelp('on_eb_dsn')">?</A> 
+<DIV id=chkEncodesql style="FONT-SIZE: 12px; LEFT: 160px; WIDTH: 80px; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 76px; HEIGHT: 20px" onmovestart=moveStart() noWrap controltype="checkbox" value="false" NotBg="否" falsevalue="false" truevalue="true" divtype="checkbox"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>转换SQL编码</SPAN></DIV><INPUT id=lblUrl1 style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 12px; LEFT: 11px; BORDER-LEFT: 0px; WIDTH: 360px; COLOR: #b2b2b2; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 202px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=64 value="oracle写法:Data Source=数据库名" controltype="text"></DIV>
+<DIV class=tab-page style="WIDTH: 378px; HEIGHT: 256px">
+<H2 class=tab>扩展</H2><TEXTAREA id=txtExpand style="LEFT: 3px; WIDTH: 363px; POSITION: absolute; TOP: 22px; HEIGHT: 201px" onmovestart=moveStart() rows=4 cols=71 controltype="textarea" value="textarea1" induce="否">schemaPattern=</TEXTAREA><LABEL id=label9 style="LEFT: 9px; WIDTH: 353px; POSITION: absolute; TOP: 5px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">扩展属性: (每行一个属性,格式为: 属性名=属性值)</LABEL></DIV></DIV>
+<SCRIPT>var tab1 = new WebFXTabPane( document.getElementById( "tab1" ) );</SCRIPT>
+<BUTTON id=cmdOk style="LEFT: 236px; WIDTH: 55px; POSITION: absolute; TOP: 278px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON id=cmdClose style="LEFT: 299px; WIDTH: 55px; POSITION: absolute; TOP: 278px; HEIGHT: 26px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON></DIV></body></html>

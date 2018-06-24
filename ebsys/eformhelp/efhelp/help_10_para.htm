@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>表单之间传参</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<LINK href="efhelpstyle.css" type="text/css" rel="stylesheet"></head>
+	<body leftMargin="0" topMargin="0">
+		<table class="tableTitle">
+			<tr>
+				<td class="title">表单之间传参</td>
+			</tr>
+			<tr>
+				<td class="aTd "><a class="aDwHomepage" href="http://www.fcsoft.com.cn">返回公司首页</a><A class="aHelpHomePage" href="efhelp_index.htm">返回帮助首页</A></td>
+			</tr>
+		</table>
+		<div class="mainDiv" id="DIV1">
+			<div class="divTitle">1. 用客户端的userdata来传递参数</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;userdata是微软为IE专门在系统中开辟的一块存储空间，所以说只支持Windows+IE的组合，userData行为通过将数据写入一个UserData存储区（UserData 
+			store）来保存数据，userData可以将数据以XML格式保存在客户端计算机上，UserData存储区保存以后，即使关机、IE浏览器关闭或者刷新了，下一次进入该页面，数据也能够重新载入而不会丢失，它由ie自己管理。
+			<BR>
+			<div class="divTitle">1.1 传参表单设置</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=EX&amp;djsn=sh_y_para1">传参</A>
+			传参</A> 
+			进入传参表单设计界面.在第一个Button按纽的属性窗口的事件输入域：SetPara('a1',FCDBedit1.value),a1是参数名，FCDBedit1.value是给a1参数的值，运行此方法即可把参数名a1的数据保存到客户端。<br>
+			<IMG src="images/help_10_para_3.gif">
+			<br>
+			<p><b>SetPara方法介绍：</b>ara(paraname,vValue); 
+				paraname:参数名,vValue:参数值。函数SetPara(paraname,vValue)应和GetPara(paraname)配套使用,第一个传递后一个接收.函数SetPara(paraname,vValue)将vValue值给paraname参数.</p>
+			<p><b>SetParaPub(vValue)方法介绍：</b> 函数SetParaPub(vValue)应和函数GetParaPub()配套使用,第一个传递后一个接收.函数SetParaPub(vValue)和SetPara(paraname,vValue)的差异是,函数SetParaPub(vValue)默认给了一个参数名pub，而函数SetPara(paraname,vValue)可以自己定义参数名。
+			</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;在第二个传递参数的Button按纽的属性窗口的事&nbsp;&nbsp;&nbsp;&nbsp;在第二个传递参数的Button按纽的属性窗口的事件输入：SetParaPub(FCDBedit2.value);经确定即可,SetParaPub方法不用写参数名，它有一个默认参数名pub，FCDBedit2.value是给默认参数名pub的值，运行此方法即可把默认参数名pub的数据保存到客户端。<br>
+			<IMG src="images/help_10_para_4.gif">
+			<div class="divTitle">1.2 接收传参表单设置</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=EX&amp;djsn=sh_y_para1_s">收参</A>
+			进入接收参数表单设计界面.两个表单之间参数传递,该表单起到接收的作 
+			进入接收参数表单设计界面.数据保存在客户端，在第一个接收参数的Button按纽的属性窗口的事件中输入：GetPara('a1');此方法是接收a1参数的值与SetPara('a1',FCDBedit1.value)方法配套使用,一个在客户端的UserData存储区中保存数据，一个在客户端的UserData存储区中获取数据.在第二个Button按纽的属性窗口的事件输入：GetParaPub(),它是获取默认参数的值与SetParaPub(vValue)配套使用.
+			<div class="divTitle">1.3 运行界面</div>
+			&nbsp;&nbsp;&nbsp; FCDBedit1文本控件中输入cc33 
+			,单击第一个【传递参数】按钮,此按钮事件的方法是SetPara('a1',FCDBedit1.value);，就给a1的参数赋值cc33.在FCDBedit2文本控件中输入王小五,单击第二个【传递参数】按钮，此按钮的事件是SetParaPub(FCDBedit2.value)，就给默认参数名赋值王小五。<br>
+			<IMG src="images/help_10_para_1.gif">
+			<br>
+			&nbsp;&nbsp;&nbsp;在单击【打开下一页按钮】进入接收参数表单,单击【接收参数】按钮,接收参数值.第一个【接收参数】的按钮事件是FCDBedit1.value=GetPara('a1')，在客户端接收a1参数的值cc33赋给id是FCDBedit1的text控件，第一个【接收参数】的按钮事件是FCDBedit2.value= 
+			GetParaPub(),接收默认参数pub的值王小五赋给id是FCDBedit2的text控件.<BR>
+			<IMG src="images/help_10_para_2.gif">
+			<div class="divTitle">2. 用模态方法打开窗口时，把一个对象传递给下一窗口</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;在sh_y_para2表单中用DjOpen方法打开模态方式打开sh_y_para2_s表单，把sh_y_para2表单的DsMain数据集传递到sh_y_para2_s表单，使用fcpubdata.obj来获取，用window的returnValue属性在sh_y_para2表单中获取返回值示意图如下：<br>
+			<IMG src="images/help_10_para_14.gif">
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;window.showModalDialog()方法模态打开表单,模态窗口和打开它的窗口相联系,可以向模态窗口打开的表单传递对象.eform的DjOpen方法中封装了window.showModalDialog()方法。在sh_y_para2表单中用DjOpen方法打开sh_y_para2_s表单要注意四步。<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;1.要想把sh_y_para2表单中的数据集对象DsMain，传入sh_y_para2_s表单中用DjOpen('sh_y_para2_s',DsMain,'展现')<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;2.在模态方式打开的sh_y_para2_s表单中要获取sh_y_para2表单中的数据集对象DsMain用fcpubdata.obj.<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;3.要把表单sh_y_para2_s中的数据返回到sh_y_para2表单中在关闭sh_y_para2_s表单之前给window.returnValue赋值。<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;4.在表单sh_y_para2_s中接收返回值用 var ret = 
+			DjOpen('sh_y_para2_s',DsMain,'展现');
+			<div class="divTitle">2.1.1 DjOpen方法打开sh_y_para2_s表单</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=EX&amp;djsn=sh_y_para2">当前窗口的数据集对象作为参数</A>
+			进入表单设计界面.用DjOpen('sh_y_para2_s',DsMain,'展现')表示在打开表单sh_y_para2_s 
+			同时,把表单sh_y_para2的数据集DsMain对象传递到表单sh_y_para2_s中,查询按钮的单击事件调用的函数是
+			<p>function uf_djOpen(){<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;var ret = DjOpen('sh_y_para2_s',DsMain,'展现') ;<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;if(IsSpace(ret) == true) ret = 0;<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;alert("查到了"+ret+"条记录");<br>
+				}</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;设计界面如下<br>
+			<IMG src="images/help_10_para_5.gif"><br>
+			<div class="divTitle">2.1.2在sh_y_para2_s表单中操作sh_y_para2表单的DsMain数据集</div>
+			&nbsp;&nbsp;&nbsp;&nbsp; 单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=EX&amp;djsn=sh_y_para2_s">接收参数表单</A>进入接收参数的设计界面。打开接收参数表单(sh_y_para2_s),单击表单属性打开表单的数据集属性窗口,设置窗口状态为模态窗口.<br>
+			<IMG src="images/help_10_para_9.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			在数据集的sql输入域用fcpubdata.obj获取上一窗口的主数据集DsMain对象,上一窗口的数据集DsMain对象中所有的属性都能用.fcpubdata.obj.Field('data').Value就是DsMain数据集在的data字段的值.<br>
+			<IMG src="images/help_10_para_10.gif">
+			<div class="divTitle">2.1.3在sh_y_para2_s表单中的数据返回到sh_y_para2表单中</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;在关闭此窗口前用window对象的returnValue属性获取当前模态方式打开的表单sh_y_para2_s的值返回到sh_y_para2，然后关闭窗口，调用的函数如下：
+			<p>function uf_returnValue(){<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;window.returnValue=dssub1.RecordCount;<br>
+				&nbsp;&nbsp;&nbsp; window.close();
+				<br>
+				}
+			</p>
+			<div class="divTitle">2.1.4在sh_y_para2表单中接收返回值</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;sh_y_para2表单中的函数uf_djOpen()中的代码 var ret = 
+			DjOpen('sh_y_para2_s',DsMain,'展现')的变量ret会接收返回值.
+			<div class="divTitle">2.1.5表单运行界面图</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;运行查询表单，输入查询条件如下<br>
+			<IMG src="images/help_10_para_11.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击查询按钮打开sh_y_para2_s表单,显示查询数据如下图<br>
+			<IMG src="images/help_10_para_12.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击取消按钮，把sh_y_para2_s表单的记录数返回到上一窗口<br>
+			<IMG src="images/help_10_para_13.gif"><br>
+			<div class="divTitle">2.2 DjOpen指定打开的窗口路径&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;DjOpen方法模态打开窗表单，第一个参数是表单的djsn，它只能打开同一路径分类下的表单，如果不做同一路径分类下DjOpen方法的第一个参数应该是表单的路径，这样它可以不在同一路径分类下。单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_10_djOpen_url">传递参数</A>进入传递参数表单界面.DjOpen指定打开的窗口的路径不需要在同一分类下,它自己指定了打开窗口的分类和名称,自定义函数如下:
+			<P></P>
+			<p class="MsoNormal"><span lang="EN-US">function uf_djOpen(){</span></p>
+			<p class="MsoNormal"><span lang="EN-US"><span style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</span>DjOpen("../../fceform/common/djframe.htm?djsn=help_10_djOpen_url1&amp;djtype=ZK",dataset1,"</span><span style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">展现</span><span lang="EN-US">","</span><span style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">有模式窗口</span><span lang="EN-US">","</span><span style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">直接</span><span lang="EN-US">","</span><span style="FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin">单位信息</span><span lang="EN-US">");<span style="mso-tab-count: 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</span></span></p>
+			<p class="MsoNormal"><span lang="EN-US">}</span></p>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=zk&amp;djsn=help_10_djOpen_url1">接收参数</A>
+			进入接收参数表单设计界面.在接收参数的表单中设置模态窗口打开,设置窗口大小,接收DjOpen方法传过来的数据集对象（fcpubdata.obj）的sdwid主键字段值做为数据集sql语句的查询条件.<br>
+			<IMG src="images/help_10_para_7.gif">
+			<div class="divTitle">DjOpen语法介绍：</div>
+			<P>&nbsp;&nbsp;&nbsp; DjOpen(djsn,updataset,opentype,sModal,sVersion,sTitle)</P>
+			<P>DjOpen参数说明</P>
+			<P></TD><TD class="title2"></TD>
+				</TR>&nbsp;&nbsp;&nbsp;
+				<TR>
+					<TD style="WIDTH: 96px">djsn</TD>
+					<TD>表示单据模版标识,为字符型</TD>
+				</TR>
+				.&nbsp;
+			</P>
+			<P><TR>
+					<TD style="WIDTH: 96px">&nbsp;&nbsp;&nbsp; updataset</TD>
+					<TD>
+				表示要传的数据集对象,为对象型.</P>
+			<P></TD></TR>&nbsp;&nbsp;&nbsp;
+				<TR>
+					<TD style="WIDTH: 96px">opentype</TD>
+					<TD>
+				表示打开表单的类别,可为: 默认/新增/修改/展现,为字符型.</P>
+			<P></TD></TR>&nbsp;&nbsp;&nbsp;
+				<TR>
+					<TD style="WIDTH: 96px">sModel</TD>
+					<TD>表示打开表单的窗口模式,值为 当前窗口/有模式窗口/无模式窗口,为字符型</TD>
+				</TR>
+			</P>
+			<P>&nbsp;&nbsp;&nbsp;
+				<TR>
+					<TD style="WIDTH: 96px">sVersion</TD>
+					<TD>
+				表示以测试方式打开还是直接打开生成的HTML文件,值为 测试/直接,为字符型.
+			</P>
+			<P>&nbsp;&nbsp; </TD></TR>&nbsp;<TR>
+					<TD style="WIDTH: 96px">sTitle</TD>
+					<TD>
+				表示打开窗口的标题,如为空则系统给默认标题,为字符型.</P>
+			<div class="divTitle">3. 通过URL的?后面来传参</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;通过URL的?后面来传参是比较简单的，它只有两步，先在url后面传参数名和参数值，然后在打开的表单中接收参数值。单击<A class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=EX&amp;djsn=sh_y_para3">url传参</A>
+			进入url传参表单设计界面,用此方法
+			<p>window.open('../../fceform/common/djframe.htm?djsn=sh_y_para3_s&amp;djtype=EX&amp;cardtype=1')</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;来打开下一个表单,在下一个表单中用此方法
+			<p>parent.Request.QueryString('cardtype').toString()</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;或者用<p>
+				$urlParam('cardtype')</p>
+			&nbsp;&nbsp;&nbsp;&nbsp;来取到这个参数的值,cardtype是它的参数名.
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;总结：用客户端的userdata来传递参数只支持Windows+IE的组合，只能传递字符不能传递对象，它对窗口和窗口之间没有链接次序。DjOpen方法是传递一个对象，只能传递对象到用DjOpen方法打开的表单。url传参是最常用的一种方法，需要在url后面添加参数名和参数值。
+		</div>
+	</body>
+</html>

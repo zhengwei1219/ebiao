@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrFunc=[
+	["提交数据成功后刷新上一窗口","$eform('提交数据成功后刷新上一窗口')","描述：<br/> 表单保存好后会提示保存成功并刷新上一窗口中的表格中的数据,如保存出错会提示错误信息. "],
+	["提交数据成功后提示","$eform('提交数据成功后提示')","描述：<br/> 表单保存好后会提示保存成功,如保存出错会提示错误信息. "],
+	["提交数据成功后退出","$eform('提交数据成功后退出')","表单保存成功后退出,如保存不成功则提示错误信息."],
+ 	["提交数据","$eform('提交数据')","描述：<br/> 表单保存好后不提示成功信息,如保存出错会提示错误信息."],
+
+ 	["打开窗口新增记录","$eform('打开窗口新增记录')","描述：<br/> 打开一个新的窗口,用于新增一条记录,窗口的URL应先赋值给fcpubdata.cardWinUrl全局变量."],
+ 	["打开窗口修改记录","$eform('打开窗口修改记录')","描述：<br/> 打开一个新的窗口,用于修改当前记录,窗口的URL应先赋值给fcpubdata.cardWinUrl全局变量."],
+
+	["第一页","$eform('第一页')","描述：<br/> 显示主数据集的第一页数据. "],
+	["上一页","$eform('上一页')","描述：<br/> 显示主数据集的上一页数据. "],
+	["下一页","$eform('下一页')","描述：<br/> 显示主数据集的下一页数据. "],
+	["最后页","$eform('最后页')","描述：<br/> 显示主数据集的最后页数据. "],
+	["新增","$eform('新增')","描述：<br/> 主数据集新增一行,会清空主数据集所绑定的所有控件. "],
+	["删除","$eform('删除')","描述：<br/> 主数据集删除一行,同时删除主数据集所保存的物理表中的一条记录,删除后记录上翻一页. "],
+	
+	/*
+	["新增保存","$eform('新增保存')","描述：<br/> 将当前表单上的数据以新增的方式保存到数据库中. "],
+	["修改保存","$eform('修改保存')","描述：<br/> 修改保存当前表单上的数据到数据库中. "],
+	["表单保存好后提示","$eform('表单保存好后提示')","描述：<br/> 表单保存好后会提示保存成功,如保存出错会提示错误信息. "],
+ 	["表单保存","$eform('表单保存')","描述：<br/> 表单保存好后不提示成功信息,如保存出错会提示错误信息."],
+	["表单保存好后退出","$eform('表单保存好后退出')","表单保存成功后退出,如保存不成功则提示错误信息."],
+	*/
+	
+	["表格第一页","$eform('表格第一页')","描述：<br/> 显示grid数据集的第一页数据. "],
+	["表格上一页","$eform('表格上一页')","描述：<br/> 显示grid数据集的上一页数据. "],
+	["表格下一页","$eform('表格下一页')","描述：<br/> 显示grid数据集的下一页数据. "],
+	["表格最后页","$eform('表格最后页')","描述：<br/> 显示grid数据集的最后页数据. "],
+	
+	//["表格保存","$eform('表格保存')","描述:<br/>保存表格上的变动数据到数据库中."],
+	//["表格保存好后退出","$eform('表格保存好后退出')","描述:<br/>保存表格上的变动数据到数据库中,存盘后关闭表单."],
+	
+	["增加行","$eform('增加行')","描述:<br/>在表格上增加一行,同时所对应的数据集也加一条记录。"],
+	["删除行","$eform('删除行')","描述:<br/>在表格上删除当前行,同时所对应的数据集也删除一条记录。"],
+	["删除行且删除记录","$eform('删除行且删除记录')","描述:<br/>删除表格中的当前行,包括数据库中的此记录也删除掉,是物理删除,不是作beactive标记."],
+	["标记方式删除","$eform('标记方式删除')","描述:<br/>以做删除标记的方式删除,即将deleteMark字段设置为值1."],
+	["删除表格多选行","$eform('删除表格多选行')","描述:<br/>删除表格中的选中的多行,包括数据库中的此记录也删除掉.它要求表格的多选列必须是第一列."],
+	["表格选中多行","$eform('表格选中多行')","描述:<br/>执行此函数会选中或不选中表格的当前行，选中是指在表格的首列打勾.此函数一般用于表格的双击事件中。"],
+
+	["打开表单","DjOpen(djsn,updataset,opentype)","输入参数：<br/> djsn 单据模版标识<br/> updataset 要传的对象<br/> opentype 打开表单的类别,可为: 默认/新增/修改/展现<br/> sModal 表示打开表单的窗口模式,值为 当前窗口/有模式窗口/无模式窗口<br/> sVersion 表示是以测试方式打开还是直接打开生成的HTML文件,值为 测试/直接<br/> sTitle 表示打开窗口的标题,如为空则系统给默认标题.<br/> 输出参数：<br/> 可自定义,当有模式或无模式打开表单时,返回值可以通过在打开的表单中给window.returnValue值, 然后在第一个表单中接收后判断此值." ],
+	["通用选择输入","CommonSelect(oJson)","输入参数：<br/> oJson 是一个包含所有参数的JSON对象,它具有如下属性:<br/> obj 必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br/> sql 必选项, 弹出窗口的显示数据用的SQL语句.<br/> left 可选项, 弹出窗口的left值.<br/> top 可选项, 弹出窗口的top值. top属性应和left属性成对设置,即要不就同时设置left,top属性,要不就不设置left,top属性,不设置left,top属性时窗口是居中.<br/> width 可选项, 弹出窗口的width值.不设置时取默认宽度值.<br/> height 可选项, 弹出窗口的height值.不设置时取默认高度值.<br/> title 可选项, 弹出窗口的标题.<br/> isgrid 可选项, 弹出窗口中是否有grid控件,其值=0或1.<br/> islist 可选项, 弹出窗口中是否有radiolist或checkboxlist控件,其值=0或1. 不能isgrid 和 islist属性同时为1. 当多选时表示是checkboxlist控件,单选时表示是radiolist控件 <br/> istree 可选项, 弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度.<br/> isfind 可选项, 弹出窗口中是否有模糊查找项,其值=0或1. <br/> findvalue 可选项,模糊查找时,用户输入的值,它应和isfind配套使用.<br/> cols 可选项,islist=1时,即有radiolist或checkboxlist控件时,界面上显示的列数,只有在islist=1时此属性才有效.<br/> datasource 可选项,当需要显示其它数据源中的内容时,在此设置数据源的名称.<br/> hidefields 可选项, 以逗号分隔的隐藏字段名列表,只有在isgrid=1时才有效.<br/> ismultisel 可选项, 是否多选,其值=0或1. <br/> istreenewsql 可选项, 树控件是否是用新格式的SQL语句,其值=0或1. 只有在istree=1时才有效.<br/> idfieldname 可选项, 前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效.<br/> textfieldname 可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效 <br/> pagesize 可选项, 一页的记录行数.只在isgrid=1时才有效. <br/> gridcoltitle 可选项, grid控件的各列的标题,是一个数组,需要和grid显示的列一一对应上.只在isgrid=1时才有效.<br/> gridcolwidth 可选项, grid控件的各列列宽,是一个数组,需要和grid显示的列一一对应上.只在isgrid=1时才有效.<br/> treewidth 可选项, tree控件的列宽,只在istree=1并且(isgrid=1或islist=1)时才有效.<br/> roottext 可选项, 树控件的根节点文本.只在istree=1时才有效.<br/> clicknodesql 可选项, 当同时有tree控件和其它如grid控件或radiolist,checkboxlist控件时,tree控件的显示用的SQL语句.标识 {nodeIdValue} 用于取当前点击的树节点.<br/><br/>输出参数：当oJson.obj参数所指定的控件没有绑定到数据集时(即无法通过字段名相同的规则来传递数据时),会有返回值: 当oJson.isgrid=1时,返回当前选中行的第一个字段的值,否则返回显示的text字段值.<br/>"],
+	["用SQL语句选择资料","SelectZlSql(sql,sMultiSel,sHideField,likevalue,ogrid)","输入参数：<br/> sql sql语句,通过它控制要列出的内容<br/> sMultiSel 是否允许多选, 值为 是/否, 缺省为否<br/> sHideField 以,分隔的隐藏字段列表<br/> likevalue 用来做模糊查找的参数,可空<br/> ogrid 如在表格控件上用此功能,则此参数应为所在的表格对象<br/>"],
+	["选择日期","$eform('选择日期')","描述:<br/>显示下拉的日期输入窗口供用户选择输入日期到指定的编辑框中,<br/>"],
+	["选择日期时间","$eform('选择日期时间')","描述:<br/>显示下拉的日期输入窗口供用户选择输入日期和时间到指定的编辑框中,<br/>"],
+	["选择日期仅年月","$eform('选择日期年月')", "描述:<br/>显示下拉的日期输入窗口供用户选择输入日期（仅能选定年月）到指定的编辑框中,<br/>"],
+	["选择日期仅年份","$eform('选择日期年')", "描述:<br/>显示下拉的日期输入窗口供用户选择输入日期（仅能选定年）到指定的编辑框中,<br/>"],
+	["关闭窗口","$eform('关闭窗口')","关闭窗口"],
+	["刷新条件格式","$eform('刷新条件格式')","描述:<br/>默认时条件格式只在刚进入表单时才有效一次,执行此命令将重新应用一次条件格式。"],
+	["刷新权限控制","$eform('刷新权限控制')","描述:<br/>默认时权限控制只在刚进入表单时才有效一次,执行此命令将重新应用一次权限控制。"],
+	["查询运行报表","EbiaoRunQuery()","描述:<br/>用于e表中,用新的条件值来运行报表,一般用在报表参数表单中的查询按钮的点击事件上。"],
+	["计算器","$eform('计算器')","描述:<br/>显示计算器,只能用于某输入框的事件中。"],
+
+	["e表控件打印预览","$eform('e表控件打印预览')","描述:<br/>和e表控件连用时，e表控件打印预览。"],
+	["e表控件打印","$eform('e表控件打印')","描述:<br/>和e表控件连用时，e表控件打印。"],
+	["e表控件直接打印","$eform('e表控件直接打印')","描述:<br/>和e表控件连用时，e表控件直接打印。"],
+	["e表控件直接打印所有页","$eform('e表控件直接打印所有页')","描述:<br/>和e表控件连用时，e表控件直接打印所有页。"],
+	["e表控件打印所有页","$eform('e表控件打印所有页')","描述:<br/>和e表控件连用时，e表控件打印所有页。"],
+	["分页导出到excel文件中","$eform('分页导出到excel文件中')","描述:<br/>和e表控件连用时，分页导出到excel文件中。"],
+	["不分页导出到excel文件中","$eform('不分页导出到excel文件中')","描述:<br/>和e表控件连用时，不分页导出到excel文件中。"],
+	["导出所有页到pdf文件中","$eform('导出所有页到pdf文件中')","描述:<br/>和e表控件连用时，导出所有页到pdf文件中。"],
+	["e表控件增加行","$eform('e表控件增加行')","描述:<br/>和e表控件连用时，给第一个明细表增加行。"],
+	["e表控件删除行","$eform('e表控件删除行')","描述:<br/>和e表控件连用时，给第一个明细表删除行。"],
+
+	["只保存业务数据","$eform('只保存业务数据')","描述:<br/>和流程一起用时，只保存表单中的数据，不保存相关的流程信息。"],
+	["提交业务数据并执行流程","$eform('提交业务数据并执行流程')","描述:<br/>和流程一起用时，提交业务数据并执行流程。"],
+	["流程的轨迹图","$eform('流程的轨迹图')","描述:<br/>流程的轨迹图。"]
+
+	];
+	
+var arrCheckFunc=[
+	["校验函数","整数","$valid('整数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法整数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg：为可选参数，验证不通过时的提示信息。"],
+	["校验函数","小数","$valid('小数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法小数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg：为可选参数，验证不通过时的提示信息。"],
+	["校验函数","日期","$valid('日期');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法日期，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg：为可选参数，验证不通过时的提示信息。"],
+	["校验函数","QQ","$valid('QQ');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法QQ，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg：为可选参数，验证不通过时的提示信息。"],
+	["校验函数","身份证号","$valid('身份证号');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法身份证号，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","Email","$valid('Email');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法Email地址，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","电话号码","$valid('电话号码');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法电话号码，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","手机","$valid('手机');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法手机，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","邮政编号","$valid('邮政编号');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法邮政编号，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+
+	["校验函数","正数","$valid('正数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法正数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","正整数","$valid('正整数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法正整数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","负数","$valid('负数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法负数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","负整数","$valid('负整数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法负整数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","零或正数","$valid('零或正数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法零或正数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","零或负数","$valid('零或负数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法零或负数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	
+	["校验函数","零或正整数","$valid('零或正整数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法零或正整数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","零或负整数","$valid('零或负整数');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否是合法零或负整数，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","字母、数字或_","$valid('字母、数字或_');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值只能是字母、数字或_，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","不含汉字","$valid('不含汉字');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否含有汉字，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","不含双引号","$valid('不含双引号');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否含有双引号，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","不含单引号","$valid('不含单引号');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否含有单引号，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","不能为空","$valid('不能为空');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验控件的值是否为空，适用于text、textarea、dropdownlist等控件的属性改变或失去焦点事件。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","字段值不重复","$valid('字段值不重复');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验数据集的字段的值是否重复，只有在数据集的数据验证事件(Valid)中才有效。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"],
+	["校验函数","值已存在","$valid('值已存在');","描述：<br/>$valid(checkType,alertMsg) <br/> 校验本字段的值在后台数据库的本表(这个表名是取本数据集的提交页签中设置的保存表名)中是否重复。<br/> 输入参数：<br/> checkType：为校验类型，整数、小数、日期、QQ、Email、身份证号等；<br/> alertMsg： 为可选参数，验证不通过时的提示信息。"]
+	
+];
+var arrUserFunc=new Array();	
+var arrRegFunc;
+function uf_open(){
+
+	if(fcpubdata.obj != null){
+		var sFunc = fcpubdata.obj[0];
+		var re = new RegExp();
+		re.compile("(function )(.[^(]*)(\(.[^)]*\))","g");
+		var arr;
+		i=0;
+		while ( re.exec(sFunc) != null ) {
+			var s1=RegExp.$2+RegExp.$3+")";
+			arrUserFunc[i]=s1;
+			i++;
+		}
+		//用户注册的函数
+		arrRegFunc = fcpubdata.obj[1];
+		if(typeof arrRegFunc != "undefined"){
+			var l=arrRegFunc.length;
+			for(var i=0;i<l;i++){
+				//加上函数分类
+				if(cboType.innerText.indexOf(arrRegFunc[i][0]) < 0){
+					var oOpt=document.createElement("option");
+					oOpt.text=arrRegFunc[i][0];
+					oOpt.value = oOpt.text ;
+					cboType.add(oOpt);
+				}
+			}
+		}
+	}
+	uf_seltype();
+	new Eform.SysForm().setButtonImage();
+}
+function uf_seltype() {
+	var sOpt= new Sys.StringBuilder();
+	if(cboType.value == "系统函数"){
+		for(var i=0;i< arrFunc.length;i++){
+			sOpt.append("<option>"+ arrFunc[i][0] +"</option>") ;
+			}
+	}else if (cboType.value == "自定义函数"){
+		for(var i=0;i< arrUserFunc.length;i++){
+			sOpt.append("<option>"+ arrUserFunc[i] +"</option>") ;
+			}	
+	}else {
+		if (cboType.value == "校验函数"){
+			for(var i=0;i<arrCheckFunc.length;i++)
+			{
+				sOpt.append("<option>"+ arrCheckFunc[i][1] +"</option>") ;	
+			}
+		}
+		for(var i=0;i< arrRegFunc.length;i++){
+			if(arrRegFunc[i][0] == cboType.value)
+				sOpt.append("<option>"+ arrRegFunc[i][1] +"</option>") ;
+		}
+	}
+	lstFunc.options.length = 0 ;
+	lstFunc.outerHTML = SelectAddOption(lstFunc,sOpt.toString());
+	txtRet.value = "";	
+	divDesc.innerHTML = "";
+}
+function uf_selfunc() {
+	var ipos = lstFunc.selectedIndex ;
+	if( ipos<0 ) return ;
+	if(cboType.value == "系统函数"){
+		txtRet.value = arrFunc[ipos][1];
+		divDesc.innerHTML = arrFunc[ipos][2] ;
+	}else if (cboType.value == "自定义函数"){
+		txtRet.value = arrUserFunc[ipos];
+	}else{ 
+		if (cboType.value == "校验函数" && ipos < arrCheckFunc.length){
+			txtRet.value = arrCheckFunc[ipos][2];
+			divDesc.innerHTML = arrCheckFunc[ipos][3] ;
+			return;
+		}
+		for(var i=0;i< arrRegFunc.length;i++){
+			if(arrRegFunc[i][0] == cboType.value && arrRegFunc[i][1] == lstFunc.options[ipos].text)
+			{	
+				txtRet.value = arrRegFunc[i][2];
+				divDesc.innerHTML = arrRegFunc[i][3] ;
+			}
+		}
+		
+	}/*else {
+		txtRet.value = arrRegFunc[ipos][2];
+		divDesc.innerHTML = arrRegFunc[ipos][3] ;
+	}*/
+}
+function uf_ok() {
+	window.returnValue = txtRet.value;
+	window.close();
+	}</script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script src='../../fceformext/js/usertb.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;~usertb.js&#13;&#10;" mkbh contxml="<root><label><id>label2</id><id>label3</id><id>label4</id></label><listbox><id>lstFunc</id></listbox><combobox><id>cboType</id></combobox><div><id>divDesc</id></div><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtRet</id></text></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:4;radio:0;listbox:1;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:2;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>lstFunc</taborder><taborder>cboType</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtRet</taborder></root>" OtherSave="否" codeheader="BBB" keyfield entertype="修改" idtype="1" BLONclose BLONopenBefore BLONopen="uf_open()" window="有模式窗口" toolbar="不带工具栏" posheight="330" poswidth="400" postop posleft center="居中" isfile="是" type="LR" caption="函数列表" dj_sn="funclist" userType AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 6px; LEFT: 9px" id=label2 onmovestart=moveStart() noWrap controltype="label" value="label2">分类:</DIV><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 113px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 3px; LEFT: 43px" id=cboType onmovestart=moveStart() onchange='bill_onclick("uf_seltype()")' controltype="combobox" temptext="系统函数&#13;&#10;自定义函数&#13;&#10;校验函数" tempvalue="系统函数&#13;&#10;自定义函数&#13;&#10;校验函数" sql check="1" sqltrans><OPTION selected value=系统函数>系统函数</OPTION><OPTION value=自定义函数>自定义函数</OPTION><OPTION value=校验函数>校验函数</OPTION></SELECT><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 153px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 258px; FONT-SIZE: 12px; TOP: 25px; LEFT: 4px" id=lstFunc onmovestart=moveStart() onchange='bill_onclick("uf_selfunc()")' size=8 controltype="listbox" temptext tempvalue sql check="1" ondblclick='bill_ondblclick("uf_ok()")' sqltrans></SELECT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 249px; LEFT: 239px" id=cmdOk onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 250px; LEFT: 309px" id=cmdClose onmovestart=moveStart() controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 215px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 222px; LEFT: 165px" id=txtRet onmovestart=moveStart() controltype="text" china CanSelect="false"></INPUT> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 208px; LEFT: 172px" id=label3 onmovestart=moveStart() noWrap controltype="label" value="label3">返回的内容:</DIV>
+<DIV style="BORDER-BOTTOM: #d6d3bd 1px solid; POSITION: absolute; BORDER-LEFT: #d6d3bd 1px solid; OVERFLOW-X: auto; OVERFLOW-Y: auto; BACKGROUND-COLOR: #ffffff; WIDTH: 216px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 159px; FONT-SIZE: 12px; OVERFLOW: auto; BORDER-TOP: #d6d3bd 1px solid; TOP: 43px; BORDER-RIGHT: #d6d3bd 1px solid; LEFT: 165px" id=divDesc onmovestart=moveStart() controltype="div"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 28px; LEFT: 169px" id=label4 onmovestart=moveStart() noWrap controltype="label" value="label4">说明:</DIV></DIV></body></html>

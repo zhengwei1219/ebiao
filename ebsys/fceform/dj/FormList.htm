@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_initPage()
+{
+	e_PropWinOnload();
+	var sHtml=GetBillType()
+	sltType.outerHTML=SelectAddOption(sltType,sHtml);
+	uf_Search();	
+}
+
+/**
+ * 查询
+**/
+function uf_Search()
+{
+	var sql = "select djid,dj_name,djlx,djsn,'修改' as editform from fc_billzl where 1=1 ";
+
+	var strName = $id("txtName").value;
+	var strSN = $id("txtSN").value;
+	var strType = $id("sltType").value;
+	var sUserType = $id("userType").value;
+	
+	if (strName != "" && strName != "请选择")
+		sql = sql + " and dj_name like '%"+strName+"%'";
+	if (strSN != "" && strSN != "请选择")
+		sql = sql + "and djsn like '%"+strSN+"%'";
+	if (strType != "" && strType != "请选择")
+		sql = sql + " and djlx = '"+ strType +"'";
+	
+	if(IsSpace(sUserType) == false)
+		sql = sql + " and userType = '"+ sUserType +"'";
+		
+	dataset1.Open(sql);
+}
+
+/**
+ * 修改
+**/
+function uf_ModifyForm()
+{
+	var sn = dataset1.Field('djsn').Value;
+	var stype = dataset1.Field('djlx').Value; 
+	window.open("../../fceform/design/design.htm?isfile=no&djtype="+stype+"&djsn="+sn,"","");	
+}
+function uf_RunForm()
+{
+	var sn = dataset1.Field('djsn').Value;
+	var stype = dataset1.Field('djlx').Value; 
+	window.open("../../fceform/common/djframe.htm?djtype="+stype+"&djsn="+sn,"","");	
+}
+
+/**
+ * 增加
+**/
+function uf_Add()
+{
+	window.open("../../fceform/design/design.htm","","");		
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" toolbar="不带工具栏" userType BLONopenBefore BLONclose dj_sn="FormList" caption="表单列表" type="ST" isfile="是" center="  " posleft postop poswidth posheight window="当前窗口" BLONopen="uf_initPage();" billtaborder="<root><taborder>sltType</taborder><taborder>cmdQuery</taborder><taborder>txtName</taborder><taborder>txtSN</taborder><taborder>grid1</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder><taborder>cmdEdit</taborder><taborder>button4</taborder><taborder>userType</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:3;radio:0;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>Label2</id></label><combobox><id>sltType</id></combobox><button><id>cmdQuery</id><id>cmdAdd</id><id>cmdDel</id><id>cmdEdit</id><id>button4</id></button><text><id>txtName</id><id>txtSN</id></text><dropdownlist><id>userType</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" OtherSave="否" codeheader="BBB" keyfield entertype="修改" idtype="1" runsave mkbh AutoResizeXml><DIV id=label1 style="LEFT: 12px; WIDTH: 65px; POSITION: absolute; TOP: 41px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" NotBg="否" value="label1">表单名称：</DIV><INPUT id=txtName style="LEFT: 73px; WIDTH: 135px; POSITION: absolute; TOP: 36px; HEIGHT: 20px" onmovestart=moveStart() size=24 controltype="text"> 
+<DIV id=label2 style="LEFT: 23px; WIDTH: 65px; POSITION: absolute; TOP: 61px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" NotBg="否" value="label2">表单SN：</DIV><INPUT id=txtSN style="LEFT: 73px; WIDTH: 135px; POSITION: absolute; TOP: 57px; HEIGHT: 20px" onmovestart=moveStart() size=22 controltype="text"> 
+<DIV id=label3 style="LEFT: 228px; WIDTH: 65px; POSITION: absolute; TOP: 60px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" NotBg="否" value="label3" inputTag="否">生成路径分类：</DIV><SELECT id=sltType style="LEFT: 317px; WIDTH: 135px; POSITION: absolute; TOP: 56px; HEIGHT: 25px" onmovestart=moveStart() controltype="combobox" sql temptext tempvalue check="1" sqltrans></SELECT><BUTTON id=cmdQuery style="LEFT: 467px; WIDTH: 65px; POSITION: absolute; TOP: 55px; HEIGHT: 23px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_Search();")'></BUTTON><?xml:namespace prefix = fc /><fc:webgrid id=grid1 onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' ondblclick='bill_ongriddblclick("<grid1><col></col><col>uf_ModifyForm();</col><col>uf_ModifyForm();</col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" visible="是" canselect="是" autoheight="是" autowidth="是" autoappend="否" readonly="否" SetRowHeight="是" hideVscroll="否" bodyrowheight="-1" bodyrows="-1" hideHscroll="否" autosize="否" format="<cols><col><fname>sel</fname><cname>选</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>30</columnwidth><align>left</align></col><col><fname>DJSN</fname><cname>表单SN</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>160</columnwidth><align>left</align></col><col><fname>DJ_NAME</fname><cname>表单名称</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>260</columnwidth><align>left</align></col></cols>" width="765" height="399" top="80" left="7">
+<TABLE id=t style="TABLE-LAYOUT: fixed; LEFT: 0px; TOP: 0px; BORDER-COLLAPSE: collapse" cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" controltype="dataset" opensortno="1" saveastable="fc_billzl" pubpara="否" isaddemptyrec="否" isSubGrid="否" submittype="1" submitno="1" savetable="fc_billzl" issubds="否" format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DJSN</fieldname><datatype>字符</datatype><displaylabel>表单SN</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DJ_NAME</fieldname><datatype>字符</datatype><displaylabel>表单名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DJLX</fieldname><datatype>字符</datatype><displaylabel>表单类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DJID</fieldname><datatype>整数</datatype><displaylabel>DJID</displaylabel><size>16</size><precision>10</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>editform</fieldname><datatype>字符</datatype><displaylabel>修改</displaylabel><size>500</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sel></sel><DJSN></DJSN><DJ_NAME></DJ_NAME><DJLX></DJLX><DJID></DJID><editform></editform></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><DJSN></DJSN><DJ_NAME></DJ_NAME><DJLX></DJLX><DJID></DJID><editform></editform></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sel></sel><DJSN></DJSN><DJ_NAME></DJ_NAME><DJLX></DJLX><DJID></DJID><editform></editform></dsid>")'></fc:dataset><BUTTON id=cmdAdd style="LEFT: 11px; WIDTH: 66px; POSITION: absolute; TOP: 1px; HEIGHT: 23px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_Add();")'></BUTTON><BUTTON id=cmdDel style="LEFT: 80px; WIDTH: 66px; POSITION: absolute; TOP: 1px; HEIGHT: 23px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;$eform('删除表格多选行')&quot;)"></BUTTON><BUTTON id=cmdEdit style="LEFT: 149px; WIDTH: 66px; POSITION: absolute; TOP: 1px; HEIGHT: 23px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ModifyForm()")'></BUTTON><BUTTON id=button4 style="LEFT: 217px; WIDTH: 65px; POSITION: absolute; TOP: 0px; HEIGHT: 23px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_RunForm()")'>运行</BUTTON><fc:fc_code id=userType controltype="dropdownlist" dataset="undefined" visible="是" datasourceName="" format="" blninput="是" blnempty="否" addrow="否" multiselect="否" xml="" align="undefined" width="133" height="20" top="32" left="318" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F8%F4%D8%F2%B6%u0100%EE%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D2%E0%E6%E6%u0102%E6" field="undefined" position="absolute" sql2="undefined" enabled="false" isShowTree="undefined" isTreeNewSql="undefined" FieldNameList="undefined"></fc:fc_code><SPAN id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 255px; WIDTH: 61px; POSITION: absolute; TOP: 37px; HEIGHT: 10px" controltype="label" align="Left">表单分类：</SPAN></DIV></body></html>

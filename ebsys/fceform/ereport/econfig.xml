@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="GB2312" ?><root>
+	<datasources>
+	</datasources>
+	<options><fromdb>no</fromdb><rows>20</rows><cols>20</cols><rowheight>18</rowheight><colwidth>70</colwidth><firstcolwidth>35</firstcolwidth><shiftf>yes</shiftf></options>
+</root>

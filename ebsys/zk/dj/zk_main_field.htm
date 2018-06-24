@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	var len = fcpubdata.obj.length;
+	for(var j = 0;j<len;j++){
+		dataset1.Append();
+	}
+	for(var i=0;i<len;i++){
+		dataset1.oDom.documentElement.childNodes[i].childNodes[0].text = fcpubdata.obj[i][0];
+		dataset1.oDom.documentElement.childNodes[i].childNodes[1].text = fcpubdata.obj[i][1];	
+	}
+	dataset1.dset_cont()
+}
+
+function uf_ok(){
+	window.returnValue = dataset1.Field('mainField').Value;
+	window.close();
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" allBrowser="否" userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_ok()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' isCheckPermit="否" alertType="1" userType contxml="<root><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" billtaborder="<root><taborder>grid1</taborder></root>" isfile="是" posheight="180" poswidth="280" postop posleft window="有模式窗口" caption="从表与主表的关联字段" type="ZK" dj_sn="zk_main_field" BLONopen="uf_open()" center="居中" BLONclose BLONopenBefore toolbar="自定义工具栏" AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=dataset1 async="否" isSubGrid="否" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" opensortno="1" controltype="dataset" idtype="1" format="<fields><field><fieldname>name</fieldname><datatype>字符</datatype><displaylabel>主表名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>mainField</fieldname><datatype>字符</datatype><displaylabel>主表关联的字段</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><name></name><mainField></mainField></dsid>")' onGetText='bill_ondatasetgettext("<dsid><name></name><mainField></mainField></dsid>")' onSetText='bill_ondatasetsettext("<dsid><name></name><mainField></mainField></dsid>")'></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" bodyrows="-1" bodyrowheight="-1" blRowNo="否" hideVscroll="auto" hideHscroll="是" SetRowHeight="是" visible="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" format="<cols><col><fname>name</fname><cname>主表名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>mainField</fname><cname>主表关联的字段</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>150</columnwidth><align>left</align></col></cols>" width="256" height="104" top="1" left="4">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid></DIV><script language="JavaScript"></script></body></html>

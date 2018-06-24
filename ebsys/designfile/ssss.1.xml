@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="7296" name="动作节点">
+      <results>
+        <unconditional-result id="1059" old-status="Finished" status="Underway" step="596"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="7478" name="结束节点">
+    </step>
+    <step id="596" name="复合节点">
+      <actions>
+        <action id="7104" name="复合节点">
+          <results>
+            <unconditional-result id="369" old-status="Finished" status="Underway" step="8289"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8289" name="复合节点">
+      <actions>
+        <action id="2130" name="复合节点">
+          <results>
+            <unconditional-result id="2935" old-status="Finished" status="Underway" step="7478"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

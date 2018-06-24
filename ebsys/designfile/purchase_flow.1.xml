@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_purchase</meta>
+  <meta name="bs_desc_field">remark</meta>
+  <meta name="bs_id_field">purchase_id</meta>
+  <initial-actions>
+    <action id="863" name="初始化">
+      <restrict-to>
+        <conditions>
+          <condition type="class">
+            <arg name="rolename">采购员</arg>
+            <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+            <arg name="role">ROL00000007</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="6843" old-status="Finished" status="Underway" step="1330"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="6697" name="结束节点">
+    </step>
+    <step id="7504" name="卖方订单处理">
+      <actions>
+        <action id="5484" name="备货">
+          <restrict-to>
+            <conditions type="OR">
+              <condition type="class">
+                <arg name="rolename">企业备货员</arg>
+                <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+                <arg name="role">ROL00000009</arg>
+              </condition>
+              <condition type="class">
+                <arg name="username">李明</arg>
+                <arg name="class.chn">判断执行者用户是否是指定的用户</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserCondition</arg>
+                <arg name="user">USR00000001</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="2179" old-status="Finished" status="Underway" step="1901"/>
+          </results>
+        </action>
+        <action id="1957" name="处理缺货">
+          <restrict-to>
+            <conditions type="OR">
+              <condition type="class">
+                <arg name="rolename">企业备货员</arg>
+                <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+                <arg name="role">ROL00000009</arg>
+              </condition>
+              <condition type="class">
+                <arg name="username">李明</arg>
+                <arg name="class.chn">判断执行者用户是否是指定的用户</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserCondition</arg>
+                <arg name="user">USR00000001</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将执行者保存到Caller</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+            <function type="class">
+              <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+              <arg name="stepchn">填写采购单</arg>
+              <arg name="stepId">6641</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="6181" old-status="Finished" sub-flow="5832">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[true]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="1823" old-status="Finished" status="Underway" sub-flow="6071"/>
+          </results>
+          <post-functions>
+            <function type="beanshell">
+              <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+              <arg name="class.name"><![CDATA[beanshell]]></arg>
+              <arg name="script"><![CDATA[propertySet.setDate("nowdate",new java.util.Date());]]></arg>
+            </function>
+          </post-functions>
+        </action>
+      </actions>
+    </step>
+    <step id="1330" name="填写采购单">
+      <tasks>
+        <task name="填写采购申请单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">执行者(caller),步骤执行者(mostRecentCaller)</arg>
+          <arg name="taskType">2</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="stepId">1330</arg>
+          <arg name="user">${caller},${mostRecentCaller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9666" name="填写采购单" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_purchase%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">9666</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">1330</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将执行者保存到Caller</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="874" old-status="Finished" status="Underway" step="3081"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3081" name="主任审核">
+      <tasks>
+        <task name="审核${oCaller.name}提交的采购申请" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">采购主任</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000008</arg>
+          <arg name="stepId">3081</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="349" name="主任审核" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_purchase_check%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">349</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">3081</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="2490" old-status="Finished" status="Underway" step="1330">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[
+"0".Equals(propertySet.getString("check_flag"))]]></arg>
+                </condition>
+              </conditions>
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">填写采购单</arg>
+                  <arg name="stepId">6641</arg>
+                </function>
+              </pre-functions>
+            </result>
+            <unconditional-result id="4911" old-status="Finished" status="Underway" step="7504"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1901" name="买方到货">
+      <actions>
+        <action id="3159" name="买方到货">
+          <results>
+            <unconditional-result id="4066" old-status="Finished" status="Underway" step="6697"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <sub-flows>
+    <sub-flow id="6071" name="缺货处理子流程" is-sync="2" sub-flowname="oos_flow" sub-flowdesc="缺货处理流程" sub-flowversion="1" sub-floworig="xmlfile">
+      <params>
+<param 
+ name="input"
+ type="1"
+ data-type="1"
+ expression="${caller}"
+ />
+<param 
+ name="input2"
+ type="1"
+ data-type="4"
+ expression="${nowdate}"
+ />
+<param 
+ name="input3"
+ type="1"
+ data-type="2"
+ expression="${result}"
+ />
+<param 
+ name="output1"
+ type="2"
+ data-type="4"
+ expression="${subnowdate}"
+ />
+</params>
+        <results>
+          <unconditional-result id="7307" old-status="Finished" status="Underway" step="7504"/>
+        </results>
+      </sub-flow>
+    <sub-flow id="5832" name="子流程节点" is-sync="2" sub-flowname="wf_series_timer" sub-flowdesc="定时启动定时执行动作的示例" sub-flowversion="1" sub-floworig="xmlfile">
+      <results>
+        <unconditional-result id="7905" old-status="Finished" status="Underway" step="7504"/>
+      </results>
+    </sub-flow>
+  </sub-flows>
+</workflow>

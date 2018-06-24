@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>page页控件运行多个表单</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+ 
+    <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.5pt;
+	font-family:宋体;
+	        margin-left: 1cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+ 
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td  class="title">page页控件运行多个表单</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage页"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+       <div  class="mainDiv">
+       <div class="divTitle">1.page页控件运行多个表单</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;page页控件的每个子页都是url打开的运行界面,不能在表单设计器中给子页增加控件,它是直接链接到一个URL地址,在一个iframe元素中打开这个URL地址,每个子页都会有一个iframe元素.用户可以在page页控件的每个子页中打开一个表单,用它来实现子表单的功能,即一个表单中包含了其它的多个表单. 单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_7_page'>page页控件运行多个表单</A> 进入page页控件运行多个表单设计界面.
+       <div class="divTitle">2.page页控件运行多个表单设置</div>
+       &nbsp;&nbsp;&nbsp;  一个grid控件,一个page页控件 一个数据集控件.grid控件和数据集控件绑定,用于显示你需要看到的多条数据.page页控件用于装入你需要在page页控件中显示的文件.在数据集中的打开事件之后设置page页控件的第一个页签的url地址.在数据集的滚动之后设置page页控件的页签要打开的url.设置page页控件页签的url的方法是page控件id.SetUrl(page页控件的页签号,url地址);<p>page1.SetUrl(page1.selectedIndex,&#39;../../fceform/common/djframe.htm?djsn=&#39;+url+&#39;&amp;djtype=FT&amp;paravalue=&#39;+dataset1.Field(&#39;semployeeid&#39;).Value);</p> 
+       &nbsp;&nbsp;&nbsp; 在页签控件的单击事件中调用自定义函数uf_openUrl(),<br /><img  src ="images/help_4_7_3.gif"/><br />&nbsp;&nbsp;&nbsp; 数据集的打开之后和移动记录之后函数中调用自定义函数uf_openUrl()<br /><img  src ="images/help_4_7_4.gif"/><br />自定义函数内容如下<p 
+               class="MsoNormal">
+               <span lang="EN-US">function uf_openUrl(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var url=&#39;help_4_7_page1&#39;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(page1.selectedIndex == 1){url=&#39;help_4_7_page2&#39;;} </span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>
+               page1.SetUrl(page1.selectedIndex,&#39;../../fceform/common/djframe.htm?djsn=&#39;+url+&#39;&amp;djtype=FT&amp;paravalue=&#39;+dataset1.Field(&#39;semployeeid&#39;).Value);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+          
+        <div class="divTitle">3.与其它视图对比</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;它可以在一个page页控件中显示多个表单,其它视图都是一个表单.当前表单和page页控件中显示的子表单之间的参数传递是通过组装子表单的运行URL来实现的，即将要传的参数加到子表单的运行URL上。然后在子表单中再从URL上取下来。
+       <div class="divTitle">4.运行page页控件导入多个表单界面视图</div>
+         &nbsp;&nbsp;&nbsp;&nbsp;单击表单的运行图片,表单运行界面如下<br /><img  src ="images/help_4_7_1.gif"/><br />&nbsp;&nbsp;&nbsp;&nbsp;单击page控件的工作经历界面如下<br /><img  src ="images/help_4_7_2.gif"/>
+</div>
+</body>
+</html>

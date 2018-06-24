@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_expense</meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field">expense_id</meta>
+  <initial-actions>
+    <action id="9088" name="初始化动作">
+      <results>
+        <unconditional-result id="5981" old-status="Finished" status="Underway" step="6093"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="3040" name="结束节点">
+    </step>
+    <step id="6093" name="填写单据">
+      <actions>
+        <action id="4771" name="填写单据" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_onedj%26djtype%3DWF_EX">
+          <results>
+            <unconditional-result id="2437" old-status="Finished" status="Underway" step="8976"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8976" name="分配步骤">
+      <actions>
+        <action id="1718" name="分配步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_dynamic_node_define%26djtype%3DWF%26dynamic_node_id%3D5331%26dynamic_node_type%3Dsplit">
+          <results>
+            <unconditional-result id="4881" old-status="Finished" status="Underway" split="5331"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5884" name="完善资料">
+      <tasks>
+        <task name="完善资料" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">${owner_a}</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">5884</arg>
+          <arg name="user">${owner_a}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="44" name="完善资料" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_onedj%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">44</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">5884</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="227" old-status="Finished" status="Underway" step="5912"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5912" name="动态会签">
+      <tasks>
+        <task name="动态会签任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">刘明辉,王强强,张庭,孙笑甜</arg>
+          <arg name="taskTypeChn">动态会签型</arg>
+          <arg name="taskType">3</arg>
+          <arg name="stepId">5912</arg>
+          <arg name="user">USR00000004,USR00000003,USR00000002,USR00000005</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9662" name="动态会签" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_onedj%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">9662</arg>
+                <arg name="class.chn">动态会签动作的可执行人判断条件</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.CounterSignCondition</arg>
+                <arg name="step_id">5912</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="8462" old-status="Finished" status="Underway" step="5912">
+              <conditions>
+                <condition type="class">
+                  <arg name="action_id">9662</arg>
+                  <arg name="class.chn">未完成动态会签的任务</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.NotFinishCounterSignResult</arg>
+                  <arg name="step_id">5912</arg>
+                </condition>
+              </conditions>
+            </result>
+            <result id="8705" old-status="Finished" status="Underway" step="5884">
+              <conditions type="AND">
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("dept_audit").Equals("0")]]></arg>
+                </condition>
+                <condition type="class">
+                  <arg name="action_id">9662</arg>
+                  <arg name="class.chn">完成动态会签的任务</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.FinishCounterSignResult</arg>
+                  <arg name="step_id">5912</arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="3335" old-status="Finished" status="Underway" step="5994"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5994" name="自动复查">
+      <actions>
+        <action id="8700" name="自动复查" auto="true">
+          <results>
+            <unconditional-result id="4459" old-status="Finished" status="Underway" join="5503"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="5331"
+ name="分支节点"
+ is-dynamic="1"
+>
+      <params>
+<param 
+ name="owner_a"
+ desc="完善资料步骤的填写人"
+ />
+</params>
+        <unconditional-result id="8752" old-status="Finished" status="Underway" step="5884"/>
+      </split>
+  </splits>
+  <joins>
+    <join id="5503"
+ name="合并节点"
+ is-dynamic="1"
+>
+      <conditions>
+        <condition type="class">
+          <arg name="split_id">5331</arg>
+          <arg name="class.chn">判断所有动态创建的分支是否都完成了</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.DynamicJoinCondition</arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="5696" old-status="Finished" status="Underway" step="3040"/>
+    </join>
+  </joins>
+</workflow>

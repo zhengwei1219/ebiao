@@ -1,0 +1,47 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	e_PropWinOnload();
+}	
+
+function uf_ok(){
+	var oRet = {};
+	var sName = GetDivRadioValue(radiolist1);
+		var sql = "select sqlstr,param,fieldchn,dsn,dstype,dsinStru from fc_ebds where name ='"+sName+"'";
+		var sXml = SelectSql(sql,1,1);
+		var oXml = SetDom(sXml);
+		if(oXml.documentElement == null){
+			alert("sql运行出错,sql语句是: "+sql+" 错误信息是:"+sXml);	
+			return;
+		}
+		var len = oXml.documentElement.childNodes.length;
+		if(len <= 1) {
+			alert("请选择一个常用数据集!");
+			return;	
+		}
+		oRet.sqlstr = oXml.documentElement.childNodes(0).childNodes(0).text;		
+		oRet.param = oXml.documentElement.childNodes(0).childNodes(1).text;
+		oRet.fieldchn = oXml.documentElement.childNodes(0).childNodes(2).text;
+		oRet.dsn = oXml.documentElement.childNodes(0).childNodes(3).text;
+		oRet.dstype = oXml.documentElement.childNodes(0).childNodes(4).text;
+		oRet.dsinStru = oXml.documentElement.childNodes(0).childNodes(5).text;
+		oRet.dsname = sName;
+	window.returnValue = oRet;
+	CloseBill();
+}
+
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" BLONopenBefore userType runsave BLONclose idtype="1" OtherSave="否" isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_open()" contxml="<root><label><id>label2</id></label><a><id>SKDBLike6</id></a><button><id>cmdOk</id><id>cmdClose</id></button><radiolist><id>radiolist1</id></radiolist></root>" billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" dj_sn="eb_datasetadd" type="LR" caption="增加数据集窗口" codeheader entertype="修改" poswidth="600" posheight="500" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:1;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:1;dropdownlist:1;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" keyfield center="居中" AutoResizeXml="<record id ='radiolist1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>5</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>5</HExt><HSetUnit>px</HSetUnit><MinH>200</MinH></record>"><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 8px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 3px; LEFT: 80px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON><A style="POSITION: absolute; WIDTH: 14px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 37px; LEFT: 152px; backgroundColor1: #ffffff" id=SKDBLike6 onmovestart=moveStart() href="javascript:ShowHelp('on_eb_ds_sel')" target=_self controltype="a" NotBg="否" href1="javascript:ShowHelp('on_eb_ds_sel')">?</A> 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; OVERFLOW-X: auto; OVERFLOW-Y: auto; WIDTH: 451px; HEIGHT: 346px; BORDER-TOP: 1px solid; BORDER-RIGHT: 1px solid; TOP: 58px; LEFT: 11px" id=radiolist1 onmovestart=moveStart() controltype="radiolist" NotBg="否" datasourceName async="否" tempvalue temptext check="2" sql sqltrans="%F4%D8%E6%D8%D4%F6Xrn%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%D2%D6%F4Xrn%EC%F2%D6%D8%F2Xrn%D2%u0100Xrn%F4%EC%F2%F6%AA%EC" rows="2" AutoSizeXml="<record id ='radiolist1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>5</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>5</HExt><HSetUnit>px</HSetUnit><MinH>200</MinH></record>" other="否"></DIV><LABEL style="POSITION: absolute; WIDTH: 136px; HEIGHT: 19px; TOP: 41px; LEFT: 14px" id=label2 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">选择一个常用数据集：</LABEL></DIV><script></script></body></html>

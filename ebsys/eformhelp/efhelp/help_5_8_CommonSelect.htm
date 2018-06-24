@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>CommonSelect函数</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+    <table  class="tableTitle">
+        <tr><td class="title">  CommonSelect函数</td></tr>
+        <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+        </tr>
+    </table>
+   <div  class=mainDiv>
+    <div class="divTitle">1. CommonSelect函数</div>  
+    &nbsp;&nbsp;&nbsp;&nbsp;CommonSelect函数可以根据用户的不同需求,自由组合选择控件,来进行多选单选输入,解决了不同的选择输入需求.例如要选择输入部门信息就可以用本函数实现。它是在一个新弹出的窗口中显示可以选择的数据，选中后，关闭弹出的选择窗口，返回选中的结果，弹出的窗口固定是模态窗口。
+    <div class="divTitle">2. CommonSelect函数示例</div>  
+     <div class="divTitle">2.1 在表格控件中多字段模糊查找 </div> 
+       &nbsp;&nbsp;&nbsp;&nbsp;在表格控件中多字段模糊查找,在单位名称的text控件(id为txtName)中输入单位编号或单位名称都能进行模糊查找.单击查询数据按钮,弹出的窗口是以grid控件显示数据.返回值返回到绑定到数据集的text控件上.:v_get是SQL语句的替换标记,在执行SQL语句之前会转换成txtName控件的值.isgrid : 1表示打开选择数据的控件是表格控件,isfind : 1表示模糊查找,findvalue : txtName.value表示模糊查找的值是txtName控件的值,obj用于修改的前一窗口控件对象,sql查询显示数据的sql语句,单击  <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect1&amp;djtype=FT'>表格控件中多字段模糊查找</A>  进入表格控件中多字段模糊查找示例.在表单的自定义函数中给CommonSelect(oJson)函数设置oJson对象的属性值如下.<p>function uf_selectData1(){//表格中多字段模糊查找<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		isgrid : 1, //可选项, 弹出窗口中是否有grid控件,其值=0或1.<br &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isgrid : 1, 可选项 弹出窗口中是否有grid控件其值="0或1.<br" ,,> 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isfind : 1, //1是模糊查找,0是没有模糊查找<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; findvalue : txtName.value,//模糊查找值<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; obj : txtCode,&nbsp; //必选项, 
+           用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hidefields : "sdwid", //可选项, 
+           以逗号分隔的隐藏字段名列表,只有在isgrid=1时才有效.<br >  
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql : "select sdwid,sdwcode,sdwname,saddress 
+           from FCS_DW where sdwname like ':v_get%' or sdwcode like ':v_get%' order by 
+           sdwcode" //必选项, 弹出窗口的显示数据用的SQL语句.<br >
+           <br >  
+		&nbsp;&nbsp;&nbsp; })<br >
+           }</p>
+           &nbsp;&nbsp;&nbsp;&nbsp;下面是选择数据界面 <br >
+<img  src="images/help_5_8_1.gif">
+       <br >
+<p  style="COLOR:red">&nbsp;注意:当模糊查找的记录只有一条时,为了提高程序运行速度，就不会打开选择数据窗口,直接将值返回给数据集绑定的控件.</p><br ><div class="divTitle">2.2 指定打开窗口的数据源 </div>
+       &nbsp;&nbsp;&nbsp;&nbsp;默认时都是从默认的数据源中查询数据，有时需要指定从别的数据源（即数据库）中来查询，即选择输入窗口的数据来自指定的数据源,datasource : "fhjtest"选择的数据源名字.单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect3&amp;djtype=FT'>指定打开窗口的数据源</A> 进入指定打开窗口的数据源示例.我们在表单的自定义函数中给CommonSelect(oJson)函数设置oJson对象的属性值,自定义函数如下：<p>function uf_selectDataSource(){//指定数据源<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		isgrid : 1, //可选项, 弹出窗口中是否有grid控件,其值=0或1.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		datasource : "fhjtest",//数据源名称<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtCode, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql : "select sdwid,sdwcode,sdwname,saddress 
+           from FCS_DW " // 必选项, 弹出窗口的显示数据用的SQL语句. <br >
+		&nbsp;&nbsp;&nbsp;
+		})<br >
+}</p>
+  <div class="divTitle">2.3 在表格控件中多选 </div>
+  <div class="divTitle">2.3.1 多选值返回到表格控件 </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;这是一个在打开选择输入页的表格控件上多选数据,然后返值的示例,请参考CommonSelect(oJson)用法说明或单击
+     <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect4&amp;djtype=FT'>在表格控件中多选</A> 进入表格控件中多选示例,我们在表单的自定义函数中给CommonSelect(oJson)函数设置oJson对象的属性值,自定义函数如下：<p>function uf_selectData(){//表格多选<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		title : "选择产品",//窗口标题<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; isgrid : 1, //1是打开窗口中在grid控件中显示数据,0是无, <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1,  //1是多选,0是单选<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : grid1,   //用于修改的前一窗口控件对象,包含grid对象<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		hidefields : "sitemid",  // 隐藏字段<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		gridcolwidth : [150,250,80,80],//grid控件的各列列宽,是一个数组,写法: [80,100,70] ,需要和grid显示的列一一对应上.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		gridcoltitle : ["产品编号","产品名称","价格","商品数量"],  //grid控件的各列的标题,是一个数组,写法: ["第一列名称","第二列名称","第三列名称"] ,需要和grid显示的列一一对应上.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql : "select sitemid,sitemcode,sitemname,dprice,dprice as dmoney,1 as dnum from FCS_ITEM order by sitemcode"<br >
+		&nbsp;&nbsp;&nbsp;
+		})<br >
+}</p>&nbsp;&nbsp;&nbsp;&nbsp;isgrid : 1,表示在打开窗口中在grid控件中显示数据,ismultisel : 1表示grid控件多选,gridcolwidth : [150,200,80,80]grid控件的各列列宽,是一个数组,gridcoltitle : ["产品编号","产品名称","价格","数量标题"]是grid控件的各列的标题 .下面是选择输入界面：<br ><img  src="images/help_5_8_2.gif"><br >
+<p style="COLOR:red">注意：如果不需要窗口标题，字段在表格列的宽度,表格列的标题就不用设置oJson的属性title,gridcolwidth,gridcoltitle.如示例中把数量字段对应的列的标题设置成了商品数量</p>
+<div class="divTitle">2.3.2 多选值返回到text控件</div>&nbsp;&nbsp;&nbsp;&nbsp;在表格控件中多选返回到text控件和表格控件中多选返回到grid控件设置都一样，就是把CommonSelect(oJson)函数中oJson的obj的属性值写成text控件的id就行其它都一样。单击<A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelectTextandGrid&amp;djtype=FT'>在表格控件中多选</A> 进入表格控件中多选示例。
+&nbsp;<div class="divTitle">2.4 在树控件中单选 </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;这是一个在打开选择输入窗口是树控件上单选数据然后返回值的示例,先设置数据集,接收返回值的控件id是txtEmployeeName,与数据集绑定.oJson对象的属性值istree:1表示在打开选择数据窗口中,用树控件显示数据,树控件中的数据来自oJson对象的属性值sql : "select semployeecode,semployeename ,semployeeid from fcs_employee ",没有设置多选属性ismultisel : 1,树控件只能单选.单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect5&amp;djtype=FT'>在树控件中单选</A> 进入示例.我们在表单的自定义函数中给CommonSelect(oJson)函数设置oJson对象的属性值如下：<p>function uf_selectData3(){//树控件单选<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //可选项, 
+           弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度. <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtEmployeeName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象. <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; idfieldname : "semployeeid", //可选项, 
+           前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效. <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效 <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "职员", //树控件的根节点文本 <br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql : "select semployeecode,semployeename ,semployeeid from fcs_employee " //必选项, 
+           弹出窗口的显示数据用的SQL语句.<br >
+           <br >
+		
+		&nbsp;&nbsp;&nbsp;
+		
+		})	<br >
+}</p>&nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_3.gif">
+  <div class="divTitle">2.5在树控件中多选 </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;这是一个在打开选择输入窗口的树控件上多选,然后返回值的示例,树控件多选接收返回值的控件为grid控件,Grid控件要与数据集绑定.
+请参考CommonSelect(oJson)用法说明或单击<A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect6&amp;djtype=FT'>在树控件中多选</A> 进入示例,示例表单的自定义函数如下.<p>function uf_selectData33(){//树控件多选<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //可选项, 
+           弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : grid2, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1, //可选项, 是否多选,其值=0或1<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "职员", //树控件的根节点文本<br > 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		sql : "select semployeecode,semployeename ,semployeeid from fcs_employee " //必选项, 
+           弹出窗口的显示数据用的SQL语句.<br >
+           <br >
+		&nbsp;&nbsp;&nbsp;
+		})<br >	
+}</p>&nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_6.gif"><br >
+    
+    
+  <div class="divTitle">2.6 多选时,已选中的值,会用已选中的值来初始化弹出的选择输入窗口 </div>
+  
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;打开多选的选择输入窗口,你选中数据后单击确定按钮，选中的值返回到上一窗口，你在打开多选的选择输入窗口后,会用已选中的值来初始化弹出的选择输入窗口,和树控件多选,表格控件多选写法都一样,就是用到了oJson对象的属性值selectedvalue : 
+           dataset1.Field('semployeeid').Value , 它的作用是多选时,已选中的值,会用已选中的值来初始化弹出的选择输入窗口.单击  
+       <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect66&amp;djtype=FT'>选中的值来初始化弹出的选择输入窗口示例</A>在表单的自定义函数中设置<p>
+           function uf_selectData33(){//树控件多选，已选中的值来初始化弹出的选择输入窗口<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //(树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度)<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1,//可选项, 是否多选,其值=0或1.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		   idfieldname : "semployeeid", //可选项, 
+           前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		   textfieldname : "semployeename", //可选项, 
+           前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "部门", //树控件的根节点文本<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectedvalue : 
+           dataset1.Field('semployeeid').Value , //可选项,多选时,已选中的值,会用已选中的值来初始化弹出的选择输入窗口.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql: "select semployeecode,semployeename ,semployeeid from fcs_employee  "  //必选项, 弹出窗口的显示数据用的SQL语句.
+		&nbsp;&nbsp;&nbsp;
+		})	<br >
+}</p>
+&nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_15.gif">
+  
+  
+  <div class="divTitle">2.8 在树控件加表格多选 </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;接收返回值的控件为grid控件.弹出的选择数据窗口是树控件与grid控件联动,多选.设置commonSelect函数的属性值isgrid : 1表示是表格控件,ismultisel : 1,表格控件多选,istree: 1表示是树控件 ,clicknodesql: "select semployeeid,semployeename from fcs_employee where sdeptid={单引号}{nodeIdValue}{单引号}" 标识 {nodeIdValue} 用于取当前点击的树节点,这个sql语句返回当前点击节点的值,obj用于修改的前一窗口控件对象,单击
+&nbsp;<A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect8&amp;djtype=FT'>树控件加表格多选</A> 进入树控件加表格多选示例.在表单的自定义函数中设置<p>function uf_selectData22(){//树控件加表格多选<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		isgrid : 1, //可选项, 弹出窗口中是否有grid控件,其值=0或1<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //(树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度)<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1,//可选项, 是否多选,其值=0或1.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : grid2, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		hidefields : "semployeeid",// 隐藏字段<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "部门", //树控件的根节点文本<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		clicknodesql: "select semployeeid,semployeename from fcs_employee where sdeptid={单引号}{nodeIdValue}{单引号}", // 标识 {nodeIdValue} 用于取当前点击的树节点<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql: "select sdeptcode,sdeptname,sdeptid from FCS_DEPT where sdeptname !='' order by sdeptcode "    //必选项, 
+           弹出窗口的显示数据用的SQL语句.<br >
+		&nbsp;&nbsp;&nbsp;
+		})	<br >
+}</p>
+    &nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_8.gif">
+    
+    
+  <div class="divTitle">2.9 checkboxlist中选择数据 </div>
+   &nbsp;&nbsp;&nbsp;&nbsp;接收返回值的控件id是txtEmployeeName,与数据集绑定.弹出的选择数据窗口是checkboxlist控件,多选.设置commonSelect函数的属性islist : 1弹出窗口中是否有radiolist或checkboxlist控件,其值=0或1. 不能isgrid 和 islist属性同时为1. 当多选时表示是checkboxlist控件,单选时表示是radiolist控件.单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect9&amp;djtype=FT'>在checkboxlist中选择数据</A> 进入在checkboxlist中选择数据.在表单的自定义函数中设置<p>function uf_selectData4(){//checkboxlist<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; islist : 1, //可选项, 
+           弹出窗口中是否有radiolist或checkboxlist控件,其值=0或1. 不能isgrid 和 islist属性同时为1. 
+           当多选时表示是checkboxlist控件,单选时表示是radiolist控件<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		cols: 3, //checkboxlist 的列数<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1,//1是多选，代表checkboxlist<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtEmployeeName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql : "select semployeeid,semployeename from fcs_employee " //必选项, 
+           弹出窗口的显示数据用的SQL语句.<br >
+           <br >
+		&nbsp;&nbsp;&nbsp;
+		})	<br >
+}</p>
+ &nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_14.gif">
+    
+     
+  <div class="divTitle">2.10 在radiolist中选择数据</div>
+  &nbsp;&nbsp;&nbsp;&nbsp;接收返回值的控件id是txtEmployeeName,与数据集绑定.弹出的选择数据窗口是radiolist控件,单选.islist : 1多选时为checkboxlist,否则是radiolist,cols: radiolist控件显示的列数.单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect10&amp;djtype=FT'>在radiolist中选择数据</A>  进入在radiolist中选择数据示例.在表单的自定义函数中设置<p>function uf_selectData5(){//在打开窗口的radiolist控件中选择数据<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		islist : 1, //多选时为checkboxlist,否则是radiolist<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		cols: 3, //列数<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtEmployeeName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sql : "select semployeeid,semployeename from fcs_employee " 
+           //必选项, 弹出窗口的显示数据用的SQL语句.<br >
+           <br >
+		
+		&nbsp;&nbsp;&nbsp;
+		
+		})	<br >
+}</p>
+   &nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_10.gif">
+    
+  <div class="divTitle">2.11 树控件和checkboxlist控件中选择数据 </div>&nbsp;&nbsp; &nbsp; 接收返回值的控件id是txtEmployeeName,与数据集绑定.弹出的选择数据窗口是树控件与checkboxlist控件联动,多选.istree: 1显示树控件,islist : 1和ismultisel : 1显示checkboxlist控件,clicknodesql: "select semployeeid,semployeename from fcs_employee where sdeptid={单引号}{nodeIdValue}{单引号}"此sql语句返回单击当前节点的返回值,单击<A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect11&amp;djtype=FT'>树控件和checkboxlist控件中选择数据</A> 进入树控件和checkboxlist控件中选择数据示例.在表单的自定义函数中设置<p>function uf_selectData6(){//树控件加checkboxlist<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //可选项, 
+       弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		islist : 1, //可选项, 弹出窗口中是否有radiolist或checkboxlist控件,其值=0或1. 不能isgrid 和 
+       islist属性同时为1. 当多选时表示是checkboxlist控件,单选时表示是radiolist控件<br >
+		
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       cols:3,//可选项,islist=1时,即有radiolist或checkboxlist控件时,界面上显示的列数,只有在islist=1时此属性才有效.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		ismultisel : 1,//1是多选<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtEmployeeName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		idfieldname : "semployeeid", //可选项, 前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 
+       前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "部门", //树控件的根节点文本<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		clicknodesql: "select semployeeid,semployeename from fcs_employee where sdeptid={单引号}{nodeIdValue}{单引号}", // 标识 {nodeIdValue} 用于取当前点击的树节点<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql: "select sdeptcode,sdeptname,sdeptid from FCS_DEPT where sdeptname !='' order by sdeptcode "&nbsp; 
+       //必选项, 弹出窗口的显示数据用的SQL语句.<br >
+       <br >
+		})	
+}</p>
+   &nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_11.gif">
+  <div class="divTitle">2.12 树控件和radiolist控件中选择数据</div>
+   &nbsp;&nbsp;&nbsp;&nbsp;接收返回值的控件id是txtEmployeeName,与数据集绑定.弹出的选择数据窗口是树控件与radiolist控件联动,单选.istree: 1显示树控件.islist : 1多选时为checkboxlist,否则是radiolist .单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect12&amp;djtype=FT'>树控件和radiolist控件中选择数据</A> 进入树控件和radiolist控件中选择数据示例.在表单的自定义函数中设置
+  <p>function uf_selectData7(){//树控件加radiolist<br >
+	&nbsp;&nbsp;&nbsp;
+	CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		istree: 1, //(树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度)<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		islist : 1, //多选时为checkboxlist,否则是radiolist<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		cols: 3, //radiolist 的列数<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtEmployeeName, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		textfieldname : "semployeename", //可选项, 
+      前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		roottext: "部门", //可选项, 树控件的根节点文本.只在istree=1时才有效.<br > 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		clicknodesql: "select semployeeid,semployeename from fcs_employee where sdeptid={单引号}{nodeIdValue}{单引号}", // 标识 {nodeIdValue} 用于取当前点击的树节点<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql: "select sdeptcode,sdeptname,sdeptid from FCS_DEPT where sdeptname !='' order by sdeptcode "&nbsp; 
+      //必选项, 弹出窗口的显示数据用的SQL语句.<br >
+      <br >
+		&nbsp;&nbsp;&nbsp;
+		})	<br >
+}</p>
+ 
+  &nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_12.gif">
+   <div class="divTitle">2.13 控件不绑定数据集弹出窗口的控件为grid</div>
+   &nbsp;&nbsp;&nbsp;&nbsp;接收返回值的控件id是txtName1,没与数据集绑定,要把CommonSelect(oJson)返回值赋给txtName1控件.弹出的选择数据窗口是表格控件,单选.接收返回值的控件id是txtName1,没与数据集绑定,要把CommonSelect(oJson)返回值赋给txtName1控件.变量sRet接收CommonSelect函数的返回值,如果返回值不是空,就直接赋值给控件.单击 <A  class=shili   href='../../fceform/design/design.htm?isfile=yes&amp;djsn=help_5_8_CommonSelect13&amp;djtype=FT'>控件不绑定数据集弹出窗口的控件为grid</A> 进入控件不绑定数据集弹出窗口的控件为grid示例.<p>function uf_selectDataNOLink(){//表格单选控件没绑定数据集<br >
+	&nbsp;&nbsp;&nbsp;
+	var sRet = CommonSelect({<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		isgrid : 1, //必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		obj : txtName1,<br >  
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		sql : "select sdwname,saddress from FCS_DW " //必选项, 弹出窗口的显示数据用的SQL语句<br >
+	&nbsp;&nbsp;&nbsp;
+	})<br >
+	&nbsp;&nbsp;&nbsp;
+	if(IsSpace(sRet) == false){<br >
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		txtName1.value=sRet<br >
+	&nbsp;&nbsp;&nbsp;
+	}<br >
+}</p>
+&nbsp;&nbsp;&nbsp;&nbsp;下面是选择输入页窗口<br >
+  <img  src="images/help_5_8_13.gif">
+  
+  <div class="divTitle">3. CommonSelect(oJson)用法说明</div>      
+       <p>
+oJson 是一个包含所有参数的JSON对象,它具有如下属性：<br >
+obj ：必选项, 用于修改的前一窗口控件对象,包含是grid对象.<br >
+sql ：必选项, 弹出窗口的显示数据用的SQL语句.<br >
+left ：可选项, 弹出窗口的left值.<br >
+top ：可选项, 弹出窗口的top值. top属性应和left属性成对设置,即要不就同时设置left,top属性,要不就不设置left,top属性,不设置left,top属性时窗口是居中.<br >
+width ：可选项, 弹出窗口的width值.不设置时取默认宽度值.<br >
+height ：可选项, 弹出窗口的height值.不设置时取默认高度值.<br >
+title ：可选项, 弹出窗口的标题.<br >
+isgrid ：可选项, 弹出窗口中是否有grid控件,其值=0或1.<br >
+islist ：可选项, 弹出窗口中是否有radiolist或checkboxlist控件,其值=0或1. 不能isgrid 和 islist属性同时为1. 当多选时表示是checkboxlist控件,单选时表示是radiolist控件<br >
+istree ：可选项, 弹出窗口中是否有tree控件,其值=0或1.树控件可以单独用,或是和grid,radiolist,checkboxlist组合用,组合用时可以设置树控件的宽度.<br >
+isfind ：可选项, 弹出窗口中是否有模糊查找项,其值=0或1.<br >
+findvalue ：可选项,模糊查找时,用户输入的值,它应和isfind配套使用.<br >
+selectedvalue ：可选项,多选时,已选中的值,会用已选中的值来初始化弹出的选择输入窗口.<br >
+ cols：可选项,islist=1时,即有radiolist或checkboxlist控件时,界面上显示的列数,只有在islist=1时此属性才有效.<br >
+datasource ：可选项,当需要显示其它数据源中的内容时,在此设置数据源的名称.<br >
+hidefields ：可选项, 以逗号分隔的隐藏字段名列表,只有在isgrid=1时才有效.<br >
+ismultisel ：可选项, 是否多选,其值=0或1.<br >
+istreenewsql ：可选项, 树控件是否是用新格式的SQL语句,其值=0或1. 只有在istree=1时才有效.<br >
+idfieldname ：可选项, 前一窗口的id字段名,用于按字段同名传递数据.只在isgrid!=1时才有效.<br >
+textfieldname ：可选项, 前一窗口的text字段名,用于按字段同名传递数据.只在isgrid!=1时才有效<br >
+pagesize ：可选项, 一页的记录行数.只在isgrid=1时才有效.<br >
+gridcoltitle ：可选项, grid控件的各列的标题,是一个数组,需要和grid显示的列一一对应上.只在isgrid=1时才有效.写法: ['第一列名称','第二列名称','第三列名称']<br >
+gridcolwidth ：可选项, grid控件的各列列宽,是一个数组,需要和grid显示的列一一对应上.只在isgrid=1时才有效.写法: [80,100,70]<
+  br>treewidth：可选项,tree控件的列宽,只在istree=1并且(isgrid=1或islist=1)时才有效.<br >
+roottext ：可选项, 树控件的根节点文本.只在istree=1时才有效.<br >
+clicknodesql ：可选项, 当同时有tree控件和其它如grid控件或radiolist,checkboxlist控件时,tree控件的显示用的SQL语句.标识 {nodeIdValue} 用于取当前点击的树节点.<br >
+输出参数：当oJson.obj参数所指定的控件没有绑定到数据集时(即无法通过字段名相同的规则来传递数据时),会有返回值: 当oJson.isgrid=1时,返回当前选中行的第一个字段的值,否则返回显示的text字段值.<br >
+CommonSelect(oJson)用法示例：CommonSelect({isgrid : 1, obj : txtCode, sql : 'select sdwcode,sdwname,saddress from FCS_DW'  })<br >
+       </p>
+ </div>
+</body>
+</html>

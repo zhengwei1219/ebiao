@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//分两个数据库版本的值:oracle, sqlserver
+function uf_open(){
+	var sHtml="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		imgwebgrid1.tab.children[0].children[2].cz = "<code><format></format><sql1></sql1><xml><tr><td>bigint</td></tr><tr><td>binary</td></tr><tr><td>bit</td></tr><tr><td>char</td></tr><tr><td>datetime</td></tr><tr><td>decimal</td></tr><tr><td>float</td></tr><tr><td>image</td></tr><tr><td>int</td></tr><tr><td>money</td></tr><tr><td>nchar</td></tr><tr><td>ntext</td></tr><tr><td>numeric</td></tr><tr><td>nvarchar</td></tr><tr><td>real</td></tr><tr><td>smalldatetime</td></tr><tr><td>smallint</td></tr><tr><td>smallmoney</td></tr><tr><td>sql_variant</td></tr><tr><td>text</td></tr><tr><td>timestamp</td></tr><tr><td>tinyint</td></tr><tr><td>uniqueidentifier</td></tr><tr><td>varbinary</td></tr><tr><td>varchar</td></tr></xml><blninput>否</blninput><blnempty>否</blnempty><check>2</check><onclickopen>event.showlist=true</onclickopen><onselchange>bill_onclick('uf_change()')</onselchange></code>"	
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		imgwebgrid1.tab.children[0].children[2].cz = "<code><format></format><sql1></sql1><xml><tr><td>CHAR</td></tr><tr><td>VARCHAR2</td></tr><tr><td>NCHAR</td></tr><tr><td>NVARCHAR2</td></tr><tr><td>NUMBER</td></tr><tr><td>DATE</td></tr><tr><td>LONG</td></tr><tr><td>RAW</td></tr><tr><td>LONG RAW</td></tr><tr><td>ROWID</td></tr><tr><td>BLOB</td></tr><tr><td>CLOB</td></tr><tr><td>NCLOB</td></tr><tr><td>BFILE</td></tr><tr><td>UROWID</td></tr><tr><td>FLOAT</td></tr><tr><td>XMLTYPE</td></tr></xml><blninput>否</blninput><blnempty>否</blnempty><check>2</check><onclickopen>event.showlist=true</onclickopen><onselchange>bill_onclick('uf_change()')</onselchange></code>"
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		imgwebgrid1.tab.children[0].children[2].cz = "<code><format></format><sql1></sql1><xml><tr><td>BIGINT</td></tr><tr><td>BLOB</td></tr><tr><td>CHARACTER</td></tr><tr><td>CLOB</td></tr><tr><td>DATE</td></tr><tr><td>DBCLOB</td></tr><tr><td>DECIMAL</td></tr><tr><td>DOUBLE</td></tr><tr><td>GRAPHIC</td></tr><tr><td>INTEGER</td></tr><tr><td>LONG VARCHAR</td></tr><tr><td>LONG VARGRAPHIC</td></tr><tr><td>REAL</td></tr><tr><td>SMALLINT</td></tr><tr><td>TIME</td></tr><tr><td>TIMESTAMP</td></tr><tr><td>VARCHAR</td></tr><tr><td>VARGRAPHIC</td></tr></xml><blninput>否</blninput><blnempty>否</blnempty><check>2</check><onclickopen>event.showlist=true</onclickopen><onselchange>bill_onclick('uf_change()')</onselchange></code>"
+	}
+	if(fcpubdata.databaseTypeName=="mysql"){
+		imgwebgrid1.tab.children[0].children[2].cz = "<code><format></format><sql1></sql1><xml><tr><td>bigint</td></tr><tr><td>int</td></tr><tr><td>smallint</td></tr><tr><td>tinyint</td></tr><tr><td>float</td></tr><tr><td>real</td></tr><tr><td>decimal</td></tr><tr><td>numeric</td></tr><tr><td>datetime</td></tr><tr><td>date</td></tr><tr><td>time</td></tr><tr><td>timestamp</td></tr><tr><td>char</td></tr><tr><td>varchar</td></tr><tr><td>text</td></tr><tr><td>longblob</td></tr></xml><blninput>否</blninput><blnempty>否</blnempty><check>2</check><onclickopen>event.showlist=true</onclickopen><onselchange>bill_onclick('uf_change()')</onselchange></code>"	
+	}
+}
+
+//增加行
+function uf_addLine(){
+	imgdataset1.Append();
+	//uf_open();	
+}
+function changeType(sType){
+    var sWidth    ="";
+	var sPrecision="";
+	if(fcpubdata.databaseTypeName=="sqlserver" || fcpubdata.databaseTypeName=="mysql"){
+		
+		switch(sType){
+			case 'int':{
+				sWidth = "4";
+				break;
+			} 
+			case 'bigint':{
+				sWidth="8";
+				break;
+			} 
+			case 'bit':{
+				sWidth="1";
+				break;
+			} 
+			case 'datetime':{
+				sWidth="8";
+				break;
+			} 
+			case 'decimal':{
+				sWidth="9";
+				sPrecision="3";
+				break;
+			} 
+			case 'float':{
+				sWidth="8";
+				break;
+			} 
+			case 'image':{
+				sWidth="16";
+				break;
+			} 
+			case 'money':{
+				sWidth="8";
+				break;
+			} 
+			case 'ntext':{
+				sWidth="16";
+				break;
+			}
+			case 'numeric':{
+				sWidth="9";
+				sPrecision="3"
+				break;
+			} 
+			case 'real':{
+				sWidth="4";
+				break;
+			} 
+			case 'smalldatetime':{
+				sWidth="4";
+				break;
+			} 
+			case 'smallint':{
+				sWidth="2";
+				break;
+			} 
+			case 'smallmoney':{
+				sWidth="4";
+				break;
+			} 
+			case 'sql_variant':{
+				sWidth="";
+				break;
+			}
+			case 'text':{
+				sWidth="16";
+				break;
+			} 
+			case 'timestamp':{
+				sWidth="8";
+				break;
+			}
+			case 'tinyint':{
+				sWidth="1";
+				break;
+			} 
+			case 'unqueidentifier':{
+				sWidth="16";
+				break;
+			} 
+			case 'binary':{
+				sWidth="50";
+				break;
+			}
+			case 'varbinary':{
+				sWidth="50";
+				break;
+			} 
+			case 'char':{
+				sWidth="10";
+				break;
+			} 
+			case 'nchar':{
+				sWidth="10";
+				break;
+			} 
+			case 'varchar':{
+				sWidth="50";
+				break;
+			} 
+			case 'nvarchar':{
+				sWidth="50";
+				break;
+			} 
+		}	
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		switch(sType){
+			case 'CHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARCHAR2':{
+				sWidth = "10";
+				break;
+			}
+			case 'NCHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'NVARCHAR2':{
+				sWidth = "10";
+				break;
+			}
+			case 'NUMBER':{
+				sWidth = "10";
+				sPrecision="0"
+				break;
+			}
+			case 'RAW':{
+				sWidth = "10";
+				break;
+			}
+			case 'FLOAT':{
+				sWidth = "10";
+				break;
+			}
+		}		
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		switch(sType){
+			case 'CHARACTER':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARCHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'GRAPHIC':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARGRAPHIC':{
+				sWidth = "10";
+				break;
+			}
+			case 'DECIMAL':{
+				sWidth = "5";
+				sPrecision="0"
+				break;
+			}
+		}		
+	}
+	imgdataset1.bEdit=true;
+	imgdataset1.Fields.Field['fdsize'].Value=sWidth;
+	imgdataset1.Fields.Field['fddec'].Value=sPrecision;
+//	imgdataset1.Fields.Field['isnullable'].Value="NULL";
+	imgdataset1.Update("不检查");
+	imgdataset1.fset_cont();
+	
+}
+
+function uf_change(){
+	var sType=imgdataset1.Field('fdtype').Value;
+	changeType(sType);
+}
+
+function uf_ok(){
+	var TAB=FCDBedit1.value;
+	if(IsSpace(new Eapi.Str().trim(TAB))){
+		alert("新建表名不能为空");
+		 return;	
+	}
+	var strsql = uf_strSQL();
+	var sSql = strsql.sql1;
+	//var struSql = strsql.sql2;
+	
+	var ZD="";
+	var ilen=imgwebgrid1.tab.rows.length;
+	for(var i=1;i<ilen;i++){
+		var sFd=imgwebgrid1.tab.rows(i).cells(1).innerText;			//字段名
+		var sUnique=imgwebgrid1.tab.rows(i).childNodes(7).style.backgroundImage;
+		//alert(sUnique); 
+		if(sUnique.indexOf("ef_run_grid_checked.gif") >=0 ){
+			ZD+=sFd+",";	
+		}
+	}
+	ZD=ZD.substring(0,ZD.length-1);
+	var str="";
+	if(ZD.length>0){
+		if(fcpubdata.databaseTypeName=="sqlserver"){
+			str=" CONSTRAINT PK_"+TAB+" PRIMARY KEY CLUSTERED("+ZD+")"	
+			
+		}
+		if(fcpubdata.databaseTypeName=="mysql"){
+			str=", PRIMARY KEY ("+ZD+")"	
+			
+		}
+		if(fcpubdata.databaseTypeName=="oracle" || fcpubdata.databaseTypeName=="db2"){
+			str=";, primary key ("+ZD+")"
+		}
+	}
+	if(fcpubdata.databaseTypeName=="sqlserver" || fcpubdata.databaseTypeName=="mysql"){	
+		var sSql1="<create tableName='"+TAB+"'>"+"<detail> "+"("+ sSql+str+")"+"</detail>"+"</create>"
+		
+	}
+	if(fcpubdata.databaseTypeName=="oracle" || fcpubdata.databaseTypeName=="db2"){	
+		var sSql1="<create tableName='"+TAB+"'>"+"<detail> "+"("+sSql+" "+str+")"+"</detail>"+"</create>"
+	}
+	var arr = sSql1.split(";");
+	var l= arr.length;
+	var sXml = ""
+	for(var i=0;i<l;i++){
+		var s3=new Eapi.Str().trim(arr[i])
+		if(IsSpace(s3)) continue;
+		 sXml+= " "+s3;
+	}
+	doSaveData(sXml,function (){alert("建表成功");window.returnValue=TAB;CloseBill();});	///
+	/*var sRet=InsertSqls(sXml+struSql);
+	
+	//added by liuxr at 2008-3-26
+	//var sRet1 = InsertSqls(struSql);
+	
+	if(IsSpace(sRet)){
+		window.returnValue=TAB;
+		alert("成功！");
+		CloseBill();
+	}else{
+		alert(sRet);
+	}*/
+}
+
+function uf_strSQL(){
+	var strsql={
+		sql1:"",
+		sql2:""
+	};
+	var sSql="";
+	var struSql = "";
+	var ilen=imgwebgrid1.tab.rows.length;
+	for(var i=1;i<ilen;i++){
+		var sFd=imgwebgrid1.tab.rows(i).cells(1).innerText;			//字段名
+		var sTxt=imgwebgrid1.tab.rows(i).cells(2).innerText;  		//字段类型
+		var WD=imgwebgrid1.tab.rows(i).cells(3).innerText;			//字段长度
+		var JD=imgwebgrid1.tab.rows(i).cells(4).innerText;			//字段精度
+		var sNull=imgwebgrid1.tab.rows(i).cells(5).innerText;		//允许空
+		var sDft=imgwebgrid1.tab.rows(i).cells(6).innerText;  		//默认值
+		var sQuot=""; 
+		var stype = getDsType(sTxt);
+		var sFieldLen=WD;
+		if(IsSpace(sFieldLen)) sFieldLen="16";
+		var sDec = JD;
+		if(IsSpace(sDec)) sDec="0";
+		//struSql += "<no>insert into FC_DBSTRU (tbname,tbchnname,fdname,chnname,fdtype,fdsize,fddec) values ('"+FCDBedit1.value+"','"+FCDBedit1.value+"','"+sFd+"','"+sFd+"','"+stype+"',"+sFieldLen+","+sDec+")</no>";
+		
+		if(fcpubdata.databaseTypeName=="sqlserver"){
+			sSql+=sFd+" "+sTxt ;
+			if(sTxt=="char" || sTxt=="nchar" || sTxt=="nvarchar" || sTxt=="varchar"){
+				sQuot="'";
+				sSql+="("+WD+") ";
+			}
+			if(sTxt=="decimal" || sTxt=="numeric"){
+				sSql+="("+WD+","+JD+") ";
+			}
+			if(sTxt=="bigint" || sTxt=="binary" || sTxt=="bit" || sTxt=="float" || sTxt=="int" || sTxt=="money" || sTxt=="real" || sTxt=="smallint" || sTxt=="smallmoney" || sTxt=="sql_variant" || sTxt=="tinyint" || sTxt=="varbinary" || sTxt=="datetime" || sTxt=="smalldatetime"){
+				sSql+=" ";
+			}
+			if(sTxt=="text" || sTxt=="ntext"){
+				sQuot="'";
+				sSql+=" ";
+			}
+			sSql += sNull;
+			if(IsSpace(sDft)==false){
+				sSql += " DEFAULT "+sQuot+sDft+sQuot;
+			}
+			sSql += ",";
+		}
+		var ii=0
+		if(fcpubdata.databaseTypeName=="oracle"){
+			sSql+=sFd+" "+sTxt;
+			if(sTxt=="NUMBER"){
+				ii++
+				sSql+=" ("+WD+","+JD+") "
+				if(IsSpace(sDft)==false){
+					sSql+="default "+sDft+" "	
+				}	
+			}
+			if(sTxt=="FLOAT"){
+				ii++
+				sSql+=" ("+WD+") "
+				if(IsSpace(sDft)==false){
+					sSql+="DEFAULT "+sDft+" ";	
+				}	
+			}
+			if(sTxt=="CHAR" || sTxt=="VARCHAR2" || sTxt=="NCHAR" || sTxt=="NVARCHAR2" || sTxt=="RAW"){
+				ii++ ;
+				sSql+=" ("+WD+") " ;
+				if(IsSpace(sDft)==false){
+					var ss=sDft;
+					if(ss.indexOf("'")!=-1){
+						ss=ss.substring(1,ss.length-1)	
+					}
+					sSql+="DEFAULT '"+ss+"' ";
+				}	
+			}
+			if(sTxt=="LONG RAW" || sTxt=="BLOB" || sTxt=="CLOB" || sTxt=="LONG"){
+				ii++
+				sSql+=" ";
+				if(IsSpace(sDft)==false){
+					sSql+="DEFAULT '"+sDft+" ";	
+				}
+			}
+			if(sTxt=="DATE"){
+				ii++
+				sSql+=" ";
+				if(IsSpace(sDft)==false){
+					sSql+="DEFAULT to_date('"+sDft+"','yyyy-mm-dd') "	
+				}	
+			}
+			if(ii=="0"){
+				sSql+=" ";
+			}
+			sSql += sNull+","
+		}
+		if(fcpubdata.databaseTypeName=="db2"){
+			if(sNull == "NULL") sNull="";
+			sSql+=sFd+" "+sTxt;
+			if(sTxt=="DECIMAL"){
+				sSql+=" ("+WD+","+JD+") ";
+			}
+			if(sTxt=="CHARACTER" || sTxt=="VARCHAR" || sTxt=="GRAPHIC" || sTxt=="VARGRAPHIC" ){
+				sSql+=" ("+WD+") ";
+			}
+			sSql+=" "+sNull+" ";
+			if(IsSpace(sDft)==false) sSql += " WITH DEFAULT "+sDft+" ";
+			sSql += ",";
+		}	
+		if(fcpubdata.databaseTypeName=="mysql"){
+			sSql+=sFd+" "+sTxt ;
+			if(sTxt=="char" || sTxt=="varchar"){
+				sQuot="'";
+				sSql+="("+WD+") ";
+			}
+			if(sTxt=="decimal" || sTxt=="numeric"){
+				sSql+="("+WD+","+JD+") ";
+			}
+			sSql += " "+sNull;
+			if(IsSpace(sDft)==false){
+				sSql += " DEFAULT "+sQuot+sDft+sQuot;
+			}
+			sSql += ",";
+		}
+		
+	}
+	sSql=sSql.substring(0,sSql.length-1);
+	strsql.sql1 = sSql;
+	strsql.sql2 = struSql;
+	
+	return strsql;                       
+	//return(sSql);	
+}
+
+
+
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" userType BLONclose BLONopenBefore center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:1;layout:0;page:0" posheight="500" poswidth="600" entertype="修改" codeheader="BBB" mkbh caption="新增表" type="ST" dj_sn="fcs_edit_table" billtaborder="<root><taborder>FCDBedit1</taborder><taborder>imgwebgrid1</taborder><taborder>FCButton7</taborder><taborder>button0</taborder><taborder>button1</taborder><taborder>button2</taborder></root>" contxml="<root><label><id>Label1</id></label><button><id>FCButton7</id><id>button0</id><id>button1</id><id>button2</id></button><text><id>FCDBedit1</id></text><grid><id>imgwebgrid1</id></grid><dataset><id>imgdataset1</id></dataset></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" AutoResizeXml><SPAN style="POSITION: absolute; WIDTH: 55px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 17px; LEFT: 9px" id=Label1 onmovestart=moveStart() value="Label1" controltype="label">新建表名</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 110px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 12px; LEFT: 62px" id=FCDBedit1 onmovestart=moveStart() controltype="text" CanSelect="false" china></INPUT><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' id=imgwebgrid1 ondblclick='bill_ongriddblclick("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' onclick='bill_ongridclick("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' controltype="grid" dataset="imgdataset1" format="<cols><col><fname>fdname</fname><cname>西文字段名</cname><width>50</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>100</columnwidth><align>left</align></col><col><fname>fdtype</fname><cname>字段类型</cname><width>20</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Conselchange%3Ebill_onclick%28%22uf_change%28%29%22%29%3C/onselchange%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>fdsize</fname><cname>宽度</cname><width>2</width><dtype>整数</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>fddec</fname><cname>精度</cname><width>2</width><dtype>整数</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>isnullable</fname><cname>允许空</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%3E%3Ctd%3ENULL%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3ENOT%20NULL%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3ENULL%0D%0ANOT%20NULL%3C/temptext%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>70</columnwidth><align>left</align></col><col><fname>text</fname><cname>缺省值</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>primarykey</fname><cname>主键</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>40</columnwidth><align>left</align></col></cols>" canselect="是" autoheight="是" autowidth="否" autoappend="否" readonly="否" visible="是" SetRowHeight="是" hideHscroll="否" hideVscroll="否" blRowNo="否" bodyrowheight="-1" bodyrows="-1" width="573" height="245" top="33" left="5">
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=imgdataset1 idtype="1" controltype="dataset" opensortno="1" onValid='bill_ondatasetvalid("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text><primarykey></primarykey></dsid>")' onGetText='bill_ondatasetgettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text><primarykey></primarykey></dsid>")' onSetText='bill_ondatasetsettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text><primarykey></primarykey></dsid>")' format="<fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnullable</fieldname><datatype>字符</datatype><displaylabel>允许空</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>NULL</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>text</fieldname><datatype>字符</datatype><displaylabel>缺省值</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>primarykey</fieldname><datatype>字符</datatype><displaylabel>主键</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" isSubGrid="否" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否"></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 510px" id=FCButton7 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'>取 消</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 440px" id=button0 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'>确 定</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 371px" id=button1 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("imgdataset1.Delete()")'>删除行</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 7px; LEFT: 301px" id=button2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_addLine()")'>增加行</BUTTON></DIV></body></html>

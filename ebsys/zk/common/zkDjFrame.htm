@@ -1,0 +1,72 @@
+<HTML>
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<script src="../../fceform/js/csjsrequest.js"></script>
+		<script language="javascript">
+		    
+		    var oDivPos = {
+                left : null,
+                top : null,
+                width: null,
+                height: null
+		    };
+		function window_onload() {
+		    var skinColor = parent.zkpub.skin;
+		    if (skinColor == "") skinColor = "blue";
+		    cssId.href = "../../zk/main/css/skins/" + skinColor + "/zkskin.css";
+		    
+		    lblTitle.innerText = unescape(Request.QueryString("caption").toString());
+		    var sUrl = Request.QueryString("url").toString();
+		    if (sUrl.indexOf("djframe.htm") < 0) imgFcWait.style.display = "none";
+		    document.all.mainform.src = sUrl;
+		    window_onresize();
+		}
+		function window_onresize() {
+
+		    oTitle.style.width = document.body.offsetWidth;
+		    oBody.style.width = document.body.offsetWidth;
+		    oBody.style.height = document.body.offsetHeight - 20;
+		    oMaxWin.style.left = document.body.offsetWidth - 50;
+		}
+		function maxWin() {
+		    var oDiv = parent.$id("oRight");
+		    if (oDiv == null) return;
+		    if (oMaxWin.className == "zk_big") {
+		        oDivPos.left = oDiv.style.left;
+		        oDivPos.top = oDiv.style.top;
+		        oDivPos.width = oDiv.style.width;
+		        oDivPos.height = oDiv.style.height;
+
+		        oDiv.style.left = 0;
+		        oDiv.style.top = 0;
+		        oDiv.style.width = screen.availWidth - 8;
+		        oDiv.style.height = screen.availHeight - 60 - 8;
+		        oMaxWin.className = "zk_small";
+		        oMaxWin.title = "向下还原窗口";
+		    } else {
+		        oDiv.style.left = oDivPos.left;
+		        oDiv.style.top = oDivPos.top;
+		        oDiv.style.width = oDivPos.width;
+		        oDiv.style.height = oDivPos.height;
+		        oMaxWin.className = "zk_big";
+		        oMaxWin.title = "最大化窗口";
+		    }
+		}
+	</script>
+	</HEAD>
+	<body onload="window_onload()" onresize="window_onresize()"><LINK href="../../fceform/css/efdesign.css" type="text/css" rel="stylesheet">
+	    <LINK id=cssId type="text/css" rel="stylesheet">
+		<div id=oTitle style="height:20px;"  class="rightwin-top-body">
+		<span class="zk_title" style="LEFT: 2px; POSITION: absolute; TOP: 2px"></span>
+		<span id=oMaxWin class="zk_big" style="POSITION: absolute; TOP: 2px;cursor:hand;" onclick="maxWin()"></span>
+		<LABEL id="lblTitle"  style="FONT-WEIGHT: bold; FONT-SIZE: 13px;LEFT: 30px;  COLOR: #000000; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 4px; HEIGHT: 15px" ></LABEL>
+		</div>
+		<div id=oBody >
+		<img id=imgFcWait src='../../fceform/images/ef_wait.gif' style='position:absolute;left:30px;top:30px;'>
+	    <iframe  width=100% height=100% id='mainform' scrolling=auto frameborder=0  bordercolor=LightGrey noresize> </iframe>
+	    </div>
+	</body>
+
+</HTML>
+
+	

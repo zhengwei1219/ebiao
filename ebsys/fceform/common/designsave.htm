@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <script src="../../fceform/js/csjsrequest.js"></script>
+	<script src="../../fceform/js/MicrosoftAjax.js"></script>
+	<script src="../../fceform/js/fcpub.js"></script>
+	<script src="../../fceform/js/fcselfuse.js"></script>
+</head>
+<body>
+<script>
+var pubRoleXml=""; //全局变量,保存控制权限的XML串
+var key = Request.QueryString("key");
+if(key=="readRoleXml"){
+    readRoleXml(Request.QueryString("djid"));
+}else if (key=="saveFromFc"){
+    saveFromFc();
+}
+
+function readRoleXml(djid){
+///在iframe中读出库中的roleXml信息到全局变量中
+    var retX = SendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=readRoleXml&crossDomain=y","<djid>"+djid+"</djid>");
+    if(IsSpace(retX) == false){
+        pubRoleXml = retX;
+    }
+
+}
+function saveFromFc(){	
+    //生成htm文件.    
+    var isalert = Request.QueryString("isalert");
+    var sXml = "<djid>"+Request.QueryString("djid")+"</djid>"+"<djsn>"+Request.QueryString("djsn")+"</djsn>";
+    var djtype = Request.QueryString("djtype");
+    var obj = BillTypeNameToPath(djtype);
+    sXml += "<subpath>"+fcpubdata.path+"</subpath>";
+    sXml += "<typepath>"+obj.path+"</typepath>";
+    sXml += "<extname>"+obj.extname+"</extname>";
+    sXml += "<roleXml>"+pubRoleXml+"</roleXml>";
+    var retX = SendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=cacheToHtml&crossDomain=y",sXml);
+    if(IsSpace(retX)){
+        if(isalert != "no") alert("保存成功!");
+    }else{
+        alert(retX);
+    }
+}    
+</script>
+</body>
+</html>

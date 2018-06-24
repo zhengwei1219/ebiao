@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>布局控件</title><link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table  class="tableTitle">
+<tr><td class="title">  
+    布局控件</td></tr>
+</table>
+    <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a><br />
+  <div  class=mainDiv>
+   &nbsp;&nbsp;&nbsp;&nbsp;表单设计分两大部分：一个是样式，一个是数据。在做表单时，由美工设计表单界面样式部分,开发人员实现数据的读写等业务逻辑。这就面临美工和开发人员之间的协作问题，如一个表单经过美工设计和开发人员实现业务逻辑之后，甚至是给最终用户使用了一段时间后，需要修改表单，美工需要修改表单界面样式，但此时表单的内容已经是界面样式和开发人员编写的代码混合在一起了，而不是纯的美工所熟悉的只含界面样式部分的页面了，这样就很难去再调整表单的界面样式了，强行调整的话，也容易将开发人员编写的代码弄乱。这种开发模式最大的问题是让多人修改同一文件，必须要将美工和开发人员做的文件分开来，在运行时再合并在一起，提供给最终用户。要完成这样的工作，便可以用布局(layout)控件。
+  <div class=" divTitle ">1.原理</div>
+              &nbsp;&nbsp;&nbsp;&nbsp;美工做好表单界面(静态html页面)后，必须放在fceformext/html目录下，这样才能选择得到这个文件。用layout控件把静态html页面导入到表单里面,然后开发人员再配置其它属性，完成整个表单。以后，如美工需要重新修改表单界面的话，则还是在原来做的静态html页面修改，而不是在经过开发人员配置的表单页面上修改，就和最初修改表单界面样式是一样的。美工修改好后，再复制到fceformext/html目录下，再用layout控件把静态html页面导入到表单里面，这样就完成了刷新的过程。使用layout控件，可以让美工和开发人员的工作完全分开，不相互影响，最大程度上利用劳动成果。 单击 <a class="shili"  href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_3_4_layout'>布局控件</a>进入布局控件表单设计界面.
+        <div class=" divTitle ">2.设置规则</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;静态HTML页面的内容有如下特别规定: 需要输入的控件需要加上name属性,例如开票日期控件有一个name="txtDate_n",子表内容必须放在一个html table元素中,且这个table元素必须给一个本表单中唯一的id属性,例如在此html文件中,自有一个id="table1"的id.子表中的输入控件必须直接放在TD元素中,中间不能加任何时候元素.<br />
+        <img src ="images/help_3_4_1.gif"/><br />
+    <div class=" divTitle ">3.装入html文件</div>   
+    &nbsp;&nbsp;&nbsp;&nbsp;在表单设计界面上,双击layout控件,弹出layout控件网页属性对话框,单击下拉按钮,选择Lay_mainsub.html文件,单击确定按钮,返回文件路径,单击装入按钮,把html文件装入.如下图：<br />
+    <img src ="images/help_3_4_2.gif"/><br />
+     <div class=" divTitle ">4.绑定控件</div>    
+&nbsp;&nbsp;&nbsp;&nbsp;layout控件还需要设置控件的对应关系,在layout控件属性页中,单击设置控件的对应关系的增加行按钮,添加装入的html文件中的控件,即在外部的HTML页面中的有name属性的输入控件,和eform表单设计器中画的控件之间一一对应.在运行表单时,会将外部的HTML页面中的有name属性的输入控件隐藏(让 obj.style.visibility = "hidden" 方式隐藏,这个隐藏的控件的id="eb_cell_"加上它所对应的eform表单设计器中画的控件的id),然后将eform表单设计器中画的控件移到对应的隐藏了的控件的位置上.控件大小和原来的相同.如果有子表,则需要设置子数据集每条记录所占行数属性.子表中的输入控件是采用动态显示的方式,即点到表格的TD中时才会显示相应的输入控件.计算过程是由数据集是子表数据集,找到它所绑定的eform控件,由eform控件找到外部HTML页面中的控件,再找到TD及TABLE元素,以最小行号的TD当作子表的起始行. <br />
+<img src ="images/help_3_4_3.gif"/><br />
+
+    <div class=" divTitle ">5.运行效果图</div>
+<img src ="images/help_3_4_4.gif"/><br />
+</div>
+</body>
+</html>

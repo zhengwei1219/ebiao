@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+<script src="../../fceform/js/MicrosoftAjax.js"></script>
+<script src="../../fceform/js/fcpub.js"></script>
+<link rel="stylesheet" type="text/css" href="../../fceform/css/xtree.css">
+<link rel="stylesheet" type="text/css" href="../../fceform/css/efdesign.css">
+<script language="JavaScript" src="../../fceform/js/xtree.js"></script>
+
+<script>
+
+function window_onresize() {
+//	select1.style.width =document.body.offsetWidth
+//	select1.style.height =document.body.offsetHeight  
+}
+function window_onload(){
+	window_onresize()
+	//SqlCombo(select1,"select djsn,dj_name from FC_BILLZL where djlx='SH' order by djsn ")
+	var tree1=new xtreeItem(0,"示例","../exampletopic.htm","design","","ef_tree_root");
+	tree1.setup(document.getElementById("tree1"));
+	var sPath = location.protocol+"//"+location.host + fcpubdata.path + "/samples/main/menu.xml";
+	//CopyToPub(sPath);
+	//tree.loadXmlFile(sPath);
+	var oXml = SetDomFile(sPath);
+	//alert(oXml.documentElement.xml);
+	tree1.loadXmlStr(NavJs.xml(oXml.documentElement));
+	
+	tree1.expand();
+	TreeRootNodeHide($id("tree1"), "none");
+}
+/**
+以设计模式打开表单
+*@date 2004-08-31
+**/
+//function openit(){
+//	var djsn=event.srcElement.value
+//	parent.design.location.assign("../fceform/common/djframe.htm?djtype=SH&djsn="+djsn)
+//	
+//}
+</script>
+</HEAD>
+<BODY  onload=window_onload() topMargin="0" leftMargin="0" rightMargin="0" bottomMargin="0" >
+<div id=tree1 style="overflow:auto;"><div>
+</BODY>
+</HTML>

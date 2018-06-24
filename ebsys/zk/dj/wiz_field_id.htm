@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var objNav = new Object();
+objNav.prevPage = "wiz_field_first";
+objNav.nextPage = "wiz_field_finish";
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+
+function uf_open() {
+    
+    PropWinOpenConfig(objNav);
+    if (objNav.config.idParam == null) { objNav.config.idParam = idParam.value; }
+    if (IsSpace(len.value)) { objNav.config.len = 11 };
+    SetTextValue(objNav.config.idParam, $id("idParam"));
+    if (IsSpace(objNav.config.idType) == false) SetRadioValue($id("idType"), objNav.config.idType);
+	uf_idtype();
+}
+//保存配置信息,由工具栏来调用
+function saveConfig() {  
+    if(uf_saveBeforecheck() == true){
+    	objNav.isOk = false;
+    	return;	
+    }
+    if (idType.value == 2) { objNav.config.idParam = null; } else { objNav.config.idParam = $id("idParam").value; }
+    objNav.config.idType = $id("idType").value;
+    if (PropWinSaveConfig(objNav)) {
+    	objNav.isOk = false;
+    	return;
+    }
+    judgeIdType();
+}
+function judgeIdType()  //判断id类型
+{
+    var sidtype = $id("idType").value;
+    if (sidtype == 2 || sidtype == 3) {
+        returnType.value = "整数";
+    }
+    if (sidtype == 8) {
+        //objNav.config.returnTyp="字符";
+        objNav.config.len = 32;
+    }
+    if (sidtype == 1 || sidtype == 4 || sidtype == 6) {
+        //objNav.config.returnType=dataType.value;//objNav.config.dataType=dataType.value;
+        var le = idParam.value;
+        if (returnType.value == "字符") {
+            //objNav.config.returnTyp="字符";
+            if (sidtype == 4 || sidtype == 6) { objNav.config.len = len.value };
+            if (sidtype == 1) { objNav.config.len = 8 + le.length };
+        }
+        if (returnType.value == "整数") {
+            if(fcpubdata.databaseTypeName == "oracle"){
+        		objNav.config.len = 10;	
+        	}
+        }
+    }
+}
+
+function uf_idtypeStyle()  //判断dataType控件的数据类型来调整那些控件显示
+{
+    var sty = "block";
+    if (returnType.value == "整数" || idType.value == 1 || idType.value == 2) sty = "none";
+    len.style.display = sty;
+    label9.style.display = sty;
+    if (idType.value == 8 && returnType.value == "整数") { len.style.display = "block"; label9.style.display = "block"; } //|| idType.value==8 && dataType.value=="字符"
+    if (idType.value == 3 && returnType.value == "字符") { len.style.display = "none"; label9.style.display = "none"; }
+
+}
+function uf_idtype() {       //判断idType控件的数据类型来调整那些控件显示
+    var sidtype = $id("idType").value;
+    var SKDBedit7 = $id("idParam");
+    len.style.display = "block";
+    label9.style.display = "block";
+    returnType.style.display = "block";
+    label10.style.display = "block";
+
+    switch (sidtype) {
+        case "1": //自已用的ID
+            Label11.style.display = "block";
+            len.style.display = "none";
+            label9.style.display = "none";
+
+            Label11.innerText = "ID标识";
+            SKDBedit7.style.display = "block";
+            break;
+        case "3": //oracle序列
+            Label11.style.display = "block";
+            len.style.display = "none";
+            label9.style.display = "none";
+            returnType.style.display = "none";
+            label10.style.display = "none";
+            Label11.innerText = "序列名称";
+            SKDBedit7.style.display = "block";
+            break;
+        case "2":
+            Label11.style.display = "none";
+            idParam.style.display = "none";
+            len.style.display = "none";
+            label9.style.display = "none";
+            returnType.style.display = "none";
+            label10.style.display = "none";
+            break;
+        case "4":
+            Label11.style.display = "none";
+            idParam.style.display = "none";
+            break;
+        case "8":
+            Label11.style.display = "none";
+            SKDBedit7.style.display = "none";
+            returnType.style.display = "none";
+            label10.style.display = "none";
+            len.value = 32;
+            break;
+        case "6": //自定义
+            Label11.style.display = "block";
+            Label11.innerText = "自定义参数值";
+            SKDBedit7.style.display = "block";
+            break;
+    }
+
+    uf_idtypeStyle()
+}
+
+
+function uf_saveBeforecheck(){
+	 if (IsSpace(len.value) && len.style.display != "none") {
+        alert("长度不能为空!");
+        return true;
+    }
+    if(fcpubdata.databaseTypeName != "oracle" && $id("idType").value == 3) {
+    	alert(fcpubdata.databaseTypeName + "数据库不能选择oracle序列作ID");
+        return true;
+    }
+	
+	if(fcpubdata.databaseTypeName != "sqlserver" && $id("idType").value == 2) {
+    	alert(fcpubdata.databaseTypeName+"数据库不能选择自动编号ID值");
+    	return true;
+	}
+	var reg = /^[A-Za-z]+$/;
+    if (($id("idType").value == 1) && (!reg.test(idParam.value) || idParam.value.length > 3)) {
+        alert("只能用26个英文字母作为id标识,并且长度不能大于3");
+        return true;
+	}
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/fczk.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fczk.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType contxml="<root><label><id>Label11</id><id>label9</id><id>label10</id><id>labFdname</id><id>labFdchnname</id><id>labHelpText</id><id>labReadTrans</id><id>labSaveTrans</id><id>labTbname</id><id>lblTitle</id></label><radio><id>idType</id></radio><combobox><id>returnType</id></combobox><a><id>showCont</id><id>showTd</id></a><button><id>cmdActionSet</id><id>cmdDropDown1</id><id>cmdDropDown2</id><id>button1</id><id>button2</id></button><text><id>idParam</id><id>len</id><id>fdname</id><id>fdchnname</id><id>helpText</id><id>readTrans</id><id>saveTrans</id><id>tbname</id></text><dataset><id>permitDs</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:3;label:11;radio:0;listbox:0;textarea:1;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:3;tab:0;div:0;DsMain_field:0;a:0;button:1;text:9;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:0;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" billtaborder="<root><taborder>idType</taborder><taborder>idParam</taborder><taborder>len</taborder><taborder>returnType</taborder><taborder>cmdActionSet</taborder><taborder>fdname</taborder><taborder>fdchnname</taborder><taborder>helpText</taborder><taborder>readTrans</taborder><taborder>saveTrans</taborder><taborder>cmdDropDown1</taborder><taborder>cmdDropDown2</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>tbname</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight="540" poswidth="400" postop posleft entertype="展现" window="有模式窗口" keyfield codeheader caption="wiz_field_id" type="ZK" dj_sn="wiz_field_id" BLONopen="uf_open()" center="居中" BLONclose runsave BLONopenBefore toolbar="不带工具栏" AutoResizeXml>&nbsp; 
+<FIELDSET style="POSITION: absolute; WIDTH: 156px; DISPLAY: block; HEIGHT: 138px; FONT-SIZE: 12px; TOP: 191px; LEFT: 91px; backgroundColor1: #ffffff" id=idType contentEditable=false legend="主键字段类别" aspect="纵向" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;6&#13;&#10;8" temptext="特定格式ID值&#13;&#10;自动编号ID值&#13;&#10;oracle序列作ID&#13;&#10;单个字段作主键&#13;&#10;自定义主键的值&#13;&#10;GUID作主键字段" value="1" onclick='bill_onclick("uf_idtype();")' NotBg="否" controltype="radio"><LEGEND>主键字段类别</LEGEND><INPUT id=RGidType1 onclick=idType.value=RGidType[0].value; value=1 CHECKED type=radio name=RGidType text="特定格式ID值"><SPAN>特定格式ID值</SPAN>&nbsp;<BR><INPUT id=RGidType2 onclick=idType.value=RGidType[1].value; value=2 type=radio name=RGidType text="自动编号ID值"><SPAN>自动编号ID值</SPAN>&nbsp;<BR><INPUT id=RGidType3 onclick=idType.value=RGidType[2].value; value=3 type=radio name=RGidType text="oracle序列作ID"><SPAN>oracle序列作ID</SPAN>&nbsp;<BR><INPUT id=RGidType4 onclick=idType.value=RGidType[3].value; value=4 type=radio name=RGidType text="单个字段作主键"><SPAN>单个字段作主键</SPAN>&nbsp;<BR><INPUT id=RGidType5 onclick=idType.value=RGidType[4].value; value=6 type=radio name=RGidType text="自定义主键的值"><SPAN>自定义主键的值</SPAN>&nbsp;<BR><INPUT id=RGidType6 onclick=idType.value=RGidType[5].value; value=8 type=radio name=RGidType text="GUID作主键字段"><SPAN>GUID作主键字段</SPAN>&nbsp;</FIELDSET><SPAN style="POSITION: absolute; TEXT-ALIGN: right; WIDTH: 81px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 339px; LEFT: 73px; backgroundColor1: #c0c0c0" id=Label11 NotBg="否" controltype="label" inputTag="否" align="Left">ID标识</SPAN> <INPUT style="POSITION: absolute; WIDTH: 90px; HEIGHT: 20px; TOP: 336px; LEFT: 159px" id=idParam onmovestart=moveStart() value=BBB size=15 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 90px; HEIGHT: 20px; TOP: 381px; LEFT: 159px" id=len onmovestart=moveStart() onchange="bill_onclick(&quot;$valid('整数');&quot;)" size=9 controltype="text"><LABEL style="POSITION: absolute; TEXT-ALIGN: right; WIDTH: 83px; HEIGHT: 17px; TOP: 384px; LEFT: 71px" id=label9 onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">字段长度</LABEL><LABEL style="POSITION: absolute; TEXT-ALIGN: right; WIDTH: 83px; HEIGHT: 17px; TOP: 362px; LEFT: 71px" id=label10 onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">数据类型</LABEL><SELECT style="POSITION: absolute; WIDTH: 90px; HEIGHT: 25px; TOP: 358px; LEFT: 159px" id=returnType onmovestart=moveStart() tempvalue="字符&#13;&#10;整数" temptext="字符&#13;&#10;整数" onclick='bill_onclick("uf_idtypeStyle()")' controltype="combobox" sql check="1" async="否" datasourceName sqltrans><OPTION selected value=字符>字符</OPTION><OPTION value=整数>整数</OPTION></SELECT> <LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 25px; LEFT: 17px" id=labFdname onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">字段名</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 22px; LEFT: 91px" id=fdname onmovestart=moveStart() value=field1 size=48 controltype="text" onblur="bill_onexit(&quot;$valid('不能为空','字段名称不能为空!');&quot;)"><LABEL style="POSITION: absolute; WIDTH: 76px; HEIGHT: 15px; TOP: 51px; LEFT: 17px" id=labFdchnname onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">字段中文名</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 45px; LEFT: 91px" id=fdchnname onmovestart=moveStart() value=字段1 size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 72px; LEFT: 17px" id=labHelpText onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">帮助文本</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 68px; LEFT: 91px" id=helpText onmovestart=moveStart() value=字段1 size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 97px; LEFT: 17px" id=labReadTrans onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">读出时转换</LABEL><INPUT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 20px; TOP: 91px; LEFT: 91px" id=readTrans onmovestart=moveStart() size=41 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 20px; TOP: 114px; LEFT: 91px" id=saveTrans onmovestart=moveStart() size=41 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 120px; LEFT: 17px" id=labSaveTrans onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">保存前转换</LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; DISPLAY: none; HEIGHT: 25px; TOP: 202px; LEFT: 287px" id=cmdActionSet onmovestart=moveStart() onclick='bill_onclick("eformWizFieldPowerSet()")' controltype="button" dropstyle="否">权限设置</BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 91px; BORDER-RIGHT: 0px; LEFT: 345px" id=cmdDropDown1 onmovestart=moveStart() onclick='bill_onclick("PropWinFx(readTrans,tbname.value)")' controltype="button" dropstyle="否"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 114px; BORDER-RIGHT: 0px; LEFT: 345px" id=cmdDropDown2 onmovestart=moveStart() onclick='bill_onclick("PropWinFx(saveTrans,tbname.value)")' controltype="button" dropstyle="否"></BUTTON><A style="POSITION: absolute; WIDTH: 188px; HEIGHT: 15px; TOP: 142px; LEFT: 91px" id=showCont onmovestart=moveStart() onclick="DjOpen('../../fceform/common/djframe.htm?djsn=zk_style_prop&amp;djtype=ZK&amp;type=2',objNav.config)" href="javascript:void(0)" target=_self controltype="a" href1>设置本字段显示控件的样式</A><A style="POSITION: absolute; WIDTH: 188px; HEIGHT: 15px; TOP: 166px; LEFT: 91px" id=showTd onmovestart=moveStart() onclick="DjOpen('../../fceform/common/djframe.htm?djsn=zk_style_prop&amp;djtype=ZK&amp;type=3',objNav.config)" href="javascript:void(0)" target=_self controltype="a" href1>设置本字段所在单元格的样式</A><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 23px; TOP: 136px; LEFT: 288px" id=button1 onmovestart=moveStart() onclick="bill_onclick(&quot;propWinFieldPermit(permitDs,'valueHide')&quot;)" controltype="button">隐藏设置</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 23px; TOP: 161px; LEFT: 288px" id=button2 onmovestart=moveStart() onclick="bill_onclick(&quot;propWinFieldPermit(permitDs,'valueDisable')&quot;)" controltype="button">只读设置</BUTTON><?xml:namespace prefix = fc /><fc:dataset id=permitDs idtype="1" controltype="dataset" async="否" isSubGrid="否" pubpara="否" isaddemptyrec="否" submittype="2" submitno="1" issubds="否" opensortno="1" onValid='bill_ondatasetvalid("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' onGetText='bill_ondatasetgettext("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' onSetText='bill_ondatasetsettext("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' format="<fields><field><fieldname>valueDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>valueHide</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>expDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>expHide</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>"></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 271px; DISPLAY: none; HEIGHT: 20px; TOP: 1px; LEFT: 96px" id=tbname disabled onmovestart=moveStart() size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 356px; HEIGHT: 15px; TOP: 7px; LEFT: 5px" id=labTbname onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">表名</LABEL><LABEL style="POSITION: absolute; WIDTH: 114px; DISPLAY: none; FONT-FAMILY: 楷体_GB2312; HEIGHT: 22px; COLOR: #000080; FONT-SIZE: 14pt; TOP: 7px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 9px" id=lblTitle onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">字段信息</LABEL></DIV><script></script></body></html>

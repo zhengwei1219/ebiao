@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>数据集打开时</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">数据集打开时</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 同名字段传递数据规则</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;在数据集的属性页中设置了sql语句后<p>select semployeecode,semployeeid,ssex,semployeename,sphone from FCS_EMPLOYEE</p>数据集打开时执行了sql的查询语句,返回成xml,装载成dom对象,sql语句的字段与数据集的字段同名就把值传给数据集的字段,下面画线链接的字段就是要传的字段.<br />&nbsp;&nbsp;&nbsp;&nbsp;1.同名字段传递时不分字段的先后顺序,是按同名传递.<br />&nbsp;&nbsp;&nbsp;&nbsp;2.同名字段传递时如下图sql查询语句中的sphone字段,传给数据集中的字段时,数据集中没有sphone字段,那它就放弃传值,<br />&nbsp;&nbsp;&nbsp;&nbsp;3.同名字段传递如下图数据集中有sEmail和sculture字段sql查询语句中没有,也会放弃不管.<br />
+<img  src ="images/help_6_2_4.gif"/> 
+      
+       <div class="divTitle">2. 数据集打开</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;数据集打开可以用 ds.Open() 命令来打开,如果用 ds.Open(sql语句) 来打开的话,在打开数据集后,还会将 sql语句 赋给数据集的opensql属性上, 如直接用 ds.Open() 命令来打开数据集,则执行的SQL语句取自 ds.opensql . 在数据集属性窗口上输入的SQL语句会赋值给 ds.opensql. 也就是说,在数据集属性窗口上输入的SQL语句和直接用代码将SQL语句赋值给 ds.opensql是一样的。ds.Open(sSql,ismovepage,callback,context) 这是完整的写法， sSql 执行的SQL语句,ismovepage = 是 表示不能初始化pageno,callback 是异步执行SQL语句时的回调函数，context 是上下文对象。ismovepage=是 是用于在数据集翻页时用，callback是要异步执行SQL语句时用。</br>
+       &nbsp;&nbsp;&nbsp;&nbsp;当数据集属性窗口上没有输入的SQL语句，且在表单刚打开时，如果数据集的提交类型选择了：只提交当前的一条记录 的话，会自动给数据集加一条空记录。</br>
+       &nbsp;&nbsp;&nbsp;&nbsp;数据集的SQL语句的写法是当前数据库所能执行的标准的SQL语句都可以写，为了方便传递参数，在真正执行SQL语句之前，还会进行一些替换。:{ 和 }:之间的内容应是一个javascript表达式，运行SQL语句之前，会将这个javascript表达式计算出来，用计算的结果代替SQL语句中的 :{javascript表达式}: 这部分。SQL语句中的 :key_value 这个会用全局变量 fcpubdata.keyValue的值在两边加上单引号来替换。</br>
+</div>
+</body>
+</html>

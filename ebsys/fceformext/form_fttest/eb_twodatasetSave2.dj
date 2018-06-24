@@ -1,0 +1,117 @@
+<script></script> 
+<DIV oncontrolselect=controlselect() id=SKbillsheet contentEditable=true jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userToolbar='<tr rowstate="add"><td>save</td><td>提交数据成功后提示</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>printpreview</td><td>e表控件打印预览</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>directprint</td><td>e表控件直接打印</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>expexcelall</td><td>不分页导出到excel文件</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>exppdf</td><td>导出所有页到pdf文件</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' userType alertType="1" isCheckPermit="否" idtype="1" entertype="修改" keyfield codeheader OtherSave="否" runsave dj_sn="eb_twodatasetSave2" caption="多行为一条记录" type="FT" isfile="是" center="  " posleft postop poswidth posheight toolbar="自定义工具栏" window="当前窗口" BLONopen BLONopenBefore BLONclose billtaborder="<root><taborder>text1</taborder><taborder>radio1</taborder><taborder>text2</taborder><taborder>text3</taborder><taborder>text5</taborder><taborder>text6</taborder><taborder>text8</taborder><taborder>text9</taborder><taborder>dropdownlist1</taborder><taborder>dropdownlist2</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:1;listbox:0;textarea:2;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:9;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:0;dataset:2;spin:0;excel:0;tree:0;ebshow:0;ebiao:1;layout:0;page:0" contxml="<root><radio><id>radio1</id></radio><text><id>text1</id><id>text2</id><id>text3</id><id>text5</id><id>text6</id><id>text8</id><id>text9</id></text><dropdownlist><id>dropdownlist1</id><id>dropdownlist2</id></dropdownlist><dataset><id>dataset1</id><id>dataset2</id></dataset><ebiao><id>ebiao1</id></ebiao></root>" unselectable="on" allBrowser="是"><DIV onresizeend=resizeEnd() oncontrolselect=controlselect() style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; OVERFLOW-X: visible; OVERFLOW-Y: visible; BACKGROUND-COLOR: #ffffff; WIDTH: 709px; HEIGHT: 269px; OVERFLOW: auto; BORDER-TOP: 0px; TOP: 15px; BORDER-RIGHT: 0px; LEFT: 8px" ondragstart="new Eapi.EformEbiao().dragStart();" id=ebiao1 onresize=resize() onmove=move() ondragend="new Eapi.EformEbiao().dragExit();" ondrop="new Eapi.EformEbiao().dragEnter();" onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() AutoSizeXml="<record id ='ebiao1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt>10</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt>10</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" isOnloadRun="是" NotBg="否" isContentSize="undefined" recRows printFile=" /ebfile/eformprint/eb_twodatasetSave2.htm" controltype="ebiao">
+<TABLE style="Z-INDEX: -5; BORDER-BOTTOM: 1px solid; POSITION: static; BORDER-LEFT: 1px solid; MARGIN-TOP: 0px; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; MARGIN-LEFT: 0px; FONT-SIZE: 13px; BORDER-TOP: 1px solid; TOP: 0px; BORDER-RIGHT: 0px solid; LEFT: 0px" id=t border=1 cellSpacing=0 borderColor=lightgrey borderColorDark=white cellPadding=0 frame=box e_paper_margin_left="8" e_paper_margin_top="8" e_paper_margin_right="8" e_paper_margin_bottom="8" e_page_size="4" e_page_orientation="1" e_page_style="1" e_datasource="default" e_datasetbak="%3Ctr%20rowstate%3D%22add%22%3E%3Ctd%3Eds1%3C/td%3E%3Ctd%3ESQL%u8BED%u53E5%3C/td%3E%3Ctd%3Eselect%20FCS_EMPLOYEE.semployeecode%2CFCS_EMPLOYEE.semployeeid%2CFCS_EMPLOYEE.sculture%2CFCS_EMPLOYEE.ssex%2CFCS_EMPLOYEE.sphone%2CFCS_EMPLOYEE.semployeename%2CFCS_EMPLOYEE.sbirthday%2CFCS_EMPLOYEE.bz%20from%20FCS_EMPLOYEE%20where%20semployeeid%3D%27%27%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%u804C%u5458%u7F16%u53F7%3A%u804C%u5458id%3A%u5B66%u5386%3A%u6027%u522B%3A%u7535%u8BDD%3A%u804C%u5458%u540D%u79F0%3A%u51FA%u751F%u65E5%u671F%3A%u5907%u6CE8%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3C/tr%3E%3Ctr%20rowstate%3D%22add%22%3E%3Ctd%3Eds2%3C/td%3E%3Ctd%3ESQL%u8BED%u53E5%3C/td%3E%3Ctd%3Eselect%20FCS_ITEM.dprice%2CFCS_ITEM.sitemcode%2CFCS_ITEM.sitemid%2CFCS_ITEM.sitemname%20from%20FCS_ITEM%20where%20fcs_item.sitemid%3D%27%27%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%u4EF7%u683C%3A%u7269%u54C1%u7F16%u53F7%3A%u4EA7%u54C1id%3A%u7269%u54C1%u540D%u79F0%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3Ctd%3E%3C/td%3E%3C/tr%3E" e_dataset="name%3Dds1%2Csql%3D%22select%20FCS_EMPLOYEE.semployeecode%2CFCS_EMPLOYEE.semployeeid%2CFCS_EMPLOYEE.sculture%2CFCS_EMPLOYEE.ssex%2CFCS_EMPLOYEE.sphone%2CFCS_EMPLOYEE.semployeename%2CFCS_EMPLOYEE.sbirthday%2CFCS_EMPLOYEE.bz%20from%20FCS_EMPLOYEE%20where%20semployeeid%3D%27%27%22%2Ctype%3Dnormal%2CfieldText%3D%u804C%u5458%u7F16%u53F7%3A%u804C%u5458id%3A%u5B66%u5386%3A%u6027%u522B%3A%u7535%u8BDD%3A%u804C%u5458%u540D%u79F0%3A%u51FA%u751F%u65E5%u671F%3A%u5907%u6CE8%2Ccached%3D0%2CindexSorted%3D%2CindexIsUnique%3D%3Bname%3Dds2%2Csql%3D%22select%20FCS_ITEM.dprice%2CFCS_ITEM.sitemcode%2CFCS_ITEM.sitemid%2CFCS_ITEM.sitemname%20from%20FCS_ITEM%20where%20fcs_item.sitemid%3D%27%27%22%2Ctype%3Dnormal%2CfieldText%3D%u4EF7%u683C%3A%u7269%u54C1%u7F16%u53F7%3A%u4EA7%u54C1id%3A%u7269%u54C1%u540D%u79F0%2Ccached%3D0%2CindexSorted%3D%2CindexIsUnique%3D%3B">
+<COLGROUP>
+<COL style="WIDTH: 0px">
+<COL style="WIDTH: 87px" e_page_break_col="0" e_hide_col="1" e_col_type="10">
+<COL style="WIDTH: 92px">
+<COL style="WIDTH: 133px">
+<COL style="WIDTH: 81px">
+<COL style="WIDTH: 158px">
+<COL style="WIDTH: 65px">
+<TBODY>
+<TR style="HEIGHT: 34px">
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: center; PADDING-LEFT: 0px; FONT-SIZE: 18px; VERTICAL-ALIGN: middle; FONT-WEIGHT: bold" colSpan=4 classbak="eb_cell_title" e_page_break_col="0" e_merge="1,3-1,6" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">商&nbsp; 品&nbsp; 表</TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 4px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD rowSpan=4 e_merge="3,2-6,2">=ds2.get(产品id)</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">商品编号</TD>
+<TD style="0: " backupValue="=ds2.物品编号"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text1 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=物品编号 controltype="text" field="sitemcode" china="物品编号" dataset="dataset1"></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle" e_page_break_col="0" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">商品名称</TD>
+<TD style="0: " backupValue="=ds2.物品名称"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text2 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=物品名称 controltype="text" field="sitemname" china="物品名称" dataset="dataset1"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 6px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">商品价格</TD>
+<TD style="0: " colSpan=3 e_merge="5,4-5,6" backupValue="=ds2.价格"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text3 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=价格 controltype="text" field="dprice" china="价格" dataset="dataset1"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 5px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 28px">
+<TD></TD>
+<TD></TD>
+<TD style="TEXT-ALIGN: center; PADDING-LEFT: 0px; FONT-SIZE: 18px; VERTICAL-ALIGN: middle; FONT-WEIGHT: bold" colSpan=4 classbak="eb_cell_title" e_page_break_col="0" e_merge="7,3-7,6" e_page_break_row="0" e_allocate_right="0" e_wordwrap="0" e_visible="1" e_split_text="0" e_adjust_size="2" e_data_type="1" e_extensible="3">职&nbsp; 员&nbsp; 表</TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 4px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 19px">
+<TD></TD>
+<TD rowSpan=8 e_merge="9,2-16,2">=ds1.get(职员id)</TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">职员编号</TD>
+<TD style="0: " backupValue="=ds1.职员编号"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text5 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="text" field="semployeecode" china="职员编号" dataset="dataset2"></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">职员名称</TD>
+<TD style="0: " backupValue="=ds1.职员名称"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text6 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="text" field="semployeename" china="职员名称" dataset="dataset2"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 4px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 20px">
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle" rowSpan=3 e_merge="11,3-13,3">职员性别</TD>
+<TD style="0: " rowSpan=3 e_merge="11,4-13,4" backupValue="=ds1.性别">
+<FIELDSET onresizeend=resizeEnd() style="POSITION: static; WIDTH: 100%; HEIGHT: 50.5%; TOP: 0px; LEFT: 0px" id=radio1 onmovestart=moveStart() onmoveend=moveEnd() contentEditable=false onresizestart=resizeStart() NotBg="否" controltype="radio" field="ssex" china="性别" dataset="dataset2" temptext="男&#13;&#10;女" tempvalue="男&#13;&#10;女" value="男" aspect="横向" legend><LEGEND></LEGEND><INPUT id=RGradio11 onclick=radio1.value=RGradio1[0].value; value=男 CHECKED type=radio name=RGradio1 text="男"><SPAN>男</SPAN>&nbsp;<INPUT id=RGradio12 onclick=radio1.value=RGradio1[1].value; value=女 type=radio name=RGradio1 text="女"><SPAN>女</SPAN>&nbsp;</FIELDSET></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">职员学历</TD>
+<TD style="0: " backupValue="=ds1.学历"><IMG onresizeend=resizeEnd() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px; ButtonWidth: 10" id=dropdownlist1 class=none_border1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_fccode.gif" controltype="dropdownlist" field="sculture" china="学历" dataset="dataset2" temptext tempvalue check="2" sql="select distinct sculture from fcs_employee" datasourceName format xml multiselect="否" addrow="否" blnempty="否" blninput="是" visible="是" isShowTree="0" isTreeNewSql="0" FieldNameList></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 4px">
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 20px">
+<TD></TD>
+<TD style="TEXT-ALIGN: center">出生日期</TD>
+<TD style="0: " backupValue="=ds1.出生日期"><IMG onresizeend=resizeEnd() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px; ButtonWidth: 10" id=dropdownlist2 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_fccode.gif" controltype="dropdownlist" field="sbirthday" china="出生日期" dataset="dataset2" temptext tempvalue check="1" sql datasourceName format xml multiselect="否" addrow="否" blnempty="否" blninput="是" visible="是" isShowTree="0" isTreeNewSql="0" FieldNameList onclickopen="bill_onclick(&quot;$eform('选择日期')&quot;)"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 5px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 21px">
+<TD></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">职员电话</TD>
+<TD style="0: " backupValue="=ds1.电话"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text8 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="text" field="sphone" china="电话" dataset="dataset2"></TD>
+<TD style="TEXT-ALIGN: left; PADDING-LEFT: 10px; VERTICAL-ALIGN: middle">备注</TD>
+<TD style="0: " backupValue="=ds1.备注"><INPUT onresizeend=resizeEnd() oncontrolselect=controlselect() style="POSITION: static; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px" id=text9 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() value=备注 controltype="text" field="bz" china="备注" dataset="dataset2"></TD>
+<TD></TD></TR>
+<TR style="HEIGHT: 18px">
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD>
+<TD></TD></TR></TBODY></TABLE></DIV><IMG onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 39px; HEIGHT: 47px; TOP: 22px; LEFT: 812px" id=dataset1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_dataset.gif" idtype="1" controltype="dataset" datasourceName async="否" opensortno="1" saveastable pubpara="否" isaddemptyrec="是" opensql BeforeOpen submittype="2" submitno="1" savetable="FCS_ITEM" idparam="ZBF" issubds="否" subdsfield masterds masterdsfield AfterOpen BeforePost AfterPost BeforeScroll AfterScroll formatxml="<root><tr rowstate=&quot;add&quot;><td>dprice</td><td>价格</td><td>实数</td><td>18</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>right</td><td>80</td><td></td><td></td><td>$valid('实数');</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sitemcode</td><td>物品编号</td><td>字符</td><td>15</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>100px</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sitemid</td><td>产品id</td><td>字符</td><td>11</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>否</td><td>否</td><td>否</td><td>是</td><td>否</td><td>是</td><td>否</td><td></td><td></td><td>left</td><td>100px</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sitemname</td><td>物品名称</td><td>字符</td><td>50</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>120px</td><td></td><td></td><td>$valid('汉字、字母、数字或_');$valid('字段值不重复');$valid('值已存在');</td><td></td><td></td><td></td><td></td><td></td></tr></root>" isSubGrid="否" queryTableName="FCS_ITEM"><IMG onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 39px; HEIGHT: 47px; TOP: 195px; LEFT: 783px" id=dataset2 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() src="../../fceform/images/ef_designer_dataset.gif" idtype="1" controltype="dataset" datasourceName opensortno="1" saveastable pubpara="否" isaddemptyrec="是" opensql BeforeOpen submittype="2" submitno="1" savetable="FCS_EMPLOYEE" idparam="ZCA" issubds="否" subdsfield masterds masterdsfield AfterOpen BeforePost AfterPost BeforeScroll AfterScroll formatxml="<root><tr rowstate=&quot;add&quot;><td>ownerid</td><td>所有者</td><td>字符</td><td>11</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>semployeeid</td><td>职员id</td><td>字符</td><td>11</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>否</td><td>否</td><td>否</td><td>是</td><td>否</td><td>是</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>semployeecode</td><td>职员编号</td><td>字符</td><td>15</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sculture</td><td>学历</td><td>字符</td><td>20</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>scardid</td><td>卡片id</td><td>字符</td><td>20</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>ssex</td><td>性别</td><td>字符</td><td>2</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>isoperator</td><td>话务员</td><td>字符</td><td>2</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>dWorkDate</td><td>工作日期</td><td>日期</td><td>8</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td>$valid('日期');</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sphone</td><td>电话</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>semployeename</td><td>职员名称</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sdeptid</td><td>部门id</td><td>字符</td><td>11</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>sbirthday</td><td>出生日期</td><td>字符</td><td>10</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>semail</td><td>email</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>job</td><td>职位</td><td>字符</td><td>20</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>bz</td><td>备注</td><td>字符</td><td>50</td><td></td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>80</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></root>" isSubGrid="否"></DIV>

@@ -1,0 +1,420 @@
+<html >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<script src="../../fceform/js/MicrosoftAjax.js"></script>
+	<script src="../../fceform/js/fcpub.js"></script>
+	<script src="../../fceform/js/design.js"></script>
+	<script type="text/javascript">
+	    var WizardConfig = {
+	        djsn : null,
+	        type : null,
+	        toolbar : null,
+	        isfile : null,
+	        inputStyle : null,
+	        inputCols : null,
+	        isHaveSub : null,
+	        gridTop : null,
+	        mainTableName : null,
+	        mainKeyField : null,
+	        mainFieldsHtml1 : null,
+	        mainFieldsHtml2 : null,
+	        mainFields : null,
+	        subTableName : null,
+	        subFieldsHtml1 : null,
+	        subFieldsHtml2 : null,
+	        subFields : null,
+	        editCss : null,
+	        cssFile : null //界面上未用
+	    } ; 
+        function cmdPrev_onclick() {
+            parent.mainform.topic.objNav.saveConfig();
+            if(parent.mainform.topic.objNav.isOk==false) return;
+            var htmlPath = parent.mainform.topic.objNav.prevPage;
+            if(htmlPath != ""){
+                cmdPrev.disabled = true;
+                parent.mainform.location.replace("djframe.htm?djsn="+htmlPath);
+            }
+        }          
+        function cmdNext_onclick() {
+            parent.mainform.topic.objNav.saveConfig();
+            if(parent.mainform.topic.objNav.isOk==false) return;
+            var htmlPath = parent.mainform.topic.objNav.nextPage;
+            if(htmlPath != ""){
+                cmdNext.disabled = true;
+                parent.mainform.location.replace("djframe.htm?djsn="+htmlPath);
+            }
+        }          
+        function cmdOk_onclick() {
+            parent.mainform.topic.objNav.saveConfig();
+            var sb = new Sys.StringBuilder();
+            sb.append('<div id="SKbillsheet"  oncontrolselect="controlselect()" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" ');
+            sb.append('dj_sn="'+WizardConfig.djsn+'" ');
+            sb.append('caption="'+WizardConfig.djsn+'" ');
+            sb.append('type="'+WizardConfig.type+'" ');
+            sb.append('toolbar="'+WizardConfig.toolbar+'" ');
+            sb.append('isfile="'+WizardConfig.isfile+'" ');
+            sb.append('keyfield="'+WizardConfig.mainKeyField+'" ');
+            sb.append('entertype="修改" codeheader="BBB" ');
+            
+            sb.append('>');
+            sb.append(getMainDsDesignStr());
+            var tmpLeft = 10,tmpTop=65;
+            if(WizardConfig.inputStyle == 2){ //grid控件输入
+                sb.append(getWizardGridStr(true,tmpLeft,tmpTop,"POSITION: absolute;"));
+            }
+            if(WizardConfig.inputStyle > 2 ) {
+                sb.append(getWizardContStr());
+                
+            }
+            if(WizardConfig.isHaveSub=="是"){
+                sb.append(getSubDsDesignStr());
+                if(IsSpace(WizardConfig.gridTop)){
+                    sb.append(getWizardGridStr(false,tmpLeft,tmpTop,""));
+                }else{
+                    tmpTop = WizardConfig.gridTop;
+                    sb.append(getWizardGridStr(false,tmpLeft,tmpTop,"POSITION: absolute;"));
+                }
+            }
+            sb.append('</div>');
+            //进入layout.htm页面
+            var oLayout = parent.designform.rightmain ;
+            oLayout.fcpubdata.area.outerHTML = sb.toString();
+            oLayout.fcpubdata.area = oLayout.$id("SKbillsheet");
+            oLayout.fcpubdata.area.contentEditable=true;
+            oLayout.DesignDjSave("是"); 
+            
+            //导航到此表单的设计界面
+            var sIsFile="";
+            if(WizardConfig.isfile=="是") sIsFile = "&isfile=yes";
+            parent.location.replace("../design/design.htm?djsn="+WizardConfig.djsn+sIsFile+"&djtype="+WizardConfig.type);
+        }
+
+        /**
+        *取得数据集的设计串,用于新建表单向导中 
+        *@date 2008-02-02
+        **/
+        function getMainDsDesignStr(){
+            var oConfig = WizardConfig ;
+	        var sb = new Sys.StringBuilder();
+	        sb.append( '<IMG id=DsMain onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() ');
+	        sb.append('style="LEFT: 489px; WIDTH: 39px; POSITION: absolute; TOP: 10px; HEIGHT: 47px" onmovestart=moveStart() src="../../fceform/images/ef_designer_dataset.gif" opensortno="1" controltype="dataset" saveastable=');
+	        sb.append(oConfig.mainTableName+' ');
+	        sb.append( 'opensql="select '+oConfig.mainFields+' from '+oConfig.mainTableName+'" iscreatetable="否" pubpara="否" ');
+            sb.append('formatxml="<root>' );
+            sb.append(getDsFormatStr(oConfig.mainTableName,oConfig.mainFields,"主数据集"));
+            sb.append('</root>" ');
+            sb.append('BeforeOpen="DsMain.PageSize=1;" ');
+            sb.append('AfterScroll="fcpubdata.keyValue=DsMain.Field(\''+oConfig.mainKeyField+'\').Value;');
+            if(oConfig.isHaveSub == "是"){
+                sb.append("dssub.Open(\""+"select "+oConfig.subTableName+".* from "+oConfig.subTableName+","+oConfig.mainTableName+" where "+oConfig.mainTableName+"."+oConfig.mainKeyField+"="+oConfig.subTableName+"."+oConfig.mainKeyField+" and "+oConfig.mainTableName+"."+oConfig.mainKeyField+"=:key_value "+"\");");
+            }
+            sb.append('" '); //数据集滚动之后事件的结束
+            sb.append('>');
+            return sb;
+        }
+
+        function ListboxAddTableNameToStr(lstSelField,tableName) {
+	        //每一个字段名称前加上所在表的表名
+	        var sb = new Sys.StringBuilder() ;
+	        var len = lstSelField.options.length;
+	        for(var jj=0;jj<len; jj++)
+	        {
+		        sb.append( tableName+".");
+		        var stmp = new Eapi.Str().trim(lstSelField.options(jj).value);
+		        if(stmp=="") stmp = new Eapi.Str().trim(lstSelField.options(jj).text);
+		        sb.append(stmp);
+		        if(jj<len-1) sb.append(",");  
+	        }
+	        return sb.toString() ;
+        }
+
+        /**
+        *由选择的表名和字段来生成数据集的format串
+        *@date 2008-02-01
+        **/
+        function getDsFormatStr(tableName,sFields,isSub) {
+            var arr = sFields.split(",");
+	        var sHtml=new Sys.StringBuilder();
+	        var fieldName="",sChnName="",sType="",sSize="";
+	        var len = arr.length;
+	        //求主数据集的字段
+	        for(var j=0; j<len; j++) {
+		        fieldName = new Eapi.Str().trim(arr[j]); //主表英文名称
+		        if(fieldName == "") continue;
+
+	            sChnName = fieldName;
+	            sType = "字符";
+	            sSize = "50";
+                if(fcpubdata.dbStruDict != ""){
+		            //主表数据类型,字段长度
+		            var sql = "select chnname,fdtype,fdsize from "+fcpubdata.dbStruDict+" where fdname='"+fieldName+"'"  ;
+		            var s1 = SelectSql(sql,1,1);
+		            var oXml=SetDom(s1);
+		            if(oXml.documentElement != null) {
+		                sChnName = oXml.documentElement.childNodes(0).childNodes(0).text;
+		                sType = oXml.documentElement.childNodes(0).childNodes(1).text;
+		                sSize = oXml.documentElement.childNodes(0).childNodes(2).text ;
+		            }
+		        }
+        		
+		        var arrFd = getFdnamePara(fieldName);
+        		
+		        sHtml.append( '<tr ><td>'+fieldName+'</td><td>'+sChnName+'</td><td>'+sType+'</td><td>'+sSize+'</td><td>0</td><td>数据项</td><td></td><td></td><td>否</td><td>是</td><td>否</td><td>否</td><td>是</td><td>否</td><td>否</td><td>否</td><td></td><td></td><td>left</td><td>'+arrFd[0]+'</td><td></td><td></td><td></td><td></td><td></td><td>');
+        //		if(SKDBRadioGroup9.value == 2 ){  //选了表格控件,?表格控件中只支持资料检索
+			        var sGridFa = "";
+			        if(isSub == "子数据集"){
+						sGridFa=","+tableName+"_grid";
+			        }
+			        
+			        if(arrFd[1] == 'facard'){
+				        var sfacardtab = "SelectZlSql('"+arrFd[2]+"','"+arrFd[4]+"','"+arrFd[3]+"',''"+sGridFa+")" ;
+				        sHtml.append( quot_42(sfacardtab) );
+			        }	
+        //		}	
+		        sHtml.append( '</td><td></td><td></td></tr>');	
+	        }
+	        return sHtml ;
+			/**
+			*将引号变成42
+			*@date 2004-12-03
+			**/
+			function quot_42(s) {
+				var s1="";
+				s=RepStr(s,"'",s1+"\\42");
+				return s;
+
+			}
+
+	        //取某字段的输入风格
+	        function getFdnamePara(fdname) {
+		        var arrRet= new Array();
+		        //主表字段的长度
+		        var sSql2 = "select objwidth from "+fcpubdata.dbStruDict+" where fdname='"+fdname+"'" ;
+		        var s0 = SqlToField(sSql2) ;
+
+		        if(IsSpace(new Eapi.Str().trim(s0)) == false ){
+					s0=new Eapi.Str().trim(s0);
+			        arrRet[0] = s0 ;   //控件宽度
+		        }else{
+			        arrRet[0] = 100 ;	//默认宽度为100px
+		        }
+		        arrRet[1]=""; 	//输入控件的类型
+		        var sSql = "select inputstyle from "+fcpubdata.dbStruDict+" where fdname='"+fdname+"'" ;
+		        var sV1 = SqlToField(sSql);
+		        if(IsSpace(sV1) == false ) {
+			        var oo = SetDom(sV1) ;
+			        if(oo.documentElement != null ){
+				        arrRet[1] = oo.documentElement.nodeName ;
+				        //tempvalue
+				        if(oo.documentElement.childNodes.length>=1) arrRet[2] = oo.documentElement.childNodes(0).text ;
+				        //temptext
+				        if(oo.documentElement.childNodes.length>=2) arrRet[3] = oo.documentElement.childNodes(1).text ;
+				        //sql
+				        if(oo.documentElement.childNodes.length>=3) arrRet[4] = oo.documentElement.childNodes(2).text ;
+				        //option串
+				        if(oo.documentElement.childNodes.length>=4) arrRet[5] = oo.documentElement.childNodes(3).text ;
+				        //format串
+				        if(oo.documentElement.childNodes.length>=5) arrRet[6] = oo.documentElement.childNodes(4).text ;
+			        }
+		        }
+		        /*
+		        sWid 0
+		        sVal 1
+		        sXml 2
+		        sX   3
+		        sX2  4
+		        spubOption 5
+		        spubFormat 6
+		        */
+		        return arrRet ; 
+	        }
+
+        }
+        /**
+        *新建表单向导时生成主表的控件串 
+        *@date 2008-02-04
+        **/
+        function getWizardContStr(){
+            var oConfig = WizardConfig ;
+            var sb = new Sys.StringBuilder();
+            if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6"){
+                sb.append("<table id=\"tab_layout1\" cellSpacing=0 cellPadding=0 border=1 >");
+                sb.append("<tr>");
+            }else{
+                var oPos = {
+                    left : 10,
+                    top  : 65,
+                    interval : 0, //为间距值
+                    adjust : 4, //为调节值
+                    rightbottom : 75  //75 为右边的编辑框的left
+                };
+                if(oConfig.inputStyle == "4") oPos.rightbottom = 85; // 85为下边的编辑框的top
+                if(oConfig.inputCols > 1 ){
+                    var iBigWidth = 900; //最大宽度
+                    var arrColLeft = new Array();
+                    arrColLeft[0]=oPos.left;
+                    for(var j=1;j<oConfig.inputCols;j++){ //初始化数组
+                        arrColLeft[j] = arrColLeft[j-1] + iBigWidth/oConfig.inputCols ;
+                    }
+                }
+            }
+            var arrF = oConfig.mainFields.split(",");
+            for(var i=0;i<arrF.length;i++){
+                var fieldName = new Eapi.Str().trim(arrF[i]);
+                if(fieldName.length == 0) continue;
+                var chnName = FieldNameToChnname(fieldName,oConfig.mainTableName);
+                var sPosition = "";
+                var obj ;
+                if(oConfig.inputStyle == "3" || oConfig.inputStyle == "4"){ //绝对定位
+                    if( oConfig.inputCols > 1){
+                        oPos.left = arrColLeft[ i % oConfig.inputCols ] ;
+                        if(oConfig.inputStyle == "3" ){
+                            oPos.rightbottom = arrColLeft[ i % oConfig.inputCols ] + 65; //65=75-10
+                        }
+                    }
+                    sPosition = "position:absolute;left:"+oPos.left+";top:"+oPos.top+";";
+                    sb.append(getFieldLabelStr(fieldName,chnName,sPosition));
+                    if(oConfig.inputStyle == "4"){
+                        sPosition = "position:absolute;left:"+oPos.left+";top:"+oPos.rightbottom+";";
+                    }else{
+                        sPosition = "position:absolute;left:"+oPos.rightbottom+";top:"+oPos.top+";";
+                    }
+                    obj = getFieldInputStr("DsMain",fieldName,chnName,sPosition);
+                    if( oConfig.inputCols == 1 || i % oConfig.inputCols == oConfig.inputCols-1){
+                        if(oConfig.inputStyle == "4"){
+                            oPos.interval = 20 + obj.height + oPos.adjust ; //20为label的高度
+                            oPos.top += oPos.interval;
+                            oPos.rightbottom += oPos.interval;
+                            oConfig.gridTop = oPos.rightbottom;
+                        }else{
+                            oPos.interval = obj.height + oPos.adjust ; 
+                            oPos.top += oPos.interval; 
+                            oConfig.gridTop = oPos.top;
+                        }
+                    }
+                    sb.append(obj.content);
+                
+                }
+                if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6"){ //table定位
+                    sb.append("<td>");
+                    sb.append(getFieldLabelStr(fieldName,chnName,sPosition));
+                    if(oConfig.inputStyle == "5" ){
+                        sb.append("</td>");
+                        sb.append("<td>");
+                    }
+                    obj = getFieldInputStr("DsMain",fieldName,chnName,""); //sPosition
+                    sb.append(obj.content);
+                    sb.append("</td>");
+                    if( oConfig.inputCols == 1 || i % oConfig.inputCols == oConfig.inputCols-1){
+                        sb.append("</tr>");
+                        if(i<arrF.length-1) sb.append("<tr>");
+                    
+                    }
+                }
+                
+            }
+            if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6"){ //table定位
+                //补齐最后的td
+                if( oConfig.inputCols > 1){
+                    for(var k=0;k< i % oConfig.inputCols ; k++){
+                        sb.append("<td></td>");
+                    }
+                    if(i % oConfig.inputCols > 0){
+                        sb.append("</tr>");
+                    }
+                }        
+                sb.append("</table>");
+            }
+            return sb;
+
+        }
+        /**
+        *由字段名求字段中文名
+        *@date 2008-02-04
+        **/
+        function FieldNameToChnname(fieldName,tableName){
+            var sql = "";
+            if(fcpubdata.dbStruDict == "FC_DBSTRU"){
+                sql = "select chnname from " + fcpubdata.dbStruDict + " where fdname='"+fieldName+"' and tbname='"+tableName+"'";
+            }
+            if(fcpubdata.dbStruDict == "FC_FLDLIST"){
+                sql = "select chnname from " + fcpubdata.dbStruDict + " where fdname='"+fieldName+"'";
+            }
+            if(sql == "") return fieldName;
+            return SqlToField(sql);
+        }
+        /**
+        *取字段所对应的Label设计串
+        *@date 2008-02-05
+        **/
+        function getFieldLabelStr(fieldName,sLabel,sPosition){
+            var sid = "lbl"+fieldName;
+            var sb = new Sys.StringBuilder();
+            if(sPosition == "") sPosition = "width:80px;height:22px;";
+            sb.append("<div controltype='label' style='"+sPosition+"' onresize=resize() onresizestart=resizeStart() onresizeend=resizeEnd() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() oncontrolselect=controlselect() nowrap id="+sid+">"+sLabel+"</div>");
+            return sb;
+        }
+        /**
+        *新建表单向导时生成grid控件串 
+        *@param isMain = true 表示为主表对应的grid, =false 为子表
+        *@date 2008-02-15
+        **/
+        function getWizardGridStr(isMain,tmpLeft,tmpTop,sPosition){
+            var oConfig = WizardConfig ;
+            var sb = new Sys.StringBuilder();
+	        var sTableName = "",dsName="";
+	        if(isMain) {
+	            dsName = "DsMain";
+	            sTableName = oConfig.mainTableName; 
+	        }else{
+	            dsName = "DsSub";
+	            sTableName = oConfig.subTableName; 
+        	
+	        }
+	        sb.append('<IMG id="');
+	        sb.append(sTableName);
+	        sb.append('_grid" onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() style="LEFT: ');
+	        sb.append(tmpLeft);
+	        sb.append('; WIDTH: 469px; ');
+	        sb.append(sPosition);
+	        sb.append( ' TOP: ');
+	        sb.append(tmpTop);
+	        sb.append('; HEIGHT: 296px" onmovestart=moveStart() src="../../fceform/images/ef_designer_webgrid.gif" controltype="grid" visible="是" readonly="否" canselect="是" autoappend="否" autowidth="否" autoheight="否" titlerowheight usertitle="否" titlerows usertitlehtml iscrosstab="否" crosstabtitle crosstabdatatype crosstabsumtype crosstabformat rowtitle coltitle rcount="否" rsum="否" rmin="否" rmax="否" ravg="否" ccount="否" csum="否" cmin="否" cmax="否" cavg="否" crosstabsql csstext1="FONT-SIZE: 12px; OVERFLOW: hidden; BACKGROUND-COLOR: #ffffff" csstext2="FONT-SIZE: 12px; OVERFLOW: hidden; BACKGROUND-COLOR: #c0c0c0" dataset="');
+	        sb.append(dsName);
+	        sb.append('">');
+	        return sb;
+
+        }
+        /**
+        *取得子数据集的设计串,用于新建表单向导中 
+        *@date 2008-02-02
+        **/
+        function getSubDsDesignStr(){
+            var oConfig = WizardConfig ;
+	        var sb = new Sys.StringBuilder();
+	        sb.append( '<IMG id=DsSub onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() ');
+	        sb.append('style="LEFT: 550px; WIDTH: 39px; POSITION: absolute; TOP: 10px; HEIGHT: 47px" onmovestart=moveStart() src="../../fceform/images/ef_designer_dataset.gif" opensortno="2" controltype="dataset" saveastable=');
+	        sb.append(oConfig.subTableName+' ');
+	        sb.append( 'opensql="select '+oConfig.subFields+' from '+oConfig.subTableName+'" iscreatetable="否" pubpara="否" ');
+            sb.append('formatxml="<root>' );
+            sb.append(getDsFormatStr(oConfig.subTableName,oConfig.subFields,"子数据集"));
+            sb.append('</root>" ');
+            
+            sb.append('>');
+            return sb;
+        }
+        function window_onload(){
+            parent.mainform.location.replace("djframe.htm?djsn=wizard_first");
+        }
+	</script>
+</head>
+
+			
+
+<body background="../images/ef_run_background.gif" onload="window_onload()">
+<button id=cmdPrev onclick=cmdPrev_onclick() style="position:absolute;left:5px;top:5px;width:70px;height:22px;">上一步</button>
+<button id=cmdNext onclick=cmdNext_onclick() style="position:absolute;left:80px;top:5px;width:70px;height:22px;">下一步</button>
+<button id=cmdOk onclick=cmdOk_onclick() style="position:absolute;left:155px;top:5px;width:70px;height:22px;">完 成</button>
+<button id=cmdClose onclick="parent.close();" style="position:absolute;left:230px;top:5px;width:70px;height:22px;">关 闭</button>
+</body>
+</html>

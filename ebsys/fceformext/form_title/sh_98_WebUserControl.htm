@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../../fceform/css/dj.css); 
+	</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body bgcolor="#d4d0c8" background="../../fceform/images/ef_run_background.gif" onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>
+   
+   			
+      
+
+pub_djhtm()
+		</script>
+<script>function uf_click() {
+	var str = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath +"/eformWebUserControl.aspx")	;
+	alert(str)
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/>
+<DIV id=SKbillsheet toolbar="不带工具栏" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label6</id><id>label7</id><id>label8</id></label><button><id>button1</id></button></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" billtaborder="<root><taborder>button1</taborder></root>" dj_sn="sh_98_WebUserControl" type="SH" caption="eform调用WebUserControl" mkbh codeheader="BBB" entertype="修改" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:8;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;SKDBTreeView:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0" keyfield window="当前窗口" posleft postop isfile="否" idtype="1"><BUTTON id=button1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 33px; WIDTH: 131px; FONT-FAMILY: ; POSITION: absolute; TOP: 208px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_click()")'>调用WebUserControl</BUTTON> 
+<DIV id=label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 31px; WIDTH: 186px; FONT-FAMILY: ; POSITION: absolute; TOP: 39px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label1" controltype="label">1.新建一个命名为:eformWebUserControl.ascx用户控件;</DIV>
+<DIV id=label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 31px; WIDTH: 612px; FONT-FAMILY: ; POSITION: absolute; TOP: 66px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label2" controltype="label">2.新建一个eformWebUserControl.aspx文件,在当前文件中引入：using WebUserControl;在onload时调用方法：</DIV>
+<DIV id=label3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 60px; WIDTH: 714px; FONT-FAMILY: ; POSITION: absolute; TOP: 88px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label3" controltype="label">WebUserControl.eformWebUserControl o = new WebUserControl.eformWebUserControl();Response.Write(o.WebUserControlText());</DIV>
+<DIV id=label4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 31px; WIDTH: 186px; FONT-FAMILY: ; POSITION: absolute; TOP: 114px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label4" controltype="label">3.点击按钮时调用：function uf_click() {</DIV>
+<DIV id=label5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 162px; WIDTH: 660px; FONT-FAMILY: ; POSITION: absolute; TOP: 137px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label5" controltype="label">var str = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath +"/eformWebUserControl.aspx");</DIV>
+<DIV id=label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 164px; WIDTH: 66px; FONT-FAMILY: ; POSITION: absolute; TOP: 157px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label6" controltype="label">alert(str);</DIV>
+<DIV id=label7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 140px; WIDTH: 6px; FONT-FAMILY: ; POSITION: absolute; TOP: 182px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label7" controltype="label">}</DIV>
+<DIV id=label8 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 10px; WIDTH: 138px; COLOR: #0000ff; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 8px; HEIGHT: 15px; TEXT-ALIGN: left; TEXT-DECORATION: underline; backgroundColor1: #c0c0c0; " onmovestart=moveStart() noWrap value="label8" controltype="label">eform调用WebUserControl示例</DIV></DIV></body></html>

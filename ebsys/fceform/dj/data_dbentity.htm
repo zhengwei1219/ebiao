@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	
+	
+	var connStr="";
+	if(IsSpace(dataset1.datasourceName)==false){
+		connStr="&datasourceName="+dataset1.datasourceName;	
+	}
+
+	
+	var sSql="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		sSql="select name as tbname from sysobjects where name <> 'dtproperties' and xtype='U' and UPPER(name) like ':{Trim(txtTableName.value.toUpperCase())+'%'}:' order by name ";	
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sSql="select table_name as tbname from user_tables where UPPER(table_name) like ':{Trim(txtTableName.value.toUpperCase())+'%'}:' order by table_name";	
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		sSql="SELECT TABNAME as tbname FROM SYSCAT.TABLES WHERE TABSCHEMA='"+db2UserName+"' and UCASE(TABNAME) like ':{Trim(txtTableName.value.toUpperCase())+'%'}:'";
+	}
+
+	if(sSql == ""){
+		new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=GetAllTables"+connStr,
+			"<returnType>dataset</returnType><sFilter></sFilter>",	_afterRun,dataset1);
+		
+	}else {
+		dataset1.PageSize = 20;
+		dataset1.Open(sSql);
+	}
+	fcpubdata.isCanRun = true;
+	
+	function _afterRun(result){
+		var retX = result.value;
+		var obj = result.context;
+		var oXml = SetDom(retX);
+		if(oXml.documentElement == null) return;
+		var len = oXml.documentElement.childNodes.length; 
+		if(len <= 1) return;
+		var sb = new Sys.StringBuilder("<root>");
+		var sEntity = SelectSql("select tbname from fc_entity",1,-1); //取得已导入过的表名
+		var entityXml = SetDom(sEntity);
+		for(var i=0;i<len-1;i++){
+			var tableName = oXml.documentElement.childNodes(i).childNodes(0).text;
+			var sInfo = "";
+			if(isImport(entityXml,tableName)) sInfo = "已导入";
+			sb.append("<tr><td>"+tableName+"</td><td>"+sInfo+"</td></tr>");
+		}
+		sb.append(obj.oDom.documentElement.childNodes(obj.oDom.documentElement.childNodes.length-1).xml);
+		sb.append("</root>");
+		obj.OpenXmlData(sb.toString());
+	}
+}
+function uf_afterRun(oDs){
+	var len = oDs.oDom.documentElement.childNodes.length; 
+	if(len <= 1) return;
+	
+	var sEntity = SelectSql("select tbname from fc_entity",1,-1); //取得已导入过的表名
+	var entityXml = SetDom(sEntity);
+	for(var i=0;i<len-1;i++){
+		var tableName = oDs.oDom.documentElement.childNodes(i).childNodes(0).text;
+		var sInfo = "";
+		if(isImport(entityXml,tableName)) {
+			sInfo = "已导入";
+			oDs.oDom.documentElement.childNodes(i).childNodes(1).text = sInfo;
+		}
+		
+	}
+	oDs.dset_cont();
+}
+function isImport(oXml,tableName){
+	tableName = tableName.toLowerCase();
+	for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+		if(oXml.documentElement.childNodes(i).childNodes(0).text.toLowerCase() == tableName) return true;	
+	}
+	return false;
+}
+function uf_ok(){
+	if(fcpubdata.isCanRun == false) return;
+	fcpubdata.isCanRun = false;
+	var sb = new Sys.StringBuilder("<root>");
+	for(var i=0;i<dataset1.oDom.documentElement.childNodes.length-1;i++){
+		if(dataset1.oDom.documentElement.childNodes(i).getAttribute("multisel") =="是" ){ //&& dataset1.oDom.documentElement.childNodes(i).childNodes(1).text != "已导入" 
+			sb.append("<option>"+dataset1.oDom.documentElement.childNodes(i).childNodes(0).text+"</option>");	
+		}	
+	}
+	sb.append("</root>");
+	var sOptions = sb.toString();
+	if(sOptions == "<root></root>") {
+		fcpubdata.isCanRun = true;
+		alert("至少要选中一个未导入的表后再试!");
+		return	
+	}
+	uf_action(sOptions);
+	
+}
+function uf_action(sOptions){
+//	var strXml="<returnType>option</returnType><sFilter>E_</sFilter><patternName>"+fcpubdata.db2UserName+"</patternName><dbType>oracle</dbType>"; //java版需要dbtype
+	var strXml="<returnType>option</returnType><sFilter></sFilter><patternName>"+fcpubdata.db2UserName+"</patternName><dbType>"+fcpubdata.databaseTypeName+"</dbType>"+sOptions;
+	new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=setDbStru",strXml,function (result){
+		var sRet = result.value;
+		if(IsSpace(sRet)==false) {
+			
+			fcpubdata.isCanRun = true;
+			alert(sRet);
+		}else{
+			alert("OK!");
+			CloseBill();
+		}
+	
+	})
+
+}
+
+function uf_key_enter(){
+	if(event.keyCode == 13){ //按回车键
+		dataset1.Open();
+	}	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType userToolbar='<tr rowstate="add"><td>cmdImport</td><td></td><td>导 入</td><td>uf_ok()</td><td>50px</td></tr><tr rowstate="add"><td>query</td><td>查询</td><td></td><td></td><td></td></tr>' mkbh contxml="<root><label><id>label1</id><id>label3</id></label><text><id>txtTableName</id></text><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:3;radio:0;listbox:1;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:2;button:3;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>grid1</taborder><taborder>txtTableName</taborder></root>" runsave OtherSave="否" codeheader="BBB" keyfield entertype="修改" idtype="1" BLONclose BLONopenBefore BLONopen="uf_open()" window="当前窗口" toolbar="自定义工具栏" posheight poswidth postop posleft center="  " isfile="是" type="ST" caption="导入库结构到fc_entity表" dj_sn="data_dbentity" AutoResizeXml><LABEL style="POSITION: absolute; WIDTH: 129px; HEIGHT: 18px; TOP: 7px; LEFT: 6px" id=label1 onmovestart=moveStart() inputTag="否" NotBg="否" controltype="label">在行上双击选择表名:</LABEL><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col>GridMultiSel(grid1)</col><col>GridMultiSel(grid1)</col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" blRowNo="否" hideHscroll="auto" canselect="是" autoheight="是" autowidth="是" autoappend="否" readonly="否" SetRowHeight="是" hideVscroll="auto" bodyrowheight="-1" bodyrows="-1" visible="是" dataset="dataset1" format="<cols><col><fname>tbname</fname><cname>表名称</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>280</columnwidth><align>left</align></col><col><fname>iType</fname><cname>状态</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" width="371" height="356" top="28" left="4">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" controltype="dataset" isSubGrid="否" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" opensortno="1" AfterOpen='bill_dsevent("AfterOpen","uf_afterRun(dataset1)")' pubpara="否" format="<fields><field><fieldname>tbname</fieldname><datatype>字符</datatype><displaylabel>表名称</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>iType</fieldname><datatype>字符</datatype><displaylabel>状态</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><tbname></tbname><iType></iType></dsid>")' onGetText='bill_ondatasetgettext("<dsid><tbname></tbname><iType></iType></dsid>")' onSetText='bill_ondatasetsettext("<dsid><tbname></tbname><iType></iType></dsid>")'></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 115px; HEIGHT: 20px; TOP: 3px; LEFT: 238px" id=txtTableName onmovestart=moveStart() controltype="text" onkeydown='bill_onkeydown("uf_key_enter()")'><LABEL style="POSITION: absolute; WIDTH: 58px; HEIGHT: 19px; TOP: 7px; LEFT: 178px" id=label3 onmovestart=moveStart() inputTag="否" controltype="label">模糊查找</LABEL></DIV></body></html>

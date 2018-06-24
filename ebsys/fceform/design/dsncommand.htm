@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE>运行命令</TITLE>
+<SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
+<!--
+var bClickOk=false
+function cmdOk_onclick() {
+	bClickOk=true
+	window.returnValue=txtCheck.value
+	self.close()
+}
+
+function window_onbeforeunload() {
+	if(bClickOk==false) 
+		window.returnValue="" 
+}
+
+function window_onload() {
+	txtCheck.value = window.dialogArguments
+}
+//-->
+</SCRIPT>
+</HEAD>
+<BODY bgProperties=fixed leftMargin=10 bgColor=silver LANGUAGE=javascript onbeforeunload="return window_onbeforeunload()" onload=window_onload() >
+<TEXTAREA id=txtCheck style="HEIGHT: 280px; LEFT: 5px; POSITION: absolute; TOP: 34px; WIDTH: 680px">
+</TEXTAREA> 
+<INPUT id=cmdOk type=button value="运 行" style="HEIGHT: 24px; LEFT:5px; POSITION: absolute; TOP: 5px; WIDTH: 71px" LANGUAGE=javascript onclick="return cmdOk_onclick()">
+
+
+
+</BODY>
+</HTML>
+

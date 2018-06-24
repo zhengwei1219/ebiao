@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){//占时不用此方法
+	txtTableName.value = fcpubdata.obj[0];
+	dropTable.value = fcpubdata.obj[1];
+	comSqlType.value = fcpubdata.obj[2];
+	colNum.value = fcpubdata.obj[3];
+	rowHeight.value = fcpubdata.obj[4];
+	labelWidth.value = fcpubdata.obj[5];
+	fieldWidth.value = fcpubdata.obj[6];
+	SetCheckBoxValue($id("nullRow"), fcpubdata.obj[7]);
+}
+
+function uf_ok(){
+	
+	var arr=new Array(); 
+	arr[0] = txtTableName.value;
+	arr[1] = dropTable.value;
+	arr[2] = comSqlType.value;
+	arr[3] = colNum.value;
+	arr[4] = rowHeight.value;
+	arr[5] = labelWidth.value;
+	//alert(arr[5])
+	arr[6] = fieldWidth.value;
+	arr[7] = nullRow.value; 
+	window.returnValue = arr;
+    window.close(); 	
+}
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../../fceform/htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType contxml="<root><checkbox><id>nullRow</id></checkbox><label><id>label1</id><id>label4</id><id>label3</id><id>label5</id><id>label7</id><id>label6</id></label><combobox><id>comSqlType</id></combobox><div><id>div1</id></div><text><id>txtTableName</id></text><dropdownlist><id>dropTable</id></dropdownlist><dataset><id>dataset1</id></dataset><spin><id>colNum</id><id>rowHeight</id><id>fieldWidth</id><id>labelWidth</id></spin></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:7;radio:0;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:0;div:1;DsMain_field:0;a:0;button:0;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:0;dataset:1;spin:4;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>dropTable</taborder><taborder>comSqlType</taborder><taborder>colNum</taborder><taborder>rowHeight</taborder><taborder>fieldWidth</taborder><taborder>labelWidth</taborder><taborder>txtTableName</taborder><taborder>nullRow</taborder></root>" isfile="是" posheight="205" poswidth="350" postop posleft window="有模式窗口" caption="布局向导属性设置" type="ZK" dj_sn="zk_layout_wizard_property" toolbar="自定义工具栏" BLONopen center="居中" BLONclose BLONopenBefore userToolbar='<tr rowstate="add"><td>ok</td><td>设置成功</td><td></td><td>uf_ok()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' AutoResizeXml><LABEL style="POSITION: absolute; WIDTH: 44px; HEIGHT: 15px; TOP: 8px; LEFT: 14px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">表名</LABEL><?xml:namespace prefix = fc /><fc:fc_code id=dropTable controltype="dropdownlist" align="undefined" datasourceName="" dataset="dataset1" visible="是" field="tbchnname" blninput="否" blnempty="否" addrow="否" multiselect="否" xml="" isShowTree="0" isTreeNewSql="0" FieldNameList="" format=" 表名  | 表中文名" enabled="false" height="20" width="186" top="2" left="65" sqltrans="%F4%D8%E6%D8%D4%F6XrnXrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100j%F6%D2%EA%D0%E8%D8Xr%94%F6%D2%D4%DE%EA%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100Xrn%E0%EA%EA%D8%F2Xrn%E2%EC%E0%EAXrn%DA%D4%CC%F0%F8%D8%F2%u0100Xrn%EC%EAXrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100j%F6%D2%EA%D0%E8%D8Xt%96%DA%D4%CC%F0%F8%D8%F2%u0100j%F6%D2%EA%D0%E8%D8XrnXrn%FC%DE%D8%F2%D8Xrn%DA%D4%CC%F0%F8%D8%F2%u0100j%F6%u0100%EE%D8Xt%96pnnXrn%EC%F2Xrn%DA%D4%CC%F0%F8%D8%F2%u0100j%F6%u0100%EE%D8XrnXt%96Xrnrnn" position="absolute" sql2="undefined"></fc:fc_code><LABEL style="POSITION: absolute; WIDTH: 79px; HEIGHT: 16px; TOP: 32px; LEFT: 15px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">sql语句类型</LABEL><SELECT style="POSITION: absolute; WIDTH: 155px; HEIGHT: 25px; TOP: 26px; LEFT: 98px" id=comSqlType onmovestart=moveStart() controltype="combobox" async="否" datasourceName tempvalue temptext check="2" sql sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D4%EC%D6%D8Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6Xrn%FC%DE%D8%F2%D8Xrn%F6%u0100%EE%D8%EA%D0%E8%D8XrnXt%96Xr%7CX%F8%7Cxr%7EX%F8%80npvX%F8%7C%94%7C%92X%F8xrr%92Xr%7CXrn%D0%EA%D6XrnXr%7E%D4%EC%D6%D8Xt%96Xr%7CpnnXr%7CXrn%EC%F2Xrn%D4%EC%D6%D8Xt%96Xr%7CrnnXr%7CXrnXrnXr%80"></SELECT> 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 332px; HEIGHT: 83px; BORDER-TOP: 1px solid; TOP: 53px; BORDER-RIGHT: 1px solid; LEFT: 8px" id=div1 class=control-border-color onmovestart=moveStart() controltype="div"><LABEL style="POSITION: absolute; WIDTH: 51px; HEIGHT: 15px; TOP: 11px; LEFT: 9px" id=label3 onmovestart=moveStart() controltype="label" inputTag="否">列数</LABEL>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 6px; LEFT: 82px; align: undefined" id=colNum class=xpSpin align="undefined ParentPos='相对' " value="2" controltype="spin" dataset="undefined" field="undefined" NextNum="1" Max="10" Min="1" enabled="否" height="22px" width="70px" top="6px" left="82px" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 11px; LEFT: 190px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">行高</LABEL>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 6px; LEFT: 246px; align: undefined" id=rowHeight class=xpSpin align="undefined ParentPos='相对' " value="20" controltype="spin" dataset="undefined" field="undefined" NextNum="1" Max="300" Min="20" enabled="否" height="22px" width="70px" top="6px" left="246px" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 31px; LEFT: 246px; align: undefined" id=fieldWidth class=xpSpin align="undefined ParentPos='相对' " value="80" controltype="spin" dataset="undefined" field="undefined" NextNum="1" Max="500" Min="1" enabled="否" height="22px" width="70px" top="31px" left="246px" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV><LABEL style="POSITION: absolute; WIDTH: 71px; HEIGHT: 19px; TOP: 39px; LEFT: 176px" id=label7 onmovestart=moveStart() controltype="label" inputTag="否">字段列宽度</LABEL>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 32px; LEFT: 82px; align: undefined" id=labelWidth class=xpSpin align="undefined ParentPos='相对' " value="80" controltype="spin" dataset="undefined" field="undefined" NextNum="1" Max="500" Min="10" enabled="否" height="22px" width="70px" top="32px" left="82px" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV><LABEL style="POSITION: absolute; WIDTH: 88px; HEIGHT: 20px; TOP: 38px; LEFT: 4px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">label列宽度</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 56px; LEFT: 3px" id=nullRow onmovestart=moveStart() noWrap value="否" controltype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>在字段行之间插入空行来调节行与行的间距</SPAN></DIV></DIV><fc:dataset id=dataset1 idtype="1" controltype="dataset" opensortno="1" format="<fields><field><fieldname>tbname</fieldname><datatype>字符</datatype><displaylabel>表名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tbchnname</fieldname><datatype>字符</datatype><displaylabel>表中文名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" issubds="否" submittype="1" submitno="1" isaddemptyrec="否" isSubGrid="否" pubpara="否" onValid='bill_ondatasetvalid("<dsid><tbname></tbname><tbchnname></tbchnname></dsid>")' onGetText='bill_ondatasetgettext("<dsid><tbname></tbname><tbchnname></tbchnname></dsid>")' onSetText='bill_ondatasetsettext("<dsid><tbname></tbname><tbchnname></tbchnname></dsid>")'></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 110px; DISPLAY: none; HEIGHT: 20px; TOP: 9px; LEFT: 326px" id=txtTableName onmovestart=moveStart() controltype="text" dataset="dataset1" china="新建字段" field="tbname"></DIV></body></html>

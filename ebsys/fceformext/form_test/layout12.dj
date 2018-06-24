@@ -1,0 +1,156 @@
+<script></script> 
+<DIV oncontrolselect=controlselect() id=SKbillsheet contentEditable=true jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="layout12" caption="layout12" type="TT" isfile="是" center="  " posleft postop poswidth posheight toolbar="确定_取消" window="当前窗口" BLONopen BLONopenBefore BLONclose userType billtaborder="<root></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:1" contxml="<root><layout><id>layout1</id></layout></root>" unselectable="on"><DIV onresizeend=resizeEnd() oncontrolselect=controlselect() style="BORDER-BOTTOM: 0px; POSITION: static; BORDER-LEFT: 0px; BACKGROUND-COLOR: #ffffff; WIDTH: 95%; HEIGHT: 95%; OVERFLOW: auto; BORDER-TOP: 0px; TOP: 0px; BORDER-RIGHT: 0px; LEFT: 0px" id=layout1 onresize=resize() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="layout" isContentSize="否" recRows file="/fceformext/html/PreSurveyBaseInfo.html" styleStr dsXml="%3Croot%3E%3Cset%3E%3Cpages%3E0%3C/pages%3E%3Cfields%3E%3Cfield%3E%3Cfieldname%3Esname%3C/fieldname%3E%3Cdatatype%3E%u5B57%u7B26%3C/datatype%3E%3Cdisplaylabel%3E%u539F%u6587%u4EF6%u4E2D%u63A7%u4EF6%3C/displaylabel%3E%3Csize%3E100%3C/size%3E%3Cprecision%3E0%3C/precision%3E%3Cfieldkind%3E%u6570%u636E%u9879%3C/fieldkind%3E%3Cdefaultvalue%3E%3C/defaultvalue%3E%3Cdisplayformat%3E%3C/displayformat%3E%3Cisnull%3E%u5426%3C/isnull%3E%3Ciskey%3E%u5426%3C/iskey%3E%3Cvalid%3E%u5426%3C/valid%3E%3Cprocvalid%3E%u5426%3C/procvalid%3E%3Clink%3E%u5426%3C/link%3E%3Ctarget%3E%3C/target%3E%3Chref%3E%3C/href%3E%3Cvisible%3E%u662F%3C/visible%3E%3Cprimarykey%3E%u5426%3C/primarykey%3E%3Cfieldvalid%3E%3C/fieldvalid%3E%3Ctag%3E%3C/tag%3E%3C/field%3E%3Cfield%3E%3Cfieldname%3Esid%3C/fieldname%3E%3Cdatatype%3E%u5B57%u7B26%3C/datatype%3E%3Cdisplaylabel%3E%u5F53%u524D%u8868%u5355%u7684%u63A7%u4EF6ID%3C/displaylabel%3E%3Csize%3E100%3C/size%3E%3Cprecision%3E0%3C/precision%3E%3Cfieldkind%3E%u6570%u636E%u9879%3C/fieldkind%3E%3Cdefaultvalue%3E%3C/defaultvalue%3E%3Cdisplayformat%3E%3C/displayformat%3E%3Cisnull%3E%u5426%3C/isnull%3E%3Ciskey%3E%u5426%3C/iskey%3E%3Cvalid%3E%u5426%3C/valid%3E%3Cprocvalid%3E%u5426%3C/procvalid%3E%3Clink%3E%u5426%3C/link%3E%3Ctarget%3E%3C/target%3E%3Chref%3E%3C/href%3E%3Cvisible%3E%u662F%3C/visible%3E%3Cprimarykey%3E%u5426%3C/primarykey%3E%3Cfieldvalid%3E%3C/fieldvalid%3E%3Ctag%3E%3C/tag%3E%3C/field%3E%3C/fields%3E%3C/set%3E%3C/root%3E">
+<DIV>
+<TABLE class=table_width border=0 cellSpacing=0 cellPadding=0 height="100%">
+<TBODY>
+<TR>
+<TD class=main_table_border height="100%" vAlign=top>
+<TABLE border=0 cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=main_toptd>
+<DIV id=con>
+<UL id=tags11>
+<LI class=selecttag><A href="../../fceform/design/extractprofessional.aspx"><SPAN class=icon_epf>摸底调查基本信息</SPAN></A> </LI>
+<LI><A href="../../fceform/design/professionalgroup.aspx"><SPAN class=icon_pfg>摸底调查历史信息</SPAN></A> </LI>
+<LI><A href="../../fceform/design/projectassign.aspx"><SPAN class=icon_pja>数据导入</SPAN></A> </LI></UL></DIV></TD></TR>
+<TR>
+<TD class=main_bodybg>
+<TABLE border=0 cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD class=search_td>
+<TABLE class=search_class border=0 cellSpacing=0 cellPadding=3 width="100%">
+<TBODY>
+<TR>
+<TD>所属省 <SELECT id=select name=select> <OPTION selected>全部</OPTION> <OPTION>北京</OPTION> <OPTION>天津</OPTION> <OPTION>上海</OPTION></SELECT> </TD>
+<TD>矿　　类 <SELECT id=select4 name=select4> <OPTION selected>全部</OPTION> <OPTION>能源</OPTION> <OPTION>黑金</OPTION></SELECT></TD>
+<TD>矿山编号 <INPUT id=textfield class=input_text name=textfield></TD>
+<TD>调查时间 <INPUT id=textfield4 class=input_text size=15 name=textfield4> </TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>所属市 <SELECT id=select2 name=select2> <OPTION selected>全部</OPTION></SELECT></TD>
+<TD>矿　　种 <SELECT id=select5 name=select5> <OPTION selected>全部</OPTION> <OPTION>铜</OPTION> <OPTION>铁</OPTION></SELECT></TD>
+<TD>许可证号 <INPUT id=textfield2 class=input_text name=textfield2></TD>
+<TD>建矿时间 <INPUT id=textfield5 class=input_text size=15 name=textfield5></TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>所属县 <SELECT id=select3 name=select3> <OPTION selected>全部</OPTION></SELECT></TD>
+<TD>经济类型 <SELECT id=select6 name=select6> <OPTION selected>全部</OPTION> <OPTION>国有</OPTION> <OPTION>集体</OPTION> <OPTION>个人</OPTION></SELECT></TD>
+<TD>企业名称 <INPUT id=textfield3 class=input_text name=textfield3></TD>
+<TD>&nbsp;</TD>
+<TD><INPUT id=button class=btn_small value=查询 type=submit name=button></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD vAlign=top>
+<TABLE class=main_table border=0 cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR class=table_title>
+<TD width="10%" align=middle>矿山编号</TD>
+<TD width="18%" align=middle>企业名称</TD>
+<TD width="22%" align=middle>矿山名称</TD>
+<TD width="10%" align=middle>矿类</TD>
+<TD width="8%" align=middle>矿种</TD>
+<TD width="9%" align=middle>经济类型</TD>
+<TD width="9%" align=middle>建矿时间</TD>
+<TD width="14%" align=middle>操作</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000000</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[<A href="../../fceform/design/presurveybaseinfolist.html">查看</A>] [修改] [<A href="../../fceform/design/presurveybaseinfoadd.html">新增</A>]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000001</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000002</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000003</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000004</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000005</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000006</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000007</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000008</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000009</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=tdbg onmouseover="this.className='tdbgmouseover'" onmouseout="this.className='tdbg'">
+<TD align=middle>000010</TD>
+<TD>高疃镇曲家日升建材厂</TD>
+<TD>&nbsp;</TD>
+<TD align=middle>贵金属矿产</TD>
+<TD align=middle>岩金矿</TD>
+<TD align=middle>集体</TD>
+<TD align=middle>2001-9-1</TD>
+<TD class=look>[查看]</TD></TR>
+<TR class=table_foot>
+<TD colSpan=8 align=middle><IMG src="../../fceform/images/page.gif" width=734 height=27></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV></DIV></DIV><p id=splitaddhtml /><link href="../../Images/style.css" rel="stylesheet" type="text/css">

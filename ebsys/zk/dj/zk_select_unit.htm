@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//增加子节点
+
+var arrTree=new Array();//树控件中添加到节点
+var profileId = "";//简档id
+var profilName = "";//简档名
+var unitName = "";//功能名称
+function uf_open()
+{
+	SetButtonImage($id("cmdTreeNodeUp"),"../../fceform/images/ef_run_button_up.gif") ;
+	SetButtonImage($id("cmdTreeNodeDown"),"../../fceform/images/ef_run_button_down.gif") ;
+	profileId = fcpubdata.obj.Field('profileid').Value;
+	profilName = fcpubdata.obj.Field('profilename').Value;
+	unitName = fcpubdata.obj.Field('unitname').Value;
+	txtProfileName.value = profilName;
+	if(IsSpace(unitName) == false) droTableName.value=unitName;//如果功能名没有就不赋值
+}
+function profileid(){
+	droTableName.sql1 = "select FCQ_UNIT.id,name from  FCQ_UNIT left join fcq_profilesub on FCQ_UNIT.id = fcq_profilesub.detail where fcq_profilesub.profileid='"+profileId+"'";
+}
+function uf_AddNode()
+{
+	var mAction = "javascript:"+unescape($id("tree1").clicknode);
+	if(Global.selectedItem == null)
+	{
+		alert("请选择要删除的节点！");
+		return;
+	}
+	if(Global.selectedItem != null)
+	{
+		var pos = Global.selectedItem.childNodes.length ;
+		var obj = new xtreeItem("","功能节点",mAction,"","","","","");
+		arrTree[arrTree.length]=obj;
+		Global.selectedItem.add(obj);
+	}
+	else
+	{
+		window.alert("请选择要增加节点的位置！");
+		return;
+	}
+}
+//删除节点
+function uf_DelNode()
+{
+	if(Global.selectedItem == null)
+	{
+		alert("请选择要删除的节点！");
+		return;
+	}
+	if(Global.selectedItem == Global.selectedItem.root())
+	{
+		alert("不能删除根节点！");
+		return;
+	}
+	//var sId = Global.selectedItem.id;
+	//Global.selectedItem.code="del";
+	Global.selectedItem.remove(Global.selectedItem); 
+	//alert(Global.all[sId]==null)	
+}
+//修改保存
+function uf_edit()
+{
+	if(Global.selectedItem == null)
+	{
+		alert("请选择要修改保存的节点！");
+		return;
+	}
+	Global.selectedItem.setText(droTableName.value);
+	Global.selectedItem.code = txtUrl.value;
+	Global.selectedItem.title = droTableName.value;
+}
+//保存
+function uf_save()
+{
+	if(uf_validate()) return;//ret=='false'有未添加功能的节点就返回
+	var treeNodeX = tree1.getNodeXml();
+	var menuDesign = escape(treeNodeX);
+	treeNodeX=RepStr(treeNodeX,'target="_parent"',' target="rightWin"');
+    var menuRunning = escape(RepStr(treeNodeX,' code="',' href="'));
+	var xmlSql = "<update tableName='FCQ_PROFILE'>"+"<set>menuDesign='"+menuDesign+"',menuRunning='"+menuRunning+"' </set>"+" <where>   profileId='"+profileId+"'</where>"+"</update>";
+	doSaveData(xmlSql);
+}
+//增加节点
+function uf_insertNode(bAfter) {
+	if(Global.selectedItem == null)
+	{
+		alert("请选择要增加节点的位置！");
+		return;
+	}
+	if(Global.selectedItem == Global.selectedItem.root())
+	{
+		alert("不能增加根节点！");
+		return;
+	}
+	if(Global.selectedItem != null)
+	{
+		var mAction = "javascript:"+unescape($id("tree1").clicknode);
+		var obj= new xtreeItem("","功能节点",mAction,"","","","","");
+		arrTree[arrTree.length]=obj
+		Global.selectedItem.insert(obj,bAfter);
+	}
+	else
+	{
+		window.alert("请选择要增加节点的位置！");
+		return;
+	}
+	
+}
+//取出树控件的xml数据
+function uf_openTree()
+{
+	var sql = "select menuDesign from FCQ_PROFILE where profileId='"+profileId+"'";
+	var sqlRet = SqlToField(sql);
+	tree1.loadXmlStr(unescape(sqlRet));
+	tree1.expand();
+}
+
+//取fcq_unit表的url字段的值
+function uf_url(){
+	var sSql = "select url from fcq_unit where id='"+txtId.value+"'";
+	var sqlRet = SqlToField(sSql);
+	if(IsSpace(sqlRet) == false) sqlRet = "&" + sqlRet;
+	txtUrl.value = "javascript:loadUrl('"+sqlRet+"')";
+
+}
+//查看是否给节点添加了功能
+function uf_validate()
+{
+	//tree1.FindNode(tree1,"code","")
+	tree1.FindNode(tree1,"text","功能点");
+	if(Global.selectedItem == Global.selectedItem.root())
+	{
+		if(Global.selectedItem.getFirstChild().text == "功能点")
+		{
+			alert("没有可保存的信息")
+			return true;
+		}
+	}
+	for(var i=0;i<arrTree.length;i++)
+	{
+		//alert(arrTree[i]==null);
+		//alert(arrTree[i].id);
+		if(Global.all[arrTree[i].id] == null) continue;
+		if(arrTree[i].code == "")
+		{
+			alert("请给没有添加功能的节点，在下拉列表中增加功能");
+			return true;
+		}
+	}	
+	return false;
+}
+//取消简档FCQ_PROFILE表的menuDesign，menuDesign字段值。
+function uf_delete()
+{
+	var xmlSql = "<update tableName='FCQ_PROFILE'>"+"<set>menuDesign='',menuRunning='' </set>"+" <where>   profileId='"+profileId+"'</where>"+"</update>";
+	doSaveData(xmlSql);
+	$id("tree1").innerHTML = "";
+	TreeRefresh($id("tree1"),'');
+	tree1.loadXmlStr('<TreeNode id="1" text="功能点1"  target="_self" title="功能点"  icon=""  check="undefined" code=""></TreeNode>');
+	
+}
+//简档名为系统管理员时，显示提示信息；
+function uf_systemAdmini(){
+	if(profileId == "systemadmin"){labCue.style.display="block"};
+}
+//打开默认菜单
+function uf_openDefaultMenu(){
+	$id("tree1").innerHTML = "";
+	TreeRefresh($id("tree1"),'');
+	var sql="select menuDesign from FCQ_PROFILE where profileId='systemadmin'";
+	var sqlRet = SqlToField(sql);
+	tree1.loadXmlStr(unescape(sqlRet));
+	tree1.expand();
+}
+
+
+function uf_moveNode(isUp){
+	var oNode = Global.selectedItem;
+	if(oNode != null){
+		oNode.moveNode(isUp);	
+	}
+
+}
+
+
+ 
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/xtree.css'  /><script src='../../fceform/js/xtree.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="居中" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:9;radio:0;listbox:0;textarea:0;combobox:3;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:3;div:0;DsMain_field:0;a:1;button:14;text:7;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:0;dataset:2;spin:0;excel:0;tree:5;ebshow:0;ebiao:0;layout:0;page:0" posheight="650" poswidth="500" caption="简档权限管理" type="ZK" dj_sn="zk_select_unit" billtaborder="<root><taborder>FCButton8</taborder><taborder>FCButton4</taborder><taborder>FCButton5</taborder><taborder>txtUrl</taborder><taborder>button4</taborder><taborder>button5</taborder><taborder>droTableName</taborder><taborder>txtId</taborder><taborder>button9</taborder><taborder>txtProfileName</taborder><taborder>button12</taborder><taborder>cmdTreeNodeUp</taborder><taborder>cmdTreeNodeDown</taborder></root>" contxml="<root><label><id>label5</id><id>label7</id><id>labCue</id></label><button><id>FCButton8</id><id>FCButton4</id><id>FCButton5</id><id>button4</id><id>button5</id><id>button9</id><id>button12</id><id>cmdTreeNodeUp</id><id>cmdTreeNodeDown</id></button><text><id>txtUrl</id><id>txtId</id><id>txtProfileName</id></text><dropdownlist><id>droTableName</id></dropdownlist><dataset><id>dataset2</id></dataset><tree><id>tree1</id></tree></root>" BLONopen="uf_open();uf_systemAdmini();uf_openTree();" window="当前窗口" posleft postop isfile="是" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" toolbar="不带工具栏" idtype="1" AutoResizeXml="<record id ='tree1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>5</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" mkbh runsave keyfield="sid" entertype="展现" codeheader="CSM" OtherSave="否"><DIV id=tree1 style="BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; DISPLAY: block; LEFT: 7px; OVERFLOW: auto; BORDER-LEFT: 1px solid; WIDTH: 320px; BORDER-BOTTOM: 1px solid; POSITION: absolute; TOP: 6px; HEIGHT: 622px; BACKGROUND-COLOR: #ffffff" datasourceName="" controltype="tree" sql="%F4%D8%E6%D8%D4%F6Xrn%AA%90%A8%98Xr%94%EE%D0%F2%D8%EA%F6%E0%D6Xr%94%B8%B2%A6Xr%94%DA%F2%EC%E8%AA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%B8%AA%A0%B6" xml="%3CTreeNode%20id%3D%221%22%20text%3D%22treeItem%22%20roottarget%3D%22_self%22%20rootaction%3D%22%2520droTableName.value%253DGlobal.selectedItem.text%253B%250D%250A%2520txtUrl.value%253DGlobal.selectedItem.code%253B%250D%250A%250D%250A%250D%250A%2520%2520%22%20%20target%3D%22_self%22%20title%3D%22treeItem%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22%3E%3CTreeNode%20id%3D%222%22%20text%3D%22%u589E%u52A0%u8282%u70B9%22%20%20target%3D%22_self%22%20title%3D%22%u589E%u52A0%u8282%u70B9%22%20%20icon%3D%22%22%20%20check%3D%22undefined%22%20code%3D%22%22/%3E%3C/TreeNode%3E" clicknode="%20droTableName.value%3DGlobal.selectedItem.text%3B%0D%0A%20txtUrl.value%3DGlobal.selectedItem.code%3B%0D%0A%0D%0A%0D%0A%20%20" roottext="功能点" sourcetype="2" ischecked="否" isAll="是" opentb="_self" xmlpath=""></DIV><BUTTON id=FCButton8 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 376px; WIDTH: 123px; FONT-FAMILY: ; POSITION: absolute; TOP: 175px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_insertNode(true)")' dropstyle="否">增加功能点</BUTTON><BUTTON id=FCButton4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 376px; WIDTH: 123px; FONT-FAMILY: ; POSITION: absolute; TOP: 215px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_AddNode()")' dropstyle="否">增加子功能点</BUTTON><BUTTON id=FCButton5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 376px; WIDTH: 123px; FONT-FAMILY: ; POSITION: absolute; TOP: 254px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_DelNode()")' dropstyle="否">删除功能点</BUTTON><INPUT id=txtUrl style="DISPLAY: none; LEFT: 620px; WIDTH: 491px; POSITION: absolute; TOP: 90px; HEIGHT: 20px" onmovestart=moveStart() size=78 controltype="text"><BUTTON id=button4 style="LEFT: 376px; WIDTH: 123px; POSITION: absolute; TOP: 136px; HEIGHT: 25px; BACKGROUND-COLOR: #d2d0ca" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_insertNode(false)")' dropstyle="否">插入功能点</BUTTON><LABEL id=label5 style="LEFT: 376px; WIDTH: 82px; COLOR: #0000ff; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 83px; HEIGHT: 20px" onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">选择功能点</LABEL><?xml:namespace prefix = fc /><fc:dataset id=dataset2 issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" opensortno="1" isSubGrid="否" controltype="dataset" idtype="1" onValid='bill_ondatasetvalid("<dsid><NAME></NAME><fromName></fromName><ID></ID></dsid>")' onGetText='bill_ondatasetgettext("<dsid><NAME></NAME><fromName></fromName><ID></ID></dsid>")' onSetText='bill_ondatasetsettext("<dsid><NAME></NAME><fromName></fromName><ID></ID></dsid>")' format="<fields><field><fieldname>NAME</fieldname><datatype>字符</datatype><displaylabel>NAME</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fromName</fieldname><datatype>字符</datatype><displaylabel>表单sn</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>ID</fieldname><datatype>字符</datatype><displaylabel>ID</displaylabel><size>11</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>"></fc:dataset><BUTTON id=button5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 376px; WIDTH: 123px; FONT-FAMILY: ; POSITION: absolute; TOP: 292px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_save()")' dropstyle="否">保存全部功能点</BUTTON><fc:fc_code id=droTableName datasourceName="" controltype="dropdownlist" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%B0%CC%B8%AA%A0%B6j%E0%D6Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8XrnXrn%9A%94%B0%CC%B8%AA%A0%B6Xrn%E6%D8%DA%F6Xrn%E2%EC%E0%EAXrn%DA%D4%F0%CC%EE%F2%EC%DA%E0%E6%D8%F4%F8%D2Xrn%EC%EAXrn%9A%94%B0%CC%B8%AA%A0%B6j%E0%D6XrnXt%96Xrn%DA%D4%F0%CC%EE%F2%EC%DA%E0%E6%D8%F4%F8%D2j%D6%D8%F6%D0%E0%E6Xrn%FC%DE%D8%F2%D8Xrn%DA%D4%F0%CC%EE%F2%EC%DA%E0%E6%D8%F4%F8%D2j%EE%F2%EC%DA%E0%E6%D8%E0%D6Xt%96Xr%7CXt%90X%7C%92%EE%F2%EC%DA%E0%E6%D8%A0%D6X%7C%96Xt%90Xr%7C" format="| 选择需要的功能名称 !" sql2="undefined" xml="" blninput="是" blnempty="否" addrow="否" multiselect="否" onchange='bill_onclick("uf_url(); uf_edit();")' visible="是" field="NAME" dataset="dataset2" height="20" width="216" top="103" left="376" position="absolute" align="undefined" enabled="false" isShowTree="undefined" isTreeNewSql="undefined" FieldNameList="undefined"></fc:fc_code><INPUT id=txtId style="DISPLAY: none; LEFT: 475px; WIDTH: 110px; POSITION: absolute; TOP: 55px; HEIGHT: 20px" onmovestart=moveStart() controltype="text" china="ID" field="ID" dataset="dataset2"><LABEL id=label7 style="LEFT: 376px; WIDTH: 98px; COLOR: #0000ff; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 37px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">简档名</LABEL><BUTTON id=button9 style="LEFT: 376px; WIDTH: 123px; POSITION: absolute; TOP: 329px; HEIGHT: 25px; BACKGROUND-COLOR: #c6c5bb" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_delete()")' dropstyle="否">删除简档功能</BUTTON><INPUT id=txtProfileName style="LEFT: 376px; WIDTH: 214px; POSITION: absolute; TOP: 56px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=38 controltype="text"><BUTTON id=button12 style="LEFT: 376px; WIDTH: 122px; POSITION: absolute; TOP: 370px; HEIGHT: 25px; BACKGROUND-COLOR: #cac4b7" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_openDefaultMenu()")' dropstyle="否">使用默认菜单</BUTTON><LABEL id=labCue style="DISPLAY: none; LEFT: 606px; WIDTH: 295px; POSITION: absolute; TOP: 50px; HEIGHT: 30px" onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">简档名为系统管理员时，设计的功能菜单为默认菜单，仅供其他简档名的功能菜单为空时使用。</LABEL><INPUT id=cmdTreeNodeUp style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 340px; WIDTH: 22px; POSITION: absolute; TOP: 210px; HEIGHT: 23px; BACKGROUND-COLOR: #d4d0c8" type=button controltype="button" onclick='bill_onclick("uf_moveNode(true)")' dropstyle="否"><INPUT id=cmdTreeNodeDown style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 340px; WIDTH: 22px; POSITION: absolute; TOP: 238px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" type=button controltype="button" onclick='bill_onclick("uf_moveNode(false)")' dropstyle="否"></DIV><script language="JavaScript">var tree1;window.attachEvent( "onunload", function(){tree1=null;})</script></body></html>

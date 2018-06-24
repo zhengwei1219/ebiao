@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrProps = ["dj_sn","caption","type","isfile"] ;
+function uf_open() {
+	var obj=fcpubdata.obj[0];
+	var oSysForm = new Eform.SysForm()
+	oSysForm.setButtonImage();
+	new Eapi.BaseCont().addOption($id("type"),oSysForm.getBillType());
+	oSysForm.jsonToCont(obj,arrProps);
+	
+}
+function uf_ok() {
+	var s1 = new Eapi.Str().trim($id("dj_sn").value);
+	if(IsSpace(s1) ) {
+		alert("流程ID不能为空");
+		return;
+	}	
+	if( IsSpace($id("caption").value.trim()) ) {
+		$id("caption").value = $id("dj_sn").value;
+	}
+	var obj=fcpubdata.obj[0];
+	new Eform.SysForm().contToJson(obj,arrProps);
+
+	window.returnValue="ok"
+	window.close();
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV class=dj id=SKbillsheet onkeydown="" ondblclick="" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" dj_sn="wfprop" caption="表单属性" type="LR" isfile="是" center="居中" posleft postop poswidth="377" posheight="301" toolbar="不带工具栏" window="有模式窗口" BLONopen="uf_open()" idtype="1" entertype="修改" keyfield codeheader OtherSave="否" para="<r></r>" dj_id="245" controlno="SKButton:7;SKDBedit:15;checkbox:1;label:1;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:1;button:0;text:9;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0" mkbh="E5" billtaborder="<root><taborder>isfile</taborder><taborder>type</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>dj_sn</taborder><taborder>caption</taborder></root>" contxml="<root><checkbox><id>isfile</id></checkbox><label><id>Label1</id><id>Label2</id><id>Label3</id><id>Label24</id><id>Label25</id></label><combobox><id>type</id></combobox><tab><id>PageControl1</id></tab><a><id>SKDBLike2</id><id>SKDBLike6</id></a><button><id>cmdOk</id><id>cmdClose</id></button><text><id>dj_sn</id><id>caption</id></text></root>" blmode="其它" BLONclose BLONopenBefore runsave AutoResizeXml><DIV class=tab-pane id=PageControl1 style="LEFT: 1px; WIDTH: 365px; POSITION: absolute; TOP: 0px; HEIGHT: 229px" controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV class=tab-page style="WIDTH: 365px; HEIGHT: 211px">
+<H2 class=tab>属性</H2><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 27px; WIDTH: 53px; COLOR: #ff0000; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 12px; HEIGHT: 15px" controltype="label" align="Left" NotBg="否">流程ID：</SPAN><SPAN id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 15px; WIDTH: 61px; POSITION: absolute; TOP: 91px; HEIGHT: 10px" controltype="label" align="Left" NotBg="否">流程分类：</SPAN><SPAN id=Label3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 15px; WIDTH: 61px; POSITION: absolute; TOP: 52px; HEIGHT: 15px" controltype="label" align="Left" NotBg="否">流程名称：</SPAN><SELECT id=type style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 72px; WIDTH: 165px; POSITION: absolute; TOP: 85px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff" controltype="combobox" sql check="1" temptext tempvalue onkeydown='bill_onkeydown("")' backheight="20" backwidth="165" sqltrans></SELECT> 
+<DIV id=isfile style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 245px; WIDTH: 80px; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 85px; HEIGHT: 20px; TEXT-ALIGN: left; backgroundColor1: #ffffff" noWrap value="是" controltype="checkbox" divtype="checkbox" truevalue="是" falsevalue="否" NotBg="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox CHECKED><SPAN>保存到文件</SPAN></DIV><A id=SKDBLike2 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 329px; WIDTH: 12px; COLOR: #0000ff; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 5px; HEIGHT: 18px; backgroundColor1: #ffffff" onmovestart=moveStart() href="javascript:ShowHelp('on_formsn')" target=_self controltype="a" href1="javascript:ShowHelp('on_formsn')">?</A><A id=SKDBLike6 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 330px; WIDTH: 18px; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 86px; HEIGHT: 15px; backgroundColor1: #ffffff" onmovestart=moveStart() href="javascript:ShowHelp('on_savefile')" target=_self controltype="a" href1="javascript:ShowHelp('on_savefile')">?</A> 
+<DIV id=Label24 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 74px; WIDTH: 126px; COLOR: #b2b2b2; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 30px; HEIGHT: 15px; TEXT-ALIGN: left; backgroundColor1: #dbdbdb" onmovestart=moveStart() noWrap value="Label24" controltype="label" NotBg="否">注:表单SN是指调用此表单时的程序调用名称</DIV>
+<DIV id=Label25 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 73px; WIDTH: 144px; COLOR: #b2b2b2; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 69px; HEIGHT: 15px" onmovestart=moveStart() noWrap value="Label24" controltype="label">注:表单名称是指表单显示名称,或称为表单中文名称</DIV><INPUT id=dj_sn style="LEFT: 73px; WIDTH: 251px; POSITION: absolute; TOP: 8px; HEIGHT: 20px" onmovestart=moveStart() size=45 controltype="text"><INPUT id=caption style="LEFT: 72px; WIDTH: 269px; POSITION: absolute; TOP: 47px; HEIGHT: 20px" onmovestart=moveStart() size=48 controltype="text"></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+<BUTTON id=cmdOk style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 200px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 234px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON id=cmdClose style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 284px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 234px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV></body></html>

@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<TITLE>录入窗口</TITLE>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../../fceform/js/csjsrequest.js"></script>
+<script src="../js/fcpub.js"></script>
+<SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript>
+<!--
+var lngid=""
+function cmdOK_onclick() {
+	if (isSpace(txtName.value )){
+		alert("报表名称不能为空！")
+		txtName.focus ()
+		return 		
+	}
+	
+	var s1=txtName.value
+	for(var i=0;i<s1.length;i++){
+		if(s1.substring(i,i+1)==" "){
+			alert("报表名称中不能有空格！")
+			txtName.focus ()
+			return 		
+		}
+	}
+	window.returnValue=txtName.value 
+	self.close ()
+
+}
+
+function window_onload() {
+    var title = unescape(Request.QueryString("title").toString());
+    if (IsSpace(stitle) == false)
+        stitle.innerText = title;
+	txtName.value =window.dialogArguments
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+<BODY bgcolor="#ded5cf" LANGUAGE=javascript onload="return window_onload()">
+<span  id=stitle style="LEFT: 15px; POSITION: absolute; TOP: 9px">
+请输入报表名称：</span>
+<INPUT id=txtName style="HEIGHT: 22px; LEFT: 17px; POSITION: absolute; TOP: 34px; WIDTH: 286px" NAME="txtName">
+<INPUT id=cmdOK type=button value="确 定" LANGUAGE=javascript onclick="return cmdOK_onclick()" style="LEFT: 310px; POSITION: absolute; TOP: 33px" NAME="cmdOK">
+
+</BODY>
+</HTML>

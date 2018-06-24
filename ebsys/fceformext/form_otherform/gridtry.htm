@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+
+	//下面的程序将修改数据集中第4个字段的前三条记录的值
+	var oRoot = imgdataset1.oDom.documentElement ;
+	if(oRoot != null){
+		
+		if( oRoot.childNodes.length < 3 ) {
+			//强行加三行
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			
+		}
+		var iRecNum =0 ; //记录号
+		var iFieldNum = 3 ; //字段顺序号,从0开始
+		
+		//修改数据集中的数据
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "aa" ;
+		iRecNum++;
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "aa1" ;
+		iRecNum++;
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "aa2" ;
+		
+	
+	
+		DsToGrid(imgwebgrid1); //修改表格上的数据
+	}
+
+}
+function uf_modify() {
+	imgdataset1.bEdit = true ;
+	imgdataset1.Field('bz').Value = "aaaa";
+	imgdataset1.Update("不检查");
+	imgdataset1.fset_cont()
+}
+function uf_hidecol(){
+	var col = imgdataset1.Field('sdwname').colno;
+	imgwebgrid1.tab.childNodes(0).childNodes(col).style.display="none";	
+
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" runsave BLONclose BLONopen="uf_open()" center="  " contxml="<root><label><id>Label1</id></label><button><id>Button2</id><id>Button3</id><id>Button4</id><id>Button5</id><id>button46</id><id>FCButton7</id><id>FCButton8</id><id>button1</id><id>button12</id></button><grid><id>imgwebgrid1</id></grid><dataset><id>imgdataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" billtaborder="<root><taborder>imgwebgrid1</taborder><taborder>Button2</taborder><taborder>Button3</taborder><taborder>Button4</taborder><taborder>Button5</taborder><taborder>button46</taborder><taborder>FCButton7</taborder><taborder>FCButton8</taborder><taborder>button1</taborder><taborder>button12</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight poswidth postop posleft entertype="修改" window="当前窗口" keyfield codeheader="BBB" mkbh caption="动态写表格的值" type="OF" dj_sn="gridtry" toolbar="不带工具栏" AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=imgdataset1 idtype="1" opensortno="1" pubpara="否" controltype="dataset" isaddemptyrec="否" isSubGrid="否" submittype="1" submitno="1" issubds="否" format="<fields><field><fieldname>BZ</fieldname><datatype>字符</datatype><displaylabel>备注</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SDWCODE</fieldname><datatype>字符</datatype><displaylabel>单位编号</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SDWID</fieldname><datatype>字符</datatype><displaylabel>单位ID</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SDWNAME</fieldname><datatype>字符</datatype><displaylabel>单位名称</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><BZ></BZ><SDWCODE></SDWCODE><SDWID></SDWID><SDWNAME></SDWNAME></dsid>")' onGetText='bill_ondatasetgettext("<dsid><BZ></BZ><SDWCODE></SDWCODE><SDWID></SDWID><SDWNAME></SDWNAME></dsid>")' onSetText='bill_ondatasetsettext("<dsid><BZ></BZ><SDWCODE></SDWCODE><SDWID></SDWID><SDWNAME></SDWNAME></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%F6%EC%EEXrnpXrnbXrn%DA%F2%EC%E8Xrn%DA%D4%F4%CC%D6%FC"></fc:dataset><fc:webgrid id=imgwebgrid1 onkeydown='bill_ongridkeydown("<imgwebgrid1><col></col><col></col><col></col></imgwebgrid1>")' ondblclick='bill_ongriddblclick("<imgwebgrid1><col></col><col></col><col></col></imgwebgrid1>")' onclick='bill_ongridclick("<imgwebgrid1><col></col><col></col><col></col></imgwebgrid1>")' controltype="grid" dataset="imgdataset1" canselect="是" autoheight="否" autowidth="否" autoappend="否" readonly="否" visible="是" format="<cols><col><fname>SDWCODE</fname><cname>单位编号</cname><width>15</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>SDWID</fname><cname>单位ID</cname><width>11</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>SDWNAME</fname><cname>单位名称</cname><width>50</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" width="431" height="242" top="33" left="5">
+<TABLE id=t style="TABLE-LAYOUT: fixed; FONT-SIZE: 12px; LEFT: 0px; POSITION: absolute; TOP: 0px; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow style="FONT-SIZE: 12px; BACKGROUND-COLOR: #c0c0c0">
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><SPAN id=Label1 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 18px; LEFT: 9px; WIDTH: 223px; COLOR: #0000a0; FONT-FAMILY: 楷体_GB2312; POSITION: absolute; TOP: 8px; HEIGHT: 23px; TEXT-ALIGN: left; TEXT-DECORATION: underline; backgroundColor1: #c0c0c0" onmovestart=moveStart() controltype="label" value="Label1">动态写表格及数据集的值</SPAN><BUTTON id=Button2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 116px; FONT-FAMILY: ; POSITION: absolute; TOP: 172px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_modify()")' dropstyle="否">修改当前行的值</BUTTON><BUTTON id=Button3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 104px; FONT-FAMILY: ; POSITION: absolute; TOP: 11px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("CopyToPub(imgdataset1.xml)")' dropstyle="否">FCButton3</BUTTON><BUTTON id=Button4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 104px; FONT-FAMILY: ; POSITION: absolute; TOP: 109px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;imgwebgrid1.ScrollBar = 'auto'&quot;)" dropstyle="否">auto ScrollBar</BUTTON><BUTTON id=Button5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 116px; FONT-FAMILY: ; POSITION: absolute; TOP: 205px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("alert(imgwebgrid1.Row)")' dropstyle="否">取表格当前行</BUTTON><BUTTON id=button46 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 138px; FONT-FAMILY: ; POSITION: absolute; TOP: 268px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;alert(imgdataset1.Field('SDWCODE').index)&quot;)" dropstyle="否">由字段名取字段顺序号</BUTTON><BUTTON id=FCButton7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 116px; FONT-FAMILY: ; POSITION: absolute; TOP: 237px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;alert(imgdataset1.Field('SDWCODE').colno)&quot;)" dropstyle="否">由字段名取列号</BUTTON><BUTTON id=FCButton8 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 104px; FONT-FAMILY: ; POSITION: absolute; TOP: 43px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick='bill_onclick("imgdataset1.OpenEmpty()")' dropstyle="否">clear data</BUTTON><BUTTON id=button1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 541px; WIDTH: 104px; FONT-FAMILY: ; POSITION: absolute; TOP: 75px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;if(imgwebgrid1.visible=='是')imgwebgrid1.visible='否'; else imgwebgrid1.visible='是';&quot;)" dropstyle="否">visible grid</BUTTON><BUTTON id=button12 style="LEFT: 541px; WIDTH: 116px; POSITION: absolute; TOP: 142px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_hidecol()")' dropstyle="否">隐藏第2列</BUTTON></DIV></body></html>

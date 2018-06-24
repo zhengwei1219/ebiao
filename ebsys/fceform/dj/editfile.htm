@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var curSelFile="";
+var isEdit=false;
+function uf_openfile(){
+	if(curSelFile != "" && isEdit){
+		var yesno = window.confirm("当前修改的内容没有保存, 按 [确定] 则放弃保存!");
+		if(yesno == false) return ;
+
+	}
+	
+    var spath = '';
+    var sRet = DjOpen('getUrl', [spath, 'file', 'yes', ''], '展现', '有模式窗口', '直接', '选择文件');
+    if (IsSpace(sRet) == false) {
+    	curSelFile = sRet;
+    	lblFile.innerText = "/ebsys"+sRet;
+        textarea1.value = readdesignhtml("<file>" + sRet + "</file>");
+        isEdit=false;
+    }	
+}
+function uf_ok(){
+    var sxml = "<file>" + curSelFile + "</file><text><![" + "CDATA[" + textarea1.value + "]]" + "></text>";
+    var ret=savedesignhtml(sxml);
+	if(ret==""){
+		alert("保存成功!");
+		isEdit=false;		
+	}else{
+		alert(ret);
+	}	
+}
+function uf_change(){
+	isEdit=true;
+}
+function uf_edit(){
+	pstrUserFunction = textarea1.value;
+	Addobj("userfunction1");
+	textarea1.value = pstrUserFunction;
+	uf_change();
+	
+		
+}</script><script src='../js/fcopendj.js'></script><script src='../js/design.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;design.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" contxml="<root><label><id>lblFile</id></label><textarea><id>textarea1</id></textarea><button><id>button1</id><id>cmdOk</id><id>button3</id></button></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:3;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>textarea1</taborder><taborder>button1</taborder><taborder>cmdOk</taborder><taborder>button3</taborder></root>" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen window="当前窗口" toolbar="不带工具栏" posheight poswidth postop posleft center="  " isfile="是" type="ST" caption="编辑文件工具" dj_sn="editfile" AutoResizeXml="<record id ='lblFile'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record><record id ='textarea1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>2</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"><BUTTON style="POSITION: absolute; WIDTH: 77px; HEIGHT: 25px; TOP: 2px; LEFT: 6px" id=button1 onmovestart=moveStart() onclick='bill_onclick("uf_openfile()")' controltype="button">选择文件</BUTTON><LABEL style="POSITION: absolute; WIDTH: 457px; HEIGHT: 15px; TOP: 36px; LEFT: 13px" id=lblFile onmovestart=moveStart() controltype="label" AutoSizeXml="<record id ='lblFile'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" inputTag="否"></LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 2px; LEFT: 92px" id=cmdOk onmovestart=moveStart() onclick='bill_onclick("uf_ok()")' controltype="button">保 存</BUTTON><TEXTAREA style="POSITION: absolute; WIDTH: 467px; HEIGHT: 444px; TOP: 58px; LEFT: 7px" id=textarea1 onmovestart=moveStart() rows=10 onchange='bill_onclick("uf_change()")' cols=93 controltype="textarea" AutoSizeXml="<record id ='textarea1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>2</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" induce="否" value="textarea1"></TEXTAREA><BUTTON style="POSITION: absolute; WIDTH: 177px; HEIGHT: 25px; TOP: 3px; LEFT: 178px" id=button3 onmovestart=moveStart() onclick='bill_onclick("uf_edit()")' controltype="button">在codemax编辑器中修改</BUTTON></DIV></body></html>

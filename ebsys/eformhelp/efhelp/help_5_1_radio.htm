@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>radio控件</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">radio控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.radio控件</div>
+        &nbsp;&nbsp;&nbsp; radio控件是标准的html的FIELDSET元素,内有type=radio 的input元素和span元素组合在一起,取值代码为:radio1.value,直接用控件的value属性来取得radio控件的值．赋值代码为: SetRadioValue(obj,sValue) obj为radio对象,sValue为要给的值,它也是字符型,不是布尔型. 例如：　SetRadioValue(obj,'选项一')。单击type=radio元素或span元素(例如选项一),都会被选中或取消.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_1_radio'>radio控件</A> 进入radio控件设计界面.
+       <div class="divTitle">2. radio控件的设置</div>
+       &nbsp;&nbsp;&nbsp; 每个表单中都可以有多个radio控件,每个radio控件中可以有多个type=radio的input元素,每个type=radio的input元素是不是一组就要看它的name属性,如果name属性相同就是一组.每个radio控件里的type=radio的input元素都分成一组，实现多选一。<br /><img src="images/help_5_1_4.gif" /><br />&nbsp;&nbsp;&nbsp; 下图中是一个radio控件,它有选项一和选项二两个type=radio input元素<br></br>
+       <img  src ="images/help_5_1_3.gif"/><br />
+      &nbsp;&nbsp;&nbsp; radio控件中可以设置内部元素的排列方式,是纵向排列还是横向排列.<br /><img  src ="images/help_5_1_1.gif"/>
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;如要用SQL语句的运行结果来初始化radio控件上的数据,用SqlToRadio(radio控件的id,显示列数,用sql查找显示的内容),下面的初始化radio控件数据时调用了下面的方法.<p>SqlToRadio(radio1,2,"select sdwid,sdwname from fcs_dw");</p>
+       <div class="divTitle">3.运行radio控件示例</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;这是运行radio控件的界面:<br />
+       <img  src ="images/help_5_1_2.gif"/>
+</div>
+</body>
+</html>

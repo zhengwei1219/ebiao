@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>grid中数据验证</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    <style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";
+	        margin-left: 1cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">grid中数据验证</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.grid中数据验证</div>
+       &nbsp;&nbsp;&nbsp; 在自定义函数窗口中写上字段验证的js函数,然后加到要验证的字段的数据验证事件中.在写js的字段验证函数时,可以用下面的属性：event.FieldValue:是取当前字段的值,event.DisplayLabel：是取当前字段的中文名称,event.returnValue不为空表示验证不通过,且它为提示信息.
+       <div class="divTitle">2.grid中数据验证</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;在表单的自定义函数中,定义自定义验证函数 
+       &nbsp;&nbsp;<p class="MsoNormal">
+               <span lang="EN-US">/**</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">*</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">单价是否为数字</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">**/</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_valpricenum() {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//uf_isspace();</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(Valid.checkValue(&quot;Double&quot;,event.FieldValue) == false){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>event.returnValue = event.DisplayLabel+&quot;</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">字段值必须为数字</span><span 
+                   lang="EN-US">!&quot;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(Num(event.FieldValue) &gt; 1000000 ) {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>event.returnValue = event.DisplayLabel+&quot;</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">不能大于</span><span 
+                   lang="EN-US">1000000!&quot;<span style="mso-tab-count:1">&nbsp;&nbsp; </span>
+               </span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">/**</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">*</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">字段值是否为空</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">**/</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_isspace() {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(IsSpace(event.FieldValue) == true ) {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>event.returnValue = event.DisplayLabel+&quot;</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">字段不能为空</span><span 
+                   lang="EN-US">!&quot;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">/**</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">*</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">字段值是否为数字</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">**/</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_Num() {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>//uf_isspace() ;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(Valid.checkValue(&quot;Double&quot;,event.FieldValue) == false ){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>event.returnValue=event.DisplayLabel+&quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">必须为数字</span><span lang="EN-US">!&quot;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>return ;<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp; </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">/**</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">* </span>
+               <span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">数据集的提交之前事件</span><span lang="EN-US">,</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">用于进行记录行级的数据验证</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">**/</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_before_update(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(Num(imgdataset1.Field(&quot;iunits&quot;).Value) &gt; 
+               Num(imgdataset1.Field(&quot;dprice&quot;).Value) ){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>event.returnValue=&quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">第</span><span lang="EN-US">&quot;+(imgdataset1.RecNo+1)+&quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">行计量规格不能大于单价</span><span lang="EN-US">!&quot;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           &nbsp;&nbsp;&nbsp; 单击 <a href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_7_3_gridValid'>在数据集的数据验证事件中验证</a> 进入在数据集的数据验证事件中验证的示例.如下图,在数据集的字段页中,计量规格字段(iunits)的数据验证中输入了验证函数uf_Num(),验证是否是数字,焦点离开当前行时进行验证,验证通过离开当前行,如果是在当前行修改记录,验证不通过鼠标离开当前行时恢复修改前的合法信息,如果当前行信息始终不合法,焦点不离开当前行.<br /><img  src ="images/help_7_3_1.gif"/><div class="divTitle">3. 在数据集的数据验证事件中验证运行界面</div>
+           &nbsp;&nbsp;&nbsp; 我们单击【增加行】按钮,给表格中增加行,输入信息,焦点离开行时进行验证,商品名称、计量单位不能为空,计量规格必须为数字,单价必须为数字,并且不能大于1000000 
+           .<br />
+&nbsp;&nbsp;&nbsp; 当你增加第二行时,第一行字段名称没有输入数据,提示第一行字段不能为空。<br /><img  src ="images/help_7_3_3.gif"/><br>
+&nbsp;&nbsp;&nbsp; 第二行计量规格第一次输入1合法,鼠标可以离开<br /><img  src ="images/help_7_3_4.gif"/><br>&nbsp;&nbsp;&nbsp; 
+           当你修改的不合法后,鼠标离开,先提示错误信息,<br /><img  src ="images/help_7_3_5.gif"/><br>&nbsp;&nbsp;&nbsp; 后恢复以前的合法值。<br /><img  src ="images/help_7_3_4.gif"/><br>&nbsp;&nbsp;&nbsp;&nbsp;如果当前行信息不合法,没有可恢复的合法信息,始终不可以换行,但是可以删除当前行.
+</div>
+</body>
+</html>

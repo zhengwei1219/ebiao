@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script src="../js/fcrundj.js"></script>
+<script src="../js/fcbasecont.js"></script>
+<script language="javascript">
+/**
+*显示计算器
+**/
+function showCaculator(){
+  var s1=""
+  try {
+  	s1=new Eapi.Str().trim(pubActiveElement.value)
+  }catch(e){}	
+//  var sRet=window.showModalDialog("caculator.htm",s1,"status:no;scroll:no;dialogHeight:290px;dialogWidth:530px;center:yes ;") 
+  var sRet=window.showModalDialog("caculator.htm",s1,"status:no;scroll:no;dialogHeight:310px;dialogWidth:300px;center:yes ;") 
+  if(isSpace(sRet)==false){
+	  try{
+		  pubActiveElement.value=new Eapi.Str().trim(sRet) ;
+		  pubActiveElement.focus() ;
+	  }catch(e){}
+  }
+}
+
+/**
+*点击主菜单时执行的相应事件
+*@date 2003-05-30
+**/
+function ClickMenuMain(index) {
+   //eval(index)
+   parent.topic.execScript(index)
+}
+//my test 
+function mytest() {
+	//alert(parent.topic.SKBILLgrid1.EndRowState+":"+parent.topic.SKBILLgrid2.EndRowState)
+	//alert(parent.topic.t.parentNode.scrollLeft+":"+parent.topic.t.parentNode.scrollWidth)
+	//parent.topic.t.parentNode.scrollLeft=0
+	alert(parent.topic.dssub1.xml)
+}
+
+function barmouseout(sGif){
+	event.srcElement.style.backgroundImage="url(../image/"+sGif+"2.gif)"
+}
+function barmouseover(sGif){
+	event.srcElement.style.backgroundImage="url(../image/"+sGif+"3.gif)"
+}
+function barmousedown(sGif){
+	event.srcElement.style.backgroundImage="url(../image/"+sGif+"1.gif)"
+}
+function barmouseup(sGif){
+	event.srcElement.style.backgroundImage="url(../image/"+sGif+"3.gif)"
+}
+
+function window_onload(){
+    //更新控件版本
+    /*
+    try{
+	    var s1="../../exe/PSKwebclass.cab#version="+GetVer()
+	    Print_sk.CODEBASE=s1
+	    MenuMain.CODEBASE=s1
+    }catch(e){}
+    */
+	//if(parent.arr[7]!="有模式窗口" && parent.arr[7]!="无模式窗口"  )
+		try{
+		divClose.style.display="none"
+	}   catch(e){}
+				 
+    SetButtonImage('codentp','../images/ef_tb_button_big.gif');
+    SetButtonImage('codenty','../images/ef_tb_button_little.gif');
+    //SetButtonImage('codentd','../images/ef_tb_button_little.gif');
+    SetButtonImage('codenta','../images/ef_tb_button_little.gif');
+    SetButtonImage('codentr','../images/ef_tb_button.gif');
+    SetButtonImage('codEn','../images/ef_tb_button.gif');
+    SetButtonImage('codEnd','../images/ef_tb_button.gif');
+    //SetButtonImage('codty','../images/ef_tb_button_little.gif');   
+}
+/**
+*在显示计算器前取得当前活动控件
+*@date 2004-01-09
+**/
+var pubActiveElement=null
+function getActive() {
+	var obj=parent.topic.document.activeElement
+	var s1=obj.tagName.toUpperCase()
+	//if(s1 == "TD" ){
+	
+	//}
+	if(s1 == "INPUT" ) {
+		pubActiveElement=parent.topic.document.activeElement
+	}
+	
+	
+}
+/**
+*设置按钮为图形按钮
+  obutton.style.backgroundImage="url(../image/b5_cancel.gif)" ;
+*@date 2004-02-16
+**/
+function SetButtonImage(sbutton,spathgif) {
+  var obutton=eval(sbutton)
+  obutton.style.backgroundImage="url("+spathgif+")" ;
+  obutton.style.cursor="hand" ;
+  //obutton.onmouseout=function func_onmouseout() { this.style.color="black"}
+  //obutton.onmouseover=function func_onmouseover() {	this.style.color="blue"}
+
+
+}
+
+</script>
+
+</HEAD>
+
+<BODY topmargin=1 bgcolor="#ffffff" onload=window_onload() >
+<input id=codenty type="button" name="button1"  style="BORDER-RIGHT:
+ 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px;
+  WIDTH: 57px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 22px; 
+  BACKGROUND-COLOR: white" size="3" value="清 空" bgcolor="#ffffff" onclick=parent.topic.execScript("LoadMod('addbill')") > 
+<input id=codenta type="button" name="button2" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 70px; BORDER-LEFT:
+  0px; WIDTH: 57px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="保 存" onclick=parent.topic.execScript("LoadMod('savebill')")> 
+ 
+<input id=codEn type="button" name="button1" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 130px; BORDER-LEFT:
+  0px; WIDTH: 70px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="增加行" onclick=parent.topic.execScript("LoadMod('gridaddline')") > 
+  <input id=codEnd  type="button" name="button1" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 200px; BORDER-LEFT:
+  0px; WIDTH: 70px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="删除行" onclick=parent.topic.execScript("LoadMod('griddelline')") > 
+<input id=codentr type="button" name="button1" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 270px; BORDER-LEFT:
+  0px; WIDTH: 70px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="计算器" onclick="showCaculator()" onbeforeactivate="getActive()" > 
+<input id=codentp type="button" name="button1" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 340px; BORDER-LEFT:
+  0px; WIDTH: 82px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="临时挂帐" 
+  onclick=parent.topic.execScript("LoadMod('savebilltmp')")
+  >
+<!--  
+  <input id=codentd type="button" name="button3" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 130px; BORDER-LEFT:
+  0px; WIDTH: 57px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="打 印" 
+  
+ onclick=sk_PrintPreview()  > 
+
+ <input id=codty type="button" name="button1" style="BORDER-RIGHT: 0px;
+ BORDER-TOP: 0px; LEFT: 483px; BORDER-LEFT:
+  0px; WIDTH: 57px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 2px; HEIGHT: 
+  22px; BACKGROUND-COLOR: white" size="3" value="关闭" 
+  onclick=parent.topic.execScript("CloseBill()")>
+  
+  -->
+</BODY>
+</HTML>

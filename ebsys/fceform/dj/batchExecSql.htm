@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_exec(){
+	var sql = txtSql.value;
+	sql=Trim(sql);
+	if(IsSpace(sql)){
+		alert("要执行的SQL命令不能为空!");
+		return;	
+	}	
+	sql = RepXml(sql);
+	if(fcpubdata.dotnetVersion == "" && fcpubdata.databaseTypeName == "oracle")
+		sql = RepStr(sql, ";\r\n", ";&#13;&#10;");
+    
+    new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=batchExecSql","<sql>"+sql+"</sql>",
+    function (result){
+	    var retX = result.value;
+	    if(IsSpace(retX)){
+	    	alert("ok");	
+	    }else{
+	    	alert(retX);
+	    }
+    }
+	);
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="  " controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" posheight poswidth caption="批量执行sql命令" type="ST" dj_sn="batchExecSql" billtaborder="<root><taborder>txtSql</taborder><taborder>button1</taborder></root>" contxml="<root><textarea><id>txtSql</id></textarea><button><id>button1</id></button></root>" BLONopen toolbar="不带工具栏" window="当前窗口" posleft postop isfile="是" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" AutoResizeXml="<record id ='txtSql'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>20</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>20</HExt><HSetUnit>px</HSetUnit><MinH>200</MinH></record>"><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 4px; LEFT: 4px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_exec()")'>执 行</BUTTON><TEXTAREA style="POSITION: absolute; WIDTH: 633px; HEIGHT: 371px; TOP: 34px; LEFT: 1px" id=txtSql onmovestart=moveStart() rows=8 cols=126 controltype="textarea" AutoSizeXml="<record id ='txtSql'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>20</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>20</HExt><HSetUnit>px</HSetUnit><MinH>200</MinH></record>" value="textarea1" induce="否"></TEXTAREA></DIV></body></html>

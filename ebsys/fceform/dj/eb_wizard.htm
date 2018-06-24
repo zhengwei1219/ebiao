@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var pubDsXml=null; //数据集的XML对象
+var pubOptions = "" ; //缓存第一个数据集的字段列表
+function uf_open() {
+	obj = fcpubdata.obj[0] ; //t对象
+	var sds = obj.e_datasetbak ; 
+	if(IsSpace(sds) == false){
+		sds = unescape(sds);
+		var oXml = SetDom("<root>"+sds+"</root>");
+		pubDsXml = oXml;
+		setDsCombo(cboDs,oXml);
+		uf_selectchange(cboDs,cboField);
+		setDsCombo(cboDs1,oXml);
+		uf_selectchange(cboDs1,cboField1);
+		setDsCombo(cboDs2,oXml);
+		uf_selectchange(cboDs2,cboField2);
+		setDsCombo(cboDs3,oXml);
+		uf_selectchange(cboDs3,cboField3);
+		setDsCombo(cboDs4,oXml);
+		uf_selectchange(cboDs4,cboField4);
+		
+	}
+	e_PropWinOnload();
+	function setDsCombo(oCombo,oXml){
+		var sOption = "";
+		var l=oXml.documentElement.childNodes.length;
+		for(var i=0;i<l;i++){
+			sOption += "<option>"+oXml.documentElement.childNodes(i).childNodes(0).text+"</option>";	
+		}
+		oCombo.outerHTML = SelectAddOption(oCombo,sOption);
+		if(oCombo.options.length>0) oCombo.selectedIndex=0;
+	}
+}
+function uf_ok(){
+	var arr=new Array();
+	arr[0]=rdoType.value;
+	arr[1]=txtGroup.value;
+	arr[2]=txtGroupValue.value;
+	arr[3]=txtRow.value;
+	arr[4]=txtCol.value;
+	arr[5]=txtValue.value;
+	if(cboDs.options.length>0){ //第一数据集的字段列表
+		arr[6]=cboDs.options(0).text;
+		arr[7]=pubOptions;
+	}
+	window.returnValue = arr;
+	CloseBill();
+	
+}
+function rdoType_onclick() {
+	switch (rdoType.value){
+		case "网格式": {
+			div1.style.display="none" ;
+			divGroup.style.display="none" ;
+			break;	
+		}	
+		case "分组式": {
+			div1.style.display="none" ;
+			divGroup.style.display="" ;
+			break;	
+		}	
+		case "交叉式": {
+			div1.style.display="" ;
+			divGroup.style.display="none" ;
+			break;	
+		}	
+	}	
+}
+function uf_add(cboDs,cboField,txt) {
+	if(cboDs.selectedIndex<0 || cboField.selectedIndex<0) return;
+	
+	if(txt.id == "txtValue" || txt.id == "txtGroupValue"){
+		txt.value += cboDs.options(cboDs.selectedIndex).text+"." + cboField.options(cboField.selectedIndex).text+"\r\n"; 
+	}else{
+		txt.value += cboDs.options(cboDs.selectedIndex).text+".Group(" + cboDs.options(cboDs.selectedIndex).text+"."+cboField.options(cboField.selectedIndex).text+",false,,)"+"\r\n";
+	}
+}
+function uf_selectchange(oDs,oField){
+	var sds = oDs.options(oDs.selectedIndex).text;
+	//alert(sds);
+	if(IsSpace(sds)) return;
+	for(var i=0;i<pubDsXml.documentElement.childNodes.length;i++){
+		if(sds == pubDsXml.documentElement.childNodes(i).childNodes(0).text){
+			var s1=pubDsXml.documentElement.childNodes(i).childNodes(1).text;
+			//alert(s1);
+			if(s1 == "SQL语句" || s1 == "存储过程"){
+				if(pubOptions !="" && oDs.selectedIndex==0){
+					var sStru = pubOptions;
+				}else{
+					var sql = pubDsXml.documentElement.childNodes(i).childNodes(2).text;
+					var sXml =  "<sql>" + sql + "</sql>"+"<pageno>1</pageno><pagesize>-1</pagesize><ds></ds>";
+					var sRet = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=ToInDs",sXml);	
+					//生成结构数据集
+					var oXml = SetDom(sRet);
+					if(oXml.documentElement == null){
+						alert("查找数据集的字段列表失败! 原因是:"+sRet);
+						return;	
+					}
+					var sStru="";
+					var oDF=oXml.documentElement.childNodes(oXml.documentElement.childNodes.length-1).childNodes(1);
+					var l = oDF.childNodes.length;
+					for(var i=0;i<l;i++){
+						sStru += "<option>"+oDF.childNodes(i).childNodes(0).text+"</option>";
+					}
+					if(oDs.selectedIndex==0 && pubOptions=="") pubOptions= sStru;
+				}
+				oField.options.length=0;
+				oField.outerHTML = SelectAddOption(oField,sStru);
+			
+			} else if (s1 == "内建数据集"){
+				var sFields = unescape(pubDsXml.documentElement.childNodes(i).childNodes(11).text);
+				var oXml = SetDom(sFields);
+				if(oXml.documentElement != null){
+					var sOption="";
+					for(var i=0;i<oXml.documentElement.childNodes.length-1;i++){
+						sOption +="<option>"+oXml.documentElement.childNodes(i).childNodes(0).text+"</option>";	
+					}	
+					oField.options.length=0;
+					oField.outerHTML = SelectAddOption(oField,sOption);
+					if(oDs.selectedIndex==0 && pubOptions=="") pubOptions= sOption;
+				}
+			}
+			break;
+		}
+	}
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:5;radio:1;listbox:0;textarea:3;combobox:7;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:2;DsMain_field:0;a:0;button:5;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="360" poswidth="360" entertype="修改" codeheader="BBB" mkbh caption="新建报表向导" type="PR" dj_sn="eb_wizard" billtaborder="<root><taborder>rdoType</taborder><taborder>txtGroup</taborder><taborder>txtGroupValue</taborder><taborder>abutton3</taborder><taborder>abutton4</taborder><taborder>txtRow</taborder><taborder>txtValue</taborder><taborder>txtCol</taborder><taborder>button3</taborder><taborder>button4</taborder><taborder>button5</taborder><taborder>cboDs</taborder><taborder>cboField</taborder><taborder>cboDs2</taborder><taborder>cboField2</taborder><taborder>cboDs3</taborder><taborder>cboField3</taborder><taborder>cboDs4</taborder><taborder>cboField4</taborder><taborder>cboDs1</taborder><taborder>cboField1</taborder><taborder>cmdClose</taborder><taborder>cmdOk</taborder></root>" contxml="<root><label><id>label1</id><id>label3</id><id>label4</id><id>label5</id><id>alabel3</id><id>alabel4</id></label><radio><id>rdoType</id></radio><textarea><id>txtRow</id><id>txtValue</id><id>txtCol</id><id>txtGroup</id><id>txtGroupValue</id></textarea><combobox><id>cboDs2</id><id>cboField2</id><id>cboDs3</id><id>cboField3</id><id>cboDs4</id><id>cboField4</id><id>cboDs</id><id>cboField</id><id>cboDs1</id><id>cboField1</id></combobox><div><id>div1</id><id>divGroup</id></div><button><id>button3</id><id>button4</id><id>button5</id><id>abutton3</id><id>abutton4</id><id>cmdOk</id><id>cmdClose</id></button></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml>&nbsp; 
+<DIV style="POSITION: absolute; WIDTH: 65px; FONT-FAMILY: 楷体_GB2312; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14pt; TOP: 5px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 9px" id=label1 onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">选择报表样式：</DIV>
+<FIELDSET style="POSITION: absolute; WIDTH: 340px; HEIGHT: 46px; COLOR: #000000; TOP: 24px; LEFT: 3px" id=rdoType onmovestart=moveStart() contentEditable=false onclick='bill_onclick("rdoType_onclick()")' controltype="radio" value="网格式" NotBg="否" temptext="网格式&#13;&#10;分组式&#13;&#10;交叉式" tempvalue="网格式&#13;&#10;分组式&#13;&#10;交叉式" legend aspect="横向"><LEGEND></LEGEND><INPUT value=网格式 CHECKED type=radio name=RGrdoType text="网格式"><SPAN onclick=RGrdoType[0].checked=true;rdoType.value=RGrdoType[0].value;RGrdoType[0].focus();>网格式</SPAN>&nbsp;<INPUT value=分组式 type=radio name=RGrdoType text="分组式"><SPAN onclick=RGrdoType[1].checked=true;rdoType.value=RGrdoType[1].value;RGrdoType[1].focus();>分组式</SPAN>&nbsp;<INPUT value=交叉式 type=radio name=RGrdoType text="交叉式"><SPAN onclick=RGrdoType[2].checked=true;rdoType.value=RGrdoType[2].value;RGrdoType[2].focus();>交叉式</SPAN>&nbsp;</FIELDSET> 
+<DIV style="BORDER-BOTTOM: black 1px solid; POSITION: absolute; BORDER-LEFT: black 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 338px; DISPLAY: none; HEIGHT: 237px; OVERFLOW: auto; BORDER-TOP: black 1px solid; TOP: 75px; BORDER-RIGHT: black 1px solid; LEFT: 1px" id=div1 onmovestart=moveStart() controltype="div" NotBg="否">
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 9px; LEFT: 11px" id=label3 onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">行定义:</DIV><TEXTAREA style="POSITION: absolute; WIDTH: 320px; HEIGHT: 51px; TOP: 26px; LEFT: 8px" id=txtRow onmovestart=moveStart() rows=1 cols=59 controltype="textarea" value="textarea1" induce="否"></TEXTAREA><TEXTAREA style="POSITION: absolute; WIDTH: 320px; HEIGHT: 44px; TOP: 179px; LEFT: 7px" id=txtValue onmovestart=moveStart() rows=1 cols=59 controltype="textarea" value="textarea1" induce="否"></TEXTAREA> 
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 159px; LEFT: 10px" id=label4 onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">值定义:</DIV><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 4px; LEFT: 271px" id=button3 onmovestart=moveStart() onclick='bill_onclick("uf_add(cboDs2,cboField2,txtRow)")' dropstyle="否" controltype="button">增加</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 152px; LEFT: 273px" id=button4 onmovestart=moveStart() onclick='bill_onclick("uf_add(cboDs4,cboField4,txtValue)")' dropstyle="否" controltype="button">增加</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 80px; LEFT: 11px" id=label5 onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">列定义:</DIV><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 74px; LEFT: 271px" id=button5 onmovestart=moveStart() onclick='bill_onclick("uf_add(cboDs3,cboField3,txtCol)")' dropstyle="否" controltype="button">增加</BUTTON><TEXTAREA style="POSITION: absolute; WIDTH: 320px; HEIGHT: 53px; TOP: 97px; LEFT: 8px" id=txtCol onmovestart=moveStart() rows=1 cols=59 controltype="textarea" value="textarea1" induce="否"></TEXTAREA><SELECT style="POSITION: absolute; WIDTH: 54px; HEIGHT: 25px; TOP: 6px; LEFT: 106px" id=cboDs2 onmovestart=moveStart() onchange='bill_onclick("uf_selectchange(cboDs2,cboField2);")' controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 102px; HEIGHT: 25px; TOP: 6px; LEFT: 162px" id=cboField2 onmovestart=moveStart() controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 54px; HEIGHT: 25px; TOP: 76px; LEFT: 105px" id=cboDs3 onmovestart=moveStart() onchange='bill_onclick("uf_selectchange(cboDs3,cboField3);")' controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 102px; HEIGHT: 25px; TOP: 76px; LEFT: 161px" id=cboField3 onmovestart=moveStart() controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 54px; HEIGHT: 25px; TOP: 154px; LEFT: 103px" id=cboDs4 onmovestart=moveStart() onchange='bill_onclick("uf_selectchange(cboDs4,cboField4);")' controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 102px; HEIGHT: 25px; TOP: 154px; LEFT: 159px" id=cboField4 onmovestart=moveStart() controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT></DIV>
+<DIV style="BORDER-BOTTOM: black 1px solid; POSITION: absolute; BORDER-LEFT: black 1px solid; BACKGROUND-COLOR: #ffffff; WIDTH: 338px; DISPLAY: none; HEIGHT: 237px; OVERFLOW: auto; BORDER-TOP: black 1px solid; TOP: 75px; BORDER-RIGHT: black 1px solid; LEFT: 1px" id=divGroup onmovestart=moveStart() controltype="div" NotBg="否">
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 9px; LEFT: 11px" id=alabel3 onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">组定义:</DIV><TEXTAREA style="POSITION: absolute; WIDTH: 320px; HEIGHT: 64px; TOP: 30px; LEFT: 7px" id=txtGroup onmovestart=moveStart() rows=1 cols=59 controltype="textarea" value="textarea1" induce="否"></TEXTAREA><TEXTAREA style="POSITION: absolute; WIDTH: 320px; HEIGHT: 107px; TOP: 116px; LEFT: 7px" id=txtGroupValue onmovestart=moveStart() rows=1 cols=59 controltype="textarea" value="textarea1" induce="否"></TEXTAREA> 
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 100px; LEFT: 11px" id=alabel4 onmovestart=moveStart() noWrap controltype="label" value="label3" NotBg="否">值定义:</DIV><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 4px; LEFT: 268px" id=abutton3 onmovestart=moveStart() onclick='bill_onclick("uf_add(cboDs,cboField,txtGroup)")' dropstyle="否" controltype="button">增加</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 22px; TOP: 93px; LEFT: 267px" id=abutton4 onmovestart=moveStart() onclick='bill_onclick("uf_add(cboDs1,cboField1,txtGroupValue)")' dropstyle="否" controltype="button">增加</BUTTON><SELECT style="POSITION: absolute; WIDTH: 54px; HEIGHT: 25px; TOP: 6px; LEFT: 106px" id=cboDs onmovestart=moveStart() onchange='bill_onclick("uf_selectchange(cboDs,cboField);")' controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 102px; HEIGHT: 25px; TOP: 6px; LEFT: 162px" id=cboField onmovestart=moveStart() controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 54px; HEIGHT: 25px; TOP: 94px; LEFT: 105px" id=cboDs1 onmovestart=moveStart() onchange='bill_onclick("uf_selectchange(cboDs1,cboField1);")' controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT><SELECT style="POSITION: absolute; WIDTH: 102px; HEIGHT: 25px; TOP: 94px; LEFT: 161px" id=cboField1 onmovestart=moveStart() controltype="combobox" temptext tempvalue sql check="1" sqltrans></SELECT></DIV><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 1px; LEFT: 203px" id=cmdOk onmovestart=moveStart() onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 1px; LEFT: 274px" id=cmdClose onmovestart=moveStart() onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON></DIV></body></html>

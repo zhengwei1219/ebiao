@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>在iframe中运行报表</title>
+<script>
+    var arr = new Array();
+    arr[0]="../fceform/ereport/ebrun.htm?name=samples/s_simplelist";
+    arr[1]="../fceform/ereport/ebrun.htm?name=samples/s_cross0";
+    arr[2]="../fceform/ereport/ebrun.htm?name=samples/s_多源";
+    var count = 0;
+	function uf_test() {
+		/*
+		* 只要指定一下iframe的url就可以了,然后在运行报表结束后事件中写处理代码,如打印等.
+		*/
+		document.all.iframe1.src=arr[0];
+        document.all.iframe2.src=arr[1];
+        document.all.iframe3.src=arr[2];
+	}
+	/* 运行报表结束后事件
+	* HandleAfterInitReport 函数名是固定名称,是在运行报表结束后就会调用此函数.
+	*	要调用运行报表工具栏的函数,可以用如下方式:
+	*	其中,Print(4) 为运行报表工具栏窗口的全局的js函数.
+	*/
+	function HandleAfterInitReport(){
+			count++;
+			if(count == arr.length){
+			    window.frames("iframe1").toolbar.execScript("Print(4);");
+	            window.frames("iframe2").toolbar.execScript("Print(4);");
+	            window.frames("iframe3").toolbar.execScript("Print(4);");
+	        }
+	}
+	
+</script>
+</head>
+<body>
+下面是一个iframe,在其中运行报表 <button onclick="uf_test()">打印</button> <br>
+<iframe id=iframe1 src="" width=0 height=0 ></iframe>
+<iframe id=iframe2 src="" width=0 height=0 ></iframe>
+<iframe id=iframe3 src="" width=0 height=0 ></iframe>
+</body>
+</html>

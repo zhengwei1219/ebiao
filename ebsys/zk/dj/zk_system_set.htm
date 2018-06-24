@@ -1,0 +1,136 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var timingExecuteFun = "";
+function uf_open(){
+	e_PropWinOnload();
+	PropWinOnload();
+	//SetRadioValue($id("radLoginNameSet"),parent.parent.parent.zksysset.loginnameset);
+	//SetRadioValue($id("radUserNameSet"),parent.parent.parent.zksysset.usernameset);
+	//SetRadioValue($id("radPasswordSet"),parent.parent.parent.zksysset.loginpasswordset);
+	if(IsSpace(parent.parent.parent.zksysset.loginnameset) == false) SetCheckBoxValue($id("cheLoginNameSet"),parent.parent.parent.zksysset.loginnameset);
+	if(IsSpace(parent.parent.parent.zksysset.usernameset) == false) SetCheckBoxValue($id("cheUserNameSet"),parent.parent.parent.zksysset.usernameset);
+	if(IsSpace(parent.parent.parent.zksysset.loginpasswordset) == false) SetCheckBoxValue($id("chePasswordSet"),parent.parent.parent.zksysset.loginpasswordset);
+	if(IsSpace(parent.parent.parent.zksysset.checkErrorNum) == false) SetCheckBoxValue($id("cheLoginError"),parent.parent.parent.zksysset.checkErrorNum);
+	if(IsSpace(parent.parent.parent.zksysset.timingEditPassword) == false)  SetComboValue(comSelTime,parent.parent.parent.zksysset.timingEditPassword);
+	if(IsSpace(parent.parent.parent.zksysset.logincheckcodeset) == false) SetCheckBoxValue($id("cheCheckCode"),parent.parent.parent.zksysset.logincheckcodeset);
+	if(IsSpace(parent.parent.parent.zksysset.userNotMuchLoginSystem) == false) SetCheckBoxValue($id("cheUserNOtMuchLogin"),parent.parent.parent.zksysset.userNotMuchLoginSystem);
+	if(IsSpace(parent.parent.parent.zksysset.stopTiming) == false) SetCheckBoxValue($id("cheStopTiming"),parent.parent.parent.zksysset.stopTiming);
+	if(IsSpace(parent.parent.parent.zksysset.timingExecuteTime) == false) spin3.value = parent.parent.parent.zksysset.timingExecuteTime;
+	uf_initSelectFun();
+}
+function SetComboValue(obj,sValue) {
+	l=obj.options.length ;
+	for(var i=0;i<l;i++){
+		if(obj.options(i).value == sValue){
+			obj.selectedIndex = i;
+			return
+		}
+	}
+}
+
+
+function uf_ok(){
+	timingExecuteFun = uf_selectFunction();
+	var shead = '<?xml version="1.0" encoding="' + fcpubdata.encoding + '" ?>';
+	var newXml="<root><loginNameSet>"+$id('cheLoginNameSet').value+"</loginNameSet><userNameSet>"+$id('cheUserNameSet').value+"</userNameSet><userPasswordSet>"+$id('chePasswordSet').value+"</userPasswordSet><checkErrorNum>"+$id('cheLoginError').value+"</checkErrorNum><timingEditPassword>"+$id('comSelTime').value+"</timingEditPassword><checkCode>"+$id('cheCheckCode').value+"</checkCode><userNotMuchLoginSystem>"+$id('cheUserNOtMuchLogin').value+"</userNotMuchLoginSystem><timing><timingExecuteTime>"+$id('spin3').value+"</timingExecuteTime><timingExecuteFunName>"+timingExecuteFun+"</timingExecuteFunName><stopTiming>"+$id('cheStopTiming').value+"</stopTiming></timing></root>";
+	var sXml = "<file>../../ebsys/fceformext/xml/sysSet.xml</file><text><![" + "CDATA[" + shead + newXml + "]]" + "></text>";
+	var ret= new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=savedesignhtml",sXml);
+	if(ret == "") {
+		alert("设置成功!");
+		parent.parent.parent.initZkSystemSet(true);//重新刷新主页（main.htm）中正康在线系统变量zkSysSet对象的属性值
+		parent.parent.parent.timingStart();//重新调用定时函数 ,如果不定时取消定时
+		return "";
+	}else{
+		alert(ret);
+	}				
+}
+
+function uf_up(){
+	for(var i = listboxFun.length-1 ;i >0; i--){
+		if ((listboxFun.options(i).selected == true) && (i != 0)){
+			var optText = listboxFun.options(i-1).text;
+			var optValue = listboxFun.options(i-1).value;
+			listboxFun.options(i-1).text=listboxFun.options(i).text;
+			listboxFun.options(i-1).value=listboxFun.options(i).value;
+			listboxFun.options(i).text=optText;
+			listboxFun.options(i).value=optValue;
+			listboxFun.selectedIndex = i-1;
+			return;
+		}
+	}
+}
+
+function uf_down(){
+	for(var i = 0 ;i < listboxFun.length; i++){
+		if ((listboxFun.options(i).selected == true) && (i < listboxFun.length-1)){
+			var optText = listboxFun.options(i+1).text;
+			var optValue = listboxFun.options(i+1).value;
+			listboxFun.options(i+1).text=listboxFun.options(i).text;
+			listboxFun.options(i+1).value=listboxFun.options(i).value;
+			listboxFun.options(i).text=optText;
+			listboxFun.options(i).value=optValue;
+			listboxFun.selectedIndex = i+1;
+			return;
+		}
+	}
+}
+
+function uf_selectFunction(){
+	timingExecuteFun = "";
+	for(var i = 0 ;i < listboxFun.length; i++){
+		if (listboxFun.options(i).selected ){
+			timingExecuteFun += listboxFun.options(i).value;
+			timingExecuteFun += ";";
+		}
+	}
+	//timingExecuteFun = "function (){"+timingExecuteFun+"}()";
+	//timingExecuteFun = timingExecuteFun.substring(0, timingExecuteFun.length-1);
+	return timingExecuteFun;
+}
+function uf_initSelectFun(){
+	var executeFunName = parent.parent.parent.zksysset.timingExecuteFunName
+
+	if(IsSpace(executeFunName) == false){
+		var funArr = executeFunName.split(";");
+		for(var j=0;j<funArr.length;j++){
+			
+			for(var i = 0 ;i < listboxFun.length; i++){
+				if (listboxFun.options(i).value == funArr[j]){
+					//listboxFun.selectedIndex = i;
+					listboxFun.options(i).selected = true;
+				}
+			}
+		}
+	}
+}
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../../fceform/htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑" isCheckPermit="否" alertType="1" userType userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_ok()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' contxml="<root><checkbox><id>cheLoginNameSet</id><id>cheUserNameSet</id><id>chePasswordSet</id><id>cheLoginError</id><id>cheCheckCode</id><id>cheUserNOtMuchLogin</id><id>cheStopTiming</id></checkbox><label><id>label3</id><id>label5</id><id>label6</id><id>label9</id></label><listbox><id>listboxFun</id></listbox><combobox><id>comSelTime</id></combobox><tab><id>tab1</id></tab><button><id>cmdSmallUp</id><id>cmdSmallDown</id><id>cmdSave</id></button><spin><id>spin3</id></spin></root>" controlno="SKButton:0;SKDBedit:0;checkbox:23;label:9;radio:5;listbox:1;textarea:0;combobox:3;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:1;div:0;DsMain_field:0;a:0;button:17;text:5;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:1;spin:3;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" billtaborder="<root><taborder>cheCheckCode</taborder><taborder>comSelTime</taborder><taborder>cheUserNOtMuchLogin</taborder><taborder>spin3</taborder><taborder>listboxFun</taborder><taborder>cmdSmallUp</taborder><taborder>cmdSmallDown</taborder><taborder>cheStopTiming</taborder><taborder>cheLoginNameSet</taborder><taborder>cheUserNameSet</taborder><taborder>chePasswordSet</taborder><taborder>cheLoginError</taborder><taborder>cmdSave</taborder></root>" BLONclose BLONopenBefore BLONopen="uf_open()" window="当前窗口" posheight poswidth postop posleft center="  " isfile="是" type="ZK" caption="系统设置" dj_sn="zk_system_set" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js"><DIV style="POSITION: absolute; WIDTH: 345px; HEIGHT: 312px; TOP: 1px; LEFT: 2px" id=tab1 class=tab-pane showtype="luna" IsHideTitle="null" controltype="tab">
+<DIV style="WIDTH: 345px; HEIGHT: 294px" class=tab-page>
+<H2 class=tab>用户</H2>&nbsp;&nbsp; <SELECT style="POSITION: absolute; WIDTH: 66px; HEIGHT: 25px; TOP: 113px; LEFT: 116px" id=comSelTime onmovestart=moveStart() controltype="combobox" sqltrans async="否" datasourceName temptext="不定时&#13;&#10;1个月&#13;&#10;2个月&#13;&#10;3个月&#13;&#10;4个月&#13;&#10;5个月&#13;&#10;6个月&#13;&#10;7个月&#13;&#10;8个月&#13;&#10;9个月&#13;&#10;10个月&#13;&#10;11个月&#13;&#10;12个月" tempvalue="0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10&#13;&#10;11&#13;&#10;12" sql check="1" backwidth="66" backheight="25"><OPTION selected value=0>不定时</OPTION><OPTION value=1>1个月</OPTION><OPTION value=2>2个月</OPTION><OPTION value=3>3个月</OPTION><OPTION value=4>4个月</OPTION><OPTION value=5>5个月</OPTION><OPTION value=6>6个月</OPTION><OPTION value=7>7个月</OPTION><OPTION value=8>8个月</OPTION><OPTION value=9>9个月</OPTION><OPTION value=10>10个月</OPTION><OPTION value=11>11个月</OPTION><OPTION value=12>12个月</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 98px; HEIGHT: 18px; TOP: 117px; LEFT: 18px" id=label3 onmovestart=moveStart() controltype="label" inputTag="否">密码有效期设置</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 246px; HEIGHT: 20px; TOP: 9px; LEFT: 14px" id=cheLoginNameSet onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>登录名长度是否限制在6到16</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 177px; HEIGHT: 20px; TOP: 35px; LEFT: 14px" id=cheUserNameSet onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>用户名长度是否限制在6到24</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 183px; HEIGHT: 20px; TOP: 59px; LEFT: 14px" id=chePasswordSet onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>密码长度是否限制在6到16</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 276px; HEIGHT: 20px; TOP: 82px; LEFT: 14px" id=cheLoginError onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否检查12小时内错误的登录次数小于5</SPAN></DIV></DIV>
+<DIV style="WIDTH: 345px; HEIGHT: 294px" class=tab-page>
+<H2 class=tab>登录</H2>
+<DIV style="POSITION: absolute; WIDTH: 310px; HEIGHT: 20px; TOP: 9px; LEFT: 13px" id=cheCheckCode onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="是"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>用户登录时是否需要验证码验证</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 312px; HEIGHT: 20px; TOP: 30px; LEFT: 13px" id=cheUserNOtMuchLogin onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>用户是否不能在多台机器上同时登录</SPAN></DIV></DIV>
+<DIV style="WIDTH: 345px; HEIGHT: 294px" class=tab-page>
+<H2 class=tab>定时功能</H2>
+<DIV style="POSITION: absolute; WIDTH: 106px; HEIGHT: 22px; TOP: 29px; LEFT: 43px; align: undefined" id=spin3 class=xpSpin align="undefined ParentPos='相对' " controltype="spin" value="20000" field="null" dataset="null" fontsize="" fontstyle="" fontfamily="" backgroundcolor="" color="" fontweight="" display="" left="43" top="29" width="106px" height="22px" NextNum="10000" Max="36000000" Min="20000" enabled="否"></DIV><LABEL style="POSITION: absolute; WIDTH: 32px; HEIGHT: 15px; TOP: 33px; LEFT: 15px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">间隔</LABEL><LABEL style="POSITION: absolute; WIDTH: 177px; HEIGHT: 17px; TOP: 34px; LEFT: 151px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">毫秒执行一次选中的函数</LABEL><SELECT style="POSITION: absolute; WIDTH: 265px; HEIGHT: 203px; TOP: 77px; LEFT: 14px" id=listboxFun onmovestart=moveStart() multiple size=8 controltype="listbox" sqltrans async="否" datasourceName temptext="用户审核&#13;&#10;" tempvalue="userPower()&#13;&#10;" sql check="1" backwidth="265" backheight="203"><OPTION value=userPower()>用户审核</OPTION><OPTION selected value=""></OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 324px; HEIGHT: 30px; TOP: 59px; LEFT: 17px" id=label9 onmovestart=moveStart() controltype="label" inputTag="否">从下面选择定时执行功能,按住shift键或ctrl键可多选</LABEL><BUTTON style="POSITION: absolute; WIDTH: 26px; HEIGHT: 24px; TOP: 112px; LEFT: 294px" id=cmdSmallUp onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_up()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 25px; HEIGHT: 24px; TOP: 166px; LEFT: 294px" id=cmdSmallDown onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_down()")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 319px; HEIGHT: 20px; TOP: 7px; LEFT: 12px" id=cheStopTiming onmovestart=moveStart() noWrap controltype="checkbox" truevalue="是" falsevalue="否" value="否"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>是否执行</SPAN></DIV></DIV></DIV>
+<SCRIPT>var tab1 = new WebFXTabPane( document.getElementById( "tab1" ) );</SCRIPT>
+&nbsp;<BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 318px; LEFT: 270px" id=cmdSave onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")'></BUTTON></DIV><script></script></body></html>

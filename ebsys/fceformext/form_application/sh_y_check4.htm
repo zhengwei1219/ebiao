@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>/**
+*单价是否为数字
+**/
+function uf_valpricenum() {
+	//uf_isspace();
+	if(Valid.checkValue("Double",event.FieldValue) == false){
+		event.returnValue = event.DisplayLabel+"字段值必须为数字!"
+		return;
+	}
+	if(Num(event.FieldValue) > 1000000 ) {
+		event.returnValue = event.DisplayLabel+"不能大于1000000!"	
+		return
+	}
+}
+/**
+*字段值是否为空
+**/
+function uf_isspace() {
+	if(IsSpace(event.FieldValue) == true ) {
+		event.returnValue = event.DisplayLabel+"字段不能为空!"
+		return
+	}
+	
+}
+/**
+*字段值是否为数字
+**/
+function uf_Num() {
+	//uf_isspace() ;
+	if(Valid.checkValue("Double",event.FieldValue) == false ){
+		event.returnValue=event.DisplayLabel+"必须为数字!"
+		return ;	
+	}	
+}
+/**
+* 数据集的提交之前事件,用于进行记录行级的数据验证
+**/
+function uf_before_update(){
+	if(Num(imgdataset1.Field("iunits").Value) > Num(imgdataset1.Field("dprice").Value) ){
+		event.returnValue="第"+(imgdataset1.RecNo+1)+"行计量规格不能大于单价!"
+	}
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" toolbar="不带工具栏" dj_sn="sh_y_check4" type="EX" caption="check4_字段验证" mkbh codeheader="LHI" keyfield="sitemid" window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>imgwebgrid1</taborder><taborder>FCButton2</taborder><taborder>FCButton3</taborder><taborder>FCButton1</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label3</id><id>Label4</id></label><button><id>FCButton2</id><id>FCButton3</id><id>FCButton1</id></button><grid><id>imgwebgrid1</id></grid><dataset><id>imgdataset1</id></dataset></root>" AutoResizeXml><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' id=imgwebgrid1 ondblclick='bill_ongriddblclick("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' onclick='bill_ongridclick("<imgwebgrid1><col></col><col></col><col></col><col></col><col></col></imgwebgrid1>")' readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" dataset="imgdataset1" visible="是" controltype="grid" SetRowHeight="是" hideHscroll="否" hideVscroll="否" blRowNo="否" bodyrowheight="-1" bodyrows="-1" format="<cols><col><fname>sitemcode</fname><cname>商品编号</cname><width>15</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sitemname</fname><cname>商品名称</cname><width>40</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>150</columnwidth><align>left</align></col><col><fname>iunits</fname><cname>计量规格</cname><width>10</width><dtype>整数</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sunit</fname><cname>计量单位</cname><width>6</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>dprice</fname><cname>单价</cname><width>10</width><dtype>实数</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" width="503" height="318" top="53" left="5">
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=imgdataset1 idtype="1" controltype="dataset" saveastable="FCS_ITEM" pubpara="否" BeforePost='bill_dsevent("BeforePost","uf_before_update()")' opensortno="1" isaddemptyrec="否" isSubGrid="否" submittype="1" submitno="1" savetable="FCS_ITEM" idparam="ZBF" issubds="否" format="<fields><field><fieldname>sitemcode</fieldname><datatype>字符</datatype><displaylabel>商品编号</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sitemid</fieldname><datatype>字符</datatype><displaylabel>商品内码</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sitemname</fieldname><datatype>字符</datatype><displaylabel>商品名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>iunits</fieldname><datatype>整数</datatype><displaylabel>计量规格</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sunit</fieldname><datatype>字符</datatype><displaylabel>计量单位</displaylabel><size>6</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dprice</fieldname><datatype>实数</datatype><displaylabel>单价</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sitemcode></sitemcode><sitemid></sitemid><sitemname>uf_isspace()</sitemname><iunits>uf_Num()</iunits><sunit>uf_isspace()</sunit><dprice>uf_valpricenum()</dprice></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sitemcode></sitemcode><sitemid></sitemid><sitemname></sitemname><iunits></iunits><sunit></sunit><dprice></dprice></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sitemcode></sitemcode><sitemid></sitemid><sitemname></sitemname><iunits></iunits><sunit></sunit><dprice></dprice></dsid>")'></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 87px; LEFT: 515px" id=FCButton2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("imgdataset1.Delete();")'>删除行</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 56px; LEFT: 515px" id=FCButton3 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("imgdataset1.Append();")'>增加行</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 124px; LEFT: 515px" id=FCButton1 onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;$eform('提交数据成功后提示')&quot;)">保 存</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 28px; FONT-WEIGHT: bold; LEFT: 13px" id=Label1 onmovestart=moveStart() noWrap controltype="label" value="Label1">脚本字段验证</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 90px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #ff0000; FONT-SIZE: 14px; TOP: 390px; LEFT: 17px" id=Label2 onmovestart=moveStart() noWrap controltype="label" value="Label2">注:商品名称、计量单位不能为空</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 66px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #ff0000; FONT-SIZE: 14px; TOP: 414px; LEFT: 17px" id=Label3 onmovestart=moveStart() noWrap controltype="label" value="Label3">注：计量规格必须为数字</DIV>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 138px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #ff0000; FONT-SIZE: 14px; TOP: 437px; LEFT: 17px" id=Label4 onmovestart=moveStart() noWrap controltype="label" value="Label4">注：单价必须为数字，并且不能大于1000000</DIV></DIV></body></html>

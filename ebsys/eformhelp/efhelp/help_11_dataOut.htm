@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>导入导出数据</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">导入导出数据</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+      &nbsp;&nbsp;&nbsp;&nbsp;在开发信息管理系统中，常常需要将不同数据库中的内容整合在一起，即将一个数据库的部分记录导到另一数据库中，甚至是把excel文件中的数据导入到数据库中。而用数据库本身带的导入导出工具有一定的局限性，比如：不方便支持字段值的转换，需要写特定的代码等。所以，在eform中内带了数据导入导出工具。数据导入导出功能也可以看是批量增加或修改多条记录的功能，在eform以前的功能中，已提供了单条记录的增删改，以及批量删除多条记录的功能，批量增加或修改多条记录的功能就在这节实现的。</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;导入导出数据分成导出数据和导入数据两部分，导出数据需要用eform定做一个表单，在表单上定义要导出的数据，然后在运行本表单时，将表单上定义的要导出的数据存到一个ＸＭＬ文件，这样便完成了导出数据。导入数据是直接运行 <a class="shili" href='../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST'>导入数据</A> ，在此界面上选择导出数据时生成的ＸＭＬ文件，将ＸＭＬ文件中的内容导入到数据库中。这样便完成了导入数据。这种导入导出数据的方法可以充分利用在表单设计器中定义表单的灵活性，以应对复杂的导入导出数据的要求。</br>
+      &nbsp;&nbsp;&nbsp;&nbsp;导入导出数据的原理是让用户在数据集中输入sql查询语句,或用数据集的ds.Open方法,或用设置数据集的ds.opensql属性，使用doExportData函数,在调用后台程序时得到要查询数据的sql语句,然后查出数据库表中的数据作为xml文件的内容,保存到我们指定目录下.导入数据时把指定目录下的xml文件发送到后台产生sql语句保存到数据库表中.
+   <div class="divTitle">1.导出单表数据</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;在表单中通过doExportData函数调用后台程序获取要导出数据的sql查询语句,查出数据,生成xml文件存放在/fceformext/res/目录下.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_2_outOneTable'>导出单表数据</A> 进入导出单表数据设计界面.
+      <div class="divTitle">1.1 要导出的数据设置</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;导出数据可以在数据集的属性页的sql语句和用数据集的obj.Open方法来获取导出的数据并在指定的目录下生成xml文件,不过这种方法执行了两次查询,因为这两种方法都是执行sql语句并把数据返回到表单中的数据集上.而执行doExportData函数后,后台又会得到这两种方法中的sql语句,来查询导出的数据,生成xml文件保持到指定到目录下.<br />&nbsp;&nbsp;&nbsp;&nbsp;另一种是对数据集的opensql属性赋值，赋一个ＳＱＬ语句给它。这种方法在打开表单时不会执行sql语句,也不会将ＳＱＬ语句的运行结果返回到前台，导出数据时，ＳＱＬ语句的运行结果的内容可能会很大，如要返回到客户端的话，可能会很慢。在执行doExportData函数后,后台会执行它的sql语句生成xml文件保持到指定到目录下.      
+      <div class="divTitle">1.1.1 导出数据的来源</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;我们在数据集属性页的输入sql查询语句.<br />
+<img  src ="images/help_11_1.gif"/><br />或者直接在自定义函数中用数据集的obj.Open方法查询数据库中的表要导出的数据,这两种sql语句都会执行后台查出数据返回到客户端,如果你不需要在表单界面选择数据,你最好不要这两种执行sql语句,用obj.opensql方法,它是到执行导出数据方法时,它的sql语句被doExportData方法在后台执行了opensql中的sql语句.<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_export(){<span style="mso-tab-count:1">
+               </span></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;select sitemid,sitemcode,sitemname,dprice<span 
+                   style="mso-spacerun:yes">&nbsp; </span>from FCS_ITEM where dprice = 150&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql=sql1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/outOneTable.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p> <div class="divTitle">1.1.2 导入数据时需要的信息也要在导出数据时设置</div> &nbsp;&nbsp;&nbsp;&nbsp;导入数据时是通过读取导入的xml文件来生成它的insert语句,导入数据时所需要的信息也是在导出数据时设置的.在导出数据表单中的数据集中设置字段主键、主键标识、保存表名来提供生成insert语句的完整信息.在数据集的字段页签中设置主键.<br /><img src='images/help_11_5.gif' /><br />&nbsp;&nbsp;&nbsp;&nbsp;在数据集的提交页中设置主键类别、主键标识.<br /><img src ='images/help_11_6.gif' /><br />&nbsp;&nbsp;&nbsp; 在表单工具栏上单击导入配置信息图片，进入导入配置信息界面来设置导入数据的类型.<br /><img src="images/help_11_1_2.gif" />
+           <div class="divTitle">1.2 生成xml文件保存在fceformext/res</div> 
+           &nbsp;&nbsp;&nbsp;&nbsp;在自定义函数中指定了文件名和路径,<span lang="EN-US">doExportData函数会调用后台程序,</span>在指定的路径下生成指定的xml文件 .
+           <div class="divTitle">1.3 把xml文件导入的数据库表中</div> 
+           &nbsp;&nbsp;&nbsp;&nbsp;我们把保存在fceformext/res路径下的xml文件,导入到与导出数据表单的数据集设置的保存表名相同的表中,导入导出数据时，也是按照同名字段传递数据规则来保存的，即导出数据时数据集上的字段和要导入的表的字段之间按照同名字段传递数据规则来导入数据,字段类型兼容就行.在导入数据界面上，可以选择数据源,是否要在同一事务中保存等.如果文件不在fceformext/res路径下,就不能用下拉按钮选择xml文件,而要用上传文件.数据导入成功后，会将本次数据导入的结果提示出来,如果导入数据出错会提示所以错误信息.如有多次错误就会提示多个错误信息。单击<a class="shili" href='../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST'>导入数据</A> 进入导入数据界面.
+           <br /><img src="images/help_11_1_1.gif" />
+           <br />
+      <div class = "divTitle">2.带条件的导出单表数据</div>
+       <div class = "divTitle">2.1 要导出的数据设置</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;这是一个在表单界面上输入查询条件动态导出数据.要导出的数据是动态选择的,不是固定的.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_outOneTableCondition'>带条件的导出单表数据</A> 进入带条件的导出单表数据设计界面.<br />&nbsp;&nbsp;&nbsp; 设计界面图如下：&nbsp; 
+           <br />
+           <img src="images/help_11_2.gif" /> <br /><div class="divTitle">2.2 生成xml文件保存在fceformext/res</div> 
+           &nbsp;&nbsp;&nbsp;&nbsp;在自定义函数中指定了文件名和路径,<span lang="EN-US">doExportData函数会调用后台程序,</span>在指定的路径下生成指定的xml文件 .表单的自定义函数设置如下：<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_export(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;select sitemid,sitemcode,sitemname,dprice<span 
+                   style="mso-spacerun:yes">&nbsp; </span>from FCS_ITEM where dprice &gt; &quot;+<span 
+                   style="mso-spacerun:yes">&nbsp; </span>txtPrice1.value +&quot; and dprice &lt; 
+               &quot;+txtPrice2.value;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql=sql1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/outOneTableCondition.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <div class="divTitle">2.3 
+               把xml文件导入的数据库表中</div> 
+           &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST'>导入数据</A> 进入导入数据界面,导入数据.<br />
+           
+      <div class = "divTitle">3.导出主从表数据</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;它与上面的区别是导出的数据是主从关系的数据，要设置主从表的关联字段,通过doExportData函数生成xml存放在/fceformext/res/目录下.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_mainSub'>导出主从表数据</A> 进入导出数据设计界面.
+           <br />
+           <div class="divTitle">
+               3.1 要导出的数据设置</div>
+               &nbsp;&nbsp;&nbsp;&nbsp;在从表数据集属性页的输入sql查询语句,在自定义函数中用数据集的obj.opensql方法查询主表要导出的数据,还要在从表数据集中设置此数据集为从表数据集和主从数据集的关联字段,表单中的自定义函数如下:<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_export(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;select 
+               FCS_BILL.djbh,FCS_BILL.sdate,FCS_BILL.sdeptid,FCS_BILL.sdwid from FCS_BILL where 
+               sdate &gt; '&quot;+<span style="mso-spacerun:yes">&nbsp; </span>txtStart.value +&quot;' and 
+               sdate &lt; '&quot;+txtEnd.value+&quot;'&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql=sql1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/mainSub.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>&nbsp;&nbsp;&nbsp;&nbsp;从表数据集的sql语句设置如下<p>select FCS_BILLSUB1.djbh,FCS_BILLSUB1.djbhsub,FCS_BILLSUB1.dmoney,FCS_BILLSUB1.dnum,FCS_BILLSUB1.dprice,FCS_BILLSUB1.sitemid from
+ FCS_BILLSUB1 where djbh in (select djbh from fcs_bill where sdate > ':{txtStart.value}:' and sdate < ':{txtEnd.value}:')
+</p>&nbsp;&nbsp;&nbsp;&nbsp;在数据集提交页设置主从表的关联字段.<br /> <img src='images/help_11_3_1.gif' />
+           <div class="divTitle">
+               3.2 把xml文件导入的数据库表中</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;单击<a 
+               class="shili" 
+               href="../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST">导入数据</a> 
+           进入导入数据界面,导入数据.<br />
+           <br />
+      <div class = "divTitle">4.导出多表数据</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;导出的表信息不是来自一个表,而是多个表,可以是主从表也可以是单表,也可以是主从表加单表或者多个单表.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_muchTable'>导出主从表数据</A> 进入导出数据设计界面.
+       <div class="divTitle">4.1 要导出的数据设置</div>
+               &nbsp;&nbsp;&nbsp;&nbsp;从数据集属性页的输入sql查询语句,主数据集在表单中的自定义函数中设置了dataset1.opensql=sql ,如下:
+               <p>function uf_export(){<br />
+	&nbsp;&nbsp;&nbsp;
+	var sql1="select FCS_BILL.djbh,FCS_BILL.sdate,FCS_BILL.sdeptid,FCS_BILL.sdwid from FCS_BILL where sdate > '"+  txtStart.value +"' and sdate < '"+txtEnd.value+"'";<br />
+	&nbsp;&nbsp;&nbsp;
+	dataset1.opensql=sql1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataset3.opensql='select FCS_ITEM.sitemid,FCS_ITEM.sitemname,FCS_ITEM.sitemcode,FCS_ITEM.dprice from FCS_ITEM';
+	&nbsp;&nbsp;&nbsp;<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;doExportData("/fceformext/res/mainsubExportExamplese1.xml",function () {<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		alert("OK!");<br />
+		&nbsp;&nbsp;&nbsp;
+		})	<br />
+}
+</p>
+      &nbsp;&nbsp;&nbsp;&nbsp;从表数据集的sql语句和在从表数据集的提交页设置主从表关联字段如下<p>select FCS_BILLSUB1.djbh,FCS_BILLSUB1.djbhsub,FCS_BILLSUB1.dmoney,FCS_BILLSUB1.dnum,FCS_BILLSUB1.dprice,FCS_BILLSUB1.sitemid from
+ FCS_BILLSUB1 where djbh in (select djbh from fcs_bill where sdate > ':{txtStart.value}:' and sdate < ':{txtEnd.value}:')
+</p><div class = "divTitle">4.2 把xml文件导入的数据库表中</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;单击<a 
+               class="shili" 
+               href="../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST">导入数据</a> 
+           进入导入数据界面,导入数据.<br />
+           
+      
+      <div class = "divTitle">5 导出转换字段值</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;即在导出时要用表达式来转换字段的值，例如导出数据时职员表中记录的男女是1和2表示,导出时转换成男女,或者职员表中记录的是部门id,要转换成部门名称导出等等.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_outSwitch'>导出转换字段值</A> 进入导出数据设计界面.在表单设计器中查看数据集属性窗口，选择最后一个字段：sdeptname ，看到 读出时SQL转换 处写了一个ＳＱＬ语句，由此ＳＱＬ语句来完成部门ＩＤ转换成部门名称。这是在导出时转换字段值，即在导出数据时的环境及数据库的情况下执行转换表达式来转换字段值的，有时，还需要在导入数据时，即在导入数据时的环境及数据库的情况下执行转换表达式，在导入数据时转换字段值的设置在做导出数据的表单时，在表单设计器的工具栏上，点 导入配置信息 按钮，进入导入配置信息界面，在此界面上，设置数据集的字段的转换的ＳＱＬ语句，这样在导入数据时，就会执行此处设置的转换ＳＱＬ语句。导出时转换字段值会将转换后的字段值写到导出数据时产生的ＸＭＬ文件中，而导入数据时转换的字段值只是将转换ＳＱＬ语句写到ＸＭＬ文件中。<br />
+           <div class="divTitle">5.1 要导出的数据设置</div>
+               &nbsp;&nbsp;&nbsp;&nbsp;我们在数据集属性页的输入sql查询语句或者直接在自定义函数中用数据集的obj.Open方法查询数据库中的表要导出的数据,表单中的自定义函数如下:<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_export(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;select 
+               semployeecode,semployeeid,semployeename,sphone,ssex,sdeptid ,sdeptid as 
+               sdeptname<span style="mso-spacerun:yes">&nbsp; </span>from FCS_EMPLOYEE where 
+               semployeeid='ZCA00000002'&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql=sql1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/outSwitch.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <div class="divTitle">
+               5.2 把xml文件导入的数据库表中</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;单击<a 
+               class="shili" 
+               href="../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST">导入数据</a> 
+           进入导入数据界面,导入数据.<br />
+           <br />
+       
+      <div class = "divTitle">6 导出图片字段</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;导出数据是图片文件或word文件等二进制的字段内容，要用导出图片字段的方法导出.会把二进制内容转成base64码存在xml文件中,单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_outImg'>导出图片字段</A> 进入导出数据设计界面.<div class="divTitle">
+               6.1 要导出的数据设置</div>
+                          &nbsp;&nbsp;&nbsp;&nbsp;导出图片字段和其它设置不同是要设置数据集中的字段为图像
+           <br /><img src='images/help_11_6_1.gif' /><br />&nbsp;&nbsp;&nbsp;&nbsp;表单自定义函数如下
+            
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_export(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;select '' as semployeeid,'</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">导入</span><span lang="EN-US">_'+semployeename as 
+               semployeename,photo from fcs_employee&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql=sql1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/Img1.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <div class="divTitle">
+               6.2 把xml文件导入的数据库表中</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单击<a 
+               class="shili" 
+               href="../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST">导入数据</a> 
+           进入导入数据界面,导入数据.<br />
+           <br />
+      <div class = "divTitle">7 导出表格选择的数据</div>    
+        &nbsp;&nbsp;&nbsp;&nbsp;在表单界面上可视化的在表格控件上多选要导出的记录,通过doExportData函数调用后台程序,生成xml存放在/fceformext/res/目录下.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_11_selectOut'>导出表格选择的数据</A> 进入导出数据设计界面.
+      <div class="divTitle">7.1 设置要导出的数据</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;在数据集属性页的输入sql查询语句，打开表单后在表单的表格控件显示出数据.<br />
+<img  src ="images/help_11_3.gif"/><br />&nbsp;&nbsp; 在表单的表格控件上选择要导出的数据<br /><img  src ="images/help_11_4.gif"/><br />
+      &nbsp;&nbsp;&nbsp;&nbsp;在自定义函数中找出我们选中的数据的id字段值做为select查询语句的条件, 生成完整的sql查询语句,在自定义函数中写入dataset1.Open(sql1), 通过执行doExportData函数,数据集重新获取它的xml数据,把数据集中的数据生成xml文件并存放在指定名录下同时生成指定的文件名.
+           <br />
+           <p class="MsoNormal">
+               <span lang="EN-US">function<span style="mso-spacerun:yes">&nbsp; </span>
+               uf_export() {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sRet=&quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sWhere=&quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var sql1=&quot;&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var l=dataset1.oDom.documentElement.childNodes.length-1;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>for(var i=0;i&lt;l;i++){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == &quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">是</span><span 
+                   lang="EN-US">&quot;){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sRet += dataset1.oDom.documentElement.childNodes(i).childNodes(1).text;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sRet +=',';</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sRet=sRet.substring(0, sRet.length-1); </span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var arr=sRet.split (',');</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>for(j=0;j&lt;arr.length;j++){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sWhere+= &quot;<span style="mso-spacerun:yes">&nbsp; </span>semployeeid= 
+               '&quot;+arr[j]+&quot;'&quot;;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sWhere += &quot;<span style="mso-spacerun:yes">&nbsp; </span>or&quot;;<span 
+                   style="mso-tab-count:1">&nbsp; </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>}<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sWhere=sWhere.substring(0, sWhere.length-2);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>sql1=&quot;select 
+               semployeecode,semployeeid,semployeename,sphone,ssex,sculture,age from 
+               FCS_EMPLOYEE where &quot;+sWhere;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>dataset1.opensql(sql1);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doExportData(&quot;/fceformext/res/selectOut.xml&quot;,function () {</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>alert(&quot;OK!&quot;);</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>})<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span></span>
+           </p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+<p>/fceformext/res/<span lang="EN-US">selectOut</span>.xml就是指定的文件路径和xml文件名</p>
+<div class="divTitle">7.2  把xml文件导入的数据库表中</div> 
+   &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/common/djframe.htm?djsn=ImportData&amp;djtype=ST'>导入数据</A> 进入导入数据界面,导入数据.    
+          
+</div>
+</body>
+</html>

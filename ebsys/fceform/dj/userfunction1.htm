@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml" >
+<HEAD>
+
+		<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script src="../js/fcrundj.js"></script>
+<script src="../js/fcout.js"></script>
+</HEAD>
+<body defer bgcolor=#d4d0c8 background="../image/BKGROUND.gif" onload="pub_window_onload()" 
+ onkeydown="RunTabindex()"  onbeforeunload="pub_window_onbeforeunload()" 
+ onkeypress="pub_window_onkeypress()"
+ onresize="pub_window_onresize()"
+ >
+<script>
+   
+   			
+      
+pub_djhtm()
+</script>
+
+
+
+
+
+
+
+
+
+<script>function uf_open() {
+	SetButtonImage(SKButton1,"../images/ef_run_button_ok.gif");
+	SetButtonImage(SKButton2,"../images/ef_run_button_close.gif");
+  var s = fcpubdata.keyValue ;
+  var l=new ActiveXObject("CodeMax.Language.3")
+ l.Xml=getUserFunction1BigDefine();
+  try{
+    l.register()
+  }catch(e){}
+  CodeMax1.Language=l
+  CodeMax1.StealKeys=true
+  CodeMax1.Text=s
+  CodeMax1.focus();
+  uf_onresize()
+  window.attachEvent( "onresize", uf_onresize )
+}
+function uf_onresize(){
+  divbig.style.width=document.body.clientWidth-divbig.style.pixelLeft
+  divbig.style.height=document.body.clientHeight-divbig.style.pixelTop
+  CodeMax1.style.width=divbig.style.posWidth-2
+  CodeMax1.style.height=divbig.style.posHeight-2
+  //alert("dddd")
+}
+
+function uf_ok(){
+   window.returnValue=CodeMax1.Text ;
+   window.close() ;
+
+}
+function uf_maxwin(){
+   window.dialogLeft=0
+   window.dialogTop=0
+   SKButton3.style.left = 748;
+   SKButton2.style.left = 912;
+   SKButton1.style.left = 830;
+   window.dialogWidth= screen.availWidth+"px"
+   window.dialogHeight=screen.availHeight+"px"
+
+}
+
+</script><div id=divbig style="position:absolute;LEFT: 1px;  TOP: 35px;BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid;;">
+<OBJECT id=CodeMax1 style="position:absolute;LEFT: 0px; WIDTH: 100%; Top: 0px; HEIGHT: 100%; "
+ classid=clsid:BCA00001-693C-43AB-9FF9-1C086FF3B5A8 VIEWASTEXT></OBJECT>
+</div>
+<div id=SKbillsheet class=dj  dj_id="431"  dj_sn="userfunction1"  mkbh="E5"  caption='带颜色的用户自定义函数'  codeheader=''  printid=''  helpid=''  mastertable=''  keyfield='' BLONopen=bill_blonopen(uf_open()) BLONclose=bill_blonclose()  runsave=""  formtitle="带颜色的用户自定义函数"  billtaborder="<root><taborder>SKButton1</taborder>
+<taborder>SKButton2</taborder>
+<taborder>SKButton3</taborder>
+</root>"  para="<r></r>"  blmode="其它"  mainmenu="<sysmenu> </sysmenu>" popmenu="<sysmenu> </sysmenu>" >  <span id="Label1"  style="position:absolute;Left:12;Top:6;Height:20;Width:168; FONT-FAMILY: 楷体_GB2312;FONT-SIZE:20px;color:#0000FF ;FONT-WEIGHT: bold;text-decoration:underline;  display:block "  align=Left  >用户自定义的函数</span>
+<input type=button dropstyle="否" value="最大化" id="SKButton3" style="position:absolute;Left:518;Top:4;Height:25;Width:79;BACKGROUND-COLOR:#D4D0C8 ;FONT-FAMILY:宋体;FONT-SIZE:12px;color:#000000 ; display:block "  onclick=bill_onclick("uf_maxwin()") NAME="SKButton3">
+<input type=button dropstyle="否" value="" id="SKButton1"  tabIndex=4 style="position:absolute;Left:600;Top:4;Height:25;Width:79;BACKGROUND-COLOR:#D4D0C8 ;FONT-FAMILY:宋体;FONT-SIZE:12px;color:#000000 ; display:block "  onclick=bill_onclick("uf_ok()") >
+<input type=button dropstyle="否" value="" id="SKButton2" tabIndex=3  style="position:absolute;Left:682;Top:4;Height:25;Width:79;BACKGROUND-COLOR:#D4D0C8 ;FONT-FAMILY:宋体;FONT-SIZE:12px;color:#000000 ; display:block "  onclick=bill_onclick("window.close()") >
+</div></body></html>

@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script src="../js/fcbasecont.js"></script>
+
+<script>
+function window_onresize() {
+	select1.style.width =document.body.offsetWidth
+	select1.style.height =document.body.offsetHeight 
+
+}
+
+/**
+选中控件
+*@date 2005-03-29
+**/
+function selectit(){
+	//var djsn=event.srcElement.value
+	//parent.design.location.assign("../dj/"+djsn+".htm")
+
+}
+/**
+*增加控件
+parent.objlist.select1 SelectAddOption(id,"")
+**/
+function objlist_add(sid,CtrlType) {
+	var addoption = document.createElement('option');
+    addoption.text = sid ;
+    addCtrlType = CtrlType;
+    select1.options.add(addoption);
+}
+//删除界面中没有而select1中有的控件
+//sid:控件id
+function objlist_del(sid) {
+	var l = select1.options.length ;
+	for(var i=0; i<l; i++) {
+		if(select1.options(i).text == sid) {
+			select1.options.remove(i)
+			l = l-1;
+		}
+	}
+}
+/*
+*修改控件id
+*/
+function objlist_edit(oldid,sid){
+	//alert(oldid)
+	var l = select1.options.length ;
+	for(var i=0; i<l; i++) {
+		if(select1.options(i).text == oldid ){
+			select1.options(i).text = sid;
+		}
+	}
+}
+/*
+*选择select1中的值中选中控件
+*/
+function objlist_change() {
+	parent.topic.SelectObj(select1.options(select1.selectedIndex).text,0)
+}
+
+/*
+*双击出选中控件的属性框
+*/
+function objlist_dblclick() {
+	if(select1.selectedIndex >= 0){
+		var sid = select1.options(select1.selectedIndex).text
+		parent.topic.execScript("main_ondblclick("+sid+")")
+		//main_ondblclick(eval("parent.topic."+sid))
+	}
+}
+/**
+* 双击选择字段
+**/
+function selectField() {
+	if(cboField.selectedIndex>=0){
+		parent.topic.execScript("AddBindField('"+cboField.options(cboField.selectedIndex).parentNode.label+"','"+cboField.value+"','"+cboField.options(cboField.selectedIndex).text+"')");
+	}
+}
+</script>
+</HEAD>
+<BODY style="margin:0" ><div id=main style="width:100%;height:100%;margin:0">
+<strong><font size=2>字段列表:</font></strong><br>
+<SELECT size=2 id="cboField" style="width:100%;height:47%" ondblclick=selectField()>
+</SELECT>
+<strong><font size=2>控件列表:</font></strong><br>
+<SELECT size=2 id=select1 style="width:100%;height:47%" ondblclick="objlist_dblclick()" onclick=selectit()  onchange="objlist_change()">
+</SELECT>
+</div>
+</BODY>
+</HTML>

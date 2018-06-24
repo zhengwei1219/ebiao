@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title></title>
+        <script src="../js/MicrosoftAjax.js"></script>
+        <script src="../js/fcpub.js"></script>
+		
+	</head>
+	<script language="javascript">
+	<!--
+	    if (IsSpace(top.zkpub) == false) {
+	        if (IsSpace(top.zkpub.skin) == false) {
+	            fcpubdata.skins = top.zkpub.skin;
+	        }
+	    }
+
+	    var hrefstyle = "<link rel='stylesheet' type='text/css' href='../css/skins/";
+	    var docstyle = "/style/Editor.css'>";
+	    document.writeln(hrefstyle + fcpubdata.skins + docstyle);
+	
+	
+		var sChk=1;
+		function design_click(){
+			if(sChk!=1){
+				design_check()
+				sChk=1
+			}
+		}
+		function html_click(){
+			if(sChk!=2){
+				html_check()
+				sChk=2
+			}
+		}
+		function design_check(){
+			//design.src="../images/ef_design_designmode.gif"
+		    //html.src="../images/ef_design_htmlmode1.gif"
+		    design.className = "ef_design_designmode";
+		    html.className = "ef_design_htmlmode1";
+			parent.topic.bigmain.style.display = ""
+			parent.topic.srcHtml.style.display = "none"
+			parent.topic.SKbillsheet.innerHTML = parent.topic.srcHtml.value
+			parent.topic.bigmain.focus()  ;
+			//维护控件ID
+			parent.topic.execScript( "if(TooContXml()){ openobjlist(); }" );
+			
+			parent.topic.blnChange = true;
+			
+			
+		}
+		function html_check(){
+			//design.src="../images/ef_design_designmode1.gif"
+			//html.src="../images/ef_design_htmlmode.gif"
+		    design.className = "ef_design_designmode1";
+		    html.className = "ef_design_htmlmode";
+		    parent.topic.bigmain.style.display = "none"
+			parent.topic.srcHtml.style.display = ""
+			parent.topic.srcHtml.value = parent.topic.SKbillsheet.innerHTML ;
+			parent.topic.srcHtml.focus() ;
+			//parent.topic.execScript("window_onresize()")
+		}
+		
+		
+		if(parent.Request.QueryString("ebuse").toString() == "yes"){
+			var sComm = "parent.topic.execScript('e_savedj();');"
+			document.write('<img src="../images/ef_run_button_ok1.gif" style="position:absolute;top:1;left:300;" onclick="' + sComm + '"><img src="../images/ef_run_button_close1.gif" style="position:absolute;top:1;left:360;" onclick="parent.topic.blnChange=false;parent.close();">');		
+		}
+		//--> bgcolor="#d4d0c8"
+	</script>
+	<body  marginTop="0"><LINK href="../../fceform/css/efdesign.css" type="text/css" rel="stylesheet">
+		<span id="design" class=ef_design_designmode style="position:absolute;top:5;left:10;" onclick="design_click()"></span> <span id="html" class=ef_design_htmlmode1 style="position:absolute;top:5;left:70;" onclick="html_click()"></span>
+		<a id="recentFile1" href="javascript:void(0);" style="position:absolute;top:1;left:130;font-size:12px;" ></a><a id="recentFile2" href="javascript:void(0);" style="position:absolute;top:14;left:130;font-size:12px;"></a>
+
+	</body>
+</html>

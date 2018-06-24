@@ -1,0 +1,4 @@
+说明:
+1 应将 treesample目录放在 webbill/ebsys/samples 目录下.
+2 如虚拟目录的名称不为webbill ,则treesample目录下的文件的绝对路径都要做相应的修改
+3 在IE中输入 http://localhost/webbill/ebsys/samples/treesample/index.htm 进入

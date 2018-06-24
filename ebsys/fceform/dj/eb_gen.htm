@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_run() {
+	new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=genHtmlFile",txtXml.value,
+		function (result){
+			var sRet = result.value;
+			txtXml.value = sRet;	
+		}	
+	);
+	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" idtype="1" OtherSave="否" isfile="是" postop posleft window="当前窗口" toolbar="不带工具栏" contxml="<root><label><id>label1</id></label><textarea><id>txtXml</id></textarea><button><id>button1</id></button></root>" billtaborder="<root><taborder>txtXml</taborder><taborder>button1</taborder></root>" dj_sn="eb_gen" type="PR" caption="成批的运算并生成报表" mkbh codeheader="BBB" entertype="修改" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield AutoResizeXml><TEXTAREA onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 597px; HEIGHT: 240px; TOP: 27px; LEFT: 2px" id=txtXml onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() cols=119 controltype="textarea" value="textarea1" induce="否">    &lt;filenames&gt;	&lt;fn&gt;&lt;in&gt;/ebfile/samples/s_simplelist.htm&lt;/in&gt;&lt;out&gt;s_simplelist&lt;/out&gt;&lt;params&gt;&lt;/params&gt;&lt;/fn&gt;  	&lt;fn&gt;&lt;in&gt;/ebfile/samples/s_参数表单.htm&lt;/in&gt;&lt;out&gt;s_ordername&lt;/out&gt;&lt;params&gt;&lt;p&gt;&lt;name&gt;startdate&lt;/name&gt;&lt;value&gt;2005-02-08&lt;/value&gt;&lt;/p&gt;&lt;/params&gt;&lt;/fn&gt;  &lt;/filenames&gt;  &lt;paths&gt;  	  	&lt;gen&gt;/ebexpfile/file/&lt;/gen&gt;  	&lt;fromdb&gt;no&lt;/fromdb&gt;  	&lt;exptype&gt;*&lt;/exptype&gt;  &lt;/paths&gt;</TEXTAREA><BUTTON onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 76px; HEIGHT: 25px; TOP: 1px; LEFT: 412px" id=button1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() controltype="button" onclick='bill_onclick("uf_run()")' dropstyle="否">生 成</BUTTON> 
+<DIV onresizeend=resizeEnd() style="POSITION: absolute; WIDTH: 65px; FONT-FAMILY: 楷体_GB2312; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14pt; TOP: 4px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 12px" id=label1 onmovestart=moveStart() onmoveend=moveEnd() onresizestart=resizeStart() noWrap controltype="label" value="label1" NotBg="否">成批的运算并生成报表</DIV></DIV></body></html>

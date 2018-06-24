@@ -1,0 +1,41 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>删除记录</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">删除记录</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.删除记录</div>
+       &nbsp;&nbsp;&nbsp; eform表单中删除记录有几种方式:只删除表格中的行记录,更改数据库中的标记删除, 删除表格行记录还删除数据库中表记录,批量删除数据库中的表记录 
+           .<div class="divTitle">2.删除记录设置</div>
+           <div class="divTitle">2.1 只删除表格中的行记录</div>
+&nbsp;&nbsp;&nbsp; 我们在表单中单击【删除行】按钮只删除了表格中的当前一行记录和数据集中所对应的记录,不删除数据库中表对应的记录.我们双击button按钮,进入button属性页,单击事件进入事件页,我们可以直接输入$eform('删除行')或者输入<p>oDsGrid.Delete()</p> &nbsp;&nbsp;&nbsp; 
+           $eform('删除行')只删除第一个表格数据集的行，oDsGrid是表格绑定的数据集的名字,用oDsGrid.Delete()可以指定要删除表格行的数据集.<br /><img  src ="images/help_8_3_4.gif"/><br />&nbsp;&nbsp;&nbsp; 也可以选择输入,单击下拉按钮弹出函数选择删除行返回删除行函数$eform('删除行')<br /><img  src ="images/help_8_3_3.gif"/>
+       <div class="divTitle">2.2 修改删除标记</div>
+       <div class="divTitle">2.2.1 不使用系统的修改删除标记函数</div>
+       &nbsp;&nbsp;&nbsp; 例如一个员工离职了,也不能马上把他的记录删除掉,但是新员工来,旧员工走,职员表中人又很多,可以用修改删除标记来达到删除的目的,查看职员时没有离职人员的信息,便于我们管理职员信息.如果有离职员工来到公司要领以前没领完的工资等,可以通过删除标记来找到他的信息.<br />&nbsp;&nbsp;&nbsp; 例如员工李明已经离职我们要用删除标记删除它的信息,职员表中的字段semployeeid(职员id李明的id是emp00000022)semployeename(职员名称字段名字李明),删除标记字段(deleteMark值是0表示没离职)表名employee,那我们修改删除标记字段是1表示离职,sql语句是<p>update employee set deleteMark=1 where semployeeid='emp00000022'</p> &nbsp;&nbsp;&nbsp;&nbsp; 使用doSaveData函数来执行updata语句来修改删除标记,语句如下<p 
+               class="MsoNormal">
+           <span lang="EN-US">&lt;update tableName='employee'&gt;&lt;set&gt;deleteMark=1&lt;/set&gt;&lt;where&gt; 
+           semployeeid = 'emp00000022'&lt;/where&gt;&lt;/update&gt;</span></p>
+          
+                      &nbsp;&nbsp;&nbsp;&nbsp; 把它生成一个xml串,在后台它在还原成sql语句.
+           <br />
+<div class="divTitle">2.2.2 使用系统的修改删除标记函数</div>
+ &nbsp;&nbsp;&nbsp; 使用系统的修改删除标记函数比较方便，但是有以下要求，1必须有删除标记字段deleteMark，2数据集中必须有保存表名,用它来找到修改删除标记的表,3设置主键字段,用来作为修改的条件.有了删除标记字段保存表名和主键才能生成修改删除标记的sql语句。<br />&nbsp;&nbsp;&nbsp; 修改删除标记的函数是$eform('标记方式删除').<br />&nbsp;&nbsp;&nbsp;&nbsp;如果你的删除标记字段和我们规定的删除标记字段不一样,则不能使用$eform('标记方式删除')函数.
+
+  <div class="divTitle">2.3 删除表格中的行且删除记录</div>
+        &nbsp;&nbsp;&nbsp; 我们在表单中单击【删除行】按钮删除了表格中的当前一行记录,同时它数据库中对应的这条记录也被删除是物理删除,不是删除标记,它的删除函数是<p>$eform('删除行且删除记录')或者DelGridRow(oDsGrid)</p>&nbsp;&nbsp;&nbsp; $eform('删除行且删除记录')可以选择输入但是只能删除第一个表格数据集相关表的一条记录,DelGridRow(oDsGrid)只能手写输入，oDsGrid是数据集的名字，它可以指定要删除那个数据集相关表的记录.
+<div class="divTitle">2.4 批量删除数据库中的表记录</div>
+&nbsp;&nbsp;&nbsp; 单击 <a href='../../fceform/design/design.htm?isfile=yes&djtype=FT&=help_7_1_onchangeValid'>批量删除</a> 进入批量删除示例.批量删除就是我们在表格中通过多选来删除多行记录,首先要给数据集添加一个字段编辑格式为复选框,我们可以在此字段中画勾进行多选<br /><img  src ="images/help_8_3_1.gif"/><br />
+  &nbsp;&nbsp;&nbsp; 多选删除函数是<p>MultiDelGridRow(dsGrid,iMultiSelCol,callback)   </p>&nbsp;&nbsp;&nbsp; dsGrid是表格绑定的数据集名,iMultiSelCol 是多选（打勾）列在数据集中的顺序号,callback是一个回调函数我们在此表单中的批量删除写法如下<p>MultiDelGridRow(dssub1,0)</p>&nbsp;&nbsp;&nbsp; 下面是批量删除运行界面图,我们在批量第一列的复习框中选择要删除的数据,然后单击批量删除按钮进行批量删除.<br /><img  src ="images/help_8_3_2.gif"/>
+</body>
+</html>

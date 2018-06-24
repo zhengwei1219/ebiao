@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>主从关系保存</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">主从关系保存</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.主从关系保存说明</div>
+      &nbsp;&nbsp;&nbsp;  主从关系保存是表单中的两个数据集中要保存的表是主从关系,保存时主表只保存一条记录,从表可以是一条或多条.主从表关联字段设置主要是在从表数据集中设置和主表的字段关联.还有一种方式是直接给主表和从表关联字段赋相同值,通过代码来建立主从表的关联。
+      <div class="divTitle">2.主从关系保存设置</div>
+<div class="divTitle">2.1 在数据集中不设置关联字段,直接给关联字段赋值</div>
+&nbsp;&nbsp;&nbsp;  单击 <a  class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_8_4_mainSub'>主从关系保存</a>进入主从关系保存示例界面.表单的保存需要设置主键字段,主键类别(如果是单字段做主键就没有主键标识)，保存表名,提交类型,例如主从表保存就要设置主从表的关联字段,也可以不在数据集中设置它的关联字段,而直接给它们的关联字段赋值.如下图我们给主表的主键字段(djbh)赋值,在数据集中新增一条记录时,字段的变量默认值会自动赋值<br />
+<img  src ="images/help_8_4_1.gif"/><br />&nbsp;&nbsp;&nbsp;  下面我们设置从表的关联字段的变量默认值,把主表djbh字段的值赋给从表djbh字段,从表每增加一行记录都会给设置变量默认值的字段赋值<br /><img  src ="images/help_8_4_2.gif"/><br />&nbsp;&nbsp;&nbsp;  我们设置表单工具栏按钮,设置表单名就可以保存表单,前提是你把新增视图类型的表单的基本设置都设置完了,例如(控件与数据集绑定,设置保存表名,主键,提交类型).<br />&nbsp;&nbsp;&nbsp;  设计界面如下<br /><img  src ="images/help_8_4_3.gif"/><br />&nbsp;&nbsp;&nbsp;  单击运行按钮运行界面如下,单击【新增】按钮设置变量默认值的单据编号djbh字段自动添加了值,单击单【击增加行】按钮时从表设置变量默认值的djbh字段也会自动增加值.<br /><img  src ="images/help_8_4_4.gif"/>
+<div class="divTitle">2.2 在数据集中设置关联字段</div>
+&nbsp;&nbsp;&nbsp;&nbsp;查看主从表保存设置,单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_8_4_mainSub1'>主从关系保存</A> 进入主从关系保存设计界面.  这种主从表保存的设置是在从表的数据集中设置主从表的关联字段,其它设置都一样，如下图：<br />
+<img  src ="images/help_8_4_5.gif"/><br />
+           <br />&nbsp;&nbsp;&nbsp;&nbsp;设置了本数据集为从表数据集后,执行保存函数时在保存前会把主数据集的djbh字段的值传给从表数据集的djbh字段.
+</div>
+</body>
+</html>

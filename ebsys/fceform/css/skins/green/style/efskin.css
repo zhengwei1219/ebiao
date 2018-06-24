@@ -1,0 +1,1517 @@
+.ef_out {
+	position:absolute;
+	/*left:-3000px;*/
+	display : none;
+}
+
+
+
+/*------------------------------------放工具栏按钮组的table--------------------------*/
+.buttontable 
+{
+	top :0px;
+	left :10px;
+	border :0px;
+}
+/*------------------------------------放工具栏按钮组的table--------------------------*/
+.buttontable 
+{
+	left :10px;
+	border :0px;
+}
+
+/*-----------------------------放工具栏按钮组的tr------------------------*/
+
+/*放按钮的tr*/
+.buttontr
+{
+	left:3px;	
+}
+/*----------------------放工具栏按钮的td-------------------------*/
+
+/*最左边的td*/
+.tdleft
+{
+	width:3px;
+}
+
+/*-----------表单工具栏按钮样式-------*/
+/*打印按钮*/
+.buttonselectprint-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -847px;height:21px;padding-left:68px;
+}
+.buttonselectprint 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -658px;height:21px;padding-left:68px;
+}
+/*直接打印按钮*/
+.buttondirectprint-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1597px;height:21px;padding-left:68px;
+}
+.buttondirectprint 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1534px;height:21px;padding-left:68px;
+}
+/*直接打印所以页按钮*/
+.buttondirectprintall-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1618px;height:21px;padding-left:68px;
+}
+.buttondirectprintall 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1555px;height:21px;padding-left:68px;
+}
+/*打印所有页按钮*/
+.buttonprintall-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1639px;height:21px;padding-left:68px;
+}
+.buttonprintall 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1576px;height:21px;padding-left:68px;
+}
+/*分页导出excel按钮*/
+.buttonexpexcel-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1471px;height:21px;padding-left:68px;
+}
+.buttonexpexcel 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px  -1408px;height:21px;padding-left:68px;
+}
+/*不分页导出excel按钮*/
+.buttonexpexcelall-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1492px;height:21px;padding-left:68px;
+}
+.buttonexpexcelall 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1429px;height:21px;padding-left:68px;
+}
+/*导出pdf按钮*/
+.buttonexppdf-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1513px;height:21px;padding-left:68px;
+}
+.buttonexppdf 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1450px;height:21px;padding-left:68px;
+}
+
+/*预览按钮*/
+.buttonprintpreview-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -889px;height:21px;padding-left:68px;
+}
+.buttonprintpreview
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -868px;height:21px;padding-left:68px;
+}
+
+
+
+/*工作流工具按钮开始*/
+/*只执行流程的动作按钮*/
+.buttonwf_flowsave-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_flowsave 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*只执行流程的动作按钮1*/
+.buttonwf_flowsave1-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_flowsave1 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*只执行流程的动作按钮2*/
+.buttonwf_flowsave2-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_flowsave2 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*只执行流程的动作按钮3*/
+.buttonwf_flowsave3-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_flowsave3 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*执行按钮*/
+.buttonwf_save-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_save 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*执行按钮1*/
+.buttonwf_save1-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_save1 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*执行按钮2*/
+.buttonwf_save2-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_save2 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/*执行按钮3*/
+.buttonwf_save3-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1366px;height:21px;padding-left:68px;
+}
+.buttonwf_save3 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1387px;height:21px;padding-left:68px;
+}
+/* 暂存按钮*/
+.buttonwf_tempsave-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1324px;height:21px;padding-left:68px;
+}
+.buttonwf_tempsave 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1345px;height:21px;padding-left:68px;
+}
+
+/* 轨迹按钮*/
+.buttonwf_trace-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1282px;height:21px;padding-left:68px;
+}
+.buttonwf_trace 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif)  no-repeat 0px -1303px;height:21px;padding-left:68px;
+}
+
+/*工作流工具按钮结束*/
+
+/*上移按钮样式*/
+.buttonupmove-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -385px;height:21px;padding-left:68px;
+}
+.buttonupmove 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -427px;height:21px;padding-left:68px;
+}
+
+/*下移按钮样式*/
+.buttondownmove-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -931px;height:21px;padding-left:68px;
+}
+.buttondownmove
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -910px;height:21px;padding-left:68px;
+}
+
+
+
+/* 最大化按钮*/
+.buttonmaxwin 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -301px;height:21px;padding-left:77px;
+}
+.buttonmaxwin-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	cursor : hand ;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -280px;height:21px;padding-left:77px;
+}
+/* 刷新按钮*/
+.buttonrefresh 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -238px;height:21px;padding-left:68px;
+}
+.buttonrefresh-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	cursor : hand ;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -196px;height:21px;padding-left:68px;
+}
+/* 全选按钮*/
+.buttonselall 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -574px;height:21px;padding-left:68px;
+}
+.buttonselall-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	cursor : hand ;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -532px;height:21px;padding-left:68px;
+}
+/* 全不选按钮*/
+.buttonnoselall 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -322px;height:21px;padding-left:77px;
+}
+.buttonnoselall-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	cursor : hand ;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -343px;height:21px;padding-left:77px;
+}
+
+/*打开窗口新增记录按钮*/
+.buttonopenwinadd  
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -616px;height:21px;padding-left:68px;
+}
+.buttonopenwinadd-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -637px;height:21px;padding-left:68px;
+	cursor : hand ;
+}
+/*新增按钮*/
+.buttonadd 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -616px;height:21px;padding-left:68px;	
+}
+.buttonadd-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -637px;height:21px;padding-left:68px;
+	cursor : hand ;
+}
+/*删除按钮*/
+.buttondel 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1057px;height:21px;padding-left:68px;	
+	
+}
+.buttondel-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1120px;height:21px;padding-left:68px;
+	cursor : hand ;
+}
+/*删除行按钮*/
+.buttondeleterow
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1162px;height:21px;padding-left:77px;	
+}
+.buttondeleterow-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1183px;height:21px;padding-left:77px;	
+	cursor : hand ;
+}
+/*修改按钮*/
+.buttonedit 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1036px;height:21px;padding-left:68px;
+}
+.buttonedit-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -973px;height:21px;padding-left:68px;	
+	cursor : hand ;
+}
+/* 关闭按钮*/
+.buttonclosewin-over 
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -763px;
+}
+.buttonclosewin
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -784px;
+}
+/*保存按钮*/
+.buttonsave 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -364px;height:21px;padding-left:68px;
+}
+.buttonsave-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -217px;height:21px;padding-left:68px;	
+	cursor : hand ;
+}
+/*保存新增按钮*/
+.buttonsaveadd 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -490px;height:21px;padding-left:77px;	
+}
+.buttonsaveadd-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -511px;height:21px;padding-left:77px;
+	cursor : hand ;
+}
+/*增加行按钮*/
+.buttonaddrow 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -742px;height:21px;padding-left:77px;	
+}
+.buttonaddrow-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -679px;height:21px;padding-left:77px;
+	cursor : hand ;
+}
+
+/*第一页按钮*/
+.buttonfirst 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -994px;height:21px;padding-left:77px;	
+}
+.buttonfirst-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1015px;height:21px;padding-left:77px;	
+	cursor : hand ;
+}
+/*上一页按钮*/
+.buttonup 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -406px;height:21px;padding-left:77px;	
+}
+.buttonup-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -553px;height:21px;padding-left:77px;	
+	cursor : hand ;
+}
+/*下一页按钮*/
+.buttondown 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -952px;height:21px;padding-left:77px;
+}
+.buttondown-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -1141px;height:21px;padding-left:77px;	
+	cursor : hand ;
+}
+/*最后页按钮*/
+.buttonlast 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -259px;height:21px;padding-left:77px;
+}
+.buttonlast-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:75px;
+	height :21px;
+	cursor : hand ;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -595px;height:21px;padding-left:77px;	
+}
+
+/*查询按钮*/
+.buttonquery 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -175px;height:21px;padding-left:68px;	
+}
+.buttonquery-over 
+{
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -154px;height:21px;padding-left:68px;	
+	cursor : hand ;
+}
+/*查询组第一页按钮*/
+.buttonfirstpage 
+{ 
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2363px;
+}
+.buttonfirstpage-over 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2403px;
+}
+/*查询组上一页按钮*/
+.buttonuppage 
+{ 
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2343px;
+}
+.buttonuppage-over 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2383px;
+}
+/*查询组下一页按钮*/
+.buttondownpage 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2243px; 
+	
+}
+.buttondownpage-over 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2283px; 
+}
+/*查询组最后页按钮*/
+.buttonlastpage 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2263px; 
+			
+}
+.buttonlastpage-over 
+{
+	width:20px;
+	height :20px;
+	border-top :0px;
+	border-left:0px;
+	border-bottom:0px;
+	border-right:0px;
+	cursor : hand ;
+	BACKGROUND: url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2303px; 
+			
+}
+
+
+/* 日期按钮背景图*/
+.cmdDate
+{
+	width :20px;
+	height : 20px;
+	background :url(../../../../images/fctoolbarallbgs.gif) no-repeat 0px -2096px;
+}
+.cmdDate-over
+{
+	width :20px;
+	height : 20px;
+	cursor : hand ;
+	background :url(../../../../images/fctoolbarallbgs.gif)  no-repeat 0px -2076px;
+}
+/*鼠标进入表单属性框的确定按钮样式*/
+.cmdOk-over
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -469px;height:21px;padding-left:68px;
+}
+/*鼠标移出表单属性框的确定按钮样式*/
+.cmdOk
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -448px;height:21px;padding-left:68px;
+}
+
+/*鼠标进入时表单属性框的取消按钮样式*/
+.cmdClose-over
+{
+	cursor :hand;
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -805px;height:21px;padding-left:68px;
+}
+/*鼠标移出表单属性框的取消按钮样式*/
+.cmdClose 
+{
+	BORDER-BOTTOM: 0px;
+	BORDER-RIGHT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-TOP: 0px;
+	width:66px;
+	height :21px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -826px;height:21px;padding-left:68px;
+}
+/*----------------------commonbox控件事件的按钮样式-----------------------------------------*/
+/*鼠标进入表单属性框的单击按钮样式*/
+.cmdDown-over
+{
+	cursor :hand;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -114px;height:20px;
+}
+/*鼠标移出表单属性框的的单击按钮样式*/
+.cmdDown 
+{
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -134px;height:20px;
+}
+/*标题颜色如： 位置、样式等标题 color:#0080c0; */
+.label_title
+{
+	
+	FONT-WEIGHT: bold;
+}
+
+/*--------------------------------------------------------*/
+.ef_out {
+	position:absolute;
+	left:-3000px;
+}
+/* label 控件  background:#fff;*/
+.ef_input_label_out{
+	color:#000000;
+}
+
+/* text 控件*/
+.ef_input_text_out
+{
+	border:1px solid #b2b2b2;
+}
+.ef_input_text_over
+{
+	border:1px solid #969596;
+}
+/* button 控件*/
+.ef_input_button_out{
+	background:url("../images/button.gif") no-repeat 0px -50px;
+	height:25px;line-height:25px;border:0px;font-size:12px
+}
+.ef_input_button_right_out{
+	background:url("../images/button.gif") no-repeat right 0px;
+	height:25px;line-height:25px;border:0px;
+}
+.ef_input_button_over{
+	background:url("../images/button.gif") no-repeat 0px -150px;
+	height:25px;line-height:25px;border:0px;font-size:12px;
+}
+.ef_input_button_right_over{
+	background:url("../images/button.gif") no-repeat right -100px;
+	height:25px;line-height:25px;border:0px;
+}
+.ef_input_button_down{
+	background:url("../images/button.gif") no-repeat 0px -250px;
+	height:25px;line-height:25px;border:0px;font-size:12px;
+}
+.ef_input_button_right_down{
+	background:url("../images/button.gif") no-repeat right -200px;
+	height:25px;line-height:25px;border:0px;
+}
+/* checkbox 控件*/
+.ef_input_checkbox_nocheck_out{
+	background:url("../images/checkbox.png") no-repeat -47px 0px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_checkbox_nocheck_over{
+	background:url("../images/checkbox.png") no-repeat -47px -25px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_checkbox_nocheck_disabled{
+	background:url("../images/checkbox.png") no-repeat -47px -75px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_checkbox_check_out{
+	background:url("../images/checkbox.png") no-repeat -22px 0px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_checkbox_check_over{
+	background:url("../images/checkbox.png") no-repeat -22px -25px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_checkbox_check_disabled{
+	background:url("../images/checkbox.png") no-repeat -22px -75px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+/* checkbox 控件上的文本*/
+.ef_checkbox_label{
+	color:#000000;
+}
+
+/* radio 控件*/
+.ef_input_radio_nocheck_out{
+	background:url("../images/radio.png") no-repeat -47px 0px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_radio_nocheck_over{
+	background:url("../images/radio.png") no-repeat -47px -25px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_radio_nocheck_disabled{
+	background:url("../images/radio.png") no-repeat -47px -75px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+
+.ef_input_radio_check_out{
+	background:url("../images/radio.png") no-repeat -22px 0px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_radio_check_over{
+	background:url("../images/radio.png") no-repeat -22px -25px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+.ef_input_radio_check_disabled{
+	background:url("../images/radio.png") no-repeat -22px -75px;
+	width:20px;height:20px;
+	display:inline-block;
+	zoom:1;
+    *display:inline;
+}
+/* radio 控件上的文本*/
+.ef_radio_label{
+	color:#000000 
+}
+
+/**
+*grid控件的样式 
+**/
+/*-----表格滚动条------*/
+/*鼠标进入表格控件的竖向滚动条*/
+.grid_scrolltop-over
+{
+	BORDER-TOP: #BAB8BA 1px solid;BORDER-BOTTOM: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolltop.gif");
+}
+/*鼠标移出表格控件的竖向滚动条*/
+.grid_scrolltop
+{
+	BORDER-TOP: #BAB8BA 1px solid;BORDER-BOTTOM: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolltop1.gif");
+}
+/*鼠标单击表格控件的竖向滚动条*/
+.grid_scrolltop-click
+{
+	/*cursor : hand ;*/
+	BORDER-TOP: #BAB8BA 1px solid;BORDER-BOTTOM: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolltop2.gif");
+}
+/*鼠标进入表格控件的横向滚动条*/
+.grid_scrolldown-over
+{
+	BORDER-LEFT: #BAB8BA 1px solid;BORDER-RIGHT: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolldown.gif");
+	
+}
+/*鼠标移出表格控件的横向滚动条*/
+.grid_scrolldown
+{
+	BORDER-LEFT: #BAB8BA 1px solid;BORDER-RIGHT: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolldown1.gif");
+}
+/*鼠标单击表格控件的横向滚动条*/
+.grid_scrolldown-click
+{
+	/*cursor:hand;*/
+	BORDER-LEFT: #BAB8BA 1px solid;BORDER-RIGHT: #BAB8BA 1px solid;
+	background:url("../images/ef_run_grid_scrolldown2.gif");
+}
+/*鼠标进入滚动条的上面按钮时的按钮样式*/
+.grid_scrollshang-over
+{
+	border :0px;
+	cursor:hand;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -84px;height:15px;padding-left:16px;
+}
+
+/*鼠标进移出滚动条的上面按钮时的按钮样式*/
+.grid_scrollshang
+
+{
+	border :0px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -99px;height:15px;padding-left:16px;
+}
+/*鼠标进入滚动条的下面按钮时的按钮样式*/
+.grid_scrollxia-over
+{
+	border :0px;cursor:hand;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -70px;height:14px;padding-left:16px;
+}
+/*鼠标进移出滚动条的下面按钮时的按钮样式 */
+.grid_scrollxia
+{
+	border :0px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -42px;height:14px;padding-left:16px;
+}
+/*鼠标进入滚动条的左面面按钮时的按钮样式*/
+.grid_scrollleft-over
+{
+	border :0px;cursor:hand;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -28px;height:14px;padding-left:16px;
+}
+/*鼠标移出滚动条的左面按钮时的按钮样式*/
+.grid_scrollleft
+{
+	border :0px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -56px;height:14px;padding-left:16px;
+}
+/*鼠标进入滚动条的右面按钮时的按钮样式*/
+.grid_scrollright-over
+{
+	border :0px;cursor:hand;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px 0px;height:14px;padding-left:16px;
+}
+/*鼠标移出滚动条的右面按钮时的按钮样式*/
+.grid_scrollright
+{
+	border :0px;
+	background:url(../images/ef_runbackground.gif) no-repeat 0px -14px;height:14px;padding-left:16px;
+}
+.table_selected_row /*用于SQL语句向导中的选中字段所在行*/
+{
+	background-color:#e6e6fa;
+}
+.tdfilter { 
+	/*progid:DXImageTransform.Microsoft.BasicImage(invert=1);
+    */
+	filter: Invert;
+	background-color:#ffff32 ;
+ }  
+.tdfilter1 
+{
+	color:#ffffff ;
+	background-color:#0000cd ;
+ }   
+/* table的外框的样式 */
+#SKbillsheet #fcwebgriddiv  
+{
+	background-color:#ffffff;BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid;BORDER-COLOR:#B8B8B8;
+}
+
+/* table的样式 */
+#SKbillsheet #fcwebgriddiv #t  
+{
+	BACKGROUND-COLOR:#FFFFFF;FONT-FAMILY:MS Sans Serif;FONT-SIZE:11px;color:#000000;
+}
+/* 表格的首行 */
+#SKbillsheet #fcwebgriddiv #t .fcGridFirstRow 
+{ 
+	FONT-SIZE:12px;FONT-WEIGHT:bold;
+}
+/* 表格的首行td */
+#SKbillsheet #fcwebgriddiv #t .fcGridFirstRow td
+{
+	BORDER-RIGHT: #a0a0a0 1px solid; 
+	FONT-SIZE:12px;FONT-WEIGHT:bold;
+	background:url("../images/grid_background.gif");
+}
+
+/* table的td样式 */
+#SKbillsheet #fcwebgriddiv #t td
+{
+	
+}
+
+/* 表格控件内的编辑框 */
+#SKbillsheet #txtMyGrid 
+{
+	BACKGROUND-COLOR: white; BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none;
+}
+/* 垂直滚动条的样式 */
+#SKbillsheet #fchtcDiv1
+{
+	BACKGROUND-COLOR: #EEEDE5; BORDER-RIGHT: gray 0px solid; 
+}
+/* 水平滚动条的样式 */
+#SKbillsheet #fchtcDiv2
+{
+	BACKGROUND-COLOR: #EEEDE5; BORDER-RIGHT: gray 0px solid; 
+}
+/*表格右下角的填补块*/
+#SKbillsheet #divconer {
+	 BORDER-BOTTOM: 0px solid; BORDER-RIGHT: 0px solid;font-size:9px;
+}
+
+/* dropdownlist 的编辑框样式  */
+#fc_txtName 
+{
+	border:1px solid #b2b2b2;
+}
+.none_border #fc_txtName 
+{
+	border:0px solid #b2b2b2;
+}
+.only_bottom_border #fc_txtName 
+{
+	border-bottom:1px solid #b2b2b2;border-top:0px solid #b2b2b2;border-left:0px solid #b2b2b2;border-right:0px solid #b2b2b2;
+}
+/*
+textarea 
+{
+
+	scrollbar-3dlight-color : #f0f8ff; 
+	scrollbar-highlight-color :  #679643; 
+	scrollbar-face-color : #dce3c1; 
+	scrollbar-arrow-color : #5B6F80; 
+	scrollbar-shadow-color :  #679643; 
+	scrollbar-darkshadow-color :#f0f8ff; 
+	scrollbar-track-color : #e8f8dc; 
+}	
+
+BODY
+{
+	BACKGROUND-IMAGE:url(../images/ef_run_background.gif);
+	scrollbar-3dlight-color : #efefef; 
+	scrollbar-highlight-color : #aaaaaa; 
+	scrollbar-face-color : #E5E5E5; 
+	scrollbar-arrow-color : #aaaaaa; 
+	scrollbar-shadow-color : #aaaaaa; 
+	scrollbar-darkshadow-color : #efefef; 
+	scrollbar-base-color : #efefef; 
+	scrollbar-track-color : #efefef; 	
+}*/
+
+/* 页签控件 tab */
+
+.dynamic-tab-pane-control.tab-pane {
+	position:	relative;
+	width:		100%;		/* width needed weird IE bug */
+	margin-right:	-2px;	/* to make room for the shadow */
+}
+
+.dynamic-tab-pane-control .tab-row .tab {
+
+	width:				90px;
+	height:				16px;
+	background-image:	url( "../images/tab.png" );
+	
+	position:		relative;
+	top:			0;
+	display:		inline;
+	float:			left;
+	overflow:		hidden;
+	
+	cursor:			Default;
+
+	margin:			1px -1px 1px 2px;
+	padding:		2px 0px 0px 0px;
+	border:			0;
+
+	z-index:		1;
+	font:			11px Tahoma;
+	white-space:	nowrap;
+	text-align:		center;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.selected {
+	width:				94px !important;
+	height:				18px !important;
+	background-image:	url( "../images/tab.active.png" ) !important;
+	background-repeat:	no-repeat;
+
+	border-bottom-width:	0;
+	z-index:		3;
+	padding:		2px 0 0px 0;
+	margin:			1px -3px -3px 0px;
+	top:			-2px;
+	font:				11px Tahoma;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a {
+	font:				11px Tahoma;
+	color:				Black;
+	text-decoration:	none;
+	cursor:				default;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.hover {
+	font:				11px Tahoma;
+	width:				90px;
+	height:				16px;
+	background-image:	url( "../images/tab.hover.png" );
+	background-repeat:	no-repeat;
+}
+
+
+.dynamic-tab-pane-control .tab-page {
+	clear:			both;
+	border:			1px solid rgb( 145, 155, 156 );
+	background:		rgb( 252, 252, 254 );
+	z-index:		2;
+	position:		relative;
+	top:			-2px;
+
+	font:				11px Tahoma;
+	color:				Black;
+
+	filter:			progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#fffcfcfe, EndColorStr=#fff4f3ee, GradientType=0);
+	padding:		10px;
+}
+
+.dynamic-tab-pane-control .tab-row {
+	z-index:		1;
+	white-space:	nowrap;
+}
+
+/* E表标题行中单元格样式 */
+
+.eb_cell_title
+{
+	BORDER-BOTTOM:#848284 1px solid; BORDER-LEFT:#848284 1px solid; BORDER-RIGHT:#848284 1px solid; BORDER-TOP:#848284 1px solid;
+	background:url("../images/grid_background.gif");
+}
+/* ----单元e表格线条颜色*/
+.eb_cell_border
+{
+   BORDER-BOTTOM:#848284 1px solid; BORDER-LEFT:#848284 1px solid; BORDER-RIGHT:#848284 1px solid; BORDER-TOP:#848284 1px solid;
+}
+
+.toolbarright
+{
+	BACKGROUND: URL(../images/ef_runbackground.gif) no-repeat 0px -1256px;height:26px;padding-left:10px;
+}
+
+.toolbarleft
+{
+	BACKGROUND: URL(../images/ef_runbackground.gif) no-repeat 0px -1204px;height:26px;padding-left:6px;
+}
+
+.toolbarmiddle
+{
+	BACKGROUND-IMAGE: URL(../images/ef_design_ToolbarBg.gif);
+    BORDER-COLLAPSE: collapse;
+	HEIGHT: 26px;
+	BORDER-BOTTOM:#848284 1px solid; BORDER-LEFT:#848284 1px solid; BORDER-RIGHT:#848284 1px solid; 
+}

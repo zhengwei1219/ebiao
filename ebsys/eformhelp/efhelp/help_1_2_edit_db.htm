@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>库结构维护</title>
+<link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    </head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">库结构维护</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+  <div  class="mainDiv">
+        &nbsp;&nbsp;&nbsp; 对数据库的库结构进行维护一般都是用数据库自带的工具来做，如SQLSERVER就会在它内带的企业管理器程序中来做。在B/S程序上，用户都是在客户端操作，就不太方便地用数据库自带的工具了，所以EFORM便内置了这个工具，用页面的方式来在线进行库结构维护。一般一次只对一个表结构进行修改,当然，它的功能不如数据库自带的工具哪样强大，只有一些基本的功能，如：添加表,删除表,添加字段、修改字段、删除字段、设置主键、字段类型、是否可空等功能. <br />
+        &nbsp;&nbsp;&nbsp;<font style="color:Red"> 注意:库结构维护只是对数据库中的表结构进行操作,不会对实体表(fc_entity,fc_entitysub)进行操作.</font>
+    <br />
+        &nbsp;&nbsp;&nbsp; 
+        例如要对业务往来的单位进行管理,在数据库中添加一个单位表,用库结构维护来创建一个dw表,进入库结构维护界面,单击新建表按钮,弹出新建表及添加字段网页对话框,在新建表名输入域输入dw,单击 【增加行】按钮,添加字段名,选择类型,设置主键,是否为空等.单击确定即可在数据库中创建表dw,下面是库结构维护中添加表、字段的界面图.单击此链接 <a class="shili" href="../../fceform/common/djframe.htm?djsn=fcs_edit_db&amp;djtype=ST"> 库结构维护</a> 进入库结构维护界面 <br /><img  src ="images/help_1_2_3.gif"/><br />
+        &nbsp;&nbsp;&nbsp; 要给单位表添加sphone字段时,在库结构维护界面,单击【新增字段】按钮,在弹出的新增字段网页的西文字段名处输入sphone,设置字段类型为varchar,字段宽度为50,可以为空,单击确定保存sphone到dw表中.如下图：<br />
+    <img  src ="images/help_1_2_1.gif" /><br />&nbsp;&nbsp;&nbsp; 下面是数据库中dw表的界面图: <br />
+    <img  src ="images/help_1_2_2.gif""/>
+        <br />
+        &nbsp;&nbsp;&nbsp;库结构维护是用页面界面来实现在数据库中添加一个表,在表上增加一个字段,设置字段类型,设置主键等功能,而批量执行sql命令是恢复成批数据，需要组织SQL命令。.
+</div>
+</body>
+</html>

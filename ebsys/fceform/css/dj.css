@@ -1,0 +1,111 @@
+/*BODY {
+	BACKGROUND-IMAGE:url(../images/ef_run_background.gif);
+	SCROLLBAR-FACE-COLOR: #cccccc; SCROLLBAR-HIGHLIGHT-COLOR: #cccccc; SCROLLBAR-SHADOW-COLOR: #999999; SCROLLBAR-3DLIGHT-COLOR: #999999; SCROLLBAR-ARROW-COLOR: #999999; SCROLLBAR-TRACK-COLOR: #cccccc; SCROLLBAR-DARKSHADOW-COLOR: #cccccc; 
+} */
+
+
+
+v\:* { Behavior: url(#default#VML) }
+.actName
+{
+	FONT-FAMILY: "宋体"; FONT-SIZE: 9pt; width:100%; COLOR: #0000CC; padding-left:2px; font-weight:bold;
+}
+
+.btn {
+    BORDER-BOTTOM:#8B8B7A 2px solid; 
+    border-right:#8B8B7A 2px solid;
+}
+
+
+/*交叉表样式*/
+.ct_cap
+{
+    BACKGROUND-COLOR:#D0B830;
+}
+
+.ct_capstat
+{
+    BACKGROUND-COLOR:#D0B830;
+    FONT-WEIGHT:BOLD;
+}
+
+.ct_valcol
+{
+    BACKGROUND-COLOR:#D0B830;
+}
+.ct_valrow
+{
+    BACKGROUND-COLOR:#10B830;
+}
+
+.ct_valstat
+{
+    BACKGROUND-COLOR:#D0B830;
+    FONT-WEIGHT:BOLD;
+}
+		
+
+/* 页签控件样式 */
+.dynamic-tab-pane-control .tab-page {}
+.dynamic-tab-pane-control h2 {
+	text-align:	center;
+	width:		auto;
+}
+.dynamic-tab-pane-control h2 a {
+	display:	inline;
+	width:		auto;
+}
+.dynamic-tab-pane-control a:hover {
+	background: transparent;
+}
+/**
+*默认字号为12px
+**/		
+#SKbillsheet  
+{
+	font-size:12px;
+}
+tr.fc_hidden_tr td, tr.fc_hidden_tr th,tr.fc_hidden_tr { display:none; }
+tr.fc_show_tr td, tr.fc_show_tr th,tr.fc_show_tr { *display:inline; }
+
+/* div类控件的边框颜色 */
+#SKbillsheet .control-border-color
+{
+	border-color: #D6D3BD;
+}
+#SKbillsheet .control-border
+{
+	border-color: #D6D3BD;
+	border-style:solid;
+	border-width:1px;
+}
+
+/* 验证没通过时的样式 */
+#SKbillsheet .valid-fail-text
+{
+	border-color :Red;
+}
+#SKbillsheet .valid-fail-msg
+{
+	color :Red;
+}
+
+#SKbillsheet FIELDSET
+{
+	margin-left:0px;
+	margin-right:0px;
+	padding:0px 0px 0px 0px;
+/*	border-width:1px;*/
+}
+
+#SKbillsheet TD
+{
+   word-break: break-all;overflow:hidden;margin:0px 0px 0px 0px;
+}
+
+
+.redbg
+{
+	BACKGROUND-COLOR:red;
+}
+

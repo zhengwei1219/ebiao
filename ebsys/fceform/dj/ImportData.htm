@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+	new Eform.SysForm().setButtonImage();
+	getDsnList(cboDsn,"");
+}
+function uf_ok() {
+	if(IsSpace(txtUrl.value)){
+		alert("请选择要导入的文件!");
+		return;	
+	}
+	divMsg.innerText="开始导入数据...";
+	
+	var sDatasource="&fileName="+escape(txtUrl.value)+"&noTrans="+chkNoTrans.value;
+	if(IsSpace(cboDsn.value) == false) sDatasource += "&datasourceName=" +cboDsn.value;
+    
+    
+    SendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=importData"  + sDatasource, "", 
+    	function(result) {
+	        var sRet = result.value;
+			if(IsSpace(sRet)){
+				sRet="导入成功!";	
+			}
+			divMsg.innerText = sRet;
+        },null);
+	
+}
+function uf_selectFile(obj) {
+	var spath = '/fceformext/res'; 
+	var spathback = '../../fceformext/res';
+	var sRet = DjOpen('getUrl',[spath,'file','yes','xml'],'展现','有模式窗口','直接','选择文件');
+	if(IsSpace(sRet) == false){
+		obj.value =spath+sRet;	//因eformaspx目录比当前表单页面所在目录高一层
+	}
+}
+function uf_upload(){
+	var arrPara = new Array();
+	arrPara[0] ="/fceformext/res/";
+	arrPara[1] = "xml";
+	var arr = window.showModalDialog(fcpubdata.path+"/fceform/common/uploadfilemain.htm",arrPara,"scroll:no;status:no;dialogHeight:200px;dialogWidth:350px;dialogTop:180;dialogLeft:250px") ;
+ 	if(IsSpace(arr)==false) {
+		 txtUrl.value = arr[2];		
+ 	}
+
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="ImportData" caption="导入数据" type="ST" isfile="是" center="  " posleft postop poswidth posheight toolbar="不带工具栏" window="当前窗口" BLONopen="uf_open()" BLONopenBefore BLONclose userType billtaborder="<root><taborder>cmdDropDown1</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>txtUrl</taborder><taborder>chkNoTrans</taborder><taborder>cboDsn</taborder><taborder>button3</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:1;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:3;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><checkbox><id>chkNoTrans</id></checkbox><label><id>Label4</id><id>label2</id><id>label1</id><id>lblDsn</id></label><combobox><id>cboDsn</id></combobox><div><id>divMsg</id></div><button><id>cmdDropDown1</id><id>button1</id><id>button2</id><id>button3</id></button><text><id>txtUrl</id></text></root>" AutoResizeXml="<record id ='divMsg'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>20</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>20</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 53px; BORDER-RIGHT: 0px; LEFT: 365px" id=cmdDropDown1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_selectFile(txtUrl)")' dropstyle="是"></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 351px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 53px; LEFT: 15px" id=txtUrl onmovestart=moveStart() size=23 controltype="text" CanSelect="false"><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 230px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 21px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 36px; LEFT: 83px" id=Label4 controltype="label" align="Left">默认为列出fceformext/res目录下的文件</SPAN><SPAN style="POSITION: absolute; WIDTH: 77px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 36px; LEFT: 14px" id=label2 controltype="label" inputTag="否" align="Left">文件位置：</SPAN><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 1px; LEFT: 1px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")'>导 入</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 1px; LEFT: 87px" id=button2 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;$eform('关闭窗口')&quot;)">关 闭</BUTTON><LABEL style="POSITION: absolute; WIDTH: 136px; HEIGHT: 18px; TOP: 147px; LEFT: 11px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">导入结果信息提示:</LABEL><SELECT style="POSITION: absolute; WIDTH: 239px; HEIGHT: 25px; TOP: 85px; LEFT: 142px" id=cboDsn onmovestart=moveStart() controltype="combobox" sql check="1" tempvalue temptext backwidth="104" backheight="25" sqltrans></SELECT><LABEL style="POSITION: absolute; WIDTH: 137px; HEIGHT: 16px; TOP: 90px; LEFT: 15px" id=lblDsn onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">要导入的数据源名称</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 106px; LEFT: 11px" id=chkNoTrans onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>不使用数据库的事务,即允许导入成功部分数据.</SPAN></DIV>
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 370px; HEIGHT: 246px; BORDER-TOP: 1px solid; TOP: 167px; BORDER-RIGHT: 1px solid; LEFT: 11px" id=divMsg class=control-border-color onmovestart=moveStart() controltype="div" AutoSizeXml="<record id ='divMsg'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>20</WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>20</HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>"></DIV><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 28px; LEFT: 307px" id=button3 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_upload()")'>上传文件</BUTTON></DIV></body></html>

@@ -1,0 +1,80 @@
+	/* 表格固定行列的样式 */
+	.fixedStyle 
+	{
+		COLOR: black;
+		background-color:darkgray;
+		BORDER-BOTTOM-COLOR: #626262; 
+		BORDER-RIGHT-COLOR: #626262
+	} 
+	
+	
+	.top_td {
+		BORDER-LEFT:#FFFFFF 1px solid;
+		BORDER-RIGHT: #848284 1px solid;
+	}
+	 .active_top_td { /* nouse */
+		BORDER-LEFT:#FFFFFF 1px solid;
+		BORDER-RIGHT: black 1px solid;
+		BORDER-TOP:#FFFFFF 1px solid;
+		BORDER-BOTTOM: #000000 2px solid;
+		font-weight:bold;
+
+	}
+
+	.left_td {
+	/*BORDER-LEFT:#FFFFFF 1px solid;
+	BORDER-TOP:#FFFFFF 1px solid;
+	*/
+	BORDER-RIGHT: #848284 0px solid;
+	BORDER-BOTTOM: #000000 1px solid;
+	}
+	.active_left_td { /* nouse */
+	BORDER-LEFT:#FFFFFF 1px solid;BORDER-RIGHT: black 1px solid;
+	BORDER-TOP:#FFFFFF 1px solid;BORDER-BOTTOM: #000000 2px solid;
+			font-weight:bold;
+	}
+
+	
+	.trans 
+	{
+		/*filter: Invert;
+		background-color:#ffff32 ;
+		FILTER: alpha(opacity=0); */
+	}
+	.tdfilter 
+	{
+		/*
+		filter: Invert;
+	height:22px;	
+*/
+	}  
+.tbnormal 
+{
+	
+}
+.tbin 
+{
+	BORDER-TOP: #506FA6 1px solid; BORDER-LEFT: #506FA6 1px solid;BORDER-RIGHT: #506FA6 1px solid;BORDER-BOTTOM: #506FA6 1px solid;
+}
+
+.tbdownin
+{
+	BORDER-BOTTOM: white 1px solid; 
+	BORDER-LEFT: #808080 1px solid; 
+	BORDER-RIGHT: white 1px solid; 
+	BORDER-TOP: #808080 1px solid;
+	BACKGROUND-COLOR: gainsboro;
+}
+.tbdownout
+{
+	BORDER-TOP: #676869 1px solid; 
+	BORDER-LEFT:  #676869 1px solid; 
+	BORDER-RIGHT:#D5D5D6 1px solid;
+	BORDER-BOTTOM: #D5D5D6 1px solid;
+	/*filter:changestrength(strength=800) alpha(opacity=100,color=#8BBCC5) dropshadow(color=#8BBCC5,offx=1,offy=1);*/
+}
+
+#divMain td 
+{
+	border-color:#c6c3c6; border-style:solid;border-width:1px;
+	}

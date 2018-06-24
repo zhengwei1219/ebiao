@@ -1,0 +1,69 @@
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title>上传文件</title>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script language="javascript">
+function check_file() 
+{
+  var strFileName=upload.pic.value;
+  if (strFileName=="")
+  {
+    alert("请选择要上传的文件");
+    return false;
+  }
+  //modify by liuxt at 2010-10-20 16:00 增加下面的赋值，因为在safari下input的file没有onblur事件
+  parent.pubFileName = upload.pic.value;
+  if(IsSpace(parent.pubextfiles) == false){ // jpg|js|htm
+	var sExt = parent.pubextfiles.toLowerCase();
+	var arr = sExt.split("|");
+	var l = arr.length ;
+	var curExt="";
+	var ipos = strFileName.lastIndexOf(".");
+	if(ipos>=0){
+		curExt = strFileName.substring(ipos+1,strFileName.length).toLowerCase();
+	}
+	var bFind = false;
+	for(var i=0;i<l;i++){
+		if(arr[i] == curExt){
+			bFind = true;
+			break;
+		}
+	}
+	if(bFind == false){
+		alert("只能上传扩展名为" + parent.pubextfiles + "的文件")
+		return false;
+	}
+  }
+}
+function window_onload() {
+	upload.action = location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=uploadFile&path="+escape(fcpubdata.path)+"&setpath="+escape(parent.pubsetpath) ;
+}
+		</script>
+	</head>
+	<body bgcolor="#d4d0c8" onload=window_onload() >
+		<form name="upload" action="" method="post" onSubmit="return check_file()"
+			enctype="multipart/form-data">
+			<table  style="width:310px;" border="0" cellpadding="2" cellspacing="0" style="FONT-SIZE:12px">
+				<tr>
+					<td colspan="1">&nbsp;&nbsp;说明:</td>
+				</tr>
+				<tr>
+					<td align="right"><input type="text" id="txtBz" name="txtBz" maxlength="250" style="width:300" onblur="parent.pubBz=upload.txtBz.value;" ></td>
+				</tr>
+				<tr>
+					<td colspan="1" style="font-family:Arial,'宋体'; font-size:12px;">&nbsp;&nbsp;请选择或输入要上传的文件的位置：</td>
+				</tr>
+				<tr>
+					<td align="right"><input name="pic" type="file"  ID="pic" style="width:300" onblur="parent.pubFileName=upload.pic.value;"></td>
+				</tr>
+				<tr><td  style="height:10px"></td>
+				</tr>
+				<tr>
+					<td align="right"><input type="submit" name="Submit" value="上 传" ID="Submit1"></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

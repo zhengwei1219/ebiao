@@ -1,0 +1,235 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var obj=fcpubdata.obj[0] ;
+//var MainDiv = fcpubdata.obj[1];		//eformarea();
+/** 
+ * @func:对齐方式改变时，距窗口边缘有多少px
+ * @param：alignType：对齐方式;direction:方向;
+**/
+function changeAlign(alignType,direction)
+{
+	var strDisplay = "";
+	if (direction == "水平")
+	{
+		switch(alignType)
+		{
+			case "不动":
+				strDisplay = "none";
+			break;
+			case "居左":
+				strDisplay = "";
+			break;
+			case "居右":
+				strDisplay = "";
+			break;
+			case "居中":
+				strDisplay = "none";
+			break;
+				
+		}
+		document.all.lblH.style.display = strDisplay;
+		document.all.txtHWidth.style.display = strDisplay;
+		document.all.sltHUnit.style.display = strDisplay;
+	}
+	else
+	{
+		switch(alignType)
+		{
+			case "不动":
+				strDisplay = "none";
+			break;
+			case "居上":
+				strDisplay = "";
+			break;
+			case "居下":
+				strDisplay = "";
+			break;
+			case "居中":
+				strDisplay = "none";
+			break;
+				
+		}
+		document.all.lblP.style.display = strDisplay;
+		document.all.txtPWidth.style.display = strDisplay;
+		document.all.sltPUnit.style.display = strDisplay;
+	}
+}
+/** 
+ * @func:宽\高度设置方式改变时调用
+ * @param：SetType：宽、高度设置方式;direction:方向;
+**/
+function changeSetType(SetType,direction)
+{
+	var strDisabled = false;	//百分比设置
+	var strDisabled1 = false;	//伸缩设置
+	if (direction == "宽度")
+	{
+		switch(SetType)
+		{
+			case "百分比设置":
+				strDisabled = false;
+				strDisabled1 = true;
+			break;
+			case "伸缩设置":
+				strDisabled = true;
+				strDisabled1 = false;
+			break;
+				
+		}
+		document.all.txtWidth.disabled = strDisabled;
+		document.all.txtW.disabled = strDisabled1;
+		document.all.sltWSetUnit.disabled = strDisabled1;
+	}
+	else
+	{
+		switch(SetType)
+		{
+			case "百分比设置":
+				strDisabled = false;
+				strDisabled1 = true;
+			break;
+			case "伸缩设置":
+				strDisabled = true;
+				strDisabled1 = false;
+			break;
+				
+		}
+		document.all.txtHeight.disabled = strDisabled;
+		document.all.txtH.disabled = strDisabled1;
+		document.all.sltHSetUnit.disabled = strDisabled1;
+	}		
+}
+
+function uf_InitPage()
+{
+		
+	//var obj=fcpubdata.obj[0] ;
+	//modify by liuxr at 2010-4-30 15:56 多个控件同时自动布局时，默认打开第一个控件以前设置的属性
+	var obj1 = null;
+	if (obj.length>1)
+		obj1= obj[0];
+	else
+		obj1 = obj;
+	
+	if (isSpace(obj1.AutoSizeXml) == false)
+	{
+		var oXml = SetDom("<root>" + obj1.AutoSizeXml + "</root>");
+						
+		var Halign = oXml.documentElement.childNodes(0).childNodes(0).text;			//水平方向对齐方式
+		$id("sltHalign").value = (Halign =="")?"不动":Halign;
+		var HWidth = oXml.documentElement.childNodes(0).childNodes(1).text;			//距窗口边有多远
+		SetTextValue(HWidth,txtHWidth);
+		$id("sltHUnit").value = oXml.documentElement.childNodes(0).childNodes(2).text;			//单位（距窗口边有多远；px/%）
+		var WSetType = oXml.documentElement.childNodes(0).childNodes(3).text;		//宽度设置方式（百分比设置；伸缩设置）
+		$id("sltWSetType").value = (WSetType == "")?"百分比设置":WSetType;
+		
+		var Width = oXml.documentElement.childNodes(0).childNodes(4).text;			//宽度
+		SetTextValue(Width,txtWidth);
+		var WExt = oXml.documentElement.childNodes(0).childNodes(5).text;			//宽度变化伸缩到距右多远(px/%)
+		SetTextValue(WExt,txtW);
+		$id("sltWSetUnit").value = oXml.documentElement.childNodes(0).childNodes(6).text;		//单位（宽度变化伸缩到距右多远）
+		var MinW = oXml.documentElement.childNodes(0).childNodes(7).text;			//最小值（宽度）
+		SetTextValue(MinW,txtMinW);
+		
+		var Palign = oXml.documentElement.childNodes(0).childNodes(8).text;			//垂直方向对齐方式
+		$id("sltPalign").value = (Palign == "")?"不动":Palign;
+		var PWidth = oXml.documentElement.childNodes(0).childNodes(9).text;			//距窗口边有多远
+		SetTextValue(PWidth,txtPWidth);
+		$id("sltPUnit").value = oXml.documentElement.childNodes(0).childNodes(10).text;			//单位（距窗口边有多远；px/%）
+		var HSetType = oXml.documentElement.childNodes(0).childNodes(11).text;		//高度设置方式（百分比设置；伸缩设置）
+		$id("sltHSetType").value = (HSetType == "")?"百分比设置":HSetType;
+		
+		var Height = oXml.documentElement.childNodes(0).childNodes(12).text;		//高度
+		SetTextValue(Height,txtHeight);	
+		var HExt = oXml.documentElement.childNodes(0).childNodes(13).text;			//高度变化伸缩到距右多远(px/%)
+		SetTextValue(HExt,txtH);
+		$id("sltHSetUnit").value = oXml.documentElement.childNodes(0).childNodes(14).text;		//单位（高度变化伸缩到距右多远）
+		var MinH = oXml.documentElement.childNodes(0).childNodes(15).text;			//最小值（高度）
+		SetTextValue(MinH,txtMinH);				
+	}
+	changeAlign($id("sltHalign").value,'水平');
+	changeAlign($id("sltPalign").value,'垂直');
+	changeSetType($id("sltWSetType").value,'宽度');
+	changeSetType($id("sltHSetType").value,'高度');
+	
+	new Eform.SysForm().setButtonImage();
+}
+
+/**
+* 确定
+**/
+function uf_ok() {
+	ReturnXml();
+	window.close();
+}
+
+/**
+*返回自动布局的XML串
+**/
+function ReturnXml()
+{
+	var strXml = new Sys.StringBuilder();
+	//strXml.append("<record id ='"+obj.id+"'>");
+	
+	strXml.append("<Halign>"+$id("sltHalign").value+"</Halign>");
+	strXml.append("<HWidth>"+$id("txtHWidth").value+"</HWidth>");
+	strXml.append("<HUnit>"+$id("sltHUnit").value+"</HUnit>");
+	strXml.append("<WSetType>"+$id("sltWSetType").value+"</WSetType>");
+	strXml.append("<Width>"+$id("txtWidth").value+"</Width>");
+	
+	strXml.append("<WExt>"+$id("txtW").value+"</WExt>");
+	strXml.append("<WSetUnit>"+$id("sltWSetUnit").value+"</WSetUnit>");
+	strXml.append("<MinW>"+$id("txtMinW").value+"</MinW>");
+	
+	strXml.append("<Palign>"+$id("sltPalign").value+"</Palign>");
+	strXml.append("<PWidth>"+$id("txtPWidth").value+"</PWidth>");
+	strXml.append("<PUnit>"+$id("sltPUnit").value+"</PUnit>");
+	strXml.append("<HSetType>"+$id("sltHSetType").value+"</HSetType>");
+	strXml.append("<Height>"+$id("txtHeight").value+"</Height>");
+	
+	strXml.append("<HExt>"+$id("txtH").value+"</HExt>");
+	strXml.append("<HSetUnit>"+$id("sltHSetUnit").value+"</HSetUnit>");
+	strXml.append("<MinH>"+$id("txtMinH").value+"</MinH>");
+	
+	strXml.append("</record>");	
+	
+	
+	//modify by liuxr at 2010-4-30 15:56 增加判断是否是多个控件同时自动布局
+	if (obj.length>1)
+	{
+		for(var i=0;i<obj.length;i++)
+		{
+			obj[i].AutoSizeXml = "<record id ='"+obj[i].id+"'>" + strXml.toString();		
+		}	
+	}
+	obj.AutoSizeXml = "<record id ='"+obj.id+"'>" + strXml.toString();
+	
+	/*var stmp = "";
+	if (IsSpace( MainDiv.AutoSizeXml) == false) {
+		var oXml = SetDom("<root>"+MainDiv.AutoSizeXml+"</root>");
+		//删除原来的	
+		var oNodes = oXml.selectNodes("root/record[@id = '"+obj.id+"']");
+		for(var i=0;i<oNodes.length;i++)
+		{
+			oXml.documentElement.removeChild(oNodes(i));
+		}
+		if (IsSpace(oXml.xml) == false)
+			stmp = new Eapi.Str().removeRoot(oXml.documentElement.xml);
+	}	
+	
+	MainDiv.AutoSizeXml = stmp + strXml.toString() ;*/
+	//alert(obj.AutoSizeXml);
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../css/shape.css'  />
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" runsave userType BLONclose BLONopenBefore idtype="1" OtherSave="否" isfile="是" postop="170" posleft="130" window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_InitPage();" contxml="<root><label><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label8</id><id>label9</id><id>label10</id><id>label11</id><id>label12</id><id>label13</id><id>lblH</id><id>lblP</id><id>label18</id><id>label19</id><id>label20</id><id>label21</id><id>label22</id><id>label23</id></label><combobox><id>sltHalign</id><id>sltPalign</id><id>sltHUnit</id><id>sltPUnit</id><id>sltWSetUnit</id><id>sltHSetUnit</id><id>sltWSetType</id><id>sltHSetType</id></combobox><shape><id>shape4</id><id>Shape6</id></shape><div><id>div1</id></div><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtWidth</id><id>txtHeight</id><id>txtMinW</id><id>txtMinH</id><id>txtHWidth</id><id>txtPWidth</id><id>txtW</id><id>txtH</id></text></root>" billtaborder="<root><taborder>sltHalign</taborder><taborder>sltPalign</taborder><taborder>txtWidth</taborder><taborder>txtHeight</taborder><taborder>txtMinW</taborder><taborder>txtMinH</taborder><taborder>sltHUnit</taborder><taborder>txtHWidth</taborder><taborder>sltPUnit</taborder><taborder>txtPWidth</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>sltWSetUnit</taborder><taborder>txtW</taborder><taborder>sltHSetUnit</taborder><taborder>txtH</taborder><taborder>sltWSetType</taborder><taborder>sltHSetType</taborder></root>" dj_sn="FormAutoResize" type="LR" caption="控件位置调整" codeheader entertype="修改" poswidth="420" posheight="370" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:23;radio:0;listbox:0;textarea:0;combobox:7;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:1;SKBILLgrid:0;shape:4;tab:0;div:1;DsMain_field:0;a:0;button:2;text:8;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" keyfield center="居中" AutoResizeXml><DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 391px; HEIGHT: 292px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 1px; LEFT: 13px" id=div1 onmovestart=moveStart() NotBg="否" controltype="div"><LABEL style="POSITION: absolute; WIDTH: 87px; HEIGHT: 17px; TOP: 9px; LEFT: -6px" id=label2 onmovestart=moveStart() class=label_title NotBg="否" controltype="label" inputTag="否">水平方向</LABEL><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 149px; LEFT: -4px" id=label3 onmovestart=moveStart() class=label_title NotBg="否" controltype="label" inputTag="否">垂直方向</LABEL><LABEL style="POSITION: absolute; WIDTH: 85px; HEIGHT: 19px; TOP: 30px; LEFT: 7px" id=label4 onmovestart=moveStart() NotBg="否" controltype="label">对齐方式：</LABEL><SELECT style="POSITION: absolute; WIDTH: 120px; HEIGHT: 25px; TOP: 27px; LEFT: 68px" id=sltHalign onmovestart=moveStart() onchange="bill_onclick(&quot;changeAlign(sltHalign.value,'水平');&quot;)" controltype="combobox" check="1" sql tempvalue="不动&#13;&#10;居左&#13;&#10;居中&#13;&#10;居右" temptext="不动&#13;&#10;居左&#13;&#10;居中&#13;&#10;居右" sqltrans><OPTION selected value=不动>不动</OPTION><OPTION value=居左>居左</OPTION><OPTION value=居中>居中</OPTION><OPTION value=居右>居右</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 85px; HEIGHT: 18px; TOP: 170px; LEFT: 7px" id=label5 onmovestart=moveStart() NotBg="否" controltype="label">对齐方式：</LABEL><SELECT style="POSITION: absolute; WIDTH: 120px; HEIGHT: 25px; TOP: 166px; LEFT: 68px" id=sltPalign onmovestart=moveStart() onchange="bill_onclick(&quot;changeAlign(sltPalign.value,'垂直');&quot;)" controltype="combobox" check="1" sql tempvalue="不动&#13;&#10;居上&#13;&#10;居中&#13;&#10;居下" temptext="不动&#13;&#10;居上&#13;&#10;居中&#13;&#10;居下" async="否" datasourceName sqltrans><OPTION selected value=不动>不动</OPTION><OPTION value=居上>居上</OPTION><OPTION value=居中>居中</OPTION><OPTION value=居下>居下</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 56px; LEFT: 193px" id=label8 onmovestart=moveStart() NotBg="否" controltype="label">宽度：</LABEL><INPUT style="POSITION: absolute; WIDTH: 61px; HEIGHT: 20px; TOP: 51px; LEFT: 258px" id=txtWidth onmovestart=moveStart() size=10 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 193px; LEFT: 192px" id=label9 onmovestart=moveStart() NotBg="否" controltype="label">高度：</LABEL><INPUT style="POSITION: absolute; WIDTH: 61px; HEIGHT: 20px; TOP: 190px; LEFT: 259px" id=txtHeight onmovestart=moveStart() size=9 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 102px; LEFT: 7px" id=label10 onmovestart=moveStart() NotBg="否" controltype="label">最小值：</LABEL><INPUT style="POSITION: absolute; WIDTH: 120px; HEIGHT: 20px; TOP: 98px; LEFT: 68px" id=txtMinW onmovestart=moveStart() size=21 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 240px; LEFT: 10px" id=label11 onmovestart=moveStart() NotBg="否" controltype="label">最小值：</LABEL><INPUT style="POSITION: absolute; WIDTH: 120px; HEIGHT: 20px; TOP: 238px; LEFT: 68px" id=txtMinH onmovestart=moveStart() size=22 controltype="text"><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 170px; FONT-FAMILY: 宋体; HEIGHT: 31px; COLOR: #c0c0c0; TOP: 97px; LEFT: 192px" id=label12 onmovestart=moveStart() NotBg="否" controltype="label">宽度最小值，即宽度不能小于多少px</LABEL><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 174px; FONT-FAMILY: 宋体; HEIGHT: 29px; COLOR: #c0c0c0; TOP: 238px; LEFT: 192px" id=label13 onmovestart=moveStart() NotBg="否" controltype="label">高度最小值，即高度不能小于多少px</LABEL><LABEL style="POSITION: absolute; WIDTH: 77px; HEIGHT: 17px; TOP: 31px; LEFT: 194px" id=lblH onmovestart=moveStart() NotBg="否" controltype="label">距窗口边有</LABEL><INPUT style="POSITION: absolute; WIDTH: 60px; HEIGHT: 20px; TOP: 28px; LEFT: 259px" id=txtHWidth onmovestart=moveStart() size=10 controltype="text"><SELECT style="POSITION: absolute; WIDTH: 44px; HEIGHT: 25px; TOP: 28px; LEFT: 320px" id=sltHUnit onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="px&#13;&#10;%" temptext="px&#13;&#10;%" sqltrans><OPTION selected value=px>px</OPTION><OPTION value=%>%</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 77px; HEIGHT: 17px; TOP: 170px; LEFT: 194px" id=lblP onmovestart=moveStart() NotBg="否" controltype="label">距窗口边有</LABEL><INPUT style="POSITION: absolute; WIDTH: 60px; HEIGHT: 20px; TOP: 167px; LEFT: 259px" id=txtPWidth onmovestart=moveStart() size=10 controltype="text"><SELECT style="POSITION: absolute; WIDTH: 44px; HEIGHT: 20px; TOP: 167px; LEFT: 320px" id=sltPUnit onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="px&#13;&#10;%" temptext="px&#13;&#10;%" sqltrans><OPTION selected value=px>px</OPTION><OPTION value=%>%</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 138px; HEIGHT: 21px; TOP: 78px; LEFT: 6px" id=label18 onmovestart=moveStart() NotBg="否" controltype="label">宽度的变化伸缩到距右</LABEL><INPUT style="POSITION: absolute; WIDTH: 60px; HEIGHT: 20px; TOP: 75px; LEFT: 137px" id=txtW onmovestart=moveStart() size=10 controltype="text"><SELECT style="POSITION: absolute; WIDTH: 44px; HEIGHT: 25px; TOP: 75px; LEFT: 198px" id=sltWSetUnit onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="px&#13;&#10;%" temptext="px&#13;&#10;%" sqltrans><OPTION selected value=px>px</OPTION><OPTION value=%>%</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 138px; HEIGHT: 21px; TOP: 218px; LEFT: 5px" id=label19 onmovestart=moveStart() NotBg="否" controltype="label">高度的变化伸缩到距下</LABEL><INPUT style="POSITION: absolute; WIDTH: 60px; HEIGHT: 20px; TOP: 215px; LEFT: 136px" id=txtH onmovestart=moveStart() size=10 controltype="text"><SELECT style="POSITION: absolute; WIDTH: 44px; HEIGHT: 25px; TOP: 215px; LEFT: 197px" id=sltHSetUnit onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="px&#13;&#10;%" temptext="px&#13;&#10;%" sqltrans><OPTION selected value=px>px</OPTION><OPTION value=%>%</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 56px; LEFT: 323px" id=label20 onmovestart=moveStart() NotBg="否" controltype="label">%</LABEL><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 195px; LEFT: 323px" id=label21 onmovestart=moveStart() NotBg="否" controltype="label">%</LABEL><LABEL style="POSITION: absolute; WIDTH: 99px; HEIGHT: 30px; TOP: 54px; LEFT: 6px" id=label22 onmovestart=moveStart() NotBg="否" controltype="label">宽度设置方式：</LABEL><SELECT style="POSITION: absolute; WIDTH: 95px; HEIGHT: 25px; TOP: 51px; LEFT: 93px" id=sltWSetType onmovestart=moveStart() onchange="bill_onclick(&quot;changeSetType(sltWSetType.value,'宽度');&quot;)" controltype="combobox" check="1" sql tempvalue="百分比设置&#13;&#10;伸缩设置" temptext="百分比设置&#13;&#10;伸缩设置" sqltrans><OPTION selected value=百分比设置>百分比设置</OPTION><OPTION value=伸缩设置>伸缩设置</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 99px; HEIGHT: 30px; TOP: 194px; LEFT: 6px" id=label23 onmovestart=moveStart() NotBg="否" controltype="label">高度设置方式：</LABEL><SELECT style="POSITION: absolute; WIDTH: 95px; HEIGHT: 25px; TOP: 191px; LEFT: 93px" id=sltHSetType onmovestart=moveStart() onchange="bill_onclick(&quot;changeSetType(sltHSetType.value,'高度');&quot;)" controltype="combobox" check="1" sql tempvalue="百分比设置&#13;&#10;伸缩设置" temptext="百分比设置&#13;&#10;伸缩设置" sqltrans><OPTION selected value=百分比设置>百分比设置</OPTION><OPTION value=伸缩设置>伸缩设置</OPTION></SELECT><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 331px; DISPLAY: block; HEIGHT: 100px; TOP: 156px; LEFT: 50px" id=shape4 onresize="" controltype="shape" id1="3" from = "0,0" to = "250pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #c0c0c0; WIDTH: 75px; HEIGHT: 25px; TOP: 303px; LEFT: 241px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok();")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #c0c0c0; WIDTH: 75px; HEIGHT: 25px; TOP: 303px; LEFT: 322px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill();")'></BUTTON><v:line style="POSITION: absolute; WIDTH: 331px; DISPLAY: block; HEIGHT: 100px; TOP: 16px; LEFT: 59px" id=Shape6 onresize="" controltype="shape" id1="3" from = "0,0" to = "250pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV><script></script></body></html>

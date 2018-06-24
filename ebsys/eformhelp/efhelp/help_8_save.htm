@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>数据保存</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">表单保存</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>
+        返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 表单保存</div>
+           &nbsp;&nbsp;&nbsp; 数据保存就是把表单上输入信息保存到数据库的表里去 
+           ,它一次可以存一个表或多个表,一条记录或多条记录,或者删除一个表或多个表的记录.数据保存通常分单表保存、多表保存、主从表保存、保存时执行其它sql语句,保存前转换等类型.
+      <div class="divTitle">2. 表单保存函数</div>
+      <div class="divTitle">2.1 doSaveData保存函数</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;doSaveData保存函数是对执行sql语句的保存,它和数据集上设置的信息无关连,每次可以执行一条或多条sql语句.它把sql语句生成标准的xml串,传到后台,再还原成要运行的sql语句,在同一事务中进行保存.<br />
+
+
+           &nbsp;<p class="MsoNormal">
+               <span lang="EN-US" style="color:black;mso-themecolor:text1">1.Create</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">语句转换成</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">格式</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p>如下:</o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;create tableName='</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">表名</span><span lang="EN-US">'&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;detail&gt;&lt;/detail&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;/create&gt;</span></p>
+           &nbsp;&nbsp;&nbsp;&nbsp; 例如我们要用create创建一个dw表，dwid的字段是char型长度11，sql语句是&nbsp; <p>create table dw (dwid char 
+               (11))</p>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;那我们生成的xml串<span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p>如下:</o:p></span>
+           
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;create tableName='dw'&gt; &lt;detail&gt;(dwid<span 
+                   style="mso-spacerun:yes">&nbsp;&nbsp; </span>char<span 
+                   style="mso-spacerun:yes">&nbsp;&nbsp; </span>(11)) &lt;/detail&gt; &lt;/create&gt;</span></p>
+           &nbsp;&nbsp;&nbsp;&nbsp; 我们在eform中新建一个表完整的写法如下;
+           <p class="MsoNormal">
+               <span lang="EN-US">function uf_createTable(){</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>var xmlSql=&lt;create tableName='dw'&gt; &lt;detail&gt;(dwid<span 
+                   style="mso-spacerun:yes">&nbsp;&nbsp; </span>char<span 
+                   style="mso-spacerun:yes">&nbsp;&nbsp; </span>(11)) &lt;/detail&gt; &lt;/create&gt;//sql</span><span style="font-family:
+宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">语句转换成的</span><span lang="EN-US">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">格式</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>doSaveData(xmlSql,function(){alert(&quot;</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">保存成功</span><span lang="EN-US">&quot;);})//doSaveData</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">是</span><span lang="EN-US">eform</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">执行</span><span lang="EN-US">sql</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">与的函数</span><span lang="EN-US">, function(){alert(&quot;</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">保存成功</span><span 
+                   lang="EN-US">&quot;)</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">是一个回调函数，新建表成功后提示</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">}</span></p>
+           <p class="MsoNormal">
+               2<span lang="EN-US" style="color:black;mso-themecolor:text1">.</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">drop语句转换成</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">格式</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p>如下:</o:p></span></p>
+                   &nbsp;&nbsp;&nbsp;&nbsp; 数据库中有一个employee表，我们要删除要删除此表的标准sql语句是<p>drop table employee</p>&nbsp;&nbsp;&nbsp;&nbsp; 
+           那我们在eform中要生成sql语句的xml串如下:
+                   
+                   
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;drop tableName='employee'&gt;&lt;/drop&gt;</span></p>
+               
+           <p class="MsoNormal">
+               3<span lang="EN-US" style="color:black;mso-themecolor:text1">.Alter</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">语句转换成</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">格式<span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p>如下:</o:p></span></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;alter tableName=''&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;detail&gt; &lt;/detail&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;/alter&gt;</span></p>
+               &nbsp;&nbsp;&nbsp;&nbsp; 例如我们在dw表中增加一个dwname字段，类型为varchar 50，我们的sql语句如下：<p>alter table dw add dwname 
+               varchar (50)</p> &nbsp;&nbsp;&nbsp;&nbsp; 我们要在eform生成的xml格式如下：<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;alter tableName='dw'&gt; &lt;detail&gt; add dwname varchar 
+               (50)&lt;/detail&gt;&lt;/alter&gt;</span></p>
+           <p class="MsoNormal">
+               3<span lang="EN-US" style="color:black;mso-themecolor:text1">.Insert </span>
+               <span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;color:black;
+mso-themecolor:text1">语句转换成</span><span lang="EN-US" style="color:black;
+mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin;
+color:black;mso-themecolor:text1">格式<span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p>如下:</o:p></span></span><span lang="EN-US" style="color:black;
+mso-themecolor:text1"><o:p></o:p></span></p>
+
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;insert tableName='</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">表名</span><span lang="EN-US">'&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;names&gt;<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>
+               &lt;/names&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;values&gt;<span style="mso-spacerun:yes">&nbsp; </span>
+               &lt;/values&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;other&gt;<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>
+               &lt;other&gt; <span style="mso-spacerun:yes">&nbsp;</span></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;/insert&gt;</span></p>
+               &nbsp;&nbsp;&nbsp;&nbsp;我们在开发、测试过程中，经常会遇到插入一条记录或者需要表复制的情况，如将一个table1的数据的部分字段复制到table2中，或者将整个table1复制到table2中，这时候我们就要使用SELECT INTO 和 INSERT INTO SELECT 表复制语句了。<br />
+           <p class="MsoNormal">
+               <span lang="EN-US">1.</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">创建测试表</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               create TABLE Table1</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>(</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>a varchar(10),</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>b varchar(10),</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>c varchar(10),</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>CONSTRAINT [PK_Table1] PRIMARY KEY CLUSTERED</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>(</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>a ASC</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>)</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>) ON 
+               [PRIMARY]</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               create TABLE Table2</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>(</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>a varchar(10),</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>c varchar(10),</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>d int,</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>CONSTRAINT [PK_Table2] PRIMARY KEY CLUSTERED</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>(</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>a ASC</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </span>)</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>) ON 
+               [PRIMARY]</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>GO</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>--2.</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">创建测试数据</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               Insert into Table1 values('</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">赵</span><span lang="EN-US">','asds','90')</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               Insert into Table1 values('</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">钱</span><span lang="EN-US">','asds','100')</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               Insert into Table1 values('</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">孙</span><span lang="EN-US">','asds','80')</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               Insert into Table1 values('</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">李</span><span lang="EN-US">','asds',null)</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>GO</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               select * from Table2</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               --3.INSERT INTO SELECT</span><span style="font-family:宋体;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
+minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">语句复制表数据</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>
+               Insert into Table2(a, c, d) select a,c,5 from Table1</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp; </span>GO</span></p>
+               
+              &nbsp;&nbsp;&nbsp; 如果插入一条数据 sql语句是<p>Insert into Table1 (a,b,c)values('孙','asds','80')</p>&nbsp;&nbsp;&nbsp; eform转换成xml串的格式如下
+              
+ 
+           <br />
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;insert tableName='table1'&gt;&lt;names&gt; a,b,c<span 
+                   style="mso-spacerun:yes">&nbsp; </span>&lt;/names&gt;&lt;values&gt;'</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">孙</span><span lang="EN-US">','asds','80' &lt;/values&gt;&lt;/insert&gt;</span></p>
+&nbsp;&nbsp;&nbsp; &nbsp;如果是一条复制表数据语句<br /><p>Insert into Table2(a, c, d) select a,c,5 from Table1
+</p>&nbsp;&nbsp;&nbsp; &nbsp;sql语句在eform中转换成xml串如下：
+            
+           <br />
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;insert tableName='Table2'&gt;&lt;names&gt; a,b,c<span 
+                   style="mso-spacerun:yes">&nbsp; </span>&lt;/names&gt;&lt;other&gt;select a,c,5 from 
+               Table1<span style="mso-spacerun:yes">&nbsp; </span>&lt;/other&gt;&lt;/insert&gt;</span></p>
+          &nbsp;&nbsp;&nbsp; &nbsp;在表单中执行sql语句的方法是doSaveData(xmlSql,function(){alert("保存成功");}),xmlsql就是我们的sql语句转换成的xml串.
+           <p class="MsoNormal">
+               5<span lang="EN-US" style="color:black;mso-themecolor:text1">.Update</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">语句转换成</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">格式</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><span 
+                   style="mso-spacerun:yes"><o:p>如下:</o:p>&nbsp;&nbsp;</span></span></p>
+                   
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;update tableName='</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">表名</span><span lang="EN-US">'&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;set&gt; &lt;/set&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;where&gt; &lt;/where&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;/update&gt;</span></p>
+             &nbsp;&nbsp;&nbsp;&nbsp; 例如我们的dw表中已经有了dwid字段等于fc00000088的一条记录，我们要修改它的dwname字段为方成，标准的sql语句应是<p>update 
+               dw set dwname='方成' where dwid='fc00000088'</p>  &nbsp;&nbsp;&nbsp;&nbsp; 
+           我们在eform中生成sql语句的xml格式如下:
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;update tableName='dw'&gt;&lt;set&gt;dwname='</span><span style="font-family:宋体;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">方成</span><span lang="EN-US">'&lt;/set&gt;&lt;where&gt; dwid = 
+               'fcs00000088'&lt;/where&gt;&lt;/update&gt;</span></p>
+           <p class="MsoNormal">
+               6<span lang="EN-US" style="color:black;mso-themecolor:text1">.Delete</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">语句转换成</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1">xml</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;color:black;mso-themecolor:text1">格式</span><span 
+                   lang="EN-US" style="color:black;mso-themecolor:text1"><o:p><o:p>如下:</o:p></o:p></span></p>
+                    
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;delete tableName=</span><span style="font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin">’</span>
+               <span style="font-family:
+宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">表名’</span><span lang="EN-US"> &gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;where&gt; &lt;/where&gt;</span></p>
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;/delete&gt;</span></p>
+           &nbsp;&nbsp;&nbsp;&nbsp; 我们要删除dw表中dwid等于fcs00000088的一条记录标准的sql语句如下:<p>
+               delete dw where dwid='fcs00000088'            </p>
+               &nbsp;&nbsp;&nbsp;&nbsp; 我们在eform中生成sql语句的xml格式如下:
+           <p class="MsoNormal">
+               <span lang="EN-US">&lt;delete tableName='dw’ &gt;&lt;where&gt;<span 
+                   style="mso-spacerun:yes">&nbsp; </span>dwid= 'fcs00000088'&lt;/where&gt;&lt;/delete&gt;</span></p>
+           <div class="divTitle">2.2 doSubmitData保存函数</div>
+           &nbsp;&nbsp;&nbsp; 
+           把当前表单要保存的所有数据集中的数据生成了标准的xml串发送到后台,然后还原成sql语句在同一事务中进行保存,在提交数据函数中增加了回调函数实现了数据提交成功后提示、退出、新增.你也可以在系统函数页中选择保存函数,系统中的保存函数也是调用了下面的函数.<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;例如我们想提交数据成功后提示那eform系统准备的选择函数是$eform('提交数据')，实际调用的函数是
+      <p>doSubmitData();</p>
+           &nbsp;&nbsp;&nbsp;&nbsp;doSubmitData()可以带参数(callback)也可以不带参数，如果带了参数是表示异步执行,它保存完后会执行callback回调函数.如果不带参数表示同步执行,你可以定义一个变量等于它的返回值，如果等于空表示执行成功，如果有值那是错误信息。 <br />
+           &nbsp;&nbsp;&nbsp;&nbsp;例如我们想提交数据成功后提示，那eform系统准备的选择函数是$eform('提交数据成功后提示')，实际调用的函数是<p>
+               doSubmitData(function(){alert(&quot;提交数据成功!&quot;);})</p> 
+           &nbsp;&nbsp;&nbsp;&nbsp;例如我们想提交数据成功后提示,那eform系统准备的选择函数是$eform('提交数据成功后退出')，实际调用的函数是
+      <p>提交数据成功后退出 doSubmitData(function(){CloseBill();})</p><br />
+           &nbsp;&nbsp;&nbsp; 例如我们想提交数据成功后提示,那eform系统准备的选择函数是$eform('提交数据成功后刷新上一窗口')，实际调用的函数是
+              <p>var sErr = doSubmitData(function(){alert(&quot;提交数据成功!&quot;);refreshUpGrid();}); 
+              if(IsSpace(sErr)==false) alert(sErr);</div>
+</body>
+</html>

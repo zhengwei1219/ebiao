@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var oDs ;
+var currentTd = fcpubdata.obj[0];
+
+function uf_open() {
+	 new Eform.SysForm().setButtonImage();
+	 if(IsSpace(currentTd.roleXml) == false){
+	 	currentTd.roleXml = unescape(currentTd.roleXml);
+	 }
+	 if(IsSpace(currentTd.contType) == false){
+	 	SetRadioValue($id("radioContType"), currentTd.contType);	
+	 	if($id("radioContType").value == "eform"){//表单上的控件
+	 		SetTextValue(fcpubdata.obj[1], $id("txtControlId"));
+	 		if(IsSpace(currentTd.roleXml) == false) {//权限设置
+	 			var roleXml = unescape(currentTd.roleXml)
+	 		 	lblTitle.fieldPowerXmlSet = roleXml;
+	 			$id('SKbillsheet').roleXml = roleXml;
+	 		}	 			
+	 	}else{
+	 		//SetTextValue(currentTd.roleXml, $id("txtDisplayValue"));
+	 		SetTextValue(fcpubdata.obj[1], $id("txtDisplayValue"));
+	 		if(IsSpace(currentTd.roleXml) == false && currentTd.contType != "eform") {//权限设置
+				 permitDs.Field("valueDisable").Value = currentTd.roleXml;
+	 		}	 			
+	 	}
+	 	SetRadioValue($id("radioMethod"), currentTd.funcType);
+	 	if(IsSpace(currentTd.funcExp) == false) droFun.value = currentTd.funcExp;
+	 	if(IsSpace(currentTd.isModalWin) == false) SetCheckBoxValue($id('isModuleWin'),currentTd.isModalWin);
+	 	if(IsSpace(currentTd.refreshType) == false) $id('comRefresh').value = currentTd.refreshType;
+	 }
+	 if(IsSpace(fcpubdata.obj[2]) == false){//表和字段的options串
+	 	comSelField.outerHTML = SelectAddOption($id("comSelField"), fcpubdata.obj[2]);
+	 	if(IsSpace(currentTd.title) == false){//有选中的字段
+	 		for(var i=0;i<comSelField.options.length;i++){
+	 			if(comSelField.options[i].value == currentTd.title){
+	 				comSelField.selectedIndex  = i; 
+	 				break;
+	 			}
+	 		}
+	 	}
+	 	//$id('txtTitle').value = fcpubdata.obj[7];
+	 }
+	 oDs = fcpubdata.obj[3];//数据集的dom对象
+	 
+	 /*if(IsSpace(fcpubdata.obj[0]) == false){
+	 	SetRadioValue($id("radioContType"), fcpubdata.obj[0]);	
+	 	if($id("radioContType").value == "eform"){//表单上的控件
+	 		SetTextValue(fcpubdata.obj[1], $id("txtControlId"));
+	 		if(IsSpace(fcpubdata.obj[4]) == false) {//权限设置
+	 			var roleXml = unescape(fcpubdata.obj[4])
+	 		 	lblTitle.fieldPowerXmlSet = roleXml;
+	 			$id('SKbillsheet').roleXml = roleXml;
+	 		}	 			
+	 	}else{
+	 		SetTextValue(fcpubdata.obj[1], $id("txtDisplayValue"));
+	 		if(IsSpace(fcpubdata.obj[4]) == false) {//权限设置
+				 permitDs.Field("valueDisable").Value = fcpubdata.obj[4];
+	 		}	 			
+	 	}
+	 	SetRadioValue($id("radioMethod"), fcpubdata.obj[2]);
+	 	if(IsSpace(fcpubdata.obj[3]) == false) droFun.value = fcpubdata.obj[3];
+	 	if(IsSpace(fcpubdata.obj[5]) == false) SetCheckBoxValue($id('isModuleWin'),fcpubdata.obj[5]);
+	 	if(IsSpace(fcpubdata.obj[6]) == false) $id('comRefresh').value = fcpubdata.obj[6];
+	 }
+	 if(IsSpace(fcpubdata.obj[7]) == false){//表和字段的options串
+	 	comSelField.outerHTML = SelectAddOption($id("comSelField"), fcpubdata.obj[7]);
+	 	if(IsSpace(fcpubdata.obj[8]) == false){//有选中的字段
+	 		for(var i=0;i<comSelField.options.length;i++){
+	 			if(comSelField.options[i].value == fcpubdata.obj[8]){
+	 				comSelField.selectedIndex  = i; 
+	 				break;
+	 			}
+	 		}
+	 	}
+	 	//$id('txtTitle').value = fcpubdata.obj[7];
+	 }
+	 oDs = fcpubdata.obj[9];//数据集的dom对象
+	 */
+	 uf_contHide1();
+	 uf_hideSelFun();
+}
+
+function uf_selFun(){
+	var ret = DjOpen('zk_sel_fun_list', "", '展现');
+	if(ret != undefined){
+		droFun.value = ret;
+	}
+}
+
+function uf_ok(){
+	var arr = new Array();
+	if ($id('radioContType').value == "eform" && $id("txtControlId").value == "") {
+		 alert("先输入控件id");
+		 return ;
+	}else{
+		if(uf_checkStr() == false) return;
+	}
+	if($id("radioContType").value != "eform" && $id("radioContType").value != "radio" && $id("radioContType").value != "checkbox"){ 
+		if((IsSpace($id("txtDisplayValue").value) == true)){
+			alert("标签值不能为空")	;
+			return;
+		}
+	}
+	if($id('radioMethod').value == "other" && IsSpace($id('droFun').value) == true) {
+		alert("请单击下拉按钮，选择自定义函数");
+		return;	
+	}
+	for(var i = 0;i<oDs.documentElement.childNodes.length-1;i++){
+		var arr1 = comSelField.value.split('.');
+		
+		if(oDs.documentElement.childNodes[i].childNodes[0].text == arr1[0]){
+			var rows = ToInt(oDs.documentElement.childNodes[i].childNodes[3].text);//获取明细数据集的行数
+			if(radioContType.value == "eform" && rows>0){
+				alert("此表设置成了明细数据集，不能选择‘表单模版上的控件’");
+				return;	
+			}
+			if((radioContType.value == "button" || radioContType.value == "href" || radioContType.value == "radio" || radioContType.value == "checkbox") && rows < 1){
+				alert("此表没设置成明细数据集不能选择按钮、超链接、无线按钮或复选框");
+				return;	
+			}
+			break;
+		}
+	}
+	arr[arr.length] = $id("radioContType").value;
+	if($id("radioContType").value == "eform"){
+		arr[arr.length] = $id("txtControlId").value;
+	}else{
+		arr[arr.length] = $id("txtDisplayValue").value;
+	}
+	arr[arr.length] = $id("radioMethod").value;
+	arr[arr.length] = $id("droFun").value;
+	var permit = "";
+	if($id("radioContType").value == "eform" && IsSpace(currentTd.roleXml) == false){//检查控件id和roleXml中的控件id是否相同
+			var oXml = SetDom(currentTd.roleXml);
+		 	if($id("txtControlId").value != oXml.documentElement.getAttribute("id")){
+		 		oXml.documentElement.setAttribute("id",$id("txtControlId").value);
+		 		permit = escape(oXml.xml);
+		 	}else{
+		 		permit = escape(currentTd.roleXml);
+		 	}
+		}
+	/*if($id("radioContType").value == "eform" && IsSpace(lblTitle.fieldPowerXmlSet) == false){
+		 var oXml = SetDom(lblTitle.fieldPowerXmlSet);
+		 oXml.documentElement.setAttribute("controlId",$id("txtControlId").value);
+		 permit = escape(oXml.xml);
+		 //permit = escape(lblTitle.fieldPowerXmlSet);
+	}*/
+	if($id("radioContType").value != "eform" && IsSpace(permitDs.Field("valueDisable").Value) == false) permit = permitDs.Field("valueDisable").Value;
+	arr[arr.length] = permit;
+	arr[arr.length] = $id('isModuleWin').value;	
+	arr[arr.length] = $id('comRefresh').value;
+	arr[arr.length] = $id('comSelField').value;
+	window.returnValue = arr;
+	window.close();
+}
+
+function uf_contHide1(){
+	var  s1 = "none";
+	var  s2 = "block";
+	if($id("radioContType").value == "eform"){
+		s1 = "block";
+		s2 = "none";
+		isModuleWin.style.display = "none";
+	}
+	if($id("radioContType").value == "radio" || $id("radioContType").value == "checkbox"){
+		s1 = "none";
+		s2 = "none";
+	}
+	labUnit.style.display = s1;
+ 	txtControlId.style.display = s1;
+ 	labDisplayValue.style.display = s2;
+ 	txtDisplayValue.style.display = s2;
+ 	radioMethod.style.display = s2;
+ 	isModuleWin.style.display = s2;
+ 	labRefresh.style.display = s2;
+ 	comRefresh.style.display = s2;
+ 	uf_hideSelFun();
+}
+
+function uf_hideSelFun(){
+	var display1 = "none";
+	if($id("radioMethod").value == "other"){
+	 	droFun.style.display = "block";	
+	}else{
+		droFun.style.display = "none";	
+	}
+	if(($id("radioMethod").value == "show" || $id("radioMethod").value == "edit") && $id("radioContType").value != "eform" ){
+		isModuleWin.style.display = "block";
+	}else{
+		isModuleWin.style.display = "none";
+	}
+	if($id("radioContType").value == "eform")  droFun.style.display = "none";
+	if($id("radioMethod").value == "edit" || $id("radioMethod").value == "del"){
+		display1 = "block";
+	}
+	if($id("radioContType").value == "radio" || $id("radioContType").value == "checkbox"){
+		s1 = "none";
+		s2 = "none";
+	}
+	if($id("radioContType").value == "radio" ||$id("radioContType").value == "checkbox"){
+		isModuleWin.style.display = "none";
+	}
+	labRefresh.style.display = display1;
+	comRefresh.style.display = display1;
+}
+
+function uf_checkStr(){
+	var ret = true;
+	var contId = $id('txtControlId').value; 
+	if(IsSpace(contId) == false){
+		var reg = /[^_|a-z|A-Z|0-9]/;       //^[a-zA-Z][a-zA-Z0-9_]*$;
+    	if(reg.test(contId) == true){
+    		ret = false;	
+    	}else{
+    		var s = contId.substring(0,1);
+    		if(s == '_' || IsInt(s) == true){
+    			ret = false;
+    		}
+    	}
+	}
+	if(ret == false) {
+		alert('控件id必须是字母开头，不能有字母数字下划线以外的其它字符');
+	}
+	return ret;
+}
+
+//权限设置
+function uf_permitSet(){
+	
+	if($id("radioContType").value == "eform"){
+		if(IsSpace($id('txtControlId').value) == true) {
+			alert("先输入控件id");
+			return;	
+		}
+		var oldFcpubdataObj = fcpubdata.obj;
+	    var arr = [$id('txtControlId').value,'', currentTd];
+	    fcpubdata.obj = arr;
+	    EformActionButtonClick();
+	    var ret = fcpubdata.obj[2].roleXml;
+	    //lblTitle.fieldPowerXmlSet = ret;
+	    fcpubdata.obj = oldFcpubdataObj;
+	}else{
+		uf_fx('valueDisable');
+	}
+}
+
+function uf_fx(fieldName){
+	DjOpen("../../fceform/common/djframe.htm?djsn=toolbarPermit&djtype=ST",[permitDs,fieldName],"展现","有模式窗口","直接","选择");	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script src='../../fceform/js/fczk.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;fczk.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" allBrowser="否" useHelp BLONopenBefore BLONclose center="居中" BLONopen="uf_open()" dj_sn="zk_add_td_label" type="ZK" caption="设置单元格上的控件" window="有模式窗口" posleft postop poswidth="280" posheight="290" isfile="是" billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>isModuleWin</taborder><taborder>radioContType</taborder><taborder>radioMethod</taborder><taborder>comRefresh</taborder><taborder>txtDisplayValue</taborder><taborder>droFun</taborder><taborder>button5</taborder><taborder>comSelField</taborder><taborder>txtControlId</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:6;radio:3;listbox:0;textarea:1;combobox:3;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:0;div:2;DsMain_field:0;a:0;button:9;text:3;hr:0;checkboxlist:0;radiolist:0;dropdownlist:4;grid:0;dataset:2;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" contxml="<root><checkbox><id>isModuleWin</id></checkbox><label><id>labUnit</id><id>labDisplayValue</id><id>labRefresh</id><id>lblTitle</id></label><radio><id>radioContType</id><id>radioMethod</id></radio><combobox><id>comRefresh</id><id>comSelField</id></combobox><div><id>div2</id></div><button><id>cmdOk</id><id>cmdClose</id><id>button5</id></button><text><id>txtDisplayValue</id></text><dropdownlist><id>droFun</id><id>txtControlId</id></dropdownlist><dataset><id>permitDs</id></dataset></root>" userType alertType="1" isCheckPermit="否" toolbar="不带工具栏" AutoResizeXml>&nbsp;<BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 63px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 1px; LEFT: 4px" id=cmdOk onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 63px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 1px; LEFT: 74px" id=cmdClose onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON>&nbsp;&nbsp; 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 273px; HEIGHT: 183px; BORDER-TOP: 0px; TOP: 70px; BORDER-RIGHT: 0px; LEFT: 1px" id=div2 class=control-border-color onmovestart=moveStart() controltype="div">
+<FIELDSET style="POSITION: absolute; WIDTH: 253px; HEIGHT: 57px; TOP: 1px; LEFT: 9px" id=radioContType onmovestart=moveStart() contentEditable=false onclick='bill_onclick("uf_contHide1()")' controltype="radio" aspect="横向" legend temptext="表单模版上的控件&#13;&#10;按钮&#13;&#10;超链接</br>&#13;&#10;无线按钮&#13;&#10;复选框" tempvalue="eform&#13;&#10;button&#13;&#10;href&#13;&#10;radio&#13;&#10;checkbox" value="button"><LEGEND></LEGEND><INPUT id=RGradioContType1 onclick=radioContType.value=RGradioContType[0].value; value=eform type=radio name=RGradioContType text="表单模版上的控件"><SPAN>表单模版上的控件</SPAN>&nbsp;<INPUT id=RGradioContType2 onclick=radioContType.value=RGradioContType[1].value; value=button CHECKED type=radio name=RGradioContType text="按钮"><SPAN>按钮</SPAN>&nbsp;<INPUT id=RGradioContType3 onclick=radioContType.value=RGradioContType[2].value; value=href type=radio name=RGradioContType text="超链接</br>"><SPAN>超链接<BR></SPAN>&nbsp;<INPUT id=RGradioContType4 onclick=radioContType.value=RGradioContType[3].value; value=radio type=radio name=RGradioContType text="无线按钮"><SPAN>无线按钮</SPAN>&nbsp;<INPUT id=RGradioContType5 onclick=radioContType.value=RGradioContType[4].value; value=checkbox type=radio name=RGradioContType text="复选框"><SPAN>复选框</SPAN>&nbsp;</FIELDSET><LABEL style="POSITION: absolute; WIDTH: 63px; DISPLAY: none; HEIGHT: 17px; TOP: 64px; LEFT: 9px" id=labUnit onmovestart=moveStart() controltype="label" inputTag="否">控件id</LABEL><LABEL style="POSITION: absolute; WIDTH: 73px; HEIGHT: 16px; TOP: 65px; LEFT: 10px" id=labDisplayValue onmovestart=moveStart() controltype="label" inputTag="否">标签值</LABEL><INPUT style="POSITION: absolute; WIDTH: 204px; HEIGHT: 20px; TOP: 63px; LEFT: 59px" id=txtDisplayValue onmovestart=moveStart() size=32 controltype="text"> 
+<FIELDSET style="POSITION: absolute; WIDTH: 253px; HEIGHT: 43px; TOP: 86px; LEFT: 9px" id=radioMethod onmovestart=moveStart() contentEditable=false onclick='bill_onclick("uf_hideSelFun()")' controltype="radio" aspect="横向" legend="单击后运行的功能" temptext="查看&#13;&#10;编辑&#13;&#10;删除&#13;&#10;其它" tempvalue="show&#13;&#10;edit&#13;&#10;del&#13;&#10;other" value="show"><LEGEND>单击后运行的功能</LEGEND><INPUT id=RGradioMethod1 onclick=radioMethod.value=RGradioMethod[0].value; value=show CHECKED type=radio name=RGradioMethod text="查看"><SPAN>查看</SPAN>&nbsp;<INPUT id=RGradioMethod2 onclick=radioMethod.value=RGradioMethod[1].value; value=edit type=radio name=RGradioMethod text="编辑"><SPAN>编辑</SPAN>&nbsp;<INPUT id=RGradioMethod3 onclick=radioMethod.value=RGradioMethod[2].value; value=del type=radio name=RGradioMethod text="删除"><SPAN>删除</SPAN>&nbsp;<INPUT id=RGradioMethod4 onclick=radioMethod.value=RGradioMethod[3].value; value=other type=radio name=RGradioMethod text="其它"><SPAN>其它</SPAN>&nbsp;</FIELDSET><?xml:namespace prefix = fc /><fc:fc_code id=droFun controltype="dropdownlist" isShowTree="0" isTreeNewSql="0" FieldNameList="" blninput="否" blnempty="否" addrow="否" multiselect="否" xml="" datasourceName="" onclickopen='bill_onclick("uf_selFun()")' format="" visible="否" sqltrans="" height="20" width="252" top="132" left="9" field="null" position="absolute" align="undefined" dataset="null" sql2="null"></fc:fc_code> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 131px; LEFT: 7px" id=isModuleWin onmovestart=moveStart() noWrap controltype="checkbox" value="1" truevalue="1" falsevalue="0"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>是否模态窗口</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 158px; LEFT: 9px" id=labRefresh onmovestart=moveStart() controltype="label" inputTag="否">刷新方式</LABEL><SELECT style="POSITION: absolute; WIDTH: 196px; HEIGHT: 25px; TOP: 155px; LEFT: 66px" id=comRefresh onmovestart=moveStart() controltype="combobox" temptext="执行后台程序&#13;&#10;只在前台运行&#13;&#10;不刷新" tempvalue="execBack&#13;&#10;execJs&#13;&#10;noRefresh" check="1" sql datasourceName async="否" sqltrans><OPTION selected value=execBack>执行后台程序</OPTION><OPTION value=execJs>只在前台运行</OPTION><OPTION value=noRefresh>不刷新</OPTION></SELECT></DIV><LABEL style="POSITION: absolute; WIDTH: 88px; FONT-FAMILY: 宋体; HEIGHT: 18px; TOP: 34px; FONT-WEIGHT: bold; LEFT: 10px" id=lblTitle onmovestart=moveStart() controltype="label" inputTag="否">选择字段：</LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 25px; LEFT: 186px" id=button5 onmovestart=moveStart() onclick='bill_onclick("uf_permitSet()")' controltype="button">权限设置</BUTTON><SELECT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 25px; TOP: 54px; LEFT: 10px" id=comSelField onmovestart=moveStart() controltype="combobox" temptext tempvalue check="1" sql datasourceName async="否" sqltrans></SELECT><fc:dataset id=permitDs controltype="dataset" format="<fields><field><fieldname>expDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>valueDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" async="否" opensortno="1" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" isSubGrid="否" idtype="1" onValid='bill_ondatasetvalid("<dsid><expDisable></expDisable><valueDisable></valueDisable></dsid>")' onGetText='bill_ondatasetgettext("<dsid><expDisable></expDisable><valueDisable></valueDisable></dsid>")' onSetText='bill_ondatasetsettext("<dsid><expDisable></expDisable><valueDisable></valueDisable></dsid>")'></fc:dataset><fc:fc_code id=txtControlId controltype="dropdownlist" isShowTree="0" isTreeNewSql="0" FieldNameList="" blninput="是" blnempty="否" addrow="否" multiselect="否" xml="<tr height='20px' ><td>upload1</td><td>附件上传</td></tr>" datasourceName="" format="  控件id  |  控件说明" visible="是" sqltrans="" height="20" width="205" top="132" left="58" field="null" position="absolute" align="undefined" dataset="null" sql2="null"></fc:fc_code></DIV><script></script></body></html>

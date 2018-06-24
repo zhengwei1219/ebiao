@@ -1,0 +1,81 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>/*function uf_open(){
+	//TreeRootNodeHide($id('tree1'), 'none');
+}
+var sId = "";//组织机构id
+function uf_clickTree(nodeValue){
+	sId = nodeValue;
+	var sWhere = "where  fcq_org.deleteMark=0 and fcq_org.sParent='"+nodeValue+"'order by fcq_org.sortNo";
+	if(IsSpace(nodeValue) == true)  sWhere = "where  fcq_org.deleteMark=0 and fcq_employee.employeeid is null order by fcq_org.sortNo";
+    DsMain.Open("select EMPLOYEEID,EMPLOYEECODE,EMPLOYEENAME,bz,fcq_employee.sortNo from FCQ_EMPLOYEE inner join fcq_org on fcq_employee.employeeId=fcq_org.sPersonId "+sWhere);
+	DsMain.Field('sId').Value = nodeValue;
+}
+ 
+function uf_deleteMark(){
+	if(IsSpace(grid1.Row) == false){
+		var ret = window.confirm("确定删除当前行信息吗？");	
+		if(ret == false) return;
+		var deptid = DsMain.Field('deptid').Value;
+		var xmlSql= "<update tableName='fcq_employee'><set>deleteMark=1</set><where> employeeid='"+DsMain.Field('employeeid').Value+"' </where> </update>"
+		doSaveData(xmlSql,function (){	
+				alert("删除成功");
+				DsMain.Open("select employeename,employeecode,bz from fcq_employee inner join fcq_org on fcq_employee.employeeId=fcq_org.sPersonId  where  fcq_org.deleteMark=0 and fcq_org.sParent='"+sId +"'order by fcq_employee.sortNo");
+				//tree1.FindNode(tree1,"code",deptid);
+			}); 
+	}
+}
+
+function uf_moveUp(isUp){
+	if(IsSpace(grid1.Row) == false){
+		if(isUp == true){
+			GridChangeRowSort(true,grid1);
+		}else{
+			GridChangeRowSort(false,grid1);
+		}
+	}
+}
+function uf_add(){
+	//if(IsSpace(DsMain.Field('sId').Value)) {alert("先选择组织结构");return}
+	var sRet = DjOpen('fcq_employeeCard',DsMain,'新增') ;
+	if(!IsSpace(sRet)){
+		DsMain.Open("select employeename,employeecode,bz from fcq_employee inner join fcq_org on fcq_employee.employeeId=fcq_org.sPersonId  where  fcq_org.deleteMark=0 and fcq_org.sParent='"+sId +"'order by fcq_employee.sortNo");
+		DsMain.Field('sId').Value =sId;
+		//tree1.FindNode(tree1,"code",sRet);	
+	}
+}
+
+
+function uf_updata(){
+	if(IsSpace(grid1.Row) == false){
+		var sRet = DjOpen('fcq_employeeCard',DsMain,'修改') ;
+		if(!IsSpace(sRet)){
+	        DsMain.Open("select employeename,employeecode,bz from fcq_employee inner join fcq_org on fcq_employee.employeeId=fcq_org.sPersonId  where  fcq_org.deleteMark=0 and fcq_org.sParent='"+MainDs.Field('sId').Value+"'order by fcq_org.sortNo");
+	        DsMain.Field('sId').Value =sId;
+	        //tree1.FindNode(tree1,"code",sRet);
+	    }
+	}	
+}
+
+
+function uf_queryEmployee(){
+	DjOpen('fcq_employee_correspond');
+}*/
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" OtherSave="否" codeheader="CSM" entertype="展现" keyfield="sid" runsave idtype="1" userToolbar="<tr rowstate=&quot;add&quot;><td>add</td><td>新增</td><td></td><td>$eform('打开窗口新增记录')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>edit</td><td>修改保存</td><td></td><td>$eform('打开窗口修改记录')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>del</td><td>删除</td><td></td><td>$eform('标记方式删除')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>query</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>upmove</td><td>上移</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>downmove</td><td>下移</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>" contxml="<root><grid><id>grid1</id></grid><dataset><id>DsMain</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:6;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:3;div:0;DsMain_field:0;a:1;button:10;text:5;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:2;spin:0;excel:0;tree:5;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen="fcpubdata.cardWinUrl='fcq_employee1'" window="当前窗口" posheight poswidth postop posleft center="  " isfile="是" type="ZK" caption="职员信息" dj_sn="fcq_employee" billtaborder="<root><taborder>grid1</taborder></root>" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑" toolbar="自定义工具栏" AutoResizeXml mkbh><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col><col></col><col></col><col></col></grid1>")' controltype="grid" blRowNo="否" hideHscroll="否" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" dataset="DsMain" format="<cols><col><fname>EMPLOYEECODE</fname><cname>编号</cname><width>15</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>EMPLOYEENAME</fname><cname>姓名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>150</columnwidth><align>left</align></col><col><fname>BIRTHDAY</fname><cname>出生日期</cname><width>19</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>CULTURE</fname><cname>学历</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>CARDID</fname><cname>身份证</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>bz</fname><cname>备注</cname><width>10</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>300</columnwidth><align>left</align></col></cols>" width="600" height="260" top="1" left="1">
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=DsMain idtype="1" controltype="dataset" fieldtrans="<root><field><name>DEPTID</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>deptname</name><trans></trans><rtrans></rtrans><sql>select%20deptid%2Cdeptname%20from%20fcq_dept</sql></field><field><name>DEPTNAME</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>sName</name><trans></trans><rtrans></rtrans><sql></sql></field></root>" savetable="FCQ_EMPLOYEE" idparam="EMP" issubds="否" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" opensortno="1" isSubGrid="否" async="否" format="<fields><field><fieldname>EMPLOYEEID</fieldname><datatype>字符</datatype><displaylabel>职员ID</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>EMPLOYEECODE</fieldname><datatype>字符</datatype><displaylabel>编号</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>EMPLOYEENAME</fieldname><datatype>字符</datatype><displaylabel>姓名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>BIRTHDAY</fieldname><datatype>字符</datatype><displaylabel>出生日期</displaylabel><size>19</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>CULTURE</fieldname><datatype>字符</datatype><displaylabel>学历</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>CARDID</fieldname><datatype>字符</datatype><displaylabel>身份证</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bz</fieldname><datatype>字符</datatype><displaylabel>备注</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>SORTNO</fieldname><datatype>整数</datatype><displaylabel>SORTNO</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>DELETEMARK</fieldname><datatype>整数</datatype><displaylabel>DELETEMARK</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME><BIRTHDAY></BIRTHDAY><CULTURE></CULTURE><CARDID></CARDID><bz></bz><SORTNO></SORTNO><DELETEMARK></DELETEMARK></dsid>")' onGetText='bill_ondatasetgettext("<dsid><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME><BIRTHDAY></BIRTHDAY><CULTURE></CULTURE><CARDID></CARDID><bz></bz><SORTNO></SORTNO><DELETEMARK></DELETEMARK></dsid>")' onSetText='bill_ondatasetsettext("<dsid><EMPLOYEEID></EMPLOYEEID><EMPLOYEECODE></EMPLOYEECODE><EMPLOYEENAME></EMPLOYEENAME><BIRTHDAY></BIRTHDAY><CULTURE></CULTURE><CARDID></CARDID><bz></bz><SORTNO></SORTNO><DELETEMARK></DELETEMARK></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98jbXrn%DA%F2%EC%E8Xrn%9A%94%B0%CC%98%A8%AE%A6%AC%C0%98%98Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%E8%D0%F2%E4Xt%96nXrn%EC%F2%D6%D8%F2Xrn%D2%u0100Xrn%F4%EC%F2%F6%AA%EC"></fc:dataset></DIV><script></script></body></html>

@@ -1,0 +1,28 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>保存前转换</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>保存前转换</font></b></td>
+</tr>
+</table>
+
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;<b><FONT style="font-size:12px;">保存前转换</FONT></b><br>
+<table><tr><td>
+&nbsp;&nbsp;<FONT style="font-size:12px;">当表单保存时(指调用了$eform('提交数据成功后提示'),doSubmitData()之类的保存函数),有时需要将数据集中字段的数据作一定的转换后再保存。用$f_value('字段名')来取某字段的值，如用：$f_value('bz')表示取bz字段的值，支持javascript的语言的表达式运算。如果要取得数据集的当前记录号则可以用全局变量 fcpubdata.transRecNo</FONT>
+</td></tr>
+<tr><td>
+&nbsp;&nbsp;<FONT style="font-size:12px;">读出时转换为保存时转换的反向，即数据从数据库中读出到数据集时的转换。也可以用$f_value('字段名')来取某字段的值，如用：$f_value('bz')表示取bz字段的值，支持javascript的语言的表达式运算。</FONT><p>
+
+&nbsp;&nbsp;<FONT style="font-size:12px;">注意: 不能在自定义函数中直接写 $f_value, 可以在自定义函数中加一个参数, function uf_getStateName(stateValue) , 在读出时转换处写成: uf_getStateName($f_value('state'))</FONT>
+
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

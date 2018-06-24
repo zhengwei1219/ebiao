@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var objNav=new Object();
+objNav.prevPage = "wiz_field_first" ;
+objNav.nextPage = "wiz_field_finish" ;
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+
+function uf_open() 
+{
+	objNav.config = parent.parent.toolbar.WizardConfig ;
+    //SetButtonImage(cmdUp,"../images/ef_run_button_up.gif") ;
+    txtTbName.value=objNav.config.tbname;
+    txtFieldType.value=objNav.config.type;
+    SetTextValue(objNav.config.fdname,$id("txtName"));
+    SetTextValue(objNav.config.fdchnname,$id("txtChnName"));
+    SetTextValue(objNav.config.helpText,$id("txtHelp"));
+    SetTextValue(objNav.config.width,$id("txtWidth"));
+    SetTextValue(objNav.config.height,$id("txtHeight"));
+    SetTextValue(objNav.config.defaultExp,$id("txtDefaultExp"));
+    SetCheckBoxValue($id("chkNull"),objNav.config.isNull);
+    SetCheckBoxValue($id("chkRepeat"),objNav.config.isRepeat);
+    //SetButtonImage($id("cmdLinkJs_fx"),fcpubdata.path+"/fceform/css/skins/"+fcpubdata.skins+"/images/ef_run_downarrow.gif")
+    
+    parent.parent.toolbar.execScript("new Eform.Wizard().disabledButton();")
+    
+}
+//保存配置信息,由工具栏来调用
+function saveConfig()
+{
+	if(PropWinSaveConfig(objNav)) return;
+
+	objNav.config.isNull = $id("chkNull").value;
+	objNav.config.isRepeat = $id("chkRepeat").value;
+	objNav.config.width = $id("txtWidth").value;
+	objNav.config.height = $id("txtHeight").value;
+	objNav.config.defaultExp = $id("txtDefaultExp").value;
+	if(objNav.config.type=="邮编") objNav.config.len =6;
+	if(objNav.config.type=="身份证号") objNav.config.len =18;
+	if(objNav.config.type=="QQ号") objNav.config.len =12;
+	if(objNav.config.type=="电子邮件" || objNav.config.type=="电话") objNav.config.len =50;
+	objNav.isOk = true;
+	
+}
+function linkJs_fx()
+{
+	var sRet = DjOpen("../../fceform/common/djframe.htm?djsn=js_fx&djtype=PR",[txtName.value,txtDefaultExp.value,parent.Request.QueryString('orgid').toString()],"展现","有模式窗口","直接","设置单元格的公式");
+	if(IsSpace(sRet) == false){
+		txtDefaultExp.value=sRet;
+	}	
+}	</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/shape.css'  /><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" userType BLONclose BLONopenBefore isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_open();new Eform.SysForm().setButtonImage() " contxml="<root><checkbox><id>chkNull</id><id>chkRepeat</id></checkbox><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>lblTitle</id><id>label12</id><id>label13</id><id>label14</id><id>label15</id><id>label16</id></label><textarea><id>txtHelp</id></textarea><shape><id>shape1</id></shape><button><id>cmdDropDown1</id></button><text><id>txtName</id><id>txtChnName</id><id>txtDefaultExp</id><id>txtWidth</id><id>txtHeight</id><id>txtTbName</id><id>txtFieldType</id></text></root>" billtaborder="<root><taborder>txtTbName</taborder><taborder>txtFieldType</taborder><taborder>txtName</taborder><taborder>txtChnName</taborder><taborder>txtHelp</taborder><taborder>txtDefaultExp</taborder><taborder>chkNull</taborder><taborder>chkRepeat</taborder><taborder>txtWidth</taborder><taborder>txtHeight</taborder><taborder>cmdDropDown1</taborder></root>" dj_sn="wiz_field_phone" type="ZK" caption="wiz_field_phone" poswidth="380" posheight="400" controlno="SKButton:0;SKDBedit:0;checkbox:2;label:11;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:8;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" center="居中" idtype="1" OtherSave="否" codeheader entertype="展现" keyfield runsave AutoResizeXml isCheckPermit="否" alertType="1"><LABEL id=label1 style="LEFT: 12px; WIDTH: 65px; POSITION: absolute; TOP: 77px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">字段名</LABEL><INPUT id=txtName style="LEFT: 96px; WIDTH: 256px; POSITION: absolute; TOP: 74px; HEIGHT: 20px" onmovestart=moveStart() size=46 controltype="text" onblur="bill_onexit(&quot;$valid('不能为空','字段名称不能为空!');&quot;)"><LABEL id=label2 style="LEFT: 12px; WIDTH: 76px; POSITION: absolute; TOP: 102px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">字段中文名</LABEL><INPUT id=txtChnName style="LEFT: 96px; WIDTH: 256px; POSITION: absolute; TOP: 96px; HEIGHT: 20px" onmovestart=moveStart() size=46 controltype="text"><LABEL id=label3 style="LEFT: 12px; WIDTH: 65px; POSITION: absolute; TOP: 137px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">帮助文本</LABEL><TEXTAREA id=txtHelp style="LEFT: 96px; WIDTH: 256px; POSITION: absolute; TOP: 118px; HEIGHT: 36px" onmovestart=moveStart() rows=1 cols=51 controltype="textarea" induce="否" value="textarea1"></TEXTAREA><LABEL id=label4 style="LEFT: 12px; WIDTH: 70px; POSITION: absolute; TOP: 163px; HEIGHT: 16px" onmovestart=moveStart() controltype="label" NotBg="否">公式默认值</LABEL><INPUT id=txtDefaultExp style="LEFT: 96px; WIDTH: 238px; POSITION: absolute; TOP: 157px; HEIGHT: 20px" onmovestart=moveStart() size=39 controltype="text"> 
+<DIV id=chkNull style="LEFT: 93px; WIDTH: 80px; POSITION: absolute; TOP: 177px; HEIGHT: 20px" onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox CHECKED><SPAN>此字段中总是需要一个值来保存记录</SPAN></DIV>
+<DIV id=chkRepeat style="LEFT: 93px; WIDTH: 80px; POSITION: absolute; TOP: 197px; HEIGHT: 20px" onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>不允许重复值</SPAN></DIV><LABEL id=lblTitle style="FONT-WEIGHT: bold; FONT-SIZE: 14pt; LEFT: 1px; WIDTH: 114px; COLOR: #000080; FONT-FAMILY: 楷体_GB2312; POSITION: absolute; TOP: 7px; HEIGHT: 22px; TEXT-DECORATION: underline" onmovestart=moveStart() controltype="label" NotBg="否">字段信息</LABEL><?xml:namespace prefix = v /><v:RoundRect id=shape1 style="LEFT: 93px; WIDTH: 262px; POSITION: absolute; TOP: 227px; HEIGHT: 47px" onmovestart=moveStart() controltype="shape" cover="9" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect><LABEL id=label12 style="LEFT: 105px; WIDTH: 29px; POSITION: absolute; TOP: 249px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">宽度</LABEL><INPUT id=txtWidth style="LEFT: 145px; WIDTH: 47px; POSITION: absolute; TOP: 244px; HEIGHT: 20px" onmovestart=moveStart() size=7 controltype="text"><LABEL id=label13 style="LEFT: 249px; WIDTH: 31px; POSITION: absolute; TOP: 249px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">高度</LABEL><INPUT id=txtHeight style="LEFT: 291px; WIDTH: 49px; POSITION: absolute; TOP: 244px; HEIGHT: 20px" onmovestart=moveStart() size=8 controltype="text"><LABEL id=label14 style="LEFT: 109px; WIDTH: 53px; POSITION: absolute; TOP: 222px; HEIGHT: 15px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() controltype="label" NotBg="否">显示控件</LABEL><BUTTON id=cmdDropDown1 style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; LEFT: 333px; BORDER-LEFT: 0px; WIDTH: 17px; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 157px; HEIGHT: 20px; BACKGROUND-COLOR: #c0c0c0" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("linkJs_fx()")'></BUTTON><LABEL id=label15 style="LEFT: 12px; WIDTH: 53px; POSITION: absolute; TOP: 36px; HEIGHT: 16px" onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">表名</LABEL><LABEL id=label16 style="LEFT: 12px; WIDTH: 95px; POSITION: absolute; TOP: 55px; HEIGHT: 17px" onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">字段数据类型</LABEL><INPUT id=txtTbName style="LEFT: 96px; WIDTH: 256px; POSITION: absolute; TOP: 29px; HEIGHT: 20px" disabled onmovestart=moveStart() size=46 controltype="text"><INPUT id=txtFieldType style="LEFT: 96px; WIDTH: 256px; POSITION: absolute; TOP: 51px; HEIGHT: 20px" disabled onmovestart=moveStart() size=46 controltype="text"></DIV></body></html>

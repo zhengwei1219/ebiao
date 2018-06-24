@@ -1,0 +1,254 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_type(){
+	return "'"+$id('comSqlType').value+"'";
+}
+
+function uf_open(){
+	//var len = fcpubdata.obj[0].childNodes[0].childNodes.length - 1;
+	if(fcpubdata.obj[0] != null && fcpubdata.obj[0].xml != "" && fcpubdata.obj[0].childNodes[0].childNodes[fcpubdata.obj[0].childNodes[0].childNodes.length - 1].childNodes[1].childNodes.length > 8){
+		dataset2.OpenXmlData(fcpubdata.obj[0].xml);	
+	}
+	if(IsSpace(fcpubdata.obj[1]) == false){
+		comSqlType.value = fcpubdata.obj[1];
+	}else{
+		$id('comSqlType').value = "电脑";
+	}
+	
+	getDsnList(cboDsn,"");
+	//uf_idtype();
+	uf_hide_subds();
+	uf_rowsGtZero();
+	uf_muchKeyField();
+}
+
+function uf_saveDsXml(){
+	dataset2.Update();
+	//fcpubdata.obj = dataset2.oDom;
+	var dsXml = dataset2.xml;
+	var sqlType = comSqlType.value;	
+	var arr = [dsXml,sqlType];
+	window.returnValue = arr;
+    window.close(); 
+}
+
+function uf_dsPropsSave(){
+	var dsProps = 'opensortno="' + opensortno.value + '" submittype="' + submittype.value + '" submitno="' + submitno.value + '" issubds="' + issubds.value + '" isSubGrid="' + isSubGrid.value + '" datasourceName="' + cboDsn.value + '" isaddemptyrec="' + isaddemptyrec.value + '" async="' + async.value + '" ';	//idtype="' + idtype.value +'"
+    //if(idparam.value != ""){
+      //dsProps += ' idparam="' + idparam.value + '" ';
+    //}
+    if(subdsfield.value != ""){
+        dsProps += ' subdsfield="' + subdsfield.value+ '" ';
+    }
+    if(masterdsfield.value != ""){
+        dsProps += ' masterdsfield="' + masterdsfield.value+ '" ';
+    }
+    if( masterds.value != ""){
+         dsProps += ' masterds="' + masterds.value+'"';
+    }
+	dataset2.Field('dsProps').Value = dsProps;
+	
+	
+}
+function uf_subField(stratSelect){//从表数据集字段
+	if(IsSpace(dataset2.Field('tbname').Value) == true) {
+		alert("先选择从表数据集中的表名");
+		SetCheckBoxValue($id('issubds'), '0');
+		return;	
+	}
+	if($id('issubds').value == '0') return; 
+	uf_selectLinkField();
+	if(IsSpace($id('subdsfield').value) == true) SetCheckBoxValue($id('issubds'), '0');
+	uf_sel_ds_field();	
+}
+
+function uf_selectLinkField(){//选择关联字段
+    CommonSelect({
+    	width : 600,
+    	height : 200,
+        isgrid : 1, //可选项, 弹出窗口中是否有grid控件,其值=0或1.
+        obj : subdsfield,  //必选项, 用于修改的前一窗口控件对象,包含是grid对象.
+        title : "选择主表关联字段",//
+        isfind : 1, //1是模糊查找,0是没有模糊查找
+        findvalue : dataset2.Field('tbname').Value,//模糊查找值
+        gridcolwidth : [250,350],
+        gridcoltitle : ["主表名","主表关联的字段"], 
+        //sql : "select linktbname,fdname from fc_entitysub where tbname like ':v_get%'  and type='主从信息表'"
+        sql : "select linktbname,fdname from fc_entitysub where tbname='"+dataset2.Field('tbname').Value +"'  and type='主从信息表'"
+
+    })
+}
+
+
+
+
+
+function uf_hide_subds(){
+	if($id("issubds").value == "1"){
+		$id("divRel").style.display="";	
+	}else{
+		$id("divRel").style.display="none";	
+		$id("subdsfield").value="";
+		$id("masterds").value="";
+		$id("masterdsfield").value="";
+	}
+}
+
+function uf_sel_ds_field() {
+	var tbName = dataset2.Field('tbName').Value;
+	if(tbName == "") return;
+	var xmlRet = SelectSql("select linktbname,linkfdname from fc_entitysub where type='主从信息表' and tbname='"+tbName+"' and fdname='"+$id('subdsfield').value+"'",1,1);
+	var oXml = SetDom(xmlRet);
+	if (oXml.documentElement == null) {
+        alert(xmlRet);
+        return;
+	}
+	if (oXml.documentElement.childNodes.length < 1) return;
+	masterds.value = oXml.documentElement.childNodes[0].childNodes[0].text;
+	masterdsfield.value = oXml.documentElement.childNodes[0].childNodes[1].text;
+	SetCheckBoxValue($id('comRows'), '1');
+}
+
+function uf_dsPropsRead(){
+	var dsProps = dataset2.Field('dsProps').Value;
+	var xmlProps = dataset2.Field('xmlProps').Value;
+	if(IsSpace(dsProps) == false){
+		var arr = dsProps.split(" ");
+		for(var i=0;i<arr.length;i++){
+			if(IsSpace(arr[i])) continue;
+			var arrSub = arr[i].split("=");
+			if(arrSub.length != 2) continue;
+			arrSub[1] = RepStr(arrSub[1],'"',''); 
+			arrSub[1] = RepStr(arrSub[1],"'",""); 
+			if(arrSub[0] == "issubds" || arrSub[0] == "isSubGrid" || arrSub[0] == "isaddemptyrec" || arrSub[0] == "async"){
+				SetCheckBoxValue($id(arrSub[0]), arrSub[1]);
+			}
+			//if(arrSub[0] == "idtype"){
+				 //SetRadioValue($id(arrSub[0]), arrSub[1]);
+			//}
+			if(arrSub[0] == "idparam" || arrSub[0] == "opensortno" || arrSub[0] == "submittype" || arrSub[0] == "submitno"  || arrSub[0] == "cboDsn" || arrSub[0] == "subdsfield" || arrSub[0] == "masterdsfield" || arrSub[0] == "masterds"){
+				$id(arrSub[0]).value = arrSub[1];
+			}
+		}	
+	}else{
+		var arrChe = ["issubds","isSubGrid", "isaddemptyrec","async"]
+		for(var k=0;k<arrChe.length;k++){
+			SetCheckBoxValue($id(arrChe[k]), '0');
+		}
+		//SetRadioValue(idtype, 1);
+		opensortno.value = 1;
+		submittype.value = 1;
+		submitno.value = 1;	
+		cboDsn.value = "";
+		
+		subdsfield.value = "";
+		masterdsfield.value = "";
+		masterds.value = "";
+		//idparam.value = "BBB";
+	}
+	
+	uf_hide_subds();
+	//uf_idtype();
+}
+
+function uf_rowsGtZero(){
+	if($id('comRows').value == 0) {
+		SetCheckBoxValue($id("isSubGrid"), "0");
+	}else{
+		SetCheckBoxValue($id("isSubGrid"), "1");
+	}
+}
+
+function uf_isSubGrid(){
+	if(isSubGrid.value == "1" && comRows.value == 0) {
+		//comRows.value = 1;
+		dataset2.Field('rows').Value= 1;
+		dataset2.fset_cont1() ;
+	}
+	if(isSubGrid.value == "0" && comRows.value > 0){
+		//comRows.value = 0;
+		dataset2.Field('rows').Value = 0;
+		dataset2.fset_cont1() ;
+	}
+	
+}
+
+
+function  checkZiMu(){
+	var s = Trim($id('idparam').value);
+	
+	var reg = /^[A-Z]{3}$/;
+	if(reg.test(s) == false){
+		alert("必须是三个大写字母")	;
+		$id('idparam').value ="BBB";
+		uf_dsPropsSave()
+		return;
+	}
+}
+
+
+function uf_muchKeyField(){
+	var display = "none";
+	if($id("isMuchKeyFields").value == "1"){
+		display = "block";
+	}
+	$id('isKeyInput').style.display = display;
+	$id('muchKeyFields').style.display = display;
+	$id('labKeyFields').style.display = display;
+	
+}
+
+function uf_xmlPropsSave(){
+	var xmlProps = "";
+	
+	if($id('isMuchKeyFields').value == "1"){
+		if(IsSpace($id('muchKeyFields').value)) {
+			alert("请选择多主键字段");
+			return;
+		}
+		xmlProps = "<keyFields>"+$id('muchKeyFields').value+"</keyFields><isKeyInput>"+$id('isKeyInput').value+"</isKeyInput>";
+	}
+	dataset2.Field("xmlProps").Value = xmlProps;
+	uf_muchKeyField();
+}
+
+function uf_xmlPropsRead(){
+	var xmlProps = dataset2.Field('xmlProps').Value;
+	if(IsSpace(xmlProps) == false){
+		SetCheckBoxValue($id("isMuchKeyFields"), "1");
+		xmlProps ="<root>" + xmlProps + "</root>";
+		var xmlDom = SetDom(xmlProps);
+		$id('muchKeyFields').value = xmlDom.documentElement.childNodes[0].text;
+		SetCheckBoxValue($id("isKeyInput"),xmlDom.documentElement.childNodes[1].text);
+	}else{
+		SetCheckBoxValue($id("isMuchKeyFields"), "0");
+		SetCheckBoxValue($id("isKeyInput"),"0");
+		$id('muchKeyFields').value = "";
+		
+	}	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/fczk.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" AutoResizeXml billtaborder="<root><taborder>issubds</taborder><taborder>async</taborder><taborder>isaddemptyrec</taborder><taborder>isSubGrid</taborder><taborder>comSqlType</taborder><taborder>opensortno</taborder><taborder>submittype</taborder><taborder>submitno</taborder><taborder>cboDsn</taborder><taborder>comRows</taborder><taborder>masterdsfield</taborder><taborder>masterds</taborder><taborder>subdsfield</taborder><taborder>dropdownlist1</taborder><taborder>grid1</taborder><taborder>isMuchKeyFields</taborder><taborder>isKeyInput</taborder><taborder>muchKeyFields</taborder></root>" dj_sn="zk_layout_table" caption="选择表" type="ZK" isfile="是" center="居中" posleft postop poswidth="700" posheight="450" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" controlno="SKButton:0;SKDBedit:0;checkbox:2;label:18;radio:0;listbox:0;textarea:2;combobox:2;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:10;text:10;hr:0;checkboxlist:0;radiolist:0;dropdownlist:3;grid:1;dataset:3;spin:2;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><checkbox><id>issubds</id><id>async</id><id>isaddemptyrec</id><id>isSubGrid</id><id>isMuchKeyFields</id><id>isKeyInput</id></checkbox><label><id>label1</id><id>label4</id><id>label5</id><id>Label68</id><id>label11</id><id>label12</id><id>label13</id><id>label14</id><id>label7</id><id>label6</id><id>label16</id><id>labKeyFields</id><id>label15</id><id>label17</id><id>label18</id></label><combobox><id>comSqlType</id><id>opensortno</id><id>submittype</id><id>submitno</id><id>cboDsn</id><id>comRows</id></combobox><div><id>divRel</id></div><text><id>masterdsfield</id><id>masterds</id><id>subdsfield</id></text><dropdownlist><id>dropdownlist1</id><id>muchKeyFields</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset2</id></dataset></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fczk.js&#13;&#10;~userfunc.js" allBrowser="否" userToolbar='<tr rowstate="add"><td>addrow</td><td>增加行</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>deleterow</td><td>删除行</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_saveDsXml()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col>uf_dsPropsSave();uf_xmlPropsSave()</col><col>uf_dsPropsSave()</col></grid1>")' bodyrows="-1" bodyrowheight="-1" blRowNo="否" hideVscroll="auto" hideHscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" dataset="dataset2" left="2" top="29" width="255" height="337" format="<cols><col><fname>tbname</fname><cname>表名</cname><width>50</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%u8868%u540D%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%21%7C%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%26amp%3Bnbsp%3B%u4E2D%u6587%u540D%3C/format%3E%3Csql1%3Eselect%20%20fc_entity.tbname%2Ctbchnname%20from%20fc_entity%20inner%20join%20fc_query%20on%20fc_entity.tbname%3Dfc_query.tbname%20%20where%20fc_query.type%3D%3A%7Buf_type%28%29%7D%3A%3C/sql1%3E%3Cblninput%3E%u662F%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E2%3C/check%3E%3CisShowTree%3E0%3C/isShowTree%3E%3CisTreeNewSql%3E0%3C/isTreeNewSql%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>center</align></col><col><fname>tbchnname</fname><cname>表中文名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col></cols>" visible="是" controltype="grid">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:fc_code id=dropdownlist1 dataset="dataset2" left="330" top="29" width="279" height="20" format="  类型  |" visible="是" controltype="dropdownlist" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%EA%D0%E8%D8Xrn%D0%F4Xrn%F6%u0100%EE%D8pXrnXr%94%D4%EC%D6%D8Xrn%D0%F4Xrn%F6%u0100%EE%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6Xrn%FC%DE%D8%F2%D8Xrn%F6%u0100%EE%D8%EA%D0%E8%D8Xt%96Xr%7CX%F8x%98ntX%F8x%94vnX%F8z%90rpX%F8z%7C%7C%9AX%F8x%92xnX%F8%7E%7Ez%7EXr%7C" field="type1" FieldNameList="" isTreeNewSql="0" isShowTree="0" multiselect="否" addrow="否" blnempty="否" blninput="否" xml="" datasourceName="" align="undefined" position="absolute" sql2="null"></fc:fc_code><LABEL style="POSITION: absolute; WIDTH: 79px; HEIGHT: 16px; TOP: 10px; LEFT: 9px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">查询信息类型</LABEL><SELECT style="POSITION: absolute; WIDTH: 169px; HEIGHT: 25px; TOP: 4px; LEFT: 90px" id=comSqlType onmovestart=moveStart() controltype="combobox" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D4%EC%D6%D8Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6Xrn%FC%DE%D8%F2%D8Xrn%F6%u0100%EE%D8%EA%D0%E8%D8XrnXt%96Xr%7CX%F8%7Cxr%7EX%F8%80npvX%F8%7C%94%7C%92X%F8xrr%92Xr%7CXrn%D0%EA%D6Xrn%D4%EC%D6%D8Xrn%EA%EC%F6XrnXrn%E6%E0%E4%D8XrnXr%7C%9A%E0%FEXrxXr%7C" async="否" temptext tempvalue check="2" sql datasourceName></SELECT><LABEL style="POSITION: absolute; WIDTH: 204px; HEIGHT: 17px; TOP: 54px; LEFT: 274px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">明细数据集时一条记录所占的行数</LABEL><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 33px; LEFT: 274px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">类型</LABEL><SPAN style="POSITION: absolute; WIDTH: 68px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 73px; LEFT: 497px" id=Label68 controltype="label" value="Label68">打开次序：</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 47px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 69px; LEFT: 559px" id=opensortno onchange='bill_onclick("uf_dsPropsSave()")' controltype="combobox" sqltrans async="否" temptext="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" check="1" sql datasourceName backheight="25" backwidth="56"><OPTION selected value=1>1</OPTION><OPTION value=2>2</OPTION><OPTION value=3>3</OPTION><OPTION value=4>4</OPTION><OPTION value=5>5</OPTION><OPTION value=6>6</OPTION><OPTION value=7>7</OPTION><OPTION value=8>8</OPTION><OPTION value=9>9</OPTION></SELECT> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 244px; LEFT: 270px" id=issubds onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" onclick='bill_onclick("uf_subField();uf_hide_subds();uf_dsPropsSave();")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>本数据集为从表数据集</SPAN></DIV>
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 336px; DISPLAY: none; HEIGHT: 94px; BORDER-TOP: 1px solid; TOP: 267px; BORDER-RIGHT: 1px solid; LEFT: 273px" id=divRel onmovestart=moveStart() controltype="div" NotBg="否"><LABEL style="POSITION: absolute; WIDTH: 118px; HEIGHT: 16px; TOP: 10px; LEFT: 7px" id=label11 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">从表数据集的字段:</LABEL><LABEL style="POSITION: absolute; WIDTH: 15px; HEIGHT: 15px; TOP: 20px; LEFT: 111px" id=label12 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">=</LABEL><LABEL style="POSITION: absolute; WIDTH: 78px; HEIGHT: 17px; TOP: 41px; LEFT: 9px" id=label13 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">主表数据集:</LABEL><LABEL style="POSITION: absolute; WIDTH: 118px; HEIGHT: 22px; TOP: 70px; LEFT: 9px" id=label14 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">主表数据集的字段:</LABEL><INPUT style="POSITION: absolute; WIDTH: 202px; HEIGHT: 20px; TOP: 65px; LEFT: 124px" id=masterdsfield onmovestart=moveStart() readOnly size=33 controltype="text"><INPUT style="POSITION: absolute; WIDTH: 202px; HEIGHT: 20px; TOP: 37px; LEFT: 124px" id=masterds onmovestart=moveStart() readOnly size=33 controltype="text"> <INPUT style="POSITION: absolute; WIDTH: 202px; HEIGHT: 20px; TOP: 8px; LEFT: 124px" id=subdsfield onmovestart=moveStart() onchange='bill_onclick("uf_dsPropsSave();")' readOnly size=33 dataset="dataset2" controltype="text" field="fdname" china="公共选择函数返回值要绑定数据集"></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 96px; LEFT: 273px" id=label7 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">提交类型:</LABEL><SELECT style="POSITION: absolute; WIDTH: 157px; HEIGHT: 25px; TOP: 93px; LEFT: 330px" id=submittype onmovestart=moveStart() onchange='bill_onclick("uf_dsPropsSave()")' controltype="combobox" sqltrans async="否" temptext="智能提交变动过的记录&#13;&#10;只提交当前的一条记录&#13;&#10;提交所有变动过的记录&#13;&#10;不提交&#13;&#10;提交所有记录" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5" check="1" sql datasourceName backheight="25" backwidth="191"><OPTION selected value=1>智能提交变动过的记录</OPTION><OPTION value=2>只提交当前的一条记录</OPTION><OPTION value=3>提交所有变动过的记录</OPTION><OPTION value=4>不提交</OPTION><OPTION value=5>提交所有记录</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 96px; LEFT: 498px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">提交次序:</LABEL><SELECT style="POSITION: absolute; WIDTH: 46px; HEIGHT: 25px; TOP: 93px; LEFT: 559px" id=submitno onmovestart=moveStart() onchange='bill_onclick("uf_dsPropsSave()")' controltype="combobox" sqltrans async="否" temptext="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" check="1" sql datasourceName backheight="25" backwidth="43"><OPTION selected value=1>1</OPTION><OPTION value=2>2</OPTION><OPTION value=3>3</OPTION><OPTION value=4>4</OPTION><OPTION value=5>5</OPTION><OPTION value=6>6</OPTION><OPTION value=7>7</OPTION><OPTION value=8>8</OPTION><OPTION value=9>9</OPTION></SELECT> <LABEL style="POSITION: absolute; WIDTH: 83px; HEIGHT: 19px; TOP: 72px; LEFT: 274px" id=label16 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">数据源:</LABEL><SELECT style="POSITION: absolute; WIDTH: 126px; HEIGHT: 25px; TOP: 67px; LEFT: 330px" id=cboDsn onmovestart=moveStart() onchange='bill_onclick("uf_dsPropsSave()")' controltype="combobox" sqltrans async="否" temptext tempvalue check="1" sql datasourceName backheight="25" backwidth="148"></SELECT> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 184px; LEFT: 270px" id=async onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" onclick='bill_onclick("uf_dsPropsSave();")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>初次进入时是否异步打开</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 165px; LEFT: 270px" id=isaddemptyrec onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" onclick='bill_onclick("uf_dsPropsSave();")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>初次进入时是否加空记录</SPAN></DIV><fc:dataset id=dataset2 idtype="1" format="<fields><field><fieldname>tbname</fieldname><datatype>字符</datatype><displaylabel>表名</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tbchnname</fieldname><datatype>字符</datatype><displaylabel>表中文名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>type</fieldname><datatype>整数</datatype><displaylabel>类型</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue>1</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>rows</fieldname><datatype>整数</datatype><displaylabel>一条记录所占行数</displaylabel><size>4</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dsProps</fieldname><datatype>字符</datatype><displaylabel>数据集设置</displaylabel><size>6000</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>xmlProps</fieldname><datatype>字符</datatype><displaylabel>多字段作主键设置</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>type1</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>表单上要生成本数据集</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>公共选择函数返回值要绑定数据集</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isMuchKeyFields</fieldname><datatype>字符</datatype><displaylabel>是多字段主键字段</displaylabel><size>10</size><precision>0</precision><fieldkind>变量默认值</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" onSetText='bill_ondatasetsettext("<dsid><tbname></tbname><tbchnname></tbchnname><type></type><rows></rows><dsProps></dsProps><xmlProps></xmlProps><type1></type1><fdname></fdname><isMuchKeyFields></isMuchKeyFields></dsid>")' onGetText='bill_ondatasetgettext("<dsid><tbname></tbname><tbchnname></tbchnname><type></type><rows></rows><dsProps></dsProps><xmlProps></xmlProps><type1></type1><fdname></fdname><isMuchKeyFields></isMuchKeyFields></dsid>")' onValid='bill_ondatasetvalid("<dsid><tbname>$valid(&amp;quot;汉字、字母、数字或_&amp;quot;);$valid(&amp;quot;字段值不重复&amp;quot;);$valid(&amp;quot;值已存在&amp;quot;);</tbname><tbchnname></tbchnname><type>$valid(&amp;quot;整数&amp;quot;);</type><rows>$valid(&amp;quot;整数&amp;quot;);</rows><dsProps></dsProps><xmlProps></xmlProps><type1></type1><fdname></fdname><isMuchKeyFields></isMuchKeyFields></dsid>")' async="否" isSubGrid="否" opensortno="1" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" AfterScroll='bill_dsevent("AfterScroll","uf_dsPropsRead();uf_xmlPropsRead()")'></fc:dataset> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 142px; LEFT: 270px" id=isSubGrid onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" onclick='bill_onclick("uf_dsPropsSave();uf_isSubGrid()")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否为明细数据集</SPAN></DIV><SELECT style="POSITION: absolute; WIDTH: 52px; HEIGHT: 25px; TOP: 50px; LEFT: 480px" id=comRows onmovestart=moveStart() onchange='bill_onclick("uf_rowsGtZero();uf_dsPropsSave();")' dataset="dataset2" controltype="combobox" sqltrans async="否" field="rows" china="一条记录所占行数" temptext="0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10&#13;&#10;11&#13;&#10;12" tempvalue="0&#13;&#10;1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9&#13;&#10;10&#13;&#10;11&#13;&#10;12" check="1" sql datasourceName><OPTION selected value=0>0</OPTION><OPTION value=1>1</OPTION><OPTION value=2>2</OPTION><OPTION value=3>3</OPTION><OPTION value=4>4</OPTION><OPTION value=5>5</OPTION><OPTION value=6>6</OPTION><OPTION value=7>7</OPTION><OPTION value=8>8</OPTION><OPTION value=9>9</OPTION><OPTION value=10>10</OPTION><OPTION value=11>11</OPTION><OPTION value=12>12</OPTION></SELECT> 
+<DIV style="POSITION: absolute; WIDTH: 159px; HEIGHT: 20px; TOP: 203px; LEFT: 270px" id=isMuchKeyFields onmovestart=moveStart() noWrap dataset="dataset2" controltype="checkbox" field="isMuchKeyFields" china="是多字段主键字段" value="0" onclick='bill_onclick("uf_muchKeyField()")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否多个字段作主键</SPAN></DIV><fc:fc_code id=muchKeyFields onchange='bill_onclick("uf_xmlPropsSave()")' dataset="null" left="385" top="226" width="221" height="20" format="  字段中文名  |  字段名 !" visible="是" controltype="dropdownlist" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D4%DE%EA%EA%D0%E8%D8XrnXr%94%DA%D6%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100%F4%F8%D2Xrn%FC%DE%D8%F2%D8Xrn%F6%D2%EA%D0%E8%D8Xt%96Xr%7CXt%90X%7C%92%D6%D0%F6%D0%F4%D8%F6rj%9A%E0%D8%E6%D6Xr%7EXr%7C%F6%D2%AA%D0%E8%D8Xr%7CXr%80j%BA%D0%E6%F8%D8X%7C%96Xt%90Xr%7C" field="null" FieldNameList="" isTreeNewSql="0" isShowTree="0" multiselect="是" addrow="否" blnempty="否" blninput="否" xml="" datasourceName="" align="undefined" position="absolute" sql2="null"></fc:fc_code> 
+<DIV style="POSITION: absolute; WIDTH: 175px; HEIGHT: 20px; TOP: 204px; LEFT: 470px" id=isKeyInput onmovestart=moveStart() noWrap controltype="checkbox" value="0" onclick='bill_onclick("uf_xmlPropsSave()")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>主键字段是否能输入</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 110px; HEIGHT: 14px; TOP: 229px; LEFT: 272px" id=labKeyFields onmovestart=moveStart() controltype="label" inputTag="否">选择多字段作主键</LABEL><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 351px; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #808080; TOP: 116px; LEFT: 274px" id=label15 onmovestart=moveStart() controltype="label" inputTag="否">当布局模版的视图类型为编辑式时，提交类型需要选择只提交当前的一条记录</LABEL><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 196px; FONT-FAMILY: 宋体; HEIGHT: 39px; COLOR: #808080; TOP: 140px; LEFT: 411px" id=label17 onmovestart=moveStart() controltype="label" inputTag="否">当布局模版的视图类型为列表式时，需要勾上是否为明细数据集</LABEL><LABEL style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 335px; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #808080; TOP: 1px; LEFT: 275px" id=label18 onmovestart=moveStart() controltype="label" inputTag="否">如果生成的布局模板是输入查询条件时用，一定要选择电脑或手机上选择查询条件时用</LABEL></DIV><script></script></body></html>

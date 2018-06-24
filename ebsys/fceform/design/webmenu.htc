@@ -1,0 +1,396 @@
+<PUBLIC:COMPONENT>
+<PUBLIC:ATTACH EVENT="ondocumentready"   ONEVENT="fnInit()" />
+<PUBLIC:METHOD NAME="Init"/>
+<PUBLIC:METHOD NAME="showMenu"/>
+<PUBLIC:PROPERTY NAME = "DataSource" />
+<PUBLIC:PROPERTY NAME = "Width" />
+<PUBLIC:PROPERTY NAME = "Effect" />
+<PUBLIC:PROPERTY NAME = "MenuType" />
+<PUBLIC:PROPERTY NAME = "Container" />
+<script  LANGUAGE=javascript>
+
+var sepWidth = 1 ;
+function Init(){fnInit();}
+function SetDom(sXml) {
+var oXml=new ActiveXObject("Microsoft.XMLDOM");
+oXml.async=false;
+oXml.loadXML (sXml);
+return oXml;
+}
+
+function fnInit(){
+if (typeof eval("window.document.all."+DataSource)=="object")
+{
+element.dataSource =eval("window.document.all."+DataSource);
+}
+else {
+element.dataSource =SetDom(eval("window.document.all."+DataSource));
+}
+initData = element.dataSource.documentElement.selectSingleNode("//MenuItem");
+if(element.MenuType=="1"){
+initWindow = window;
+initoEle = window.document.body;
+window.document.childWin=null;
+}
+else{
+oMenubar = createMenuBar();
+eval("window.document.all."+element.Container+".appendChild(oMenubar)");
+}
+window.document.attachEvent("onmousedown",function(){
+hideMenu(window);
+if(!element.Menubar) return;
+element.Menubar.isDisplay=false;
+oEles = element.Menubar.getElementsByTagName("SPAN");
+for(i=0;i<oEles.length;i++){
+oEles[i].className="MenubarNormal";
+}
+
+});
+}
+
+function fnCreatePopup(oParentWin){
+oNewChildWin = oParentWin.document.parentWindow.createPopup();
+oNewChildWin.document.createStyleSheet('menu.css');
+oParentWin.document.childWin = oNewChildWin;
+}
+function fadeIn(oDiv){
+oDiv.style.visibility="hidden";
+switch(element.Effect){
+case("1"):
+strfilter = "progid:DXImageTransform.Microsoft.GradientWipe(duration=0.5,gradientSize=0.75,motion=forward)";
+break;
+case("2"):
+strfilter = "progid:DXImageTransform.Microsoft.RevealTrans ( duration=0.5,transition=12 )" ;
+break;
+case("3"):
+strfilter = "progid:DXImageTransform.Microsoft.GradientWipe ( duration=0.5,gradientSize=0.25,motion=forward,wipeStyle=1)";
+break;
+case("4"):
+strfilter = "progid:DXImageTransform.Microsoft.Fade()";
+break;
+default:
+strfilter = "progid:DXImageTransform.Microsoft.GradientWipe(duration=0.5,gradientSize=0.75,motion=forward)";
+}
+oDiv.style.filter = strfilter;
+oDiv.filters[0].Apply();
+oDiv.style.visibility="visible";
+oDiv.filters[0].play(0.2);
+}
+
+function showMenu(oCurrWin,NodeData,oEle,x,y){
+fnCreatePopup(oCurrWin);
+oChildWin = oCurrWin.document.childWin;
+oChildWin.document.body.innerHTML = "";
+subWidth        = (NodeData.attributes.getNamedItem("subWidth"))?NodeData.attributes.getNamedItem("subWidth").text:false;
+HeadColumn      = (NodeData.attributes.getNamedItem("HeadColumn"))?NodeData.attributes.getNamedItem("HeadColumn").text:"0";
+oDiv = createBasePanel(oChildWin,subWidth);
+oChildWin.document.body.appendChild(oDiv);
+iHeight=4;
+for(i=0;i<NodeData.childNodes.length;i++){
+oTR = createItemTemp(oDiv,oChildWin,HeadColumn,subWidth*1);
+aNode = NodeData.childNodes.item(i);
+fillMenuItemData(aNode,oTR,oChildWin,HeadColumn);
+iHeight = iHeight + 25;
+}
+createHLDiv(oChildWin,HeadColumn);
+oCurrWin.document.body.preShowItem = oEle;
+oChildWin.document.iHeight = iHeight*1;
+oChildWin.document.iWidth = subWidth*1+4;
+if(oCurrWin.document.body.preShowItem==oEle&&oChildWin.document.DivPanel.style.visibility=="visible"&&oChildWin.isOpen){
+oCurrWin.document.childWin.document.body.HLDiv.style.visibility="hidden";
+return;
+}
+if(x&&y){
+XConer = x;
+YConer = y;
+}
+else{
+XConer = oEle.offsetWidth+oEle.offsetLeft;
+YConer = oEle.offsetTop;
+}
+oChildWin.show(XConer,YConer,oChildWin.document.iWidth,oChildWin.document.iHeight,oCurrWin.document.body);
+
+fadeIn(oChildWin.document.DivPanel);
+try{
+event.returnValue = false;
+}
+catch(e){
+}
+}
+function createHLDiv(oPopup,HeadColumn){
+oHLDiv = oPopup.document.createElement("DIV");
+oTable = oPopup.document.createElement("<TABLE height='100%' border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+oTBody = oPopup.document.createElement("TBODY");
+oTable.className = "ItemHighLightTable";
+oHLDiv.className = "ItemHightLightDiv";
+oHLDiv.appendChild(oTable);
+oTable.appendChild(oTBody);
+oTR = oTable.insertRow();
+switch(HeadColumn){
+case "0":
+oTD = oTR.insertCell();
+oTD.style.width = 23;
+oTD.className = "ItemHL" ;
+oTR.picTD = oTD;
+break;
+case "1":
+oTD = oTR.insertCell();
+oTD.style.width = 23;
+oTD.className = "ItemHL" ;
+oTR.checkTD = oTD;
+break;
+case "2":
+oTD = oTR.insertCell();
+oTD.style.width = 23;
+oTD.className = "ItemHL" ;
+oTR.picTD = oTD;
+oTD = oTR.insertCell();
+oTD.style.width = 23;
+oTD.className = "ItemHL" ;
+oTR.checkTD = oTD;
+break;
+}
+oTD = oTR.insertCell();
+oTD.style.width = sepWidth ;
+oTD.className = "ItemHL" ;
+oTD.innerHTML = "&nbsp;";
+oTD = oTR.insertCell();
+oTD.className = "ItemHL" ;
+oTR.textTD = oTD;
+oTD.noWrap = true;
+oTD = oTR.insertCell();
+oTD.style.width = 22;
+oTD.className = "ItemHL" ;
+oTD.align = "center";
+oHLDiv.iTable = oTable;
+oHLDiv.iTable.iTBody = oTBody;
+oPopup.document.body.appendChild(oHLDiv);
+oHLDiv.style.visibility="hidden";
+oHLDiv.attachEvent("onclick",function() {
+var s1=Trim(oHLDiv.Func);
+if(isSpace(s1)) return;
+if(s1.substring(0,11) == "javascript:") {
+s1=s1.substring(11,s1.length) ;
+}else{
+s1="window."+s1;
+}
+eval(s1) ;
+hideMenu(window);
+});
+oPopup.document.body.HLDiv = oHLDiv;
+
+}
+function highLight(oEle,oWin){
+switch(oEle.HeadColumn){
+case "0":
+oWin.document.body.HLDiv.iTable.cells[0].style.paddingLeft = "3px";
+oWin.document.body.HLDiv.iTable.cells[2].style.paddingLeft = "5px";
+break;
+case "1":
+oWin.document.body.HLDiv.iTable.cells[0].style.paddingLeft = "3px";
+oWin.document.body.HLDiv.iTable.cells[2].style.paddingLeft = "5px";
+break;
+case "2":
+oWin.document.body.HLDiv.iTable.cells[0].style.width=23;
+oWin.document.body.HLDiv.iTable.cells[1].style.width=25;
+oWin.document.body.HLDiv.iTable.cells[0].style.paddingLeft = "5px";
+break;
+}
+for(i=0;i<oWin.document.body.HLDiv.iTable.cells.length;i++){
+oWin.document.body.HLDiv.iTable.cells[i].innerHTML=oEle.cells[i].innerHTML;
+}
+
+oWin.document.body.HLDiv.style.visibility="visible";
+oWin.document.body.HLDiv.style.top = oEle.offsetTop+1;
+oWin.document.body.HLDiv.style.width = oEle.offsetWidth - 2;
+oWin.document.body.HLDiv.Func = oEle.Func ;
+}
+function hideMenu(oWin){
+try{
+oWin.document.childWin.document.body.HLDiv.style.visibility="hidden";
+oWin.document.childWin.hide();
+}
+catch(e){
+}
+}
+function createBasePanel(oWin,subWidth){
+oDiv = oWin.document.createElement("<DIV>");
+oDiv.className = "DivPanel";
+oTable = oWin.document.createElement("<TABLE  border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+oTable.className = "MenuPanel";
+
+oDiv.appendChild(oTable);
+oTBody = oWin.document.createElement("TBODY");
+oTable.appendChild(oTBody);
+oWin.document.DivPanel = oDiv;
+oDiv.TablePanel = oTable;
+return(oDiv);
+}
+function createItemTemp(oDiv,oWin,HeadColumn,subWidth){
+oTable = oDiv.TablePanel;
+oTR = oTable.insertRow();
+switch(HeadColumn){
+case "0":
+oTD = oTR.insertCell();
+oTD.style.width = 26;
+oTD.className = "PicColummFull" ;
+oTR.picTD = oTD;
+subWidth = subWidth - 26;
+break;
+case "1":
+oTD = oTR.insertCell();
+oTD.style.width = 26;
+oTD.className = "PicColummFull" ;
+oTR.checkTD = oTD;
+subWidth = subWidth - 26;
+break;
+case "2":
+oTD = oTR.insertCell();
+oTD.className = "PicColummLeftHalf" ;
+oTR.checkTD = oTD;
+oTD = oTR.insertCell();
+oTD.className = "PicColummRightHalf" ;
+oTR.picTD = oTD;
+subWidth = subWidth - 26*2;
+break;
+default:
+oTD = oTR.insertCell();
+oTD.style.width = 26;
+oTD.className = "PicColummFull" ;
+oTR.picTD = oTD;
+subWidth = subWidth - 26;
+}
+
+oTD = oTR.insertCell();
+oTD.style.width = sepWidth;
+oTD.className = "ItemNormal" ;
+oTD.innerHTML = "&nbsp;";
+subWidth = subWidth - sepWidth;
+oTD = oTR.insertCell();
+oTD.className = "ItemNormal" ;
+oTD.style.width = subWidth*1 - 26;
+oTR.textTD = oTD;
+oTD.noWrap = true;
+oTD = oTR.insertCell();
+oTD.style.width = 26;
+oTD.className = "ItemNormal" ;
+oTD.align = "center";
+oTR.nextTD = oTD;
+oTD.style.paddingTop = "1px";
+oTD.style.paddingLeft = "6px";
+return(oTR);
+}
+
+function fillMenuItemData(oNode,oTR,oWin,HeadColumn){
+oIMG          = oNode.attributes.getNamedItem("img").text;
+oFunc         = oNode.attributes.getNamedItem("Func").text;
+oText         = oNode.attributes.getNamedItem("Text").text;
+blhasSub      = oNode.attributes.getNamedItem("hasSub")?true:false;
+blSplitLine   = oNode.attributes.getNamedItem("hasLine")?true:false;
+blChecked     = oNode.attributes.getNamedItem("checked")?true:false;
+blReadOnly    = oNode.attributes.getNamedItem("readonly")?true:false;
+
+switch(HeadColumn){
+case "0":
+oTR.picTD.innerHTML = (oIMG!="")?"<img border=\"0\" src=\""+oIMG+"\"  valign=\"absmiddle\" align=\"center\">":"&nbsp;" ;
+break;
+case "1":
+oTR.checkTD.innerHTML = (blChecked)?"<img border=\"0\" src=\"../images/ef_designer_menu_checked.gif\"  valign=\"absmiddle\" align=\"center\">":"&nbsp;" ;
+break;
+case "2":
+oTR.picTD.innerHTML = (oIMG!="")?"<img border=\"0\" src=\""+oIMG+"\"  valign=\"absmiddle\" align=\"center\">":"&nbsp;" ;
+oTR.checkTD.innerHTML = (blChecked)?"<img border=\"0\" src=\"../images/ef_designer_menu_checked.gif\"  valign=\"absmiddle\" align=\"center\">":"&nbsp;" ;
+break;
+default:
+oTR.picTD.innerHTML = (oIMG!="")?"<img border=\"0\" src=\""+oIMG+"\"  valign=\"absmiddle\" align=\"center\">":"&nbsp;" ;
+}
+if(blhasSub){
+oTR.nextTD.innerHTML = "<Img src=\"../images/ef_designer_menu_arrow.gif\" border=\"0\" valign=\"absmiddle\" width=\"16px\" height=\"16px\">";
+oTR.attachEvent("onmouseover",function(){showMenu(oWin,oNode,oTR)});
+}
+else{
+oTR.nextTD.innerHTML = "&nbsp;";
+oTR.attachEvent("onmouseover",function(){hideMenu(oWin)});
+}
+if(blSplitLine){
+oTR.nextTD.className = "ItemNormalLine";
+oTR.textTD.className = "ItemNormalLine";
+}else if(blReadOnly){
+oTR.nextTD.className = "ItemNormalReadOnly";
+oTR.textTD.className = "ItemNormalReadOnly";
+}
+else{
+oTR.nextTD.className = "ItemNormal";
+oTR.textTD.className = "ItemNormal";
+}
+oTR.textTD.innerText = oText;
+oTR.HeadColumn = HeadColumn;
+oTR.attachEvent("onmouseover",function(){highLight(oTR,oWin)});
+oTR.Func = oFunc;
+}
+function createMenuBar(){
+BarData = element.dataSource.documentElement.selectSingleNode("//MenuItem");
+oTable = window.document.createElement("TABLE");
+oTable.className = "Menubar";
+oTBody = window.document.createElement("TBODY");
+oTable.appendChild(oTBody);
+oTR = oTable.insertRow();
+oTD = oTR.insertCell();
+oIMG = window.document.createElement("IMG");
+oIMG.src = "../images/ef_designer_menu_left.gif";
+oIMG.valign = "absmiddle";
+oTD.appendChild(oIMG);
+for(i=0;i<BarData.childNodes.length;i++){
+oNode = BarData.childNodes.item(i);
+var oNewSPAN = window.document.createElement("SPAN");
+oNewSPAN.className = "MenubarNormal";
+oNewSPAN.NodeData = oNode;
+oNewSPAN.innerHTML = oNode.attributes.getNamedItem("Text").text;
+oNewSPAN.hasSub = (oNode.attributes.getNamedItem("hasSub"))?true:false;
+oNewSPAN.style.width = 90;
+oTD.appendChild(oNewSPAN);
+oNewSPAN.attachEvent("onmouseover",MenuOver);
+oNewSPAN.attachEvent("onmousedown",MenuMouseDown);
+}
+element.Menubar = oTable;
+return oTable;
+}
+function MenuOver(){
+hideMenu(window);
+oEle = event.srcElement;
+oEles = oEle.parentElement.getElementsByTagName("SPAN");
+for(i=0;i<oEles.length;i++){
+oEles[i].className="MenubarNormal";
+}
+if(element.Menubar.isDisplay==null||(element.Menubar.isDisplay!=null&&element.Menubar.isDisplay==false)){
+oEle.className = "MenubarHLYellow";
+}
+else{
+oEle.className = "MenubarHLBlue";
+if(!oEle.hasSub) return;
+showMenu(window,oEle.NodeData,oEle,getAbsLeft(oEle)+2,getAbsTop(oEle)+oEle.offsetHeight+1);
+}
+}
+function MenuMouseDown(){
+oEle = event.srcElement;
+element.Menubar.isDisplay = element.Menubar.isDisplay?false:true;
+event.srcElement.className = (oEle.className=="MenubarHLYellow")?"MenubarHLBlue":"MenubarHLYellow";
+if(element.Menubar.isDisplay&&oEle.hasSub) showMenu(window,oEle.NodeData,oEle,getAbsLeft(oEle)+2,getAbsTop(oEle)+oEle.offsetHeight+1);
+event.cancelBubble = true;
+}
+function getAbsLeft(e){
+var l=e.offsetLeft;
+while(e=e.offsetParent){
+l+=e.offsetLeft;
+}
+return l;
+}
+function getAbsTop(e){
+var t=e.offsetTop;
+while(e=e.offsetParent){
+t+=e.offsetTop;
+}
+return t;
+}
+</script>
+</PUBLIC:COMPONENT>

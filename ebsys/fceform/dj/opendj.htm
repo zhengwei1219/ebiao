@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open(){
+	var ss=SKDBListBox1.outerHTML ;
+	var sHtml=GetBillType()
+	SKDBListBox1.outerHTML=ss.substring(0,ss.length-9)+sHtml+"</select>"
+	SKDBListBox1.children(0).selected=true;
+	uf_onclick();
+	//uf_onresize()
+	//window.attachEvent( "onresize", uf_onresize )
+	new Eform.SysForm().setButtonImage();
+}
+function uf_ok() {
+	window.returnValue=dssub1.Field('djid').Value;
+
+	window.close() ;
+}
+function uf_onclick() {
+	for(var i=0; i<SKDBListBox1.length; i++){
+		if(SKDBListBox1.options(i).selected) {
+			var d=SKDBListBox1.options(i).value ;
+			var sql="select djid,djlx,dj_name,djsn from FC_BILLZL where djlx='"+d+"' order by djsn"
+			dssub1.Open(sql);
+		}
+	}
+}
+function uf_del() {
+	DelGridRow();
+}
+//function uf_onresize(){
+//	SKbillsheet.style.width=document.body.clientWidth-SKbillsheet.style.pixelLeft-2
+//	SKbillsheet.style.height=document.body.clientHeight-SKbillsheet.style.pixelTop-42
+//	SKDBListBox1.style.height=SKbillsheet.style.posHeight
+//}
+//最大化函数
+function uf_maxwin(){
+	window.dialogLeft=0
+	window.dialogTop=0
+	window.dialogWidth= screen.availWidth+"px"
+	window.dialogHeight=screen.availHeight+"px"
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" contxml="<root><button><id>FCButton7</id><id>button0</id><id>cmdClose</id><id>cmdOk</id></button><grid><id>SKBILLgrid1</id></grid><dataset><id>dssub1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:1;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>SKBILLgrid1</taborder><taborder>FCButton7</taborder><taborder>button0</taborder><taborder>cmdClose</taborder><taborder>cmdOk</taborder></root>" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen="uf_open()" window="有模式窗口" toolbar="不带工具栏" posheight="450" poswidth="510" postop posleft center="居中" isfile="是" type="LR" caption="打开数据库中的表单" dj_sn="opendj" blmode="其他" idtype="1" OtherSave="否" entertype="修改" keyfield="djid" codeheader mkbh AutoResizeXml><SPAN style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 95px; DISPLAY: block; FONT-FAMILY: 楷体_GB2312; HEIGHT: 21px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 16px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 8px; backgroundColor1: #c0c0c0" id=Label1 value="Label1">表单分类:</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 132px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 373px; FONT-SIZE: 12px; TOP: 35px; LEFT: 1px" id=SKDBListBox1 size=8 AutoSizeXml="<record id ='SKDBListBox1'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" datasourceName async="否" onclick='bill_onclick("uf_onclick()")' check="1" sql tempvalue temptext></SELECT><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<SKBILLgrid1><col></col><col></col><col></col><col></col></SKBILLgrid1>")' id=SKBILLgrid1 ondblclick='bill_ongriddblclick("<SKBILLgrid1><col>uf_ok()</col><col>uf_ok()</col><col>uf_ok()</col><col>uf_ok()</col></SKBILLgrid1>")' onclick='bill_ongridclick("<SKBILLgrid1><col></col><col></col><col></col><col></col></SKBILLgrid1>")' controltype="grid" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" hideHscroll="auto" blRowNo="否" dataset="dssub1" format="<cols><col><fname>djid</fname><cname>id</cname><width>11</width><dtype>整数</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>30</columnwidth><align>left</align></col><col><fname>djsn</fname><cname>表单sn</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>100</columnwidth><align>left</align></col><col><fname>djlx</fname><cname>类型</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>36</columnwidth><align>left</align></col><col><fname>dj_name</fname><cname>表单名称</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>160</columnwidth><align>left</align></col></cols>" width="316" height="383" top="35" left="136">
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dssub1 controltype="dataset" idtype="1" saveastable="FC_BILLZL" issubds="否" savetable="FC_BILLZL" submitno="1" submittype="1" isaddemptyrec="否" pubpara="否" opensortno="1" isSubGrid="否" format="<fields><field><fieldname>djid</fieldname><datatype>整数</datatype><displaylabel>id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>djsn</fieldname><datatype>字符</datatype><displaylabel>表单sn</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>djlx</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dj_name</fieldname><datatype>字符</datatype><displaylabel>表单名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><djid></djid><djsn></djsn><djlx></djlx><dj_name></dj_name></dsid>")' onGetText='bill_ondatasetgettext("<dsid><djid></djid><djsn></djsn><djlx></djlx><dj_name></dj_name></dsid>")' onSetText='bill_ondatasetsettext("<dsid><djid></djid><djsn></djsn><djlx></djlx><dj_name></dj_name></dsid>")'></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 26px; FONT-SIZE: 12px; TOP: 8px; LEFT: 225px" id=FCButton7 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_maxwin()")' dropstyle="否">最大化</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 26px; FONT-SIZE: 12px; TOP: 8px; LEFT: 143px" id=button0 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_del()")' dropstyle="否">删除表单</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 68px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 9px; LEFT: 366px" id=cmdClose controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 68px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 9px; LEFT: 294px" id=cmdOk controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON></DIV></body></html>

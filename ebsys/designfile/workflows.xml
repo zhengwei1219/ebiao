@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflows>
+<workflow name="wf_simple" version="1" desc="单据式的单步审核流程" status="定义" typeid="" />
+<workflow name="wf_task_reminder" version="1" desc="任务设置了提醒的示例" status="定义" typeid="" />
+<workflow name="wf_assign_roler" version="2" desc="动态指定下一步审核角色" status="定义" typeid="" />
+<workflow name="shenzhou_test3" version="1" desc="分支子流程的示例" status="定义" typeid="" />
+<workflow name="wf_assign_roler" version="1" desc="动态指定下一步审核角色" status="定义" typeid="" />
+<workflow name="publish" version="2" desc="出版" status="定义" typeid="" />
+<workflow name="approve_leave" version="1" desc="请假申请流程(分支＋合并)" status="定义" typeid="" />
+<workflow name="approve_fee" version="2" desc="费用报销流程" status="定义" typeid="" />
+<workflow name="two_init" version="1" desc="两个初始化动作" status="定义" typeid="" />
+<workflow name="publish" version="1" desc="出版" status="定义" typeid="" />
+<workflow name="ex_return_dynamic_static" version="1" desc="回退＋动态嵌静态分支的示例" status="定义" typeid="" />
+<workflow name="purchase_flow" version="1" desc="采购流程" status="定义" typeid="" />
+<workflow name="shenzhou_sub3" version="1" desc="shenzhou_sub3" status="定义" typeid="" />
+<workflow name="wf onedj" version="2" desc="同一张表单多流程步骤流转" status="定义" typeid="" />
+<workflow name="wf_task_direct" version="2" desc="直接指派型的示例" status="定义" typeid="" />
+<workflow name="wf_series_timer" version="1" desc="定时启动定时执行动作的示例" status="定义" typeid="" />
+<workflow name="ex_return" version="1" desc="回退的示例" status="定义" typeid="" />
+<workflow name="wf_split_subflow" version="1" desc="动态分支带子流程" status="定义" typeid="" />
+<workflow name="wf_task_direct" version="1" desc="直接指派型的示例" status="定义" typeid="" />
+<workflow name="wf_two_action" version="1" desc="审核通过和拒绝做动作的流程示例" status="定义" typeid="" />
+<workflow name="wf_onedj" version="1" desc="同一张表单多流程步骤流转" status="定义" typeid="" />
+<workflow name="wf_trace_bug" version="1" desc="问题处理跟踪流程" status="定义" typeid="" />
+<workflow name="wf_leave_init_jsp" version="1" desc="调用jsp表单驱动流程的方式" status="定义" typeid="" />
+<workflow name="wf_dynamic_split_eform" version="1" desc="动态分支带表单的示例" status="定义" typeid="" />
+<workflow name="wf_task_countersign" version="1" desc="动态会签的示例" status="定义" typeid="" />
+<workflow name="wf_other_instance" version="1" desc="其它字段做流程实例id" status="定义" typeid="" />
+<workflow name="aaa" version="1" desc="" status="定义" typeid="" />
+<workflow name="shenzhou_test" version="1" desc="shenzhou_测试" status="定义" typeid="" />
+<workflow name="wf_split_temp" version="1" desc="分支合并的示例" status="定义" typeid="" />
+<workflow name="wf_leave_jsp" version="1" desc="请假流程（调用jsp表单）" status="定义" typeid="" />
+<workflow name="approve_leave_mail" version="1" desc="请假申请流程(会签 邮件通知)" status="定义" typeid="1" />
+<workflow name="wf_task_average" version="1" desc="平均分配型任务示例" status="定义" typeid="" />
+<workflow name="shenzhou_test2" version="2" desc="分支带子流程的示例" status="定义" typeid="" />
+<workflow name="wf_leave_condition" version="1" desc="条件的请假流程示例" status="定义" typeid="2" />
+<workflow name="wf_dynamic_split_split" version="1" desc="动态分支嵌动态分支的示例" status="定义" typeid="" />
+<workflow name="ex_return_mul_static" version="1" desc="回退＋静态多层分支的示例" status="定义" typeid="" />
+<workflow name="car_approve" version="1" desc="用车流程示例" status="定义" typeid="" />
+<workflow name="oos_flow" version="1" desc="缺货处理流程" status="定义" typeid="" />
+<workflow name="max_nodes" version="1" desc="max_nodes" status="定义" typeid="" />
+<workflow name="wf_dynamic_split" version="1" desc="动态分支带角色参数的示例" status="定义" typeid="" />
+<workflow name="shenzhou_test2" version="1" desc="分支带子流程的示例" status="定义" typeid="" />
+<workflow name="wf_assign_checker" version="1" desc="动态指定下一步审核人" status="定义" typeid="" />
+<workflow name="wf_task_timer" version="1" desc="定时处理的流程示例" status="定义" typeid="" />
+<workflow name="wf_dynamic_split_bs" version="1" desc="动态分支带业务参数的示例" status="定义" typeid="" />
+<workflow name="wf_temp" version="1" desc="简单的单步审核流程" status="定义" typeid="" />
+<workflow name="wf_leave_init_aspx" version="1" desc="条件的请假流程示例(aspx)" status="定义" typeid="" />
+<workflow name="wf_superior" version="1" desc="获取执行人或指定步骤的执行人的上级" status="定义" typeid="" />
+<workflow name="shenzhou_sub2" version="1" desc="shenzhou_sub2" status="定义" typeid="" />
+<workflow name="ssss" version="1" desc="" status="定义" typeid="" />
+<workflow name="shenzhou_sub1" version="1" desc="shenzhou_sub1" status="定义" typeid="" />
+<workflow name="ex_return_static" version="2" desc="回退＋静态分支的示例" status="定义" typeid="" />
+<workflow name="wf_task" version="1" desc="竞争型任务的示例" status="定义" typeid="" />
+<workflow name="wf_task" version="2" desc="竞争型任务的示例" status="定义" typeid="" />
+<workflow name="sc_test1" version="1" desc="四川客户示例" status="定义" typeid="" />
+<workflow name="ex_return_dynamic" version="1" desc="回退＋动态分支的示例" status="定义" typeid="" />
+<workflow name="wf_dynamic_split_sign" version="1" desc="动态分支带动态会签" status="定义" typeid="" />
+<workflow name="wf_assign_range" version="1" desc="从范围中动态指定下一步执行人" status="定义" typeid="" />
+</workflows>

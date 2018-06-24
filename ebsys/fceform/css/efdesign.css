@@ -1,0 +1,246 @@
+﻿
+/* eform设计区域背景图*/
+.designbackground{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -1792px;height:10px;width:10px;padding-left:12px;}
+.ef_design_designmode1{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1802px;height:19px;padding-left:65px;}
+.ef_design_htmlmode{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1821px;height:19px;padding-left:61px;}
+.ef_design_htmlmode1{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1643px;height:22px;padding-left:56px;}
+.ef_design_designmode{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1604px;height:19px;padding-left:61px;}
+
+
+ /*新建新表单*/
+.newempty{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -120px;padding-left:22px;height:20px;}
+/*带向导新建表单*/
+.newdj  {}
+/*打开数据库中的表单*/
+.opendj{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -20px;height:20px;padding-left:22px;}
+/*打开表单文件*/
+.opendjfile{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px 0px;height:20px;padding-left:22px;}
+/*生成路径分类维护*/
+.billtype{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -660px;height:20px;padding-left:22px;}
+/*
+.opendjfile
+{
+	background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -80px;height:20px;padding-left:22px;height:20px;
+}
+*/
+/*表单预览*/
+.djpreview{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -460px;height:20px;}
+/*直接运行表单*/
+.directrun{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -980px;height:20px;padding-left:22px;}
+/*保存表单*/
+.save{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -500px;height:20px;padding-left:22px;}
+/*另存表单*/
+.saveas{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -480px;height:20px;padding-left:22px;}
+/*剪切*/
+.cut{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -600px;height:20px;padding-left:22px;}
+/*复制*/
+.copy{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -620px;height:20px;padding-left:22px;}
+/*粘贴*/
+.paste{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -60px;height:20px;padding-left:22px;}
+/*撤消*/
+.undo{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -380px;height:20px;padding-left:22px;}
+/*重做*/
+.redo{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -520px;height:20px;padding-left:22px;}
+/*对齐面板*/
+.align{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -760px;height:20px;padding-left:22px;}
+/*焦点次序*/	
+.focus {background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -300px;height:20px;padding-left:22px;}
+/*前置*/	
+.front{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -440px;height:20px;padding-left:22px;}
+/*后置*/	
+.behind{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -900px;height:20px;padding-left:22px;}
+/*表单属性*/	
+.form{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -320px;height:20px;padding-left:22px;}
+/*自定义函数*/	
+.userfunction{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -820px;height:20px;padding-left:22px;}
+/*能变色的自定义函数*/
+.userfunction1{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -360px;height:20px;padding-left:22px;}
+/*附加页面元素*/
+.addhtml{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -780px;height:20px;padding-left:22px;}
+/*显示/隐藏控件列表*/
+.showlist{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -240px;height:20px;padding-left:22px;}
+.execute{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -640px;height:20px;padding-left:22px;}
+/*列出配置信息, 改用E表中页面设置图*/
+.listconfig{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1956px;height:20px;padding-left:22px;}
+/*导入配置信息*/
+.importconfig{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -700px;height:20px;padding-left:22px;}
+/*帮助*/
+.eformhelp{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -920px;height:20px;padding-left:22px;}
+.cbozoom{background:url(../images/fctoolbarallbgs.gif) no-repeat -125px -22px;padding-top:22px;}
+/*button控件*/
+.button{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -580px;height:20px;padding-left:23px;}
+.buttonover{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -580px;height:20px;padding-left:23px;border:1px;}
+.label{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -140px;height:20px;padding-left:22px;}
+.img{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -160px;height:20px;padding-left:22px;}
+.div{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -960px;height:20px;padding-left:22px;}
+.ebshow{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -720px;height:20px;padding-left:22px;}
+.shape{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -400px;height:20px;padding-left:22px;}
+.ToolBar .tab{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -80px;height:20px;padding-left:22px;}
+.page{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -100px;height:20px;padding-left:22px;}
+
+/*
+.treeview
+{
+	background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -280px;height:20px;padding-left:22px;height:20px;
+}*/
+
+.a{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -880px;height:20px;padding-left:22px;}
+.spin{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -40px;height:20px;padding-left:22px;}
+.checkboxlist{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1060px;height:20px;padding-left:22px;}
+.radiolist{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1040px;height:20px;padding-left:22px;}
+.dataset{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -800px;height:20px;padding-left:22px;}
+.grid{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -340px;height:20px;padding-left:22px;}
+.htmltable{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -180px;height:20px;padding-left:22px;}
+.formattab{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -840px;height:20px;padding-left:22px;}
+.text{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1020px;height:20px;padding-left:22px;}
+.checkbox{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -560px;height:20px;padding-left:22px;}
+.radio{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -420px;height:20px;padding-left:22px;}
+.listbox{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -220px;height:20px;padding-left:22px;}
+.dropdownlist{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -940px;height:20px;padding-left:22px;}
+.combobox{background:url(../images/fctoolbarallbgs.gif) no-repeat no-repeat 0px -540px;height:20px;padding-left:22px;}
+.textarea{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -740px;height:20px;padding-left:23px;}
+.dbimg{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1000px;height:20px;padding-left:22px;}
+.chart{background:url(../images/fctoolbarallbgs.gif) no-repeat -125px -22px;padding-top:22px;}
+.upload{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -860px;height:20px;padding-left:22px;}	
+.setPosition{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -260px;height:20px;padding-left:22px;}
+.menu{background:url(../images/fctoolbarallbgs.gif) no-repeat -125px -22px;padding-top:22px;}
+.ebiaoform{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -320px;height:20px;padding-left:22px;}
+.ebiaobind{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -800px;height:20px;padding-left:22px;}
+.ebiao{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -720px;height:20px;padding-left:22px;}
+.layout{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -680px;height:20px;padding-left:22px;}
+.eblayout{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1344px;height:20px;padding-left:22px;}
+.tree{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -280px;height:20px;padding-left:22px;}
+.menuline{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -1660px;height:15px;padding-left:4px;} /*分隔线 -1665px 改为 -1660px*/
+
+/*报表工具栏样式*/	
+.eb_newempty{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -120px;height:20px;padding-left:22px;}
+.eb_newwizard{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1680px;height:20px;padding-left:22px;}
+.eb_open{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -20px;height:20px;padding-left:22px;}
+.eb_save{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -500px;height:20px;}
+
+.eb_layoutsave{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -500px;height:20px;padding-left:22px;}/*fhj 2012-05-15*/
+.eb_layoutsaveas{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -480px;height:20px;padding-left:22px;}
+.eb_newlayout{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -120px;height:20px;padding-left:22px;}
+.eb_fieldcheck{background:url(../images/fctoolbarallbgs.gif)  no-repeat 0px -460px;height:20px;padding-left:22px;}
+.eb_addproperty{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -640px;height:20px;padding-left:22px;}
+.eb_delproperty{background:url(../images/ef_design_delete.gif) no-repeat; height:16px;width:16px;}
+.eb_layoutprop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -320px;height:20px;padding-left:22px;}
+.eb_selecttable{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -780px;height:20px;padding-left:22px;}
+.eb_newlayoutwizard{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1680px;height:20px;padding-left:22px;}
+.eb_layoutrun{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -980px;height:20px;padding-left:22px;}
+.eb_openlayout{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2792px;height:16px;padding-left:6px;}
+.eb_openlayoutf{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -20px;height:20px;padding-left:22px;}/*fhj2012-05-15添加结束*/
+
+
+.eb_saveas{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -480px;height:20px;padding-left:22px;}
+.eb_run{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -980px;height:20px;padding-left:22px;}
+.eb_cut{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -600px;height:20px;padding-left:22px;}
+.eb_copy{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -620px;height:20px;padding-left:22px;}
+.eb_paste{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -60px;height:20px;padding-left:22px;}
+.eb_formatcopy{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1264px;height:20px;padding-left:22px;}
+.eb_undo{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -380px;height:20px;padding-left:22px;}
+.eb_redo{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -520px;height:20px;padding-left:22px;}
+.eb_insertrow{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1404px;height:20px;padding-left:22px;}
+.eb_addrow{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1384px;height:20px;padding-left:22px;}
+.eb_delrow{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1524px;height:20px;padding-left:22px;}
+.eb_insertcol{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1504px;height:20px;padding-left:22px;}
+.eb_addcol{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1484px;height:20px;padding-left:22px;}
+.eb_delcol{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1464px;height:20px;padding-left:22px;}
+.eb_fx{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1284px;height:20px;padding-left:22px;}
+.eb_prop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1774px;height:18px;padding-left:20px;}
+.eb_rowprop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1756px;height:18px;padding-left:20px;}
+.eb_colprop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1738px;height:18px;padding-left:20px;}
+.eb_cellprop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1720px;height:18px;padding-left:20px;}
+.eb_dataset{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -800px;height:20px;padding-left:22px;}
+.eb_param{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1364px;height:20px;padding-left:22px;}
+.eb_designform{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -700px;height:20px;padding-left:22px;}
+.eb_macro{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1324px;height:20px;padding-left:22px;}
+.eb_subreport{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -680px;height:20px;padding-left:22px;}
+.eb_chart{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1564px;height:20px;padding-left:22px;}
+.eb_flash{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1584px;height:20px;padding-left:22px;}
+.eb_barcode{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1220px;height:18px;padding-left:22px;}
+.eb_importexcel{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1623px;height:20px;}
+.eb_option{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1344px;height:20px;padding-left:22px;}
+.eb_showinfo{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -920px;height:20px;padding-left:22px;}
+.eb_runcommand{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -640px;height:20px;padding-left:22px;}
+.eb_b{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1200px;height:20px;padding-left:22px;}
+.eb_i{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1304px;height:20px;padding-left:22px;}
+.eb_u{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1544px;height:20px;padding-left:22px;}
+.eb_alignleft{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1120px;height:20px;padding-left:22px;} 
+.eb_aligncenter{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1100px;height:20px;padding-left:22px;}  
+.eb_alignright{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1160px;height:20px;padding-left:22px;}  
+.eb_aligntop{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1180px;height:20px;padding-left:22px;}  
+.eb_alignmiddle{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1140px;height:20px;padding-left:22px;}  
+.eb_alignbottom{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1080px;height:20px;padding-left:22px;}  
+.eb_bgcolor{}  
+.eb_merge{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1424px;height:20px;padding-left:22px;}
+.eb_split{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1444px;height:20px;padding-left:22px;}   
+
+/*新添加到报表运行后的图片类和eform不分皮肤颜色的图片类*/
+.eb_excelone{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1840px;height:16px;}
+.eb_exppdf{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1856px;height:20px;}
+.eb_find{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1876px;height:20px;}
+.eb_firstpage{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1896px;height:20px;}
+.eb_lastpage{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1916px;height:20px;}
+.eb_nextpage{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1936px;height:20px;}
+.eb_pageset{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1956px;height:20px;}
+.eb_prevpage{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1976px;height:20px;}
+.eb_print{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -1996px;height:20px;}
+.eb_printall{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2016px;height:20px;}
+.eb_printdirect{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2036px;height:20px;}
+.eb_refresh{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2056px;height:20px;}
+.ef_button_date1{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2076px;height:20px;padding-left:22px;}
+.ef_button_date{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2096px;height:20px;padding-left:22px;}
+.ef_open_list1{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2116px;height:22px;padding-left:24px;}
+.ef_open_list{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2138px;height:22px;padding-left:24px;}
+.ef_open_up{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2160px;height:25px;padding-left:27px;}
+.ef_run_button_color{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2185px;height:20px;padding-left:23px;}
+.ef_run_button_down{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2205px;height:18px;padding-left:20px;}
+.ef_run_button_font{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2223px;height:20px;padding-left:23px;}
+.ef_run_button_notbg{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2323px;height:20px;padding-left:23px;}
+.ef_run_button_up{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2423px;height:18px;padding-left:20px;}
+.ef_run_down{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2441px;height:10px;padding-left:16px;}
+.ef_run_grid_checked{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2451px;height:16px;padding-left:18px;}
+.ef_run_grid_gou{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2467px;height:20px;padding-left:10px;}
+.ef_run_grid_uncheck{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2487px;height:16px;padding-left:18px;}
+.ef_run_up{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2503px;height:10px;padding-left:16px;}
+.cmdlogin-over{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2513px;height:21px;padding-left:68px;width:66px;border:0px;}
+.cmdlogin{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2534px;height:21px;padding-left:68px;width:66px;border:0px;}
+
+/*树控件图片和定位方式图片*/
+.ef_design_static{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2630px;height:20px;padding-left:22px;}
+
+.ef_tree_root{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2830px;height:16px;padding-left:6px;}
+.ef_tree_open{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2792px;height:16px;padding-left:6px;}
+.ef_tree_blank{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2650px;height:22px;}
+.ef_tree_close{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2672px;height:16px;padding-left:6px;}
+.ef_tree_file{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2688px;height:16px;padding-left:6px;}
+.ef_tree_I{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2704px;height:22px;}
+.ef_tree_L{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2726px;height:22px;}
+.ef_tree_Lminus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2748px;height:22px;}
+.ef_tree_Lplus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2770px;height:22px;}
+.ef_tree_Rminus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2808px;height:22px;}
+.ef_tree_Rplus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2846px;height:22px;}
+.ef_tree_T{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2868px;height:22px;}
+.ef_tree_Tminus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2890px;height:22px;}
+.ef_tree_Tplus{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2912px;height:22px;}
+/* 组织机构树 */
+.ef_tree_ogn {background:url(../images/ef_tree_ogn.png) no-repeat;}
+.ef_tree_psm {background:url(../images/ef_tree_psm.gif) no-repeat;}
+.ef_tree_pos {background:url(../images/ef_tree_pos.gif) no-repeat;}
+.ef_tree_dpt {background:url(../images/ef_tree_dpt.gif) no-repeat;}
+.ef_tree_usr {background:url(../images/ef_tree_usr.png) no-repeat;}
+
+.ef_design_menuline{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2934px;padding-left:4px;}
+
+/* 工作流中心树*/
+.ef_tree_menu{background:url(../images/wf_menu.png) no-repeat;}
+.ef_tree_ch{background:url(../images/wf_menu_ch.png) no-repeat;}
+.ef_tree_rz{background:url(../images/wf_menu_rz.png) no-repeat;}
+.ef_tree_sl{background:url(../images/wf_menu_sl.png) no-repeat;}
+
+.zk_big{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2934px;height:16px;padding-left:18px;}
+.zk_small{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2950px;height:17px;padding-left:18px;}
+.zk_title{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2967px;height:16px;padding-left:18px;}
+.ef_run_grid_checkdisabled{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2983px;height:16px;padding-left:18px;}
+.ef_run_grid_uncheckdisabled{background:url(../images/fctoolbarallbgs.gif) no-repeat 0px -2999px;height:16px;padding-left:18px;}

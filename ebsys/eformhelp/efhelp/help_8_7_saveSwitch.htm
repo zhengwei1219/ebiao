@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>保存前字段值转换</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">保存前字段值转换</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+      &nbsp;&nbsp;&nbsp;&nbsp;在将界面上输入的值保存到数据库中时，常常会需要转换字段的值，比如界面上输入男/女,而库中要存1/0，这就需要用到保存前字段值转换功能。 
+       <div class="divTitle">1. 保存前字段值转换说明</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;此表单主要演示将界面上输入的值保存到数据库中时或从数据库中读出时会作转换,比如本例作了将备注字段的内容加上备注:后再保存到库中,显示时返回原样,或者你保存性别字段时,保存到数据库的表中是1读出时转换成男.查看读出时转换表单,单击 <a  class ="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_8_7_saveSwitch'>
+           保存前转换</a>进入保存前转换表单设计界面.双击数据集打开数据集属性页,单击字段,进入字段页签,设置备注字段保存前给它的字段在添加一个备注<p>"备注:"+$f_value('bz')</p>$f_value('bz')是获取bz字段的当前值,你也可以单击保存前转换的下拉按钮，在弹出的设置公式页中选择获取字段值的公式.为了让保存时的值和读出时的值一样,我们还可以在读出时去掉备注<p>$f_value('bz').substring(3,$f_value('bz').length)</p><img  src ="images/help_8_7_1.gif"/>.</br>
+      &nbsp;&nbsp;&nbsp;&nbsp; 在保存前字段值转换处用自定义函数时， 不能在自定义函数中写 $f_value,而应自定义函数中加一个参数,如： function uf_getStateName(stateValue) , 在读出时转换处写成: uf_getStateName($f_value('state')) , 不能在自定义函数(比如： function uf_getStateName) 的代码中写 $f_value('state') 。在数据集的读出时转换处写自定义函数也是如此。 
+</body>
+</html>

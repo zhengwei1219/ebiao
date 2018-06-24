@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>dropdownlist控件</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    <style type="text/css">
+        .style1
+        {
+            text-align: justify;
+            text-indent: 21.0pt;
+            font-size: 10.5pt;
+            font-family: Calibri, sans-serif;
+            margin-left: 0cm;
+            margin-right: 0cm;
+            margin-top: 0cm;
+            margin-bottom: .0001pt;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">dropdownlist控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. dropdownlist控件</div>
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;标准html自带的select元素的控件功能有限,它只能选择输入,不能直接输入,单击下拉信息时,不能列出表格信息,它只能返回一列两列信息,而dropdownlist是一个功能强大的下拉控件,它可选可输,下拉信息时可以列出表格,而且能返回多列信息.
+       <div class="divTitle">2. dropdownlist控件功能设置</div>
+       <div class="divTitle">2.1 dropdownlist控件可选可输,支持分页</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_7_dropdownlist1'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.
+       <div class="divTitle">2.1.1 实现功能</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;下拉列表控件中的数据大于你设置的行数就实现翻页.
+       <div class="divTitle">2.1.2 设置</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;在表单属性的打开之后事件中输入dropdownlist2.pagesize = 5来设置下拉控件显示的行数.<br />
+       <img  src ="images/help_5_7_1.gif"/>
+       <div class="divTitle">2.1.3 效果图</div>
+       <img  src ="images/help_5_7_2.gif"/>
+        <div class="divTitle">2.2 dropdownlist控件支持在树控件中选择数据</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_7_dropdownlist2'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.
+        <div class="divTitle">2.2.1 实现功能</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击下拉列表按钮,显示的数据不是在表格中,而是在树控件中选择数据,如下图.<br />
+         <img  src ="images/help_5_7_3.gif"/><br /><div class="divTitle">2.2.2 设置</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;双击下拉控件,打开属性窗口,选中树控件前的复选框,就会显示树控件需要设置的字段列表,如果你没选择新格式sql语句,那就是默认格式的sql.如果在下拉控件属性框中选择了树控件,那显示中只能用sql语句,不能用标准格式,同时也支持多选的树,数据源.下拉控件绑定数据集,数据就可以实现联动.
+         <br /><img  src ="images/help_5_7_4.gif"/>
+          
+        <div class="divTitle">2.3 dropdownlist控件有模糊查找功能</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_020_fccode4'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.
+        <div class="divTitle">2.3.1 实现功能</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;在dropdownlist控件文本框中输入一个字,点击按钮,下拉框中的值都包含有文本框输入的字.
+        <div class="divTitle">2.3.2 设置</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;实现此功能是要在dropdownlist控件的sql语句中带上模糊查找,例如下面的sql语句<br /><p>select sdeptid,sdeptcode,sdeptname from FCS_DEPT where sdeptcode like ':v_get%'</p>
+        :v_get是一个SQL语句替换标记,它在后台执行sql语句前,会替换成当前dropdownlist控件的值，这个值一般是用户手工输入的，以达到输入什么就查找包含什么的值，即模糊查找.<br />
+        
+        <div class="divTitle">2.4 dropdownlist控件边输入边模糊查找</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?djsn=dropdownlist_presskey&djtype=OF&isfile=yes'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.
+        <div class="divTitle">2.4.1 实现功能</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;在下拉列表控件中一边输入一边模糊查找,先输到00时是第一张图,然后在输到006是第二张图,如下图<br /><img  src ="images/help_5_7_5.gif"/> <img  src ="images/help_5_7_6.gif"/>
+         <div class="divTitle">2.4.2 设置</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;只需要在表单打开事件中加上dropdownlist1.isAutoDropWin=true;即可实现在输入时下拉出窗口.<br /><img  src ="images/help_5_7_7.gif"/>
+        <div class="divTitle">2.5 dropdownlist控件联动选择功能</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_020_fccode1'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.<div class="divTitle">2.5.1 实现功能</div>&nbsp;&nbsp;&nbsp;&nbsp;第一个控件选择值后,第二个控件动态生成数据.<div class="divTitle">2.5.2 设置</div>&nbsp;&nbsp;&nbsp;&nbsp;在第一个下拉控件中的改变事件中执行自定义函数.在自定义函数中改变第二个下拉列表控件的内容，如dropdownlist控件的内容为常数，则改变dropdownlist控件的xml属性值，如为dropdownlist控件的内容为SQL语句运行结果，则改变dropdownlist控件的sql属性值。具体写法请查看 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_020_fccode1'>dropdwonlist示例</a>
+       <div class="divTitle">2.6 dropdownlist控件多选</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=SH1&djsn=sh_020_fccode3'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.<div class="divTitle">2.6.1 实现功能</div>
+       &nbsp;&nbsp;&nbsp;&nbsp; 在下拉框中有一列checkbox控件,可以同时选择多个值<br /><img  src ="images/help_5_7_9.gif"/>
+<div class="divTitle">2.6.2 设置</div>
+&nbsp;&nbsp;&nbsp;&nbsp;选择下拉列表属性框中的多选,就可以出现多选如下图<br />
+<img  src ="images/help_5_7_8.gif"/>
+        <div class="divTitle">2.7 dropdownlist控件列出图片</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?djsn=dropimg&djtype=OF&isfile=yes'>dropdwonlist示例</a> 进入dropdwonlist示例设计界面.<div class="divTitle">2.7.1 实现功能</div> &nbsp;&nbsp;&nbsp;&nbsp;本示例演示dropdownlist控件的下拉列表中列出图片.<div class="divTitle">2.7.2 设置</div>
+&nbsp;&nbsp;&nbsp;&nbsp;在自定义函数中写上自定义函数,每个tr中的td中加一个img元素.
+           <br />
+           <p align="left" class="MsoNormal">
+               <b>
+               <span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:blue;mso-font-kerning:0pt;mso-no-proof:yes">function</span></b><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:
+0pt;mso-no-proof:yes"> uf_set() <b><span style="color:blue">{<o:p></o:p></span></b></span></p>
+           <p align="left" class="MsoNormal">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b><span style="color:blue">var</span></b> sHeight
+               <span style="color:red">=</span> <span style="color:purple">&quot;40px&quot;</span>;<o:p></o:p></span></p>
+           <p align="left" class="MsoNormal">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span><b><span style="color:blue">var</span></b> sWidth
+               <span style="color:red">=</span> <span style="color:purple">&quot;100%&quot;<o:p></o:p></span></span></p>
+           <p align="left" class="style1" 
+               style="mso-char-indent-count: 0; mso-list: l0 level1 lfo1; mso-layout-grid-align: none; text-autospace: none; text-justify: inter-ideograph;">
+               <![if !supportLists]>
+               <span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-fareast-font-family:&quot;Courier New&quot;;
+mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-list:Ignore">1.<span 
+                   style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span></span><![endif]>
+               <b>
+               <span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;color:blue;
+mso-font-kerning:0pt;mso-no-proof:yes">var</span></b><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:0pt;
+mso-no-proof:yes"> sHtml <span style="color:red">=</span> <span style="color:purple">&quot;&lt;tr 
+               height=&#39;&quot;</span><span style="color:red">+</span>sHeight<span style="color:red">+</span><span 
+                   style="color:purple">&quot;&#39;&gt;&lt;td width=&#39;&quot;</span><span style="color:red">+</span>sWidth<span 
+                   style="color:red">+</span><span style="color:purple">&quot;&#39;&gt;&lt;img 
+               src=&#39;../../fceform/images/ef_design_copy.gif&#39;/&gt;&lt;/td&gt;&lt;td width=&#39;&quot;</span><span 
+                   style="color:red">+</span>sWidth<span style="color:red">+</span><span 
+                   style="color:purple">&quot;&#39;&gt;</span></span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:
+0pt;mso-no-proof:yes">海淀区</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+               height=&#39;&quot;</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;
+color:red;mso-font-kerning:0pt;mso-no-proof:yes">+</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:0pt;
+mso-no-proof:yes">sHeight<span style="color:red">+</span><span style="color:purple">&quot;&#39;&gt;&lt;td 
+               width=&#39;&quot;</span><span style="color:red">+</span>sWidth<span style="color:red">+</span><span 
+                   style="color:purple">&quot;&#39;&gt;&lt;img 
+               src=&#39;../../fceform/images/ef_design_copy.gif&#39;/&gt;&lt;/td&gt;&lt;td&gt;</span></span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:
+0pt;mso-no-proof:yes">朝阳区</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr 
+               height=&#39;&quot;</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;
+color:red;mso-font-kerning:0pt;mso-no-proof:yes">+</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:0pt;
+mso-no-proof:yes">sHeight<span style="color:red">+</span><span style="color:purple">&quot;&#39;&gt;&lt;td&gt;&lt;img 
+               src=&#39;../../fceform/images/ef_design_copy.gif&#39;/&gt;&lt;/td&gt;&lt;td&gt;</span></span><span style="font-size:11.0pt;font-family:宋体;mso-ascii-font-family:&quot;Courier New&quot;;
+mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:
+&quot;Courier New&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:
+0pt;mso-no-proof:yes">上地</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Courier New&quot;;color:purple;mso-font-kerning:0pt;mso-no-proof:yes">&lt;/td&gt;&lt;/tr&gt;&quot;</span><span 
+                   lang="EN-US" style="font-size:11.0pt;font-family:&quot;Courier New&quot;;mso-font-kerning:
+0pt;mso-no-proof:yes">;<o:p></o:p></span></p>
+           <p align="left" class="MsoNormal">
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>drop<b><span style="color:blue">do</span></b>wnlist1.xml
+               <span style="color:red">=</span> sHtml;<span style="mso-tab-count:1">&nbsp;
+               </span><o:p></o:p></span>
+           </p>
+           <p class="MsoNormal">
+               <b>
+               <span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Courier New&quot;;color:blue;mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+       <div class="divTitle">3. dropdownlist控件与combobox控件对比</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;combobox控件是标准的html的SELECT元素,它可以显示到当前窗口之外,只能显示一列信息,返回最多两列信息,一个是显示值,一个是隐藏值．不支持多选(多选是变成listbox控件了),只能返回一行信息,不支持分页显示．不能直接输入,只能选择输入．它可以实现控件显示为显示值,而控件的值（．value时）是隐藏值的效果．而这个效果是dropdownlist控件所不具有的．<br />dropdownlist控件是通过下拉显示出一个iframe元素来显示选项列表信息,它无法显示到当前窗口之外,可以显示和返回多列信息,也支持多选,来实现返回多行信息．当选项列表的内容太多时,也支持分页显示．也可以直接输入控件的内容．可以下拉显示出一个树来供选择输入．也可以控制弹出一个新的窗口来选择输入
+</div>
+</body>
+</html>
+

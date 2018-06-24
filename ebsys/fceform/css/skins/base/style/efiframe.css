@@ -1,0 +1,39 @@
+﻿/* dropdownlist 控件的下拉出来的表格的样式 */
+#fc_list 
+{
+	font-size:12;border-color:#B8B7B7;	
+}  
+/* 下拉列表中的表格首行td border-left:1px solid white; border-top: 2px solid white; border-bottom: 1px solid #818080; border-right:1px solid #B8B7B7;background-color: #EFEFDE;*/
+#fc_list .firstrow td
+{
+	
+	border-left:1px solid #B8B7B7; border-top: 2px solid #B8B7B7; border-bottom: 1px solid #B8B7B7; border-right:1px solid #B8B7B7;
+	FONT-SIZE:12px;FONT-WEIGHT:bold;height:20px;background:url(../images/dropdownlist_background.gif);
+}
+/*斑马纹,即每隔行的样式   */
+#fc_list .pertworow
+{
+	background-color:#FFFFFC;
+}
+/*找到行的样式*/
+#fc_list .findrow
+{
+	color:Red;
+}
+/*选择行的样式*/
+#fc_list .selectrow
+{
+	background-color:blue;color:White;
+}
+/*iframe的body*/
+BODY {
+	background-color:white;
+	scrollbar-3dlight-color : #efefef; 
+	scrollbar-highlight-color : #aaaaaa; 
+	scrollbar-face-color : #E5E5E5; 
+	scrollbar-arrow-color : #aaaaaa; 
+	scrollbar-shadow-color : #aaaaaa; 
+	scrollbar-darkshadow-color : #efefef; 
+	scrollbar-base-color : #efefef; 
+	scrollbar-track-color : #efefef; 	
+}

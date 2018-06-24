@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrProps = ["format","onclickopen","fieldnamelist",
+    "blninput","blnempty","multiselect",
+	"href","isShowTree","isTreeNewSql"] ;
+
+function uf_open() {
+	
+	var obj=fcpubdata.obj ;
+	var oSysForm = new Eform.SysForm();
+	oSysForm.setButtonImage();
+	oSysForm.jsonToCont(obj,arrProps);
+
+	SetTextValue(obj.tempvalue,SKDBMemo5)
+	SetTextValue(obj.temptext,SKDBMemo1)
+	SetTextValue(obj.sql1,SKDBMemo6)
+	
+	BillEventHeadOpen(obj.onselchange,FCDBedit4) ;
+	BillEventHeadOpen(obj.onchange,FCDBedit5) ;
+	BillEventHeadOpen(obj.oninterchange,FCDBedit6)
+	BillEventHeadOpen(obj.onkeydown,FCDBedit7)
+	BillEventHeadOpen(obj.onclick,FCDBedit8)
+	
+
+	if(IsSpace(obj.check)){
+		SetRadioValue(SKDBRadioGroup1,"1") ;
+	}else{
+		SetRadioValue(SKDBRadioGroup1,obj.check);
+	}
+
+	uf_hide() ; 
+}
+
+function uf_ok() {
+
+	var obj=fcpubdata.obj ;
+
+	obj.check=SKDBRadioGroup1.value;
+	if(RepDqMarks(FCDBedit7) == false || RepDqMarks(FCDBedit8) == false || RepDqMarks(FCDBedit4) == false || RepDqMarks(FCDBedit6) == false || RepDqMarks(FCDBedit5) == false || RepDqMarks($id('onclickopen')) == false) 
+	{
+		alert("不支持双引号!")
+		return;
+	}
+
+	var s=new Eapi.Str().trim(FCDBedit4.value)
+	if(s==""){
+		obj.onselchange="" ;
+	}else{
+		obj.onselchange="bill_onclick(\""+s+"\")";
+	}
+	s=new Eapi.Str().trim(FCDBedit8.value)
+	if(s==""){
+		obj.fc_onclick="" ;
+	}else{
+		obj.fc_onclick="bill_onclick(\""+s+"\")";
+	}
+	var s=new Eapi.Str().trim(FCDBedit6.value)
+	if(s==''){
+		obj.oninterchange=""
+	}else{
+		obj.oninterchange="bill_onclick(\""+s+"\")";
+	}
+	var s=new Eapi.Str().trim(FCDBedit5.value)
+	if(s==''){
+		obj.onchange="";
+	}else{
+		obj.onchange="bill_onclick(\""+s+"\")" ;
+	}
+	var s=new Eapi.Str().trim(FCDBedit7.value)
+	if(s==''){
+		obj.onkeydown="" ;
+	}else{
+		obj.onkeydown="bill_onclick(\""+s+"\")" ;
+	}
+
+	
+	var stxt=SKDBMemo1.value.split("\r\n");
+	var sval=SKDBMemo5.value.split("\r\n");	
+	var sHtml="" ;
+	for(var i=0;i<stxt.length;i++){
+		try{
+		s1=stxt[i];
+		s2=sval[i];
+			if(typeof s1=="undefined"){
+				s1="";
+			}
+			if(typeof s2=="undefined"){
+				s2="";
+			}
+		}catch(e){
+			s1="";
+			s2="";
+		}
+		sHtml += "<tr height='16px' ><td>"+s1+"</td>" ;	
+		if(IsSpace(SKDBMemo5.value) == false) {
+			sHtml += "<td>"+s2+"</td>"
+		}
+		sHtml += "</tr>";
+	}
+	var slen = stxt.length ;
+	var lent = sval.length;
+	if(IsSpace(SKDBMemo1.value) == false && IsSpace(SKDBMemo5.value) == false) {
+		if(slen != lent){
+			alert("显示值和取值的长度不相等,请修改!")	;
+			return;
+		}	
+	}
+
+	obj.tempvalue=SKDBMemo5.value;
+	obj.temptext=SKDBMemo1.value;
+	obj.sql1=SKDBMemo6.value;
+	obj.sql2="" ;
+	
+	if(SKDBMemo1.value==""){
+		obj.xml=""
+	}else{
+		obj.xml=sHtml
+	}
+
+	new Eform.SysForm().contToJson(obj,arrProps);
+
+	window.returnValue = obj ;
+	window.close() ;
+}	
+function uf_hide() {
+	if(SKDBRadioGroup1.value=="1"){
+		SKDBMemo1.style.width=140;
+		SKDBMemo5.style.width=140;
+		Label7.style.width=20 ;
+		Label7.style.height=100 ;
+		SKDBMemo6.style.width=0 ;
+		lblFieldNameList.style.display="";
+		$id("fieldnamelist").style.display="";
+	}else{
+		SKDBMemo1.style.width=0;
+		SKDBMemo5.style.width=0;
+		Label7.style.width=0 ;
+		Label7.value="" ;
+		Label7.style.height=0;
+		SKDBMemo6.style.width=320
+		if(IsSpace(isShowTree)) {
+			$id("fieldnamelist").style.display="none";
+			lblFieldNameList.style.display="none";
+		}else {
+			$id("fieldnamelist").style.display="";
+			lblFieldNameList.style.display="";
+		}
+	}
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link type='text/css' rel='stylesheet' href='../css/shape.css'  />
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:1;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" posheight="330" poswidth="386" entertype="修改" codeheader mkbh caption="dsfccode" type="LR" dj_sn="dsfccode" billtaborder="<root><taborder>blninput</taborder><taborder>blnempty</taborder><taborder>multiselect</taborder><taborder>href</taborder><taborder>SKDBMemo5</taborder><taborder>SKDBMemo6</taborder><taborder>FCDBedit4</taborder><taborder>FCDBedit5</taborder><taborder>FCDBedit6</taborder><taborder>FCDBedit7</taborder><taborder>FCDBedit8</taborder><taborder>onclickopen</taborder><taborder>cmdDropDown1</taborder><taborder>cmdDropDown6</taborder><taborder>cmdDropDown5</taborder><taborder>cmdDropDown4</taborder><taborder>cmdDropDown3</taborder><taborder>cmdDropDown2</taborder><taborder>fieldnamelist</taborder><taborder>format</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>isShowTree</taborder><taborder>isTreeNewSql</taborder></root>" contxml="<root><checkbox><id>blninput</id><id>blnempty</id><id>multiselect</id><id>href</id><id>isShowTree</id><id>isTreeNewSql</id></checkbox><label><id>Label6</id><id>Label7</id><id>lblFieldNameList</id><id>Label5</id><id>Label8</id><id>Label9</id><id>Label11</id><id>Label12</id><id>Label15</id><id>Label16</id></label><textarea><id>SKDBMemo5</id><id>SKDBMemo6</id></textarea><shape><id>shape3</id></shape><tab><id>PageControl1</id></tab><button><id>cmdDropDown1</id><id>cmdDropDown6</id><id>cmdDropDown5</id><id>cmdDropDown4</id><id>cmdDropDown3</id><id>cmdDropDown2</id><id>cmdOk</id><id>cmdClose</id></button><text><id>fieldnamelist</id><id>format</id><id>FCDBedit7</id><id>FCDBedit8</id><id>FCDBedit4</id><id>FCDBedit6</id><id>FCDBedit5</id><id>onclickopen</id></text></root>" blmode="其他" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 374px; HEIGHT: 266px; TOP: 1px; LEFT: 1px" id=PageControl1 class=tab-pane controltype="tab" IsHideTitle="null" showtype="luna">
+<DIV style="WIDTH: 374px; HEIGHT: 248px" class=tab-page>
+<H2 class=tab>属性</H2><?xml:namespace prefix = v /><v:RoundRect style="POSITION: absolute; WIDTH: 345px; HEIGHT: 103px; TOP: 125px; LEFT: 8px" id=shape3 onmovestart=moveStart() controltype="shape" cover="9" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 138px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 87px; FONT-SIZE: 12px; TOP: 135px; LEFT: 33px" id=SKDBMemo1 cols=23 value="SKDBMemo1" china></TEXTAREA><SPAN style="POSITION: absolute; WIDTH: 14px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 31px; FONT-SIZE: 12px; TOP: 143px; LEFT: 13px" id=Label3 value="Label3">显示</SPAN><SPAN style="POSITION: absolute; WIDTH: 41px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 33px; LEFT: 7px" id=Label4 value="Label4">标&nbsp; 题</SPAN> 
+<FIELDSET style="POSITION: absolute; WIDTH: 160px; DISPLAY: block; HEIGHT: 38px; FONT-SIZE: 12px; TOP: 84px; LEFT: 6px; backgroundColor1: #ffffff" id=SKDBRadioGroup1 contentEditable=false value="1" onclick='bill_onclick("uf_hide()")' NotBg="否" CustomAttr temptext="标准格式&#13;&#10;SQL语句" tempvalue="1&#13;&#10;2" legend="取值方式" aspect="横向"><LEGEND>取值方式</LEGEND><INPUT onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[0].value; name=RGSKDBRadioGroup1 value=1 CHECKED type=radio text="标准格式"><SPAN onclick=RGSKDBRadioGroup1[0].checked=true;SKDBRadioGroup1.value=RGSKDBRadioGroup1[0].value;RGSKDBRadioGroup1[0].focus();>标准格式</SPAN>&nbsp;<INPUT onclick=SKDBRadioGroup1.value=RGSKDBRadioGroup1[1].value; name=RGSKDBRadioGroup1 value=2 type=radio text="SQL语句"><SPAN onclick=RGSKDBRadioGroup1[1].checked=true;SKDBRadioGroup1.value=RGSKDBRadioGroup1[1].value;RGSKDBRadioGroup1[1].focus();>SQL语句</SPAN>&nbsp;</FIELDSET> <SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 286px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 16px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 12px; LEFT: 47px" id=Label6 controltype="label" value="Label6">格式为:标题名称1 !| 标题名称2 列宽用空格调动</SPAN><TEXTAREA style="POSITION: absolute; WIDTH: 138px; HEIGHT: 87px; FONT-SIZE: 12px; TOP: 135px; LEFT: 203px" id=SKDBMemo5 cols=27 controltype="textarea" value="SKDBMemo5"></TEXTAREA><SPAN style="POSITION: absolute; WIDTH: 13px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 28px; FONT-SIZE: 12px; TOP: 143px; LEFT: 179px" id=Label7 controltype="label" value="Label7">取值</SPAN><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; FONT-STYLE: normal; WIDTH: 309px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 87px; COLOR: #0000ff; FONT-SIZE: 12px; TOP: 133px; LEFT: 32px" id=SKDBMemo6 cols=61 controltype="textarea" value="SKDBMemo6" china induce="否"></TEXTAREA> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 47px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 56px; LEFT: 293px; backgroundColor1: #ffffff" id=blninput noWrap controltype="checkbox" value="是" NotBg="否" CustomAttr divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() CHECKED type=checkbox><SPAN>直接输入</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 46px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 56px; LEFT: 247px; backgroundColor1: #ffffff" id=blnempty noWrap controltype="checkbox" value="否" NotBg="否" CustomAttr divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>空行</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 47px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 56px; LEFT: 200px; backgroundColor1: #ffffff" id=multiselect noWrap controltype="checkbox" value="否" NotBg="否" CustomAttr divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>多选</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 46px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 56px; LEFT: 152px; backgroundColor1: #ffffff" id=href noWrap controltype="checkbox" value="否" NotBg="否" CustomAttr divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>新增</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 96px; LEFT: 175px" id=lblFieldNameList onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">字段名列表</DIV><INPUT style="POSITION: absolute; WIDTH: 110px; HEIGHT: 20px; TOP: 94px; LEFT: 244px" id=fieldnamelist onmovestart=moveStart() controltype="text" CustomAttr><INPUT style="POSITION: absolute; WIDTH: 309px; HEIGHT: 20px; TOP: 30px; LEFT: 50px" id=format onmovestart=moveStart() size=55 controltype="text" CustomAttr> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 56px; LEFT: 4px" id=isShowTree onmovestart=moveStart() noWrap controltype="checkbox" value="0" onclick='bill_onclick("uf_hide()")' truevalue="1" falsevalue="0"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>下拉树</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 56px; LEFT: 65px" id=isTreeNewSql onmovestart=moveStart() noWrap controltype="checkbox" value="0" truevalue="1" falsevalue="0"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>新格式SQL</SPAN></DIV></DIV>
+<DIV style="WIDTH: 374px; HEIGHT: 248px" class=tab-page>
+<H2 class=tab>事件</H2><SPAN style="POSITION: absolute; WIDTH: 98px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 14px; FONT-SIZE: 12px; TOP: 92px; LEFT: 14px" id=Label5 controltype="label" value="Label5">选择改变：</SPAN></INPUT><SPAN style="POSITION: absolute; WIDTH: 91px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 115px; LEFT: 14px" id=Label8 controltype="label" value="Label8">填写改变：</SPAN><SPAN style="POSITION: absolute; WIDTH: 91px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 11px; FONT-SIZE: 12px; TOP: 139px; LEFT: 14px" id=Label9 controltype="label" value="Label9">同时改变：</SPAN></INPUT></INPUT><SPAN style="POSITION: absolute; WIDTH: 44px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 9px; FONT-SIZE: 12px; TOP: 45px; LEFT: 38px" id=Label11 controltype="label" value="Label11">按键：</SPAN></INPUT><SPAN style="POSITION: absolute; WIDTH: 51px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 11px; FONT-SIZE: 12px; TOP: 68px; LEFT: 38px" id=Label12 controltype="label" value="Label12">单击：</SPAN></INPUT><SPAN style="POSITION: absolute; WIDTH: 124px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 17px; FONT-SIZE: 12px; TOP: 163px; LEFT: 13px" id=Label15 controltype="label" value="Label9">打开表单：</SPAN></INPUT> 
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 78px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 18px; LEFT: 73px" id=Label16 onmovestart=moveStart() noWrap controltype="label" value="Label16">事件代码（不支持双引号！）</DIV><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 38px; LEFT: 328px" id=cmdDropDown1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("SelFunction(FCDBedit7)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 158px; LEFT: 328px" id=cmdDropDown6 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('onclickopen'));&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 134px; LEFT: 328px" id=cmdDropDown5 onmovestart=moveStart() controltype="button" onclick='bill_onclick("SelFunction(FCDBedit5)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 110px; LEFT: 328px" id=cmdDropDown4 onmovestart=moveStart() controltype="button" onclick='bill_onclick("SelFunction(FCDBedit6)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 86px; LEFT: 328px" id=cmdDropDown3 onmovestart=moveStart() controltype="button" onclick='bill_onclick("SelFunction(FCDBedit4)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 62px; LEFT: 328px" id=cmdDropDown2 onmovestart=moveStart() controltype="button" onclick='bill_onclick("SelFunction(FCDBedit8)")' dropstyle="是"></BUTTON><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 38px; LEFT: 70px" id=FCDBedit7 controltype="text" CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 62px; LEFT: 70px" id=FCDBedit8 controltype="text" CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 86px; LEFT: 70px" id=FCDBedit4 controltype="text" CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 110px; LEFT: 70px" id=FCDBedit6 controltype="text" CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 134px; LEFT: 70px" id=FCDBedit5 controltype="text" CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 259px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 158px; LEFT: 70px" id=onclickopen controltype="text" CanSelect="false"></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+<BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 274px; LEFT: 200px" id=cmdOk controltype="button" onclick='bill_onclick("uf_ok()")' CustomAttr dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 274px; LEFT: 284px" id=cmdClose controltype="button" onclick='bill_onclick("CloseBill()")' CustomAttr dropstyle="否"></BUTTON></DIV><script></script><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT>       
+</body></html>

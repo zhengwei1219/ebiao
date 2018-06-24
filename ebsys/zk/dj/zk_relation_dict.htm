@@ -1,0 +1,107 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_deltype(){
+	var ret = window.confirm("确定删除当前关系分类吗？");
+	if(ret == true){	
+		var xmlSql="<update tableName='FCQ_RELATION_DICT_TYPE'>  <set>deleteMark = 1</set> <where> typeId = '"+dataset2.Field('typeId').Value+"'</where> </update>";
+		//xmlSql += "<delete tableName='FCQ_RELATION_DICT'>  <where> typeId = '"+dataset2.Field('typeId').Value+"'</where> </delete>";
+		doSaveData(xmlSql,function(){alert("删除关系分类成功")});
+	}
+}
+
+
+function uf_delRow(){//如果就一条记录，删除后界面上的关系类型字段绑定的控件就没有值了，
+	var typeId = dataset2.Field('typeId').Value;
+	var typeName = dataset2.Field('chnname').Value;
+	$eform('删除行且删除记录');
+	if(dataset2.oDom.documentElement.childNodes.length  == 1){//如果选择的类型没有记录，就给数据集新增一条空记录，然后把类型名称和id赋值给数据集当前行的id名称
+		dataset2.Append();
+		dataset2.Field('typeId').Value = typeId;
+		dataset2.Field('chnname').Value = typeName;
+		dataset2.fset_cont1();
+	}	
+}
+
+
+function uf_refeshDs(){//选择关系类型后刷新数据集
+	var typeId = $id('typeId').value;
+	var typeName = $id('relationType').value;
+	var sql = "select typeId ,tbname1,tbname2 from fcq_relation_dict_type where typeId='"+typeId+"'";
+	var xmlRet1 = SelectSql(sql, 1, 1);
+    var oXml1 = SetDom(xmlRet1);
+    if (oXml1.documentElement == null) {
+        alert(xmlRet1);
+        return;
+    }
+	if (oXml1.documentElement.childNodes.length < 1) return;
+    var table1 = oXml1.documentElement.childNodes[0].childNodes[1].text;
+    var table2 = oXml1.documentElement.childNodes[0].childNodes[2].text;
+    var key1Sql = uf_sqlTrans(table1,1);
+    var key2Sql = uf_sqlTrans(table2,2);
+    //var s=escape("select typeId, chnname  from fcq_relation_dict_type ")
+    var  fieldtrans ="<root><field><name>keyName1</name><trans></trans><rtrans></rtrans><sql>"+key1Sql+"</sql></field><field><name>keyName2</name><trans></trans><rtrans></rtrans><sql>"+key2Sql+"</sql></field><field><name>chnname</name><trans></trans><rtrans></rtrans><sql>select%20typeId%2C%20chnname%20%20from%20fcq_relation_dict_type</sql></field></root>";
+    dataset2.oXmlTrans = SetDom(fieldtrans);
+	dataset2.Open();
+	if(dataset2.oDom.documentElement.childNodes.length  == 1){//如果选择的类型没有记录，就给数据集新增一条空记录，然后把类型名称和id赋值给数据集当前行的id名称
+		dataset2.Append();
+		dataset2.Field('typeId').Value = typeId;
+		dataset2.Field('chnname').Value = typeName;
+		dataset2.fset_cont1();
+	}
+}
+
+
+function uf_sqlTrans(tableName,type){//根据表名生成读出时转换的sql语句
+	var sqlTrans ="";
+	if(tableName == "FCQ_USER"){
+    	sqlTrans = escape("select userid as key"+type+" ,username as keyName"+type+" from FCQ_USER"); 	
+    }else  if(tableName == "FCQ_PROFILE"){
+    	sqlTrans = escape("select profileId as key"+type+" ,profileName as keyName"+type+" from FCQ_PROFILE"); 
+    }else  if(tableName == "FCQ_ORG"){
+    	sqlTrans = escape("select sId as key"+type+" ,sName as keyName"+type+" from FCQ_ORG"); 
+    }else  if(tableName == "FCQ_ROLE"){
+    	sqlTrans = escape("select roleId as key"+type+" ,roleName as keyName"+type+" from FCQ_ROLE");
+    }else  if(tableName == "FCQ_MANAGETYPE"){
+    	sqlTrans = escape("select id as key"+type+" ,manageType as keyName"+type+" from FCQ_MANAGETYPE");  
+	}else  if(tableName == "FCQ_EMPLOYEE"){
+    	sqlTrans = escape("select employeeid as key"+type+" ,employeename as keyName"+type+" from FCQ_EMPLOYEE");  
+    }else  if(tableName == "FCQ_USER_GROUP"){
+    	sqlTrans = escape("select userGroupId as key"+type+" ,userGroupName as keyName"+type+" from FCQ_USER_GROUP");  
+    }/*else{//在实体子表中查找名称字段然后生成读出时转换的sql
+    	var fieldName = SqlToField("select fdname from fc_entitysub where type='名称' and tbname='"+tableName+"'");
+		sqlTrans = escape("select "+ fieldId +" as key"+type+" ,"+ fieldName +" as keyName"+type+" from FCQ_manageType");
+	}*/
+	return sqlTrans;
+}
+function uf_add(){
+	var typeId = dataset2.Field('typeId').Value;
+	var chnname = dataset2.Field('chnname').Value;
+	if(IsSpace(typeId)) {alert("先选择关系类型后，再新增");return;}
+	$eform('打开窗口新增记录');
+	relationType.fnPutvalue(chnname);
+	if(dataset2.oDom.documentElement.childNodes[0].childNodes[0].text == ""){//数据集当前行的xml串是分类下没有记录添加的空行，删掉
+		$id('typeId').value = typeId;
+		uf_refeshDs();
+	}
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/htc/fc_code.js'></script><script src='../../fceform/htc/webgrid.js'></script><script src='../../fceform/js/fcwebgrid.js'></script><script src='../../fceform/htc/dataset.js'></script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" AutoResizeXml="<record id ='relationType'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>百分比设置</WSetType><Width></Width><WExt></WExt><WSetUnit>px</WSetUnit><MinW></MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>百分比设置</HSetType><Height></Height><HExt></HExt><HSetUnit>px</HSetUnit><MinH></MinH></record>" dj_sn="zk_relation_dict" caption="关系词典维护" type="ZK" isfile="是" center="  " posleft postop poswidth posheight window="当前窗口" BLONopen="fcpubdata.cardWinUrl='zk_relation_card'" BLONopenBefore BLONclose billtaborder="<root><taborder>grid1</taborder><taborder>relationType</taborder><taborder>typeId</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:2;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:9;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:3;grid:1;dataset:3;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label2</id></label><text><id>typeId</id></text><dropdownlist><id>relationType</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset2</id></dataset></root>" userToolbar='<tr rowstate="add"><td>add</td><td>新增</td><td></td><td>uf_add()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>griddel</td><td>删除行且删除记录</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>delType</td><td>删除当前关系分类</td><td>删除关系类型</td><td>uf_deltype()</td><td></td><td></td><td></td><td></td><td></td></tr>' userType alertType="1" isCheckPermit="否" BLONresizeBefore BLONresizeAfter allBrowser="是" useHelp envType="电脑" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" idtype="1" mkbh runsave OtherSave="否" codeheader="DIC" entertype="修改" keyfield="id"><DIV style="POSITION: absolute; WIDTH: 85px; HEIGHT: 15px; TOP: 4px; LEFT: 6px" id=label2 onmovestart=moveStart() noWrap controltype="label" NotBg="否" value="label2" inputTag="否">关系类型:</DIV><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' format="<cols><col><fname>keyName1</fname><cname>名称一</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>keyName2</fname><cname>名称二</cname><width>250</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col></cols>" controltype="grid" left="3" top="26" height="252" width="375" dataset="dataset2" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="auto" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" hideHscroll="auto" blRowNo="否">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:fc_code id=relationType sqltrans="%F4%D8%E6%D8%D4%F6XrnXrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%D4%DE%EA%EA%D0%E8%D8XrnXr%94%F6%u0100%EE%D8%A0%D6Xrn%DA%F2%EC%E8Xrn%DA%D4%F0%CC%F2%D8%E6%D0%F6%E0%EC%EA%CC%D6%E0%D4%F6%CC%F6%u0100%EE%D8Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xt%96nXrn%D0%EA%D6Xrn%F8%F4%D8%B6%u0100%EE%D8Xt%96Xr%7CX%F8x%80p%90X%F8x%92%9A%80X%F8x%80p%90X%F8xp%7CtX%F8%7C%94%9A%92Xr%7C" format="! 类型名称 |" controltype="dropdownlist" left="78" top="0" height="16" width="181" dataset="dataset2" visible="是" position="absolute" FieldNameList="" isTreeNewSql="0" isShowTree="0" blninput="否" blnempty="否" multiselect="否" xml="" addrow="否" align="undefined" sql2="null" datasourceName="" field="chnname" onselchange='bill_onclick("uf_refeshDs();")' oninterchange='bill_onclick("uf_refeshDs();")'></fc:fc_code><fc:dataset id=dataset2 sqltrans="%F4%D8%E6%D8%D4%F6Xrn%E4%D8%u0100pXr%94%E4%D8%u0100pXrn%D0%F4Xrn%E4%D8%u0100%AA%D0%E8%D8pXr%94%E4%D8%u0100rXr%94%E4%D8%u0100rXrn%D0%F4Xrn%E4%D8%u0100%AA%D0%E8%D8rXr%94%F6%u0100%EE%D8%A0%D6XrnXr%94%F6%u0100%EE%D8%A0%D6Xrn%D0%F4Xrn%D4%DE%EA%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%F0%CC%F2%D8%E6%D0%F6%E0%EC%EA%CC%D6%E0%D4%F6Xrn%FC%DE%D8%F2%D8Xrn%F6%u0100%EE%D8%A0%D6Xt%96Xr%7CXt%90X%7C%92Xrv%E0%D6Xr%7EXr%7C%F6%u0100%EE%D8%A0%D6Xr%7CXr%80j%FA%D0%E6%F8%D8X%7C%96Xt%90Xr%7C" onSetText='bill_ondatasetsettext("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><chnname></chnname></dsid>")' onGetText='bill_ondatasetgettext("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><chnname></chnname></dsid>")' onValid='bill_ondatasetvalid("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><chnname></chnname></dsid>")' format="<fields><field><fieldname>key1</fieldname><datatype>字符</datatype><displaylabel>当前id</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keyName1</fieldname><datatype>字符</datatype><displaylabel>名称一</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keyName2</fieldname><datatype>字符</datatype><displaylabel>名称二</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>key2</fieldname><datatype>字符</datatype><displaylabel>接受分配者id</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>typeId</fieldname><datatype>字符</datatype><displaylabel>id字段</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnname</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" idtype="5" controltype="dataset" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" savetable="fcq_relation_dict" async="否" fieldtrans="<root><field><name>keyName1</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>keyName2</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>chnname</name><trans></trans><rtrans></rtrans><sql>select%20typeId%2C%20chnname%20%20from%20fcq_relation_dict_type</sql></field></root>"></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 110px; DISPLAY: none; HEIGHT: 20px; TOP: 62px; LEFT: 229px" id=typeId onmovestart=moveStart() controltype="text" dataset="dataset2" field="typeId" china="id字段"></DIV><script>var grid1=new webgrid("grid1"); $obj("grid1").fnInit(); var dataset2=new dataset("dataset2"); var relationType=new dropdownlist("relationType"); $obj("relationType").fnInit(); </script></body></html>

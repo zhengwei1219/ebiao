@@ -1,0 +1,29 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>listbox控件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>listbox控件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">listbox控件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">listbox控件是标准的html的SELECT元素,不过它可以多选.可以JS代码来动态的初始化选项列表的内容. SqlCombo(obj,sql) 作用:用一个sql语句的结果填充选项列表, obj为listbox或combox对象,sql为要运行的新的SQL语句. 还有一个类似功能的函数: SqlCombo1(obj,sql),它和 SqlCombo(obj,sql)的差异是 SqlCombo1 是采用动态加option元素的方法来改变选项列表,SqlCombo是替换整个outerHTML串的方式.如表单打开之后事件中用SqlCombo则会使本控件的绑定数据集的状态丢失.此时应用SqlCombo1,如当选项列表的内容较多时,SqlCombo1比SqlCombo的运行速度会慢很多.另外 SqlCombo SqlCombo1都是采用同步方式,如要采用异步的话,则要用 fillcombox(oSql,callback,context) 函数,它的作用是: 运行一个SQL语句,将其结果以＜option>串的方式返回，oSql 为要运行的ＳＱＬ语句，callback 为后台处理完成后的回调函数，context 为上下文对象．常见JS代码写法是:<br>
+fillcombox(s1, function(result) { <br>
+   var s1 = result.value; <br>
+   var obj = result.context; <br>
+   if (isSpace(s1) == false) { obj.outerHTML = SelectAddOption(obj, s1); } <br>
+}, combobox1); <br>
+</FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312">	
+		<title>测试eform的安装情况</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="ProgId" content="VisualStudio.HTML">
+		<meta name="Originator" content="Microsoft Visual Studio .NET 7.1">
+		<script src="fceform/js/MicrosoftAjax.js"></script>
+		<script src="fceform/js/fcpub.js"></script>
+		
+	</head>
+	<body>
+		<FONT face="宋体"></FONT><STRONG>测试eform的安装情况:</STRONG>
+		<div id="div1"></div>
+		<script>
+			
+			function test1() {
+				var s="a";
+				try {
+					s = isSpace(s) ;
+				}catch(e){
+					div1.innerText += "无法读到fceform/js/fcpub.js文件的内容,可能是找不到fceform/js/fcpub.js文件,也可能是因为汉字的问题而使fcpub.js文件的格式不正确\r\n"  ;
+					return false ;
+				}
+				return true ;
+			}
+			function test2() {
+				//if(fcpubdata.dotnetVersion == ""){
+
+				    var sRet = new Eapi.RunAjax().sendHttp(location.protocol + '//' + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=HelloWorld", '');
+				    //alert(sRet);
+					if(sRet != "HelloWorld"){
+						var sV = ".NET";
+						if(fcpubdata.servletPath.indexOf("/servlet") >= 0) sV = "JAVA";
+					    div1.innerText += "无法调用到后台的 "+sV+" 程序,\r\n"+sRet;
+						return false;
+					}
+				//}
+				return true ;
+			}
+			function test3() {
+				
+					var sRet = SelectSql("select biaoshi from FC_MAXBH where biaoshi='BIL'",1,1);
+					//if(sRet == null){
+					//	div1.innerText += "无法调用到后台程序,\r\n";
+					//	return false;
+					//}
+					try {
+					    sRet = sRet.toLowerCase();
+					} catch (e) { }
+					if(sRet != "<root><record><biaoshi>bil</biaoshi></record><pages>1</pages></root>" && sRet != "<root></root>"){
+						div1.innerText += "无法调用到后台的数据库,\r\n错误原因:\r\n"+sRet+"\r\n";
+						return false;
+					}
+				return true ;
+			}
+			
+			
+			if(	test1() && test2() && test3()){
+				div1.innerText += "安装配置正确!" ;
+			};
+		</script>
+	</body>
+</html>

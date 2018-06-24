@@ -1,0 +1,159 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var objNav = new Object();
+objNav.prevPage = "wiz_field_first";
+objNav.nextPage = "wiz_field_finish";
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+
+function uf_open() {
+	PropWinOpenConfig(objNav);
+    SetCheckBoxValue($id("isMultiOne"), objNav.config.isMultiOne);
+    uf_dataContrlHide();
+    uf_controlTypeHide();
+
+}
+
+
+//保存配置信息,由工具栏来调用
+function saveConfig() {
+	 if ($id("isConst").value == "1" && $id('contComputer').value == "checkboxlist" ) {
+        objNav.isOk = false;
+        alert("checkboxlist控件只能选择数据词典表作选择项");
+        return;
+    }
+	if(IsSpace(dictType.value) == true && isConst.style.display == "block" && isConst.value == "数据词典表作选择项"){
+	  	objNav.isOk = false;
+	  	alert("选择数据词典内容的条件不能为空");
+	  	return;
+  	}
+	if (PropWinSaveConfig(objNav))	{
+		objNav.isOk = false;
+		return;
+	}
+    objNav.config.isMultiOne = isMultiOne.value;
+   // objNav.config.len = 50;
+ }
+
+
+function uf_constClick(){
+	if ($id("isConst").value == "1" && $id('contComputer').value == "checkboxlist" ) {
+    	alert("checkboxlist控件只能选择数据词典表作选择项");
+    }	
+}
+function uf_dataContrlHide() {
+    var isDisplay1 = "block";
+    var isDisplay2 = "none";
+    if ($id("isConst").value == "0") {
+        isDisplay1 = "none";
+        isDisplay2 = "block";
+    }
+    listText.style.display = isDisplay1;
+    listValue.style.display = isDisplay1;
+    lblListText.style.display = isDisplay1;
+    lblListValue.style.display = isDisplay1;
+    dictType.style.display = isDisplay2;
+    lbDataDict.style.display = isDisplay2;
+    
+    if ($id("isConst").value == "0" && $id('contComputer').value == "checkboxlist" ) {
+        labelCols.style.display = "block";
+    	colsNum.style.display = "block";
+    }else{
+    	labelCols.style.display = "none";
+    	colsNum.style.display = "none";
+    }
+    
+}
+
+function uf_controlTypeHide() {
+    var isDisplay1 = "none";
+    var isDisplay2 = "block";
+    var isDisplay3 = "none";
+    var isDisplay4 = "block";
+    var isDisplay5 = "none";
+    if (contComputer.value == "选择函数") {
+        isDisplay1 = "block";
+        isDisplay2 = "none";
+        isDisplay3 = "none";
+        isDisplay4 = "block";
+        isDisplay5 = "none";
+    } else if (contComputer.value == "dropdownlist") {
+        isDisplay1 = "none";
+        isDisplay2 = "block";
+        isDisplay3 = "none";
+        isDisplay4 = "block";
+        isDisplay5 = "block";
+    } else if (contComputer.value == "checkboxlist") {
+        isDisplay1 = "none";
+        isDisplay2 = "none";
+        isDisplay3 = "block";
+        isDisplay4 = "none";
+        isDisplay5 = "block";
+        //SetRadioValue($id("isConst"), 0);
+    } else {
+        isDisplay1 = "none";
+        isDisplay2 = "none";
+        isDisplay3 = "none";
+        isDisplay4 = "none";
+        isDisplay5 = "block";
+        
+    }
+    isMultiOne.style.display = isDisplay4
+    cmdSelectFun.style.display = isDisplay1;
+    selectFunction.style.display = isDisplay1;
+    isInput.style.display = isDisplay2;
+    isOther.style.display = isDisplay3;
+    isTree.style.display = isDisplay2;
+    isConst.style.display = isDisplay5;
+    dictType.style.display = isDisplay5;
+    lbDataDict.style.display = isDisplay5;
+    listText.style.display = isDisplay5;
+    listValue.style.display = isDisplay5;
+    lblListText.style.display = isDisplay5;
+    lblListValue.style.display = isDisplay5;
+    labelCols.style.display = isDisplay3;
+    colsNum.style.display = isDisplay3;
+	if($id('isSamePhone').value == 1) {
+		$id('selectInput').style.display = "block";
+	}else{
+		$id('selectInput').style.display = "none";
+	}
+	
+    if(contComputer.value == "listbox" || contComputer.value == "dropdownlist" || contComputer.value == "checkboxlist") uf_dataContrlHide(); 
+}
+
+function uf_selFun(){
+	var ret = DjOpen('zk_sel_fun_list', "", '展现');
+	if(ret != undefined){
+		selectFunction.value = ret;
+	}
+}
+
+function uf_selectPhone(){
+	var ret = DjOpen("zk_select_input",["多选列表",$id('contPhone').value]);	
+	if(IsSpace(ret) == false)  $id('contPhone').value = ret; 
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/js/fczk.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../../fceform/htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml billtaborder="<root><taborder>contComputer</taborder><taborder>isConst</taborder><taborder>dictType</taborder><taborder>cmdSelectFun</taborder><taborder>selectFunction</taborder><taborder>isInput</taborder><taborder>isTree</taborder><taborder>isRepeat</taborder><taborder>isNull</taborder><taborder>listText</taborder><taborder>listValue</taborder><taborder>defaultExp</taborder><taborder>isMultiOne</taborder><taborder>cmdDropDown1</taborder><taborder>isOther</taborder><taborder>cmdActionSet</taborder><taborder>fdname</taborder><taborder>fdchnname</taborder><taborder>helpText</taborder><taborder>readTrans</taborder><taborder>saveTrans</taborder><taborder>cmdDropDown2</taborder><taborder>cmdDropDown3</taborder><taborder>colsNum</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>tbname</taborder><taborder>cmdDropDown4</taborder><taborder>queryExp</taborder><taborder>isSamePhone</taborder><taborder>selectInput</taborder><taborder>contPhone</taborder><taborder>len</taborder></root>" dj_sn="wiz_field_select_much" caption="wiz_field_selectMuch" type="ZK" isfile="是" center="居中" posleft postop poswidth="390" posheight="520" window="有模式窗口" BLONopen="uf_open();new Eform.SysForm().setButtonImage() " BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" controlno="SKButton:0;SKDBedit:0;checkbox:9;label:17;radio:1;listbox:0;textarea:1;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:4;text:12;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><checkbox><id>isInput</id><id>isTree</id><id>isRepeat</id><id>isNull</id><id>isMultiOne</id><id>isOther</id><id>isSamePhone</id></checkbox><label><id>lbDataDict</id><id>lblListText</id><id>lblListValue</id><id>labDefaultExp</id><id>labFdname</id><id>labFdchnname</id><id>labHelpText</id><id>labReadTrans</id><id>labSaveTrans</id><id>labelCols</id><id>lblTitle</id><id>labTbname</id><id>label21</id><id>label20</id></label><radio><id>contComputer</id><id>isConst</id></radio><textarea><id>listText</id><id>listValue</id></textarea><combobox><id>dictType</id></combobox><a><id>showCont</id><id>showTd</id></a><button><id>cmdSelectFun</id><id>cmdDropDown1</id><id>cmdActionSet</id><id>cmdDropDown2</id><id>cmdDropDown3</id><id>button1</id><id>button2</id><id>cmdDropDown4</id><id>selectInput</id></button><text><id>selectFunction</id><id>defaultExp</id><id>fdname</id><id>fdchnname</id><id>helpText</id><id>readTrans</id><id>saveTrans</id><id>tbname</id><id>queryExp</id><id>contPhone</id><id>len</id></text><dataset><id>permitDs</id></dataset><spin><id>colsNum</id></spin></root>" idtype="1" runsave keyfield entertype="展现" codeheader OtherSave="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fczk.js&#13;&#10;~userfunc.js">&nbsp; 
+<FIELDSET style="POSITION: absolute; WIDTH: 271px; HEIGHT: 37px; TOP: 219px; LEFT: 91px" id=contComputer onmovestart=moveStart() contentEditable=false controltype="radio" NotBg="否" value="选择函数" onclick='bill_onclick("uf_controlTypeHide()")' temptext="选择函数&#13;&#10;dropdownlist&#13;&#10;listbox</br>&#13;&#10;checkboxlist" tempvalue="选择函数&#13;&#10;dropdownlist&#13;&#10;listbox&#13;&#10;checkboxlist" aspect="横向" legend="电脑中用"><LEGEND>电脑中用</LEGEND><INPUT id=RGcontComputer1 onclick=contComputer.value=RGcontComputer[0].value; value=选择函数 CHECKED type=radio name=RGcontComputer text="选择函数"><SPAN>选择函数</SPAN>&nbsp;<INPUT id=RGcontComputer2 onclick=contComputer.value=RGcontComputer[1].value; value=dropdownlist type=radio name=RGcontComputer text="dropdownlist"><SPAN>dropdownlist</SPAN>&nbsp;<INPUT id=RGcontComputer3 onclick=contComputer.value=RGcontComputer[2].value; value=listbox type=radio name=RGcontComputer text="listbox</br>"><SPAN>listbox<BR></SPAN>&nbsp;<INPUT id=RGcontComputer4 onclick=contComputer.value=RGcontComputer[3].value; value=checkboxlist type=radio name=RGcontComputer text="checkboxlist"><SPAN>checkboxlist</SPAN>&nbsp;</FIELDSET>&nbsp; 
+<FIELDSET style="POSITION: absolute; WIDTH: 271px; HEIGHT: 41px; TOP: 324px; LEFT: 91px" id=isConst onmovestart=moveStart() contentEditable=false controltype="radio" value="1" onclick='bill_onclick("uf_constClick();uf_dataContrlHide()")' temptext="常数选择项&#13;&#10;数据词典表作选择项" tempvalue="1&#13;&#10;0" aspect="横向" legend="数据选择项"><LEGEND>数据选择项</LEGEND><INPUT id=RGisConst1 onclick=isConst.value=RGisConst[0].value; value=1 CHECKED type=radio name=RGisConst text="常数选择项"><SPAN>常数选择项</SPAN>&nbsp;<INPUT id=RGisConst2 onclick=isConst.value=RGisConst[1].value; value=0 type=radio name=RGisConst text="数据词典表作选择项"><SPAN>数据词典表作选择项</SPAN>&nbsp;</FIELDSET><LABEL style="POSITION: absolute; WIDTH: 132px; HEIGHT: 18px; TOP: 369px; LEFT: 17px" id=lbDataDict onmovestart=moveStart() controltype="label" inputTag="否">数据词典内容做选择项</LABEL><SELECT style="POSITION: absolute; WIDTH: 196px; HEIGHT: 25px; TOP: 368px; LEFT: 165px" id=dictType onmovestart=moveStart() controltype="combobox" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F6%u0100%EE%D8%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D6%D0%F6%D0%D6%E0%D4%F6Xrn%FC%DE%D8%F2%D8Xrn%D6%D8%E6%D8%F6%D8%A8%D0%F2%E4Xt%96nXrn%D0%EA%D6Xrn%DA%D4%F4%u0100%F4%A8%D0%F2%E4Xt%96n" async="否" temptext tempvalue datasourceName sql check="2"></SELECT><INPUT style="POSITION: absolute; WIDTH: 199px; HEIGHT: 20px; TOP: 301px; LEFT: 91px" id=selectFunction onmovestart=moveStart() size=35 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 69px; HEIGHT: 23px; TOP: 298px; LEFT: 292px" id=cmdSelectFun onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_selFun()")'>选择函数</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 301px; LEFT: 88px" id=isInput onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否能输入</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 301px; LEFT: 184px" id=isTree onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否为下拉树</SPAN></DIV><SPAN style="POSITION: absolute; WIDTH: 25px; DISPLAY: block; HEIGHT: 11px; FONT-SIZE: 12px; TOP: 372px; LEFT: 60px" id=lblListText controltype="label" align="Left">显示</SPAN><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 112px; DISPLAY: block; HEIGHT: 76px; FONT-SIZE: 12px; TOP: 368px; LEFT: 91px" id=listText rows=1 cols=18 controltype="textarea" induce="否"></TEXTAREA><SPAN style="POSITION: absolute; WIDTH: 26px; DISPLAY: block; HEIGHT: 7px; FONT-SIZE: 12px; TOP: 371px; LEFT: 223px" id=lblListValue controltype="label" align="Left">取值</SPAN><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 109px; DISPLAY: block; HEIGHT: 74px; FONT-SIZE: 12px; TOP: 368px; LEFT: 253px" id=listValue rows=1 cols=16 controltype="textarea" induce="否"></TEXTAREA><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 450px; LEFT: 15px" id=labDefaultExp onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">公式默认值</LABEL><INPUT style="POSITION: absolute; WIDTH: 254px; HEIGHT: 20px; TOP: 446px; LEFT: 91px" id=defaultExp onmovestart=moveStart() size=37 controltype="text"> 
+<DIV style="POSITION: absolute; WIDTH: 78px; HEIGHT: 20px; TOP: 506px; LEFT: 87px" id=isRepeat onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>不允许重复值</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 78px; HEIGHT: 20px; TOP: 489px; LEFT: 87px" id=isNull onmovestart=moveStart() noWrap controltype="checkbox" NotBg="否" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>此字段中总是需要一个值来保存记录</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 278px; LEFT: 88px" id=isMultiOne onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>多选值返回表格不用逗号分隔,产生多条记录</SPAN></DIV><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 16px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 446px; BORDER-RIGHT: 0px; LEFT: 344px" id=cmdDropDown1 onmovestart=moveStart() controltype="button" dropstyle="是" onclick='bill_onclick("PropWinFx(defaultExp,tbname.value)")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 300px; LEFT: 88px" id=isOther onmovestart=moveStart() noWrap controltype="checkbox" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否有其它项</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 28px; LEFT: 17px" id=labFdname onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">字段名</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 25px; LEFT: 91px" id=fdname onmovestart=moveStart() value=field1 size=48 controltype="text" onblur="bill_onexit(&quot;$valid('不能为空','字段名称不能为空!');&quot;)"><LABEL style="POSITION: absolute; WIDTH: 76px; HEIGHT: 15px; TOP: 54px; LEFT: 17px" id=labFdchnname onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">字段中文名</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 48px; LEFT: 91px" id=fdchnname onmovestart=moveStart() value=字段1 size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 75px; LEFT: 17px" id=labHelpText onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">帮助文本</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; HEIGHT: 20px; TOP: 71px; LEFT: 91px" id=helpText onmovestart=moveStart() value=字段1 size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 100px; LEFT: 17px" id=labReadTrans onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">读出时转换</LABEL><INPUT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 20px; TOP: 94px; LEFT: 91px" id=readTrans onmovestart=moveStart() size=41 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 123px; LEFT: 17px" id=labSaveTrans onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">保存前转换</LABEL><INPUT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 20px; TOP: 117px; LEFT: 91px" id=saveTrans onmovestart=moveStart() size=41 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 75px; DISPLAY: none; HEIGHT: 25px; TOP: 198px; LEFT: 287px" id=cmdActionSet onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("eformWizFieldPowerSet()")'>权限设置</BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 94px; BORDER-RIGHT: 0px; LEFT: 345px" id=cmdDropDown2 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("PropWinFx(readTrans,tbname.value)")'></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 117px; BORDER-RIGHT: 0px; LEFT: 345px" id=cmdDropDown3 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("PropWinFx(saveTrans,tbname.value)")'></BUTTON><A style="POSITION: absolute; WIDTH: 188px; HEIGHT: 15px; TOP: 143px; LEFT: 91px" id=showCont onmovestart=moveStart() onclick="DjOpen('../../fceform/common/djframe.htm?djsn=zk_style_prop&amp;djtype=ZK&amp;type=2',objNav.config)" href="javascript:void(0)" target=_self controltype="a" href1>设置本字段显示控件的样式</A><A style="POSITION: absolute; WIDTH: 188px; HEIGHT: 15px; TOP: 167px; LEFT: 91px" id=showTd onmovestart=moveStart() onclick="DjOpen('../../fceform/common/djframe.htm?djsn=zk_style_prop&amp;djtype=ZK&amp;type=3',objNav.config)" href="javascript:void(0)" target=_self controltype="a" href1>设置本字段所在单元格的样式</A><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 305px; LEFT: 210px" id=labelCols onmovestart=moveStart() controltype="label" inputTag="否">分栏数</LABEL>
+<DIV style="POSITION: absolute; WIDTH: 70px; HEIGHT: 22px; TOP: 300px; LEFT: 252px; align: undefined" id=colsNum class=xpSpin align=undefined dataset="null" left="252" top="300" width="70px" height="22px" controltype="spin" field="null" value="2" Min="1" Max="20" NextNum="1" enabled="否" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 23px; TOP: 138px; LEFT: 288px" id=button1 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;propWinFieldPermit(permitDs,'valueHide')&quot;)">隐藏设置</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 23px; TOP: 163px; LEFT: 288px" id=button2 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;propWinFieldPermit(permitDs,'valueDisable')&quot;)">只读设置</BUTTON><?xml:namespace prefix = fc /><fc:dataset id=permitDs idtype="1" format="<fields><field><fieldname>valueDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>valueHide</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>expDisable</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>expHide</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>3000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" onSetText='bill_ondatasetsettext("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' onGetText='bill_ondatasetgettext("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' onValid='bill_ondatasetvalid("<dsid><valueDisable></valueDisable><valueHide></valueHide><expDisable></expDisable><expHide></expHide></dsid>")' async="否" isSubGrid="否" opensortno="1" pubpara="否" isaddemptyrec="否" submittype="2" submitno="1" issubds="否"></fc:dataset><LABEL style="POSITION: absolute; WIDTH: 114px; DISPLAY: none; FONT-FAMILY: 楷体_GB2312; HEIGHT: 22px; COLOR: #000080; FONT-SIZE: 14pt; TOP: 7px; FONT-WEIGHT: bold; TEXT-DECORATION: underline; LEFT: 9px" id=lblTitle onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">字段信息</LABEL><LABEL style="POSITION: absolute; WIDTH: 356px; HEIGHT: 15px; TOP: 7px; LEFT: 5px" id=labTbname onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">表名</LABEL><INPUT style="POSITION: absolute; WIDTH: 271px; DISPLAY: none; HEIGHT: 20px; TOP: 1px; LEFT: 90px" id=tbname disabled onmovestart=moveStart() size=48 controltype="text"><LABEL style="POSITION: absolute; WIDTH: 70px; HEIGHT: 16px; TOP: 467px; LEFT: 15px" id=label21 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">作查询条件时的默认值</LABEL><INPUT style="POSITION: absolute; WIDTH: 255px; HEIGHT: 20px; TOP: 469px; LEFT: 91px" id=queryExp onmovestart=moveStart() size=42 controltype="text"><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #c0c0c0; WIDTH: 17px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 469px; BORDER-RIGHT: 0px; LEFT: 344px" id=cmdDropDown4 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("PropWinFx(queryExp,tbname.value)")'></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 193px; LEFT: 87px" id=isSamePhone onmovestart=moveStart() noWrap controltype="checkbox" value="0" onclick='bill_onclick("uf_controlTypeHide();")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>手机上的配制是否和电脑上一样</SPAN></DIV><BUTTON style="POSITION: absolute; WIDTH: 68px; DISPLAY: none; HEIGHT: 25px; TOP: 194px; LEFT: 294px" id=selectInput onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_selectPhone()")'>手机配置</BUTTON><INPUT style="POSITION: absolute; WIDTH: 110px; DISPLAY: none; HEIGHT: 20px; TOP: 213px; LEFT: 270px" id=contPhone onmovestart=moveStart() controltype="text"><LABEL style="POSITION: absolute; WIDTH: 57px; HEIGHT: 16px; TOP: 531px; LEFT: 19px" id=label20 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">长度</LABEL><INPUT style="POSITION: absolute; WIDTH: 83px; HEIGHT: 20px; TOP: 527px; LEFT: 91px" id=len onmovestart=moveStart() value=50 size=14 controltype="text" onblur="bill_onexit(&quot;$valid('正整数');&quot;)"></DIV><script></script></body></html>

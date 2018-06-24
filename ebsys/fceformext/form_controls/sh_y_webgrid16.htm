@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//打开表单调用
+function uf_open () {
+	//给表格增加几行空行,对联动无关
+	var oRoot = imgdataset1.oDom.documentElement ;
+	if(oRoot != null){
+		if( oRoot.childNodes.length < 3 ) {
+			//强行加三行
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			imgdataset1.Append();
+			imgdataset1.Update("不检查");
+			
+			
+		}
+		var iRecNum =0 ; //记录号
+		var iFieldNum = 1 ; //字段顺序号,从0开始
+		//修改数据集中的数据
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "北京" ;
+		iRecNum++;
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "上海" ;
+		iRecNum++;
+		oRoot.childNodes(iRecNum).childNodes(iFieldNum).text = "河北" ;
+		
+		DsToGrid(imgwebgrid1); //修改表格上的数据
+	}
+	//imgdataset1.RecNo=0
+	imgwebgrid1.hide()
+	//表格的焦点移动到第二列时发生事件
+	//表格联动选
+	imgwebgrid1.onCellChange = function () {
+
+		if(event.newTD.cellIndex != 2) return ;  //焦点是否在第二列上，
+		var curRow = event.newTD.parentNode.rowIndex ;  //焦点所在的当前行
+		var curRowValue = imgwebgrid1.tab.rows(curRow).cells(1).innerText ;   //得到焦点在第一列当前行的值
+		var sXml="";
+		var sHtml1 = "<code><format>名称</format><sql1></sql1><xml>"
+		var sHtml2 = "</xml><blninput>否</blninput><blnempty>否</blnempty><check>2</check><onclickopen>event.showlist=true</onclickopen></code>"
+		switch(curRowValue){
+			case '北京': { 
+				sXml = sHtml1+"<tr><td>海淀区</td></tr><tr><td>朝阳区</td></tr><tr><td>上地</td></tr><tr><td>丰台区</td></tr>"+sHtml2 ;
+				break;
+			}
+			case '天津' : {
+				sXml = sHtml1+"<tr><td>北辰区</td></tr><tr><td>古沽区</td></tr><tr><td>大港区</td></tr><tr><td>南开区</td></tr>"+sHtml2;
+				break;
+			}
+			case '上海': {
+				sXml = sHtml1+"<tr><td>静安区</td></tr><tr><td>长宁区</td></tr><tr><td>徐汇区</td></tr><tr><td>谱头区</td></tr>"+sHtml2
+				break;
+			}
+			case '河北': {
+				sXml = sHtml1+"<tr><td>衡水</td></tr><tr><td>邢台</td></tr><tr><td>石家庄</td></tr><tr><td>定洲</td></tr><tr><td>保定</td></tr>"+sHtml2
+				break;
+			}
+			case '山东': {
+				sXml = sHtml1+"<tr><td>烟台区</td></tr><tr><td>德州市</td></tr><tr><td>丰阳</td></tr><tr><td>柏林</td></tr>"+sHtml2;
+				break;
+			}
+			default: {
+				sXml = "" ;
+			}		
+		}
+		imgwebgrid1.tab.children[0].children[2].cz  = sXml ;
+	}
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label4</id><id>Label5</id></label><button><id>FCButton1</id></button><grid><id>imgwebgrid1</id></grid><dataset><id>imgdataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" billtaborder="<root><taborder>FCButton1</taborder><taborder>imgwebgrid1</taborder></root>" idtype="1" OtherSave="否" isfile="是" posheight poswidth postop posleft entertype="修改" window="当前窗口" keyfield codeheader="BBB" mkbh caption="grid16_联动选择数据" type="SH1" dj_sn="sh_y_webgrid16" toolbar="不带工具栏" BLONopen="uf_open()" AutoResizeXml><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<imgwebgrid1><col></col><col></col></imgwebgrid1>")' id=imgwebgrid1 ondblclick='bill_ongriddblclick("<imgwebgrid1><col></col><col></col></imgwebgrid1>")' onclick='bill_ongridclick("<imgwebgrid1><col></col><col></col></imgwebgrid1>")' controltype="grid" visible="是" dataset="imgdataset1" canselect="是" autoheight="否" autowidth="否" autoappend="是" readonly="否" format="<cols><col><fname>areaname</fname><cname>城市</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%3E%3Ctd%3E%u5317%u4EAC%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5929%u6D25%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E0A%u6D77%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u6CB3%u5317%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5C71%u4E1C%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%u5317%u4EAC%0D%0A%u5929%u6D25%0D%0A%u4E0A%u6D77%0D%0A%u6CB3%u5317%0D%0A%u5C71%u4E1C%3C/temptext%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>areaname1</fname><cname>市区</cname><width>10</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col></cols>" width="589" height="329" top="45" left="1">
+<TABLE style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=imgdataset1 controltype="dataset" opensortno="1" pubpara="否" format="<fields><field><fieldname>New_areaid</fieldname><datatype>字符</datatype><displaylabel>地区ID</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>areaname</fieldname><datatype>字符</datatype><displaylabel>城市</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>areaname1</fieldname><datatype>字符</datatype><displaylabel>市区</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><New_areaid></New_areaid><areaname></areaname><areaname1></areaname1></dsid>")' onGetText='bill_ondatasetgettext("<dsid><New_areaid></New_areaid><areaname></areaname><areaname1></areaname1></dsid>")' onSetText='bill_ondatasetsettext("<dsid><New_areaid></New_areaid><areaname></areaname><areaname1></areaname1></dsid>")' isSubGrid="undefined"></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 48px; LEFT: 598px" id=FCButton1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("imgdataset1.Append()")' dropstyle="否">增加行</BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 23px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: 18px; FONT-WEIGHT: bold; LEFT: 9px" id=Label1 onmovestart=moveStart() noWrap controltype="label" value="Label1">常数数据联动</DIV>
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 387px; LEFT: 17px" id=Label2 onmovestart=moveStart() noWrap controltype="label" value="Label2">常数数据联动</DIV>
+<DIV style="POSITION: absolute; WIDTH: 90px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 407px; LEFT: 15px" id=Label4 onmovestart=moveStart() noWrap controltype="label" value="Label2">表格第一列中下拉列表的值是常数</DIV>
+<DIV style="POSITION: absolute; WIDTH: 132px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 427px; LEFT: 15px" id=Label5 onmovestart=moveStart() noWrap controltype="label" value="Label5">第二列中的值是跟拒第一列中值改变后，动态加值</DIV></DIV></body></html>

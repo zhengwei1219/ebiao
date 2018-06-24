@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field"></meta>
+  <initial-actions>
+    <action id="3205" name="动作节点">
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="1574" old-status="Finished" status="Underway" step="5607"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="8875" name="结束节点">
+    </step>
+    <step id="5607" name="处理节点1" compensate="cn.com.fcsoft.extend.ReturnAddCallerToTask">
+      <tasks>
+        <task name="子流程一的任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">执行者(caller)</arg>
+          <arg name="taskType">2</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="stepId">5607</arg>
+          <arg name="user">${caller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9400" name="处理节点1">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">9400</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">5607</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="3878" old-status="Finished" status="Underway" step="8875"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field"></meta>
+  <initial-actions>
+    <action id="109" name="初始化动作">
+      <results>
+        <unconditional-result id="6466" old-status="Finished" status="Underway" step="8416"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1619" name="结束节点">
+    </step>
+    <step id="8416" name="分配步骤">
+      <actions>
+        <action id="1959" name="分配步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_dynamic_node_define%26djtype%3DWF%26dynamic_node_id%3D1416%26dynamic_node_type%3Dsplit">
+          <results>
+            <unconditional-result id="4707" old-status="Finished" status="Underway" split="1416"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8536" name="步骤节点A">
+      <actions>
+        <action id="8354" name="步骤节点A">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="rolename">${role_a}</arg>
+                <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+                <arg name="role">${role_a}</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="9741" old-status="Finished" status="Underway" step="8211"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8211" name="步骤节点B">
+      <actions>
+        <action id="1056" name="步骤节点B">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="class.chn">判断执行者用户是否在指定的群组</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.UserInGroupCondition</arg>
+                <arg name="groupname">${group_b}</arg>
+                <arg name="group">${group_b}</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="4209" old-status="Finished" status="Underway" join="7209"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="1416"
+ name="动态分支"
+ is-dynamic="1"
+>
+      <params>
+<param 
+ name="role_a"
+ desc="步骤A的执行角色"
+ />
+<param 
+ name="group_b"
+ desc="步骤B的执行群组"
+ />
+</params>
+        <unconditional-result id="5577" old-status="Finished" status="Underway" step="8536"/>
+      </split>
+  </splits>
+  <joins>
+    <join id="7209"
+ name="动态合并"
+ is-dynamic="1"
+>
+      <conditions>
+        <condition type="class">
+          <arg name="split_id">1416</arg>
+          <arg name="class.chn">判断所有动态创建的分支是否都完成了</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.DynamicJoinCondition</arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="5921" old-status="Finished" status="Underway" step="1619"/>
+    </join>
+  </joins>
+</workflow>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<STYLE>
+  .userData{behavior:url(#default#userData);}
+</STYLE>
+<script src="../../fceform/js/csjsrequest.js"></script>
+
+<script >
+    function window_onload() {
+
+
+
+
+        
+        
+
+
+
+	userData=oForm.oInput
+	/*if(typeof parent.curUserID != "undefined" && typeof parent.curUserID != "" ){
+		try{
+		SaveUserData("hr","curuser",parent.curUserID)
+		}catch(e){}
+	}*/
+//动态加载页面,
+	//var sVersion="测试"  //测试/正式
+	var s=parent.sDivHtml
+	//if(isSpace(s)==false){
+	if(typeof(s) != "undefined" && s != null && s !="" && s != " " && s != "null" && s != "undefined"){
+		//if(s.length> 44 ){  //djsn 40 +.htm 4 最多44
+		if(Request.QueryString("isfile") == "test"){
+			var pubsrc="./djempty.htm";
+			parent.topic.location.assign(pubsrc);
+
+		} else if(Request.QueryString("isfile") == "yes"){
+			var pubsrc = "./djempty.htm?isfile=yes"
+			parent.topic.location.assign(pubsrc)			
+		} else if (parent.topic.location.href=="about:blank" || parent.topic.location.href=="null.htm"){
+            
+ 			parent.topic.location.assign("../dj/"+s)	
+ 		}
+ 	}
+	
+}
+</script>
+
+</HEAD>
+<BODY defer onload="window_onload()"  >
+
+
+<form id="oForm">
+	<input Class="userData" style="DISPLAY: none;  " ID="oInput">
+</form>
+
+</BODY>
+</HTML>

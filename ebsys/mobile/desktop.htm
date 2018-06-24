@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eworkflow手机版桌面</title>
+<link rel="stylesheet"  href="jquery/jquery.mobile-1.2.0.css" />
+<style type="text/css">
+
+	.iconmenu li{ float:left; list-style:none; line-height:8px; padding-right:6px;padding-left:6px; margin:10px 0; text-align:center; }
+	.iconmenu img{ display:block;}
+	.iconmenu a {color: #3e3e3e;font-weight:bold; font-size:14px;}
+	.iconmenu a:link {color: #3e3e3e;text-decoration:none;}
+	.iconmenu a:hover {color: #3e3e3e;}
+	.iconul{ padding-left:0px; padding-right:0px;}
+</style>
+<script src="jquery/jquery.js"></script>
+<script src="jquery/jquery.mobile-1.2.0.js"></script>
+
+<script src="../fceform/js/MicrosoftAjax.js"></script>
+<script src="../fceform/js/fcpub.js"></script>
+<script src="../fceform/js/csjsrequest.js"></script>
+<script language="javascript" >
+		$(document).ready(function() { 
+			//装入menu_m.xml文件内容
+		    var oXml = SetDomFile("desktop.xml");	
+			
+			var ipad = parent.Request.QueryString('ipad').toString();
+
+
+	    	if (!IsSpace(ipad) && ipad=="1")//是平板登录
+		    	ipad="ipad=1";//加到菜单链接后面
+		    else
+			    ipad="1=1";
+
+			if (oXml.documentElement){
+		    	var sub = oXml.documentElement.childNodes;
+				var sHtml="";
+				
+		    	for (i=0;i<sub.length;i++)
+		    	{ 
+			    	var node = sub[i];
+			    	if (node.nodeType==1){// only process element nodes 						
+						var l = node.childNodes.length;
+	
+						sHtml ="<ul class='iconul'>";	
+											
+						for (j=0;j<l;j++){					
+							var menu = node.childNodes[j];
+							if (menu.nodeType==1){
+								var href = menu.getAttribute("href");
+								var icon = menu.getAttribute("icon");
+								var desc = menu.getAttribute("desc");
+								if (href.indexOf("?")>0)
+									href +="&amp;" + ipad;
+								else
+									href +="?" + ipad;
+	
+								sHtml +="<li><a href='" + href + "' rel='external'><img src='" + icon + "' alt='"+ desc + "'><br/>" + desc + "</a></li>";																								
+							}	
+				
+						}
+						sHtml +="</ul>";						
+						
+
+						$(".iconmenu").append($(sHtml));		
+						
+			    	} 
+		    	}
+
+				//menuli.innerHTML = liHtml;
+		    }
+			$("#username").text("欢迎您：" + GetSessionOne("username"));
+			//var obj=$("#username")[0];
+			//obj.children[0].children[0].innerText = "欢迎：" + GetSessionOne("username");
+			
+
+		})
+		
+
+		
+		function doExit() {
+		    var loginsuffix = parent.Request.QueryString('suffix').toString();
+		    //var url = "login.htm";
+		    var url = "login.";
+		    if (IsSpace(loginsuffix))
+		        url += "htm";
+		    else
+		        url += loginsuffix;
+			var ipad = parent.Request.QueryString('ipad').toString();
+				
+	    	if (!IsSpace(ipad) && ipad=="1")
+		    	url +="?ipad=1";
+	    	window.open(url,"_parent");
+			
+		}
+
+		</script>
+</head>
+<body>
+<div data-role="page" data-theme="b" >
+	<div data-role="header" data-theme="b" >
+		<a href="content.htm" data-icon="arrow-l" data-role="button" rel='external'>菜单</a>  
+		<h1 id="username"></h1>
+		
+		<a class="ui-btn-right" href="javascript:doExit();" data-role="button" data-icon="gear" data-transition="slideup">退出</a>
+
+		
+	</div>
+	<!-- /header -->
+	<div data-role="content" data-theme="b">
+		
+		
+		<div class="iconmenu">
+
+		</div>
+
+	</div>
+	<!-- /content -->
+	<div data-role="footer" data-theme="b">
+		<h4>Copyright &copy; 2013 www.fcsoft.com.cn</h4>
+		
+	</div>
+	<!-- /footer -->
+</div>
+<!-- /page -->
+</body>
+</html>

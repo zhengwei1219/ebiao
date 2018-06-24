@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>编辑代码</title>
+    <link rel="stylesheet" href="codemirror.css">
+    <script src="codemirror.js"></script>
+    
+    <script src="jshint-2.1.9.js"></script>
+    <script src="addon.js"></script>
+    <script src="tern.js"></script>
+   
+    <script src="ecma5.js"></script>
+   
+    <script>
+        var p_winName = "";
+        var editor = null;
+        var isIe9 = false;
+        if (navigator.userAgent.indexOf(' MSIE ') > -1) {
+            if (parseFloat(navigator.userAgent.match(/MSIE (\d+\.\d+)/)[1]) >= 9) isIe9 = true;
+        }
+//        if (isIe9) {
+//            var scripts = ["tern.js"];
+//            var heads = document.getElementsByTagName("head");
+//            if (heads.length > 0) {
+//                for (var i = 0; i < scripts.length; ++i) {
+//                    var script = document.createElement("script");
+//                    //script.charset="gb2312";
+//                    script.src = scripts[i];
+//                    heads[0].appendChild(script);
+//                }
+//            }
+//        }
+        function cmdOk_onclick() {
+            var oWin = window.opener;
+            if (oWin != null) {
+                if (typeof (oWin.textarea_code) == "undefined" || oWin.textarea_code == null) {
+                    oWin.textarea_code = new Object();
+                }
+                if (typeof (oWin.textarea_code.title) != "undefined" && oWin.textarea_code.title != null) {
+                    oWin.textarea_code.title = document.getElementById("lblTitle").innerText;
+                }
+                if (typeof (oWin.textarea_code.value) != "undefined" && oWin.textarea_code.value != null) {
+                    editor.save();
+                    oWin.textarea_code.value = document.getElementById("code").value;
+                    //debugger
+
+                    var fileName = "newJs";
+                    if (oWin.fcpubdata.area.dj_sn) fileName = oWin.fcpubdata.area.dj_sn;
+                    var winName = oWin.fcpubdata.area.type + "_" + fileName;
+                    if (p_winName == winName) {
+                        oWin.pstrUserFunction = oWin.textarea_code.value;
+                    }
+                }
+            }
+            window.opener = null;
+            window.close();
+        }
+        function getHeight() {
+            var winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
+            //var oCode = document.getElementById("code");
+            //oCode.CodeMirror.getWrapperElement().style.height = (winHeight - 40) + "px";
+            //alert((winHeight - 40))
+            //oCode.style.height = (winHeight - 40) + "px";
+            return (winHeight - 30) + "px";
+        }
+
+        window.onload = function() {
+
+            var oWin = window.opener;
+            if (oWin != null && typeof (oWin.textarea_code) != "undefined" && oWin.textarea_code != null) {
+                //debugger;
+                if (typeof (oWin.textarea_code.title) != "undefined" && oWin.textarea_code.title != null) {
+                    document.getElementById("lblTitle").innerText = oWin.textarea_code.title;
+                    document.title = oWin.textarea_code.title;
+                }
+                if (typeof (oWin.textarea_code.value) != "undefined" && oWin.textarea_code.value != null) {
+                    document.getElementById("code").value = oWin.textarea_code.value;
+                }
+                p_winName = oWin.textarea_code.winName;
+            }
+            if (!isIe9) {
+                CodeMirror.commands.autocomplete = function(cm) {
+                    CodeMirror.showHint(cm, CodeMirror.hint.javascript);
+                    //CodeMirror.showHint(cm, CodeMirror.hint.anyword);
+
+                }
+            }
+            //setHeight();
+            var editorOption = {
+                mode: "javascript",
+                lineNumbers: true,
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                //showTrailingSpace: true,
+                continueComments: "Enter",
+
+                lineWrapping: true,
+                //lint: true,
+
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "CodeMirror-lint-markers"],
+                highlightSelectionMatches: { showToken: /\w/ },
+                styleActiveLine: true,
+                tabSize: 4,
+                indentUnit: 4,
+                indentWithTabs: true,
+
+                extraKeys: {
+                    "Shift-/": function(cm) { cm.foldCode(cm.getCursor()); },
+                    "Ctrl-Enter": "autocomplete",
+                    //"Ctrl-Enter": function(cm) { ternServer.complete(cm); },
+                    "Ctrl-I": function(cm) { ternServer.showType(cm); },
+                    "Alt-.": function(cm) { ternServer.jumpToDef(cm); },
+                    "Alt-,": function(cm) { ternServer.jumpBack(cm); },
+                    "Ctrl-R": function(cm) { ternServer.rename(cm); },
+                    "Ctrl-/": "toggleComment"
+                }
+            };
+            if (isIe9) {
+                var ternServer = new CodeMirror.TernServer({ defs: [ecma5] });
+                editorOption.lint = true;
+                editorOption.extraKeys["Ctrl-Enter"] = function(cm) { ternServer.complete(cm); };
+            }
+
+
+            editor = CodeMirror.fromTextArea(document.getElementById("code"), editorOption);
+            editor.setOption("theme", "eclipse");
+            try {
+                editor.foldCode(CodeMirror.Pos(8, 0));
+            } catch (e) { }
+
+            if (isIe9) editor.on("cursorActivity", function(cm) { ternServer.updateArgHints(cm); });
+            editor.setSize("100%", getHeight());
+            CodeMirror.on(window, "resize", function() {
+                //setHeight();
+                editor.setSize("100%", getHeight());
+            });
+        }
+    
+</script>
+
+  </head>
+  <body>
+    <div>&nbsp;<button id="cmdOk" onclick="cmdOk_onclick()">确 定</button>&nbsp;<a href="keyhelp.htm" target=_blank >帮 助</a>&nbsp;<span id="lblTitle"></span></div>
+
+<div><textarea id="code" name="code">
+
+</textarea></div>
+
+
+
+  </body>
+</html>

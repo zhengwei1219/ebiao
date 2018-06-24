@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>查看视图</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">查看视图</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.查看视图</div>
+        &nbsp;&nbsp;&nbsp; 用户对一些信息的权限只能查看不能对其进行修改,就需要查看视图表单,这种表单只显示一条记录,如果是一个主从表的查看视图,那主表只显示一条记录,从表显示多条记录.它不需要设置表的保存设置,只需要设置数据集打开页的sql语句来显示数据,数据集字段名与控件绑定.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_4_1_read'>查看视图</A> 进入查看视图设计界面.<a class="shili" href='../../fceform/common/djframe.htm?djsn=help_4_1_read&djtype=FT&paravalue=ZCA00000081'>运行查看视图</A> 进入查看视图运行界面.<br />
+       <div class="divTitle">2.查看视图的设置</div>
+       &nbsp;&nbsp;&nbsp; 做表单时,只读控件可用label控件,数据集控件中的字段与显示值的控件一一绑定,数据集中设置sql语句<p>select * from FCS_EMPLOYEE where semployeeid=':{$urlParam("paravalue")}:'</p>查询出当前要显示的记录. semployeeid=':{$urlParam(&quot;paravalue&quot;)}:'是接收到的运行表单的url上参数名为paravalue的参数值, :{和}:是一个替换标记,它们之间应是一个javascript表达式，在运行SQL语句之前，会先将这个javascript表达式的值计算出来，替换SQL语句的这一部分内容。 运行表单的url如下.<p 
+               class="MsoNormal">
+               <span lang="EN-US" style="font-size:13.0pt;font-family:新宋体;
+mso-hansi-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-font-kerning:0pt;mso-no-proof:yes">
+               ../../fceform/common/djframe.htm?djsn=help_4_3_edit&amp;djtype=FT&amp;paravalue=ZCA00000081</span></p>
+             <img  src ="images/help_4_1_2.gif"/>
+       <div class="divTitle">3.运行查看视图</div>
+           &nbsp;&nbsp;&nbsp; 这是运行的查看视图界面:<br /><img src="images/help_4_1_3.gif"/><br />
+</div>
+</body>
+</html>

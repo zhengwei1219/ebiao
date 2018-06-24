@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>
+    表单名称</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+
+<table  class="tableTitle">
+<tr><td class="title">  
+     表单名称</td></tr>
+ <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>
+         返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table>
+  <div  class=mainDiv>
+<div class=" divTitle ">1. 表单SN</div>
+  &nbsp;&nbsp;&nbsp;&nbsp;在做表单时要给表单起个名字,就和其它文件要起文件名一样,这个表单名字在eform中叫表单SN，在保存表单时它会生成以表单SN为主文件名的文件.在表单属性页必须设置表单英文名（表单SN）,运行表单时就靠表单SN和表单的分类路径来找到要运行的表单文件,表单保存前会对表单英文名进行检查.<br /> <img  src ="images/help_2_1_1.gif"/>
+<div class=" divTitle ">2. 表单中文名</div>
+&nbsp;&nbsp;&nbsp;&nbsp;表单中文名用来显示窗口的标题,如果表单保存到数据库,可以用表单中文名在数据库的fc_billzl表中查找你要用的表单.
+<div class=" divTitle ">3. 表单分类</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;表单保存到数据库时，设置此分类才有用,可以在数据库中查找出此分类的所有表单，这个分类是供用户自定义表单分类用。保存在数据库的fc_billzl表的userType字段上，下拉列表中的可选择的内容也是取自数据库的fc_billzl表的userType字段的不重复值。它也可以直接手工输入。
+<div class=" divTitle ">4. 生成路径分类</div>
+&nbsp;&nbsp;&nbsp;表单生成路径分类的信息保存在fceformext/xml/billtype.xml中,分类说明列中的信息是分类的中文名,分类列中的信息是url运行时要带的分类名,生成文件路径列中的信息是主文件名保存的目录,扩展名列中的信息是文件的扩展名.<br />
+&nbsp;&nbsp;&nbsp; 这是运行示例中心的一个表单的url 
+      http://localhost/webbill/ebsys/fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=basicControlAndDateSave,
+      djtype=FT中的FT就是开发测试的分类.jsp是java的文件扩展名,aspx是.net文件的扩展名,不推荐使用这两种.推荐使用htm扩展名.<br /><img  src ="images/help_2_1_5.gif"/><br />
+    <div class=" divTitle ">5. 修改表单保存类型</div>
+&nbsp;&nbsp;&nbsp;&nbsp;表单默认保存成文件,如果用户需要默认保存到数据库,只需修改fceform/dj目录下的form.dj表单中保存类型的默认设置,把保存到文件的勾去掉.     
+     <div class=" divTitle ">6. 保存到文件</div>  
+     &nbsp;&nbsp;&nbsp;&nbsp;用户的表单放在 供用户使用 分类下,保存成功后表单放在ebsys/fceformext/form_test目录下,会生成一个dj文件和一个htm文件.如果htm丢失,则在表单设计器中保存本表单时还会产生一个htm文件,如果表单dj文件丢失,表单就丢失了.无法从表单的htm文件生成表单的dj文件。如下图dropdownTree1表单,保存类型是保存到文件,保存成功后,保存到了form_test目录下.<br /> <img  src ="images/help_2_1_1.gif"/><img  src ="images/help_2_1_2.gif"/><br />
+     <div class=" divTitle ">7. 保存到数据库</div>
+     &nbsp;&nbsp;&nbsp;&nbsp;表单保存成功后,会在数据库的fc_billzl表中添加一条记录.保存表单到fc_billzl表时除了将当前表单的设计串保存之外，还会生成一个相应正式运行文件。此文件的扩展名一般为HTM，可以在表单分类中设置它的扩展名，如下图dropdownTree1表单保存到了数据库fc_billzl表的一条记录中.<br /><img  src ="images/help_2_1_3.gif"/><img  src ="images/help_2_1_4.gif"/><br />  
+    <div class=" divTitle ">8. 窗口状态</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;当用户选择窗口状态为模态窗口时,而且是用DjOpen方法打开的窗口,窗口的位置和窗口的坐标,高度和宽度将起作用.这些位置信息是保存在billpos.xml文件中的，billpos.xml文件的路径是表单dj文件保存在同一目录中.</br>
+    <div class=" divTitle ">9. eform表单的设计串和运行串的比较 </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;在eform的表单设计器中做一个表单，实际上会生成两份表单串。一份是设计串，供在表单设计器打开再修改时用，另一份是运行串，供直接运行表单时用。设计串保存在fc_billzl表的designtext字段中，运行串保存在fc_billzl表的xmltext字段中。设计串保存为.dj的文件，运行串保存为.htm的文件。由设计串可以通过转换程序转换生成运行串，但由运行串无法生成设计串。设计串类似于源码，运行串类似于编译好后的可执行文件。表单正式做好后，运行表单就可以运行.htm的文件，这样可以大大提高运行效率。 </br>
+    &nbsp;&nbsp;&nbsp;&nbsp;运行表单分测试运行表单和直接运行表单两种。测试运行保存在数据库中的表单时，是读出fc_billzl表中的xmltext字段的值，将它放到页面上，然后再运行此字符串的。 测试运行保存在文件中的表单时，是先读出.dj的文件，然后执行设计串生成运行串的转换程序，再运行转换后的字符串的。 直接运行表单是直接链接打开到保存的htm文件。测试运行表单能够让修改的内容立即生效，立即看到修改后结果。直接运行表单的运行效率高。
+
+
+    </br>
+    </div>
+
+</body>
+</html>

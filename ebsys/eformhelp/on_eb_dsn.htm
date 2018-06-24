@@ -1,0 +1,79 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>数据库连接串的写法</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width="99.8%" bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  e表<br> 
+<b><font style='font-size:13px;'>&nbsp;数据库连接串的写法</font></b></td>
+</tr>
+</table>
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;<b><FONT style="font-size:12px;">对于e表 for .net版来说</FONT></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for .net版来说, 数据库连接串是不用将驱动程序和数据源URL分开来写的，程序总是将驱动程序编辑
+框中输入的内容加上";"加上数据源URL编辑框中输入的内容加上";User ID="+用户名编辑框中输入的内容加上";Password="+口令编辑框中输入的内容来得到一个数据库的连接串的。<br>
+.net程序连数据库常用的方式有：oledb,sqlclient,oracleclient。在默认情况下，e表是靠如下逻辑来区分采用哪种方式来连接的: <br>
+<pre>
+	if(strConnection.IndexOf("provider=") >= 0) 
+	{		
+		return new OleDBOperator(strConnection);	
+	}		
+		else     
+	{		
+		if(strConnection.IndexOf("local") >= 0)  //假定连接串中含有local字样就认为是连sqlserver库
+			return new SqlDBOperator(strConnection);	
+		else
+			return new OracleDBOperator(strConnection);
+	}	 
+</pre><br>
+其意思是如数据库连接串中含有provider= 就表示用 oledb方式来连，否则如数据库连接串中含有local 就表示用sqlclient方式来连，余下就是用oracleclient方式来连了。<br>
+数据库连接串的写法格式常用有以下几种：<br>
+<pre>
+	驱动程序：Provider=SQLOLEDB
+	数据源URL：Data Source=localhost;Initial Catalog=ebtest
+	用户名：sa
+	口令：
+	Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=ebtest;User ID=sa;pwd=;
+	表示用oledb方式来连接sql server库
+	
+	驱动程序：Data Source=localhost;
+	数据源URL：Initial Catalog=ebtest
+	用户名：sa
+	口令：
+	Data Source=localhost;Initial Catalog=ebtest;User Id=sa;Password=;
+	表示用sqlclient方式来连接sql server库
+
+	驱动程序：Provider=OraOLEDB.Oracle
+	数据源URL：Data Source=sys
+	用户名：eboracle
+	口令：eboracle
+	Provider=OraOLEDB.Oracle;Data Source=sys;User ID=eboracle;Password=eboracle;
+	表示用oledb方式来连接oracle库
+	
+	驱动程序：Data Source=sys
+	数据源URL：Integrated Security=no
+	用户名：eboracle
+	口令：eboracle
+	Data Source=sys;Integrated Security=no;User Id=eboracle;Password=eboracle;
+	表示用oracleclient方式来连接oracle库
+</pre>
+</FONT><br>
+&nbsp;<b><FONT style="font-size:12px;">对于e表 for Java版来说</FONT></b><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">对于e表 for Java版来说，常用写法如下： </FONT><br>
+<pre>
+	驱动程序：com.newatlanta.jturbo.driver.Driver
+	数据源URL：jdbc:JTurbo://localhost/ebtest/charset=GBK
+	用户名：sa
+	口令：
+	表示连接sql server库
+	
+	驱动程序：oracle.jdbc.driver.OracleDriver
+	数据源URL：jdbc:oracle:thin:@localhost:1521:sys
+	用户名：eboracle
+	口令：eboracle
+	表示连接oracle库
+</pre>
+
+
+<br>
+</body>
+</html>
+

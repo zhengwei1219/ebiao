@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var sFieldInfo="<set><pages>0</pages><fields><field><fieldname>sdata</fieldname><datatype>字符</datatype><displaylabel>数据集</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sfield</fieldname><datatype>字符</datatype><displaylabel>英文字段名</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>schnname</fieldname><datatype>字符</datatype><displaylabel>中文名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere</fieldname><datatype>字符</datatype><displaylabel>条件</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>svalue</fieldname><datatype>字符</datatype><displaylabel>字符值</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sint</fieldname><datatype>整数</datatype><displaylabel>数字值</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere2</fieldname><datatype>字符</datatype><displaylabel>条件</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields></set>"
+
+function uf_open(){
+	new Eform.SysForm().setButtonImage();
+	try { //出错表示是增加
+		var arr = fcpubdata.obj[1]
+		var sxml = "<root>"+arr[1]+sFieldInfo+"</root>";
+		if(IsSpace(sxml)==false){
+			dssub1.OpenXmlData(sxml);
+			SKDBcombobox4.value=arr[3];
+	        FCDBedit6.value=arr[4];
+	        SKDBMemo1.value=arr[5];
+		}
+	}catch(e){}
+}
+
+function uf_selfield() {
+     var arrtmp=contselfield(fcpubdata.obj[0]);
+     //alert(arrtmp[0])
+    if(typeof arrtmp != "undefined"){
+     	dssub1.Fields.Field['sdata'].Value=arrtmp[0];	
+		dssub1.Fields.Field['sfield'].Value=arrtmp[1];
+		dssub1.Fields.Field['schnname'].Value=arrtmp[2];
+		dssub1.fset_cont();
+     
+    }
+    //alert(FCDBedit1.value)
+}
+
+//条件是否合法
+function uf_checkCond(){
+	dssub1.bEdit=true;
+	dssub1.Update('不检查');
+	for(i=0;i<dssub1.RecordCount;i++){
+		var sDs=dssub1.oDom.documentElement.childNodes(i).childNodes(0).text;
+		var swh1=dssub1.oDom.documentElement.childNodes(i).childNodes(3).text;
+		var svl=dssub1.oDom.documentElement.childNodes(i).childNodes(4).text;
+		var sint=dssub1.oDom.documentElement.childNodes(i).childNodes(5).text;
+		var swh2=dssub1.oDom.documentElement.childNodes(i).childNodes(6).text;
+		//alert(IsSpace(sDs))
+		if(IsSpace(sDs)==false){
+			if( IsSpace(swh1)){
+				alert("请输入该条件");
+				return 0;	
+			}
+		}else{
+			alert("请输入数据集及字段,如果要关闭窗口,请点击【取消】");
+			return 0;
+		}
+		
+		if(IsSpace(dssub1.oDom.documentElement.childNodes(i+1).childNodes(0).text)==false && dssub1.oDom.documentElement.childNodes(i+1).childNodes(0).text!="0"){
+			if(IsSpace(swh2)){
+				alert("请选择条件（或/与）")	;
+				return 0;
+			}	
+		}
+		if(swh1=="包含" || swh1=="不包含" || swh1=="开始于" || swh1=="结束于" || swh1=="为空" || swh1=="不为空"){
+			if(IsSpace(sint)==false){
+				alert("条件不合法，请重新填写");
+				return 0;	
+			}	
+		}
+		if(swh1=="为空" || swh1=="不为空"){
+			if(IsSpace(svl)==false){
+				alert("条件不合法，请重新填写");
+				return 0;	
+			}	
+		}
+		if(IsSpace(svl)==false && IsSpace(sint)==false){
+			alert("条件不合法，请重新填写");
+			return 0;	
+		}
+	}		
+}
+
+//条件
+function uf_strReturn(){
+	var s1="";
+	var str="'";
+	var sfun=uf_checkCond();
+	if(sfun=="0"){
+		return ;	
+	}
+	for(i=0;i<dssub1.RecordCount;i++){
+		var sDs=dssub1.oDom.documentElement.childNodes(i).childNodes(0).text;
+		var sfd=dssub1.oDom.documentElement.childNodes(i).childNodes(1).text;
+		var schn=dssub1.oDom.documentElement.childNodes(i).childNodes(2).text;
+		var swh1=dssub1.oDom.documentElement.childNodes(i).childNodes(3).text;
+		var svl=dssub1.oDom.documentElement.childNodes(i).childNodes(4).text;
+		var sint=dssub1.oDom.documentElement.childNodes(i).childNodes(5).text;
+		var swh2=dssub1.oDom.documentElement.childNodes(i).childNodes(6).text;
+		if(IsSpace(svl)==true){
+			str=""
+		}
+		s1=s1+"["+schn+"]"+" "+swh1+" "+str+svl+str+sint+swh2+" ";
+	}
+	return (s1);
+}
+//生成判断的条件串
+function uf_sReturn(){
+	var s1="";
+	var sfun=uf_checkCond();
+	if(sfun=="0"){
+		return ;	
+	}
+	for(i=0;i<dssub1.RecordCount;i++){
+		var sDs=dssub1.oDom.documentElement.childNodes(i).childNodes(0).text;
+		var sfd=dssub1.oDom.documentElement.childNodes(i).childNodes(1).text;
+		var schn=dssub1.oDom.documentElement.childNodes(i).childNodes(2).text;
+		var swh1=dssub1.oDom.documentElement.childNodes(i).childNodes(3).text;
+		var svl=dssub1.oDom.documentElement.childNodes(i).childNodes(4).text;
+		var sint=dssub1.oDom.documentElement.childNodes(i).childNodes(5).text;
+		var swh2=dssub1.oDom.documentElement.childNodes(i).childNodes(6).text;
+		if(IsSpace(sDs)==false){
+			s1 += uf_condCheck(swh1,svl,sint,sDs+".Fields.Field['"+sfd+"'].Value") ;
+			if(IsSpace(dssub1.oDom.documentElement.childNodes(i+1).childNodes(0).text)==false && dssub1.oDom.documentElement.childNodes(i+1).childNodes(0).text!="0"){
+				s1 += uf_condition2(swh2);
+			}
+		}
+	}
+	return (s1);	
+}
+
+function uf_condition2(swh2){
+	var s2="";
+	if(swh2=="或"){
+		s2=" || ";	
+	}
+	if(swh2=="与"){
+		s2=" && ";	
+	}
+	return s2;
+	
+}
+function uf_condCheck(swh,svl,sint,sIn){
+	var swhere="";
+	var sRet = "";
+	var s="'";
+	var ss=svl;
+	if(IsSpace(ss)){
+		ss=sint;
+		s="";
+	}
+	switch (swh){
+		case "等于" :{
+			swhere="=="+s+ss+s;	break;
+		}
+		case "不等于":{
+			swhere="!="+s+ss+s;	break;
+		}
+		case "小于":{
+			swhere="<"+s+ss+s;break;	
+		}
+		case "小于或等于":{
+			swhere="<="+s+ss+s;	break;
+		}
+		case "大于":{
+			swhere=">"+s+ss+s;break;	
+		}
+		case "大于或等于":{
+			swhere=">="+s+ss+s;	break;
+		}
+		case "包含":{
+			swhere=" like '%"+svl+"%'";break;	
+		}
+		case "不包含":{
+			swhere=" not like '%"+svl+"'";break;
+		}
+		case "开始于":{
+			swhere=" like '"+svl+"%'";break;	
+		}	
+		case "结束于":{
+			swhere=" like '%"+svl+"'";break;	
+		}
+		case "为空":{
+			sRet = " Valid.checkValue('Require',"+sIn+")==false";break;	
+		}
+		case "不为空":{
+			sRet =" Valid.checkValue('Require',"+sIn+")";break;	
+		}
+		case "为Email":{
+			sRet =" Valid.checkValue('Email',"+sIn+")==false";break;	
+		}
+		case "为电话号码":{
+			sRet =" Valid.checkValue('Phone',"+sIn+")==false";break;	
+		}
+		case "为手机号码":{
+			sRet =" Valid.checkValue('Mobile',"+sIn+")==false";break;	
+		}
+		case "为网址":{
+			sRet =" Valid.checkValue('Url',"+sIn+")==false";break;	
+		}
+		case "为身份证号":{
+			sRet =" Valid.checkValue('IdCard',"+sIn+")==false";break;	
+		}
+		case "为货币":{
+			sRet =" Valid.checkValue('Currency',"+sIn+")==false";break;	
+		}
+		case "为数字":{
+			sRet =" Valid.checkValue('Number',"+sIn+")==false";break;	
+		}
+		case "为邮编":{
+			sRet =" Valid.checkValue('Zip',"+sIn+")==false";break;	
+		}
+		case "为QQ号":{
+			sRet =" Valid.checkValue('QQ',"+sIn+")==false";break;	
+		}
+		case "为整数":{
+			sRet =" Valid.checkValue('Integer',"+sIn+")==false";break;	
+		}
+		case "为小数":{
+			sRet =" Valid.checkValue('Double',"+sIn+")==false";break;	
+		}
+		case "为英文":{
+			sRet =" Valid.checkValue('English',"+sIn+")==false";break;	
+		}
+		case "为中文":{
+			sRet =" Valid.checkValue('Chinese',"+sIn+")==false";break;	
+		}
+		case "为用户名":{
+			sRet =" Valid.checkValue('Username',"+sIn+")==false";break;	
+		}
+		case "为安全串":{
+			sRet =" Valid.checkValue('IsSafe',"+sIn+")==false";break;	
+		}
+		case "为不安全串":{
+			sRet =" Valid.checkValue('UnSafe',"+sIn+")==false";break;	
+		}
+		case "为日期":{
+			sRet =" Valid.checkValue('Date',"+sIn+")==false";break;	
+		}
+		
+	}
+	if(swhere == "")
+		return sRet ;
+	else
+		return sIn+swhere;
+}
+
+function uf_checkAlarm(){
+	if(IsSpace(FCDBedit6.value)){
+		alert("请输入屏幕提示");	
+		return 0;
+	}
+}
+
+function uf_ok(){
+	var s3=uf_checkAlarm();
+	if(s3=="0")return;	
+	var s2=uf_checkCond();
+	if(s2=="0")return;
+	var arr=new Array();
+	var s1=dssub1.xml
+	s1 = s1.substring(6,s1.indexOf(sFieldInfo))
+	s1 = RepStr(s1,' rowstate="add"','')
+	arr[0]=uf_strReturn();//生成添加数据验证页面上显示的值
+	arr[1]=s1 ;//xml串
+	arr[2]=uf_sReturn();//生成条件串
+	arr[3]=SKDBcombobox4.value;//警告类型
+	arr[4]=FCDBedit6.value;//屏幕提示
+	arr[5]=SKDBMemo1.value;//信息
+	window.returnValue=arr;
+	window.close();
+	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" userType dj_sn="validate" caption="数据验证" type="LR" isfile="是" center="居中" posleft postop poswidth="625" posheight="310" toolbar="不带工具栏" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose idtype="1" entertype="修改" keyfield codeheader OtherSave="否" billtaborder="<root><taborder>FCButton1</taborder><taborder>FCButton2</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>SKBILLgrid1</taborder><taborder>SKDBMemo1</taborder><taborder>SKDBcombobox4</taborder><taborder>FCDBedit6</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:1;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label10</id><id>Label11</id><id>Label12</id></label><textarea><id>SKDBMemo1</id></textarea><combobox><id>SKDBcombobox4</id></combobox><button><id>FCButton1</id><id>FCButton2</id><id>cmdOk</id><id>cmdClose</id></button><text><id>FCDBedit6</id></text><grid><id>SKBILLgrid1</id></grid><dataset><id>dssub1</id></dataset></root>" mkbh blmode="其他" AutoResizeXml><SPAN style="POSITION: absolute; WIDTH: 95px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 6px; FONT-WEIGHT: bold; LEFT: 9px" id=Label1 controltype="label" value="Label1">如果条件为真：</SPAN><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 61px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 22px; FONT-SIZE: 12px; TOP: 167px; LEFT: 468px" id=FCButton1 controltype="button" dropstyle="否" onclick='bill_onclick("dssub1.Append()")'>新增行</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 61px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 22px; FONT-SIZE: 12px; TOP: 167px; LEFT: 535px" id=FCButton2 controltype="button" dropstyle="否" onclick='bill_onclick("dssub1.Delete()")'>删除行</BUTTON><SPAN style="POSITION: absolute; WIDTH: 135px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 17px; FONT-SIZE: 12px; TOP: 175px; FONT-WEIGHT: bold; LEFT: 9px" id=Label2 controltype="label" value="Label2">则显示出错警告：</SPAN><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<SKBILLgrid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col></SKBILLgrid1>")' id=SKBILLgrid1 ondblclick='bill_ongriddblclick("<SKBILLgrid1><col>uf_selfield()</col><col>uf_selfield()</col><col>uf_selfield()</col><col></col><col></col><col></col><col></col></SKBILLgrid1>")' onclick='bill_ongridclick("<SKBILLgrid1><col></col><col></col><col></col><col></col><col></col><col></col><col></col></SKBILLgrid1>")' controltype="grid" dataset="dssub1" visible="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" format="<cols><col><fname>sdata</fname><cname>数据集</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>70</columnwidth><align>left</align></col><col><fname>sfield</fname><cname>英文字段名</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>90</columnwidth><align>left</align></col><col><fname>schnname</fname><cname>中文名称</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>100</columnwidth><align>left</align></col><col><fname>swhere</fname><cname>条件</cname><width>20</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%3E%3Ctd%3E%u7B49%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E0D%u7B49%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5C0F%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5C0F%u4E8E%u6216%u7B49%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5927%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5927%u4E8E%u6216%u7B49%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5305%u542B%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E0D%u5305%u542B%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u5F00%u59CB%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u7ED3%u675F%u4E8E%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u7A7A%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E0D%u4E3A%u7A7A%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3AEmail%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u7535%u8BDD%u53F7%u7801%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u624B%u673A%u53F7%u7801%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u7F51%u5740%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u8EAB%u4EFD%u8BC1%u53F7%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u8D27%u5E01%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u6570%u5B57%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u90AE%u7F16%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3AQQ%u53F7%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u6574%u6570%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u5C0F%u6570%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u82F1%u6587%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u4E2D%u6587%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u7528%u6237%u540D%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u5B89%u5168%u4E32%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u4E0D%u5B89%u5168%u4E32%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E3A%u65E5%u671F%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%u7B49%u4E8E%0D%0A%u4E0D%u7B49%u4E8E%0D%0A%u5C0F%u4E8E%0D%0A%u5C0F%u4E8E%u6216%u7B49%u4E8E%0D%0A%u5927%u4E8E%0D%0A%u5927%u4E8E%u6216%u7B49%u4E8E%0D%0A%u5305%u542B%0D%0A%u4E0D%u5305%u542B%0D%0A%u5F00%u59CB%u4E8E%0D%0A%u7ED3%u675F%u4E8E%0D%0A%u4E3A%u7A7A%0D%0A%u4E0D%u4E3A%u7A7A%0D%0A%u4E3AEmail%0D%0A%u4E3A%u7535%u8BDD%u53F7%u7801%0D%0A%u4E3A%u624B%u673A%u53F7%u7801%0D%0A%u4E3A%u7F51%u5740%0D%0A%u4E3A%u8EAB%u4EFD%u8BC1%u53F7%0D%0A%u4E3A%u8D27%u5E01%0D%0A%u4E3A%u6570%u5B57%0D%0A%u4E3A%u90AE%u7F16%0D%0A%u4E3AQQ%u53F7%0D%0A%u4E3A%u6574%u6570%0D%0A%u4E3A%u5C0F%u6570%0D%0A%u4E3A%u82F1%u6587%0D%0A%u4E3A%u4E2D%u6587%0D%0A%u4E3A%u7528%u6237%u540D%0D%0A%u4E3A%u5B89%u5168%u4E32%0D%0A%u4E3A%u4E0D%u5B89%u5168%u4E32%0D%0A%u4E3A%u65E5%u671F%3C/temptext%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>svalue</fname><cname>字符值</cname><width>30</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>sint</fname><cname>数字值</cname><width>15</width><dtype>整数</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>swhere2</fname><cname>条件</cname><width>2</width><dtype>字符</dtype><readonly>选%3Ccode%3E%3Cxml%3E%3Ctr%3E%3Ctd%3E%u6216%3C/td%3E%3C/tr%3E%3Ctr%3E%3Ctd%3E%u4E0E%3C/td%3E%3C/tr%3E%3C/xml%3E%3Cformat%3E%3C/format%3E%3Cblninput%3E%u5426%3C/blninput%3E%3Cblnempty%3E%u5426%3C/blnempty%3E%3Ccheck%3E1%3C/check%3E%3Ctemptext%3E%u6216%0D%0A%u4E0E%3C/temptext%3E%3C/code%3E</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>40</columnwidth><align>left</align></col></cols>" width="593" height="140" top="22" left="3">
+<TABLE style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dssub1 controltype="dataset" pubpara="否" opensortno="1" isSubGrid="undefined" format="<fields><field><fieldname>sdata</fieldname><datatype>字符</datatype><displaylabel>数据集</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sfield</fieldname><datatype>字符</datatype><displaylabel>英文字段名</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>schnname</fieldname><datatype>字符</datatype><displaylabel>中文名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere</fieldname><datatype>字符</datatype><displaylabel>条件</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>svalue</fieldname><datatype>字符</datatype><displaylabel>字符值</displaylabel><size>30</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sint</fieldname><datatype>整数</datatype><displaylabel>数字值</displaylabel><size>15</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>swhere2</fieldname><datatype>字符</datatype><displaylabel>条件</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><sdata></sdata><sfield></sfield><schnname></schnname><swhere></swhere><svalue></svalue><sint></sint><swhere2></swhere2></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sdata></sdata><sfield></sfield><schnname></schnname><swhere></swhere><svalue></svalue><sint></sint><swhere2></swhere2></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sdata></sdata><sfield></sfield><schnname></schnname><swhere></swhere><svalue></svalue><sint></sint><swhere2></swhere2></dsid>")'></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 235px; LEFT: 433px" id=cmdOk controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 235px; LEFT: 515px" id=cmdClose controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON>&nbsp;&nbsp; <SPAN style="POSITION: absolute; WIDTH: 87px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 19px; FONT-SIZE: 12px; TOP: 163px; LEFT: 130px" id=Label10 controltype="label" value="Label10">出错警告类型：</SPAN><SPAN style="POSITION: absolute; WIDTH: 65px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 203px; LEFT: 30px" id=Label11 controltype="label" value="Label11">屏幕提示：</SPAN><SPAN style="POSITION: absolute; WIDTH: 51px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 174px; LEFT: 129px" id=Label12 controltype="label" value="Label12">信息：</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 265px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 169px; LEFT: 202px" id=SKDBcombobox4 controltype="combobox" china check="1" sql tempvalue="内联警告（屏幕提示和需要时显示的信息）&#13;&#10;对话框警告（立即显示信息）" temptext="内联警告（屏幕提示和需要时显示的信息）&#13;&#10;对话框警告（立即显示信息）" sqltrans><OPTION selected value=内联警告（屏幕提示和需要时显示的信息）>内联警告（屏幕提示和需要时显示的信息）</OPTION><OPTION value=对话框警告（立即显示信息）>对话框警告（立即显示信息）</OPTION></SELECT><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 264px; DISPLAY: block; HEIGHT: 19px; FONT-SIZE: 12px; TOP: 198px; LEFT: 113px" id=FCDBedit6 controltype="text" CanSelect="false" china></INPUT><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 265px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 36px; FONT-SIZE: 12px; TOP: 105px; LEFT: 158px" id=SKDBMemo1 rows=1 cols=46 controltype="textarea" value="SKDBMemo1" china induce="否"></TEXTAREA></DIV></body></html>

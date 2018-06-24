@@ -1,0 +1,95 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_selectData1(){//表格控件多字段模糊查找
+	CommonSelect({
+		width:600,
+		isgrid : 1, //可选项, 弹出窗口中是否有grid控件,其值=0或1.
+		isfind : 1, //1是模糊查找，0是没有模糊查找
+		findvalue : txtName.value,//模糊查找值
+		gridcolwidth : [160,260,140],//
+		gridcoltitle : ["登录名","用户名","编辑密码时间"],
+		obj : txtName,//必选项, 用于修改的前一窗口控件对象,包含是grid对象
+		hidefields : "userid",  //可选项, 以逗号分隔的隐藏字段名列表,只有在isgrid=1时才有效.
+		sql : "select userid,loginName,username,editPasswordTime from fcq_user where username like ':v_get%'  order by username"  //必选项, 弹出窗口的显示数据用的SQL语句.
+		})
+}
+
+function passworkPas(){//密码过期处理
+	var userid =  DsMain.Field('userid').Value;
+	if(IsSpace(userid) == false){
+		var xmlSql="<update tableName='fcq_user'><set>editPasswordTime='"+CurentTime()+"'</set><where> userid = '" +userid +"'</where></update>";
+     	doSaveData(xmlSql,function(){alert("密码过期处理成功");})
+	}else{
+		alert("先选择用户");
+	}
+}
+function userDeblocking(){//用户错误的登录次数大于5后，解锁
+	var userid =  DsMain.Field('userid').Value
+	if(IsSpace(userid) == false){
+		var xmlSql="<update tableName='fcq_user'><set>loginErrorTime='',loginErrorNum=0</set><where> userid = '" +userid +"'</where></update>";
+     	doSaveData(xmlSql,function(){alert("用户"+DsMain.Field('userName').Value+"已经解锁");})
+	}else{
+		alert("先选择用户");
+	}
+}
+
+function  newPassword(){
+	var userid =  DsMain.Field('userid').Value;
+	if(IsSpace(userid) == false){
+		DsMain.Field('password').Value = "e10adc3949ba59abbe56e057f20f883e";
+		//DsMain.Update();
+		doSubmitData(function(){alert("初始化密码成功!");})		
+	}else{
+		alert("先选择用户");
+	}
+}
+function CurentTime()
+{ 
+    var now = new Date();
+   
+    var year = now.getFullYear();       //年
+    var month = now.getMonth() + 1;     //月
+    var day = now.getDate();            //日
+   
+    var hh = now.getHours();            //时
+    var mm = now.getMinutes(); 
+   	var ss = now.getSeconds();     //获取当前秒数(0-59)
+
+    var clock = year + "-";
+   
+    if(month < 10)
+        clock += "0";
+   
+    clock += month + "-";
+   
+    if(day < 10)
+        clock += "0";
+       
+    clock += day + " ";
+   
+    if(hh < 10)
+        clock += "0";
+       
+    clock += hh + ":";
+    if (mm < 10) clock += '0'; 
+    clock += mm + ":";
+    
+    if(ss < 10) clock += '0';
+    clock += ss;
+    return(clock); 
+} 
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link type='text/css' rel='stylesheet' href='../../fceform/css/shape.css'  /><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml center="  " controlno="SKButton:0;SKDBedit:0;checkbox:0;label:4;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:4;tab:0;div:0;DsMain_field:0;a:0;button:3;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" posheight poswidth caption="系统管理员用" type="ZK" dj_sn="zk_admin_using" billtaborder="<root><taborder>cmdCommonSelect</taborder><taborder>txtName</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder></root>" contxml="<root><label><id>Label7</id><id>label1</id><id>label2</id><id>label3</id><id>label4</id></label><shape><id>shape1</id><id>shape2</id><id>shape3</id><id>shape4</id></shape><button><id>cmdCommonSelect</id><id>button1</id><id>button2</id><id>button3</id></button><text><id>txtName</id></text><dataset><id>DsMain</id></dataset></root>" BLONopen window="当前窗口" posleft postop isfile="是" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑"><?xml:namespace prefix = fc /><fc:dataset id=DsMain controltype="dataset" format="<fields><field><fieldname>userid</fieldname><datatype>字符</datatype><displaylabel>用户id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>username</fieldname><datatype>字符</datatype><displaylabel>用户名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>PASSWORD</fieldname><datatype>字符</datatype><displaylabel>密码</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>editPasswordTime</fieldname><datatype>字符</datatype><displaylabel>编辑密码时间</displaylabel><size>19</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onSetText='bill_ondatasetsettext("<dsid><userid></userid><username></username><PASSWORD></PASSWORD><editPasswordTime></editPasswordTime></dsid>")' onGetText='bill_ondatasetgettext("<dsid><userid></userid><username></username><PASSWORD></PASSWORD><editPasswordTime></editPasswordTime></dsid>")' onValid='bill_ondatasetvalid("<dsid><userid></userid><username></username><PASSWORD></PASSWORD><editPasswordTime></editPasswordTime></dsid>")' idtype="1" issubds="否" submitno="1" submittype="2" isaddemptyrec="是" pubpara="否" opensortno="1" isSubGrid="否" async="否" idparam="USE" savetable="fcq_user" saveastable="FCS_BILL"></fc:dataset><?xml:namespace prefix = v /><v:RoundRect style="POSITION: absolute; WIDTH: 355px; HEIGHT: 71px; TOP: 7px; LEFT: 8px" id=shape1 onmovestart=moveStart() controltype="shape" cover="9" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "#d2d2d2" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect> <SPAN style="POSITION: absolute; WIDTH: 65px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 19px; LEFT: 26px" id=Label7 controltype="label" inputTag="否" value="Label7">用户名称</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 170px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 16px; LEFT: 84px" id=txtName size=11 controltype="text" dataset="DsMain" china="用户名" CanSelect="false" field="username"><BUTTON style="POSITION: absolute; WIDTH: 58px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 14px; LEFT: 264px" id=cmdCommonSelect controltype="button" dropstyle="是" onclick='bill_onclick("uf_selectData1();")'>选择用户</BUTTON><v:RoundRect style="POSITION: absolute; WIDTH: 353px; HEIGHT: 172px; TOP: 86px; LEFT: 8px" id=shape2 onmovestart=moveStart() controltype="shape" cover="9" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "#bcbc78" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect><BUTTON style="POSITION: absolute; WIDTH: 85px; HEIGHT: 25px; TOP: 106px; LEFT: 13px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("passworkPas()")'>密码过期修复</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 67px; HEIGHT: 25px; TOP: 167px; LEFT: 13px" id=button2 onmovestart=moveStart() controltype="button" onclick='bill_onclick("userDeblocking()")'>用户解锁</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 216px; LEFT: 13px" id=button3 onmovestart=moveStart() controltype="button" onclick='bill_onclick("newPassword()")'>初始化密码</BUTTON><LABEL style="POSITION: absolute; WIDTH: 231px; HEIGHT: 45px; TOP: 158px; LEFT: 110px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">登录错误次数大于5，无法登录使用此功能，清除它以前的错误登录记录，使其可以重新登录。</LABEL><v:line style="POSITION: absolute; WIDTH: 316px; HEIGHT: 15px; TOP: 149px; LEFT: 14px" id=shape3 onresize="" onmovestart=moveStart() controltype="shape" cover="9" linetype="横线" from = "0,0" to = "237pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><v:line style="POSITION: absolute; WIDTH: 316px; HEIGHT: 15px; TOP: 208px; LEFT: 15px" id=shape4 onresize="" onmovestart=moveStart() controltype="shape" cover="9" linetype="横线" from = "0,0" to = "237pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><LABEL style="POSITION: absolute; WIDTH: 228px; HEIGHT: 35px; TOP: 216px; LEFT: 110px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否">如果用户忘记密码，重新设置用户密码为123456</LABEL><LABEL style="POSITION: absolute; WIDTH: 236px; HEIGHT: 45px; TOP: 99px; LEFT: 110px" id=label3 onmovestart=moveStart() controltype="label" inputTag="否">此密码在系统规定的时间内没有修改，使其过期，无法使用，使用此功能延长它的有效期。</LABEL><LABEL style="POSITION: absolute; WIDTH: 326px; HEIGHT: 15px; TOP: 44px; LEFT: 21px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">在编辑框中输入用户名支持模糊查找，如果就一条记录不弹出选择用户窗口，直接返回用户名。</LABEL></DIV><script></script></body></html>

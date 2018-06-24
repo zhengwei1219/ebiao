@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body bgcolor="#d4d0c8" background="../images/ef_run_background.gif" onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>
+   
+   			
+      
+
+pub_djhtm()
+		</script>
+<script>function uf_open(){
+	var obj=fcpubdata.obj[0] ;
+	SetTextValue(obj.id,SKDBedit1)
+	SetTextValue(obj.datasetdata,SKDBedit3)
+	SetTextValue(obj.xfield,SKDBedit4)
+	SetTextValue(obj.china,SKDBedit2)
+	SetTextValue(obj.rest,SKDBMemo1)
+	SetButtonImage(SKButton6,"../images/ef_run_button_up.gif");
+	SetButtonImage(SKButton7,"../images/ef_run_button_down.gif");
+	SetButtonImage(FCButton1,"../images/ef_run_button_ok.gif");
+	SetButtonImage(FCButton2,"../images/ef_run_button_close.gif");
+	SetTextValue(obj.style.width,txtWidth)
+	SetTextValue(obj.style.height,txtHeight)
+	SetTextValue(obj.style.top,txtTop)
+	SetTextValue(obj.style.left,txtLeft)
+	var sXml=obj.formatxml
+	if(IsSpace(new Eapi.Str().trim(sXml))==false && sXml != "<root/>") {
+		dssub1.OpenXmlData(sXml) ;
+	}
+	SKDBedit1.onchange = function uf_id_onchange() {
+								var sR = CheckContSameName(fcpubdata.obj[3],SKDBedit1.value,obj,fcpubdata.obj[2]) ;
+								if(sR != ""){
+									alert(sR);
+									event.returnValue = false ;
+								}
+							}
+	
+	var sother=""
+	if(IsSpace(obj.other)==false) sother=obj.other
+	SKDBcombobox4.value = obj.style.position
+	if(obj.style.position == "static") {
+		txtLeft.disabled = true;
+		txtTop.disabled = true ;
+	}else{
+		txtLeft.disabled = false;
+		txtTop.disabled = false ;
+	}
+	if(sother.indexOf("<param name=3DModeOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox1,"是")
+	if(sother.indexOf("<param name=barLabelsOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox8,"是")
+	if(sother.indexOf("<param name=sampleLabelsOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox5,"是")
+	if(sother.indexOf("<param name=barAlignment value=horizontal>")>=0) SetCheckBoxValue(SKDBcheckbox4,"是")
+	if(sother.indexOf("<param name=legendOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox3,"是")
+	if(sother.indexOf("<param name=valueLabelsOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox2,"是")
+	if(sother.indexOf("<param name=valueLinesOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox6,"是")
+	if(sother.indexOf("<param name=defaultGridLinesOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox7,"是")
+	if(sother.indexOf("<param name=barType value=stacked>")>=0) SetCheckBoxValue(SKDBcheckbox11,"是")
+	if(sother.indexOf("<param name=stackedOn value=true>")>=0) SetCheckBoxValue(SKDBcheckbox10,"是")
+	if(sother.indexOf("<param name=valueLabelsOn value=true><param name=valueLabelStyle value=inside>")>=0) SetCheckBoxValue(SKDBcheckbox9,"是")
+
+}
+function uf_ok() {
+	var obj=fcpubdata.obj[0] ;
+	obj.graphtype=SKDBcombobox3.value;
+	obj.china=SKDBedit2.value
+	obj.rest=SKDBMemo1.value ;
+	obj.formatxml=dssub1.xml
+	if(IsCheckDataField(SKDBedit3,SKDBedit2) == false )
+	{
+		alert("数据集和字段名称不能为空，请选择！");	
+		return;
+	}
+	s=new Eapi.Str().trim(SKDBedit3.value)
+	if(s==""){
+		obj.removeAttribute('datasetdata')
+	}else{
+		obj.datasetdata=s;
+	}
+	s=new Eapi.Str().trim(SKDBedit4.value)
+	if(s==""){
+		obj.removeAttribute('field')
+	}else{
+		obj.xfield=s;
+	}
+	obj.style.position = SKDBcombobox4.value ;
+		
+	var sRet="<root><samplevalues>"
+	for(var i=0;i<dssub1.RecordCount;i++){
+		var fdname=dssub1.oDom.documentElement.childNodes(i).childNodes(0).text
+		if(IsSpace(fdname)==false){
+			sRet+="<field>"+fdname+"</field>"
+		}
+	}
+	sRet+="</samplevalues><samplelabels><field>"+obj.xfield+"</field></samplelabels></root>"
+	obj.graphxml=sRet
+	var sother=""
+	if(SKDBcheckbox1.value=="是") sother+="<param name=3DModeOn value=true>"
+	if(SKDBcheckbox8.value=="是") sother+="<param name=barLabelsOn value=true>"
+	if(SKDBcheckbox5.value=="是") sother+="<param name=sampleLabelsOn value=true>"
+	if(SKDBcheckbox4.value=="是") sother+="<param name=barAlignment value=horizontal>"
+	if(SKDBcheckbox3.value=="是") sother+="<param name=legendOn value=true>"
+	if(SKDBcheckbox2.value=="是") sother+="<param name=valueLabelsOn value=true>"
+	if(SKDBcheckbox6.value=="是") sother+="<param name=valueLinesOn value=true>"
+	if(SKDBcheckbox7.value=="是") sother+="<param name=defaultGridLinesOn value=true>"
+	if(SKDBcheckbox11.value=="是") sother+="<param name=barType value=stacked>"
+	if(SKDBcheckbox10.value=="是") sother+="<param name=stackedOn value=true>"
+	if(SKDBcheckbox9.value=="是") sother+="<param name=valueLabelsOn value=true><param name=valueLabelStyle value=inside>"
+	sother+=SKDBMemo1.value
+	obj.other=sother
+	window.close() ;
+}
+function uf_selfield() {
+	var arrtmp=contselfield(fcpubdata.obj[1]);
+	if(typeof arrtmp != "undefined"){
+		SKDBedit3.value=arrtmp[0];
+		SKDBedit4.value=arrtmp[1];
+		SKDBedit2.value=arrtmp[2];
+		dssub1.bEdit=true
+		dssub1.Update("不检查")
+		DsToGrid(SKBILLgrid1)
+	}
+}
+function uf_addline(){
+	if(IsSpace(dssub1.Fields.Field['fdname'].Value)==false){
+		LoadMod("gridaddline ")
+	}
+	var arrtmp=contselfield(fcpubdata.obj[1]);
+	if(typeof arrtmp != "undefined"){
+		dssub1.Fields.Field['fdname'].Value=arrtmp[1];
+		dssub1.Fields.Field['chnname'].Value=arrtmp[2];
+		dssub1.bEdit=true
+		dssub1.Update("不检查")
+		DsToGrid(SKBILLgrid1)
+	}
+ }
+function uf_changeVal(){
+	if(SKDBcombobox4.value=="static"){
+		txtLeft.value="";
+		txtTop.value="";
+	}	
+	if(SKDBcombobox4.value == "static") {
+		txtLeft.disabled = true;
+		txtTop.disabled = true ;
+	}else{
+		txtLeft.disabled = false;
+		txtTop.disabled = false ;
+	}
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script >document.styleSheets[0].addRule(".fcmask","behavior: url(../htc/fcmask.htc)",0);</script><script language='vbscript' src='../js/fcmask.vbs'></script><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV class=dj id=SKbillsheet onkeydown="" ondblclick="" toolbar="不带工具栏" BLONopen="uf_open()" blmode="其它" contxml="<root><SKButton><id>SKButton1</id><id>SKButton2</id><id>SKButton6</id><id>SKButton7</id><id>SKButton8</id></SKButton><SKDBedit><id>SKDBedit1</id><id>SKDBedit4</id><id>SKDBedit2</id><id>SKDBedit3</id></SKDBedit><checkbox><id>SKDBcheckbox1</id><id>SKDBcheckbox2</id><id>SKDBcheckbox3</id><id>SKDBcheckbox4</id><id>SKDBcheckbox5</id><id>SKDBcheckbox6</id><id>SKDBcheckbox7</id><id>SKDBcheckbox8</id><id>SKDBcheckbox9</id><id>SKDBcheckbox10</id><id>SKDBcheckbox11</id></checkbox><label><id>Label1</id><id>Label4</id><id>Label9</id><id>Label6</id><id>Label7</id><id>Label2</id><id>Label5</id><id>Label13</id><id>Label10</id><id>Label11</id><id>Label12</id><id>Label8</id><id>Label15</id><id>Label16</id></label><textarea><id>SKDBMemo1</id></textarea><combobox><id>SKDBcombobox3</id><id>SKDBcombobox4</id></combobox><shape><id>Shape4</id><id>Shape5</id><id>Shape6</id><id>Shape7</id></shape><tab><id>PageControl1</id></tab><button><id>FCButton1</id><id>FCButton2</id></button><text><id>txtLeft</id><id>txtTop</id><id>txtWidth</id><id>txtHeight</id></text><grid><id>SKBILLgrid1</id></grid><dataset><id>dssub1</id></dataset></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" billtaborder="<root><taborder>SKButton1</taborder><taborder>SKButton2</taborder><taborder>SKButton6</taborder><taborder>SKButton7</taborder><taborder>SKButton8</taborder><taborder>SKDBedit1</taborder><taborder>SKDBedit4</taborder><taborder>SKDBedit2</taborder><taborder>SKDBedit3</taborder><taborder>SKDBcheckbox1</taborder><taborder>SKDBcheckbox2</taborder><taborder>SKDBcheckbox3</taborder><taborder>SKDBcheckbox4</taborder><taborder>SKDBcheckbox5</taborder><taborder>SKDBcheckbox6</taborder><taborder>SKDBcheckbox7</taborder><taborder>SKDBcheckbox8</taborder><taborder>SKDBcheckbox9</taborder><taborder>SKDBcheckbox10</taborder><taborder>SKDBcheckbox11</taborder><taborder>SKDBMemo1</taborder><taborder>SKDBcombobox3</taborder><taborder>SKDBcombobox4</taborder><taborder>FCButton1</taborder><taborder>FCButton2</taborder><taborder>txtLeft</taborder><taborder>txtTop</taborder><taborder>txtWidth</taborder><taborder>txtHeight</taborder><taborder>SKBILLgrid1</taborder></root>" dj_sn="chart" type="LR" caption="chart" mkbh="E5" codeheader entertype="修改" poswidth="405" posheight="430" controlno="SKButton:8;SKDBedit:4;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:1;shape:0;tab:0;div:0;SKDBTreeView:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0" keyfield window="当前窗口" posleft postop isfile="否" idtype="1" center="居中" dj_id="275" para="<r></r>"><div class="tab-pane" showtype="luna" IsHideTitle=undefined id=PageControl1 style="position:absolute;left:1px;top:1px;width:395px;Height:363px"><div class="tab-page" style="width:395px;height:345" ><h2 class="tab">标准</h2><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 34px; WIDTH: 63px;  POSITION: absolute; TOP: 20px; HEIGHT: 5px;  " controltype="label" align="Left">控件ID：</SPAN><SPAN id=Label4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 34px; WIDTH: 94px;  POSITION: absolute; TOP: 43px; HEIGHT: 13px;  " controltype="label" align="Left">数据集：</SPAN><SPAN id=Label9 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 34px; WIDTH: 86px;  POSITION: absolute; TOP: 67px; HEIGHT: 14px;  " controltype="label" align="Left">横轴对应字段：</SPAN><SPAN id=Label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 8px; WIDTH: 73px;  POSITION: absolute; TOP: 104px; HEIGHT: 12px" controltype="label" align="Left">纵轴对应字段</SPAN><SPAN id=Label7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 182px; WIDTH: 94px;  POSITION: absolute; TOP: 67px; HEIGHT: 12px;  " controltype="label" align="Left">字段名称：</SPAN><SPAN id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 8px; WIDTH: 49px;  POSITION: absolute; TOP: 249px; HEIGHT: 12px" controltype="label" align="Left">其他属性</SPAN><INPUT id=SKDBedit1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 77px; WIDTH: 186px;  POSITION: absolute; TOP: 15px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" size=25 controltype="text" dataset="" onclick='bill_onclick("")' field="" ondblclick='bill_ondblclick("")' onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT id=SKDBedit4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 34px; WIDTH: 136px;  POSITION: absolute; TOP: 81px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" size=17 controltype="text" dataset="" onclick='bill_onclick("")' field="" ondblclick='bill_ondblclick("")' onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT id=SKDBedit2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 177px; WIDTH: 111px;  POSITION: absolute; TOP: 81px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" size=14 controltype="text" dataset="" onclick='bill_onclick("")' field="" ondblclick='bill_ondblclick("")' onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT id=SKButton1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 195px; WIDTH: 71px;  POSITION: absolute; TOP: 227px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" type=button value=增加字段 controltype="button" dropstyle="否" onclick='bill_onclick("uf_addline()")'><INPUT id=SKButton2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 276px; WIDTH: 70px;  POSITION: absolute; TOP: 227px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" type=button value=删除字段 controltype="button" dropstyle="否" onclick='bill_onclick("griddelline")'><TEXTAREA id=SKDBMemo1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 33px; WIDTH: 350px;  POSITION: absolute; TOP: 267px; HEIGHT: 64px; BACKGROUND-COLOR: #ffffff" rows=1 cols=16 controltype="textarea" dataset="" onclick='bill_onclick("")' field="" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'></TEXTAREA><fc:webgrid visible='是' readonly='否' autoappend='否' autowidth='否' autoheight='否' canselect='是' id=SKBILLgrid1 dataset=dssub1  ParentPos='相对'  left=33 top=124 height=81 width=301 format="<cols><col><fname>fdname</fname><cname>西文字段名</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>chnname</fname><cname>中文名称</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>190</columnwidth><align>left</align></col></cols>"  onclick='bill_ongridclick("<SKBILLgrid1><col></col><col></col></SKBILLgrid1>")'  ondblclick='bill_ongriddblclick("<SKBILLgrid1><col></col><col></col></SKBILLgrid1>")'  onkeydown='bill_ongridkeydown("<SKBILLgrid1><col></col><col></col></SKBILLgrid1>")'  ><table id=t cellPadding=1 cellSpacing=0  frame=box  style="BORDER-COLLAPSE:collapse;TABLE-LAYOUT:fixed;left:0px;POSITION:absolute;top:0px;FONT-SIZE:12px;BACKGROUND-COLOR:#ffffff;" ><tr style="FONT-SIZE:12px;BACKGROUND-COLOR:#c0c0c0;;height: " ><td></td></tr></table></fc:webgrid><fc:dataset id=dssub1 opensortno='1' temptable=TMP_LRGRID1 format="<fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnname</fieldname><datatype>字符</datatype><displaylabel>中文名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onSetText='bill_ondatasetsettext("<dsid><fdname></fdname><chnname></chnname></dsid>")'  onGetText='bill_ondatasetgettext("<dsid><fdname></fdname><chnname></chnname></dsid>")'  onValid='bill_ondatasetvalid("<dsid><fdname></fdname><chnname></chnname></dsid>")'  ></fc:dataset><INPUT id=SKButton6 style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; DISPLAY: block; FONT-SIZE: 12px; LEFT: 356px; BORDER-LEFT: 0px; WIDTH: 18px; COLOR: #000000; BORDER-BOTTOM: 0px; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 148px; HEIGHT: 19px; BACKGROUND-COLOR: #d4d0c8" type=button controltype="button" dropstyle="否" onclick='bill_onclick("GridChangeRow(true)")'><INPUT id=SKButton7 style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; DISPLAY: block; FONT-SIZE: 12px; LEFT: 356px; BORDER-LEFT: 0px; WIDTH: 18px; COLOR: #000000; BORDER-BOTTOM: 0px; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 175px; HEIGHT: 19px; BACKGROUND-COLOR: #d4d0c8" type=button controltype="button" dropstyle="否" onclick='bill_onclick("GridChangeRow(false)")'><INPUT id=SKButton8 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 293px; WIDTH: 86px;  POSITION: absolute; TOP: 81px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" type=button value=选择字段 controltype="button" dropstyle="否" onclick='bill_onclick("uf_selfield()")'><INPUT id=SKDBedit3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 77px; WIDTH: 186px;  POSITION: absolute; TOP: 37px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" size=22 controltype="text" dataset="" onclick='bill_onclick("")' field="" ondblclick='bill_ondblclick("")' onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'> <?xml:namespace prefix = v /><v:line id=Shape4 onresize="" style="DISPLAY: block; LEFT: 84px; WIDTH: 295px; POSITION: absolute; TOP: 110px; HEIGHT: 18px" controltype="shape" id1="3" from = "0,0" to = "221.25pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><v:line id=Shape5 onresize="" style="DISPLAY: block; LEFT: 59px; WIDTH: 323px; POSITION: absolute; TOP: 258px; HEIGHT: 18px" controltype="shape" id1="3" from = "0,0" to = "242.25pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></div><div class="tab-page" style="width:395px;height:345" ><h2 class="tab">样式</h2><SPAN id=Label5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 19px; WIDTH: 80px;  POSITION: absolute; TOP: 103px; HEIGHT: 11px;  " controltype="label" align="Left">图形类型：</SPAN><SELECT id=SKDBcombobox3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 76px; WIDTH: 82px;  POSITION: absolute; TOP: 98px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff" controltype="combobox" dataset="" onclick='bill_onclick("")' field="" backheight="20" backwidth="82" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><OPTION value=折线图 selected>折线图</OPTION><OPTION value=圆饼图>圆饼图</OPTION><OPTION value=柱状图>柱状图</OPTION></SELECT><SPAN id=Label13 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 20px; WIDTH: 65px; FONT-FAMILY: ; POSITION: absolute; TOP: 35px; HEIGHT: 15px;  " value="Label13" controltype="label">定位方式：</SPAN><SELECT id=SKDBcombobox4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 76px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 30px; HEIGHT: 25px; BACKGROUND-COLOR: #ffffff" onchange='bill_onclick("uf_changeVal()")' controltype="combobox" check="1" tempvalue="static&#13;&#10;absolute" temptext="静态&#13;&#10;绝对" china sql backheight="25" backwidth="79"><OPTION value=static selected>静态</OPTION><OPTION value=absolute>绝对</OPTION></SELECT><SPAN id=Label10 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 55px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 59px; HEIGHT: 15px;  " value="Label5" controltype="label">左：</SPAN><INPUT type=text id=txtLeft style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 76px; WIDTH: 45px; FONT-FAMILY: ; POSITION: absolute; TOP: 55px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left; medium: " value controltype="text" china onchange='bill_onclick("SetPosOnChange(fcpubdata.obj[0],txtLeft)")' CanSelect="false"></INPUT><SPAN id=Label11 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 127px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 60px; HEIGHT: 15px;  " value="Label6" controltype="label">上：</SPAN><INPUT type=text id=txtTop style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 147px; WIDTH: 45px; FONT-FAMILY: ; POSITION: absolute; TOP: 55px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left; medium: " value controltype="text" china onchange='bill_onclick("SetPosOnChange(fcpubdata.obj[0],txtTop)")' CanSelect="false"></INPUT><SPAN id=Label12 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 201px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 60px; HEIGHT: 15px;  " value="Label7" controltype="label">宽：</SPAN><INPUT type=text id=txtWidth style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 221px; WIDTH: 45px; FONT-FAMILY: ; POSITION: absolute; TOP: 55px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left; medium: " value controltype="text" china onchange='bill_onclick("SetPosOnChange(fcpubdata.obj[0],txtWidth)")' CanSelect="false"></INPUT><SPAN id=Label8 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 274px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 60px; HEIGHT: 15px;  " value="Label8" controltype="label">高：</SPAN><INPUT type=text id=txtHeight style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 294px; WIDTH: 45px; FONT-FAMILY: ; POSITION: absolute; TOP: 55px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left; medium: " value controltype="text" china onchange='bill_onclick("SetPosOnChange(fcpubdata.obj[0],txtHeight)")' CanSelect="false"></INPUT> 
+<DIV id=Label15 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 6px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 11px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="Label15" controltype="label">位置</DIV><?xml:namespace prefix = v /><v:line id=Shape6 onresize="" style="DISPLAY: block; LEFT: 30px; WIDTH: 354px; POSITION: absolute; TOP: 17px; HEIGHT: 18px" controltype="shape" id1="3" from = "0,0" to = "248.25pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line>
+<DIV id=Label16 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 7px; WIDTH: 12px; FONT-FAMILY: ; POSITION: absolute; TOP: 79px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="Label16" controltype="label">图形</DIV><v:line id=Shape7 onresize="" style="DISPLAY: block; LEFT: 29px; WIDTH: 354px; POSITION: absolute; TOP: 85px; HEIGHT: 18px" controltype="shape" id1="3" from = "0,0" to = "248.25pt,0" fillcolor = "white" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></div><div class="tab-page" style="width:395px;height:345" ><h2 class="tab">高级</h2><DIV id=SKDBcheckbox1 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 97px;  POSITION: absolute; TOP: 25px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>3D显示</SPAN></DIV>
+<DIV id=SKDBcheckbox2 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 179px; WIDTH: 216px;  POSITION: absolute; TOP: 73px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>数值标记显示在柱形图形上面</SPAN></DIV>
+<DIV id=SKDBcheckbox3 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 97px;  POSITION: absolute; TOP: 49px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>显示图例</SPAN></DIV>
+<DIV id=SKDBcheckbox4 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 192px;  POSITION: absolute; TOP: 193px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>直方图水平显示成条形图</SPAN></DIV>
+<DIV id=SKDBcheckbox5 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 144px;  POSITION: absolute; TOP: 169px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>折线图时显示标签</SPAN></DIV>
+<DIV id=SKDBcheckbox6 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 136px;  POSITION: absolute; TOP: 73px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>显示水平网格线</SPAN></DIV>
+<DIV id=SKDBcheckbox7 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 144px;  POSITION: absolute; TOP: 97px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>显示垂直网格线</SPAN></DIV>
+<DIV id=SKDBcheckbox8 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 144px;  POSITION: absolute; TOP: 121px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>直方图时显示标签</SPAN></DIV>
+<DIV id=SKDBcheckbox9 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 17px; WIDTH: 136px;  POSITION: absolute; TOP: 145px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>园饼图时显示标签</SPAN></DIV>
+<DIV id=SKDBcheckbox10 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 180px; WIDTH: 128px;  POSITION: absolute; TOP: 49px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>显示堆积折线图</SPAN></DIV>
+<DIV id=SKDBcheckbox11 contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 180px; WIDTH: 128px;  POSITION: absolute; TOP: 25px; HEIGHT: 17px" controltype="checkbox" onclick='bill_onclick("")' falsevalue="否" truevalue="是" divtype="checkbox" onfocus='bill_onenter("")' onblur='bill_onexit("")' onkeydown='bill_onkeydown("")'><INPUT type=checkbox><SPAN>显示堆积直方图</SPAN></DIV></div></div><script>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</script><BUTTON id=FCButton1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 226px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 368px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON id=FCButton2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 310px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 368px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV></body></html>

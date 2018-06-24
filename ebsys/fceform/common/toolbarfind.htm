@@ -1,0 +1,142 @@
+<HTML>
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<TITLE></TITLE>
+		<LINK href="../css/cx.css" rel="stylesheet">
+		<script src="../js/MicrosoftAjax.js"></script>
+			<script src="../js/fcpub.js"></script>
+			<script>
+function window_onload(){
+
+
+
+}
+
+function newClose(){
+	parent.topic.execScript("CloseBill()")
+
+}
+function swapClass(obj, cls) {
+  obj.className = cls
+}
+/**
+* 翻页
+*@param ipos =1,2,3,4 表示移到头,上,下,尾
+*@date 2004-02-10
+**/
+function movepage(ipos){
+	var sRun="var dssub1=Getdssub1();"
+	if(ipos==1){
+	  sRun+="dssub1.FirstPage();"
+	}else if(ipos==2){
+	  sRun+="dssub1.PrevPage();"
+	}else if(ipos==3){
+	  sRun+="dssub1.NextPage();"
+	}else if(ipos==4){
+	  sRun+="dssub1.LastPage();"
+	}	
+		
+	parent.topic.execScript(sRun)
+	
+	pageno.value=parent.topic.dssub1.PageNo+"/"+parent.topic.dssub1.PageCount
+}
+/**
+*运行查询
+*@date 2004-02-10
+**/
+function Run(){
+   
+	//new Eapi.Str().showWait('正在查询...');
+	//return
+	var ipagesize=pagesize.value
+	ipagesize=parseInt(ipagesize)
+	if(isNaN(ipagesize)) {
+		alert("页尺寸必须是整数!")
+	}
+	/*
+	var sRun="sys_run_query()"
+	try {
+		parent.topic.execScript(sRun)
+	}catch(e){}
+	*/
+	
+	var sRun="var odssub1=Getdssub1();var oSKBILLgrid1=GetDsGrid(odssub1); odssub1.PageSize="+ipagesize+"; odssub1.Open();try { oSKBILLgrid1.SetFocus(oSKBILLgrid1.FindFirstTD(oSKBILLgrid1.FixRows),'程序给焦点');}catch(e){};"
+	sRun += "parent.toolbar.pageno.value = odssub1.PageNo+'/'+odssub1.PageCount;" ;
+	//if(typeof sql != "undefined") sRun="dssub1.opensql"+sRun
+	parent.topic.execScript(sRun)
+	
+	//pageno.value=parent.topic.dssub1.PageNo+"/"+parent.topic.dssub1.PageCount
+
+}
+/**
+*另存为EXCEL
+*@date 2004-02-18
+**/
+function SaveAsExcel() {
+	var sRun="SaveAsExcel()"
+	parent.topic.execScript(sRun)
+	
+}
+
+			</script>
+	</HEAD>
+	<body topmargin="0" leftmargin="0" onload="window_onload()">
+		<TABLE border="0" cellPadding="1" cellSpacing="1" bgcolor="#c0c0c0">
+			<tr bgcolor="#e0e0e0">
+				<td width="240">
+					<INPUT class="buttonpage" type="button" value="|<" onclick="movepage(1)"> <INPUT class="buttonpage" type="button" value="<" onclick="movepage(2)">
+					<INPUT id="pageno" class="buttonpageno" disabled style="WIDTH:40px"> <INPUT class="buttonpage" type="button" value=">" onclick="movepage(3)">
+					<INPUT class="buttonpage" type="button" value=">|" onclick="movepage(4)"> &nbsp;&nbsp; 
+					页尺寸 <INPUT id="pagesize" class="buttonpageno" style="WIDTH:20px" value="20">
+				</td>
+				<td width="60">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="Run()">
+						<img src="../images/ef_tb_find.gif"> 查询
+					</DIV>
+				</td>
+				<!--
+				<td width="90">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="parent.topic.execScript('PrintPreview()')">
+						<img src="../images/ef_tb_preview.gif"> 打印预览
+					</DIV>
+				</td>
+				<td width="60">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="parent.topic.execScript('Print()')">
+						<img src="../images/ef_tb_print.gif"> 打印
+					</DIV>
+				</td>
+			
+      <td width=60>
+        <DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')" ONCLICK="parent.topic.execScript('SaveUserQuery()')">
+	  <img src="../image/basic-format.gif"> 保存
+        </DIV>
+      </td>
+
+				<td width="75">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="parent.topic.execScript(&quot;DjOpen('TTsendemail',SKBILLgrid1.tab.outerHTML,3,'有模式窗口','测试')&quot;)">
+						<img src="../images/ef_run_mail.gif" id="IMG1"> 发邮件
+					</DIV>
+				</td>
+      -->
+				<td width="120">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="SaveAsExcel()">
+						<img src="../images/ef_design_excel.gif"> 另存为EXCEL
+					</DIV>
+				</td>
+				<!--
+				<td width="60">
+					<DIV CLASS="bOut" ONMOUSEOVER="swapClass(this, 'bOver')" ONMOUSEOUT="swapClass(this, 'bOut')"
+						ONCLICK="newClose()">
+						<img src="../image/exit.bmp"> 关闭
+					</DIV>
+				</td>
+				-->
+			</tr>
+		</TABLE>
+	</body>
+</HTML>

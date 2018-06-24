@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>
+    表结构数据导入到实体表</title>
+    <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    </head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+<tr><td class="title">  
+    表结构数据导入到实体表</td></tr>
+     <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>
+         返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+<div  class="mainDiv">
+        &nbsp;&nbsp;&nbsp; 在数据库中建好了业务表后，需要将这些业务表结构信息传递到实体表中。这便可以用本工具，它可以一次将一个或多个业务表结构信息导入到实体表中，当已经存在的业务表的结构在大幅修改后，也可以用本工具来重新导入一下，达到刷新实体表中的记录的目的。一次可以选择一个或多个业务表来导入。<br />
+       
+<div class="divTitle">1. 导入时数据处理原理</div>
+   &nbsp;&nbsp;&nbsp;&nbsp; 导入时，会将业务表结构信息导入到实体表的fc_entity表和fc_entitysub表中。 
+  fc_entity表保存业务表名称，一个业务表结构信息在fc_entity表中保存一条记录。fc_entitysub表保存的是业务表结构中的字段，如一条业务表结构中有10个字段，则fc_entitysub表就有10条记录。导入后，fc_entity表中的表中文名和表英文名两个字段存的内容是一样的，都是存业务表名称，一般来说，表中文名字段需要手工在 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 界面上修改。fc_entitysub表的字段中文名和字段英文名也一样都是存业务表中的字段名称，也同样需要手工在 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 界面上修改字段中文名。fc_entitysub表中的字段(type,detailxml,linktbname,linkfdname)信息在导入后都是空，也是在 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 界面上修改的。<br />
+      &nbsp;&nbsp;&nbsp; 
+      在实体表中已存在业务表结构信息的情况下再做导入时，会根据导入的业务表的字段重新计算，完成同步功能。假如业务表的字段多了一个叫name的字段,它会在fc_entitysub表中添加name字段的一条记录,假如业务表的字段少了一个叫name的字段，它会在fc_entitysub表中删除掉name字段的那条记录。例如字段名没变,字段类型变了,则不会修改fc_entitysub表的记录。此时只能在 <A  class=shili   href='../../fceform/common/djframe.htm?djsn=entityList&djtype=ZK'>数据库中的表信息</A> 界面上修改字段类型了。
+<div class="divTitle">2. 操作步骤</div>
+        <br />&nbsp;&nbsp;&nbsp; 在表结构数据导入到实体表页面,双击表名dw会在第一列中打勾,表示选中,可以选中多表进行导入.下面是导入界面图.<br />
+        <img  src ="images/help_1_3_1.gif"/><br /> &nbsp;&nbsp;&nbsp; 
+      下面是导入成功后在数据库fc_entity表中的界面,tbname字段和tbchnname字段的值都是dw。<br /><img  src ="images/help_1_3_4.gif"/><br />
+          &nbsp;&nbsp;&nbsp; 
+      下面是导入成功后在数据库fc_entitysub表中的界面,fdname字段和chnname字段的值是一样的,而且type字段,detailxml字段,linktbname字段,linkfdname字段都是空.<br />   
+        <img  src ="images/help_1_3_5.gif"/><br />
+      <br />
+       &nbsp;&nbsp;&nbsp; 
+      表结构数据导入到fc_entity表后,在表单设计器中，需要输入表名称的地方就可以选择输入了，不用再手工输入表名。例如在数据集的保存表名的下拉列表中就会有新导入的表名称信息。表结构数据导入到fc_entitysub表后,在需要输入字段名的地方就同样也可以选择输入了，例如在数据集的生成sql语句向导和数据集的批量增加字段名时就能选择输入了。如下面的界面图中选择输入表名：<br />
+      <img  src ="images/help_1_4_15.gif"/>
+      
+     
+</div>
+</body>
+</html>

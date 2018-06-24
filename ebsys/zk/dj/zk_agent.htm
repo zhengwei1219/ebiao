@@ -1,0 +1,75 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>/*
+function uf_add(){
+	var commonParam = 'width="670px";height="480px"';
+	var agentId = dataset1.Field('agentId').Value;
+	dataset1.Field('agentId').Value = "";//新增时清空数据集当前行agentId的值
+	dataset1.Field('clientUserId').Value = top.zkpub.userid;
+	dataset1.Field('clientUserName').Value = top.zkpub.username;
+    if (Sys.Browser.agent != Sys.Browser.InternetExplorer) { 
+        NavJs.openModalDialog("../../fceform/common/djframe.htm?djsn=zk_agent_card&djtype=ZK", dataset1, commonParam, function(oRet) { var sRet = oRet.value; var commonParam = oRet.context; _modalReturn(sRet,commonParam); }, commonParam);
+    } else {
+        $eform('打开窗口新增记录');
+    }
+}
+
+function uf_edit(){
+	var commonParam = 'width="670px";height="480px"';
+	var envType = fcpubdata.area.getAttribute("envType");
+    if (fcpubdata.isModalUser) { 
+        NavJs.openModalDialog("../../fceform/common/djframe.htm?djsn=zk_agent_card&djtype=ZK",dataset1, commonParam, function(oRet) { var sRet = oRet.value;var commonParam = oRet.context; _modalReturn(sRet,commonParam);}, commonParam);//
+    } else {
+        var ret = $eform('打开窗口修改记录');
+       //dataset1.Open();
+    }
+}
+
+function _modalReturn(sRet, commonParam) {
+    if (IsSpace(sRet)) return;
+    if (IsSpace(commonParam)) return;
+    dataset1.Open();
+
+}*/
+function uf_isCancel(){
+/*	var ret = window.confirm("是否取消"+dataset1.Field('agentUserName').Value+"的代理权");
+	if(ret == true){
+		xmlSql = "<update tableName='FCQ_AGENT'><set>isCancel='1'</set><where> agentId = '"+dataset1.Field('agentId').Value+"'</where></update>"
+		doSaveData(xmlSql,function(){alert("功能取消"+dataset1.Field('agentUserName').Value+"的代理权");});
+		dataset1.Open();
+	}
+	*/
+	
+	getTopWin().openConfirmDialog({
+        contents: "是否取消"+dataset1.Field('agentUserName').Value+"的代理权",
+        icon: "help",
+        bottons: {
+            "确定": function() {
+				xmlSql = "<update tableName='FCQ_AGENT'><set>isCancel='1'</set><where> agentId = '"+dataset1.Field('agentId').Value+"'</where></update>"
+				doSaveData(xmlSql,function(){alert("功能取消"+dataset1.Field('agentUserName').Value+"的代理权");});
+				dataset1.Open();
+			
+            },
+            "取消": null
+        }
+    });	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/htc/webgrid.js'></script><script src='../../fceform/js/fcwebgrid.js'></script><script src='../../fceform/htc/fc_code.js'></script><script src='../../fceform/htc/dataset.js'></script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="zk_agent" caption="委托代理人" type="ZK" isfile="是" center="  " posleft postop poswidth posheight window="当前窗口" BLONopen="fcpubdata.cardWinUrl='zk_agent_card'" BLONopenBefore BLONclose billtaborder="<root><taborder>grid1</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" userToolbar="<tr rowstate=&quot;add&quot;><td>add</td><td>新增</td><td></td><td>$eform('打开窗口新增记录')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>edit</td><td>修改保存</td><td></td><td>$eform('打开窗口修改记录')</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate=&quot;add&quot;><td>cancel</td><td></td><td>取消代理</td><td>uf_isCancel()</td><td></td><td></td><td></td><td></td><td></td></tr>" userType alertType="1" isCheckPermit="否" BLONresizeBefore BLONresizeAfter allBrowser="是" useHelp envType="电脑" AutoResizeXml><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" savetable="FCQ_AGENT" idparam="AGE" async="否" controltype="dataset" format="<fields><field><fieldname>AGENTID</fieldname><datatype>字符</datatype><displaylabel>id字段</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>agentUserId</fieldname><datatype>字符</datatype><displaylabel>代理人id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>agentUserName</fieldname><datatype>字符</datatype><displaylabel>代理人</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>clientUserId</fieldname><datatype>字符</datatype><displaylabel>委托人id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>clientUserName</fieldname><datatype>字符</datatype><displaylabel>委托人</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>startTime</fieldname><datatype>字符</datatype><displaylabel>开始时间</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>endTime</fieldname><datatype>字符</datatype><displaylabel>结束时间</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>unitIds</fieldname><datatype>字符</datatype><displaylabel>功能点id</displaylabel><size>7800</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><AGENTID></AGENTID><agentUserId></agentUserId><agentUserName></agentUserName><clientUserId></clientUserId><clientUserName></clientUserName><startTime></startTime><endTime></endTime><unitIds></unitIds></dsid>")' onGetText='bill_ondatasetgettext("<dsid><AGENTID></AGENTID><agentUserId></agentUserId><agentUserName></agentUserName><clientUserId></clientUserId><clientUserName></clientUserName><startTime></startTime><endTime></endTime><unitIds></unitIds></dsid>")' onSetText='bill_ondatasetsettext("<dsid><AGENTID></AGENTID><agentUserId></agentUserId><agentUserName></agentUserName><clientUserId></clientUserId><clientUserName></clientUserName><startTime></startTime><endTime></endTime><unitIds></unitIds></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D0%DC%D8%EA%F6%A0%D6Xr%94Xrn%D0%DC%D8%EA%F6%B8%F4%D8%F2%A0%D6Xr%94%D0%DC%D8%EA%F6%B8%F4%D8%F2%A0%D6Xrn%D0%F4Xrn%D0%DC%D8%EA%F6%B8%F4%D8%F2%AA%D0%E8%D8Xr%94%D4%E6%E0%D8%EA%F6%B8%F4%D8%F2%A0%D6Xr%94Xrn%D4%E6%E0%D8%EA%F6%B8%F4%D8%F2%A0%D6Xrn%D0%F4Xrn%D4%E6%E0%D8%EA%F6%B8%F4%D8%F2%AA%D0%E8%D8XrnXr%94%F4%F6%D0%F2%F6%B6%E0%E8%D8Xr%94%D8%EA%D6%B6%E0%E8%D8Xr%94%F8%EA%E0%F6%A0%D6%F4Xrn%DA%F2%EC%E8Xrn%DA%D4%F0%CC%D0%DC%D8%EA%F6Xrn%FC%DE%D8%F2%D8Xrn%E0%F4%94%D0%EA%D4%D8%E6Xt%96n" fieldtrans="<root><field><name>clientName</name><trans></trans><rtrans></rtrans><sql>select%20userid%20as%20clientId%2Cusername%20as%20clientName%20from%20fcq_user%20where%20deleteMark%3D0</sql></field><field><name>agentUserName</name><trans></trans><rtrans></rtrans><sql>select%20userid%20as%20agentUserId%2C%20username%20agentUserName%20from%20fcq_user%20where%20deleteMark%3D0</sql></field><field><name>clientUserName</name><trans></trans><rtrans></rtrans><sql>select%20userId%20as%20clientUserId%2CuserName%20as%20clientUserId%20from%20fcq_user%20where%20deleteMark%3D0</sql></field></root>"></fc:dataset><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col><col>$eform(&amp;quot;打开窗口修改记录&amp;quot;)</col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' controltype="grid" format="<cols><col><fname>agentUserName</fname><cname>代理人</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col><col><fname>startTime</fname><cname>开始时间</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col><col><fname>endTime</fname><cname>结束时间</cname><width>20</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>120</columnwidth><align>left</align></col></cols>" dataset="dataset1" visible="是" height="265" width="650" top="4" left="4" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" blRowNo="否" hideHscroll="否">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid></DIV><script>var grid1=new webgrid("grid1"); $obj("grid1").fnInit(); var dataset1=new dataset("dataset1"); </script></body></html>

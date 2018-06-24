@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field"></meta>
+  <initial-actions>
+    <action id="546" name="初始化动作">
+      <restrict-to>
+        <conditions>
+          <condition type="class">
+            <arg name="rolename">普通职员</arg>
+            <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+            <arg name="role">ROL00000001</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="7941" old-status="Finished" status="Underway" step="9709"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1468" name="结束节点">
+    </step>
+    <step id="9709" name="制单步骤" compensate="cn.com.fcsoft.extend.ReturnAddCallerToTask">
+      <tasks>
+        <task name="制单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">执行者(caller),步骤执行者(mostRecentCaller)</arg>
+          <arg name="taskType">2</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="stepId">9709</arg>
+          <arg name="user">${caller},${mostRecentCaller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9332" name="制单步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_simple_new%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">9332</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">9709</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="9043" old-status="Finished" status="Underway" step="3562"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3562" name="审核步骤">
+      <tasks>
+        <task name="审核制单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">部门经理</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000003</arg>
+          <arg name="stepId">3562</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="9828" name="审核步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_simple_check%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">9828</arg>
+                <arg name="rolename">部门经理</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="role">ROL_0000003</arg>
+                <arg name="step_id">3562</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="8610" old-status="Finished" status="Underway" step="9709">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[
+propertySet.getString("check_flag").Equals("0")
+]]></arg>
+                </condition>
+              </conditions>
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">制单步骤</arg>
+                  <arg name="stepId">9709</arg>
+                </function>
+              </pre-functions>
+            </result>
+            <unconditional-result id="2363" old-status="Finished" status="Underway" step="1468"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

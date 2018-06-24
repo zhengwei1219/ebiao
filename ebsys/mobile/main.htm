@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>eworkflow管理中心 - 移动版</title>
+		<link rel="stylesheet" href="css/mm_main.css" type="text/css" />
+		<script src="../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../fceform/js/fcpub.js"></script>
+		<script src="../fceform/js/csjsrequest.js"></script>		
+
+		
+	<script language="javascript">	
+		function on_load(){
+			 var ipad = Request.QueryString("ipad").toString();
+			 if (!IsSpace(ipad) && ipad=="1")//是平板登录
+				 fcpubdata.keyScene = "平板";			 
+			 else			 
+				 fcpubdata.keyScene = "手机";
+			
+			 resizeWin();
+		}
+		function resizeWin(){
+	
+			var content = document.getElementById("content");			
+			//var footer = document.getElementById("footer");
+			var pageHeight;
+			if (document.compatMode == "BackCompat"){ 
+				pageHeight = document.body.clientHeight;
+			}
+			else {//document.compatMode == "CSS1Compat"
+				pageHeight = document.documentElement.clientHeight;
+			}
+			//var minContent = 500;
+		
+			/*if (pageHeight > minContent + footer.offsetHeight + content.offsetTop){
+				footer.style.top = (pageHeight - footer.offsetHeight) + "px";
+			}		
+			else{
+				footer.style.top = (content.offsetTop + content.offsetHeight) + "px";
+			}*/
+			var contentHeight = pageHeight - content.offsetTop-4;
+			
+			//if (contentHeight<=minContent) contentHeight = minContent;
+			content.style.height = contentHeight + "px";
+			//content.style.height = "1000px";
+		
+		}
+		function downFooter(){	
+		
+			var content = document.getElementById("content");
+			var frameHeight=0;
+			if (document.compatMode == "BackCompat"){ 
+				frameHeight = contentWin.document.body.scrollHeight;
+			}
+			else {//document.compatMode == "CSS1Compat"
+				frameHeight = contentWin.document.documentElement.scrollHeight;
+			}		
+			var contentHeight = frameHeight - content.offsetTop;
+			
+			content.style.height = contentHeight + "px";			
+					
+		}
+
+	</script>
+	</head>
+	<body onLoad="on_load()" onResize="setTimeout('resizeWin()',500)">
+
+	<div class="content" id="content">
+		<iframe width="100%" height="100%" id='contentWin' name='contentWin' src="content.htm" frameborder="0" bordercolor="LightGrey" noresize></iframe>
+	</div>
+
+	</body>
+</html>

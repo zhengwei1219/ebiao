@@ -1,0 +1,23 @@
+
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>表单属性的处理过程</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1"  width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>表单属性的处理过程</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;<b><FONT style="font-size:12px;">表单属性的处理过程</FONT></b><br>
+<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">直接将存储过程名写在处理过程输入域中即可，比如用一个abc的存储过程，就直接写abc，设置了后，再进入此表单的数据集的属性窗口时，会看到多了要创建的临时表名等信息，必须根据最新的数据集字段信息点创建临时表按钮来建临时表，这个临时表是用于传递数据集中的数据到存储过程（如abc）中的。在执行表单保存的同一事务中会同时运行存储过程abc，可以在存储过程abc中做一些特别的存储逻辑。</FONT><br>
+</td></tr>
+<tr><td>
+&nbsp;<FONT style="font-size:12px;">注：存储过程(如abc)必须且只能带两个指定参数：djsn char(40),gzid char(11)；djsn：表示当前表单ID，gzid：表示定位到这次要处理的记录。</FONT><br>
+</td></tr>
+</table>
+<br>
+</body>
+</html>
+

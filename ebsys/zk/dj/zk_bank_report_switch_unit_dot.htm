@@ -1,0 +1,98 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_initPage()
+{
+	e_PropWinOnload();
+	var sHtml=GetBillType()
+	uf_Search();	
+}
+
+/**
+ * 查询
+**/
+function uf_Search()
+{
+	var sql = "select sName,userType from fc_reportfile where 1=1 ";
+
+	var strName = $id("txtName").value;
+	var sUserType = $id("userType").value;
+	
+	if (strName != "" && strName != "请选择")
+		sql = sql + " and sName like '%"+strName+"%'";
+	
+	if(IsSpace(sUserType) == false)
+		sql = sql + " and userType = '"+ sUserType +"'";
+	sql+="and not   exists (select   1   from   fcq_unit  where  FC_REPORTFILE.sName=fcq_unit.fromName)";
+	dataset1.Open(sql);
+}
+
+/**
+ * 保存功能点
+**/
+function uf_save()
+{
+	var djType="";
+	var fromName="";
+	var sName="";
+	var url="";
+	var sRet="";
+	var paramUrl = "";//参数字段 
+	var envType = "电脑";
+	var code =radio1.value;
+	var type = 3;
+	if(code == 2) {//code=1 是基本报表运行，2是电脑表单运行报表，3是手机表单运行报表
+		type = 2;
+		fromName = "ebr_db";
+	}else if(code == 3){
+		type = 2;
+		envType = "手机";
+		fromName = "ebr_m_db";
+	}
+	var l=dataset1.oDom.documentElement.childNodes.length-1;
+	for(var i=0;i<l;i++)
+	{
+		if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == "是")
+		{
+			sName = dataset1.oDom.documentElement.childNodes(i).childNodes(1).text;
+			if(code == 1) fromName = escape(sName);
+			/*var sIndex=fromName.lastIndexOf('/');
+			if(sIndex == -1){
+				sName=fromName;
+			}else{
+				sName=fromName.substr(sIndex+1)
+			}*/
+			djTyp=dataset1.oDom.documentElement.childNodes(i).childNodes(2).text;
+			var maxCode=getMaxNo('UNI');
+			var sortNo=getMaxIntNo('SOR')
+			if(code != 1){
+				paramUrl = RepXml("&name=")+escape(sName);
+			}
+			sRet ="<insert tableName='FCQ_UNIT'> <names>id,name,fromName,fromtype,sortNo,deleteMark,paramUrl,genTime,envType</names> <values>'"+maxCode+"','"+sName+"','"+fromName+"',"+type+","+sortNo+" ,0 ,'"+paramUrl+"','"+ GetTime()+"','"+envType+"'</values> </insert>";
+		}
+	}
+	if(IsSpace(sRet) == true){
+		alert("没有选中的报表")
+	}else{
+		doSaveData(sRet,function(){alert("保存成功");uf_Search();});
+	}
+	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" toolbar="不带工具栏" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore BLONopen="uf_initPage();" center="  " contxml="<root><label><id>label1</id><id>Label2</id></label><radio><id>radio1</id></radio><button><id>cmdQuery</id><id>button5</id></button><text><id>txtName</id></text><dropdownlist><id>userType</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:3;radio:1;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:1;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:8;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:1;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" billtaborder="<root><taborder>cmdQuery</taborder><taborder>txtName</taborder><taborder>grid1</taborder><taborder>userType</taborder><taborder>button5</taborder><taborder>radio1</taborder></root>" isfile="是" posheight poswidth postop posleft window="当前窗口" caption="库中的报表转换成功能点" type="ZK" dj_sn="zk_bank_report_switch_unit_dot" idtype="1" AutoResizeXml runsave OtherSave="否" entertype="修改" keyfield codeheader="BBB" mkbh><DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 9px; LEFT: 12px" id=label1 onmovestart=moveStart() noWrap controltype="label" inputTag="否" value="label1" NotBg="否">报表名称：</DIV><INPUT style="POSITION: absolute; WIDTH: 135px; HEIGHT: 20px; TOP: 4px; LEFT: 83px" id=txtName onmovestart=moveStart() size=24 controltype="text" CustomAttr>&nbsp;<BUTTON style="POSITION: absolute; WIDTH: 65px; HEIGHT: 23px; TOP: 4px; LEFT: 472px" id=cmdQuery onmovestart=moveStart() onclick='bill_onclick("uf_Search();")' controltype="button" dropstyle="否"></BUTTON><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" format="<cols><col><fname>sel</fname><cname>选</cname><width>10</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>30</columnwidth><align>left</align></col><col><fname>sName</fname><cname>报表名</cname><width>100</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>260</columnwidth><align>left</align></col></cols>" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" hideHscroll="否" SetRowHeight="是" visible="是" readonly="否" autoappend="否" autowidth="是" autoheight="是" canselect="是" autosize="否" width="765" height="399" top="124" left="5">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 controltype="dataset" async="否" isSubGrid="否" saveastable="fc_billzl" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" opensortno="1" idtype="1" onValid='bill_ondatasetvalid("<dsid><sel></sel><sName></sName><userType></userType></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><sName></sName><userType></userType></dsid>")' onSetText='bill_ondatasetsettext("<dsid><sel></sel><sName></sName><userType></userType></dsid>")' format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sName</fieldname><datatype>字符</datatype><displaylabel>报表名</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>userType</fieldname><datatype>字符</datatype><displaylabel>用户分类</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>"></fc:dataset><fc:fc_code id=userType controltype="dropdownlist" datasourceName="" field="null" dataset="null" format="" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F8%F4%D8%F2%B6%u0100%EE%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D2%E0%E6%E6%u0102%E6" visible="是" FieldNameList="" isTreeNewSql="0" isShowTree="0" multiselect="否" addrow="否" blnempty="否" blninput="是" xml="" align="undefined" width="133" height="20" top="4" left="318" position="absolute" sql2="null"></fc:fc_code><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 10px; FONT-SIZE: 12px; TOP: 9px; LEFT: 255px" id=Label2 controltype="label" inputTag="否" align="Left">报表分类：</SPAN><BUTTON style="POSITION: absolute; WIDTH: 161px; HEIGHT: 25px; TOP: 3px; LEFT: 547px" id=button5 onmovestart=moveStart() onclick='bill_onclick("uf_save();uf_Search();")' controltype="button" dropstyle="否">选中的报表转换成功能点</BUTTON> 
+<FIELDSET style="POSITION: absolute; WIDTH: 452px; HEIGHT: 82px; TOP: 34px; LEFT: 82px" id=radio1 onmovestart=moveStart() contentEditable=false controltype="radio" tempvalue="1&#13;&#10;2&#13;&#10;3" temptext="fceform/ereport/ebrun.htm?&#13;&#10;fceform/common/djframe.htm?djsn=ebr_file&amp;amp;djtype=ST&#13;&#10;fceform/common/djframe.htm?djsn=ebr_m_file&amp;amp;djtype=ST" value="1" aspect="纵向" legend="选择报表转化成功能点运行的路径"><LEGEND>选择报表转化成功能点运行的路径</LEGEND><INPUT id=RGradio11 onclick=radio1.value=RGradio1[0].value; value=1 CHECKED type=radio name=RGradio1 text="fceform/ereport/ebrun.htm?"><SPAN>fceform/ereport/ebrun.htm?</SPAN>&nbsp;<BR><INPUT id=RGradio12 onclick=radio1.value=RGradio1[1].value; value=2 type=radio name=RGradio1 text="fceform/common/djframe.htm?djsn=ebr_file&amp;djtype=ST"><SPAN>fceform/common/djframe.htm?djsn=ebr_file&amp;djtype=ST</SPAN>&nbsp;<BR><INPUT id=RGradio13 onclick=radio1.value=RGradio1[2].value; value=3 type=radio name=RGradio1 text="fceform/common/djframe.htm?djsn=ebr_m_file&amp;djtype=ST"><SPAN>fceform/common/djframe.htm?djsn=ebr_m_file&amp;djtype=ST</SPAN>&nbsp;</FIELDSET></DIV><script></script></body></html>

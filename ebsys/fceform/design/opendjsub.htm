@@ -1,0 +1,39 @@
+<HTML >
+	<HEAD>
+	 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title>打开表单</title>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcopendj.js"></script>
+		<SCRIPT ID="clientEventHandlersJS" LANGUAGE="javascript">
+//<!--
+	
+function window_onload_opendj() {
+	if(parent.topisfile == "yes") {
+		DjOpenTestFile(parent.topdjsn)
+	} else {
+		DjOpenTest(parent.topdjsn)
+	}
+
+	
+} 
+/*
+	document.onreadystatechange= function ()
+	{
+		if (document.readyState=="complete")
+		{
+			// Finish initialization.
+			bFinish = true ;
+			
+		}
+	}	
+*/
+//-->.
+		</SCRIPT>	
+
+	</HEAD>
+	<BODY onload="return window_onload_opendj()" >
+
+
+	</BODY>
+</HTML>

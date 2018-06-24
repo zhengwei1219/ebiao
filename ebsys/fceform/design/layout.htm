@@ -1,0 +1,116 @@
+<HTML xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link rel="stylesheet" type="text/css" href="../css/menu.css">
+	
+		<STYLE> 
+				v\:* { BEHAVIOR: url(#default#VML);}
+				.subpageDiv { BACKGROUND-COLOR: #ffffff; BORDER-BOTTOM: #0000cd 2px outset; BORDER-LEFT: #0000cd 2px ridge; 
+					BORDER-RIGHT: #0000cd 2px outset; BORDER-TOP: #0000cd 2px ridge;  OVERFLOW: auto;  
+					WIDTH:210MM; HEIGHT:297MM;padding:5mm; }
+				* {font-size: 13px;}	
+
+                .FormatTab 
+                {
+	                BORDER-RIGHT: #000000 1px dotted;
+	                BORDER-TOP: #000000 1px dotted; 
+	                BORDER-LEFT: #000000 1px dotted; 
+	                BORDER-BOTTOM: #000000 1px dotted; 
+	                BORDER-COLLAPSE: collapse
+                }
+                .FormatTabTD 
+                {
+	                BORDER-RIGHT: #000000 1px dotted;
+	                BORDER-TOP: #000000 1px dotted; 
+	                BORDER-LEFT: #000000 1px dotted; 
+	                BORDER-BOTTOM: #000000 1px dotted; 
+	                BORDER-COLLAPSE: collapse
+                }
+
+			</STYLE>
+        <LINK href="../../fceform/css/efdesign.css" type="text/css" rel="stylesheet">
+        <LINK href="../../widget/css/all.css" type="text/css" rel="stylesheet">
+
+        <LINK href="../../fceform/css/skins/blue/style/efskin.css" type="text/css" rel="stylesheet">
+			<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/design.js"></script>
+		<script src="../js/fcopendj.js"></script>
+		<script src="../js/fctorun.js"></script>		
+		<script src="../js/fcbasecont.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/table-operations.js"></script>
+		<script src="../js/htmlarea.js"></script>				
+		<script src="../js/fcselfuse.js"></script>		
+		<script src="../js/fcebiao.js"></script>		
+		<script src="../ereport/js/loadreport.js"></script>
+        <script src="../../widget/all.js"></script>
+		<script src="../js/htm_layout.js"></script>	
+			
+	</HEAD>
+	<BODY onbeforeunload="window_onbeforeunload()" onload="window_onload()" id="mainbody"
+	onresize="window_onresize()"  style="background-image:url(../images/ef_design_dot_5.gif)"
+		>
+		<div id="bigmain" ondblclick="main_ondblclick()" onbeforeeditfocus="main_onbeforeeditfocus()"
+		onclick="window_onclick()" onkeydown="main_onkeydown()"
+		onkeyup="main_onkeyup()" oncontextmenu="main_onRightClick()" 
+		ondrop="new Eapi.EformEbiao().divDrop();"
+		
+		 
+		>
+		<div id="middlediv" style="overflow:auto;"  >
+			<div id="SKbillsheet" oncontrolselect="controlselect()" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" >
+			</div>
+		</div>
+		</div>
+		
+		<textarea rows="17" id="srcHtml" cols="73" style="display:none" >
+		</textarea>
+		
+		<WebMenu DataSource="MenuCode.value" class="WebMenu" id="RightMenu" Width="100" Effect="3" MenuType="1" ></WebMenu>
+		<textarea rows="17" id="MenuCode" cols="73" style="display:none" NAME="MenuCode">
+				
+				<Root>
+					<MenuItem  hasSub="1" subWidth="160" >
+							<MenuItem Func="javascript:CopyCont();main_onkeydel();" Text="剪切 ctrl+x" img="../images/ef_design_cut.gif" />  
+							<MenuItem Func="javascript:CopyCont();" Text="复制 ctrl+c" img="../images/ef_design_copy.gif" />  
+							<MenuItem Func="javascript:if(PasteCont()==false) main_exec('Paste');" Text="粘贴 ctrl+v" img="../images/ef_design_paste.gif" hasLine="1" />
+							<MenuItem Func="javascript:main_onkeydel();" Text="删除	Del" img="../images/ef_design_delete.gif" hasLine="1"/>
+							<MenuItem Func="javascript:main_ondblclick();" Text="属性" img="../images/ef_design_shuxing.gif" hasLine="1"/>
+							
+							<MenuItem Func="javascript:SetSelTextProp();" Text="选中文本属性" img="../images/ef_tab_cell_prop.gif" />  
+					</MenuItem>
+				</Root>
+
+		</textarea>
+		<WebMenu DataSource="MenuTab.value" class="WebMenu" id="RightMenuTab" Width="100" Effect="3" MenuType="1" ></WebMenu>
+		<textarea rows="17" id="MenuTab" cols="73" style="display:none" >
+				<Root>
+					<MenuItem  hasSub="1" subWidth="160" >
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-table-prop');" Text="表格属性" hasLine="1" img="../images/ef_tab_table_prop.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-row-insert-above');" Text="在前面加一行" img="../images/ef_tab_row_insert_above.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-row-insert-under');" Text="在后面加一行" img="../images/ef_tab_row_insert_under.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-row-delete');" Text="删除当前行" img="../images/ef_tab_row_delete.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-row-split');" Text="按行拆分单元格" hasLine="1" img="../images/ef_tab_row_split.gif" />
+							  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-col-insert-before');" Text="在前面加一列" img="../images/ef_tab_col_insert_before.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-col-insert-after');" Text="在后面加一列" img="../images/ef_tab_col_insert_after.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-col-delete');" Text="删除当前列" img="../images/ef_tab_col_delete.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-col-split');" Text="按列拆分单元格" hasLine="1" img="../images/ef_tab_col_split.gif" />
+
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-prop');" Text="单元格属性" hasLine="1" img="../images/ef_tab_cell_prop.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-insert-before');" Text="在前面加单元格" img="../images/ef_tab_cell_insert_before.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-insert-after');" Text="在后面加单元格" img="../images/ef_tab_cell_insert_after.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-delete');" Text="删除当前单元格" img="../images/ef_tab_cell_delete.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-merge');" Text="合并单元格" img="../images/ef_tab_cell_merge.gif" />  
+							<MenuItem Func="javascript:editortab.buttonPress(editor,'TO-cell-split');" Text="拆分单元格" hasLine="1" img="../images/ef_tab_cell_split.gif" />  
+							
+							<MenuItem Func="javascript:SetSelTextProp();" Text="选中文本属性" img="../images/ef_tab_cell_prop.gif" />  
+
+					</MenuItem>
+				</Root>
+
+		</textarea>	
+		
+	</BODY>
+</HTML>

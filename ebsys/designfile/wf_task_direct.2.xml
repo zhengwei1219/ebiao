@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_expense</meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field">expense_id</meta>
+  <initial-actions>
+    <action id="5404" name="初始化动作">
+      <restrict-to>
+        <conditions>
+          <condition type="class">
+            <arg name="rolename">普通职员</arg>
+            <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+            <arg name="role">ROL00000001</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="2615" old-status="Finished" status="Underway" step="5333"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="9687" name="结束节点">
+    </step>
+    <step id="5333" name="填写步骤">
+      <tasks>
+        <task name="制单(报销单)" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">${caller}</arg>
+          <arg name="finishDays">0.003</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">5333</arg>
+          <arg name="user">${caller}</arg>
+          <arg name="signScale">100</arg>
+          <var-classes>
+            <var-class type="class">
+              <arg name="username">指定步骤的执行者</arg>
+              <arg name="class">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+              <arg name="stepId">5333</arg>
+              <arg name="user">${mostRecentCaller}</arg>
+            </var-class>
+          </var-classes>
+          <reminder>
+            <para name="sendMode">1,3</para>
+            <para name="jobOverdue">1</para>
+            <para name="jobOverdueCornChn">每天 15 点</para>
+            <para name="startRecipient">1</para>
+            <para name="finishInfo">您的任务已经处理完成，任务为：</para>
+            <para name="jobStartCorn">0 0/1 15 ? * *</para>
+            <para name="dueInfo">您的任务已经超期，请赶紧登录系统处理，任务为：</para>
+            <para name="dueRecipient">1</para>
+            <para name="startInfo">您有一条任务需要处理，任务为：</para>
+            <para name="finishRecipient">2</para>
+            <para name="jobStartCornChn">每天 15 点</para>
+            <para name="jobFinish">1</para>
+            <para name="jobStart">1</para>
+            <para name="jobOverdueCorn">0 0/1 15 ? * *</para>
+          </reminder>
+        </task>
+      </tasks>
+      <actions>
+        <action id="141" name="填写步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_onedj%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">141</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">5333</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将执行者保存到Caller</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="1330" old-status="Finished" status="Underway" step="9712">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将执行者保存到Caller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9712" name="审核步骤">
+      <tasks>
+        <task name="审核 ${oCaller.name}提交的报销单" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">王强强</arg>
+          <arg name="finishDays">0.001</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">9712</arg>
+          <arg name="user">USR00000003</arg>
+          <arg name="signScale">100</arg>
+          <var-classes>
+            <var-class type="class">
+              <arg name="copy_username">执行者</arg>
+              <arg name="copy_user">${caller}</arg>
+              <arg name="class">cn.com.fcsoft.workflow.util.Caller</arg>
+            </var-class>
+          </var-classes>
+          <reminder>
+            <para name="sendMode">1</para>
+            <para name="jobOverdue">1</para>
+            <para name="jobOverdueCornChn">立即</para>
+            <para name="startRecipient">1</para>
+            <para name="jobStartCorn"></para>
+            <para name="dueInfo">审核${oCaller.name}提交的报销单 任务超期了，请及时处理。</para>
+            <para name="dueRecipient">1</para>
+            <para name="startInfo">您有一条任务（审核 ${oCaller.name}提交的报销单）需要审核。</para>
+            <para name="finishRecipient">1</para>
+            <para name="jobStartCornChn">立即</para>
+            <para name="jobFinish">1</para>
+            <para name="jobStart">1</para>
+            <para name="jobOverdueCorn"></para>
+          </reminder>
+        </task>
+      </tasks>
+      <actions>
+        <action id="5267" name="审核步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_onedj%26djtype%3DWF_EX">
+          <action-forms>
+            <action-form name="mobilePhone">/fceform/common/djframe.htm?djsn=wf_onedj&amp;djtype=WF_EX</action-form>
+          </action-forms>
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">5267</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">9712</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="5817" old-status="Finished" status="Underway" step="5333">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("dept_audit").Equals("0")]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="8343" old-status="Finished" status="Underway" step="9687"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

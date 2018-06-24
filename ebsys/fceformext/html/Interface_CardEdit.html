@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>设计接口资料单 - 编辑</title>
+</head>
+
+<body>
+
+<!--以下为toolbar-->
+<div class="navbar">
+    <a href="Interface_DataList.html" class="on">全部资料单</a>
+</div>
+<!--以下为表格-->
+<div class="fillflow2">
+  <ul>
+    <li class="green"><a href="#">新建</a><br/>
+      <span><a href="#"><img src="images/green.gif"/></a></span></li>
+    <li class="green"><a href="#">审核</a><br/>
+      <span><a href="#"><img src="images/green.gif"/></a></span></li>
+    <li style="margin:0; width:250px">
+      <table border="0" cellspacing="0" cellpadding="0" style="background-color:#FFF;">
+        <tr>
+          <td rowspan="2"><img src="images/fillflow_left.gif"/></td>
+          <td><table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="green" width="120px" height="25px"><a href="#">区域审核</a></td>
+              <td class="orange" width="120px"><a href="#">区域主管</a></td>
+            </tr>
+            <tr>
+              <td background="images/dashed.gif"><a href="#"><img src="images/green.gif" style="margin-bottom:3px"/></a></td>
+              <td background="images/dashed.gif"><a href="#"><img src="images/orange.gif" style="margin-bottom:3px"/></a></td>
+            </tr>
+          </table></td>
+          <td rowspan="2"><img src="images/fillflow_right.gif"/></td>
+        </tr>
+        <tr>
+          <td><table border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;" align="center">
+            <tr>
+              <td class="green" width="240px"><a href="#">系统审核</a></td>
+            </tr>
+            <tr>
+              <td background="images/dashed.gif"><a href="#"><img src="images/green.gif" style="margin-bottom:2px"/></a></td>
+            </tr>
+          </table></td>
+        </tr>
+      </table>
+    </li>
+    <li>电气主管<br/>
+      <span><a href="#"><img src="images/gray.gif"/></a></span></li>
+    <li>车型主管<br/>
+      <span><img src="images/gray.gif"/></span></li>
+    <li>设计经理<br/>
+      <span><img src="images/gray.gif"/></span></li>
+  </ul>
+</div>
+<div class="toolbar">
+<img src="images/icon25.gif"/>&nbsp;<a href="Interface_Card.html">保存</a>&nbsp;&nbsp;<img src="images/icon79.gif"/>&nbsp;<a href="Interface_Card.html">提交</a></div>
+<div class="info">
+  <div class="infotitlebar">
+    <div class="infotitle"><img src="images/cons.gif"/>设计接口资料单</div>
+  </div>
+  <div class="infomain">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="11%" class="form_title">项目 - 车型：</td>
+        <td colspan="5" class="form_content"><input name="textfield5" type="text" class="form_short" id="textfield10" value="项目名称"  style="width:47%"/>
+          -          
+          <input name="textfield2" type="text" class="form_short" id="textfield2" value="车型"  style="width:46%"/>
+        <a href="Interface_CardEdit_SelectItem.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+      </tr>
+      <tr>
+        <td class="form_title">组件名称：</td>
+        <td width="22%" class="form_content"><input name="textfield3" type="text" class="form_short" id="textfield3" value="组件名称"  style="width:97%"/></td>
+        <td width="11%" class="form_title">版本：</td>
+        <td width="22%" class="form_content">A</td>
+        <td width="11%" class="form_title">编号：</td>
+        <td width="22%" class="form_content">001</td>
+      </tr>
+      <tr>
+        <td class="form_title">提供者：</td>
+        <td class="form_content">李江明</td>
+        <td class="form_title">所属部门：</td>
+        <td colspan="3" class="form_content">产品研发部</td>
+      </tr>
+      <tr>
+        <td class="form_title">资料名称：</td>
+        <td colspan="5" class="form_content"><input name="textfield6" type="text" class="form_short" id="textfield5"style="width:99%" /></td>
+      </tr>
+      <tr>
+        <td class="form_title">资料内容：</td>
+        <td colspan="5" class="form_content"><textarea name="textarea2" rows="6" class="form_area" id="textarea2" style="width:99%"></textarea></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="info">
+  <div class="infotitlebar">
+    <div class="infotitle"><img src="images/cons.gif"/>附件上传</div>
+    <div class="infocontrols"><img src="images/icon09.gif"/>&nbsp;<a href="#">添加附件</a></div>
+  </div>
+  <div class="infomain">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border-left:1px solid #98bde9; border-right:1px solid #98bde9;">
+      <tr>
+        <td width="11%" class="form_title">拖放区域：</td>
+        <td colspan="3" class="form_content" style="height:45px; font-weight:bold;"><img src="images/filearea.gif" /> 操作提示：请用鼠标将待上传文件拖放至左侧黄色区域内。</td>
+      </tr>
+      <tr>
+        <td width="11%" class="form_title">附件名称：</td>
+        <td width="22%" class="form_content"><input name="textfield" type="text" class="form_short" id="textfield" size="20" /></td>
+        <td width="11%" class="form_title">上传路径：</td>
+        <td class="form_content"><input name="textfield" type="text" class="form_short" id="textfield" size="52" />
+          <a href="#"><img src="images/icon28.gif" alt="选择"/></a>&nbsp;&nbsp;<a href="#"><img src="images/icon19.gif" alt="删除"/></a></td>
+      </tr>
+    </table>
+    <table class="listbox">
+      <thead>
+        <tr>
+          <td width="25">序号</td>
+          <td>名称</td>
+          <td width="120">上传时间</td>
+          <td width="55">附件大小</td>
+          <td width="25">下载</td>
+          <td width="25">删除</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table_td1" onmouseover="this.className='table_over';" onmouseout="this.className='table_td1';">
+          <td>1</td>
+          <td><a href="#" target="_blank">数据图形库文档.rar</a></td>
+          <td>2009-08-15 15:54:30</td>
+          <td>126K</td>
+          <td><a href="ItemManange_New_Preview.html"><img src="images/icon62.gif" alt="下载版本"/></a></td>
+          <td><a href="#"><img src="images/icon19.gif" alt="删除"/></a></td>
+        </tr>
+        <tr class="table_td1" onmouseover="this.className='table_over';" onmouseout="this.className='table_td1';">
+          <td>2</td>
+          <td><a href="#" target="_blank">项目通用测试模板.doc</a></td>
+          <td class="table_td1">2009-09-04 10:21:25</td>
+          <td class="table_td1">351K</td>
+          <td><a href="ItemManange_New_Preview.html"><img src="images/icon62.gif" alt="下载版本"/></a></td>
+          <td><a href="#"><img src="images/icon19.gif" alt="删除"/></a></td>
+        </tr>
+        <tr class="table_td1" onmouseover="this.className='table_over';" onmouseout="this.className='table_td1';">
+          <td>3</td>
+          <td><a href="#" target="_blank">项目审核通知单.xls</a></td>
+          <td>2009-09-26 17:05:44</td>
+          <td>1.2M</td>
+          <td><a href="ItemManange_New_Preview.html"><img src="images/icon62.gif" alt="下载版本"/></a></td>
+          <td><a href="#"><img src="images/icon19.gif" alt="删除"/></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="info">
+  <div class="infotitlebar">
+    <div class="infotitle"><img src="images/cons.gif"/>审核情况</div>
+  </div>
+  <div class="infomain">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="11%" class="form_title">审核：</td>
+        <td width="22%" class="form_content"><input name="textfield8" type="text" class="form_short" id="textfield6" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td width="11%" class="form_title">区域审核：</td>
+        <td width="22%" class="form_content"><input name="textfield9" type="text" class="form_short" id="textfield7" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td width="11%" class="form_title">系统审核：</td>
+        <td width="22%" class="form_content"><input name="textfield10" type="text" class="form_short" id="textfield8" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+      </tr>
+      <tr>
+        <td class="form_title">区域主管：</td>
+        <td class="form_content"><input name="textfield11" type="text" class="form_short" id="textfield9" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td class="form_title">处理情况：</td>
+        <td colspan="3" class="form_content"><input name="textfield12" type="text" class="form_short" id="textfield11"style="width:99%" /></td>
+      </tr>
+      <tr>
+        <td class="form_title">电气主管：</td>
+        <td class="form_content"><input name="textfield11" type="text" class="form_short" id="textfield9" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td class="form_title">处理情况：</td>
+        <td colspan="3" class="form_content"><input name="textfield12" type="text" class="form_short" id="textfield11"style="width:99%" /></td>
+      </tr>
+      <tr>
+        <td class="form_title">车型主管：</td>
+        <td class="form_content"><input name="textfield11" type="text" class="form_short" id="textfield9" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td class="form_title">处理情况：</td>
+        <td colspan="3" class="form_content"><input name="textfield12" type="text" class="form_short" id="textfield11"style="width:99%" /></td>
+      </tr>
+      <tr>
+        <td class="form_title">设计主管：</td>
+        <td class="form_content"><input name="textfield11" type="text" class="form_short" id="textfield9" value="李江明" size="15" />
+        <a href="DataManage_New_NewDoc_Interfix.html" target="_blank"><img src="images/icon27.gif"/></a></td>
+        <td class="form_title">处理情况：</td>
+        <td colspan="3" class="form_content"><input name="textfield12" type="text" class="form_short" id="textfield11"style="width:99%" /></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="divbtn">
+  <input name="button" type="button" class="buttonenter" id="button" value="保 存" />
+  <input name="button3" type="button" class="buttonenter" id="button4" value="提 交" />
+  <input name="button3" type="button" class="buttonenter" id="button4" value="重 置" />
+</div>
+<!--以下为form表单样式-->
+</body>
+</html>

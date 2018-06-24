@@ -1,0 +1,23 @@
+<HTML>
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<script src="../../fceform/js/csjsrequest.js"></script>
+	<script language="javascript">
+	    function linkCss() {
+	        var skinColor = parent.parent.zkpub.skin;
+	        if (skinColor == "") skinColor = "base";
+	        cssId.href = "../../zk/main/css/skin/" + skinColor + "/style.css";
+	    }
+	    function window_onload() {
+	        linkCss();
+	        lblTitle.innerText = unescape(parent.Request.QueryString("caption").toString());
+	    }
+	</script>
+	</HEAD>
+	<body class="rightwin-top-body" onload="window_onload()" >
+	    <LINK id=cssId type="text/css" rel="stylesheet">
+		<IMG src="../../zk/main/css/skin/commonImg/01.gif" style="LEFT: 2px; POSITION: absolute; TOP: 2px">
+		<IMG src="../../zk/main/css/skin/commonImg/03.gif" style="LEFT: 98%; POSITION: absolute; TOP: 2px">
+		<LABEL id="lblTitle"  style="FONT-WEIGHT: bold; FONT-SIZE: 13px;LEFT: 30px; WIDTH:400px;  COLOR: #000000; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 4px; HEIGHT: 15px" ></LABEL>
+	</body>
+</HTML>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<root>
+	<func name="upper1" class="LoadEbiao.Upper1" type="1" />
+	<func name="sum1" class="LoadEbiao.DSSum1" type="2" />
+</root>

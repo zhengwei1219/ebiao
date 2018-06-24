@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../../fceform/css/dj.css); 
+	</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../../fceform/images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_save(){
+	var stable=dataset1.saveastable;
+	if(isSpace(stable)){
+		var stip1="请设置dataset1的保存表名!";
+		alert(stip1);
+		return stip1;
+	}
+	
+	var sRet = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/clobfield"+fcpubdata.dotnetVersion+"?key=writeClob&sTablename="+stable+"&sImgname=bigtext&sKeyname="+fcpubdata.area.keyfield+"&sKeyvalue="+fcpubdata.keyValue,textarea1.value,null,null,"noRoot");
+	if(IsSpace(sRet)){
+		alert("OK");
+	}else{
+		alert(sRet);
+	}
+
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="clob" caption="clob" type="OF" isfile="是" center="  " posleft postop poswidth posheight toolbar="不带工具栏" window="当前窗口" BLONopen="fcpubdata.keyValue=dataset1.Field(fcpubdata.area.keyfield).Value;" BLONclose idtype="1" entertype="修改" keyfield="id" codeheader OtherSave="否" runsave billtaborder="<root><taborder>text1</taborder><taborder>textarea1</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:3;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:1;spin:0;excel:0;tree:0;ebshow:0" contxml="<root><label><id>label1</id><id>label2</id></label><textarea><id>textarea1</id></textarea><button><id>button1</id><id>button2</id><id>button3</id></button><text><id>text1</id></text><dataset><id>dataset1</id></dataset></root>"><?xml:namespace prefix = fc /><fc:dataset id=dataset1 opensortno="1" controltype="dataset" saveastable="fcs_clob" pubpara="否" onValid='bill_ondatasetvalid("<dsid><id></id><name></name><bigtext></bigtext></dsid>")' onGetText='bill_ondatasetgettext("<dsid><id></id><name></name><bigtext></bigtext></dsid>")' onSetText='bill_ondatasetsettext("<dsid><id></id><name></name><bigtext></bigtext></dsid>")' sqltrans="%F4%D8%E6%D8%D4%F6Xrn%E0%D6Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%F4%CC%D4%E6%EC%D2Xrn%FC%DE%D8%F2%D8Xrn%E0%D6Xt%96Xr%7C%E0%D6pXr%7C" format="<fields><field><fieldname>id</fieldname><datatype>字符</datatype><displaylabel>id</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>name</fieldname><datatype>字符</datatype><displaylabel>name</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>bigtext</fieldname><datatype>文本</datatype><displaylabel>大文本</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>"></fc:dataset><INPUT id=text1 style="LEFT: 33px; WIDTH: 110px; POSITION: absolute; TOP: 42px; HEIGHT: 20px" onmovestart=moveStart() controltype="text" field="name" dataset="dataset1" china="name"><LABEL id=label1 style="LEFT: 38px; WIDTH: 44px; POSITION: absolute; TOP: 22px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">名称</LABEL><LABEL id=label2 style="LEFT: 32px; WIDTH: 65px; POSITION: absolute; TOP: 69px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">大文本</LABEL><TEXTAREA id=textarea1 style="LEFT: 27px; WIDTH: 271px; POSITION: absolute; TOP: 85px; HEIGHT: 190px" onmovestart=moveStart() rows=4 cols=54 controltype="textarea" field="bigtext" dataset="dataset1" china="大文本" induce="否" value="textarea1"></TEXTAREA><BUTTON id=button1 style="LEFT: 207px; WIDTH: 75px; POSITION: absolute; TOP: 7px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_save()")'>保存</BUTTON><BUTTON id=button2 style="LEFT: 309px; WIDTH: 75px; POSITION: absolute; TOP: 11px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("alert(dataset1.xml)")'>button2</BUTTON><BUTTON id=button3 style="LEFT: 320px; WIDTH: 75px; POSITION: absolute; TOP: 44px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("alert(fcpubdata.keyValue)")'>button3</BUTTON></DIV></body></html>

@@ -1,0 +1,59 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var key1 = "";
+var keyName1 = "";
+//var roottext = "角色";
+//var tbname ='tbname1';
+//var roottext1 = "角色";
+
+function uf_Open(){
+	new Eform.SysForm().setButtonImage();
+	dataset2.Field('typeId').Value = fcpubdata.obj.Field('typeId').Value;
+	$id('manageType').innerText = fcpubdata.obj.Field('chnname').Value;
+	var sql = "select tbname1,tbname2,selFunc1 ,selFunc2 ,sql1,sql2 from  fcq_relation_dict_type where typeId='"+fcpubdata.obj.Field('typeId').Value+"'";
+	var xmlRet1 = SelectSql(sql, 1, 1);
+    var oXml1 = SetDom(xmlRet1);
+    if (oXml1.documentElement == null) {
+        alert(xmlRet1);
+        return;
+    }
+	if (oXml1.documentElement.childNodes.length < 1) return;
+    //var table1 = oXml1.documentElement.childNodes[0].childNodes[0].text;
+    //var table2 = oXml1.documentElement.childNodes[0].childNodes[1].text;
+    var selFunc1 = oXml1.documentElement.childNodes[0].childNodes[2].text;
+    var selFunc2 = oXml1.documentElement.childNodes[0].childNodes[3].text;
+    var sql1 = oXml1.documentElement.childNodes[0].childNodes[4].text;
+    var sql2 = oXml1.documentElement.childNodes[0].childNodes[5].text;
+    if(IsSpace(selFunc1) == false)	{//函数和sql语句的规则，有函数先用函数，没函数就用sql
+    	selFunc1 = unescape(selFunc1);
+		$id('dropTable1').onclickopen="bill_onclick(\""+selFunc1+"\")";
+    } else{
+    	sql1 = unescape(sql1);
+    	dropTable1.sql1 = sql1;
+    } 
+    
+    if(IsSpace(selFunc2) == false)	{
+    	selFunc2 = unescape(selFunc2);
+    	$id('dropTable2').onclickopen="bill_onclick(\""+selFunc2+"\")";
+    } else{
+    	sql2 = unescape(sql2);
+    	dropTable2.sql1 = sql2;
+    } 
+}
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script src='../../fceform/htc/fc_code.js'></script><script src='../../fceform/htc/dataset.js'></script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" BLONopenBefore BLONclose center="居中" BLONopen="uf_Open()" dj_sn="zk_relation_card" type="ZK" caption="关系词典卡片表" window="有模式窗口" posleft postop poswidth="330" posheight="300" isfile="是" billtaborder="<root><taborder>dropTable1</taborder><taborder>dropTable2</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:6;radio:0;listbox:2;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:12;text:6;hr:0;checkboxlist:0;radiolist:0;dropdownlist:6;grid:2;dataset:3;spin:0;excel:0;tree:1;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><label><id>label2</id><id>label3</id><id>manageType</id><id>label6</id></label><dropdownlist><id>dropTable1</id><id>dropTable2</id></dropdownlist><dataset><id>dataset2</id></dataset></root>" userType alertType="1" isCheckPermit="否" BLONresizeBefore BLONresizeAfter allBrowser="是" useHelp envType="电脑" userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' toolbar="自定义工具栏" AutoResizeXml><LABEL style="POSITION: absolute; WIDTH: 58px; HEIGHT: 17px; TOP: 25px; LEFT: 12px" id=label2 onmovestart=moveStart() inputTag="否" controltype="label">关系一</LABEL><?xml:namespace prefix = fc /><fc:dataset id=dataset2 idtype="5" controltype="dataset" format="<fields><field><fieldname>key1</fieldname><datatype>字符</datatype><displaylabel>当前id</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keyName1</fieldname><datatype>字符</datatype><displaylabel>关系一</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keyName2</fieldname><datatype>字符</datatype><displaylabel>关系二</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>key2</fieldname><datatype>字符</datatype><displaylabel>接受分配者id</displaylabel><size>250</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>typeId</fieldname><datatype>字符</datatype><displaylabel>id字段</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tbname1</fieldname><datatype>字符</datatype><displaylabel>表一</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tbname2</fieldname><datatype>字符</datatype><displaylabel>表二</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" fieldtrans="<root><field><name>keyName2</name><trans></trans><rtrans></rtrans><sql></sql></field></root>" async="否" opensortno="1" pubpara="否" isaddemptyrec="否" isSubGrid="否" submittype="1" submitno="1" savetable="fcq_relation_dict" issubds="否" onValid='bill_ondatasetvalid("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><tbname1></tbname1><tbname2></tbname2></dsid>")' onGetText='bill_ondatasetgettext("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><tbname1></tbname1><tbname2></tbname2></dsid>")' onSetText='bill_ondatasetsettext("<dsid><key1></key1><keyName1></keyName1><keyName2></keyName2><key2></key2><typeId></typeId><tbname1></tbname1><tbname2></tbname2></dsid>")'></fc:dataset><LABEL style="POSITION: absolute; WIDTH: 69px; HEIGHT: 22px; TOP: 50px; LEFT: 12px" id=label3 onmovestart=moveStart() inputTag="否" controltype="label">关系二</LABEL><LABEL style="POSITION: absolute; WIDTH: 196px; HEIGHT: 15px; TOP: 4px; LEFT: 72px" id=manageType onmovestart=moveStart() inputTag="否" controltype="label"></LABEL><fc:fc_code id=dropTable1 controltype="dropdownlist" dataset="dataset2" visible="是" FieldNameList="" isTreeNewSql="0" isShowTree="0" xml="" blninput="是" blnempty="否" addrow="否" multiselect="否" field="keyName1" datasourceName="" format="" width="229" height="16" top="23" left="68" sqltrans="" position="absolute" align="undefined" sql2="null"></fc:fc_code><fc:fc_code id=dropTable2 controltype="dropdownlist" dataset="dataset2" visible="是" FieldNameList="" isTreeNewSql="0" isShowTree="0" xml="" blninput="是" blnempty="否" addrow="否" multiselect="否" field="keyName2" datasourceName="" format="" width="229" height="16" top="47" left="68" sqltrans="" position="absolute" align="undefined" sql2="null"></fc:fc_code><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 7px; LEFT: 12px" id=label6 onmovestart=moveStart() inputTag="否" controltype="label">关系类型</LABEL></DIV><script>var dataset2=new dataset("dataset2"); var dropTable1=new dropdownlist("dropTable1"); $obj("dropTable1").fnInit(); var dropTable2=new dropdownlist("dropTable2"); $obj("dropTable2").fnInit(); </script></body></html>

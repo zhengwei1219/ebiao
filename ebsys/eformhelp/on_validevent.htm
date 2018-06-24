@@ -1,0 +1,23 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>数据验证事件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>数据验证事件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">数据验证事件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">在绑定到数据集的输入控件上的值赋给数据集(准确地说是指 ds.Field('字段名').Value )上时会触发此事件,比如在编辑框上修改了值,并离开此编辑框时,此时会触发onchange事件.此时也会触发编辑框所绑定的字段的数据验证事件. 在此事件中可以写 $valid的验证代码,也可以自定义JS函数.在自定义JS函数的代码中,可以用下面的属性： event.FieldValue:是取当前字段的值，event.returnValue不为空表示验证不通过，且它为提示信息。event.DisplayLabel：是取当前字段的中文名称. </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

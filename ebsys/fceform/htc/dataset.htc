@@ -1,0 +1,3669 @@
+/*
+	作者:梅勇 2003.02.27
+*/
+<PROPERTY NAME="showerr" />   //是否显示错误提示,缺省为显示.
+<ATTACH EVENT="ondocumentready" HANDLER="fnInit0" />
+<PUBLIC:PROPERTY NAME="isNeedValid" />
+<PUBLIC:PROPERTY NAME="datasourceName"  /> //数据源名称
+
+<PUBLIC:PROPERTY ID="visibleID" NAME="visible" PUT="fnPutvisible" GET="fnGetvisible"  />
+<PUBLIC:PROPERTY ID="leftID" NAME="left" PUT="fnPutleft" GET="fnGetleft"  />
+<PUBLIC:PROPERTY ID="topID" NAME="top" PUT="fnPuttop" GET="fnGettop"  />
+<PUBLIC:PROPERTY ID="heightID" NAME="height" PUT="fnPutheight" GET="fnGetheight"  />
+<PUBLIC:PROPERTY ID="widthID" NAME="width" PUT="fnPutwidth" GET="fnGetwidth"  />
+//dataset的DOM对象
+<PUBLIC:PROPERTY ID="FieldsID" NAME="Fields" PUT="fnPutFields" GET="fnGetFields"  />
+//dataset的DOM对象
+<PUBLIC:PROPERTY ID="xmlID" NAME="xml" PUT="fnPutxml" GET="fnGetxml"  />
+//dataset的DOM对象
+<PUBLIC:PROPERTY ID="oDomID" NAME="oDom" GET="fnGetoDom"  />
+//dataset的字段对象
+<PUBLIC:PROPERTY ID="oDataFieldID" NAME="oDataField"   /> //GET="fnGetoDataField"
+
+//当用一SQL语句打开数据集时设置要隐藏的字段
+<PUBLIC:PROPERTY ID="HideFieldID" NAME="HideField" PUT="fnPutHideField" GET="fnGetHideField"  />
+
+
+//只指传到前台的记录数
+<PUBLIC:PROPERTY ID="RecordCountID" NAME="RecordCount" GET="fnGetRecordCount"  />
+//只指传到前台的记录数
+<PUBLIC:PROPERTY ID="FieldCountID" NAME="FieldCount" GET="fnGetFieldCount"  />
+//此次查询所得的总记录数包含未传到前台的.
+<PUBLIC:PROPERTY ID="RecordCountAllID" NAME="RecordCountAll" GET="fnGetRecordCountAll"  />
+//页尺寸,指每次最多能传到前台的记录数
+<PUBLIC:PROPERTY ID="PageSizeID" NAME="PageSize" PUT="fnPutPageSize" GET="fnGetPageSize"  />
+//当前页号,从1开始
+<PUBLIC:PROPERTY ID="PageNoID" NAME="PageNo" PUT="fnPutPageNo" GET="fnGetPageNo"  />
+<PUBLIC:PROPERTY ID="PageCountID" NAME="PageCount" GET="fnGetPageCount"  />
+//当前记录号,从0开始
+<PUBLIC:PROPERTY ID="RecNoID" NAME="RecNo" PUT="fnPutRecNo" GET="fnGetRecNo"  />
+//true表示到头了
+<PUBLIC:PROPERTY ID="BofID" NAME="Bof" GET="fnGetBof"  />
+//true表示到尾了
+<PUBLIC:PROPERTY ID="EofID" NAME="Eof" GET="fnGetEof"  />
+//true表示add status
+<PUBLIC:PROPERTY ID="bAddID" NAME="bAdd" PUT="fnPutbAdd" GET="fnGetbAdd"  />
+//true表示Edit status
+<PUBLIC:PROPERTY ID="bEditID" NAME="bEdit" PUT="fnPutbEdit" GET="fnGetbEdit"  />
+//true表示dataset和控件中的数据同步
+<PUBLIC:PROPERTY ID="AutoControlID" NAME="AutoControl" PUT="fnPutAutoControl" GET="fnGetAutoControl"  />
+
+<PUBLIC:PROPERTY ID="opensqlID" NAME="opensql" PUT="fnPutopensql" GET="fnGetopensql"  />
+<PUBLIC:PROPERTY ID="formatID" NAME="format" PUT="fnPutformat" GET="fnGetformat"  />
+//数据集是否为清空状态,=yes表示是,=no
+<PUBLIC:PROPERTY ID="EmptyID" NAME="Empty" PUT="fnPutEmpty" GET="fnGetEmpty"  />
+
+//收集已删除的数据
+<PUBLIC:PROPERTY  NAME="DeletedData"  />
+//第一个主键字段名
+<PUBLIC:PROPERTY  NAME="firstKeyFieldName"  /> 
+//数据集中记录部分的数据
+<PUBLIC:PROPERTY  NAME="RecordData" GET="fnGetRecordData"  />
+//在sql语句中处理分页取数
+<PUBLIC:PROPERTY  NAME="isSqlActionPage"  /> 
+<PUBLIC:METHOD NAME="SumAllRecord"/>  //计算本数据集的所有实际计算项的公式值.
+<PUBLIC:METHOD NAME="RunBeforeUpdate"/> 
+<PUBLIC:METHOD NAME="MoveGridRow"/>  //当数据集的recno移动后更新表格的行指向
+<PUBLIC:METHOD NAME="ClearData"/>   //清空数据集中的记录
+<PUBLIC:METHOD NAME="fset_contall"/> 
+
+<PUBLIC:METHOD NAME="LineSum"/>
+<PUBLIC:METHOD NAME="dataValid"/>
+<PUBLIC:METHOD NAME="ReSum"/>  //打印前重算汇总项
+//装入数据
+<PUBLIC:METHOD NAME="base_dset"/>
+<PUBLIC:METHOD NAME="dset_cont"/>
+<PUBLIC:METHOD NAME="dset_fset"/>
+<PUBLIC:METHOD NAME="fset_cont1"/>
+
+<PUBLIC:METHOD NAME="MoveFirst"/>
+<PUBLIC:METHOD NAME="MovePrev"/>
+<PUBLIC:METHOD NAME="MoveNext"/>
+<PUBLIC:METHOD NAME="MoveLast"/>
+<PUBLIC:METHOD NAME="SetPos"/>
+<PUBLIC:METHOD NAME="NextPage"/>
+<PUBLIC:METHOD NAME="PrevPage"/>
+<PUBLIC:METHOD NAME="FirstPage"/>
+<PUBLIC:METHOD NAME="LastPage"/>
+
+<PUBLIC:METHOD NAME="Append"/>
+<PUBLIC:METHOD NAME="Insert"/>
+<PUBLIC:METHOD NAME="Edit"/>
+<PUBLIC:METHOD NAME="Update"/>
+<PUBLIC:METHOD NAME="Cancel"/>
+<PUBLIC:METHOD NAME="Delete"/>
+<PUBLIC:METHOD NAME="Open"/>
+<PUBLIC:METHOD NAME="OpenEmpty"/>
+<PUBLIC:METHOD NAME="Find"/>
+<PUBLIC:METHOD NAME="FindAll"/>
+<PUBLIC:METHOD NAME="Filter"/>
+<PUBLIC:METHOD NAME="UnFilter"/>
+<PUBLIC:METHOD NAME="Sort"/>
+<PUBLIC:METHOD NAME="fset_cont"/>
+//由字段顺序号得到字段名
+<PUBLIC:METHOD NAME="FieldNoToName"/>
+<public:METHOD NAME="FieldNameToNo"/>
+
+//此两方法一个是从非表格控件往fset送数,一个是从表格控件往fset送数
+<PUBLIC:METHOD NAME="cont1_fset"/>
+<PUBLIC:METHOD NAME="cont_onDataChange"/>
+<PUBLIC:METHOD NAME="cont1_onblur"/>
+
+<PUBLIC:METHOD NAME="fset_cont1"/>
+<PUBLIC:METHOD NAME="OpenXml"/>
+<PUBLIC:METHOD NAME="OpenBigXml"/>
+<PUBLIC:METHOD NAME="OpenXmlData"/>
+<PUBLIC:METHOD NAME="InitLinkObj"/> //初始化此数据集的绑定控件
+<PUBLIC:METHOD NAME="Field"/> //取得字段对象
+<PUBLIC:METHOD NAME="isFieldName"/> //判断是否是本数据集的字段名
+<PUBLIC:METHOD NAME="fieldTrans"/>  //保存前转换
+<PUBLIC:METHOD NAME="AppendCopy"/>  //复制增加
+<PUBLIC:METHOD NAME="getKeyFieldNo"/> //取得主键字段的字段顺序号
+<PUBLIC:METHOD NAME="getFirstKeyFieldName"/> //取得第一个主键字段名
+<PUBLIC:METHOD NAME="FieldNameToColNo"/> //由字段名求到grid的列号
+<PUBLIC:METHOD NAME="GridAddHref"/> //给grid加上超链接
+
+<PUBLIC:METHOD NAME="setFieldTrans"/>  //设置转换的XML对象，2013-04-03
+<PUBLIC:METHOD NAME="getAttribute"/>  //设置属性，2013-05-14
+
+//事件
+<PUBLIC:EVENT NAME="AfterOpen" ID="AfterOpenID">
+<PUBLIC:EVENT NAME="BeforeOpen" ID="BeforeOpenID">
+<PUBLIC:EVENT NAME="BeforePost" ID="BeforePostID">
+<PUBLIC:EVENT NAME="AfterPost" ID="AfterPostID">
+<PUBLIC:EVENT NAME="BeforeDelete" ID="BeforeDeleteID">
+<PUBLIC:EVENT NAME="AfterDelete" ID="AfterDeleteID">
+<PUBLIC:EVENT NAME="BeforeInsert" ID="BeforeInsertID">
+<PUBLIC:EVENT NAME="AfterInsert" ID="AfterInsertID">
+<PUBLIC:EVENT NAME="BeforeEdit" ID="BeforeEditID">
+<PUBLIC:EVENT NAME="AfterEdit" ID="AfterEditID">
+<PUBLIC:EVENT NAME="BeforeCancel" ID="BeforeCancelID">
+<PUBLIC:EVENT NAME="AfterCancel" ID="AfterCancelID">
+
+<PUBLIC:EVENT NAME="BeforeScroll" ID="BeforeScrollID">
+<PUBLIC:EVENT NAME="AfterScroll" ID="AfterScrollID">
+
+
+
+
+<PUBLIC:EVENT NAME="OnNewRecord" ID="OnNewRecordID">
+<PUBLIC:EVENT NAME="OnFilterRecord" ID="OnFilterRecordID">
+
+
+//当输入的数据不合法时发生此事件
+<PUBLIC:EVENT NAME="onValidError"  ID="onValidErrorID"  />
+
+//当从控件向fset给值时发生
+<PUBLIC:EVENT NAME="onValid"  ID="onValidID"  />
+<PUBLIC:EVENT NAME="onSetText"  ID="onSetTextID"  />
+//尚未做
+<PUBLIC:EVENT NAME="onGetText"  ID="onGetTextID"  />
+
+<SCRIPT LANGUAGE=javascript >
+fcpubdata.transRecNo = 0; //临时性的当前记录号,用在$fbak_value函数中
+var oXmlTrans=null;   //数据转换的配置xml,
+//var firstKeyFieldName=""; //取数据集字段配置中的第一个主键字段名.
+var dataset_mformat_isnull=false;
+
+/* 控件位置 */
+var mleft=100,mtop=50,mwidth=150,mheight=20 ;
+/* 按钮宽度 */
+var mwidthButton=17 ;
+/* 页号 */
+var mPageNo=1;	
+
+var mMainSql="";	//
+var mopensql="";
+var mformat="";
+/* Empty=yes 数据集中无记录,=one 有一条记录 =null 表示数据集对象没有打开,即OPENSQL为空无法建立数据集对象, =no 正常 */
+var mEmpty="null";  
+
+/* true表示表格左边有一个标记列 */
+var mbTagCol=true ; 
+/* 保存装入的XML数据 */
+var mXmlData="" ;
+/* 保存改动后的XML数据,filter时用 */
+var mXmlDataNew="";
+/* 保存主DOM对象,此对象对应表格的显示 */
+var oData;
+/* 删除Dom对象 
+var oDel;	
+var oDel=new ActiveXObject("Microsoft.XMLDOM");
+oDel.async=false;
+oDel.loadXML ("<root></root>");*/
+/* 过滤Dom对象 */
+var oFilter=new ActiveXObject("Microsoft.XMLDOM");
+oFilter.async=false;
+oFilter.loadXML ("<root></root>");
+/* =true表示数据集处于过滤状态 */
+var mbFilter=false ;
+/* 保存字段DOM对象 */
+var oDataField ; 
+/* 字段数 */
+var mFieldCount	;
+/* 记录数 */
+var mRecordCount=0	;
+/* all记录数 */
+var mRecordCountAll	;
+/* 页尺寸,缺省为5 */
+var mPageSize=-1;
+var mPageCount=1;
+/* 查找时定位用 */
+var iFind=0;
+/* 用作返回Fields属性 */
+var oFields	;
+
+/* 保存linkobj,即和数据集绑定的非表格控件 */
+var LinkObjs=new Array();	
+
+/* 到头 */
+var mBof=false,mEof=false;
+/* 记录号,从0开始 */
+var mRecNo=0;
+
+/* 编辑状态 */
+var mbEdit=false;
+/* 增加状态 */
+var mbAdd=false;
+
+/**
+* 取本数据集的第一个主键字段名,可用于在数据集还没有Open时取.
+**/
+function getFirstKeyFieldName(){
+   if(isSpace(mformat)==false){
+	   var oXml=SetDom(mformat)
+	   var oNode=oXml.documentElement.selectSingleNode("//field[primarykey='是']");
+	   if(oNode != null){
+	        firstKeyFieldName = oNode.childNodes(0).text;
+	        return firstKeyFieldName;
+	   }
+    }
+}
+/**
+*将一标准格式的XML串装入为数据集对象
+*用于交叉表中的大数据量 no use
+*@date 2004-02-11
+**/
+function OpenBigXml(sXml){
+	BeforeOpenID.fire();	
+	DeletedData = "" ;
+	mXmlData=sXml;
+	//base_dset(2)
+	var o=window.document.all.tags("webgrid");
+	for(var ii=0;ii<o.length;ii++){
+	    if (o[ii].dataset==eval(uniqueID+".id")){
+			
+			XmlRepGrid(o[ii],sXml);
+			o[ii].tab.rows(0).style.height=19;
+			//o[ii].tab.rows(0).align="center"
+			o[ii].hideVscroll=true;
+			o[ii].hideHscroll=true;
+			o[ii].autosize=true;
+			o[ii].ReadOnly=true;
+			
+		}
+	}
+	AfterOpenID.fire();
+	return "";
+
+}
+
+/**
+*将一标准格式的XML串装入为数据集对象
+*用于交叉表中
+*@date 2004-02-11
+**/
+function OpenXml(sXml){
+	BeforeOpenID.fire()	;
+	DeletedData = "" ;
+	mXmlData=sXml;
+	base_dset(2);
+
+	AfterOpenID.fire();
+	return "";
+
+}
+/**
+用于将一计算好的（不是通过SQL语句计算来的）XML数据装入到数据集中,主要用这个来装入xml
+*@date 2004-07-14
+**/
+function OpenXmlData(sXml){
+	BeforeOpenID.fire()	;
+	DeletedData = "" ;
+	mXmlData=sXml;
+	
+	base_dset(4);
+
+	AfterOpenID.fire();
+	return "";
+
+}
+/**
+//清空数据集中的记录,保存字段结构
+*@date 2004-04-08
+**/
+function ClearData() {
+	mXmlData="<root>"+oData.documentElement.childNodes(oData.documentElement.childNodes.length-1).xml+"</root>";
+	base_dset(3);
+
+}
+/**
+*此方法供djsave时调用,用来fire BeforeSaveDatabase事件
+
+function SaveEvent(sFieldName,sFieldValue) {
+	var oEvent = createEventObject();
+	oEvent.FieldName=sFieldName;
+	oEvent.FieldValue=sFieldValue;  
+	BeforeSaveDatabaseID.fire(oEvent);
+
+}**/
+/**
+*数据集中无记录来打开数据集.字段列表从format中取得
+**/
+function OpenEmpty(){
+
+	BeforeOpenID.fire()	;
+	DeletedData = "" ;
+//   if(eval(uniqueID+".id")==fcpubdata.dsMain ){
+//		var oSour=new ActiveXObject("Microsoft.XMLDOM");
+//		oSour.async=false;
+//		oSour.loadXML (mformat);
+//		var s1="";
+//		for(var i=0;i<oSour.documentElement.childNodes.length;i++){
+//			var oNode=oSour.documentElement.childNodes(i);
+//			//加上字段的默认值
+//			if(oNode.childNodes(5).text=="数据项" && isSpace(oNode.childNodes(6).text)==false){
+//			    s1+="<td>"+oNode.childNodes(6).text+"</td>";
+//			}else if(oNode.childNodes(5).text=="变量默认值" && isSpace(oNode.childNodes(6).text)==false){
+//			    s1+="<td>"+eval(oNode.childNodes(6).text)+"</td>";
+//			}else if(eval(uniqueID+".id")==fcpubdata.dsMain && isSpace(oNode.childNodes(6).text)==false){
+//			    s1+="<td>"+eval(oNode.childNodes(6).text)+"</td>";
+//				 
+//			}else {
+//			    s1+="<td></td>";
+//			}
+//			
+//		}
+//		mXmlData="<root><tr rowstate='add'>"+s1+"</tr><set><pages>1</pages>"+mformat+"</set></root>";
+//   } else { 
+		mXmlData="<root><set><pages>0</pages>"+mformat+"</set></root>";
+   
+   //}
+   //						var   d = new Date();
+//						var   t = d.getTime();
+
+	base_dset(1);
+	mEmpty="yes";
+	AfterOpenID.fire();
+//						var   d = new Date();
+//						var   t1 = d.getTime()  ;
+	//	alert(t1-t)
+	mbAdd = false;
+	mbEdit = false;
+	
+	return "";
+
+}
+
+/**
+*打开数据集,
+*通过一个KEY得SQL语句再完成数据集的装入工作
+*返回""表示正常打开,否则返回错误提示.
+*@param sSql 执行的SQL语句
+*@param ismovepage = 是 表示不能初始化pageno
+*curID=用于主子表联接时的联接ID
+**/
+function Open(sSql,ismovepage,callback,context){
+
+    BeforeOpenID.fire();
+    DeletedData = "" ;
+	 var sql=mopensql;
+	 if(mopensql==""){
+		if(typeof sqltrans != "undefined"){
+			sql = UnSqlPropTrans(sqltrans);
+		}
+	 }
+	 if(typeof sSql != "undefined"){
+	 	sql=sSql;
+	 	mopensql=sSql;
+	 }
+	 if(isSpace(sql)){
+	 		mEmpty="null";
+	 		return;
+	 }else	{
+	 		mEmpty="no";
+	 }
+
+    var oSelf=eval(uniqueID+".id") ;  //当前数据集对象
+
+    var sSour=mformat;
+    
+    var sFieldNameList="";
+    if((isSpace(sSour)==false && mformat!='<fields></fields>') && dataset_mformat_isnull == false  ){
+	    var oSour=SetDom(sSour);
+	    var l = 0;
+	    if (oXmlTrans.documentElement != null) l = oXmlTrans.documentElement.childNodes.length;
+	    for (var i = 0; i < oSour.documentElement.childNodes.length; i++) {
+	        sFieldNameList += "<field><name>" + oSour.documentElement.childNodes(i).childNodes(0).text + "</name><tbname>" + oSour.documentElement.childNodes(i).childNodes(9).text + "</tbname>";
+	        for (var k = 0; k < l; k++) {
+	            if (oXmlTrans.documentElement.childNodes(k).childNodes(0).text != oSour.documentElement.childNodes(i).childNodes(0).text) continue;
+	            if (oXmlTrans.documentElement.childNodes(k).childNodes.length > 3 && IsSpace(oXmlTrans.documentElement.childNodes(k).childNodes(3).text) == false)
+                    sFieldNameList += "<sql>" + oXmlTrans.documentElement.childNodes(k).childNodes(3).text + "</sql>";
+
+            }
+	            
+	        sFieldNameList += "</field>";    
+	    }
+
+		//因第一次以增加模式打开后又以修改模式打开时mPageSize=0
+		if(mPageSize==0)mPageSize=-1;
+		//重新查询时初始化当前页号和记录号
+		if(ismovepage!="是"){
+			mPageNo=1;
+			mRecordCount=0;
+		}
+		if(typeof callback == "function"){
+			//比较成功,下面执行SQL
+			dataset_fields1(RepOpenSql(sql),mPageNo,mPageSize,sFieldNameList,function (result) {
+				var sRet = result.value;
+				//补上字段串
+				mXmlData=repStr(sRet,"<fields></fields>",mformat);
+				if(isRunSqlErr(sql,mXmlData))return;
+				_OpenAfter(sql) ;
+				callback(result);
+			},context) ;
+		}else {
+			//比较成功,下面执行SQL
+			var sRet=dataset_fields1(RepOpenSql(sql),mPageNo,mPageSize,sFieldNameList) ;
+			//alert(sRet)
+			//补上字段串
+			
+			mXmlData=repStr(sRet,"<fields></fields>",mformat);
+			if(isRunSqlErr(sql,mXmlData))return;
+			
+			//alert(mXmlData)
+			_OpenAfter(sql) ;
+		}
+
+    } else {  //mformat==empty
+        var newsql = RepOpenSql(sql) ;
+        var oSql = new Object();
+        oSql.sql = newsql;
+        oSql.datasourceName=datasourceName;
+		if(typeof callback == "function"){
+				//mHideField 要隐藏的字段列表
+				dataset_select(oSql,mPageNo,mPageSize,mHideField,function (result) {
+					mXmlData = result.value;
+        			if(isRunSqlErr(sql,mXmlData))return;
+					dataset_mformat_isnull=true;
+					_OpenAfter(sql) ;
+					callback(result);
+				
+				},context);
+		
+		}else {
+			
+			mXmlData=dataset_select(oSql,mPageNo,mPageSize,mHideField);
+			if(isRunSqlErr(newsql,mXmlData))return;
+			dataset_mformat_isnull = true;
+			
+			_OpenAfter(sql) ;
+		}
+   }
+
+   return "";
+   
+   function isRunSqlErr(sql,mXmlData){
+		var oF=SetDom(mXmlData);
+		if(oF.documentElement == null ){
+			alert("SQL语句: "+sql+" 执行错误! 错误信息:"+ mXmlData);
+			CopyToPub(sql);
+			OpenEmpty(); //让空打开,以免出现代码错..
+			return true;
+		}  
+		mformat=oF.documentElement.childNodes(oF.documentElement.childNodes.length-1).childNodes(1).xml;
+        return false;
+   }
+}
+function _OpenAfter(sql) {
+	//alert(sql+"::"+mXmlData);
+   /*if(isSpace(mXmlData)) return;   //空 
+   if(mXmlData==fcpubdata.sendHttpErrMsg) return;
+   if(mXmlData=="<root>"){
+   	    window.clipboardData.setData("Text",sql);
+   		alert("下面这条SQL语句运行不正确: "+sql);
+   		return;
+   }*/
+   	
+   base_dset();
+
+
+   mbAdd = false;
+   mbEdit = false;
+   AfterOpenID.fire();
+
+}
+/**
+*从数据库中取下一页的数据
+**/
+function NextPage(){
+	if(mEmpty == "yes") return ;
+
+ //  alert(mPageCount)
+   if(mPageNo<mPageCount){
+   
+      mPageNo++;
+      //base_dset(mopensql,mPageNo,mPageSize)
+      //alert(mPageSize+" "+mPageNo+" "+mopensql)
+		Open(mopensql,"是");
+
+   }
+}
+/**
+*从数据库中取上一页的数据
+**/
+function PrevPage(){
+	if(mEmpty == "yes") return ;
+
+   if(mPageNo>1){
+      mPageNo--;
+      Open(mopensql,"是");
+      //base_dset(mopensql,mPageNo,mPageSize)
+   }
+}
+/**
+*从数据库中取第一页的数据
+**/
+function FirstPage(){
+	if(mEmpty == "yes") return ;
+//   if(mPageNo<mPageCount){
+   
+      mPageNo=1;
+      Open(mopensql,"是");
+//   }
+}
+/**
+*从数据库中取最后一页的数据
+**/
+function LastPage(){
+	if(mEmpty == "yes") return ;
+
+ //  if(mPageNo>1){
+      mPageNo=mPageCount;
+      Open(mopensql,"是");
+ //  }
+}
+
+/**
+*根据字段类型及长度作常规检查.iTag=1时用于grid.ondatachange和cont1_onblur中,iTag=2时用于checkbeforeupdate中
+*iTag=1时是由控件向fset送数时只发生校验事件,iTag=2是由fset向dset送数时检查.
+*@param curOF 为字段对象,下有数据类型,长度等属性
+*@param value 为要存入上面字段中的值,
+*@param iTag 调用标志,整型,可为1,2  =1只发生事件不检查,=2只检查不发生事  
+			=3 即检查也发生事件 同时在datavalid函数中直接提示出来.
+			=4 即不检查也不发生事件
+			=5 只运行检查,用于保存单据前,错误信息通过多层传递给savebill函数中才alert出来,此时不赋值给fset
+			=6 做所有的工作,除了不提示错误信息外.只返回错误信息 2009-07-15 add
+*@return 非空表示检查非法,""表示通过
+**/
+function dataValid(curOF,value,iTag){ //iTag = 3,5,6
+
+    //alert(curOF.Empty+" : "+value)
+
+  if(typeof curOF=="undefined")return "";
+  if(typeof value=="undefined")return "";
+  if(curOF.DataType=="实数" || curOF.DataType=="整数"){
+	  value=RemoveComma(value);
+  }
+  
+  if((iTag==2 || iTag==3 || iTag==5 || iTag==6 ) && curOF.valid == "是"){
+	  //检查是否为空
+	  if(curOF.Empty=="是"){
+	     if(isSpace(new Eapi.Str().trim(value))){
+	     	//fdsfsd
+	         return RunValidError(curOF.DisplayLabel+"不能为空! ",iTag);
+	         //alert("bbbb")
+	         
+	     }  
+	  }
+	  //检查在数据集中此字段是否唯一
+//	  if(curOF.isKey=="是"){
+//		for(var ii=0;ii<oData.documentElement.childNodes.length-1;ii++){
+//			if(ii!=mRecNo){	//除去当前记录进行比较
+//				if(value==oData.documentElement.childNodes(ii).childNodes(curOF.index).text){
+//					return RunValidError(curOF.DisplayLabel+"的值重复! ",iTag);
+//					
+//				}
+//			}
+//		}
+
+//	  }
+	  
+	  
+	  if(isSpace(value)==false){
+	    //alert(curOF.DataType)
+	    switch(curOF.DataType)
+	    {
+	        case "整数"            :
+	            //var ivalue=parseInt(value)
+	            //if(isNum(value,"整数") == false  ){
+	            if(IsInt(value) == false  ){
+	               return RunValidError(curOF.DisplayLabel+"不是个整数 ",iTag);
+	            }
+	            break;
+	        case "实数"            :
+	            //var ivalue=parseFloat(value)
+//	            if(isNum(value,"实数") == false ){
+	            if (IsNum(value) == false) {
+	               return RunValidError(curOF.DisplayLabel+"不是个数字 ",iTag);
+	            }
+	            break;
+//	        case "字串"  :
+	        case "字符"  :
+	            //if(isSpace(maxlen)==false){
+	               var iLen=curOF.Length;
+	               if(isSpace(iLen)==false && iLen>0){
+		               if(GetLength(value)>iLen){
+		                  return RunValidError(curOF.DisplayLabel+"长度不能大于 "+iLen,iTag);
+		               }
+	               }
+	            //}
+	            break;    
+	        case "日期" :
+				/*
+				try {
+					var oDate = new PowerDate(value);
+				}catch(e){
+					return RunValidError("必须在表单上引入fcdate.js!",iTag);
+				}
+				if (isNaN(oDate.date)){
+	               return RunValidError(curOF.DisplayLabel+"不是个合法日期! ",iTag);
+	            }*/
+	            var oDate = new Eapi.DateParse().parse(value);
+	            if(oDate == null){
+	                return RunValidError(curOF.DisplayLabel+"不是个合法日期! ",iTag);
+	            }
+	            break;
+	            
+	    }
+	  }
+	  
+
+  }
+  var oEvent = createEventObject();
+  oEvent.FieldName=curOF.FieldName;
+  oEvent.DisplayLabel=curOF.DisplayLabel;
+  oEvent.FieldValue=value;  //保存在校验的值供事件中检查用.
+  oEvent.DataSet = eval(uniqueID); //保存数据集对象,用于$Valid函数的字段值不重复
+  if(iTag==1  || iTag==3 || iTag==5 || iTag==6){
+	  //发生数据检查事件
+      oEvent.returnValue = "";
+	 
+	  //向fset给值前发生onvalid事件
+      onValidID.fire(oEvent);
+      //alert("3:" + oEvent.returnValue);
+	  if(oEvent.returnValue != "") return RunValidError(oEvent.returnValue,iTag)  ;  
+	//--------------------------      
+	   //alert(curOF.FieldName+" "+curOF.Value)
+  }
+  if(iTag != 5 ){
+    curOF.Value=value;
+	
+  }
+  if(isSpace(curOF.fieldvalid) == false) {
+	//alert(curOF.fieldvalid)
+	var stmp = unescape(curOF.fieldvalid);
+	var sRet = eval(stmp);
+	if(isSpace(sRet) == false ) return RunValidError(sRet,iTag);
+  }
+   return "";
+	/*
+	取得字符的实际长度,一个汉字算2
+	*@date 2004-06-24
+	*/
+	function GetLength(str){
+	var i,rt=0;
+	for(i=0;i<str.length;i++)
+	{
+	rt++;
+	if(str.charCodeAt(i)>256)rt++;
+	}
+	return rt;
+	}
+   
+	function RemoveComma(sSour){
+		var s1=sSour+"";
+		s1=repStr(s1,",","");
+		return s1;
+	}
+   
+}
+/**
+*grid控件的数据变化事件,用于向fset送数
+* fieldObj 字段对象, newValue要更新的值 此两个参数用于E表控件中
+**/
+function cont_onDataChange(fieldObj,newValue){
+//
+//curObj1用于不通过事件调用时给此参数
+    if(typeof(fieldObj) == "undefined" || typeof(newValue) == "undefined"){
+       var curObj;
+       try {   
+   	       curObj=event.srcElement;   //当前控件
+	       if(curObj.tagName!="webgrid"){
+			    curObj=GetDsGrid(eval(uniqueID));
+	       }
+       }catch (e){
+   	    //找此DS所绑定的第一个表格。
+            curObj=GetDsGrid(eval(uniqueID));
+       }
+       var value=curObj.curTD.innerText;  //要存入fset中的值
+
+       //通过grid.format得到当前列所对应的数据集中的字段名
+       var oXml=new ActiveXObject("Microsoft.XMLDOM");
+       oXml.async=false;
+       oXml.loadXML (curObj.format);
+       var colNo=curObj.curTD.cellIndex ;  //列号
+       if(mbTagCol && colNo>0) colNo--;
+       if(colNo<0)colNo=0;
+       var curFieldName=oXml.documentElement.childNodes(colNo).childNodes(0).text ; //0个节点为字段名
+       var curOF=Field(curFieldName);   //当前字段对象
+    }else{
+        var curOF = fieldObj;
+        var value = newValue;
+    }
+    //表格此处给值,做验证
+    var sRet=dataValid(curOF,value,3);
+    if (sRet != "") {
+        return;
+    }
+    
+    mbEdit=true;
+
+    CalcCurLine(curOF); //计算当前行的实际计算项和汇总项
+
+
+
+	//从fset回写控件,主要是要调用显示格式
+	
+	fset_cont(mRecNo);
+	//fset_cont1();
+
+}
+function CalcCurLine(curOF){
+///计算当前行的实际计算项和汇总项
+   //计算表达式----------
+      //通过dataset format属性找到表达式及字段名
+   var s11=eval(uniqueID+".format");
+   if(isSpace(s11)==false){
+	   var oXml=SetDom(s11);
+	   var oList=oXml.documentElement.selectNodes("//field[fieldkind='实际计算项']");
+	   for(var iList=0;iList<oList.length;iList++){     
+		   
+		   //var sExp="ff('shl')*ff('dj')"
+		   var sExp=oList.item(iList).childNodes(6).text;
+		   var sFieldName=oList.item(iList).childNodes(0).text;
+		   var vValue="";
+		   try {
+		   		vValue=eval(sExp);
+			}catch(E){
+				alert("字段: "+sFieldName+" 的默认值处公式不正确!");
+			}
+		   Field(sFieldName).Value=vValue;
+		   //刷新计算字段的值到零散控件上
+		   fset_cont1(2,sFieldName);
+		   
+		      //放到表格上
+		   //var curRowNo=curObj.curTD.parentNode.rowIndex
+		   //通过表格的format属性,找到je字段所对应的列号
+		   
+		   //var sumColNo=FieldNameToColNo(curObj,sFieldName)
+		   //curObj.tab.rows(curRowNo).cells(sumColNo).innerText=fset_contall(Field(sFieldName))
+	   }
+	   oList=oXml.documentElement.selectNodes("//field[fieldkind='汇总项']");
+		if(oList.length>0)
+		   ReSum("只算fset"); //加上强行计算汇总项,2006-09-14 add
+
+   }
+   //---------------------
+    //向fset给值后发生onsettext事件
+	var oEvent = createEventObject();
+	oEvent.FieldName=curOF.FieldName;
+    
+    oEvent.ods = eval(uniqueID);
+    onSetTextID.fire(oEvent); //用于当改动某个字段后要反算哪些字段值 gridsumcol
+
+}
+/**
+*计算 实际计算项 ,用于 cont_onDataChange 和 zlselect
+*@param ogrid 表格对象
+*@param curRow oData对象中的行号
+*@date 2003-12-30
+**/
+function LineSum(ogrid,curRow) {
+	//alert(curRow)
+    //	LineSumSub(curRow);  //当给了缺省值然后又要运行自定义公式
+    //if (typeof (curRow) != "undefined") {
+        SetPos(curRow);
+        var oEvent = createEventObject();
+        oEvent.FieldName = "";
+        oEvent.ods = eval(uniqueID);
+        onSetTextID.fire(oEvent);
+        mbEdit = true;
+        Update("不检查");
+    //}
+    var s11=eval(uniqueID+".format");
+    if(isSpace(s11)==false){
+	   var oXml=SetDom(s11);
+	   var oList=oXml.documentElement.selectNodes("//field[fieldkind='实际计算项']");
+	   for(var iList=0;iList<oList.length;iList++){     
+		   
+		   //var sExp="ff('shl')*ff('dj')"
+		   var sExp=oList.item(iList).childNodes(6).text;
+		   var sFieldName=oList.item(iList).childNodes(0).text;
+		   if( ogrid == null ) { //用于copydataset
+			    dset_fset(curRow);
+				
+				var vValue="";
+				try {
+					vValue=eval(sExp);
+				}catch(E){
+					alert("字段: "+sFieldName+" 的默认值处公式不正确!");
+				}			    
+			    
+		   		//alert(sFieldName+" "+sExp+" "+vValue)
+				oData.documentElement.childNodes(curRow).childNodes(FieldNameToNo(sFieldName)).text=vValue;
+		   }else {	//只计算当前行 用于 cont_ondatachange
+				var vValue="";
+				try {
+					vValue=eval(sExp);
+				}catch(E){
+					alert("字段: "+sFieldName+" 的默认值处公式不正确!");
+				}			    
+				Field(sFieldName).Value=vValue;
+				  //放到表格上
+				var curRowNo=ogrid.curTD.parentNode.rowIndex;
+				//通过表格的format属性,找到je字段所对应的列号
+				
+				var sumColNo=FieldNameToColNo(ogrid,sFieldName);
+				ogrid.tab.rows(curRowNo).cells(sumColNo).innerText=fset_contall(Field(sFieldName));
+		   }
+	   }
+    }
+}
+/**
+2011-05-26
+计算本数据集的所有记录,计算实际计算项公式.
+**/
+function SumAllRecord() {
+    var s11 = eval(uniqueID + ".format");
+    if (IsSpace(s11)) return;
+    var oXml = SetDom(s11);
+    if (oXml.documentElement == null) return;
+    
+    var oList = oXml.documentElement.selectNodes("//field[fieldkind='实际计算项']");
+    for (var iList = 0; iList < oList.length; iList++) {
+        var sExp = oList.item(iList).childNodes(6).text;
+        var sFieldName = oList.item(iList).childNodes(0).text;
+        sExp = RepStr(sExp, "$f_value", "$fbak_value");
+        var iFieldNo = FieldNameToNo(sFieldName);
+
+        for (var j = 0; j < oData.documentElement.childNodes.length-1; j++) {
+            fcpubdata.transRecNo = j;
+            var vValue = "";
+            try { 
+                vValue = eval(sExp);
+            } catch (E) {
+                alert("字段: " + sFieldName + " 的默认值处公式:" + oList.item(iList).childNodes(6).text + "不正确!错误信息:" + E.description);
+                return;
+            }
+
+            oData.documentElement.childNodes(j).childNodes(iFieldNo).text = vValue;
+        }
+    }
+    
+
+}
+/**
+*用于绑定控件的onblur事件
+**/
+function cont1_onblur() {
+    
+    var curObj=event.srcElement;   //当前控件
+    //alert(curObj.outerHTML)
+    //fieldset 或 checkbox 
+    if(curObj.parentNode.controltype=="radio" || curObj.parentNode.controltype=="checkbox"){
+		curObj=curObj.parentNode;
+    }
+    if (curObj.tagName.toUpperCase() == "INPUT") {
+        var curObjTmp = null;
+        try {
+            curObjTmp = curObj.parentNode.parentNode.parentNode.parentNode.parentNode; //由TD里到table外.
+        } catch (ee) { }
+        if (curObjTmp != null) {
+            if (curObjTmp.controltype == "checkboxlist") {
+                curObj = curObjTmp;
+                curObj.value = GetDivCheckBoxValue(curObj, "");
+            }
+            if (curObjTmp.controltype == "radiolist") {
+                curObj = curObjTmp;
+                curObj.value = GetDivRadioValue(curObj, "");
+            }
+        }
+    }
+    if(typeof curObj.field == "undefined" ) return;
+   
+    var curOF=Field(curObj.field);   //当前字段对象
+    //alert(curObj.value)
+    var svalue = curObj.value;
+    //保存换行符
+    if (curObj.tagName.toUpperCase() == "TEXTAREA") {
+		svalue = RepStr(svalue,"\r\n","&#13;&#10;") ;
+		svalue = RepStr(svalue, "\t", "&#9;");
+    }
+   
+    //根据字段类型及长度作常规检查.
+    var iRet=dataValid(curOF,svalue,3);
+   //alert(iRet)
+    if (iRet != "") {
+        
+        //记录没有通过的验证，在保存前再验证。 2013-07-25
+        var oErr = new Object();
+        oErr.oDs = eval(uniqueID);
+        oErr.oField = curOF;
+        oErr.oCont = curObj;
+        oErr.name = oErr.oDs.id + "_" + oErr.oField.FieldName;
+        
+        if (IsSpace(fcpubdata.arrValidDs)) fcpubdata.arrValidDs = new Array();
+        var len = fcpubdata.arrValidDs.length;
+        var isFind = false;
+        for (var k = 0; k < len; k++) {
+            if (fcpubdata.arrValidDs[k].name == oErr.oDs.id + "_" + oErr.oField.FieldName) {
+                isFind = true;
+                break;
+            }
+        }
+        if (!isFind) {
+            fcpubdata.arrValidDs[len] = oErr;
+        }
+        //--------------------------------
+        
+   	  //会死循环
+   	  //curObj.focus();
+        return;
+    }
+    CalcCurLine(curOF); //计算当前行的实际计算项和汇总项
+       
+	if(curOF.DataType=="实数" || curOF.DataType=="整数"){
+		//从fset回写控件,主要是要调用显示格式
+		fset_cont1(2,curOF.FieldName);
+	}
+	//fset_cont1(mRecNo);
+	fset_cont(mRecNo); //刷新表格
+	
+    var oDs = eval(uniqueID);
+    if(typeof(oDs.e_startRow) != "undefined"){
+        new Eapi.EformEbiao().fset_cont2(oDs,curObj.parentNode); //刷新E表控件
+    }
+           
+    mbEdit=true;
+
+}
+/**
+*处理radio控件向fset传数
+**/
+function radioclick() {
+	//alert("radioclick")
+	//radioclick1();
+	radio_checkbox_click()
+	cont1_onblur();
+}
+function radioclick1() {
+	var o=event.srcElement ;
+	o.parentNode.value=o.value ;
+}
+/**
+*把界面上的控件装入LinkObjs数组
+**/
+function InitLinkObj(){
+
+  var l;
+  var iLinkObjs=0;
+  var o=window.document.all.tags("INPUT");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var curObj = o[i];
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)){
+        //判断spin控件,怕出错所以加try
+        try{
+            curObj = o[i].parentNode;
+            if(curObj.controltype == "spin"){
+                ds1 = curObj.getAttribute("dataset");
+            }
+        }catch(e){}
+    }
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         curObj.attachEvent("onchange", cont1_onblur);
+         LinkObjs[iLinkObjs] = curObj;
+         iLinkObjs++;
+      }   
+    }
+  }
+
+  var o=window.document.all.tags("TEXTAREA");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         o[i].attachEvent("onchange", cont1_onblur);
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }
+
+
+  var o = window.document.all.tags("LABEL"); //2010-08-13 span ==>LABEL
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }
+  var o=window.document.all.tags("SELECT");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         o[i].attachEvent("onchange", cont1_onblur);
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }
+  var o=window.document.all.tags("fieldset");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }
+  
+  
+  var o=window.document.all.tags("div") ;//新的checkbox
+  l=o.length;
+  for(var i=0;i<l;i++){
+      if (o[i].controltype == "checkbox" || o[i].controltype == "checkboxlist" || o[i].controltype == "radiolist") {
+          var ds1 = o[i].getAttribute("dataset");
+          if (isSpace(ds1) == false) {
+              if (ds1 == eval(uniqueID + ".id")) {
+                  if (o[i].controltype == "checkboxlist" || o[i].controltype == "radiolist") {
+                      //alert("11");
+                      o[i].attachEvent("onclick", cont1_onblur);
+                      //added by liuxr at 2011-6-23 增加其他选项输入后的数据提交到数据集
+                      try
+                      {
+						var chktxt = $id(o[i].id+"_txt");
+						if (chktxt != null)
+								chktxt.attachEvent("onchange", cont1_onblur);
+                      }catch(e){}
+                  }
+                  LinkObjs[iLinkObjs] = o[i];
+                  iLinkObjs++;
+              }
+          }
+      }
+  }
+  
+  var o=window.document.all.tags("img");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }  
+
+  var o=window.document.all.tags("fc_code");
+  l=o.length;
+  for(var i=0;i<l;i++){
+    var ds1=o[i].getAttribute("dataset");
+    if(isSpace(ds1)==false){
+      if (ds1==eval(uniqueID+".id")){
+         o[i].attachEvent("onchange", cont1_onblur);
+         LinkObjs[iLinkObjs]=o[i];
+         iLinkObjs++;
+      }   
+    }
+  }  
+  /////////2005-08-22  2010-06-02 my 去掉下边这段
+//  var o=window.document.all.tags("div")
+//  l=o.length;
+//  for(var i=0;i<l;i++){
+//    if(o[i].controltype == "upload") continue ; //upload不绑定
+//    var ds1=o[i].getAttribute("dataset");
+//    if(isSpace(ds1)==false){
+//      if (ds1==eval(uniqueID+".id")){
+//         o[i].attachEvent("onchange", cont1_onblur);
+//         LinkObjs[iLinkObjs]=o[i];
+//         iLinkObjs++;
+//      }   
+//    }
+//  }  
+    var o=window.document.all.tags("webgrid");
+    l=o.length;
+    for(var i=0;i<l;i++){
+        if (o[i].dataset==eval(uniqueID+".id")){
+            o[i].attachEvent("onDataChange", cont_onDataChange);
+        }
+    }
+  
+}
+/**
+*@date 2004-08-25
+**/
+function checkboxclick(){
+	var obj=event.srcElement ;
+	var bool=obj.checked ;
+	obj=obj.parentNode;
+	//alert(bool+"  "+obj.outerHTML)
+	if(bool){
+		obj.value=obj.truevalue;
+	}else{
+		obj.value=obj.falsevalue ;
+	}
+	
+}
+/**
+*全文查找,
+*@param sFind ='大米'
+*@param bLike =true表示模糊查找
+*@return 无
+**/
+function FindAll(sFind,bLike){
+  if(typeof bLike == "undefined" ) bLike=true ; 
+
+  //alert(mFieldCount+oData.documentElement.xml)
+  var bln;
+ // if(bLike)
+   //  bln="oData.documentElement.childNodes(i).childNodes(j).text.indexOf(sFind)!=-1"
+  //else
+    // bln="oData.documentElement.childNodes(i).childNodes(j).text==sFind"
+  for(var i=0;i<mRecordCount;i++){
+     for(var j=0;j<mFieldCount;j++){
+     	if(bLike){
+     		if(oData.documentElement.childNodes(i).childNodes(j).text.indexOf(sFind)!=-1){
+	           SetPos(i);
+	           return true;
+     		}
+    	}else{
+    		if(oData.documentElement.childNodes(i).childNodes(j).text==sFind){
+	           SetPos(i);
+	           return true;
+    		}
+    	}
+     }
+  } 
+	return false;
+}
+/**
+当数据集的recno移动后更新表格的行指向
+*@date 2004-04-08
+**/
+function MoveGridRow(){
+   var o=window.document.all.tags("webgrid");
+   for(var ii=0;ii<o.length;ii++){
+        if (o[ii].dataset==eval(uniqueID+".id")){
+	
+			var tmprow=mRecNo+o[ii].FixRows;
+			o[ii].lostfocustd=null;
+			//alert(tmprow)
+			var td=o[ii].FindFirstTD(tmprow);
+			//alert(td.innerHTML)
+			o[ii].SetFocus(td,"程序给焦点");
+		}
+	}
+
+}
+/**
+*记录定位,
+模糊查找:
+   var s1="F('danwbh').indexOf('" + SKDBedit3.value +"')>=0";
+   var b=dssub1.Find(s1) ;
+   if(b){
+      dssub1.MoveGridRow();
+   }
+
+*@param sFind =" F('fstrcustomer')=='0'"
+*@return true 表示找到,
+**/
+function Find(sFind){
+  for(iFind=0;iFind<mRecordCount;iFind++){
+     if(eval(sFind)){
+        SetPos(iFind);
+        return true;
+     }
+  } 
+  return false;
+}
+/**
+*宏使用的函数 取表格的行号 no use
+**/
+function getlineno(){
+  var o=window.document.all.tags("webgrid");
+  for(var ii=0;ii<o.length;ii++){
+    if (o[ii].dataset==eval(uniqueID+".id")){
+    	return o[ii].Row;
+    }
+  }
+}
+/**
+*宏使用的函数  计算汇总项用
+*@param sFieldName 字段名
+*@return 此字段的所有记录合计
+**/
+function sum(sFieldName){return summaryFunc(sFieldName,"sum");}
+function avg(sFieldName){return summaryFunc(sFieldName,"avg");}
+function max(sFieldName){return summaryFunc(sFieldName,"max");}
+function min(sFieldName){return summaryFunc(sFieldName,"min");}
+function summaryFunc(sFieldName,sFuncName){
+    
+   var FieldNo=FieldNameToNo(sFieldName);
+   var sum1=0,max1=0,min1=0;
+   var bool = true;
+   if(typeof Field(sFieldName).Value == "undefined") bool=false;
+   for(var i=0;i<mRecordCount;i++){
+	  if(i==mRecNo && bool) continue;
+      var f1=parseFloat(oData.documentElement.childNodes(i).childNodes(FieldNo).text);
+      if(isNaN(f1)==false){
+         sum1+=f1;
+         if(f1 != 0 ){
+            if(max1<f1) max1=f1;
+            if(min1>f1) min1=f1;
+         }
+      }
+   }
+//加上当前的
+   if(bool){
+		var f1=parseFloat(Field(sFieldName).Value);
+		if(isNaN(f1)==false){
+			sum1+=f1;
+             if(f1 != 0 ){
+                if(max1<f1) max1=f1;
+                if(min1>f1) min1=f1;
+             }
+        }
+   }
+   if(sFuncName == "sum"){
+        return sum1;
+   }else if(sFuncName == "min"){
+        return min1;
+   }else if(sFuncName == "max"){
+        return max1;
+   }else{ //avg
+        if(mRecordCount>0){
+            return sum1/mRecordCount ;
+        }
+        return 0;
+   }
+
+}
+/**
+*宏使用的函数  当前日期,暂为客户端
+*@return 当前日期 格式为2000-03-03
+**/
+/*
+function getdate(){
+	
+	var d=new Date()
+	var s=""
+   var s1= d.getYear();
+   var s2= d.getMonth() + 1 ;
+   if(s2<10)
+   	s2="0"+s2
+   var s3= d.getDate() 
+   if(s3<10)
+   	s3="0"+s3
+	s=s1+"-"+s2+"-"+s3	
+   return s
+}
+*/
+/**
+*宏使用的函数  取得最大单据编号
+*@return 最大单据编号
+**/
+function getmaxdjbh(){
+   var s1=getMaxNo(fcpubdata.area.codeheader,fcpubdata.area.mkbh);
+   return s1;
+}
+
+
+/**
+*宏使用的函数  行间计算用
+*@param sFieldName 字段名
+*@return 此字段的值
+**/
+function ff(sFieldName){
+	var sexp=Field(sFieldName).DefaultValue;
+	if(isSpace(sexp)==false && Field(sFieldName).Type=="实际计算项" ){
+		return eval(sexp);
+	}else {
+   		return Field(sFieldName).Value;
+	}
+   
+}
+function $f_value(sFieldName){ return ff(sFieldName);}  //希望在设置时统一用$f_value这个函数,而在实际计算时会调用: ff  $fbak_value 这两种可能.
+function $fbak_value(sFieldName){ 
+   var i=FieldNameToNo(sFieldName);
+   return oData.documentElement.childNodes(fcpubdata.transRecNo).childNodes(i).text;
+
+}
+/**
+*宏使用的函数 find use
+*@param sField 字段名
+*@return 此字段的值
+**/
+function F(sField){
+   var i=FieldNameToNo(sField);
+   return oData.documentElement.childNodes(iFind).childNodes(i).text;
+}
+/**
+*宏使用的函数,判断某字段是否包含某值
+*@param sField 字段名="fstrCustomerName"
+*@param sValue 值="01"
+*@return 如包含则返回true,否则返回false
+**/
+function IN(sField,sValue){
+   var i=FieldNameToNo(sField);
+   var s1=oData.documentElement.childNodes(iFind).childNodes(i).text;
+   if(s1.indexOf(sValue)==-1)
+      return false;
+   else
+      return true;
+}
+/**
+*记录过滤,
+*@param sFind 过滤条件表达式,例如=" F('fstrcustomer')=='0'"
+*@return 无
+**/
+function Filter(sFind){
+//
+//alert(sFind)
+  if(mbFilter){
+     UnFilter();
+  }else{
+	  mXmlDataNew=oData.documentElement.xml;
+  
+  }
+  mbFilter=true;
+  var tmpCount=oData.documentElement.childNodes.length-1;
+  for(iFind=tmpCount-1;iFind>=0;iFind--){
+//  for(iFind=0;iFind<=tmpCount-1;iFind++){
+     if(eval(sFind)){
+     }else{
+     //移到oFilter中
+        var oClone=oData.documentElement.childNodes(iFind).cloneNode(true);
+        oFilter.documentElement.appendChild(oClone);
+        oData.documentElement.removeChild(oData.documentElement.childNodes(iFind));
+     }
+  } 
+  //表格总行数变化
+  var o=window.document.all.tags("webgrid");
+  for(var ii=0;ii<o.length;ii++){  
+    	if (o[ii].dataset==eval(uniqueID+".id")){
+       		//alert(o[ii].tab.outerHTML)
+       		o[ii].hide();
+       		o[ii].Rows=1;  //为了IE5中能刷新,最后可以去掉
+  			o[ii].Rows=oData.documentElement.childNodes.length-1+1;
+  			o[ii].EndRowState="edit";
+  		}
+  }
+  
+  dset_cont();
+  //MoveFirst();
+  OnFilterRecordID.fire();
+
+}
+/**
+*取消过滤,
+*@param iTag 标志,=1表示改动界面, 为空表示不改动界面 用于Filter方法调用
+*@return 无
+**/
+function UnFilter(iTag){
+//
+	//如不在过滤状态则不能反过滤
+	if(mbFilter==false) return;
+/*
+	for(var i=oFilter.documentElement.childNodes.length-1;i>0;i--){
+     	//移到oData中
+      var oClone=oFilter.documentElement.childNodes(i).cloneNode(true)
+      oData.documentElement.insertBefore(oClone, oData.documentElement.childNodes(oData.documentElement.childNodes.length-1))
+	}
+   */
+
+   oData=new ActiveXObject("Microsoft.XMLDOM");
+   oData.async=false;
+   oData.loadXML (mXmlDataNew);
+   
+   oFilter=new ActiveXObject("Microsoft.XMLDOM");
+   oFilter.async=false;
+   oFilter.loadXML ("<root></root>");
+   if(iTag==1){
+      dset_cont();
+      MoveFirst();
+   }
+}
+/**
+*对数据集进行排序
+*@param sortcol 要排序的列号,整形
+*@param asc = "升序/降序" 
+*@date 2003-12-08
+**/
+function Sort(sortcol,asc){
+  if(oData.documentElement.childNodes.length<=1) return;
+	
+  var oSort=new ActiveXObject("Microsoft.XMLDOM");
+   	  oSort.async=false;
+      oSort.loadXML ("<root></root>");
+	
+
+
+  while (oData.documentElement.childNodes.length-1>0) {
+    var sendrow=MaxMinSort(sortcol,asc) ;
+     //移到oSort中
+    var oClone=oData.documentElement.childNodes(sendrow).cloneNode(true);
+    oSort.documentElement.appendChild(oClone);
+    oData.documentElement.removeChild(oData.documentElement.childNodes(sendrow));
+	//alert(oSort.xml)
+	//alert(oData.xml)
+  	//i++;
+  }
+  oSort.documentElement.appendChild(oData.documentElement.childNodes(oData.documentElement.childNodes.length-1));
+  oData=oSort;
+  //alert(oData.xml)
+  //表格总行数变化
+  var o=window.document.all.tags("webgrid");
+  for(var ii=0;ii<o.length;ii++){  
+    	if (o[ii].dataset==eval(uniqueID+".id")){
+       		//alert(o[ii].tab.outerHTML)
+       		o[ii].hide();		
+  			o[ii].EndRowState="edit";
+  		}
+  }
+  
+  dset_cont();
+  dset_fset();
+  fset_cont1();
+  for(var ii=0;ii<o.length;ii++){  
+    	if (o[ii].dataset==eval(uniqueID+".id")){
+		  GridAddHref(o[ii]);
+  		}
+  }
+
+}
+function MaxMinSort(sortcol,asc) {
+	var sMax;
+	var SendRow;  //送出的行
+	var datatype=Field(sortcol).DataType;
+	/*
+	if(datatype=="实数" || datatype=="整数"){
+		sMax=0
+	}else{
+		sMax=""
+	}*/
+	//alert(oData.documentElement.childNodes.length-1)
+	for(var i=0;i<oData.documentElement.childNodes.length-1;i++){
+		var s1=oData.documentElement.childNodes(i).childNodes(sortcol).text;
+		if(datatype=="实数" || datatype=="整数"){
+			s1=parseFloat(s1);
+			if(isNaN(s1)) s1=0;
+		}
+//		alert("sMax:"+sMax+" "+"s1:"+s1)
+		if(i==0) sMax=s1;
+		if(asc=="升序"){
+			if(sMax>s1 ){ 
+				sMax=s1;  //取最小值送出
+				SendRow=i;
+			}
+		}else{
+			if(sMax<s1 ) {
+				sMax=s1;  //取最大值送出
+				SendRow=i;
+			}
+		}
+	}
+	
+	return SendRow;
+}
+/**
+*通过表格的format属性,找到je字段所对应的列号
+*@param grid 为表格对象
+*@param sFieldName 为字段名,
+*@return 返回列号
+**/
+function FieldNameToColNo(grid,sFieldName){
+   var oXml=new ActiveXObject("Microsoft.XMLDOM");
+   oXml.async=false;
+   oXml.loadXML (grid.format);
+   for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+   	if(sFieldName==oXml.documentElement.childNodes(i).childNodes(0).text){
+            if(mbTagCol){
+               return i+1;
+            }else{
+               return i;
+            }
+   	}
+   }   
+   
+   
+}
+/**
+*记录集增加一条记录
+*将fset清空
+*1 先在oData对象中加一个记录节点
+*2 移动记录到尾
+*@param sTag=强行加一行 用于多选时复制数据集
+		    =不置表格的焦点 用于表单以新增状态进入时
+*@param pos 整数,为插入的位置.给Insert方法用.第一条记录此值应为0	
+**/
+function Append(sTag,pos){
+   var sRowState="rowstate='new'"; //表示强行加上的行的行标识
+   if(sTag != "强行加一行" ){
+	   if(mbAdd || mbEdit ){ 
+	   	//if(mRecordCount>0){
+	   		if(Update("提示错误信息")!="") return; //=1 因检查非法而无法update
+	   	//}
+	   }
+	   BeforeInsertID.fire();
+	   sRowState = "rowstate='add'";
+   } 
+   //alert("new:"+mFieldCount)
+   
+   var sNode="<root><tr " + sRowState + ">";
+   for(var i=0;i<mFieldCount;i++){
+		//加上字段的默认值
+		//alert(Field(i).Type+":"+Field(i).DefaultValue)
+		if(Field(i).Type=="数据项" && isSpace(Field(i).DefaultValue)==false){
+			sNode+="<td>"+Field(i).DefaultValue+"</td>";
+		}else if(Field(i).Type=="变量默认值" && isSpace(Field(i).DefaultValue)==false){
+		
+		//}else if(isSpace(Field(i).DefaultValue)==false){
+		    var sss=eval(Field(i).DefaultValue);
+		    sNode+="<td>"+sss+"</td>";
+		}else {
+      	sNode+="<td></td>";
+      }
+   }
+   sNode+="</tr></root>";
+	
+   var newNode=SetDom(sNode);
+   var oClone=newNode.documentElement.childNodes(0).cloneNode(true);
+   //alert("aaa:"+mRecordCount+oData.documentElement.xml)
+	if(typeof pos == "undefined" ){	
+   		oData.documentElement.insertBefore(oClone, oData.documentElement.childNodes(oData.documentElement.childNodes.length-1));
+   	}else{
+   		oData.documentElement.insertBefore(oClone, oData.documentElement.childNodes(pos));
+   	}
+   mRecordCount++;
+   
+   if(sTag != "强行加一行" ){
+
+		//先放此事件暂于此	
+	   OnNewRecordID.fire();
+	
+	   //grid add line
+	   var o=window.document.all.tags("webgrid");
+	   for(var ii=0;ii<o.length;ii++){
+	      if (o[ii].dataset==eval(uniqueID+".id")){
+	      	 o[ii].RemoveBackColor();
+			if(typeof pos == "undefined" ){	
+	         	o[ii].InsertRow();
+				if(sTag != "不置表格的焦点"){
+					var tmprow=o[ii].tab.rows.length-1;
+					//o[ii].lostfocustd=null
+					//alert(o[ii].FindFirstTD(tmprow).outerHTML)
+					o[ii].SetFocus(o[ii].FindFirstTD(tmprow),"程序给焦点");
+				}
+				
+	         }else{
+	            var tmprow=pos+o[ii].FixRows;
+	         	o[ii].InsertRow(tmprow);
+	         	//alert(tmprow)
+	         	//o[ii].lostfocustd=null
+				o[ii].SetFocus(o[ii].FindFirstTD(tmprow),"程序给焦点");
+	         }
+	         //滚动到最后一行
+	         o[ii].VscrollTo(o[ii].Vmax);
+	         //added by liuxr at 2009-5-22 重算行号
+	         o[ii].ReCalRowNo();
+	         o[ii].hide();
+	      }   
+	      
+	   }
+	   
+	  // fnPutRecNo(mRecNo)
+	   mbAdd=true;
+	   //mbEdit=false
+  
+	
+		//移动当前记录指针指向最后一行
+		if(typeof pos == "undefined" ){	
+   			mRecNo=mRecordCount-1;
+   		}else{
+   			mRecNo=pos;
+   		}
+ 		SetPos(mRecNo);
+		AfterInsertID.fire();
+   }
+}
+/**
+在当前位置插入一行记录
+*@date 2004-03-03
+**/
+function Insert() {
+	Append("",mRecNo);
+}
+/**
+*复制增加
+*@date 2008-06-04
+**/
+function AppendCopy(){
+	var arrBack = new Array();
+	for(var i=0;i<mFieldCount;i++){
+   	    arrBack[i]=Field(i).Value;
+	}
+	Append();
+	for(var i=0;i<mFieldCount;i++){
+   	    Field(i).Value=arrBack[i];
+	}
+}
+/**
+*编辑记录
+**/
+function Edit(){
+	BeforeEditID.fire();
+   if(oData.documentElement.childNodes(mRecNo).getAttribute("rowstate")=="new")
+      oData.documentElement.childNodes(mRecNo).setAttribute("rowstate", "add");
+   if(oData.documentElement.childNodes(mRecNo).getAttribute("rowstate")!="add")
+      oData.documentElement.childNodes(mRecNo).setAttribute("rowstate", "edit");
+   mbEdit=true;
+   AfterEditID.fire();
+//因dset中的数据已经在setpos时放入fset中
+}
+/**
+*提交到数据集之前执行的检查.主要检查Field(i).Value中的数据是否符合数据类型和是否为空等法则
+*如果fset中的数和dset中的数一样则不检查,返回true
+*根据Field(i)对象的结构来检查Field(i).Value值是否合法
+*@return 检查不合法返回false,否则返回true
+*@date 2003-05-14
+**/
+function checkbeforeupdate(iTag){
+   for(var i=0;i<mFieldCount;i++){
+   	    var sRet=dataValid(Field(i),Field(i).Value,iTag); //3 
+	    if(sRet!=""){
+		    return sRet;
+	    }
+   }
+   return "";
+}
+
+/**
+*将fset中的数据保存到数据集中
+*@param novalid ="不检查" 表示不执行 checkbeforeupdate ,用于表格中
+    novalid ="提示错误信息" 表示在此要函数中提示错误信息
+*@return 1 表示因检查非法而无法update
+  return "" 表示成功,否则是错误信息
+**/
+function Update(novalid){
+	//alert(mbEdit)
+    if(mbEdit==false && mbAdd==false) return "";
+    if(novalid == "不检查") {
+        var sRetErr = checkbeforeupdate(5);
+        if (sRetErr != "") {
+            //此时会提交非法的数据进数据集中.在grid的LostFocus时会
+            //通知在保存前再检查此数据集的所有变动的数据
+            isNeedValid = "yes";
+            alert(sRetErr);
+            return sRetErr;
+        }
+    }else{
+        var sRetErr = checkbeforeupdate(6);    
+   		if(sRetErr != "") {
+   		    if(novalid == "提示错误信息") alert(sRetErr);    
+   		    return sRetErr;
+   		}
+    }
+    
+    var sMsg = RunBeforeUpdate();
+    if (sMsg != "") {
+        if (novalid == "不检查") isNeedValid = "yes";
+        if (novalid == "提示错误信息" || novalid == "不检查") alert(sMsg);
+        return sMsg;
+    }
+   	
+    //if (novalid != "不检查") {
+//        var oEvent = createEventObject();
+//        oEvent.returnValue = true;
+//        BeforePostID.fire(oEvent);
+//        if (oEvent.returnValue == false) return "数据集提交之前事件中的检查没有通过!";
+//    //}
+   //加了下面这行可以使当前修改的东西也存盘,但会使表格中的记录指针不随光标移动
+   //cont_onDataChange()  
+   
+   //cont1_onblur()
+   //cont1_fset()
+   //cont_fset(r)
+   //alert(r)
+   //if(r>0 && mbEdit)mRecNo=(r-1)
+	//alert("recno: "+mRecNo+" value:"+Field("Shenhyj").Value)
+   if(oData.documentElement.childNodes.length>1){
+	   //表示oData中有记录节点
+	   for(var i=0;i<mFieldCount;i++){
+	      oData.documentElement.childNodes(mRecNo).childNodes(i).text=Field(i).Value;
+	   }
+	   if(oData.documentElement.childNodes(mRecNo).getAttribute("rowstate")=="new")
+	      oData.documentElement.childNodes(mRecNo).setAttribute("rowstate","add");
+	   if(oData.documentElement.childNodes(mRecNo).getAttribute("rowstate")!="add")
+	      oData.documentElement.childNodes(mRecNo).setAttribute("rowstate","edit");
+   }
+   //重新计算所有行的汇总项
+   ReSum("只算fset");
+   
+   mbEdit=false;
+   mbAdd=false;
+
+   AfterPostID.fire();
+   
+   return "";
+}
+//将提交之前事件做成一个方法来调用
+function RunBeforeUpdate() {
+    var oEvent = createEventObject();
+    oEvent.returnValue = "";
+    BeforePostID.fire(oEvent);
+    return oEvent.returnValue;
+}
+/**
+*取消提交到数据集中
+**/
+function Cancel(){
+	BeforeCancelID.fire();
+   SetPos(mRecNo);
+   //如为增加后再取消,则需要删除
+   var sState=oData.documentElement.childNodes(mRecNo).getAttribute("rowstate");
+   if(sState=="add"){
+      Delete(1);
+   }
+   mbEdit=false;
+   mbAdd=false;
+   AfterCancelID.fire();
+}
+/**
+*删除数据集中的记录,不能用Cancel取消
+*@param type type=1表示不需要在oDel中增加节点,用于Cancel方法
+**/
+function Delete(type){
+	if(oData.documentElement.childNodes.length<=1) return;
+   if(type!=1){
+      BeforeDeleteID.fire();
+      //add oDel对象
+      //alert(oData.documentElement.xml)
+      //var oClone=oData.documentElement.childNodes(mRecNo).cloneNode(true);
+      //oDel.documentElement.insertBefore(oClone, null);
+      var oTr = oData.documentElement.childNodes(mRecNo);
+      if(oTr.getAttribute("rowstate") != "add" && oTr.getAttribute("rowstate") != "del"){
+		oTr.setAttribute("rowstate","del");
+		DeletedData += oTr.xml;
+      }
+   }
+	
+	var curcol=1; 	//因一个数据集只可能绑定到一个表格上.所以用此变量保留删除前的当前列供后面的置焦点用.
+   var o=window.document.all.tags("webgrid");
+   for(var ii=0;ii<o.length;ii++){
+      if (o[ii].dataset==eval(uniqueID+".id")){
+         curcol=o[ii].curTD.cellIndex;
+         o[ii].DeleteRow(mRecNo+o[ii].FixRows);
+        // o[ii].VScroll();
+      }
+   }
+
+	
+   oData.documentElement.removeChild(oData.documentElement.childNodes(mRecNo));
+   mRecordCount--;
+   
+   if(mRecordCount>0){
+      if(mRecNo>0){
+         mRecNo--;
+      }
+      /*
+      else if(mRecNo<mRecordCount-1){
+         mRecNo++
+      }*/
+      //fnPutRecNo(mRecNo),下面此行包括了
+      SetPos(mRecNo);
+      ReSum("只算fset");
+      fset_cont1();
+   }
+   else {
+      fset_setnull();
+      //当记录数为0时清空绑定控件上的值
+      fset_cont1(1)	;
+   }
+   mbAdd=false;
+   mbEdit=false;
+   if(mRecordCount>0){
+   var o=window.document.all.tags("webgrid");
+	   for(var ii=0;ii<o.length;ii++){
+	      if (o[ii].dataset==eval(uniqueID+".id")){
+	         //置焦点
+	         o[ii].SetFocus(o[ii].tab.rows(mRecNo+o[ii].FixRows).cells(curcol),"程序给焦点");
+            //added by liuxr at 2009-5-22 重算行号
+            o[ii].ReCalRowNo();	         
+	      }
+	   }
+   }
+   
+   AfterDeleteID.fire();
+}
+
+/**
+*到第一条记录
+**/
+function MoveFirst(){return SetPos(-1);}
+/**
+*下一条记录
+**/
+function MoveNext(){return SetPos(mRecNo+1);}
+/**
+*上一条记录
+**/
+function MovePrev(){return SetPos(mRecNo-1);}
+/**
+*最后一条记录
+**/
+function MoveLast(){return SetPos(mRecordCount);}
+/**
+*记录定位,给好mBof,mEof,mRecNo这些变量的值
+*@param pos pos为记录号,从0开始
+**/
+function SetPos(pos)
+{ 
+  BeforeScrollID.fire();
+  mBof=false;mEof=false;
+  var tmpCount=oData.documentElement.childNodes.length-1;
+  if(pos>=tmpCount)pos=tmpCount-1;
+  if(pos<0 || isNaN(pos))pos=0;
+  if(pos==0)mBof=true;
+  if(pos>=tmpCount-1)mEof=true;
+			var d=new Date();
+			var t = d.getTime();
+
+  fnPutRecNo(pos); //10
+//alert("dset_fset")
+  dset_fset();  //30
+  fset_cont1(); //10
+  //fset_cont(pos);
+			var d=new Date();
+			var t1 = d.getTime();
+			//alert(t1-t)
+
+  AfterScrollID.fire();
+  return 0;
+}
+
+/**
+*将字段集中的数据==>文本控件中
+*@param type type=1表示清空界面 
+        type=2 表示只回写当前字段(fieldname)的控件 用于cont1_onblur函数中回写数值的格式
+**/
+function fset_cont1(type,fieldname){
+  if(type==1){
+    for(var i=0;i<LinkObjs.length;i++){
+        if (LinkObjs[i].tagName.toUpperCase() == "LABEL") { //2010-08-13 将 SPAN ==> LABEL
+          LinkObjs[i].innerText="";
+      // }else if(LinkObjs[i].type.toUpperCase()=="CHECKBOX"  ){
+	  //		LinkObjs[i].checked=false
+       }else{   
+          LinkObjs[i].value="";
+       }
+    }
+
+  }else {
+    var stable = eval(uniqueID).savetable;
+   // alert(stable);
+    for(var i=0;i<LinkObjs.length;i++){
+       if((type==2 && fieldname==LinkObjs[i].field && isSpace(fieldname)==false ) || type !=2 )	{
+           if (LinkObjs[i].tagName.toUpperCase() == "LABEL") { //2010-08-13 将 SPAN ==> LABEL
+	          LinkObjs[i].innerText=Field(LinkObjs[i].field).Value;
+	       }else if(LinkObjs[i].tagName.toUpperCase()=="IMG"){
+				if(typeof LinkObjs[i].field != "undefined"){
+				    if (IsSpace(stable)) {
+				        alert("本数据集没有设置保存表名!");
+				        continue;
+				    }
+					if(IsSpace(firstKeyFieldName)){
+						alert("本数据集没有设置主键字段!");
+						continue;
+					}
+	       			//fcpubdata.area.mastertable;
+					//if(IsSpace(stable)) stable=eval(fcpubdata.dsMain+".saveastable");
+					//if(IsSpace(stable)) stable=eval(LinkObjs[i].dataset+".saveastable");
+					//alert(fcpubdata.servletPath)
+					
+					var s1="";
+					if (Field(LinkObjs[i].field).DataType != "图象") {//判断保存图片还是保存图片路径 @fhj 2011-05-30
+					    try {
+					        s1 = Field(LinkObjs[i].field).Value;
+					        s1 = "../.." + s1;
+					    } catch (e) {
+					        alert(LinkObjs[i].field + "字段在数据集中没有")
+					        continue;
+					    }
+					} else {
+
+					    s1 = location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=readImage&sTablename=" + stable + "&sImgname=" + LinkObjs[i].field + "&sKeyname=" + firstKeyFieldName + "&sKeyvalue=";
+
+					    s1 += Field(firstKeyFieldName).Value;
+					    s1 += "&random=" + Math.random();
+					}
+					//CopyToPub(s1)
+	       			//alert("test123"+s1)
+					LinkObjs[i].src=s1;   //Field(LinkObjs[i].field).Value
+				}
+	       }else if(LinkObjs[i].tagName.toUpperCase()=="TEXTAREA" && typeof(LinkObjs[i].field) != "undefined" && fcpubdata.databaseTypeName == "oracle" && Field(LinkObjs[i].field).DataType=="文本"){ //处理clob字段
+				if(IsSpace(firstKeyFieldName)){
+					alert("本数据集没有设置主键字段!");
+					continue;
+	            }
+
+	            var primarykeyFieldValue = Field(firstKeyFieldName).Value;
+	            if (IsSpace(primarykeyFieldValue) == false) {
+
+	                //var stable=fcpubdata.area.mastertable;
+	                //if(IsSpace(stable)) stable=eval(LinkObjs[i].dataset+".saveastable");
+	                //alert(fcpubdata.servletPath)
+	                var s1 = location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=readClob&sTablename=" + stable + "&sImgname=" + LinkObjs[i].field + "&sKeyname=" + firstKeyFieldName + "&sKeyvalue=";
+
+	                s1 += primarykeyFieldValue;
+	                s1 += "&random=" + Math.random();
+	                new Eapi.RunAjax().sendHttp(s1, "", function(result) {
+	                    //保存换行符, 2011-05-13
+	                    var oTextArea = result.context;
+	                    var v1 = result.value;
+	                    if (oTextArea.tagName.toUpperCase() == "TEXTAREA") {
+	                        v1 = RepStr(v1, "&#13;&#10;", "\r\n");
+	                        v1 = RepStr(v1, "&#9;", "\t");
+	                    }
+	                    oTextArea.value = v1;
+	                    oTextArea.fireEvent("onchange");
+
+	                }, LinkObjs[i]);
+	            }
+	       }else if(LinkObjs[i].tagName.toUpperCase()=="FIELDSET"){
+	          SetRadioValue(LinkObjs[i],Field(LinkObjs[i].field).Value);
+	          
+	          
+	       }else if(LinkObjs[i].tagName.toUpperCase()=="DIV" && LinkObjs[i].controltype=="checkbox" ){
+	          var v1="";
+	          try{
+	          	 v1=Field(LinkObjs[i].field).Value;
+	          }catch (e){
+	          	 alert(LinkObjs[i].field+"字段在数据集中没有"); continue;
+	          }
+	          SetCheckBoxValue(LinkObjs[i],v1);
+
+	      }
+	      //modify by liuxr at 2010-4-27 15:17 给checkboxlist控件赋值
+	      else if (LinkObjs[i].tagName.toUpperCase() == "DIV" && LinkObjs[i].controltype == "checkboxlist") {
+	          var v1 = "";
+	          try {
+	              v1 = Field(LinkObjs[i].field).Value;
+	          } catch (e) {
+	              alert(LinkObjs[i].field + "字段在数据集中没有"); continue;
+	          }
+	          SetDivCheckBoxValue(LinkObjs[i], v1,"",true);
+	      }
+	      //modify by liuxr at 2010-4-27 16:17 给radiolist控件赋值 divradio
+	      else if (LinkObjs[i].tagName.toUpperCase() == "DIV" && LinkObjs[i].controltype == "radiolist") {
+	          var v1 = "";
+	          try {
+	              v1 = Field(LinkObjs[i].field).Value;
+	          } catch (e) {
+	              alert(LinkObjs[i].field + "字段在数据集中没有"); continue;
+	          }
+	          SetDivRadioValue(LinkObjs[i], v1);
+	      }
+
+	       else{
+	          var v1="";
+	          try{
+	          	 v1=Field(LinkObjs[i].field).Value;
+	          }catch (e){
+	          	 alert(LinkObjs[i].field+"字段在数据集中没有")
+	          	 continue;
+	          }
+	          v1=fset_contall(Field(LinkObjs[i].field));
+	          
+			  //保存换行符
+			  if(LinkObjs[i].tagName.toUpperCase()=="TEXTAREA"){
+					v1 = RepStr(v1,"&#13;&#10;","\r\n");
+					v1 = RepStr(v1,"&#9;","\t");
+	          }
+	          LinkObjs[i].value=v1;
+	          
+	       }
+       }
+    }
+  }
+}
+/**
+*从fset向界面上的控件传数时要调用此函数,用于做ongettext事件和处理实数的千分位和小数位数等
+*@param oF 字段对象
+*@param v1 此字段的值
+*@date 2003-11-27
+**/
+function fset_contall(oF,v1){
+	if(typeof oF=="undefined") return "";
+	if(typeof v1 == "undefined"){
+		var v1=oF.Value;
+	}
+	
+	//加处理日期的显示格式.
+	if(oF.DataType=="日期")	{
+		var sFormat = oF.DisplayFormat;
+		if(IsSpace(sFormat) == false && IsSpace(v1) == false){ 
+			var oDate = new Eapi.DateParse().parse(v1);//new PowerDate(v1);
+			if(oDate != null){
+			    v1 =  oDate.format(sFormat);
+			}
+			//oDate.isFmtZero = true;
+			//v1 = oDate.getString(sFormat);
+		}
+	}
+	
+	if(oF.DataType=="实数")	{
+		v1=ContDec(v1,oF.DotLength)	;
+	}
+	//处理千分位
+    if(oF.DataType=="实数" || oF.DataType=="整数")  {
+  		var s1=oF.DisplayFormat;
+  		if(s1.indexOf(",")>=0){
+  			v1=AddComma(v1);
+  		}
+  	}	
+	return v1;
+	/**
+	*从数据集到控件: 按千分位加上,号. 在dataset.htc 的 fset_contall 函数中调用
+	*@param sSour 处理原串
+	*@date 2003-11-27
+	**/
+	function AddComma(sSour){
+		var s1=new Eapi.Str().trim(sSour);
+		var ret="";
+		var s2="";
+		var start1=s1.indexOf(".");
+		if(start1<0) {
+			start1=s1.length;
+		}else{
+			s2=s1.substring(start1,s1.length);
+		}
+		for(var i=start1-3;i>0;i=i-3){
+			ret=","+s1.substring(i,i+3)+ret;
+		}
+		if(ret==""){
+			ret=s1;
+		}else{
+			ret=s1.substring(0,i+3)+ret+s2;
+		}
+		return ret;
+	}
+	
+}
+function cont1_fset(){
+//将文本控件中的数据==>字段集中
+// 在savebill中 use 
+	
+
+  for(var i=0;i<LinkObjs.length;i++){
+    //alert(LinkObjs[i].field)
+    // alert(LinkObjs[i].tagName+":"+LinkObjs[i].value)
+    if(LinkObjs[i].tagName.toUpperCase()=="SPAN"){
+       Field(FieldNameToNo(LinkObjs[i].field)).Value=LinkObjs[i].innerText;
+    }else if(LinkObjs[i].tagName.toUpperCase()=="IMG"){
+    }else if(LinkObjs[i].tagName.toUpperCase()=="FIELDSET"){
+       //alert(GetRadioValue(LinkObjs[i]))
+       /*Field(FieldNameToNo(LinkObjs[i].field)).Value=GetRadioValue(LinkObjs[i]);
+      
+	}else if(LinkObjs[i].tagName.toUpperCase()=="DIV" && LinkObjs[i].controltype=="checkbox" ){
+		var v1=LinkObjs[i].falsevalue
+		if(LinkObjs[i].childNodes(0).checked) v1=LinkObjs[i].truevalue ;
+		Field(FieldNameToNo(LinkObjs[i].field)).Value=v1induce
+	 */	
+    }else if(LinkObjs[i].controltype == "SKDBMemo" ) {
+		var svalue = LinkObjs[i].value ;
+		if( LinkObjs[i].induce == "是") svalue = RepStr(svalue,"_","");
+		svalue = RepStr(svalue,"\r\n","&#13;&#10;") ;
+		svalue = RepStr(svalue,"\t","&#9;") ;
+		Field(FieldNameToNo(LinkObjs[i].field)).Value = svalue ;
+    }
+    //added by liuxr at 2010-4-27 14:52 给checkboxlist控件增加绑定字段属性后，保存时给数据集赋值
+    else if (LinkObjs[i].tagName.toUpperCase() == "DIV" && LinkObjs[i].controltype == "checkboxlist") {
+        var chkvalues = GetDivCheckBoxValue(LinkObjs[i], "");
+        Field(FieldNameToNo(LinkObjs[i].field)).Value = chkvalues;
+    }
+    //added by liuxr at 2010-4-27 16:08 给radiolist控件增加绑定字段属性后，保存时给数据集赋值
+    else if (LinkObjs[i].tagName.toUpperCase() == "DIV" && LinkObjs[i].controltype == "radiolist") {
+        var radiovalues = GetDivRadioValue(LinkObjs[i], "");
+        Field(FieldNameToNo(LinkObjs[i].field)).Value = radiovalues;
+
+    }
+    else{
+       Field(FieldNameToNo(LinkObjs[i].field)).Value = LinkObjs[i].value;
+    }
+
+    //Field(FieldNameToNo(LinkObjs[i].field)).Value=LinkObjs[i].value
+
+  }
+}
+function cont_fset(r){
+//将grid控件中的数据==>字段集中
+//no use 改为用validID分字段送数
+//r line 
+//alert(r)
+   r=parseInt(r);
+   if(isNaN(r))return;
+   
+   var o=window.document.all.tags("webgrid");
+   for(var ii=0;ii<o.length;ii++){
+      if (o[ii].dataset==eval(uniqueID+".id")){
+         //alert(o[ii].Cols)
+         for(var i=0;i<mFieldCount;i++){
+            //假定字段列表和表格是一一对应的.
+	    //alert(o[ii].tab.rows(r).cells(i+1).innerText)
+	    if(mbTagCol){
+               Field(i).Value=o[ii].tab.rows(r).cells(i+1).innerText;
+            }else{
+               Field(i).Value=o[ii].tab.rows(r).cells(i).innerText;
+            }
+         }
+      }
+   }
+//   alert("o[ii].Cols")
+
+}
+/**
+*将字段集中===>grid控件中的数据
+*@param r r=0表示第一条记录
+**/
+function fset_cont(r) {
+    if (typeof (r) == "undefined") {
+        r = mRecNo;
+    }
+   r=parseInt(r);
+
+   
+   var o=window.document.all.tags("webgrid");
+   for(var ii=0;ii<o.length;ii++){
+      if (o[ii].dataset==eval(uniqueID+".id")){
+		 r=r+o[ii].FixRows;
+         if(isNaN(r)) {
+            r=o[ii].curTD.parentNode.rowIndex;
+            if(r < o[ii].FixRows) r=r+o[ii].FixRows; //2008-06-26 add ,以防写到标题行上.
+            //alert(r)
+         }else if(r>=o[ii].tab.rows.length){
+            break;
+         }
+
+         for(var i=1;i<o[ii].tab.childNodes(0).childNodes.length;i++){
+            //字段和表格的列可能不对应
+            var v1;
+            
+            var ifieldno=o[ii].tab.children[0].children[i].getAttribute("dsfield");
+            
+            ifieldno=parseInt(ifieldno);
+            if(isNaN(ifieldno))ifieldno=0;
+			var sReadOnly=o[ii].tab.children[0].children[i].getAttribute("cz");
+			if (sReadOnly == "<checkbox></checkbox>" || sReadOnly == "<checkbox_readonly></checkbox_readonly>") {
+				v1=Field(ifieldno).Value;
+				o[ii].tab.rows(r).cells(i).innerText="";
+				if (IsTrue(v1)) {
+				    if (sReadOnly == "<checkbox></checkbox>")
+				        o[ii].tab.rows(r).cells(i).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checked.gif)";
+				    else
+				        o[ii].tab.rows(r).cells(i).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checkdisabled.gif)";
+				} else {
+				    if (sReadOnly == "<checkbox></checkbox>")
+				        o[ii].tab.rows(r).cells(i).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)";
+                    else
+                        o[ii].tab.rows(r).cells(i).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheckdisabled.gif)";
+				}    
+				o[ii].tab.rows(r).cells(i).style.backgroundPosition = "center center";	
+			}else {
+				if(sReadOnly == null && Field(ifieldno).Type=="数据项" ){ //只读
+	    			v1=Field(ifieldno).Value;
+	  		
+	    		}else{
+	    			v1=fset_contall(Field(ifieldno));
+	    		}
+	    		if(o[ii].tab.rows(r).cells(i).innerText == o[ii].tab.rows(r).cells(i).innerHTML){ //表示不是超链接
+	    		    o[ii].tab.rows(r).cells(i).innerText = v1;
+
+	    		    //modify by liuxr at 2010-12-6 17:49 TD上输入内容后重新计算行高
+	    		    if (!IsTrue(o[ii].SetRowHeight)) {
+	    		        if (o[ii].tab.rows[r].style.removeAttribute) {
+	    		            o[ii].tab.rows[r].style.removeAttribute("height");
+	    		        }
+	    		        else {
+	    		            o[ii].tab.rows[r].style.removeProperty("height");
+	    		        }
+
+	    		        //alert("curObj" + gridobj.curObj.offsetHeight + " grid:" +gridobj.tgrid.rows [r].offsetHeight);
+	    		        o[ii].tab.rows[r].style.height = o[ii].tab.rows[r].offsetHeight;
+	    		    }
+				    
+				}
+            }
+         }
+      }
+   }
+
+}
+/**
+*由字段名称求字段号.
+*@param name 字段名称
+*@return 字段顺序号
+**/
+function FieldNameToNo(name){
+	var index=0 ;
+	try{
+		index =Field(name).index; 
+	}catch(e){};
+	return index ;
+}
+/**
+*由字段号求字段名称.
+*@param name 字段名称
+*@return 字段顺序号
+**/
+function FieldNoToName(no){
+    return oDataField.childNodes(no).childNodes(0).text;
+}
+/**
+*从mXmlData中装入数据==>数据集中
+*@param iTag 未定义表示正常使用，=1表示刚进入时装入空 =2用于交叉表时装入数据 =3 用清空数据集时，=4 表示装入用自己的程序生成的数据集XML数据用
+**/
+function base_dset(iTag){
+//
+  //alert(mXmlData)
+  oData=new ActiveXObject("Microsoft.XMLDOM");
+  oData.async=false;
+  oData.loadXML (mXmlData);
+  if(oData.documentElement == null){
+	alert(mXmlData);
+	return;
+  }
+  mRecordCount=oData.documentElement.childNodes.length-1;
+  mRecordCountAll=parseInt(oData.documentElement.childNodes(oData.documentElement.childNodes.length-1).childNodes(0).text);
+  //alert(mRecordCount+mXmlData)
+  oDataField=oData.documentElement.childNodes(oData.documentElement.childNodes.length-1).childNodes(1);
+  mFieldCount=oDataField.childNodes.length;
+  
+  //alert(mFieldCount)
+
+  if(mPageSize==-1){
+  		mPageCount=1;
+  }else {
+  		mPageCount=Math.ceil(mRecordCountAll/mPageSize);
+  }
+  initRowSet() ; //初始化字段对象
+
+    //-------------------
+    //处理读出时转换 2008-03-06
+    if(oXmlTrans.documentElement != null){
+        var l=oXmlTrans.documentElement.childNodes.length;
+        for(var k=0;k<l;k++){
+            var ss = unescape(oXmlTrans.documentElement.childNodes(k).childNodes(2).text) ; //oDs.fieldtrans = <field><name></name><trans></trans><rtrans></rtrans></field>
+            //ss=ss.trim();
+            if(ss!=""){
+                ss = RepStr(ss,"$f_value","$fbak_value"); 
+                var colRep = FieldNameToNo(oXmlTrans.documentElement.childNodes(k).childNodes(0).text.toLowerCase());
+                for(var i=0;i<mRecordCount ;i++){
+                    fcpubdata.transRecNo = i;
+                    oData.documentElement.childNodes(i).childNodes(colRep).text =eval(ss);
+                }
+            }
+        }
+    }
+
+    //---------------------
+//后处理
+//    try {
+//        alert(dssub1.Field("product_name").Value + ":");
+//        alert(oData.documentElement.childNodes(0).childNodes(2).text + ":");
+//        CopyToPub(oData.documentElement.xml);
+//    } catch (e) { }     
+
+			
+  initGrid(iTag);    //初始化绑定表格控件
+
+
+  //if(iTag!=1)
+  //	dset_cont()
+
+    
+  //dset_grid()
+  ReSum("只算fset");  //初始化汇总项字段的fset
+  
+
+  
+  if(mRecordCount>0){
+      MoveFirst();
+  }else {
+     //清空绑定的非表格控件
+     dset_fset();
+     fset_cont1();
+  }
+ 
+
+  
+}
+/**
+* 清空fset中的值
+*@date 2008-01-06
+**/
+function fset_setnull() {
+	for (var i=0;i<mFieldCount;i++)	{
+		if(mRecordCount==0) Field(i).Value="";
+	}
+}
+/**
+*将dset==>fset 用于setpos方法中 
+**/
+function dset_fset(curRow) {
+   if(typeof curRow == "undefined" ) curRow=mRecNo;
+	for (var i=0;i<mFieldCount;i++){
+   	  if(Field(i).Type != "汇总项" ){
+	      if(mRecordCount==0){
+	         Field(i).Value="";
+	      }else {
+	         Field(i).Value=oData.documentElement.childNodes(curRow).childNodes(i).text;
+	      }
+      }
+   }
+ 
+   //处理汇总项
+   /*
+   if(isSpace(mformat)==false){
+	   var oXml=new ActiveXObject("Microsoft.XMLDOM")
+	   oXml.async=false
+	   oXml.loadXML (mformat)
+	   var oList=oXml.documentElement.selectNodes("//field[fieldkind='汇总项']")
+	   for(var iList=0;iList<oList.length;iList++){   
+	       var sExp=oList.item(iList).selectSingleNode("defaultvalue").text
+	       //Field(FieldNameToNo(oList.item(iList).childNodes(0).text)).Value=oList.item(iList).childNodes(10).text  //10为totalvalue节点
+	       Field(FieldNameToNo(oList.item(iList).childNodes(0).text)).Value=eval(sExp)
+	   }  
+   }
+	*/
+
+   
+}
+/**
+*重新计算汇总项的值,并给值给oData对象,用于打印前
+*@param sTag = "只算fset" 表示计算汇总项字段的fset值, 为空表示将汇总项字段的fset中的值给数据集中
+*@date 2003-12-15
+**/
+function ReSum(sTag){
+   if(sTag == "只算fset" ){
+	   if(isSpace(mformat)==false){
+		   var oXml=SetDom(mformat);
+		   var oList=oXml.documentElement.selectNodes("//field[fieldkind='汇总项']");
+		   for(var iList=0;iList<oList.length;iList++){   
+		       var sExp=oList.item(iList).selectSingleNode("defaultvalue").text;
+		       //Field(FieldNameToNo(oList.item(iList).childNodes(0).text)).Value=oList.item(iList).childNodes(10).text  //10为totalvalue节点
+			   var v1="";
+			   try {
+			   		v1=eval(sExp);
+			   }catch(E){
+			   		alert("汇总项: "+sExp+" 公式不正确!");
+			   }
+			   Field(oList.item(iList).childNodes(0).text).Value = v1;
+			   //2011-03-16 加上将汇总值向text类控件传递
+			   fset_cont1(2, Field(oList.item(iList).childNodes(0).text).FieldName);
+			   
+		   }  
+	   }
+   }else{	//汇总项字段 fset ==> dset
+	   for (var i=0;i<mFieldCount;i++){
+	   	  if(Field(i).Type == "汇总项" ){
+			   for(var j=0;j<oData.documentElement.childNodes.length-1;j++){
+			   		oData.documentElement.childNodes(j).childNodes(i).text=Field(i).Value;
+			   }
+	      }
+	   }  	
+   }
+}
+
+
+/**
+*初始化grid控件
+*@param iTag =1表示刚进入时装入空,=2表示openxml
+**/
+function initGrid(iTag){
+	var d=new Date();
+	var t = d.getTime();
+
+	var format_empty='否';
+	var o=window.document.all.tags("webgrid");
+	for(var ii=0;ii<o.length;ii++){
+	    if (o[ii].dataset==eval(uniqueID+".id")){
+	    	//alert("a"+o[ii].format+"<cols></cols>")
+	    	//alert(o[ii].format.indexOf("<cols></cols>"))
+	    	if(isSpace(o[ii].format) || new Eapi.Str().trim(o[ii].format)=="<cols></cols>") format_empty="是";
+	    	if(iTag==2 || iTag == 4) format_empty="是";
+			/*分析grid.format串
+			<cols>
+			  <col>
+			     <fname>fstrcustomername</fname>
+			     <cname>客户编码</cname>
+			     <width>16</width>
+			     <dtype>字符</dtype>字符/整数/实数
+			  </col>
+			  ...
+			</cols>
+			*/
+
+			var HeadRows=1;	//标题行数
+			var SumCols=mFieldCount;	//总列数
+			//如果format串为空则由数据集中的字段对象产生format串
+			//alert(iTag)
+			if(format_empty=="是" ){
+				var oXmlFormat = SetDom(o[ii].format);
+				var sX="<cols>";
+				var jj = 0 ;
+				for(var kk=0;kk<oDataField.childNodes.length;kk++){
+					
+					var bool=false;
+					if(iTag==2  ){ //交叉表
+						bool=true;
+					}else if(oDataField.childNodes(kk).childNodes(15).text=="是"){  //visible
+						bool=true;
+					}	
+								
+					if(bool){  
+						sX+="<col><fname>"+Field(kk).FieldName+"</fname><cname>"
+						+Field(kk).DisplayLabel+"</cname><width>"+parseInt(Field(kk).Length)
+						+"</width><dtype>"+Field(kk).DataType+"</dtype>";
+						//if(iTag == 4){
+							//jj为表格的列信息中的列号
+							sX += initFormatCol(oXmlFormat,jj);
+							jj++;
+						//}
+						sX+="</col>";
+					}
+				}
+				sX+="</cols>";
+				// alert(sX)
+				o[ii].format=sX;
+			}
+			
+			var oXml=SetDom(o[ii].format);
+
+  
+			//找到标题行数
+			/*
+			for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+				var sDisplayLabel=oXml.documentElement.childNodes(i).childNodes(1).text
+				var len=sDisplayLabel.split("|").length
+				if(len>HeadRows)HeadRows=len
+			} 
+			*/
+			HeadRows=1;
+			//alert(oXml.documentElement.childNodes.length)
+			SumCols=oXml.documentElement.childNodes.length;
+			//    alert(o[ii].format)
+
+			//2006-01-27 将此两行移到此.考虑多层表头输入时,用OpenEmpty
+			XmlRepGrid(o[ii]) ;
+			HeadRows=o[ii].FixRows;
+		
+			if(iTag==1){
+				var tmprows = parseInt(o[ii].headrows);	
+				if(isNaN(tmprows) == false) o[ii].FixRows = tmprows;
+				
+				o[ii].Rows=1;  //防止webgrid.htc中执行删除行而使界面不显示值.
+				o[ii].Rows=mRecordCount+HeadRows;	//标题行
+				
+				       
+				if(mbTagCol){	//加标记列
+					SumCols++;	//暂没考虑隐藏列
+		            //o[ii].tab.rows(1).cells(0).innerText=">"
+				}
+				o[ii].Cols=SumCols;
+			
+			}
+
+	       		
+	       	if(iTag == 4){  //初始化table内的col元素
+	       		
+	       		
+	       	}	
+	       	//在表格的col元素上加了一个自定义属性dsfield=在数据集字段列表中的顺序号
+	       		InitColField();
+
+			//加上超级链接列
+			GridAddHref(o[ii]);
+			
+			
+			//给单据中的表格的每一行的行高,以防行高变大
+			if(IsTrue(o[ii].SetRowHeight)){
+				var tmpHeight = 21 ;
+				if(o[ii].bodyrowheight == -1 || IsSpace(o[ii].bodyrowheight)){
+					if(isNaN(parseInt(o[ii].tab.style.fontSize)) == false ) tmpHeight = parseInt(o[ii].tab.style.fontSize)+8;
+				}else  {
+					tmpHeight = o[ii].bodyrowheight;
+				}
+				
+				for(var iirow=HeadRows; iirow<o[ii].Rows; iirow++){
+					o[ii].tab.rows(iirow).style.height=tmpHeight ;
+					//o[ii].tab.rows(iirow).cells(1).style.height=tmpHeight ;
+				}
+			}
+			//added by liuxr at 2009-5-14 如果没有设置固定行则初始为固定行高模式
+            else
+            {
+	            window.fc_tmp_grid_obj = o[ii];
+	            window.setTimeout("fc_tmp_grid_obj.ReCalRowHeight()",200);
+            }		
+
+			//alert(o[ii].Cols)
+			//给每列列宽
+//			if(format_empty=="否"){
+				var oXml=new ActiveXObject("Microsoft.XMLDOM");
+				oXml.async=false;
+				oXml.loadXML (o[ii].format);
+	  			//alert(o[ii].format)
+				for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+					var curCol;
+					if(mbTagCol)
+						curCol=i+1;
+					else
+						curCol=i;
+
+					
+					//考虑此列是否显示
+					var svisible="";
+					try{   
+						svisible=oXml.documentElement.childNodes(i).selectSingleNode("visible").text;	
+					}catch (e){}
+					if(svisible=="否"){
+						//o[ii].tab.childNodes(0).childNodes(curCol).style.width=0
+					}else {
+						var blnErr=false;
+						var sWidth="60";
+						try{
+							sWidth=oXml.documentElement.childNodes(i).childNodes(10).text;
+						}catch (e){blnErr=true; }
+						if(blnErr==false){
+						    o[ii].tab.childNodes(0).childNodes(curCol).style.width = sWidth;
+						    
+						}else {
+				   	        var sWidth=oXml.documentElement.childNodes(i).childNodes(2).text;
+					        //缺省列宽为60,每个字符宽为6px
+					        var iWidth=isNaN(parseInt(sWidth))?60:parseInt(sWidth)*6;
+					        //标题行
+					       // var titleinfo=oXml.documentElement.childNodes(i).childNodes(1).text;
+					        //var titlelen=titleinfo.length*14;   //14为一个字的字宽
+					        //当标题行的宽度大于列宽时,取标题行的宽度作列宽
+					        //if(iWidth<titlelen)iWidth=titlelen;
+					        if(iWidth>300) iWidth=300;  //最大列宽为300
+					        if(iWidth<30) iWidth=30;    //最小列宽为30
+					        o[ii].tab.childNodes(0).childNodes(curCol).style.width=iWidth;
+				        }
+					}
+					//给列对齐方式:
+					var blnErr=false;
+					var sAlign="left";
+					try{
+					     sAlign=oXml.documentElement.childNodes(i).childNodes(11).text;
+					}catch (e){ blnErr=true; }
+					if(blnErr==false){
+						o[ii].tab.childNodes(0).childNodes(curCol).align=sAlign;
+					}else {
+			     		var sDtype=oXml.documentElement.childNodes(i).childNodes(3).text;
+			     		if(sDtype=="整数" || sDtype == "实数"){
+			        		o[ii].tab.childNodes(0).childNodes(curCol).align="right";
+			     		}
+			     	}
+			     	//o[ii].tab.rows(0).cells(i).style.borderWidth=1
+	     	
+					if(HeadRows==1){   //单行标题
+				     	//o[ii].tab.rows(0).cells(i).style.borderStyle="outset"
+				     	o[ii].tab.rows(0).cells(i+1).align="center";
+
+						//给标题名称:超级链接在标题正文之后,排序标志在标题正文之前且只有一个字符
+						//标题格式: 标题%%http://www.sina.com.cn;sina
+				     	var sTitle = oXml.documentElement.childNodes(i).childNodes(1).text;
+
+				     	sTitle = new Eapi.Str().repMark(sTitle);
+				
+						var ii1=sTitle.indexOf("%%");
+						var sTitle1="";
+						if(ii1>=0){
+							sTitle1=sTitle.substring(ii1+2,sTitle.length);
+							var arrtmp=sTitle1.split(";");
+							sTitle=sTitle.substring(0,ii1)+' <a href="'+arrtmp[0]+'" target=_blank >'+arrtmp[1]+'</a>';
+							//alert(sTitle)
+						}
+						o[ii].tab.rows(0).cells(curCol).innerHTML=sTitle;
+						//o[ii].tab.rows(0).style.height=18  //标题行高为18
+						//try{
+						//如果行高为1表示在表单工具中没设置行高
+						if(o[ii].tab.rows(0).style.pixelHeight<=1){
+							var iFontSize = parseInt(o[ii].tab.rows(0).style.fontSize);
+							if(isNaN(iFontSize)) iFontSize=12 ; //默认字体为12px
+							o[ii].tab.rows(0).style.height=iFontSize+8 ; //6
+						}
+						//}catch(e){}
+						//o[ii].tab.rows(0).style.backgroundColor="#87cefa"   //表格标题的背景色,
+						o[ii].tab.rows(0).align="center";
+					}else {
+						//给标题名称: no finish
+						/*
+						for(var iHead=0;iHead<HeadRows;iHead++){
+							var sDisplayLabel=oXml.documentElement.childNodes(i).childNodes(1).text
+							var arr=sDisplayLabel.split("|")
+							var iHead1=iHead
+							if(iHead1>arr.length-1)iHead1=arr.length-1
+							o[ii].tab.rows(iHead).cells(curCol).innerText=arr[iHead1]
+		        
+						}*/
+						
+						
+					}
+				} 
+	  
+				SumCols=oXml.documentElement.childNodes.length;
+			//}
+			if(mbTagCol){
+				//added by liuxr at 2009-5-22 如果显示行号则把宽度定义为"20"
+				if (IsTrue(o[ii].blRowNo))
+					o[ii].tab.childNodes(0).childNodes(0).style.width=20;  
+				else
+					o[ii].tab.childNodes(0).childNodes(0).style.width=9;  //标记列给9px宽
+       
+			}
+
+		
+		
+			//附加上ondatachange事件,对应一般控件上的onblur
+			//o[ii].attachEvent("onDataChange", cont_onDataChange);
+			o[ii].HScroll();  //重算滚动条
+			o[ii].VScroll();
+			//alert(SKBILLgrid1.Cols)
+
+
+
+			//if(format_empty=="否"){
+				o[ii].ReadOnly=false;
+				/*    表格每列的属性
+				<col>
+				<fname>spid</fname>
+				<cname>药品内码</cname>
+				<width>11</width>
+				<dtype>字符</dtype>
+				<readonly>否</readonly>
+				<visible>是</visible>
+				<unique>否</unique>
+				<validate>否</validate>
+				<sorted>否</sorted>
+				<required>否</required><
+				/col>
+				
+				*/        
+				//计算列编辑方式
+				var oXml=SetDom(o[ii].format);
+				var scoledit="<root><readonly></readonly>";
+				
+				for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+					var s1 = oXml.documentElement.childNodes(i).childNodes(4).text ;
+					if(s1 == "是"){
+					  scoledit+="<readonly></readonly>";
+					}else if(s1.substring(0,1)=="选"){
+						//modify by liuxr at 2009-7-16 修改如果没有设置下拉框的内容时加上"<code></code>"，否则会出现最后一列不能编辑问题
+					    var stmp = s1.substring(1,s1.length);
+					    if (stmp != "") 
+							scoledit += unescape(stmp);    //"<code><xml>"+RepXml("<tr><td>是</td></tr><tr><td>否</td></tr>")+"</xml><format>"+RepXml("是否活动!")+"</format></code>"
+						else
+							scoledit += "<code></code>";
+					}else if(s1.substring(0,1)=="勾"){
+						scoledit += "<checkbox></checkbox>";
+						//check_one_col(o[ii],i+1);
+						o[ii].SetCheckBoxCol(i + 1);
+		            } else if (s1.substring(0, 1) == "灰") { //只读复选框
+		                scoledit += "<checkbox_readonly></checkbox_readonly>";
+		                o[ii].SetCheckBoxCol(i + 1,true);
+		            } else if (oXml.documentElement.childNodes(i).childNodes(3).text == "字符" || oXml.documentElement.childNodes(i).childNodes(3).text == "自定" || oXml.documentElement.childNodes(i).childNodes(3).text == "日期") {
+					  scoledit+="<str><maxlength>"+oXml.documentElement.childNodes(i).childNodes(2).text+"</maxlength></str>";
+					}else if(oXml.documentElement.childNodes(i).childNodes(3).text=="实数"){
+					  scoledit+="<double><pointnum>2</pointnum></double>";
+					}else if(oXml.documentElement.childNodes(i).childNodes(3).text=="整数"){
+					  scoledit+="<int></int>";
+					}else if (oXml.documentElement.childNodes(i).childNodes(3).text == "文本")
+					{
+						scoledit+="<text></text>";
+					}
+					else if (oXml.documentElement.childNodes(i).childNodes(3).text == "图象")
+					{
+						scoledit+="<image></image>";
+					}
+				}
+				scoledit+="</root>";
+				o[ii].coledit=scoledit;
+				//alert(scoledit)
+				
+				//暂时如此,以后应从对应的数据集的format属性中拼成
+				//o[ii].coledit="<root><readonly></readonly><str><maxlength>20</maxlength></str><double><pointnum>2</pointnum></double><double><pointnum>2</pointnum></double><double><pointnum>2</pointnum></double><readonly></readonly></root>"
+			//}
+			/*if(iTag==1){	
+				//新增状态
+				//if(djNo==""){
+				try {
+					var dsO=eval(o[ii].dataset);
+					dsO.bAdd=false;
+					dsO.bEdit=false;
+					dsO.Append("不置表格的焦点")   ;    
+				}catch (e) {}
+   	   		}else{
+				//因插入行使其变成了add状态
+	   	   		o[ii].EndRowState="edit"	;
+   	   		
+   	   		}*/
+			//调整GRID外的DIV的大小
+			o[ii].ResizeDiv();
+			//调整滚动条的位置
+			//o[ii].initGrid();
+            //added by liuxr at 2009-5-22 重算行号
+            o[ii].ReCalRowNo();
+
+			//为了防止点击表格后重新显示表格的行高,加上下面此行让它先显示好.2004-09-23 add
+			try{o[ii].tab.rows(0).cells(0).focus();}catch(E){}
+
+		}//当前表格结束
+	} //表格end for
+
+			var d=new Date();
+			var t1 = d.getTime();
+			//alert("init grid time:")
+			
+			//alert("init grid:"+(t1-t))
+	//对这一列的TD打勾
+//	function check_one_col(ogrid,curcol) {
+//		var l=ogrid.tab.rows.length;
+//		var istart = ogrid.FixRows;
+//		for(var i=istart;i<l;i++){
+//			var oTd = ogrid.tab.rows(i).cells(curcol);
+//			oTd.style.backgroundRepeat="no-repeat";
+//			if(IsTrue(oTd.innerText)){
+//				oTd.style.backgroundImage = "url("+fcpubdata.path+"/fceform/images/ef_run_grid_checked.gif)"
+//			}else{
+//				oTd.style.backgroundImage = "url("+fcpubdata.path+"/fceform/images/ef_run_grid_uncheck.gif)"
+//			}
+//			oTd.innerText = "";	
+//		}
+//    }
+//	
+	//当有OpenXmlData打开数据集时,数据集的列信息和原来不一样时要先取原有列的列宽信息.
+	function initFormatCol(oXmlFormat,iRow) {
+		var s="";
+		try {  //有可能后面的列中没有这些数据，则为空
+			s += "<readonly>"+oXmlFormat.documentElement.childNodes(iRow).childNodes(4).text+"</readonly>";
+			s += "<visible></visible>"+"<u></u><v></v><s></s><r></r>"+"<columnwidth>"+oXmlFormat.documentElement.childNodes(iRow).childNodes(10).text+"</columnwidth>"+"<align>"+oXmlFormat.documentElement.childNodes(iRow).childNodes(11).text+"</align>";
+		} catch(e) {} ;
+		if(s=="") s = "<readonly>是</readonly>";
+		return s ;
+	}
+}
+
+/**
+*在表格上加上超级链接
+*@date 2004-01-02
+**/
+function GridAddHref(ogrid) {
+	
+	//加上超级链接列
+	var oList = oDataField.selectNodes("//field[link='是']");
+	for(var iList=0;iList<oList.length;iList++){
+		var sFieldName=oList.item(iList).childNodes(0).text;
+		var colno=FieldNameToColNo(ogrid,sFieldName);
+		var totalrows=ogrid.Rows;
+		for(var iirow=ogrid.FixRows; iirow<totalrows; iirow++) {
+			var s1=new Eapi.Str().trim(oList.item(iList).childNodes(14).text);
+			var s2=s1;
+			s1=s1.toUpperCase();
+			//当设置为http或mailto时表示直接以当前显示的内容当链接地址
+			if(s1 == "HTTP"){
+				s2="http://"+new Eapi.Str().trim(ogrid.tab.rows(iirow).cells(colno).innerText);
+			}else if(s1 == "MAILTO"){
+				s2="mailto:"+new Eapi.Str().trim(ogrid.tab.rows(iirow).cells(colno).innerText);
+			}
+			ogrid.tab.rows(iirow).cells(colno).innerHTML="<a target='" +oList.item(iList).childNodes(13).text
+			 +"' href="+s2+" >"+ogrid.tab.rows(iirow).cells(colno).innerText
+			 +"</a>";
+		}
+	}
+
+}
+
+/**
+*从数据集==>GRID ActiveX控件上
+**/
+function dset_grid(){
+
+//
+//可能要改为先到fset上,
+  var o=window.document.all.tags("object");
+  for(var ii=0;ii<o.length;ii++){
+     if(o[ii].type=="grid"){
+       //计算列对应关系,在表格的<col>中加上属性col no
+          if(mbTagCol)
+	       var tmpj=1;
+	  else
+	       var tmpj=0;	
+	  //在initGridTitle中有下面两行
+	  //o[ii].ColumnCount=mFieldCount+1
+	  //o[ii].RowCount=mRecordCount+1
+           for (var i=0;i<oData.documentElement.childNodes.length-1;i++){
+              //o[ii].InsertRow(i,"")
+	      for(j=0;j<o[ii].ColumnCount-1;j++){
+		 if (i<oData.documentElement.childNodes.length-1){
+		    o[ii].Text(i+1,j+tmpj)=oData.documentElement.childNodes(i).childNodes(j).text ;
+		 } else {
+		    o[ii].Text(i+1,j+tmpj)="";
+		 }
+	      }
+	    }
+     }
+  }
+  
+}
+/**
+*初始化表格的列与数据集字段之间的对应关系.
+*在表格的col元素上加了一个自定义属性dsfield=在数据集字段列表中的顺序号
+**/
+function InitColField(){
+	var o=window.document.all.tags("webgrid");
+	for(var ii=0;ii<o.length;ii++){
+		if (o[ii].dataset==eval(uniqueID+".id")){
+			//alert(o[ii].tab.outerHTML)
+			o[ii].hide();
+			//计算列对应关系,在表格的<col>中加上属性col no
+			if(mbTagCol)
+				var tmpj=1;
+			else
+				var tmpj=0;
+	
+			if(isSpace(o[ii].format)==false){
+				var oXml=new ActiveXObject("Microsoft.XMLDOM");
+				oXml.async=false;
+				oXml.loadXML (o[ii].format);
+				var ll =oXml.documentElement.childNodes.length;
+				//var sCol="";
+				//for(var j=0;j<ll;j++){
+				//	sCol += "<col>";
+				//}
+				//if(iTag == 4 ){
+				//	o[ii].tab.children[0].innerHTML = sCol ;
+				//}
+				for(var i=0;i<ll;i++){
+					//表格上的字段名
+					var sFname=oXml.documentElement.childNodes(i).childNodes(0).text.toUpperCase();
+					//var oList=oDataField.selectSingleNode("field[fieldname='"+sFname+"']")
+					//if(oList.length>0){
+					//   o[ii].tab.childNodes(0).childNodes(i).setAttribute("dsfield","")
+					//}
+					for(var j=0;j<oDataField.childNodes.length;j++){
+						var sFname1=oDataField.childNodes(j).childNodes(0).text;
+						if(sFname1.toUpperCase()==sFname){
+							o[ii].tab.children[0].children[tmpj+i].setAttribute("dsfield",j);
+							break;
+						}
+					}
+				}
+			}
+		} // end if
+	} //end for
+
+}
+/**
+*将数据集中的数据==>DBgrid控件上
+**/
+function dset_cont(){
+
+	var o=window.document.all.tags("webgrid");
+	for(var ii=0;ii<o.length;ii++){
+		if (o[ii].dataset==eval(uniqueID+".id")){
+			//alert(o[ii].tab.outerHTML)
+			o[ii].hide();
+			//计算列对应关系,在表格的<col>中加上属性col no
+			if(mbTagCol)
+				var tmpj=1;
+			else
+				var tmpj=0;	  
+	
+			if(isSpace(o[ii].format)==false){
+				var oXml=new ActiveXObject("Microsoft.XMLDOM");
+				oXml.async=false;
+				oXml.loadXML (o[ii].format);
+				for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+					//表格上的字段名
+					var sFname=oXml.documentElement.childNodes(i).childNodes(0).text.toUpperCase();
+					//var oList=oDataField.selectSingleNode("field[fieldname='"+sFname+"']")
+					//if(oList.length>0){
+					//   o[ii].tab.childNodes(0).childNodes(i).setAttribute("dsfield","")
+					//}
+					for(var j=0;j<oDataField.childNodes.length;j++){
+						var sFname1=oDataField.childNodes(j).childNodes(0).text;
+						if(sFname1.toUpperCase()==sFname){
+							o[ii].tab.childNodes(0).childNodes(tmpj+i).setAttribute("dsfield",j);
+							break;
+						}
+					}
+				}
+				//--------给值
+				var tmpii=0;
+				for (var i=0;i<o[ii].tab.rows.length-o[ii].FixRows;i++){
+					tmpii=i+o[ii].FixRows;
+					for(var j=0;j<o[ii].tab.childNodes(0).childNodes.length;j++){
+						var sT=o[ii].tab.childNodes(0).childNodes(j).getAttribute("dsfield");
+						if(sT!=null){
+							sT=parseInt(sT);
+							if (i<oData.documentElement.childNodes.length-1){
+								if(o[ii].tab.rows(tmpii).cells(j).style.backgroundImage == ""){
+									dset_cont_td(o[ii].tab.rows(tmpii).cells(j),fset_contall(Field(sT),oData.documentElement.childNodes(i).childNodes(sT).text ));
+								}else{
+									dset_cont_td(o[ii].tab.rows(tmpii).cells(j),"");
+									var v1 = oData.documentElement.childNodes(i).childNodes(sT).text;
+									if (o[ii].tab.rows(tmpii).cells(j).style.backgroundImage.indexOf("checkdisabled.gif") >= 0) {
+									    if (IsTrue(v1))
+									        o[ii].tab.rows(tmpii).cells(j).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checkdisabled.gif)"
+									    else
+									        o[ii].tab.rows(tmpii).cells(j).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheckdisabled.gif)"
+
+									} else {
+									    if (IsTrue(v1))
+									        o[ii].tab.rows(tmpii).cells(j).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checked.gif)"
+									    else
+									        o[ii].tab.rows(tmpii).cells(j).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)"
+									}
+						            o[ii].tab.rows(tmpii).cells(j).style.backgroundPosition = "center center";
+								}
+							} else {
+								dset_cont_td(o[ii].tab.rows(tmpii).cells(j),"");
+							}
+						}
+					}
+				}
+			}else{
+			//自动感应
+       
+				for (var i=0;i<o[ii].Rows-o[ii].FixRows;i++){
+					tmpii=i+o[ii].FixRows;
+					for(j=0;j<o[ii].Cols-1;j++){
+						if (i<oData.documentElement.childNodes.length-1){
+							if(o[ii].tab.rows(tmpii).cells(j+tmpj).style.backgroundImage == ""){
+								dset_cont_td(o[ii].tab.rows(tmpii).cells(j+tmpj),fset_contall(Field(j),oData.documentElement.childNodes.item(i).childNodes.item(j).text ));
+							}else{
+								dset_cont_td(o[ii].tab.rows(tmpii).cells(j+tmpj).innerText,"");
+								var v1 = oData.documentElement.childNodes(tmpii).childNodes(j).text;
+								if (o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundImage.indexOf("checkdisabled.gif") >= 0) {
+								    if (IsTrue(v1))
+								        o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checkdisabled.gif)"
+								    else
+								        o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheckdisabled.gif)"
+
+								} else {
+
+								    if (IsTrue(v1))
+								        o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_checked.gif)"
+								    else
+								        o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundImage = "url(" + fcpubdata.path + "/fceform/images/ef_run_grid_uncheck.gif)"
+								}
+					            o[ii].tab.rows(tmpii).cells(j + tmpj).style.backgroundPosition = "center center";
+							}
+
+						} else {
+							dset_cont_td(o[ii].tab.rows(tmpii).cells(j+tmpj),"");
+						}
+					}
+				}  //end for
+
+			} //end if
+		} // end if
+	} //end for
+}
+function dset_cont_td(oTd,sValue) {
+    ///防止冲掉超链接 2012-04-13 my add
+    
+    var sInnerHtml = oTd.innerHTML;
+    sInnerHtml = new Eapi.Str().trim(sInnerHtml);
+
+    if (IsSpace(sInnerHtml) == false && sInnerHtml.substring(0, 3) == "<a ") {
+        return;
+    } else {
+        oTd.innerText = sValue;
+    }
+}
+function cont_dset(){
+//将DBgrid控件上的数据==>数据集中
+
+}
+/**
+*初始化字段对象
+**/
+function initRowSet(){
+  var hidecols = 0;
+  oFields=new fnFields();
+//给所有字段的值
+  for(var i=0;i<mFieldCount;i++){
+	if(oDataField.childNodes(i).childNodes.length>15){
+		if(oDataField.childNodes(i).childNodes(15).text == "否") hidecols++ ;
+	}
+    var f=fnField(oDataField.childNodes(i));	//f为可带.FieldName等的字段对象
+    f.index=i	;	//此字段在字段列表中的顺序号
+    f.colno = i-hidecols + 1 ; //此字段在表格控件中的列号;
+    oFields.Add(f);
+  }
+  
+}
+
+//字段对象集
+function fnFields()
+{
+  this.Field=new Array();
+  //this.Fieldx=new Array();
+  this.Add=FS_addfield;
+  this.Clear=function(){this.Count=0;this.Field=new Array();};
+  this.Count=0;
+  this.Auto=true;
+  this.State;
+  //this.DataSet=dataset;
+}
+/**
+*将字段加入到字段数组中
+*@param field 是一个字段对象
+**/
+function FS_addfield(field)
+{
+//field 是一个字段对象
+  //return 
+  var n=field.FieldName;
+  if(n!=""){
+        //alert(n.toUpperCase())
+	this.Field[n]=field;
+	//支持全小写的字段名
+	this.Field[n.toLowerCase()]=field;
+	this.Field[this.Count]=field;
+	//this.Fieldx[this.Count]=field;
+	//field.DataSet=this.DataSet;
+	field.Index=this.Count;
+	this.Count++;
+  }
+}
+/**
+*将节点中的字段信息加到字段对象中.
+<field>
+0	<fieldname> shl</fieldname>
+1	<datatype>实数</datatype>
+2	<displaylabel>数量</displaylabel>
+3	<size>10</size>
+4	<precision>0</precision>
+5	<fieldkind>数据项</fieldkind>
+6	<defaultvalue></defaultvalue>
+7	<displayformat></displayformat>
+8	<isnull>是</isnull>
+9	<iskey>否</iskey> 
+10	<valid>否</valid>
+11	<procvalid>否</procvalid>
+12	<link>否</link>
+13	<target>_blank</target>
+14	<href></href>
+15	<visible>是</visible>
+16	<primarykey>是</primarykey>
+
+17	<fieldvalid>是</fieldvalid>	//字段数据验证
+18	<tag>是</tag>				//供用户自定义
+
+</field>
+
+imgdataset 中总字段数为28 
+
+*@param hidecols 为已隐藏的列数
+**/
+function fnField(oNode)
+{
+  //if(oNode.childNodes(0).text=="GZID"){
+     //去掉挂帐ID字段
+    // return
+  //}
+//对字段进行给值
+  var obj=new Object(); //new Field();
+  obj.FieldName=oNode.childNodes(0).text ;
+  var s1=oNode.childNodes(1).text ;
+
+  obj.DataType=oNode.childNodes(1).text ;
+  
+  if(isSpace(mformat) && fcpubdata.dbStruDict != "" && fcpubdata.dbStruDict != "FC_ENTITY"){
+  	  var ss1="";
+	  ss1=SqlToField("select chnname from "+fcpubdata.dbStruDict+" where fdname='"+obj.FieldName+"'");
+	  
+	  if(isSpace(ss1)==false ){
+			obj.DisplayLabel=ss1;
+	  }else{
+			obj.DisplayLabel=oNode.childNodes(2).text ;
+	  }
+	  
+	  obj.Length=SqlToField("select fdsize from "+fcpubdata.dbStruDict+" where fdname='"+obj.FieldName+"'");
+	  obj.DotLength=SqlToField("select fddec from "+fcpubdata.dbStruDict+" where fdname='"+obj.FieldName+"'");
+  }else{
+	  obj.DisplayLabel=oNode.childNodes(2).text ;
+	  obj.Length=oNode.childNodes(3).text;
+	  obj.DotLength=oNode.childNodes(4).text ; 
+  }
+  if(obj.DisplayLabel=="undefined")
+  	obj.DisplayLabel="";
+  //
+  //alert(obj.DisplayLabel)
+  //
+    obj.DisplayLabel = new Eapi.Str().repMark(obj.DisplayLabel);
+    
+  //alert(oNode.xml)
+  obj.Empty=oNode.childNodes(8).text;  //="是"表示不能为空
+  obj.isKey=oNode.childNodes(9).text;  //="是"表示唯一
+  if(oNode.childNodes.length > 10) obj.valid=oNode.childNodes(10).text;  //="是"表示要执行常规校验
+  obj.Type=oNode.childNodes(5).text;  //="数据项"表示一般字段
+  obj.DefaultValue=oNode.childNodes(6).text ; //默认值
+  obj.DisplayFormat=oNode.childNodes(7).text;  //显示格式带,表示要千分位
+  
+  if(oNode.childNodes.length > 17){
+    obj.primaryKey = oNode.childNodes(16).text ; //是否是主键字段
+    if (obj.primaryKey == "是" && IsSpace(firstKeyFieldName)) firstKeyFieldName = obj.FieldName;
+    
+	obj.fieldvalid = oNode.childNodes(17).text ;	//字段数据验证
+	obj.tag = oNode.childNodes(18).text ;		//用户自定义
+  }
+  return obj;
+
+
+}
+/**
+* 检查并返回字段对象
+*@date 2008-01-07
+**/
+function Field(NameOrIndex){
+    //加上对标志赋值,这样就不用再加改变标志的代码了.
+    if(mbAdd == false) mbEdit = true; // my add 2009-09-19
+    
+	var isName = isNaN(parseInt(NameOrIndex)) ;
+	
+	var objF =  oFields.Field[isName?NameOrIndex.toLowerCase():NameOrIndex];
+	if(typeof objF == "undefined" && NameOrIndex != "" ){
+		var sQuot="";
+		if(isName) sQuot="'"
+		alert("对象:"+this.id+".Field("+sQuot+NameOrIndex+sQuot+") 未定义!");
+		
+	}
+	return objF;
+}
+/**
+* 是否是本数据集的字段名
+*@param fieldName 要检查的字段名
+*@return true/false
+*@date 2008-01-09
+**/
+function isFieldName(fieldName){
+	return typeof oFields.Field[fieldName.toLowerCase()] != "undefined" ;
+}
+/**
+* 取得主键字段的字段顺序号,返回整数
+**/
+function getKeyFieldNo(){
+    for(var i=0;i<oDataField.childNodes.length;i++){
+        if(oDataField.childNodes(i).childNodes(16).text == "是"){
+            return i;
+        }
+    }
+    return -1;
+}
+/**
+*出错则给出提示.
+*@param sMsg 提示信息
+*@param iTag 从dataValid函数中传来的标志号,=3 时表示要alert提示
+**/
+function RunValidError(sMsg,iTag){
+    //如杲出错则给出提示.
+    //if(eval(uniqueID+".id")!=fcpubdata.dsMain)
+    	
+
+	//try {
+		//var objfocus=event.srcElement;
+    //if(objfocus.tagName.toUpperCase()!="WEBGRID"){
+	        if(mRecNo > 0) sMsg="第"+(mRecNo+1)+"行"+sMsg;
+			//在表格中不alert,自动恢复旧值.在其它零散控件中提示,注意因text绑定到onchange事件,
+	        //objfocus取不到上一个控件
+        	if(iTag==3 && mRecordCount>0)	alert(sMsg);
+		//}
+	//}catch(E){}
+    return sMsg;
+}
+
+/*-------------------------------------------
+属性处理
+--------------------------------------------*/
+function fnPutRecNo(vValue){
+  mRecNo=vValue;
+  RecNoID.fireChange();
+}
+
+function fnGetRecNo(){
+	return mRecNo;
+}
+function fnPutPageSize(vValue){
+	mPageSize=parseInt(vValue);
+	if(isNaN(mPageSize))mPageSize=0;
+	PageSizeID.fireChange();
+}
+
+function fnGetPageSize(){
+	return mPageSize;
+}
+function fnGetPageCount(){
+        return mPageCount;
+}
+function fnPutPageNo(vValue){
+	mPageNo=vValue;
+	PageNoID.fireChange();
+}
+
+function fnGetPageNo(){
+	return mPageNo;
+}
+function fnPutbAdd(vValue){
+	mbAdd=vValue;
+	bAddID.fireChange();
+}
+
+function fnGetbAdd(){
+	return mbAdd;
+}
+function fnPutopensql(vValue){
+	mopensql=vValue;
+	opensqlID.fireChange();
+}
+
+function fnGetopensql(){
+	return mopensql;
+}
+function fnPutformat(vValue){
+	mformat=vValue;
+	formatID.fireChange();
+}
+
+function fnGetformat(){
+	return mformat;
+}
+function fnPutEmpty(vValue){
+	mEmpty=vValue;
+	EmptyID.fireChange();
+}
+
+function fnGetEmpty(){
+	return mEmpty;
+}
+function fnGetRecordCountAll(){
+	return mRecordCountAll;
+}
+
+function fnGetFieldCount(){
+	return mFieldCount;
+}
+function fnPutbEdit(vValue){
+	mbEdit=vValue;
+	bEditID.fireChange();
+}
+function fnGetbEdit(){
+	return mbEdit;
+}
+function fnPutFields(vValue){
+	//oFields=vValue;
+	//FieldsID.fireChange();
+}
+
+function fnGetFields(){
+	return oFields;
+}
+function fnGetxml(){
+	return oData.documentElement.xml;
+}
+function fnPutxml(vValue){
+    mXmlData = vValue;
+    xmlID.fireChange();
+}
+function fnGetoDom(){
+	return oData;
+}
+function fnGetoDataField(){
+	return oDataField;
+}
+
+function fnGetRecordCount()
+{
+	return oData.documentElement.childNodes.length-1;
+}
+
+var mvisible=false;
+function fnGetvisible(){
+	return mvisible;
+}
+function fnPutvisible(vValue){
+	mvisible=isTrue(vValue);
+	fnInit();
+	visibleID.fireChange();
+}
+var mHideField="";
+function fnGetHideField(){
+	return mHideField;
+}
+function fnPutHideField(vValue){
+	mHideField=vValue;
+	HideFieldID.fireChange();
+}
+function fnGetleft(){
+	return mleft;
+}
+function fnPutleft(vValue){
+	mleft=vValue;
+	leftID.fireChange();
+	fnInit();
+}
+function fnGettop()
+{
+	return mtop;
+}
+function fnPuttop(vValue)
+{
+	mtop=vValue;
+	topID.fireChange();
+	fnInit();
+}
+function fnGetheight()
+{
+	return mheight;
+}
+function fnPutheight(vValue)
+{
+	mheight=vValue;
+	heightID.fireChange();
+	fnInit();
+}
+function fnGetwidth()
+{
+	return mwidth;
+}
+function fnPutwidth(vValue)
+{
+	mwidth=vValue;
+	widthID.fireChange();
+	fnInit();
+}
+function fnGetRecordData(){
+	var ss = oData.documentElement.xml ;
+  //加一个数据集的记录数据的属性
+  var mRecordData = "";
+  var istart = ss.indexOf("<root>");
+  var iend = ss.lastIndexOf("<set><pages>");
+  if(istart >= 0 && iend > istart){
+	mRecordData = ss.substring(istart+6,iend);
+  }
+	return mRecordData ;
+  
+
+}
+/*-------------------------------------------
+属性处理 end
+--------------------------------------------*/
+/*-------------------------------------------
+通用函数 begin
+--------------------------------------------*/
+
+function dataset_fields1(sSql,PageNo,PageSize,xmlField,callback,context) {
+//执行比较后再执行此来进行查询记录,但注意结果没有加上字段串
+//sField=带;分隔的字段名
+//xmlField=<field><name>field1</name><sql>读出时转换SQL,此节点可为空</sql></field>...
+//替代非法XML字符
+
+	var sDsn="";
+	if(IsSpace(datasourceName) ==false)    
+	    sDsn = "&datasourceName="+datasourceName;
+	    
+	//表示在SQL语句中处理好分页取数, 2011-11-16 加.
+	
+	/*if(IsTrue(isSqlActionPage) && PageSize != -1){
+		if(fcpubdata.databaseTypeName == "oracle"){
+		sqlStr.append("select  * from ( select row_.*, rownum rownum_ from (");
+sqlStr.append(sql);
+sqlStr.append(" ) row_ where rownum < = ").append(Scroller.getRecordTo(scroller));
+sqlStr.append(" ) where rownum_ > ").append(Scroller.getRecordStart(scroller) - 1);
+	
+		
+			sSql = Trim(sSql);
+			if(sSql.toUpperCase().indexOf("SELECT ") == 0){
+				sSql = "select  * from ( select row_.*, rownum rownum_ from (" +sSql+" ) row_ where rownum < = " + (PageNo*PageSize)+" ) where rownum_ > "+((PageNo-1)*PageSize)
+			}
+
+		}
+		PageNo=1;
+		PageSize=-1;
+	}*/
+	    
+	//--------------------------------------------
+	var sXml="<sql>"+RepXml(sSql)+"</sql>"+"<pageNo>"+PageNo+"</pageNo>"+"<pageSize>"+PageSize+"</pageSize>"+"<fields>"+xmlField+"</fields>";
+	
+	if(IsTrue(isSqlActionPage)) sXml += "<isSqlActionPage>1</isSqlActionPage>" ;
+	
+	var retX=new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=dataset_fields1"+sDsn,sXml,callback,context);
+	return retX;
+}
+
+/**
+*判是否是整数/实数
+*@param sNum 被判断的字符串
+*@param sType ="整数" 表示判断是否为整数,="实数" 表示判断是否为实数
+*@return true表示是数字,为空时也返回true
+*@date 2003-05-19
+**/
+/*
+function isNum(sNum,sType){
+	sNum=new Eapi.Str().trim(sNum+"");
+	if(sType=="整数")
+		var s1=parseInt(sNum);
+	else
+		var s1=parseFloat(sNum);
+	if(isNaN(s1))return false;
+	if(sNum.length>0 ){
+		var s2=sNum.substring(sNum.length-1,sNum.length);
+		if(isNaN(parseInt(s2))) return false;
+		return true;
+	} else { return true; }
+}*/
+
+/**
+用XML数据替代表格
+*@param sBigXml 为交叉表时生成的大的XML,为空为正常情况
+*@date 2003-12-23
+**/
+function XmlRepGrid(ogrid,sBigXml){
+	if(typeof ogrid.tab == "undefined" ){
+		ogrid.Init();
+	}
+	var sTab=ogrid.tab.outerHTML;
+	//alert(sTab)
+	var sTab1="";
+	var sTab2="";
+
+	var sColgroup="<colgroup>";	//列信息串
+	var sTD="";
+
+
+
+	if(isSpace(sBigXml)){
+		var oXml=SetDom("<root><td></td></root>");
+		
+		var oData1=oData.documentElement.cloneNode(true);
+		oData1.removeChild(oData1.childNodes(oData1.childNodes.length-1));
+		//处理不显示的列--------------------------------
+		/*var oXmlField=new ActiveXObject("Microsoft.XMLDOM")
+		oXmlField.async=false
+		oXmlField.loadXML (ogrid.format)
+		*/
+		//alert(ogrid.format)
+		//alert(oDataField.xml)
+		/*var oList=oDataField.selectNodes("field[displayformat != '']");
+		var arrDisplayFormat =new Array();
+		//计算有显示格式列的对应关系
+		for(var j=0;j<oList.length;j++){
+			for(var jj=0;jj<oDataField.childNodes.length;jj++){
+				if(oList.item(j).childNodes(0).text == oDataField.childNodes(jj).childNodes(0).text){
+					arrDisplayFormat[j]=jj ;
+					break;
+				}
+			}
+		}*/
+		
+		var oList=oDataField.selectNodes("field[visible='否']");
+		var arrList =new Array();
+		//计算不显示列的对应关系
+		for(var j=0;j<oList.length;j++){
+			for(var jj=0;jj<oDataField.childNodes.length;jj++){
+				if(oList.item(j).childNodes(0).text == oDataField.childNodes(jj).childNodes(0).text){
+					arrList[j]=jj +1;
+					break;
+				}
+			}
+		}
+		//----------------------------------------------
+		//alert(oList.length)
+		
+		for(var i=0;i<oData1.childNodes.length ;i++){
+		    // 让设置显示格式适用于grid显示 2008-03-06 改由 dset_cont() 方法来做此工作.
+		    //for(var k=0;k<arrDisplayFormat.length;k++){
+            //    oData1.childNodes(i).childNodes(k).text = fset_contall(oFields.Field(k),oData1.childNodes(i).childNodes(k).text);
+            //}
+		    //插入第一列
+			var oClone=oData1.childNodes(i).childNodes(0).cloneNode(false);
+			oClone.text="";
+			oData1.childNodes(i).insertBefore(oClone,oData1.childNodes(i).childNodes(0));
+		
+			//删除不显示的列-----------------------
+			var l1=arrList.length-1;
+			for(var j=l1;j>=0;j--){
+				//如没有哪么多列则不删
+				if(oData1.childNodes(i).childNodes.length-1>=arrList[j]) {
+					oData1.childNodes(i).removeChild(oData1.childNodes(i).childNodes(arrList[j]));
+				}
+			}
+			//-------------------------------------
+		}
+		var sumcols=mFieldCount+1-oList.length;
+		for(var i=0;i<sumcols;i++){
+			sColgroup+="<col>";
+			sTD+="<TD></TD>";
+		}
+	}else {  //大数据量的交叉表
+		var oXml=SetDom(sBigXml);
+
+		var sumcols=oXml.documentElement.childNodes(0).childNodes.length;
+		sColgroup+="<col style='width:80;'  >";
+		sTD+="<TD></TD>";
+		for(var i=1;i<sumcols;i++){
+			sColgroup+="<col style='width:80;' align=right >";
+			sTD+="<TD align=center >"+oXml.documentElement.childNodes(oXml.documentElement.childNodes.length-1).childNodes(1).childNodes(i).childNodes(2).text+"</TD>";
+		}
+		oXml.documentElement.removeChild(oXml.documentElement.childNodes(oXml.documentElement.childNodes.length-1));
+	}
+
+	//ogrid.Cols=mFieldCount+1
+
+	sColgroup+="</colgroup>";
+	
+	//加<col>
+	var iPos=sTab.indexOf(">");
+	if(iPos>0){
+		sTab1=sTab.substring(0,iPos+1);   //保存table这一节
+		
+		//sTab=sTab.substring(0,iPos+1)+sColgroup+sTab.substring(iPos+1,sTab.length)
+	}
+
+	if(isSpace(ogrid.multihead)) {
+		//加TD
+		var iPos1=sTab.indexOf("<TR");
+		var iPos=sTab.indexOf(">",iPos1);
+		if(iPos>0){
+			sTab2=sTab.substring(iPos1,iPos+1); //保存TR这一节
+		}
+	
+		sTab=sTab1+sColgroup+sTab2+sTD+"</tr> ";
+	}else{
+		ogrid.FixRows=parseInt(ogrid.headrows);
+		sTab=sTab1+sColgroup+ogrid.multihead;
+	}
+	//alert(ogrid.headrows+" "+sTab)
+	if(isSpace(sBigXml)){
+		var s1=RemoveRoot(oData1.xml);
+	}else{
+		var s1=RemoveRoot(oXml.documentElement.xml);
+	}
+	//alert(s1)
+	
+	//ogrid.tab.outerHTML=s3+s1+"</table>"
+
+
+	//CopyToPub(s1 + oData.documentElement.xml);
+	ogrid.LoadXml(sTab+s1+"</table>");
+	//t.outerHTML=(sTab+s1+"</table>")
+
+}
+
+
+/*-------------------------------------------
+通用函数 end
+--------------------------------------------*/
+
+///保存前转换 
+///fieldNo为字段顺序号,recNo为记录号,如为-1 则表示为当前记录,用于主表时,bRead=true 表示读取时转换,否则是保存前转换
+function fieldTrans(fieldNo,recNo,bRead) {
+	
+	var oDs = eval(uniqueID);
+	var fieldvalue="";
+	if(recNo == -1)
+	    fieldvalue = oDs.Field(fieldNo).Value;
+	else
+	    fieldvalue = oDs.oDom.documentElement.childNodes(recNo).childNodes(fieldNo).text ;
+	var colno =1;
+	if(bRead) colno=2;    
+	if(oXmlTrans.documentElement == null) return fieldvalue;
+	var l = oXmlTrans.documentElement.childNodes.length;
+	
+	for(var i=0;i<l;i++){
+		if(oXmlTrans.documentElement.childNodes(i).childNodes(0).text == oDs.Field(fieldNo).FieldName){
+			var ss = unescape(oXmlTrans.documentElement.childNodes(i).childNodes(colno).text) ;
+			//ss = ss.trim();
+			if(ss=="") return fieldvalue;
+            if(recNo != -1){
+                fcpubdata.transRecNo = recNo;
+                ss = RepStr(ss,"$f_value","$fbak_value"); 
+            }
+			return eval(ss);
+		}
+	}
+	return fieldvalue ;
+}
+
+
+function Refresh() {
+   alert(oData.documentElement.xml);
+   //alert(eval(uniqueID+".id"))
+}
+function fnInit0() {
+	//initLinkObj() //初始化绑定控件
+   fnInit();
+}
+function fnInit() { oXmlTrans=SetDom(eval(uniqueID).fieldtrans);}
+function setFieldTrans(oXml) {
+    //修改字段转换的xml对象， 2013-04-03
+    oXmlTrans = oXml;
+}
+function getAttribute(attrName) {
+    var sId = eval(uniqueID).id;
+    var retValue = null;
+    try {
+        retValue = eval(sId + "." + attrName);
+    } catch (e) { }
+    //if (typeof retValue == "undefined" || retValue == null) retValue = $id(sId).getAttribute(attrName);
+    return retValue;
+}
+</SCRIPT>

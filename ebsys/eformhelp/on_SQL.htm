@@ -1,0 +1,28 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>SQL语句</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br> 
+&nbsp;<b><font style='font-size:13px;'>SQL语句</font></b></td>
+</tr>
+</table>
+
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;<b><FONT style="font-size:12px;">SQL语句</FONT></b><br>
+<table><tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">当打开数据集时,会运行此处设置的SQL语句,用此SQL语句的执行结果初始化数据集。
+在将此处设置的SQL语句送到后台数据库中去运行之前，会进行一些字符串替换。当此处设置为存储过程的运行串时，也会先进行这样的替换。替换的过程是：<br>
+1 将 :{  和 }: 之间的javascript的表达式计算出值来。<br>
+2 将 :key_value 用 "'"+fcpubdata.keyValue+"'" 来替代。其中fcpubdata.keyValue为全局变量，它常为主键字段的值。<br>
+3 将 oDs.field 格式，用 "'"+oDs.Field(field).Value+"'"  来替代,表示计算出oDs数据集的field字段的当前记录值。<br>
+此处SQL语句是保存在数据集的opensql属性中.在表单打开时(即window.onload事件),会执行数据集的Open()方法,如果此处的SQL语句为空,也可以自己用ds.Open(sql)命令来打开数据集.
+</FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

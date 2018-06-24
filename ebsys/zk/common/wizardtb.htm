@@ -1,0 +1,534 @@
+<html >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<script src="../../fceform/js/MicrosoftAjax.js"></script>
+	<script src="../../fceform/js/fcpub.js"></script>
+	<script src="../../fceform/js/design.js"></script>
+	<script src="../../fceform/js/fcselfuse.js"></script>
+	<script src="../../fceform/js/fcbasecont.js"></script>
+	
+	<script type="text/javascript">
+	    var WizardConfig = {
+	        djsn : null,
+	        type : null,
+	        toolbar : null,
+	        userToolbar : null,//主表自定义工具栏
+	        userListToolbar : null, //list表单自定义工具栏
+	        isfile : null,
+	        inputStyle : null,
+	        inputCols : null,
+	        isHaveSub : null,
+	        gridTop : null,
+	        mainTableName : null,
+	        mainKeyField : null,
+	        mainKeyFieldDataType : null, //主键字段的数据类型: 字符/整数
+	        mainFieldsHtml1 : null,
+	        mainFieldsHtml2 : null,
+	        mainFields : null,
+	        listFields : null,
+	        listFieldsHtml1 : null,
+	        listFieldsHtml2 : null,
+	        listToolbar : null, //list表单的工具栏
+	        subTableName : null,
+	        subKeyField : null,
+	        subFieldsHtml1 : null,
+	        subFieldsHtml2 : null,
+	        subFields : null,
+	        editCss : null,
+	        isHaveList : null,  //是否自动加列表式表单
+	        billName    : null, //列表式表单名称
+	        left : null, //左边距
+	        top : null,
+	        bigWidth : null,//最大宽度
+	        labelHeight : null,
+	        adjust : null,//为调节值
+	        rightbottom: null, //为右边的编辑框的left
+	        userType: null, //用户自用的表单分类
+	        newDjsn: null, //自动产生的djsn
+	        newDjsnList: null, //自动产生的列表式表单的djsn
+	        cssFile : null //界面上未用
+	    };
+	   
+	    var divTop="";
+	    function cmdOk_onclick() {
+	        WizardConfig.newDjsn = getMaxNo("XXX"); //djsn自动生成
+            parent.mainform.topic.objNav.saveConfig();
+           
+            if(WizardConfig.isHaveList == "是" && IsSpace(WizardConfig.billName) == false){
+                saveListBill();
+            }
+            
+            var sb = new Sys.StringBuilder();
+            sb.append('<div id="SKbillsheet"  oncontrolselect="controlselect()" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" ');
+            sb.append('dj_sn="' + WizardConfig.newDjsn + '" ');
+            sb.append('caption="'+WizardConfig.djsn+'" ');
+            sb.append('type="'+WizardConfig.type+'" ');
+            sb.append("userToolbar='" + WizardConfig.userToolbar + "'");
+            sb.append('toolbar="' + WizardConfig.toolbar + '" ');
+            var formwidth = ToInt(WizardConfig.bigWidth) + ToInt(100);
+            sb.append('poswidth="' + formwidth + '" ');
+            sb.append('posheight="' + formwidth + '" ');
+            // if(WizardConfig.billName != null){
+            sb.append('center = "居中"');
+            sb.append('isfile = "否"');
+            sb.append('window="有模式窗口"'); 
+             
+           // }else{
+           // sb.append('window="当前窗口"');
+           // }
+            sb.append('isfile="'+WizardConfig.isfile+'" ');
+            //sb.append('keyfield="'+WizardConfig.mainKeyField+'" ');
+            //sb.append('entertype="修改" codeheader="BBB" ');
+            sb.append('userType="' + WizardConfig.userType + '" ');
+            
+            sb.append('>');
+            sb.append(getMainDsDesignStr());
+            var tmpLeft = 10,tmpTop=5;
+            if(WizardConfig.inputStyle == 2 || WizardConfig.inputStyle == 7 ){ //grid控件输入
+                sb.append(getWizardGridStr(true,tmpLeft,tmpTop,"POSITION: absolute;"));
+            }
+            if(WizardConfig.inputStyle > 2  && WizardConfig.inputStyle < 7) {
+                sb.append(getWizardContStr());
+            }
+               
+            if(WizardConfig.inputStyle == 8){
+                var haveSub='';
+                if(WizardConfig.isHaveSub=='是'){
+                    haveSub='<DIV onmove=move() oncontrolselect=controlselect() id=div24 onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() onresize=resize() style="BORDER-RIGHT: #c9c9c9 1px solid; BORDER-TOP: #c9c9c9 1px solid; OVERFLOW-Y: hidden; LEFT: -1px; OVERFLOW-X: hidden; OVERFLOW: auto; BORDER-LEFT: #c9c9c9 1px solid; WIDTH: $$width; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: $$divTop; HEIGHT: 32px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() NotBg="否" controltype="div"><DIV title=分割标题 style="BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 20px; FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#ffffff endColorStr=#d1d1d1, gradientType=0); WIDTH: $$width; LINE-HEIGHT: 20px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 33px; TEXT-ALIGN: center"></DIV></DIV>';
+                }
+                var moduleStr='<TABLE width="100%"><TBODY><TR vAlign=center><TD align=middle><DIV onmove=move() oncontrolselect=controlselect() id=div28 onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() onresize=resize() style="BORDER-RIGHT: #c9c9c9 1px solid; BORDER-TOP: #c9c9c9 1px solid; OVERFLOW-Y: hidden; LEFT: 0px; OVERFLOW-X: hidden; OVERFLOW: auto; BORDER-LEFT: #c9c9c9 1px solid; WIDTH: $$width; BORDER-BOTTOM: #c9c9c9 1px solid; POSITION: static; TOP: 0px; HEIGHT: $$divHeight; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() controltype="div" NotBg="否"><DIV onmove=move() oncontrolselect=controlselect() id=div2 onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() onresize=resize() style="BORDER-RIGHT: #c9c9c9 1px solid; BORDER-TOP: #c9c9c9 1px solid; LEFT: -1px; OVERFLOW: auto; BORDER-LEFT: #c9c9c9 1px solid; WIDTH:$$width; BORDER-BOTTOM: #c9c9c9 1px solid; POSITION: absolute; TOP: -1px; HEIGHT: 53px; BACKGROUND-COLOR: #eeeeee" onmovestart=moveStart() controltype="div" NotBg="否"></DIV><DIV onmove=move() oncontrolselect=controlselect() id=div22 onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() onresize=resize() style="BORDER-RIGHT: #c9c9c9 1px solid; BORDER-TOP: #c9c9c9 1px solid; OVERFLOW-Y: hidden; LEFT: -1px; OVERFLOW-X: hidden; OVERFLOW: auto; BORDER-LEFT: #c9c9c9 1px solid; WIDTH: $$width; BORDER-BOTTOM: 0px; POSITION: absolute; TOP: 91px; HEIGHT: 21px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() controltype="div" NotBg="否"><DIV onmove=move() title=分割标题 style="BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 20px; FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#ffffff endColorStr=#d1d1d1, gradientType=0); WIDTH: $$width; LINE-HEIGHT: 20px; BORDER-BOTTOM: #cccccc 1px solid; HEIGHT: 26px; TEXT-ALIGN: center"> </DIV></DIV> $haveSub  $$getWizardContStr $$getWizardGridStr <IMG id=img1 onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() style="LEFT: 0px; POSITION: absolute; TOP: 0px" onmovestart=moveStart() src="../../fceform/images/logo.gif" controltype="img" srcsk="../../fceform/images/logo.gif" cover="9"></DIV></TD></TR></TBODY></TABLE>';   
+                moduleStr=RepStr(moduleStr,'$haveSub',haveSub);
+                var getWizardContStr1=getWizardContStr().toString();
+                moduleStr=RepStr(moduleStr,'$$width',WizardConfig.bigWidth);
+                moduleStr = RepStr(moduleStr, '$$getWizardContStr', getWizardContStr1);
+                moduleStr = RepStr(moduleStr, '$$divTop', divTop); //divTop子表上边div上边线的高度
+                if (WizardConfig.isHaveSub != '是') {
+                    moduleStr = RepStr(moduleStr, '$$divHeight', divTop);
+                }
+                if (WizardConfig.isHaveSub == '是' && WizardConfig.inputStyle == 8) {
+                    sb.append(getSubDsDesignStr());
+                    divTop += 32;
+                    var getWizardGridStr1 = getWizardGridStr(false, 0, divTop, "POSITION: absolute;").toString();
+                    moduleStr = RepStr(moduleStr, '$$getWizardGridStr', getWizardGridStr1);
+                    divTop += 260; //最外边div的高
+                    moduleStr = RepStr(moduleStr, '$$divHeight', divTop);
+                }
+               
+                sb.append(moduleStr);  
+            }
+            if(WizardConfig.isHaveSub=="是" && WizardConfig.inputStyle != 8){
+                sb.append(getSubDsDesignStr()); 
+                if(IsSpace(WizardConfig.gridTop)){
+                    sb.append(getWizardGridStr(false,tmpLeft,tmpTop,""));
+                }else{
+                    tmpTop = WizardConfig.gridTop;
+                    sb.append(getWizardGridStr(false,tmpLeft,tmpTop,"POSITION: absolute;"));
+                }
+            }
+            sb.append('</div>');
+            
+            
+            //进入layout.htm页面
+            var oLayout = parent.designform.rightmain ;
+            oLayout.curdjid = 0; 
+            oLayout.fcpubdata.area.outerHTML = sb.toString();
+            oLayout.fcpubdata.area = oLayout.$id("SKbillsheet");
+            oLayout.fcpubdata.area.contentEditable=true;
+            oLayout.DesignDjSave("是"); 
+            
+            //导航到此表单的设计界面
+            var sIsFile="";
+            if(WizardConfig.isfile=="是") sIsFile = "&isfile=yes";
+            var djName = WizardConfig.newDjsn; // WizardConfig.djsn;
+            if (WizardConfig.isHaveList == "是" && IsSpace(WizardConfig.billName) == false) djName = WizardConfig.newDjsnList
+            parent.location.replace("../../fceform/design/design.htm?djsn="+djName+sIsFile+"&djtype="+WizardConfig.type);
+        }
+        function saveListBill(){
+            ///自动保存列表式表单
+            WizardConfig.newDjsnList = getMaxNo("XXX"); //djsn自动生成
+            var sb = new Sys.StringBuilder();
+            sb.append('<div id="SKbillsheet"  oncontrolselect="controlselect()" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" ');
+            sb.append('dj_sn="' + WizardConfig.newDjsnList + '" ');
+            sb.append('caption="'+WizardConfig.billName+'" ');
+            sb.append('type="'+WizardConfig.type+'" ');
+            sb.append("userToolbar='" + WizardConfig.userListToolbar + "'");
+            sb.append('toolbar="'+WizardConfig.listToolbar+'" ');
+            sb.append('isfile="'+WizardConfig.isfile+'" ');
+            //加上指定卡片式表单的事件代码.
+            sb.append('AfterScroll= "" ');
+            var sEventOpen = "fcpubdata.cardWinUrl='" + WizardConfig.newDjsn + "'";
+            sb.append('BLONopen="'+sEventOpen+'" ');
+            sb.append('>'); 
+            sb.append(getMainDsDesignStr("只读","列表"));
+            var tmpLeft = 6,tmpTop=5;
+            sb.append(getWizardGridStr(true,tmpLeft,tmpTop,"POSITION: absolute;"));
+            sb.append('</div>');
+            //进入layout.htm页面
+            var oLayout = parent.designform.rightmain ;
+            oLayout.fcpubdata.area.outerHTML = sb.toString();
+            oLayout.fcpubdata.area = oLayout.$id("SKbillsheet");
+            oLayout.fcpubdata.area.contentEditable=true;
+            oLayout.DesignDjSave("不提示"); 
+        }
+        /**
+        *取得数据集的设计串,用于新建表单向导中 
+        *@date 2008-02-02
+        **/
+        function getMainDsDesignStr(sReadOnly,tableType){
+            var oConfig = WizardConfig ;
+	        var sb = new Sys.StringBuilder();
+	        sb.append( '<IMG id=DsMain onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() ');
+	        sb.append('style="LEFT: 489px; WIDTH: 39px; POSITION: absolute; TOP: 10px; HEIGHT: 47px" onmovestart=moveStart() src="../../fceform/images/ef_designer_dataset.gif" opensortno="1"  submitno="1"  controltype="dataset"   ');
+	        var fields="";//列表表单字段或主表表单字段
+	        if(tableType != "列表"){
+				fields=oConfig.mainFields;
+	        }else{	
+				fields=oConfig.listFields;
+	        }
+	         //需要取到tablename idtype idparam属性
+	        doIdProp(sb,oConfig.mainTableName,oConfig.mainKeyField);
+	        var sQuot = "'"; //需要根据主键的数据类型判断.
+           // var sql='select '+oConfig.mainFields+' from '+oConfig.mainTableName+'';
+            if(oConfig.mainKeyFieldDataType == "整数") sQuot = "";
+            var sql1 = 'select ' + switchDateField(oConfig.mainTableName, fields) + ' from ' + oConfig.mainTableName + '';
+            if(oConfig.inputStyle == 2 || sReadOnly == "只读"){
+                sb.append('opensql="'+ sql1+'"');
+            }else{
+            sb.append('opensql="' + sql1 + ' where ' + oConfig.mainKeyField + ' = ' + sQuot + ':{getListFormIdValue(DsMain ,\''+ oConfig.mainKeyField +'\''+')}:' + sQuot + '"');    
+            }
+            sb.append('formatxml="<root>' );
+            if(typeof(sReadOnly) == "undefined") sReadOnly = oConfig.inputStyle == 7 ? "只读":"是";
+            sb.append(metadata_dataset(oConfig.mainTableName,fields,sReadOnly));
+            sb.append('</root>" ');
+            if(sReadOnly != "只读")  sb.append('submittype="2" ');
+            if(oConfig.inputStyle != 2 && oConfig.inputStyle != 7 && sReadOnly != "只读"){
+                sb.append('BeforeOpen="DsMain.PageSize=1;" ');
+                if (oConfig.isHaveSub == "是") {
+                    var subStr = "DsSub.Open('select " + switchDateField(oConfig.subTableName, oConfig.subFields) + " from " + oConfig.subTableName + " where " + oConfig.subTableName + "." + oConfig.mainKeyField + "=:key_value ')";
+                   sb.append('AfterScroll="fcpubdata.keyValue=DsMain.Field(\''+oConfig.mainKeyField+'\').Value;'+subStr+'" ');
+                } 
+                //sb.append('" '); //数据集滚动之后事件的结束
+            }
+            sb.append('>');
+            return sb;
+        }
+        /**
+        *对选中字段的日期字段进行转换
+        *@date 2009-11-12
+        **/
+        function switchDateField(selectTable, selectFields) {
+            var ret = "";
+            var ret1 = "";
+            var RS=",";
+            var arrF = selectFields.split(",");
+            if (fcpubdata.dbStruDict == "FC_ENTITY") {
+                for (var i = 0; i < arrF.length; i++) {
+                    var fieldName = new Eapi.Str().trim(arrF[i]);
+                    if((i+1) == arrF.length) RS="";
+                    var sqlRet = SqlToField("select type from fc_entitysub where tbname='" + selectTable + "' and fdname='" + fieldName + "'");
+                    sqlRet = new Eapi.Str().trim(sqlRet);
+                    if (sqlRet == "日期" || sqlRet == "日期时间") {
+                        if (fcpubdata.databaseTypeName == "sqlserver") {
+                            if (sqlRet == "日期") {
+                                ret1 = ' CONVERT(varchar(10),' + arrF[i] + ', 25) as ' + arrF[i] + RS;
+                            } else {
+                                ret1 = ' CONVERT(varchar(30),' + arrF[i] + ', 20) as ' + arrF[i] + RS;
+                            }
+                        } else if (fcpubdata.databaseTypeName == "oracle") {
+                            if (sqlRet == "日期") {
+                                ret1 = " to_char(" + arrF[i] + ",'yyyy-mm-dd') as " + arrF[i] + RS;
+                            } else {
+                                ret1 = " to_char(" + arrF[i] + ",'yyyy-mm-dd hh24:mi:ss') as " + arrF[i] + RS;
+                            }
+
+                        } else {
+                            ret1 = arrF[i] + RS;
+                        }
+                    } else {
+                        ret1 = arrF[i] + RS;
+                    }
+                    ret += ret1;
+                }
+            }
+            return ret       
+        }
+        function doIdProp(sb,tableName,idFieldName){
+        //需要取到tablename idtype idparam属性
+        sb.append('savetable='+tableName+' ');
+        if (fcpubdata.dbStruDict != "FC_ENTITY") return;
+        //if (tableName == "") return;
+        sb.append('queryTableName='+tableName+' ');
+        var sql = "select fdtype,detailxml from fc_entitysub where tbname='" + tableName + "' and fdname='" + idFieldName + "'";
+        var xmlRet = SelectSql(sql, 1, 1);
+        var oXml = SetDom(xmlRet); 
+        WizardConfig.mainKeyFieldDataType = oXml.documentElement.childNodes(0).childNodes(0).text;
+        var sXml = oXml.documentElement.childNodes(0).childNodes(1).text;
+        if(IsSpace(sXml)) return ;
+        var oXml = SetDom("<root>"+unescape(sXml)+"</root>");
+        var oNode = oXml.documentElement.selectSingleNode("/root/idType");
+        if(oNode != null){
+        if(IsSpace(oNode.text) == false) {
+        sb.append('idtype='+oNode.text+' ');                    
+        }
+        }
+        var oNode = oXml.documentElement.selectSingleNode("/root/idParam");
+        if(oNode != null){
+        if(IsSpace(oNode.text) == false) {
+        sb.append('idparam='+oNode.text+' ');                    
+        }
+        }
+
+        }
+        function ListboxAddTableNameToStr(lstSelField,tableName) {
+        //每一个字段名称前加上所在表的表名
+        var sb = new Sys.StringBuilder() ;
+        var len = lstSelField.options.length;
+        for(var jj=0;jj<len; jj++)
+        {
+        sb.append( tableName+".");
+        var stmp = new Eapi.Str().trim(lstSelField.options(jj).value);
+        if(stmp=="") stmp = new Eapi.Str().trim(lstSelField.options(jj).text);
+        sb.append(stmp);
+        if(jj<len-1) sb.append(",");  
+        }
+        return sb.toString() ;
+        }
+
+
+        /**
+        *新建表单向导时生成主表的控件串 
+        *@date 2008-02-04
+        **/
+        
+        function getWizardContStr()
+        {
+            var oConfig = WizardConfig ;
+            var ret=0;  
+            var sb = new Sys.StringBuilder();
+            if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6")
+            {
+                sb.append("<table id=\"tab_layout1\" cellSpacing=0 cellPadding=0 border=1 >");
+                sb.append("<tr>");
+            }
+            else
+            {
+                var oPos = {
+                    interval : 0 //为间距值
+                };
+                var spare=oConfig.rightbottom-oConfig.left;
+                if(oConfig.inputStyle == "8") oConfig.top = 114; 
+                if(oConfig.inputCols > 1 )
+                {
+                    var arrColLeft = new Array();
+                    arrColLeft[0]=ToInt(oConfig.left);
+                    for(var j=1;j<oConfig.inputCols;j++){ //初始化数组
+                        arrColLeft[j] = arrColLeft[j-1] + oConfig.bigWidth/oConfig.inputCols ;
+                    }
+                 }
+            }
+            var arrF = oConfig.mainFields.split(",");
+            var i=0;
+            for(var ibak=0;ibak<arrF.length;ibak++)
+            {
+                var fieldName = new Eapi.Str().trim(arrF[ibak]);
+                var sql = "";
+                if(fcpubdata.dbStruDict == "FC_ENTITY"){
+                    sql = "select chnname,type,detailxml from FC_ENTITYSUB where fdname='"+fieldName+"' and tbname='"+oConfig.mainTableName+"'";
+                    var xmlRet = SelectSql(sql,1,1);
+		            var oXml=SetDom(xmlRet);
+		            var chnName = oXml.documentElement.childNodes(0).childNodes(0).text;
+		            var type1 = oXml.documentElement.childNodes(0).childNodes(1).text;
+		            if (type1 == "ID字段" || type1 == "主从信息表") { continue; }		            
+		            var sxml=unescape(oXml.documentElement.childNodes(0).childNodes(2).text);
+		        }
+                var oXml=SetDom("<root>"+sxml+"</root>")
+                var conttype = getProp(oXml,"isLstContType"); //判断是radio控件吗
+                if(fieldName.length == 0) continue;
+                if(IsSpace(chnName)) continue;
+                var sPosition = "";
+                var obj ;
+                if(oConfig.inputStyle == "3" || oConfig.inputStyle == "4" || oConfig.inputStyle == "8"){ //绝对定位
+                    if( oConfig.inputCols > 1){
+                        oConfig.left = arrColLeft[i % oConfig.inputCols] ;
+                        if(oConfig.inputStyle == "3" || oConfig.inputStyle == "8" ){
+                            oConfig.rightbottom = arrColLeft[i % oConfig.inputCols] +spare; //65=75-10
+                        }
+                    }
+                    sPosition = "position:absolute;left:"+oConfig.left+";top:"+oConfig.top+";height:"+oConfig.labelHeight+";";
+                    if(type1 == "复选框" || conttype=="radio") {   
+                    }else{
+                       sb.append(getFieldLabelStr(fieldName,chnName,sPosition));
+                    }  
+                    if(oConfig.inputStyle == "4"){
+                        sPosition = "position:absolute;left:"+oConfig.left+";top:"+oConfig.rightbottom+";";
+                    }else{
+                        sPosition = "position:absolute;left:"+oConfig.rightbottom+";top:"+oConfig.top+";";
+                    }
+                   
+                    obj = getNewFieldInputStr("DsMain",oConfig.mainTableName,fieldName,chnName,sPosition);                      
+                   
+                    if(ret<obj.height)
+                    {
+                        ret=ToInt(obj.height);
+                    }
+                    if(oConfig.inputCols == 1 || i % oConfig.inputCols == oConfig.inputCols-1 || oConfig.inputStyle == "8"  && ibak==arrF.length-1){
+                        if(ret > obj.height)
+                            {
+                                obj.height=ret; 
+                            }
+                        if(oConfig.inputStyle == "4"){
+                            oPos.interval = ToInt(oConfig.labelHeight)+ obj.height + ToInt(oConfig.adjust) ;  //20为label的高度
+                            oConfig.top=ToInt(oConfig.top);
+                            oConfig.top += oPos.interval;
+                            oConfig.rightbottom=ToInt(oConfig.rightbottom);
+                            oConfig.rightbottom += oPos.interval;
+                            oConfig.gridTop = oConfig.rightbottom;
+                        }else{
+                            oPos.interval = obj.height + ToInt(oConfig.adjust) ; 
+                            oConfig.top=ToInt(oConfig.top);
+                            oConfig.top += ToInt(oPos.interval); 
+                            oConfig.gridTop = oConfig.top;
+                            if(ibak==arrF.length-1)
+                            {
+                                if(oConfig.inputStyle == "8")
+                                {
+                                    divTop=oConfig.top
+                                }
+                            }
+                            ret=0;
+                        }
+                     }
+                    sb.append(obj.content);
+                
+                }
+               
+                if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6"){ //table定位
+                    sb.append("<td>");
+                    sb.append(getFieldLabelStr(fieldName,chnName,sPosition));
+                    if(oConfig.inputStyle == "5" ){
+                        sb.append("</td>");
+                        sb.append("<td>");
+                    }
+                    obj = getNewFieldInputStr("DsMain",oConfig.mainTableName,fieldName,chnName,""); //sPosition
+                    sb.append(obj.content);
+                    sb.append("</td>");
+                    if( oConfig.inputCols == 1 || (i) % oConfig.inputCols == oConfig.inputCols-1){
+                        sb.append("</tr>");
+                        if(i<arrF.length-1) sb.append("<tr>");
+                    
+                    }
+                }
+                i++;
+            }
+            
+            if(oConfig.inputStyle == "5" || oConfig.inputStyle == "6"){ //table定位
+                //补齐最后的td
+                if( oConfig.inputCols > 1){
+                    for(var k=0;k< i % oConfig.inputCols ; k++){
+                        sb.append("<td></td>");
+                    }
+                    if(i % oConfig.inputCols > 0){
+                        sb.append("</tr>");
+                    }
+                }        
+                sb.append("</table>");
+            }
+            return sb;
+            function getProp(oXml,nodeName)
+			    {
+				    var oNode = oXml.documentElement.selectSingleNode("/root/"+nodeName);	
+				    if(oNode != null)
+				    {
+					    return oNode.text;
+				    }		
+			    }
+        }
+     
+        /**
+        *取字段所对应的Label设计串
+        *@date 2008-02-05
+        **/
+       /* function getFieldLabelStr(fieldName,sLabel,sPosition){
+            var sid = "lbl"+fieldName;
+            var sb = new Sys.StringBuilder();
+            if(sPosition == "") sPosition = "width:"+oConfig.rightbottom-oConfig.left+"px;height:"+oConfig.labelHeight+"px;";
+            sb.append("<div controltype='label' style='"+sPosition+"' onresize=resize() onresizestart=resizeStart() onresizeend=resizeEnd() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() oncontrolselect=controlselect() nowrap id="+sid+">"+sLabel+"</div>");
+            return sb;
+        }*/
+         function getFieldLabelStr(fieldName,sLabel,sPosition){
+            var sid = "lbl"+fieldName;
+            var sb = new Sys.StringBuilder();
+            if(sPosition == "") sPosition = "width:"+ WizardConfig.rightbottom- WizardConfig.left+"px;height:"+ WizardConfig.labelHeight+"px;";
+            sb.append("<div controltype='label' style='"+sPosition+"' onresize=resize() onresizestart=resizeStart() onresizeend=resizeEnd() onmove=move() onmovestart=moveStart() onmoveend=moveEnd() oncontrolselect=controlselect() nowrap id="+sid+">"+sLabel+"</div>");
+            return sb;
+        }
+        /**
+        *新建表单向导时生成grid控件串 
+        *@param isMain = true 表示为主表对应的grid, =false 为子表
+        *@date 2008-02-15
+        **/
+        function getWizardGridStr(isMain,tmpLeft,tmpTop,sPosition){
+            var oConfig = WizardConfig ;
+            var sb = new Sys.StringBuilder();
+	        var sTableName = "",dsName="";
+	        if(isMain) {
+	            dsName = "DsMain";
+	            sTableName = oConfig.listTableName; 
+	        }else{
+	            dsName = "DsSub";
+	            sTableName = oConfig.subTableName; 
+        	
+	        }
+	        sb.append('<IMG id="');
+	        sb.append(sTableName);
+	        sb.append('_grid" onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() style="LEFT: ');
+	        sb.append(tmpLeft);
+	        sb.append('; WIDTH:'+oConfig.bigWidth+';');
+	        sb.append(sPosition);
+	        sb.append( ' TOP: ');
+	        sb.append(tmpTop);
+	        var isNull="是";//修改
+	         if(oConfig.inputStyle != "8"){isNull=="是"};
+	        sb.append('; HEIGHT: 260px" onmovestart=moveStart() src="../../fceform/images/ef_designer_webgrid.gif" controltype="grid" visible="是" readonly="否" canselect="是" autoappend="否" autowidth='+isNull+' autoheight='+isNull+' titlerowheight usertitle="否" titlerows usertitlehtml iscrosstab="否" crosstabtitle crosstabdatatype crosstabsumtype crosstabformat rowtitle coltitle rcount="否" rsum="否"  rmin="否" rmax="否" ravg="否" ccount="否" csum="否" cmin="否" cmax="否" cavg="否" crosstabsql csstext1="FONT-SIZE: 12px; OVERFLOW: hidden; BACKGROUND-COLOR: #ffffff" csstext2="FONT-SIZE: 12px; OVERFLOW: hidden; BACKGROUND-COLOR: #c0c0c0" dataset="');
+	        sb.append(dsName);
+	        sb.append('">');
+	        return sb;
+
+        }
+        /**
+        *取得子数据集的设计串,用于新建表单向导中 
+        *@date 2008-02-02
+        **/
+        function getSubDsDesignStr(){
+            var oConfig = WizardConfig ;
+	        var sb = new Sys.StringBuilder();
+	        sb.append( '<IMG id=DsSub onresizeend=resizeEnd() onresizestart=resizeStart() onmoveend=moveEnd() ');
+	        sb.append('style="LEFT: 550px; WIDTH: 39px; POSITION: absolute; TOP: 10px; HEIGHT: 47px" onmovestart=moveStart() src="../../fceform/images/ef_designer_dataset.gif"  isSubGrid="否" AfterScroll BeforeScroll AfterPost BeforePost AfterOpen BeforeOpen opensql pubpara="否" saveastable isaddemptyrec="否" submittype="1" opensortno="2" controltype="dataset"   submitno="2"   masterdsfield=' +WizardConfig.mainKeyField+' masterds="DsMain" subdsfield= '+WizardConfig.mainKeyField + ' datasourceName   issubds="是" ');
+	        //需要取到tablename idtype idparam属性
+	        doIdProp(sb,oConfig.subTableName,oConfig.subKeyField );
+	        //if(oConfig.isHaveSub != "是") sb.append( 'opensql="select '+oConfig.subFields+' from '+oConfig.subTableName+'" iscreatetable="否"pubpara="否" ');
+            sb.append('formatxml="<root>' );
+            sb.append(metadata_dataset(oConfig.subTableName,oConfig.subFields,"是"));
+           // sb.append('submitno="2" ');
+            sb.append('</root>" ');
+            
+            sb.append('>');
+            return sb;
+        }
+        function window_onload(){
+			var sUrl="../../fceform/common/djframe.htm?djtype=ZK&djsn=";
+				sUrl += "wizard_first";
+			parent.mainform.location.replace(sUrl);
+            
+        }
+	</script>
+</head>
+
+			
+
+<body onload="window_onload()">
+<button id=cmdPrev onclick="new Eform.Wizard().prev()" style="position:absolute;left:5px;top:5px;width:70px;height:22px;">上一步</button>
+<button id=cmdNext onclick="new Eform.Wizard().next()" style="position:absolute;left:80px;top:5px;width:70px;height:22px;">下一步</button>
+<button id=cmdOk onclick=cmdOk_onclick() style="position:absolute;left:155px;top:5px;width:70px;height:22px;">完 成</button>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+<style>
+	input  { BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px;
+		BORDER-BOTTOM: 0px;  HEIGHT: 22px; WIDTH: 70px;background-color:#E5E5E5;}
+	td {width:80px;HEIGHT: 25px}
+</style>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script language="javascript">
+
+function window_onload(){
+	SetAllButtonImage();
+}
+
+/**
+*设置按钮为图形按钮
+*@date 2004-02-16
+**/
+function SetAllButtonImage() {
+	for(var i=0;i<tb.rows(0).cells.length ;i++){
+		var obutton=tb.rows(0).cells(i).childNodes(0) ;
+		obutton.style.backgroundImage="url(../images/ef_tb_button.gif)" ;
+		obutton.style.cursor="hand" ;
+		obutton.onmouseout=function func_onmouseout() { this.style.color="black"}
+		obutton.onmouseover=function func_onmouseover() {	this.style.color="blue"}
+	}
+
+}
+
+</script>
+
+</HEAD>
+
+<BODY topmargin=1 background="../images/ef_run_background.gif" onload=window_onload() >
+
+<TABLE  cellSpacing=0 cellPadding=0  ID="tb">
+<TBODY>
+<TR>
+<TD  ><input type="button" value="第一页" onclick=parent.topic.execScript("$eform('第一页')") > </TD>
+<TD  ><input type="button" value="上一页" onclick=parent.topic.execScript("$eform('上一页')") > </TD>
+<TD  ><input type="button" value="下一页" onclick=parent.topic.execScript("$eform('下一页')") ></TD>
+<TD  ><input type="button" value="最后页" onclick=parent.topic.execScript("$eform('最后页')") ></TD>
+<TD  ><input type="button" value="新 增" onclick=parent.topic.execScript("$eform('新增')") ></TD>
+<TD  ><input type="button" value="删 除" onclick=parent.topic.execScript("$eform('删除')") ></TD>
+<TD  ><input type="button" value="保 存" onclick=parent.topic.execScript("$eform('表单保存好后提示')") ></TD>
+</TR></TBODY></TABLE>  
+
+</BODY>
+</HTML>

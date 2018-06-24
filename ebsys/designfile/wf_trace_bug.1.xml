@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_trace_bug</meta>
+  <meta name="bs_desc_field">bug_name</meta>
+  <meta name="bs_id_field">record_id</meta>
+  <initial-actions>
+    <action id="2629" name="初始化动作">
+      <restrict-to>
+        <conditions>
+          <condition type="class">
+            <arg name="rolename">普通职员</arg>
+            <arg name="class.chn">判断执行者是否有某个角色权限</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.UserHasRoleCondition</arg>
+            <arg name="role">ROL00000001</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.chn">将执行者保存到Caller</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="7132" old-status="Finished" status="Underway" step="214"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="3964" name="结束节点">
+    </step>
+    <step id="214" name="提出问题" compensate="cn.com.fcsoft.extend.ReturnAddCallerToTask">
+      <tasks>
+        <task name="填写或完善问题描述" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">执行者(caller),步骤执行者(mostRecentCaller)</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">214</arg>
+          <arg name="user">${caller},${mostRecentCaller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="8473" name="提出问题" view="/fceform/common/djframe.htm%3Fdjsn%3Dtrace_bug_new%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">8473</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">214</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将执行者保存到Caller</arg>
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="422" old-status="Finished" status="Underway" step="3964">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("bug_status").Equals("3")]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="1992" old-status="Finished" status="Underway" step="4370"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4370" name="问题发送">
+      <tasks>
+        <task name="审核 ${oCaller.name}提交的问题bug" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">部门经理</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="role">ROL00000003</arg>
+          <arg name="stepId">4370</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="4506" name="问题发送" view="/fceform/common/djframe.htm%3Fdjsn%3Dtrace_bug_new%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">4506</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">4370</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="7808" old-status="Finished" status="Underway" step="214">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("check_result").Equals("0")
+]]></arg>
+                </condition>
+              </conditions>
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">提出问题</arg>
+                  <arg name="stepId">214</arg>
+                </function>
+              </pre-functions>
+            </result>
+            <unconditional-result id="3189" old-status="Finished" status="Underway" step="8482"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8482" name="处理问题">
+      <tasks>
+        <task name="处理问题" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">普通职员</arg>
+          <arg name="taskTypeChn">竞争型</arg>
+          <arg name="taskType">1</arg>
+          <arg name="role">ROL00000001</arg>
+          <arg name="stepId">8482</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="4351" name="处理问题" view="/fceform/common/djframe.htm%3Fdjsn%3Dtrace_bug_deal%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">4351</arg>
+                <arg name="class.chn">判断竞争型任务的签收人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.CompetitionTaskCondition</arg>
+                <arg name="step_id">8482</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="8251" old-status="Finished" status="Underway" step="7318">
+              <pre-functions>
+                <function type="class">
+                  <arg name="class.chn">将指定步骤的执行者保存到变量mostRecentCaller</arg>
+                  <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentCaller</arg>
+                  <arg name="stepchn">提出问题</arg>
+                  <arg name="stepId">214</arg>
+                </function>
+              </pre-functions>
+            </unconditional-result>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7318" name="问题反馈">
+      <tasks>
+        <task name="查看问题处理结果" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">步骤执行者(mostRecentCaller)</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">7318</arg>
+          <arg name="user">${mostRecentCaller}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="2528" name="问题反馈" view="/fceform/common/djframe.htm%3Fdjsn%3Dtrace_bug_edit%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">2528</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">7318</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <result id="1540" old-status="Finished" status="Underway" step="3964">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[propertySet.getString("bug_status").Equals("4")
+]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="2861" old-status="Finished" status="Underway" step="8482"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+</workflow>

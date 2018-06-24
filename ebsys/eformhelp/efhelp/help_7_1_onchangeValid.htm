@@ -1,0 +1,34 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>onchange事件验证</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">onchange事件验证</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.onchange事件验证</div>
+       &nbsp;&nbsp;&nbsp; 一般是在text控件,textarea控件,可输入的dropdownlist控件修改了值之后，执行onchange事件,在事件代码中加上验证输入值是否合法的代码.在表单属性窗口的其他控制页中可以设置表单验证出错后提示方式是在输入框的右侧还是在输入框的下边显示提示信息，或是直接alert提示信息。
+       <div class="divTitle">2.onchange事件验证规则和设置</div>
+       &nbsp;&nbsp;&nbsp; 单击<a href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_7_1_onchangeValid'>onchange事件验证</a>进入onchange事件验证示例。
+        <div class="divTitle">2.1 onchange事件验证规则</div>
+        &nbsp;&nbsp;&nbsp; 因onchange事件的发生,必须是进入它并修改了值然后离开本控件时才会发生。当控件有默认值时，不会对默认值进行数据验证，即默认值一般应是合法的，如要对默认值也要验证(比如不能为空的验证),则可以在数据集的字段的数据验证中写验证函数来验证。<br />&nbsp;&nbsp;&nbsp; 在数据集的字段的数据验证中写的验证,以及在onchange事件中写的验证如验证没有通过了的,这两者都会在保存表单前再验证。如验证失败,则放弃保存并提示. <div class="divTitle">2.2 onchange事件验证设置</div>
+    &nbsp;&nbsp &nbsp; 双击txtName控件，打开txtName控件的属性页，单击事件页签，进入在事件页，在改变事件中，单击下拉按钮选择$valid('汉字、字母、数字或_')或者直接输入均可，单击确定在onchange事件中的验证设置完成。<br /><img  src ="images/help_7_1_4.gif"/><br />&nbsp;&nbsp;&nbsp; 如上图在表单属性页的其他控制中验证错误提示方式是选择在输入框右边显示。<br /><img  src ="images/help_7_1_1.gif"/><br />&nbsp;&nbsp;&nbsp; 例如控件的值修改后，如果控件输入信息有误，在右侧显示错误信息如下图:<br /><img  src ="images/help_7_1_3.gif"/><br />
+           &nbsp;&nbsp;&nbsp; 如果在表单属性页的其他控制中验证错误提示方式是选择在输入框下边显示，表单中的界面图如下：<br /><img  src ="images/help_7_1_6.gif"/><br />&nbsp;&nbsp;&nbsp; 如果在表单属性页的其他控制中验证错误提示方式是选择用警报窗口，表单中的界面图如下：<br /><img  src ="images/help_7_1_5.gif"/>
+     <div class="divTitle">3. 自定义函数在onchange事件验证</div>&nbsp;&nbsp;&nbsp; 我们在表单的自定义函数中，写一个自定义验证函数，然后在控件的onchange事件中调用验证函数.它也会和用我们系统函数一样,按你设置的验证错误提示方式显示 
+           错误信息.单击<a 
+               href="../../fceform/design/design.htm?sfile=yes&djtype=FT&djsn=help_7_1_onchangeValid">onchange事件中的自定义函数验证</a>进入onchange事件自定义函数验证。<br /><div class="divTitle">自定义函数设置规则</div>&nbsp;&nbsp;&nbsp; 自定义函数验证不通过时,按表单中设置的验证错误后的提示方式显示,你只要表单中写自定义验证函数,然后把自定义函数名写在$valid(自定义函数名)的参数中. 在表单的自定义函数中写入自定义函数<p>function uf_test(){<br />
+	if(text1.value < 9) return "不能小于9";	<br />
+}</p>&nbsp;&nbsp;&nbsp; 自定义函数有返回值表示验证没通话,返回值为错误信息,返回值为空表示验证通过,在onchange事件中执行的自定义函数写法如下<p>
+               $valid(uf_test);</p>&nbsp;&nbsp;&nbsp;onchange事件中可以验证多个验证函数,当函数验证不通过时返回,后边的验证函数将不执行 . 在onchange事件中多个事件验证如下图<br /><img  src ="images/help_7_1_7.jpg"/></br>
+             
+</div>
+</body>
+</html>

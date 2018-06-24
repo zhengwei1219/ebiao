@@ -1,0 +1,326 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<script src="../js/csjsrequest.js"></script>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/log4javascript.js"></script>
+		<script src="../js/fcopendj.js"></script>
+		
+    </HEAD>
+	<body style="MARGIN:0px;overflow:hidden;" onresize="win_onresize()">  
+	<script language="javascript">
+	    //var oRequest;  //接收?号后的参数	 <meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+	    var toolbarWinHeight = 0; //工具栏窗口的高度 2012-08-29
+
+var piAction; //单据打开状态,=1为新增状态
+var sOpenDjNo=""; //单据编号
+var sDivHtml; //整个表单的串
+//var pubMainObj= //用于传给子窗口(即表单所在窗口)的参数,以避开异步加载的问题
+//{ 
+//    skins : ""
+//};
+function win_onresize() {
+
+    if (!fcpubdata.resizeTimeOut)
+        fcpubdata.resizeTimeOut = window.setTimeout("win_onresize_bak();window.clearTimeout(fcpubdata.resizeTimeOut);fcpubdata.resizeTimeOut = null;", 500);
+}
+function win_onresize_bak() {
+    if (toolbarWinHeight > 0) {
+        $id("toolbar").style.height = toolbarWinHeight+"px";
+        $id("toolbar").style.display = "";
+    }
+    var topicWinHeight = getClientSize(window).height - toolbarWinHeight;
+    $id("topic").style.height = toolbarWinHeight + "px";
+    try { 
+        $win("topic").pub_window_onresize_bak(); //有时此行会报错。2013-05-22
+    } catch (ee) { }
+}
+
+function _start() {
+
+    //建立日志对象
+    if (typeof (log4javascript) != "undefined") {
+        fcpubdata.loggerObj = log4javascript.getLogger();
+      
+        //弹出日志窗口
+//        var popUpAppender = new log4javascript.PopUpAppender();
+//        var popUpLayout = new log4javascript.PatternLayout("%d{HH:mm:ss,SSS} %-5p - %m%n");
+//        popUpAppender.setLayout(popUpLayout);
+//        fcpubdata.loggerObj.addAppender(popUpAppender);
+
+
+
+
+        var ajaxAppender = new log4javascript.AjaxAppender(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=logger");
+        ajaxAppender.setThreshold(log4javascript.Level.ERROR);
+        ajaxAppender.setTimed(true);
+        ajaxAppender.setTimerInterval(60000); //ms毫秒
+        //   ajaxAppender.setBatchSize(10); //一次10条
+        ajaxAppender.setSendAllOnUnload(true);
+
+        //alert(ajaxAppender.getBatchSize(3))
+        //var xmlLayout = new log4javascript.XmlLayout();
+        // ajaxAppender.setLayout(log4javascript.XmlLayout());
+        fcpubdata.loggerObj.addAppender(ajaxAppender);
+        //fcpubdata.logger.debug("Debugging message (appears in pop-up)");
+
+    }
+
+
+    fcpubdata.loggerObj.debug("djframe.htm init start");
+    
+    
+    var djtype = Request.QueryString("djtype").toString();
+   
+	var djsn = Request.QueryString("djsn").toString();
+	//alert(djsn);
+//	var unitid = Request.QueryString("unitid").toString();
+//    if(djtype != "undefined"){ //eform本身用的系统表单不作权限控制,以提高速度
+//        var retX = new Eapi.RunAjax().sendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=isRunForm&djtype=" + djtype + "&djsn=" + djsn + "&unitid=" + unitid, "");
+
+//        if (retX == "你还没成功登录，或session失效" || retX == "你的帐号已在其它服务器上登录，请重新登录！") {
+//            alert(retX);
+//            top.close();
+//            
+//            window.open("../../zk/main/login.htm", "", "toolbar=no")
+//            return;
+//        }
+//        if (retX != "ok") {
+//            alert(retX);
+//            window.close();
+//            return;
+//        }
+//    } 
+
+    //pubMainObj.skins = Request.QueryString("skins").toString();
+    
+	var sver = Request.QueryString("isfile").toString();
+	if (typeof window.dialogArguments == "undefined") {
+	    //my add 2013-01-29 jquery dialog
+	    if (!IsSpace(top.Dialog) && !IsSpace(top.Dialog.Arguments)) {
+	        var arr = [];
+	        arr[0] = "";
+	        arr[1] = top.Dialog.Arguments;
+	    } else {
+	        //if(typeof parent.arr == "undefined") return;
+	        //为了防止重名,将parent.arr 改为 parent.arrPubEformPara 
+	        var arr = parent.arrPubEformPara; //window.opener.fcpubarr ;
+	    }
+	}else{
+		var arr=window.dialogArguments;
+	}
+	if(typeof arr == "undefined" && typeof parent.topic != "undefined" && parent.location.href.indexOf("fceform/design/opendj.htm") >= 0){ //定位刷新测试运行表单时
+		parent.topic.document.onreadystatechange= function ()
+		{
+			if (parent.topic.document.readyState=="complete")
+			{
+				// Finish initialization.
+				if(IsSpace(parent.topdjsn) ==false) {
+					if(parent.topisfile == "yes") {
+						DjOpenTestFile(parent.topdjsn)
+					} else {
+						DjOpenTest(parent.topdjsn)
+					}
+				}
+			}
+		}
+	}else{	
+		try{  //直接用此页面来运行正式表单时下面的命令会出错,所以try
+			sDivHtml=arr[0]  //整个表单的串.
+		}catch(e){}	
+		try{
+			sOpenDjNo=arr[1] //当前打开的单据编号.
+		}catch(e){}		
+		//加上如何在djframe中传递单据编号
+		var tmppara = Request.QueryString("paravalue").toString();
+		if(IsSpace(tmppara) == false) {
+			sOpenDjNo=tmppara;
+		}
+		if (typeof sOpenDjNo == "undefined") sOpenDjNo = "";
+
+		//加下面的是为了直接用window.showModal打开表单模版时用，2012-09-07
+		try{
+		    if (sOpenDjNo == "" && Request.QueryString("djtype").toString() == "MB") {
+		        if (typeof (window.dialogArguments) == "object") {
+		            sOpenDjNo = window.dialogArguments;
+		        } else {
+		            //try {
+		                //var tmpTest = top.Dialog.Arguments.id; //测试 top.Dialog.Arguments == 拒绝访问
+		                sOpenDjNo = top.Dialog.Arguments;
+		           // } catch (e1) { }
+		            
+		        }
+		    }
+        } catch (e) { }	
+
+		try{
+			piAction=arr[2]	  //单据打开状态,=1为新增状态
+		}catch(e){}	
+		//加上如何在djframe中指定打开表单方式
+		var tmpAction = Request.QueryString("opentype").toString();
+		if(IsSpace(tmpAction) == false) {
+			tmpAction = parseInt(tmpAction);
+			if(isNaN(tmpAction) == false) piAction = tmpAction ;
+		}
+		
+//		try{
+//			oRequest=arr[3] ;    
+//		}catch(e){}
+//		try{
+//			var ComputerName=arr[5] ;  //客户端的机器名,arr[4]为工作流的数组
+//			var modNo=arr[6] ;  //模块编号C3
+//		}catch(e){}
+		if (IsSpace(arr) == false && IsSpace(arr[9]) == false) {
+		    
+		    window.document.title = arr[9]; //窗口标题
+//		    if (IsSpace(arr[9]) == false) {
+//		        window.document.title = arr[9]; //窗口标题
+//		    } else if (typeof window.dialogArguments != "undefined") { //模态窗口
+//		        if (getIEVersion() < 7) {
+//		            var sDbTitle = SqlToField("select dj_name from FC_BILLZL where djsn='" + arr[0] + "'");
+//		            if (IsSpace(sDbTitle)) sDbTitle = arr[0];
+//		            window.document.title = sDbTitle;
+//		        }
+//		    }
+
+		}
+
+		var sdjsn = Request.QueryString("djsn").toString();
+		//alert(Request.QueryString("djtype"));
+		var pubsrc="fceform/common/pubdata.htm" ;
+		var topicsrc="fceform/dj/"+sdjsn+".htm"  ;  // /webbill/samples
+		var tmpB = true;
+		if(sver == "yes") {
+		//以测试模式运行文件表单
+			pubsrc += "?isfile=yes";
+			topicsrc="null.htm";
+			try{
+				Request = arr[3];
+			}catch(e){}
+		}else if(sver == "test") {
+		//以测试模式运行数据库表单
+			pubsrc += "?isfile=test";
+			topicsrc="null.htm";
+			try{
+				Request = arr[3]; //接收opendj.htm?后的参数
+			}catch(e){}
+		}else{
+		//通过?带上djtype的参数来决定此表单的分类信息
+			tmpB = false;
+			var stype = Request.QueryString("djtype").toString();
+			if(stype == "undefined"){
+			    stype = "ST" ; //给默认的表单分类
+			}
+			var isGen = Request.QueryString("isgen").toString();
+
+			if (stype == "MB" && (IsSpace(isGen) || (IsSpace(isGen)==false && isGen != "run" && isGen != "htm"))) { //表单模版，my add 2012-08-10
+			    var newFileName = sdjsn+ ",";
+			    var sear = location.search;
+			    var pos3 = sear.indexOf("&djtype=MB");
+			    var sear1 = sear.substring(1, pos3);
+			    var arrSear = sear1.split("&");
+			    for (var j = 0; j < arrSear.length; j++) {
+			        var arrSear1 = arrSear[j].split("=");
+			        if (arrSear1[0] != "djsn" && arrSear1[0] != "column" && arrSear1[0] != "rowHeight" && arrSear1[0] != "labelWidth" && arrSear1[0] != "fieldWidth" && arrSear1[0] != "isNullRow")
+			            newFileName += arrSear[j];
+			    }
+			    topicsrc = "../../zk/formtemp/" + newFileName + ".htm";
+			    tmpB = true;
+			} else { //原来的做法
+			    var oXml = SetDomFile("../.." + fcpubdata.userDir + "/xml/billtype.xml");
+			    var l = oXml.documentElement.childNodes.length - 1;
+			    for (var i = 0; i < l; i++) {
+			        if (NavJs.getNodeValue11(oXml, i, 2) == stype) {
+			            var sPartPath = NavJs.getNodeValue11(oXml, i, 3);
+			            topicsrc = fcpubdata.path + "/" + sPartPath + sdjsn + "." + NavJs.getNodeValue11(oXml, i, 4);
+			            //alert(topicsrc);
+			            //当在form_design目录下有设计界面用的表单时,则用之,否则用 fceform/dj/ 目录下的
+			            if (sPartPath.toLowerCase().indexOf("form_design") > 0) {
+			                var retX = new Eapi.RunAjax().sendHttp(location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=fileExist&spath=" + topicsrc, "");
+			                if (retX == "no") {
+			                    topicsrc = "../../fceform/dj/" + sdjsn + ".htm";
+			                }
+			            }
+			            tmpB = true;
+			            break;
+			        }
+			    }
+			}
+		}
+		//alert(topicsrc);
+		fcpubdata.loggerObj.debug("djframe.htm init middle");
+		if(fcpubdata.pubSession == "null"){
+			var tmpTopic = topicsrc;
+			if(tmpB == false) tmpTopic = "../../"+topicsrc;
+//			var sFrame='<frameset name="mainframeset" rows="0,99%,0" frameborder=0 border=0>'
+//			+'<frame id="toolbar" src="null.htm" scrolling=no border=0 frameborder=0  noresize >'
+//			+'<frame id="topic" src="' + tmpTopic + '" scrolling=auto border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize>'
+//			+'<frame id="pubdata" src="../../'+pubsrc+'" scrolling=auto border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize>'
+//			+'</frameset>';
+
+			var tbStyleDisplay = ' style="display:none"';
+			var tbHeight = 0;
+			var tbWinHeight = Request.QueryString("tbwinheight").toString();
+			if (IsSpace(tbWinHeight) == false) {
+			    tbStyleDisplay = "";
+			    tbHeight = tbWinHeight;
+			}
+
+//			var sFrame = '<table style="WIDTH:100%;height:100%" border="0" cellpadding="0" cellspacing="0" ><tr' + tbStyleDisplay + '><td> '
+//			+ '<iframe id="toolbar" name="toolbar" src="null.htm" style="width:100%;height:'+tbHeight+'px;" frameborder="0" scrolling="auto" border=0  noresize ></iframe></td></tr><tr><td>'
+//			+ '<iframe id="topic" name="topic" src="' + tmpTopic + '" scrolling=auto border=0 frameborder="0" style="width:100%;height:99%;" bordercolor=LightGrey noresize></iframe>'
+//			+ '<iframe id="pubdata" name="pubdata" src="../../' + pubsrc + '" style="display:none;" border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize></iframe></td></tr>'
+//			+ '</table>';
+			//alert(sFrame);
+
+			var sFrame = ''
+			+ '<iframe id="toolbar" name="toolbar" src="null.htm" style="width:100%;height:' + tbHeight + 'px;" frameborder="0" scrolling="auto" border=0  noresize ></iframe>'
+			+ '<iframe id="topic" name="topic" src="' + tmpTopic + '" scrolling=auto border=0 frameborder="0" style="width:100%;height:99%;" bordercolor=LightGrey noresize></iframe>'
+			+ '<iframe id="pubdata" name="pubdata" src="null.htm" style="display:none" border=0  bordercolor=LightGrey marginwidth=1 noresize></iframe>';
+			
+			window.document.write(sFrame) ;
+		
+		}else{
+		    var getsessionsrc = location.protocol + "//" + location.host + fcpubdata.servletPath + "/WebBill" + fcpubdata.dotnetVersion + "?key=getSession&" + fcpubdata.pubSession;
+			var sPrev = location.href ;
+			var ipos = sPrev.indexOf("fceform/common/djframe.htm");
+			sPrev = sPrev.substring(0,ipos);
+			fcpubdata.pubdataSrc=sPrev+pubsrc;
+			if(tmpB) sPrev = "";
+			fcpubdata.topicSrc=sPrev+topicsrc;
+			
+//			var sFrame='<frameset name="mainframeset" rows="0,99%,0,0" frameborder=0 border=0>'
+//			+'<frame id="toolbar" src="null.htm" scrolling=no border=0 frameborder=0  noresize >'
+//			+'<frame id="topic" src="null.htm" scrolling=auto border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize>'
+//			+'<frame id="pubdata" src="null.htm" scrolling=auto border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize>'
+//			+'<frame id="getsession" src="'+getsessionsrc+'" scrolling=auto border=0  frameborder=0  bordercolor=LightGrey marginwidth=1 noresize>'
+//			+'</frameset>';
+
+			var sFrame = '<table style="WIDTH:100%;" border="0" cellpadding="0" cellspacing="0"><tr><td> '
+			+ '<iframe id="toolbar" name="toolbar" src="null.htm" style="width:100%;height:0px" frameborder="0" scrolling="auto"  border=0 noresize > </iframe></td></tr><tr><td>'
+			+ '<iframe id="topic" name="topic" src="null.htm" style="width:100%;height:99%" frameborder="0" scrolling="auto"  border=0  bordercolor=LightGrey noresize></iframe>'
+			+ '<iframe id="pubdata" name="pubdata" src="null.htm" style="display:none" border=0  bordercolor=LightGrey marginwidth=1 noresize></iframe>'
+			+ '<iframe id="getsession" name="getsession" src="' + getsessionsrc + '" style="display:none" border=0  bordercolor=LightGrey marginwidth=1 noresize></iframe></td></tr>'
+			+ '</table>';
+
+
+			
+			window.document.write(sFrame);
+
+
+
+        }
+        fcpubdata.loggerObj.debug("djframe.htm init finish");		
+	}
+};
+_start();
+
+	</script>
+		
+  
+    </body>
+</html>

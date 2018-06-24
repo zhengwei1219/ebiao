@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../images/ef_run_background.gif" onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>
+
+   			
+
+
+ 
+pub_djhtm();
+		</script>
+<script>var objNav=new Object();
+objNav.prevPage = "wizard_maininput" ;
+objNav.nextPage = "wizard_css" ;
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+function uf_open() {
+	objNav.config = parent.parent.toolbar.WizardConfig ;
+	
+	
+	if(IsSpace(objNav.config.inputStyle))
+		SetRadioValue($id("rdoInputStyle"),"3");
+	else
+		SetRadioValue($id("rdoInputStyle"),objNav.config.inputStyle);
+	
+	if(IsSpace(objNav.config.inputCols) == false)
+		$id("txtCols").value = objNav.config.inputCols;
+	
+    SetCheckBoxValue($id("chkHaveSub"),objNav.config.isHaveSub);
+			
+	uf_sel();
+	uf_nav();
+	//uf_DisabledButton();
+}
+//保存配置信息,由工具栏来调用
+function saveConfig(){
+	objNav.config.inputStyle = $id("rdoInputStyle").value;
+	objNav.config.inputCols = $id("txtCols").value;
+	objNav.config.isHaveSub = $id("chkHaveSub").value;
+
+	objNav.isOk = true;
+}
+function uf_DisabledButton(){
+	var cmdPrev	 = parent.parent.toolbar.cmdPrev;
+	var cmdNext	 = parent.parent.toolbar.cmdNext;
+	var cmdOk	 = parent.parent.toolbar.cmdOk;
+	if(objNav.prevPage == "") {
+		cmdPrev.disabled = true;
+	}else{
+		cmdPrev.removeAttribute("disabled");
+	}
+	
+	if(objNav.nextPage == "") {
+		cmdNext.disabled = true;
+		cmdOk.removeAttribute("disabled");
+	}else{
+		cmdNext.removeAttribute("disabled");
+		cmdOk.disabled = true;
+	}
+}
+function uf_sel(){
+	if($id("rdoInputStyle").value == "1" || $id("rdoInputStyle").value == "2"){
+		$id("lblCols").style.display="none";
+		$id("txtCols").style.display="none";
+	}else{
+		$id("lblCols").style.display="";
+		$id("txtCols").style.display="";
+	}
+	if($id("rdoInputStyle").value == "2"){
+		$id("chkHaveSub").style.display="none";
+		SetCheckBoxValue($id("chkHaveSub"),"否");
+	}else{
+		$id("chkHaveSub").style.display="";
+	}		
+
+	if($id("rdoInputStyle").value == "1"){
+		$id("divSelMode").style.display="none";
+	}else{
+		$id("divSelMode").style.display="";
+		if($id("rdoInputStyle").value == "2"){
+			$id("imgSelMode").src = "../images/ef_design_textgrid.jpg";
+		}else if($id("rdoInputStyle").value == "4" || $id("rdoInputStyle").value == "6"){
+			$id("imgSelMode").src = "../images/ef_design_text1.jpg" ;
+		}else{
+			$id("imgSelMode").src = "../images/ef_design_text.jpg" ;
+		}
+	}
+}
+function uf_nav(){
+	if($id("rdoInputStyle").value == "1" || $id("rdoInputStyle").value == "2"){
+		if($id("chkHaveSub").value=="否")
+			objNav.nextPage = "" ;
+		else
+			objNav.nextPage = "wizard_subinput" ;
+	}else{
+		objNav.nextPage = "wizard_css" ;
+	}
+	uf_DisabledButton();
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" toolbar="不带工具栏" dj_sn="wizard_inputstyle" type="ST" caption="wizard_inputstyle" mkbh codeheader="BBB" keyfield BLONopen="uf_open()" window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" billtaborder="<root><taborder>rdoInputStyle</taborder><taborder>txtCols</taborder><taborder>chkHaveSub</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:2;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:1;excel:0;tree:0;ebshow:0" contxml="<root><checkbox><id>chkHaveSub</id></checkbox><label><id>lblCols</id><id>lblSelMode</id></label><radio><id>rdoInputStyle</id></radio><img><id>imgSelMode</id></img><div><id>divSelMode</id></div><spin><id>txtCols</id></spin></root>">&nbsp; 
+<FIELDSET id=rdoInputStyle contentEditable=false style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 10px; WIDTH: 327px;  POSITION: absolute; TOP: 7px; HEIGHT: 138px; backgroundColor1: #ffffff" onmovestart=moveStart() controltype="radio" value="3" onclick='bill_onclick("uf_sel();uf_nav();")' tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6" temptext="无: 表示只要数据集,不要输入界面&#13;&#10;grid控件: 表示直接用grid控件来输入&#13;&#10;绝对定位: 常规,即label在左,textbox在右&#13;&#10;绝对定位: 上下结构,即label在上,textbox在下&#13;&#10;table布局: 常规,即label在左,textbox在右&#13;&#10;table布局: 上下结构,即label在上,textbox在下" CustomAttr NotBg="否" aspect="纵向" legend="输入格式:"><LEGEND>输入格式:</LEGEND><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[0].value; type=radio value=1 name=RGrdoInputStyle text="无: 表示只要数据集,不要输入界面"><SPAN onclick=RGrdoInputStyle[0].checked=true;rdoInputStyle.value=RGrdoInputStyle[0].value;RGrdoInputStyle[0].focus();>无: 表示只要数据集,不要输入界面</SPAN>&nbsp;<BR><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[1].value; type=radio value=2 name=RGrdoInputStyle text="grid控件: 表示直接用grid控件来输入"><SPAN onclick=RGrdoInputStyle[1].checked=true;rdoInputStyle.value=RGrdoInputStyle[1].value;RGrdoInputStyle[1].focus();>grid控件: 表示直接用grid控件来输入</SPAN>&nbsp;<BR><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[2].value; type=radio CHECKED value=3 name=RGrdoInputStyle text="绝对定位: 常规,即label在左,textbox在右"><SPAN onclick=RGrdoInputStyle[2].checked=true;rdoInputStyle.value=RGrdoInputStyle[2].value;RGrdoInputStyle[2].focus();>绝对定位: 常规,即label在左,textbox在右</SPAN>&nbsp;<BR><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[3].value; type=radio value=4 name=RGrdoInputStyle text="绝对定位: 上下结构,即label在上,textbox在下"><SPAN onclick=RGrdoInputStyle[3].checked=true;rdoInputStyle.value=RGrdoInputStyle[3].value;RGrdoInputStyle[3].focus();>绝对定位: 上下结构,即label在上,textbox在下</SPAN>&nbsp;<BR><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[4].value; type=radio value=5 name=RGrdoInputStyle text="table布局: 常规,即label在左,textbox在右"><SPAN onclick=RGrdoInputStyle[4].checked=true;rdoInputStyle.value=RGrdoInputStyle[4].value;RGrdoInputStyle[4].focus();>table布局: 常规,即label在左,textbox在右</SPAN>&nbsp;<BR><INPUT onclick=rdoInputStyle.value=RGrdoInputStyle[5].value; type=radio value=6 name=RGrdoInputStyle text="table布局: 上下结构,即label在上,textbox在下"><SPAN onclick=RGrdoInputStyle[5].checked=true;rdoInputStyle.value=RGrdoInputStyle[5].value;RGrdoInputStyle[5].focus();>table布局: 上下结构,即label在上,textbox在下</SPAN>&nbsp;</FIELDSET> 
+<DIV class=xpSpin id=txtCols style="LEFT: 54px; WIDTH: 44px; POSITION: absolute; TOP: 148px; HEIGHT: 22px; align: undefined" align=undefined value="1" NextNum="1" Max="5" Min="1" enabled="否" height="22px" width="44px" top="148px" left="54px" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="" dataset="undefined" field="undefined"></DIV> 
+<DIV id=lblCols style="LEFT: 16px; WIDTH: 37px; POSITION: absolute; TOP: 152px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">列数:</DIV>
+<DIV id=chkHaveSub style="LEFT: 249px; WIDTH: 80px; POSITION: absolute; TOP: 150px; HEIGHT: 20px" onmovestart=moveStart() noWrap controltype="checkbox" value="否" onclick='bill_onclick("uf_nav()")' CustomAttr NotBg="否" falsevalue="否" truevalue="是" divtype="checkbox"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否有子表</SPAN></DIV>&nbsp;
+<DIV id=divSelMode style="BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; LEFT: 8px; OVERFLOW: auto; BORDER-LEFT: black 1px solid; WIDTH: 333px; BORDER-BOTTOM: black 1px solid; POSITION: absolute; TOP: 174px; HEIGHT: 105px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() controltype="div" CustomAttr NotBg="否">
+<DIV id=lblSelMode style="LEFT: 8px; WIDTH: 65px; POSITION: absolute; TOP: 7px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">示意图:</DIV><IMG id=imgSelMode style="DISPLAY: block; LEFT: 2px; WIDTH: 326px; POSITION: absolute; TOP: 22px; HEIGHT: 78px" onmovestart=moveStart() src="http://localhost/webbill/ebsys/fceform/design/" controltype="img" CustomAttr cover="9" srcsk></DIV></DIV></body></html>

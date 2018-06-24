@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE>
+	        @import url(../css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+
+		<script src="../js/csjsrequest.js"></script>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/fctorun.js"></script>
+		<script src="../js/tabpane.js"></script>
+		<script src="../js/fcselfuse.js"></script>
+		<script src="../js/xtree.js"></script>
+		<script src="../js/fcother.js"></script>
+		<script src="../../fceformext/js/userfunc.js"></script>
+		<script src="../ereport/js/loadreport.js"></script>
+		
+		<script src="../htc/fc_code.js"></script>
+	</HEAD>
+	<body  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script >
+   //单据编号
+   			//单据编辑标志
+      //从上一单据传来的数据集对象
+
+ 
+	
+var oContXml = null;
+function _start(){
+//生成正式运行串用
+//if(Request.QueryString("getrunstring") == "yes") {
+//	var oContXml = null ;
+	
+//	var s1=DesignStr_RunStr(parent.sDivHtml) ;
+//	parent.sDivHtml = s1 ;
+//	document.body.onload="";
+	
+	
+//} else{
+	//e表中直接运行html串来用.
+	var s2 = Request.QueryString("djcontent").toString() ;
+	
+	if(Request.QueryString("isfile") == "yes") {
+	    //var oContXml = null;
+		var s1=DesignStr_RunStr(parent.sDivHtml);
+    } else if (s2 == "yes") { //从e表运行参数表单
+
+		var s3 = "";
+		var owin1 = window.dialogArguments;
+		if(typeof owin1 != "undefined"){
+			s3 = owin1.sPubDjContent ; 
+		}
+		if(IsSpace(s3)){
+			s3 = parent.sPubDjContent;
+        }
+
+        
+        document.write(s3);
+        
+	} else { //测试运行数据库表单
+		//CopyToPub(parent.sDivHtml);
+		document.write(parent.sDivHtml);
+
+	}
+
+	pub_djhtm() ;
+	
+
+	
+	
+//}
+//
+}
+_start();
+
+
+
+		</script>
+	</body>
+</html>

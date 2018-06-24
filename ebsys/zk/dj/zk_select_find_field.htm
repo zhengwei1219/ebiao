@@ -1,0 +1,127 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_open(){
+	labTbName.innerText = fcpubdata.obj[1];
+	var jiahao = "+";
+	if (fcpubdata.databaseTypeName == "oracle") jiahao = "||";
+	dataset1.Open("select tbname,fdname,'|'"+jiahao+" CHNNAME "+jiahao+"'|' as CHNNAME,type from fc_entitysub where tbname ='"+fcpubdata.obj[1]+"' Order By sortNo");
+	if(IsSpace(fcpubdata.obj[3]) == true) return;
+	var len = fcpubdata.obj[3].length;
+	for(var j=0;j<len;j++){
+		var l=dataset1.oDom.documentElement.childNodes.length-1;
+		for(var i=0;i<l;i++){
+			if(fcpubdata.obj[3][j] == dataset1.oDom.documentElement.childNodes(i).childNodes(2).text ){
+				dataset1.oDom.documentElement.childNodes(i).childNodes(0).text = "是";
+				/*var oTd = grid1.tab.rows(i+1).cells(1);
+				oTd.style.backgroundImage="url("+fcpubdata.path+"/fceform/images/ef_run_grid_checked.gif)";
+				oTd.style.backgroundRepeat="no-repeat";*/
+				dataset1.oDom.documentElement.childNodes(i).childNodes(3).text = fcpubdata.obj[4][j];
+				dataset1.oDom.documentElement.childNodes(i).childNodes(4).text = fcpubdata.obj[7][j];
+				break;				
+			}
+		}
+	}
+	dataset1.dset_cont();
+	dataset1.SetPos(0);
+	//uf_xmlGet();
+}
+
+function uf_sel() {
+	dataset1.Update();//防止修改某行记录后，鼠标没移动行，记录没提交到数据集
+	var xmlSql = "";
+	var fieldArr =  new Array();
+	var titleArr = new Array();
+	var showContArr = new Array();
+	var len = titleArr.length;
+	var xmlRet = SelectSql("select fdname from fc_entitysub where (tbname='"+fcpubdata.obj[1]+"' and type= '名称') or  tbname='"+fcpubdata.obj[1]+"' and type='自动编号'" ,1,-1);
+	var oXml = SetDom(xmlRet);
+	if (oXml.documentElement == null) {
+	    alert(xmlRet);
+	    return;
+	}
+	if (oXml.documentElement.childNodes.length < 1){
+		alert(fcpubdata.obj[1]+"表中没有名称或自动编号的字段，请在"+fcpubdata.obj[1]+"表中添加。"); 
+		return;
+	}	 
+	var noNameField = true;
+	var l = dataset1.oDom.documentElement.childNodes.length-1;
+	xmlSql += "<delete tableName='fc_relation' ><where>  tbname1='"+fcpubdata.obj[0]+"' and fdname1='"+fcpubdata.obj[2]+"' and tbname2= '"+fcpubdata.obj[1]+"'</where></delete>"
+	if((fcpubdata.obj[5] != null) && (fcpubdata.obj[6] != null)){
+		xmlSql += "<delete tableName='fc_relation' ><where>  tbname1='"+fcpubdata.obj[0]+"' and fdname1='"+fcpubdata.obj[6]+"' and tbname2= '"+fcpubdata.obj[5]+"'</where></delete>"
+	}
+
+	for(var i=0;i<l;i++){
+		if(dataset1.oDom.documentElement.childNodes(i).childNodes(0).text == "是"){
+			if(dataset1.oDom.documentElement.childNodes(i).childNodes(5).text == "名称" || dataset1.oDom.documentElement.childNodes(i).childNodes(5).text == "自动编号") { 
+			 	noNameField = false;
+			}
+			
+			fieldArr[len] = dataset1.oDom.documentElement.childNodes(i).childNodes(2).text;			
+			titleArr[len] = dataset1.oDom.documentElement.childNodes(i).childNodes(3).text;
+			showContArr[len] = dataset1.oDom.documentElement.childNodes(i).childNodes(4).text;
+			len += 1;
+			var rowNo = i+1;
+			xmlSql += "<insert tableName='fc_relation'><names> tbname1,tbname2,fdname1,fdname2,title,xmlSet,rowNo</names><values>'"+fcpubdata.obj[0]+"','"+fcpubdata.obj[1]+"','"+fcpubdata.obj[2]+"','"+dataset1.oDom.documentElement.childNodes(i).childNodes(2).text +"','"+dataset1.oDom.documentElement.childNodes(i).childNodes(3).text +"','"+TransSql(RepXml(dataset1.oDom.documentElement.childNodes(i).childNodes(4).text)) +"'," + rowNo + " </values></insert>";
+		}	
+	}
+	if(noNameField == true) {alert("没有选择名称或自动编号类型字段,不能保存"); return }
+	var arr = [xmlSql,fieldArr,titleArr,showContArr];
+	window.returnValue = arr;
+	$eform('关闭窗口');
+}
+
+
+function uf_xmlSet(){
+	var xmlSet = "";
+	var showCont = "";
+	var isNotGenField = 0;
+	if(!IsSpace($id('showCont').value)){
+		xmlSet += "<showCont>"+$id('showCont').value+"</showCont>"
+	}
+	if(!IsSpace($id('isNotGenField').value)){
+		xmlSet += "<isNotGenField>"+$id('isNotGenField').value+"</isNotGenField>";
+	}
+	dataset1.Field('xmlSet').Value = xmlSet;
+} 
+
+function uf_xmlGet(){
+	var showCont = "";
+	var isNotGenField = 0;
+	if(!IsSpace(dataset1.Field('xmlSet').Value)){
+		var oDom = SetDom("<root>"+dataset1.Field('xmlSet').Value+"</root>");
+		if(oDom.documentElement != null){
+			uf_getProp(oDom,'showCont');
+			uf_getProp(oDom,'isNotGenField');
+		}
+	}
+}
+
+function uf_getProp(oDom,nodeName){
+	var node = oDom.documentElement.selectSingleNode("/root/"+nodeName);
+	if(node != null){
+		if(nodeName == "isNotGenField") {
+			SetCheckBoxValue($id("isNotGenField"), node.text);
+		}
+		$id(nodeName).value = node.text;
+	}		
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script src='../../fceform/js/fctorun.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../../fceform/htc/webgrid.htc)",0);</script><script src='../../fceform/js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="自定义工具栏" AutoResizeXml billtaborder="<root><taborder>isNotGenField</taborder><taborder>title</taborder><taborder>showCont</taborder><taborder>grid1</taborder></root>" dj_sn="zk_select_find_field" caption="查找关系类型选择多字段" type="ZK" isfile="是" center="居中" posleft postop poswidth="388" posheight="500" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:6;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:2;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><checkbox><id>isNotGenField</id></checkbox><label><id>label1</id><id>labTbName</id><id>label4</id><id>label5</id><id>label6</id></label><a><id>a11</id></a><text><id>title</id></text><dropdownlist><id>showCont</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;fctorun.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp userToolbar='<tr rowstate="add"><td>ok</td><td>确定</td><td></td><td>uf_sel()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col>uf_xmlGet()</col><col>uf_xmlGet()</col><col></col></grid1>")' bodyrows="-1" bodyrowheight="-1" blRowNo="否" hideVscroll="是" hideHscroll="是" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" dataset="dataset1" left="4" top="17" width="192" height="407" format="<cols><col><fname>sel</fname><cname>选</cname><width>50</width><dtype>字符</dtype><readonly>勾</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>25</columnwidth><align>left</align></col><col><fname>FDNAME</fname><cname>字段名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>92</columnwidth><align>left</align></col><col><fname>TYPE</fname><cname>类型</cname><width>30</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>60</columnwidth><align>left</align></col><col><fname>noGenField</fname><cname>不产生数据集的字段</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col></cols>" visible="是" controltype="grid">
+<TABLE style="BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dataset1 idtype="1" format="<fields><field><fieldname>sel</fieldname><datatype>字符</datatype><displaylabel>选</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>TBNAME</fieldname><datatype>字符</datatype><displaylabel>表名</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>FDNAME</fieldname><datatype>字符</datatype><displaylabel>字段名</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>CHNNAME</fieldname><datatype>字符</datatype><displaylabel>标题</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>xmlSet</fieldname><datatype>字符</datatype><displaylabel>字段属性</displaylabel><size>7000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>TYPE</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>30</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>noGenField</fieldname><datatype>字符</datatype><displaylabel>不产生数据集的字段</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" onSetText='bill_ondatasetsettext("<dsid><sel></sel><TBNAME></TBNAME><FDNAME></FDNAME><CHNNAME></CHNNAME><xmlSet></xmlSet><TYPE></TYPE><noGenField></noGenField></dsid>")' onGetText='bill_ondatasetgettext("<dsid><sel></sel><TBNAME></TBNAME><FDNAME></FDNAME><CHNNAME></CHNNAME><xmlSet></xmlSet><TYPE></TYPE><noGenField></noGenField></dsid>")' onValid='bill_ondatasetvalid("<dsid><sel></sel><TBNAME></TBNAME><FDNAME></FDNAME><CHNNAME></CHNNAME><xmlSet></xmlSet><TYPE></TYPE><noGenField></noGenField></dsid>")' async="否" isSubGrid="否" opensortno="1" pubpara="否" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" BeforeScroll='bill_dsevent("BeforeScroll","uf_xmlSet()")'></fc:dataset><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 2px; LEFT: 10px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">表名：</LABEL><LABEL style="POSITION: absolute; WIDTH: 202px; HEIGHT: 15px; TOP: 2px; LEFT: 49px" id=labTbName onmovestart=moveStart() controltype="label" inputTag="否"></LABEL><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; TOP: -3px; FONT-WEIGHT: bold; LEFT: 355px; backgroundColor1: #ffffff" id=a11 onmovestart=moveStart() href="javascript:ShowHelp('findmuchfield')" target=_self controltype="a" NotBg="否" href1="javascript:ShowHelp('findmuchfield')">?</A><LABEL style="POSITION: absolute; WIDTH: 72px; HEIGHT: 16px; TOP: 1px; LEFT: 284px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">查找多字段</LABEL><INPUT style="POSITION: absolute; WIDTH: 170px; HEIGHT: 20px; TOP: 38px; LEFT: 208px" id=title onmovestart=moveStart() size=30 dataset="dataset1" controltype="text" field="CHNNAME" china="标题"><fc:fc_code id=showCont dataset="null" left="208" top="86" width="170" height="20" format="" visible="是" controltype="dropdownlist" sqltrans="" onselchange='bill_onclick("uf_xmlSet();")' field="null" FieldNameList="" isTreeNewSql="0" isShowTree="0" multiselect="否" addrow="否" blnempty="否" blninput="否" xml="<tr height='20px' ><td>空</td><td>空</td></tr><tr height='20px' ><td>标签</td><td>标签</td></tr><tr height='20px' ><td>只读编辑框</td><td>只读编辑框</td></tr><tr height='20px' ><td>编辑框</td><td>编辑框</td></tr><tr height='20px' ><td>只读多行编辑框</td><td>只读多行编辑框</td></tr><tr height='20px' ><td>多行编辑框</td><td>多行编辑框</td></tr>" datasourceName="" align="undefined" position="absolute" sql2="null"></fc:fc_code> 
+<DIV style="POSITION: absolute; WIDTH: 182px; HEIGHT: 20px; TOP: 117px; LEFT: 205px" id=isNotGenField onmovestart=moveStart() noWrap dataset="dataset1" controltype="checkbox" field="noGenField" china="不产生数据集的字段" value onclick='bill_onclick("uf_xmlSet()")' falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否不产生数据集中的字段</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 20px; LEFT: 208px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否">标题：</LABEL><LABEL style="POSITION: absolute; WIDTH: 113px; HEIGHT: 15px; TOP: 68px; LEFT: 208px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">显示控件：</LABEL></DIV><script></script></body></html>

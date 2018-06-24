@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>日期选择输入</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">日期选择输入</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>
+        返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. 日期选择输入</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;日期选择输入能帮助我们选择输入日期，日期加时间格式的日期,我们通常在text控件和grid控件中输入.
+           
+       <div class="divTitle">2. 零散选择输入设置</div>
+      &nbsp;&nbsp;&nbsp; 单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_9_dateSelete'>日期选择输入</a> 
+           进入日期选择输入设计界面.日期选择输入需要一个button控件，用于单击弹出日历，和一个text控件用于接收返回的日期值.
+       <div class="divTitle">2.1 设置日期年份函数</div>
+       &nbsp;&nbsp;&nbsp; 选择日期年份函数如下,<p>SelectDate(txtDateYear,'year')</p> 
+       &nbsp;&nbsp;&nbsp; obj表示要显示日期年份的text控件的id,year表示显示年份.eform系统函数是$eform('选择日期年'),它也是调用的SelectDate(txtDateYear,'year'),单击button控件,弹出日历选择界面.<br /> <img src="images/help_5_9_7.gif" /><div class="divTitle">2.2 单击显示日期年月图片</div>&nbsp;&nbsp;&nbsp;选择日期年函数 
+           txtYearM是显示日期的控件id,year-m代表显示年月.
+<p>SelectDate(txtYearM,'year-m')</p>
+&nbsp;&nbsp;&nbsp; txtYearM是接收日期年月的控件id,这是一个选择日期年月的图片,单击日历按钮弹出选择年月的日历.eform系统函数是$eform('选择日期年月'),它也是调用的SelectDate(txtYearM,'year-m'),单击button控件,弹出日历选择界面.<br /><img  src ="images/help_5_9_8.gif"/>&nbsp; <br /><div class="divTitle">
+               2.3 选择输入日期</div>&nbsp;&nbsp;&nbsp; 选择输入日期函数<p>SelectDate(txtDate)</p>&nbsp;&nbsp;&nbsp; 
+           txtDate是接收选择日期的控件id,这是一个选择日期的图片,单击日历按钮弹出选择日期的日历,eform系统函数是$eform('选择日期'),它也是调用的SelectDate(txtDate).<br /><img  src ="images/help_5_9_1.gif"/>&nbsp; <br /><div class="divTitle">2.4 
+           选择输入日期时间</div>&nbsp;&nbsp;&nbsp; 选择输入日期函数如下<p>SelectDate(txtDateTime,true)</p>
+           &nbsp;&nbsp;&nbsp;&nbsp;txtDateTime是接收返回值的控件id,下面是一个选择日期时间的图片,单击日历按钮,弹出一个可以选择年月日的日历,eform系统函数是$eform('选择日期时间'),它也是调用的SelectDate(txtDateTime,true).<br /><img  src ="images/help_5_9_2.gif"/>
+       
+           &nbsp;
+       <div class="divTitle">3. 表格中日期选择输入</div>
+       
+       
+           &nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_9_dateSelete1'>表格中日期选择输入</a> 进入日期选择输入设计界面.在数据集中单击工作日期字段,把数据集的工作日期字段的编辑格式设置为下拉按钮,单击【设置】按钮, <br /><img  src ="images/help_5_9_3.gif"/> <br />&nbsp;&nbsp;&nbsp; 进入设置列的参照属性页,如果选中直接数据就可以在表格控件中的下拉列表中输入数据,没选中直接输入,只能选择输入数据如下图<br /><img  src ="images/help_5_9_6.gif"/>&nbsp;&nbsp;&nbsp; <br />    &nbsp;&nbsp;&nbsp; 
+           单击事件页签,进入设置列的参照属性页的事件页中,在打开表单事件中输入<p>$eform(&#39;选择日期&#39;) 或 $eform(&#39;选择日期年&#39;)</p>
+          &nbsp;&nbsp;&nbsp; 如下图<br /><img  src ="images/help_5_9_5.gif"/> <br />
+          </div>
+</body>
+</html>

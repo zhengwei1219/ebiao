@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+var objNav=new Object();
+objNav.prevPage = "" ;
+objNav.nextPage = "wizard_maininput" ;
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+function uf_open() {
+	objNav.config = parent.parent.toolbar.WizardConfig ;
+	var oXml = SetDom("<root>"+fcpubdata.formToolbar+"</root>");
+	if(oXml.documentElement != null && fcpubdata.formToolbar != ""){
+		for(var i=0;i<oXml.documentElement.childNodes.length;i++){
+			var oOption = oXml.documentElement.childNodes(i);
+			oOption.setAttribute("value",oOption.text);
+		}	
+		fcpubdata.formToolbar = new Eapi.Str().removeRoot(oXml.documentElement.xml);
+	}
+	$id("cboBillType").outerHTML=SelectAddOption($id("cboBillType"),GetBillType());
+	$id("cboToolBar").outerHTML=SelectAddOption($id("cboToolBar"),fcpubdata.formToolbar);
+	
+	SetTextValue(objNav.config.userType,$id("cboUserType"));
+	SetTextValue(objNav.config.djsn,$id("txtBillName"));
+	SetTextValue(objNav.config.type,$id("cboBillType"));
+	if($id("cboBillType").value == "") $id("cboBillType").selectedIndex = 0;
+	if(IsSpace(objNav.config.toolbar) == false){
+		new Eapi.BaseCont().setComboText($id("cboToolBar"),objNav.config.toolbar)
+	}
+	if(IsSpace($id("txtBillName").value)) $id("txtBillName").value = "表单名称1";
+
+	uf_change();
+	parent.parent.toolbar.execScript("new Eform.Wizard().disabledButton();")
+}
+//保存配置信息,由工具栏来调用
+function saveConfig(){
+	var sValue = new Eapi.Str().trim($id("txtBillName").value);
+	if(IsSpace(sValue)){
+		alert("表单名称不能为空!");
+		objNav.isOk = false;
+		return;
+	}
+	objNav.config.userType = $id("cboUserType").value;
+	objNav.config.djsn = sValue;
+	objNav.config.type =  $id("cboBillType").value;
+	//objNav.config.isfile = $id("chkIsFile").value;
+	objNav.config.toolbar = $id("cboToolBar").options($id("cboToolBar").selectedIndex).text;
+	objNav.isOk = true;
+}
+function uf_change(){
+	if(cboToolBar.value == "自定义工具栏"){
+		cmdUserTb.style.display="";
+	}else{
+		cmdUserTb.style.display="none";
+	}	
+}
+
+function uf_set(){
+	var sRet=DjOpen("userToolbar",objNav.config.userToolbar,'展现','有模式窗口','直接',"自定义工具栏");
+	//var sRet=DjOpen("../../fceform/common/djframe.htm?djsn=userToolbar&djtype=LR","展现","有模式窗口","直接","自定义工具栏")
+	if(IsSpace(sRet) == false){
+		objNav.config.userToolbar = sRet;	
+	}
+		
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" mkbh codeheader="BBB" keyfield entertype="展现" OtherSave="否" runsave idtype="1" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label6</id><id>label1</id></label><combobox><id>cboBillType</id><id>cboToolBar</id></combobox><a><id>a0</id></a><button><id>cmdUserTb</id></button><text><id>txtBillName</id></text><dropdownlist><id>cboUserType</id></dropdownlist></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:1;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:1;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" billtaborder="<root><taborder>cboBillType</taborder><taborder>cboToolBar</taborder><taborder>txtBillName</taborder><taborder>cboUserType</taborder><taborder>cmdUserTb</taborder></root>" BLONclose BLONopenBefore BLONopen="uf_open()" window="当前窗口" toolbar="不带工具栏" posheight poswidth postop posleft center="  " isfile="是" type="ZK" caption="wizard_first" dj_sn="wizard_first" AutoResizeXml><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 10px; WIDTH: 66px; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 12px; HEIGHT: 15px" align="Left" NotBg="否" inputTag="否" controltype="label">表单名称：</SPAN> <SELECT id=cboBillType style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 105px; WIDTH: 210px; POSITION: absolute; TOP: 47px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff" controltype="combobox" onkeydown='bill_onkeydown("")' backwidth="165" backheight="20" sql tempvalue temptext check="1" sqltrans></SELECT><SPAN id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 10px; WIDTH: 61px; POSITION: absolute; TOP: 91px; HEIGHT: 10px" align="Left" controltype="label">表单分类：</SPAN> <SELECT id=cboToolBar style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 76px; WIDTH: 146px; POSITION: absolute; TOP: 130px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff" onchange='bill_onclick("uf_change()")' controltype="combobox" onkeydown='bill_onkeydown("")' backwidth="146" backheight="20" sql tempvalue="不带工具栏" temptext="不带工具栏" check="1" async="否" datasourceName sqltrans><OPTION value=不带工具栏 selected>不带工具栏</OPTION></SELECT><SPAN id=Label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 10px; WIDTH: 70px; POSITION: absolute; TOP: 136px; HEIGHT: 14px" align="Left" controltype="label">工 具 栏：</SPAN><A id=a0 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 230px; WIDTH: 14px; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 131px; HEIGHT: 15px; backgroundColor1: #ffffff" onmovestart=moveStart() href="javascript:ShowHelp('on_formtools')" target=_self NotBg="否" controltype="a" href1="javascript:ShowHelp('on_formtools')">?</A><INPUT id=txtBillName style="LEFT: 72px; WIDTH: 242px; POSITION: absolute; TOP: 7px; HEIGHT: 20px" onmovestart=moveStart() size=44 value=表单名称1 controltype="text"><LABEL id=label1 style="LEFT: 10px; WIDTH: 96px; POSITION: absolute; TOP: 49px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" inputTag="否" controltype="label">生成路径分类:</LABEL><?xml:namespace prefix = fc /><fc:fc_code id=cboUserType align="undefined" controltype="dropdownlist" datasourceName="" blninput="是" blnempty="否" addrow="否" multiselect="否" xml="" format="" visible="是" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F8%F4%D8%F2%B6%u0100%EE%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D2%E0%E6%E6%u0102%E6" height="20" width="236" top="87" left="75" field="undefined" position="absolute" dataset="undefined" sql2="undefined" enabled="false"></fc:fc_code><BUTTON id=cmdUserTb style="DISPLAY: none; LEFT: 257px; WIDTH: 47px; POSITION: absolute; TOP: 126px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_set()")'>设置</BUTTON></DIV></body></html>

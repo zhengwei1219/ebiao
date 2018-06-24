@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+	<datasources>
+
+      <ds name="nyncbwsxtdb" dbType="sqlserver" type="sqlclient" connStr="Data Source=127.0.0.1\DATA2008;Initial Catalog=cggl_moa;User Id=sa;Password=1230;" />
+
+	    <ds name="eb" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=192.168.0.95;Initial Catalog=fecc20170707;User ID=fecc20170707;Password=84272233" />
+
+    <ds name="sql2006" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=192.168.0.95;Initial Catalog=fecc20170707;User ID=fecc20170707;Password=84272233;" />
+
+    <ds name="ebsrc" dbType="sqlserver" type="oledb"
+	     	connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=ebsrc;User ID=sa;Password=;" />
+    <ds name="fhjtest" dbType="sqlserver" type="oledb"
+	     	connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=fhjtest;User ID=sa;Password=;" />
+    <ds name="sqlclient_fhjtest" dbType="sqlserver"
+			type="sqlclient" connStr="Data Source=localhost;Initial Catalog=fhjtest;User ID=sa;Password=;" />
+
+    <ds name="eforacle134" dbType="oracle" type="oledb"
+       			connStr="Provider=OraOLEDB.Oracle;Data Source=(DESCRIPTION =(ADDRESS_LIST= (ADDRESS = (PROTOCOL = TCP)(HOST=192.168.1.18)(PORT =1521)))(CONNECT_DATA =(sid=MYSYS)));User ID=eworkflow;Password=eworkflow" />
+    <ds name="eforacle1341" dbType="oracle" type="oledb"
+       			connStr="Provider=OraOLEDB.Oracle;Data Source=MYSYS;User ID=eworkflow;Password=eworkflow" />
+
+	     <ds name="fhjtest11" dbType="sqlserver" type="oledb" 
+	     	connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=eworkflow;User ID=sa;Password=;" />
+	     	
+	   	<ds name="threeall" dbType="sqlserver" type="oledb" 
+	   		connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=threeall;User ID=sa;Password=;" />
+	    <ds name="sql2005_test" dbType="sqlserver" 
+type="oledb" connStr="Provider=SQLOLEDB;Data Source=192.168.1.107;Initial Catalog=eformtest;User ID=sa;Password=;" />
+
+		<ds name="eforacle13" dbType="oracle" type="oledb" 
+       			connStr="Provider=OraOLEDB.Oracle;Data Source=MYSYS;User ID=ef_test6;Password=ef_test6" />			
+		<ds name="eforacle1" dbType="oracle" type="oledb" 
+       			connStr="Provider=OraOLEDB.Oracle;Data Source=MYSYS;User ID=efsrc1;Password=efsrc1" />			
+
+    <ds name="eforacle3" dbType="oracle"
+			type="oracleclient" connStr="Data Source=MYSYS;User Id=msl;Password=msl;Integrated Security=no;" />
+    <ds name="daqin" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=daqin;User ID=sa;Password=;" />
+    <ds name="eworkflow" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=eworkflow;User ID=sa;Password=;" />
+    
+    <ds name="cloud" dbType="sqlserver"
+    type="sqlclient" connStr="Server=tcp:y9zdhjlwb9.database.windows.net;Database=eformtest;User ID=eform01@y9zdhjlwb9;Password=Fc82645151!;Trusted_Connection=False;Encrypt=True;" />
+
+    <ds name="exceldb" dbType="sqlserver" type="oledb" 
+	connStr="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\yunjianjt\OA\ebsys\fceformext\res\odbctest.xls;Extended Properties=Excel 8.0;"  />
+			
+			
+    <ds name="msl" dbType="oracle"
+			type="oledb" connStr="Provider=OraOLEDB.Oracle;Data Source=MYSYS;User ID=msl;Password=msl" schemaPattern="MSL" />
+
+    <ds name="sqlclient1" dbType="sqlserver"
+			type="sqlclient" connStr="Data Source=localhost;Initial Catalog=fhjtest;User ID=sa;Password=;" />
+    <ds name="sql2005" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=eformtest;User ID=sa;Password=;" />
+    <ds name="sql2008" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=eformtest;User ID=sa;Password=fc82645151;" />
+ 
+		<ds name="eforacle" dbType="oracle" 
+			type="oledb" connStr="Provider=MSDAORA.1;Data Source=MYSYS;User ID=efdemo;Password=efdemo" />
+			
+		<ds name="eformsqloledb" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=efdemo;User ID=sa;Password=;" />
+    <ds name="eformsql" dbType="sqlserver"
+			type="sqlclient" connStr="Data Source=localhost;Initial Catalog=eformtest;User Id=sa;Password=;" />
+    <ds name="ebsql" dbType="sqlserver" 
+			type="oledb" connStr="Provider=SQLOLEDB;Data Source=localhost;Initial Catalog=ebtest;User ID=sa;Password=;" />
+		<ds name="ebsqljava" dbType="sqlserver" 
+			type="jdbc" jdbcDriver="com.newatlanta.jturbo.driver.Driver" jdbcUrl="jdbc:JTurbo://localhost/ebtest/charset=GBK" user="sa" password="" />
+		<ds name="eboracle" dbType="oracle" 
+			type="jdbc" jdbcDriver="oracle.jdbc.driver.OracleDriver" jdbcUrl="jdbc:oracle:thin:@localhost:1521:sys" user="eboracle" password="eboracle" 
+			 />
+	</datasources>
+	<fileroot>/ebsys</fileroot>
+	<pubparam>系统.单位名称,用户.ID,用户.名称,用户简档.ID,角色.ID,皮肤颜色</pubparam>
+  <encoding>GB2312</encoding>
+  <cachetime eb="30" ebparam="120" sessionTime="20" />
+  <orgname>北京方成公司</orgname>
+  <itemname>示例演示管理系统</itemname>
+  <inver>local</inver>
+
+  <integration>
+    <isCheckDataPermit>0</isCheckDataPermit>
+    <path>
+      <userToProfile>
+        <unit>FCQ_USER</unit>
+        <unit relation="fcq_userTofcq_org" >FCQ_ORG</unit>
+        <unit relation="fcq_orgTofcq_org" isNeedOld="1" >FCQ_ORG</unit>
+        <unit>FCQ_PROFILE</unit>
+        <unit isNeedOld="1" isDeepFind="1" isChange="1">FCQ_PROFILE</unit>
+      </userToProfile>
+      <!-- <userToProfile11>
+        <unit>FCQ_USER</unit>
+        <unit relation="fcq_userTofcq_profile" >FCQ_PROFILE</unit>
+        <unit>FCQ_PROFILE</unit>
+      </userToProfile11>-->
+
+      <userToUserGroup>
+        <unit>FCQ_USER</unit>
+        <unit>FCQ_USER_GROUP</unit>
+      </userToUserGroup>
+
+      <!-- 
+      <userToRoleUser>
+        <unit>FCQ_USER</unit>
+        <unit>FCQ_ROLE</unit>
+        <unit relation="fcq_roleTofcq_role" >FCQ_ROLE</unit>
+        <unit isChange="1">FCQ_USER</unit>
+      </userToRoleUser>
+      
+      <userToOrgAll>
+        <unit>FCQ_USER</unit>
+        <unit>FCQ_EMPLOYEE</unit>
+        <unit relation="fcq_employeeTofcq_orgParent" isUseIn="1" ></unit>
+        <unit relation="fcq_orgTofcq_orgAll" isUseIn="1" ></unit>
+        <unit funcName="getDept"></unit>
+      </userToOrgAll>-->
+
+    </path>
+    <relation>
+      <fcq_userTofcq_profile>
+        <sql>select fcq_profile.profileId from fcq_profile where deleteMark=0 and userId{{keyvalue}}</sql>
+      </fcq_userTofcq_profile>
+
+      <fcq_userTofcq_org>
+        <sql>select fcq_org.sId from fcq_org where deleteMark=0 and sPersonId{{keyvalue}}</sql>
+      </fcq_userTofcq_org>
+
+      <fcq_employeeTofcq_org>
+        <sql>select fcq_org.sId from fcq_org where deleteMark=0 and sPersonId{{keyvalue}}</sql>
+      </fcq_employeeTofcq_org>
+      <fcq_employeeTofcq_orgParent>
+        <sql>select fcq_org.sParent from fcq_org where deleteMark=0 and sPersonId{{keyvalue}}</sql>
+      </fcq_employeeTofcq_orgParent>
+      <fcq_orgTofcq_orgAll>
+        <sql>select fcq_org.sFID from fcq_org where deleteMark=0 and sId{{keyvalue}}</sql>
+      </fcq_orgTofcq_orgAll>
+
+      <fcq_orgTofcq_org>
+        <tbname1>FCQ_ORG</tbname1>
+        <tbname2>FCQ_ORG</tbname2>
+        <fdname1>sId</fdname1>
+        <fdname2>sParent</fdname2>
+        <where>deleteMark=0</where>
+        <datatype>string</datatype>
+        <istree>1</istree>
+      </fcq_orgTofcq_org>
+  
+      <fcq_roleTofcq_role>
+        <tbname1>FCQ_ROLE</tbname1>
+        <tbname2>FCQ_ROLE</tbname2>
+        <fdname1>roleid</fdname1>
+        <fdname2>parentid</fdname2>
+        <where>deleteMark=0</where>
+        <istree>1</istree>
+      </fcq_roleTofcq_role>
+    </relation>
+  </integration>
+
+
+
+  <!--
+  <timer>
+    <workflow-timer flowName="wf_series_timer" flowVersion="1" className="cn.com.fcsoft.workflow.timer.StartWorkflowJob">
+      <cronExpression>0 0 1 * * ?</cronExpression>
+      <userId>USR_0000001</userId>
+      <dsnName></dsnName>
+      <triggerName>trigger:1</triggerName>
+      <groupName>group:1</groupName>
+      <jobName>job:1</jobName>
+      <arg name="leave_days">3</arg>
+    </workflow-timer>
+    <workflow-timer flowName="wf_series_timer" flowVersion="1" className="cn.com.fcsoft.workflow.timer.DoActionWorkflowJob">
+      <cronExpression>0 0/1 * * * ?</cronExpression>
+      <userId>USR_0000001</userId>
+      <dsnName></dsnName>
+      <triggerName>trigger:2</triggerName>
+      <groupName>group:2</groupName>
+      <jobName>job:2</jobName>
+      <arg name="leave_days">3</arg>
+    </workflow-timer>
+  </timer>
+-->
+</root>

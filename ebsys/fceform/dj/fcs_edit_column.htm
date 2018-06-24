@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//赋值到SKDBcombobox1控件
+//分两个数据库版本的值:oracle, sqlserver
+var db2UserName=fcpubdata.db2UserName;
+var bAddField=false;//增加/编辑字段
+var oldNull="";
+function uf_evaluate(){
+	var sHtml="";
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		sHtml="<option value='bigint'>bigint</option>"
+			+"<option value='binary'>binary</option>"
+			+"<option value='bit'>bit</option>"
+			+"<option value='char'>char</option>"      
+			+"<option value='datetime'>datetime</option>"
+			+"<option value='decimal'>decimal</option>"
+			+"<option value='float'>float</option>"
+			+"<option value='image'>image</option>"
+			+"<option value='int'>int</option>"
+			+"<option value='money'>money</option>"
+			+"<option value='nchar'>nchar</option>"
+			+"<option value='ntext'>ntext</option>"
+			+"<option value='numeric'>numeric</option>"
+			+"<option value='nvarchar'>nvarchar</option>"
+			+"<option value='real'>real</option>"
+			+"<option value='smalldatetime'>smalldatetime</option>"
+			+"<option value='smallint'>smallint</option>"
+			+"<option value='smallmoney'>smallmoney</option>"
+			+"<option value='sql_variant'>sql_variant</option>"
+			+"<option value='text'>text</option>"
+			+"<option value='timestamp'>timestamp</option>"
+			+"<option value='tinyint'>tinyint</option>"
+			+"<option value='uniqueidentifier'>uniqueidentifier</option>"
+			+"<option value='varbinary'>varbinary</option>"
+			+"<option value='varchar'>varchar</option>"	;
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sHtml="<option value='CHAR'>CHAR</option>"
+			 +"<option value='VARCHAR2'>VARCHAR2</option>"
+		     +"<option value='NCHAR'>NCHAR</option>"
+		     +"<option value='NVARCHAR2'>NVARCHAR2</option>"
+		     +"<option value='NUMBER'>NUMBER</option>"
+		     +"<option value='DATE'>DATE</option>"
+		     +"<option value='LONG'>LONG</option>"
+		     +"<option value='RAW'>RAW</option>"
+		     +"<option value='LONG RAW'>LONG RAW</option>"
+		     +"<option value='ROWID'>ROWID</option>"
+		     +"<option value='BLOB'>BLOB</option>"
+		     +"<option value='CLOB'>CLOB</option>"
+		     +"<option value='NCLOB'>NCLOB</option>"
+		     +"<option value='BFILE'>BFILE</option>"
+		     +"<option value='UROWID'>UROWID</option>"
+		     +"<option value='FLOAT'>FLOAT</option>"
+		     +"<option value='XMLTYPE'>XMLTYPE</option>";
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		sHtml="<option value='BIGINT'>BIGINT</option>"
+			 +"<option value='BLOB'>BLOB</option>"
+		     +"<option value='CHARACTER'>CHARACTER</option>"
+		     +"<option value='CLOB'>CLOB</option>"
+		     +"<option value='DATE'>DATE</option>"
+		     +"<option value='DBCLOB'>DBCLOB</option>"
+		     +"<option value='DECIMAL'>DECIMAL</option>"
+		     +"<option value='GRAPHIC'>GRAPHIC</option>"
+		     +"<option value='INTEGER'>INTEGER</option>"
+		     +"<option value='LONG VARCHAR'>LONG VARCHAR</option>"
+		     +"<option value='LONG VARGRAPHIC'>LONG VARGRAPHIC</option>"
+		     +"<option value='REAL'>REAL</option>"
+		     +"<option value='SMALLINT'>SMALLINT</option>"
+		     +"<option value='TIME'>TIME</option>"
+		     +"<option value='TIMESTAMP'>TIMESTAMP</option>"
+		     +"<option value='VARCHAR'>VARCHAR</option>"
+		     +"<option value='VARGRAPHIC'>VARGRAPHIC</option>";
+	}	
+	if(fcpubdata.databaseTypeName=="mysql"){
+		sHtml="<option value='bigint'>bigint</option>"
+			+"<option value='int'>int</option>"
+			+"<option value='smallint'>smallint</option>"
+			+"<option value='tinyint'>tinyint</option>"
+			+"<option value='float'>float</option>"
+			+"<option value='real'>real</option>"
+			+"<option value='decimal'>decimal</option>"
+			+"<option value='numeric'>numeric</option>"
+			+"<option value='datetime'>datetime</option>"
+			+"<option value='date'>date</option>"
+			+"<option value='time'>time</option>"
+			+"<option value='timestamp'>timestamp</option>"
+			+"<option value='char'>char</option>"
+			+"<option value='varchar'>varchar</option>"
+			+"<option value='text'>text</option>"
+			+"<option value='longblob'>longblob</option>"	;
+	}
+	var ss=SelectAddOption(cboType,sHtml);
+	cboType.outerHTML=ss;
+}
+function uf_open(){
+	uf_evaluate()
+	var arr=fcpubdata.obj;
+	var sval=arr[0]		//表名 
+	var sFd=arr[1]		//字段名
+	if (IsSpace(sFd)) bAddField=true;
+	if(bAddField){
+		if(fcpubdata.databaseTypeName=="oracle"){
+			cboType.value="VARCHAR2";
+			txtFsize.value="10"
+		}
+		if(fcpubdata.databaseTypeName=="sqlserver" || fcpubdata.databaseTypeName=="mysql"){
+			cboType.value="varchar";
+			txtFsize.value="50"	
+		}
+		if(fcpubdata.databaseTypeName=="db2"){
+			cboType.value="VARCHAR";
+			txtFsize.value="10"
+		}
+		
+	}else{
+		//alert(sFd)
+		txtFname.readOnly=true;	
+		txtFname.value=sFd ;
+		if(fcpubdata.databaseTypeName=="mysql"){
+			var retX = SelectSql("describe "+sval,1,-1);
+	        var oX = SetDom(retX);
+	        if(oX.documentElement == null){
+	        	alert(retX);
+	        	return;
+	        }
+	        for(var i=0;i<oX.documentElement.childNodes.length-1;i++){
+	        	if(sFd == oX.documentElement.childNodes(i).childNodes(0).text )	{
+		        	var sTypes = oX.documentElement.childNodes(i).childNodes(1).text;
+		        	var posStart = sTypes.indexOf("(");
+		        	var posEnd = sTypes.indexOf(")");
+		        	var pos = sTypes.indexOf(",");
+		        	if(posStart<0)
+		        		cboType.value = sTypes;
+		        	else
+		        		cboType.value = sTypes.substring(0,posStart);
+		        	if(pos>=0){
+			        	txtFsize.value = sTypes.substring(posStart+1,pos);
+			        	txtFdec.value=sTypes.substring(pos+1,posEnd);
+		        	}else{
+			        	txtFsize.value = sTypes.substring(posStart+1,posEnd);
+			        	txtFdec.value=0;
+		        	}
+		  			var sNull = "NULL";
+		  			if(oX.documentElement.childNodes(i).childNodes(2).text == "NO") sNull = "NOT " +sNull;     	
+					
+					cboNull.value =sNull;
+					txtFdefault.value=oX.documentElement.childNodes(i).childNodes(4).text;
+					break;					        	
+	        	}
+	        }
+			
+		}else{	
+			var sSql="";
+			if(fcpubdata.databaseTypeName=="sqlserver"){
+				sSql="select distinct syscolumns.name as fdname,systypes.name as fdtype,syscolumns.length as fdsize,"
+					+"syscolumns.scale as fddec,case when syscolumns.isnullable=1 then 'NULL' when syscolumns.isnullable=0 then 'NOT NULL' end as isnullable"
+					+",case when syscolumns.cdefault=0 then '' else syscomments.text end as text from "
+					+" ((syscolumns inner join sysobjects on syscolumns.id=sysobjects.id) inner join systypes on syscolumns.xtype=systypes.xtype) left join syscomments on syscomments.id=syscolumns.cdefault or syscolumns.cdefault=0 or syscomments.id is null "
+					+" where sysobjects.xtype='U' and "
+					+"sysobjects.name='"+sval+"' and syscolumns.name='"+sFd+"'"
+			}
+			if(fcpubdata.databaseTypeName=="oracle"){
+				sSql="select COLUMN_NAME as fdname,DATA_TYPE AS fdtype,decode(DATA_TYPE,'CHAR',DATA_LENGTH,'NCHAR',DATA_LENGTH,'VARCHAR2',DATA_LENGTH,'NVARCHAR2',DATA_LENGTH,'RAW',DATA_LENGTH,DATA_PRECISION) as fdsize,decode(DATA_TYPE,'NUMBER',DATA_SCALE,DATA_PRECISION) as fddec,decode(NULLABLE,'N','NOT NULL','Y','NULL') as isnullable,DATA_DEFAULT as text  from user_tab_columns where table_name='"+sval+"' and column_name='"+sFd+"'";
+			}
+			if(fcpubdata.databaseTypeName=="db2"){
+				sSql="SELECT TABNAME FROM SYSCAT.TABLES WHERE TABSCHEMA='"+db2UserName+"'";
+			}
+			
+			//CopyToPub(sSql)
+			imgdataset1.Open(sSql);
+			var ss=imgdataset1.xml
+			var ilen=ss.indexOf("<set>")
+			var s1=ss.substring(6,ilen)
+			var oXml=SetDom(s1);
+			cboType.value=oXml.childNodes(0).childNodes(1).text;
+			txtFsize.value=oXml.childNodes(0).childNodes(2).text;
+			txtFdec.value=oXml.childNodes(0).childNodes(3).text;
+			cboNull.value=oXml.childNodes(0).childNodes(4).text;
+			oldNull=oXml.childNodes(0).childNodes(4).text;
+			txtFdefault.value=oXml.childNodes(0).childNodes(5).text;
+		}
+	}
+	uf_disabled();
+}
+function uf_ok(){
+	var arr=fcpubdata.obj;
+	var TAB= arr[0]                  //表名
+	var ZD=txtFname.value;			  //字段名
+	var LX=cboType.value;		  //字段类型
+	var WD=txtFsize.value;			  //字段宽度
+	var JD=txtFdec.value;			  //字段精度
+	var sNull=cboNull.value    //允许空
+	if(fcpubdata.databaseTypeName=="oracle"){
+		if(sNull==oldNull){
+			sNull="";	
+		}
+	}
+	var sChnTabName=TAB; //求表的中文名
+	/*var sTemp = SqlToField("select tbchnname from FC_DBSTRU where tbname='"+TAB+"'");
+	if(IsSpace(sTemp) == false){
+		sChnTabName = sTemp;
+	}*/
+	var stype = getDsType(LX);
+	//var strusql = "";
+	//strusql += "<no>delete FC_ENTITYSUB where tbname='"+TAB+"' and fdname='"+ZD+"'</no>";
+	//strusql += "<no>insert into FC_ENTITYSUB (tbname,fdname,fdtype,fdsize,fddec) values ('"+TAB+"','"+ZD+"','"+stype+"','"+WD+"','"+JD+"')</no>";
+	var DF=txtFdefault.value;			  //默认值
+	if(IsSpace(DF)==true) DF=0;
+	var xmlSql="";
+	var sAddEdit = "ADD";
+	var sQuot = ""; //字符型的引号
+	if(LX=="image") sQuot=" '";
+	var DF1=" DEFAULT "+sQuot+DF+sQuot//约束默认值，修改时不需要为空
+	if(fcpubdata.databaseTypeName=="sqlserver"){			  
+		if(uf_sDefault()=="0"){
+			alert("验证列的默认值时出错")
+			return;
+		}
+		if(bAddField == false){
+			sAddEdit = "ALTER COLUMN ";
+			DF1="";
+			var DF_name=SqlToField("select top 1 name from sysobjects where id=(select syscolumns.cdefault from syscolumns,sysobjects where syscolumns.id=sysobjects.id and sysobjects.name='"+TAB+"' and syscolumns.name='"+ZD+"')")
+			if(IsSpace(DF_name)==false){
+				xmlSql+="<alter tableName='"+TAB+"'>"+"<detail> drop constraint "+DF_name+"</detail>"+"</alter>;\n"
+			}		
+		}
+		
+		var s2="<alter tableName='"+TAB+"'>"+" <detail>" + sAddEdit + " "+ZD+" "+LX
+		if(LX=="char" || LX=="nchar" || LX=="nvarchar" || LX=="varchar"){ 
+			if(IsSpace(DF)==false){
+				if(DF.indexOf("('")!=-1){
+					DF=DF.substring(2,DF.length-2);	
+				}
+				sQuot = "'";
+			}
+			xmlSql+=s2+"("+WD+") "+sNull+ " "+DF1
+			
+		}
+		if(LX=="decimal" || LX=="numeric"){
+			xmlSql+=s2+"("+WD+","+JD+") "+sNull+" "+ DF1;
+		}
+		if(LX=="bigint" || LX=="binary" || LX=="bit" ||LX=="image" || LX=="float" || LX=="int" || LX=="money" || LX=="real" || LX=="smallint" || LX=="smallmoney" || LX=="sql_variant" || LX=="tinyint" || LX=="varbinary" ||  LX=="text" || LX=="ntext" || LX=="datetime" || LX=="smalldatetime"){
+			xmlSql+=s2+" "+sNull+" "+ DF1;
+		}
+		
+		xmlSql+="</detail>"+"</alter>"+";\n";
+		if(bAddField == false){
+			if(IsSpace(DF)==false){
+				xmlSql+="<alter tableName='"+TAB+"'>"+"<detail> add constraint PK_"+ZD+"_default DEFAULT "+sQuot+DF+sQuot+" for "+ZD+"</detail>"+"</alter>";
+			}
+		}
+	} 
+	if(fcpubdata.databaseTypeName=="oracle"){
+		if(bAddField == false) sAddEdit = "modify";
+			xmlSql="<alter tableName='"+TAB+"'>"+" <detail>" + sAddEdit + "( "+ZD+" "+LX
+		if(LX=="NUMBER"){
+			xmlSql+=" ("+WD+","+JD+") ";
+			if(IsSpace(DF)==false) xmlSql += "DEFAULT "+DF+" ";
+		}
+		if(LX=="FLOAT"){
+			xmlSql+=" ("+WD+") ";
+			if(IsSpace(DF)==false) xmlSql += "DEFAULT "+DF+" ";
+		}
+		if(LX=="CHAR" || LX=="VARCHAR2" || LX=="NCHAR" || LX=="NVARCHAR2" || LX=="RAW"){
+			xmlSql+=" ("+WD+") ";
+			if(IsSpace(DF)==false){
+				if(DF.indexOf("'")!=-1){
+					DF=DF.substring(1,DF.length-1)	
+				}
+
+				xmlSql += "DEFAULT '"+DF+"' ";
+			}
+		}
+		if(LX=="LONG RAW" || LX=="BLOB" || LX=="CLOB" || LX=="LONG"){
+			xmlSql += " ";
+			if(IsSpace(DF)==false) xmlSql += "DEFAULT "+DF+" ";
+		}
+		if(LX=="DATE"){
+			xmlSql += " ";
+			if(IsSpace(DF)==false) xmlSql += "DEFAULT to_date('"+DF+"','yyyy-mm-dd') ";
+		}
+		xmlSql+=sNull+")"+"</detail>"+"</alter>";	
+	}
+	if(fcpubdata.databaseTypeName=="db2"){
+		//sSql="alter table "+TAB+" " + sAddEdit + " "+ZD+" "+LX
+		xmlSql="<alter tableName='"+TAB+"'>"+" <detail>" + sAddEdit + " "+ZD+" "+LX
+		if(LX=="DECIMAL"){
+			xmlSql+=" ("+WD+","+JD+") ";
+		}
+		if(LX=="CHARACTER" || LX=="VARCHAR" || LX=="GRAPHIC" || LX=="VARGRAPHIC" ){
+			xmlSql+=" ("+WD+") ";
+		}
+		xmlSql+=" "+sNull+" ";
+		if(IsSpace(DF)==false) xmlSql += " DEFAULT "+DF+" "+"</detail>"+"</alter>";
+	}	
+	if(fcpubdata.databaseTypeName=="mysql"){
+		if(bAddField == false) sAddEdit = "modify ";
+		//sSql="alter table "+TAB+" " + sAddEdit + " "+ZD+" "+LX///
+		xmlSql="<alter tableName='"+TAB+"'>"+" <detail>" + sAddEdit + " "+ZD+" "+LX
+		if(LX=="decimal" || LX=="numeric"){
+			xmlSql+=" ("+WD+","+JD+") ";
+		}
+		if(LX=="char" || LX=="varchar" ){
+			xmlSql+=" ("+WD+") ";
+			if(IsSpace(DF)==false){
+				if(DF.substring(0,1)!="'") DF = "'"+DF+"'";
+			}
+		}
+		xmlSql +=" "+sNull+" ";
+		if(IsSpace(DF)==false) 
+			xmlSql += " DEFAULT "+DF;
+		xmlSql +=" "+ "</detail>"+"</alter>";
+	}	
+	xmlSql =RepStr(xmlSql,";"," ");
+	//CopyToPub(xmlSql)
+	//alert(xmlSql)
+	doSaveData(xmlSql,function (){alert("成功")});
+ /*	var s=InsertSql(sSql);
+ 	alert(sSql)
+ 	if(IsSpace(s)){
+ 		var s1= InsertSqls(strusql);
+ 		
+		window.returnValue="ok";
+		alert("修改成功")
+		CloseBill();
+	}else{
+		alert(s);
+	}*/
+ 	
+}
+
+//判断字段类型
+//触发时间：当改变字段类型时出发
+//参数1：sType 字段类型
+//参数2：sWidth 字段宽度
+//参数3：sPrecision 字段精度
+function changeType(sType,sWidth,sPrecision){
+	if(fcpubdata.databaseTypeName=="sqlserver" || fcpubdata.databaseTypeName=="mysql"){
+		sPrecision="";
+		switch(sType){
+			case 'int':{
+				sWidth = "4";
+				break;
+			} 
+			case 'bigint':{
+				sWidth="8";
+				break;
+			} 
+			case 'bit':{
+				sWidth="1";
+				break;
+			} 
+			case 'datetime':{
+				sWidth="8";
+				break;
+			} 
+			case 'decimal':{
+				sWidth="9";
+				sPrecision="3";
+				break;
+			} 
+			case 'float':{
+				sWidth="8";
+				break;
+			} 
+			case 'image':{
+				sWidth="16";
+				break;
+			} 
+			case 'money':{
+				sWidth="8";
+				break;
+			} 
+			case 'ntext':{
+				sWidth="16";
+				break;
+			}
+			case 'numeric':{
+				sWidth="9";
+				sPrecision="3"
+				break;
+			} 
+			case 'real':{
+				sWidth="4";
+				break;
+			} 
+			case 'smalldatetime':{
+				sWidth="4";
+				break;
+			} 
+			case 'smallint':{
+				sWidth="2";
+				break;
+			} 
+			case 'smallmoney':{
+				sWidth="4";
+				break;
+			} 
+			case 'sql_variant':{
+				sWidth="";
+				break;
+			}
+			case 'text':{
+				sWidth="16";
+				break;
+			} 
+			case 'timestamp':{
+				sWidth="8";
+				break;
+			}
+			case 'tinyint':{
+				sWidth="1";
+				break;
+			} 
+			case 'unqueidentifier':{
+				sWidth="16";
+				break;
+			} 
+			case 'binary':{
+				sWidth="50";
+				break;
+			}
+			case 'varbinary':{
+				sWidth="50";
+				break;
+			} 
+			case 'char':{
+				sWidth="10";
+				break;
+			} 
+			case 'nchar':{
+				sWidth="10";
+				break;
+			} 
+			case 'varchar':{
+				sWidth="50";
+				break;
+			} 
+			case 'nvarchar':{
+				sWidth="50";
+				break;
+			} 
+		}
+		if(sType == "nvarchar" || sType == "varchar" || sType == "nchar" || sType == "char" ){
+			txtFsize.readOnly = false;
+		}else{
+			txtFsize.readOnly = true;
+		}
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		sPrecision="";
+		sWidth="";
+		switch(sType){
+			case 'CHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARCHAR2':{
+				sWidth = "10";
+				break;
+			}
+			case 'NCHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'NVARCHAR2':{
+				sWidth = "10";
+				break;
+			}
+			case 'NUMBER':{
+				sWidth = "10";
+				sPrecision="0"
+				break;
+			}
+			case 'RAW':{
+				sWidth = "10";
+				break;
+			}
+			case 'FLOAT':{
+				sWidth = "10";
+				break;
+			}
+		}	
+	}	
+	if(fcpubdata.databaseTypeName=="db2"){
+		sPrecision="";
+		sWidth="";
+		switch(sType){
+			case 'CHARACTER':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARCHAR':{
+				sWidth = "10";
+				break;
+			}
+			case 'GRAPHIC':{
+				sWidth = "10";
+				break;
+			}
+			case 'VARGRAPHIC':{
+				sWidth = "10";
+				break;
+			}
+			case 'DECIMAL':{
+				sWidth = "5";
+				sPrecision="0"
+				break;
+			}
+		}		
+	}	
+	txtFsize.value=sWidth;
+	txtFdec.value=sPrecision;
+	uf_disabled();
+	
+}
+function uf_change(){
+	changeType(cboType.value,txtFsize.value,txtFdec.value);
+	txtFdefault.value="";	
+}
+
+function uf_disabled(){
+	var sType=cboType.value;
+	if(fcpubdata.databaseTypeName=="sqlserver" || fcpubdata.databaseTypeName=="mysql"){
+		if(sType!='numeric' && sType!='decimal'){
+			txtFdec.disabled=true;
+			txtFdec.style.backgroundColor="Menu"	
+		}else{
+			txtFdec.removeAttribute("disabled");
+			txtFdec.style.backgroundColor="white"
+		}
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		if(sType != 'NUMBER'){
+			txtFdec.disabled=true;
+			txtFdec.style.backgroundColor="Menu"	
+		}else{
+			txtFdec.removeAttribute("disabled");
+			txtFdec.style.backgroundColor="white"
+		}
+	}	
+	if(fcpubdata.databaseTypeName=="db2"){
+		if(sType != 'DECIMAL'){
+			txtFdec.disabled=true;
+			txtFdec.style.backgroundColor="Menu"	
+		}else{
+			txtFdec.removeAttribute("disabled");
+			txtFdec.style.backgroundColor="white"
+		}
+	}		
+}
+
+
+function uf_Precision(){
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		if(txtFdec.value>38){
+			alert("精度设置值必须位于1至38之间")	;
+			txtFdec.value="3";
+			return;
+		}
+	}
+	if(fcpubdata.databaseTypeName=="oracle"){
+		if(txtFdec.value>32767 && txtFdec.value<-32768){
+			alert("值必须介于 -32768 和 32767 之间")	;
+			txtFdec.value="3";
+			return;
+		}	
+	}
+}
+
+function uf_Width(){
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		if(txtFsize.value>8000){
+			alert("长度的设置值必须位于1至8000之间");
+			txtFsize.value="50";
+			return;
+		}
+	}
+}
+
+function uf_sDefault(){
+	if(fcpubdata.databaseTypeName=="sqlserver"){
+		if(cboType.value=="bigint" || cboType.value=="binary" || cboType.value=="bit" || cboType.value=="decimal" || cboType.value=="float" || cboType.value=="int" || cboType.value=="money" || cboType.value=="numeric" || cboType.value=="real" || cboType.value=="smallint" || cboType.value=="smallmoney" || cboType.value=="sql_variant" || cboType.value=="tinyint" || cboType.value=="varbinary"){
+			if(IsNum(txtFdefault.value)==false && IsSpace(txtFdefault.value)==false){
+				return 0;	
+			}
+		}
+	}
+	
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" userType BLONclose BLONopenBefore center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" posheight="130" poswidth="500" entertype="修改" codeheader="BBB" mkbh caption="字段" type="ST" dj_sn="fcs_edit_column" billtaborder="<root><taborder>txtFname</taborder><taborder>cboType</taborder><taborder>txtFsize</taborder><taborder>txtFdec</taborder><taborder>cboNull</taborder><taborder>txtFdefault</taborder><taborder>FCButton1</taborder><taborder>FCButton2</taborder></root>" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label3</id><id>Label4</id><id>Label5</id><id>Label6</id></label><combobox><id>cboType</id><id>cboNull</id></combobox><button><id>FCButton1</id><id>FCButton2</id></button><text><id>txtFname</id><id>txtFsize</id><id>txtFdec</id><id>txtFdefault</id></text><dataset><id>imgdataset1</id></dataset></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" AutoResizeXml><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 8px; WIDTH: 111px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #d4d0c8" onmovestart=moveStart() value="Label1" controltype="label">西文字段名</SPAN><SPAN id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 120px; WIDTH: 106px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #d4d0c8" onmovestart=moveStart() value="Label2" controltype="label">字段类型</SPAN><SPAN id=Label3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 227px; WIDTH: 65px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #c0c0c0" onmovestart=moveStart() value="Label3" controltype="label">字段宽度</SPAN><SPAN id=Label4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 293px; WIDTH: 44px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #d4d0c8" onmovestart=moveStart() value="Label4" controltype="label">精度</SPAN><SPAN id=Label5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 338px; WIDTH: 72px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #d4d0c8" onmovestart=moveStart() value="Label5" controltype="label">允许空</SPAN><SPAN id=Label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 411px; WIDTH: 78px; FONT-FAMILY: ; POSITION: absolute; TOP: 8px; HEIGHT: 17px; BACKGROUND-COLOR: #d4d0c8; TEXT-ALIGN: center; backgroundColor1: #d4d0c8" onmovestart=moveStart() value="Label6" controltype="label">缺省值</SPAN><INPUT id=txtFname style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 8px; WIDTH: 110px; POSITION: absolute; TOP: 26px; HEIGHT: 19px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" onmovestart=moveStart() controltype="text" dataset="imgdataset1" CanSelect="false" china="西文字段名" field="fdname"></INPUT><SELECT id=cboType style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 119px; WIDTH: 108px; FONT-FAMILY: ; POSITION: absolute; TOP: 26px; HEIGHT: 39px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() onchange='bill_onclick("uf_change()")' controltype="combobox" dataset="imgdataset1" china="字段类型" field="fdtype" sql check="1" temptext tempvalue sqltrans></SELECT><INPUT id=txtFsize style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 226px; WIDTH: 65px; POSITION: absolute; TOP: 26px; HEIGHT: 19px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" onmovestart=moveStart() onchange='bill_onclick("uf_Width()")' controltype="text" dataset="imgdataset1" CanSelect="false" china="字段宽度" field="fdsize"></INPUT><INPUT id=txtFdec style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 292px; WIDTH: 45px; POSITION: absolute; TOP: 26px; HEIGHT: 19px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" onmovestart=moveStart() onchange='bill_onclick("uf_Precision()")' controltype="text" dataset="imgdataset1" CanSelect="false" china="字段精度" field="fddec"></INPUT><SELECT id=cboNull style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 338px; WIDTH: 73px; FONT-FAMILY: ; POSITION: absolute; TOP: 26px; HEIGHT: 29px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() controltype="combobox" dataset="imgdataset1" china="允许空" field="isnullable" sql check="1" temptext="NULL&#13;&#10;NOT NULL" tempvalue="NULL&#13;&#10;NOT NULL" sqltrans><OPTION value=NULL selected>NULL</OPTION><OPTION value="NOT NULL">NOT NULL</OPTION></SELECT><INPUT id=txtFdefault style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 410px; WIDTH: 79px; POSITION: absolute; TOP: 26px; HEIGHT: 19px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" onmovestart=moveStart() controltype="text" dataset="imgdataset1" CanSelect="false" china="缺省值" field="text"></INPUT><BUTTON id=FCButton1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 333px; WIDTH: 67px; FONT-FAMILY: ; POSITION: absolute; TOP: 52px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'>确 定</BUTTON><BUTTON id=FCButton2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 404px; WIDTH: 67px; FONT-FAMILY: ; POSITION: absolute; TOP: 52px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'>取 消</BUTTON><?xml:namespace prefix = fc /><fc:dataset id=imgdataset1 controltype="dataset" opensortno="1" onValid='bill_ondatasetvalid("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text></dsid>")' onGetText='bill_ondatasetgettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text></dsid>")' onSetText='bill_ondatasetsettext("<dsid><fdname></fdname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><isnullable></isnullable><text></text></dsid>")' format="<fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>字段宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>字段精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnullable</fieldname><datatype>字符</datatype><displaylabel>允许空</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>text</fieldname><datatype>字符</datatype><displaylabel>缺省值</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" isSubGrid="undefined"></fc:dataset></DIV></body></html>

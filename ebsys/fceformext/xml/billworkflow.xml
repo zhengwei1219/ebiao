@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<root>
+  <bill>
+    <djsn>表单sn名称</djsn>
+    <djname>先小小学校学校学</djname>
+    <fields>
+        <field>
+            <fieldname>beactive</fieldname> 		//字段名
+            <datatype>字符</datatype>			//数据类型,分:字符/实数/整数/文本/图象/日期
+            <displaylabel>是否活动</displaylabel>		//中文名
+            <size>2</size>					//长度
+            <precision>0</precision>			//小数位数
+        </field>
+        ... 
+    </fields>
+  </bill>
+  <bill>
+    ...
+  </bill>
+  ...
+ </root>
+  

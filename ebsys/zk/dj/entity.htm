@@ -1,0 +1,119 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open()
+{
+	new Eform.SysForm().setButtonImage();
+	if(txtTableChName.value != ""){
+		txtTableName.readOnly = true;
+	}
+	//if(IsSpace($id('isNotSameUnit').value) == true) $id('isNotSameUnit').value = 0;
+	//uf_heid();
+}
+function uf_saveTable(saveAdd)
+{	
+	if(uf_tableNameNull()==false) return;
+	var sRet = "";
+	var tbname = txtTableName.value;
+	tbname = tbname.toUpperCase();
+	dataset1.Field('tbname').Value = tbname;
+	/*if($id('isNotSameUnit').value == 0){
+			dataset1.Field('addUnitId').Value = dataset1.Field('showUnitId').Value;
+			dataset1.Field('editUnitId').Value = dataset1.Field('showUnitId').Value;
+	}*/
+	var xmlSql="";
+	if(txtTableName.readOnly  == false)//添加表
+	{
+		var sb = new Sys.StringBuilder();
+		var fdSize = 4;
+		if(fcpubdata.databaseTypeName == "oracle") fdSize = 10;
+		xmlSql="<insert tableName='FC_ENTITYSUB'>"+"<names>tbname,fdname,chnname,fdtype,fdsize,type,sortNo</names>"+"<values>'"+tbname+"','sName','名称','字符',50 ,'名称',"+getMaxIntNo('ENS')+"</values> </insert>";
+		if(radioSqlType.value==1)
+		{ 
+			sb.append("<create tableName='"+ tbname +"'>");
+	 		sb.append("<detail> (sName  varchar (50))</detail>");
+	 		sb.append("</create>");
+			sb.append("<insert tableName='FC_ENTITY'>");
+			sb.append("<names> tbname,tbchnname,sortNo,userType,isSaveHistory</names>");
+			sb.append("<values>'"+tbname+"','"+txtTableChName.value+"',"+getMaxIntNo('ENT')+",'"+$id('userType').value+"','"+$id('isSaveHistory').value+"'</values>");
+			sb.append("</insert>");	
+			xmlSql += sb.toString();
+		}
+	}
+	else   //修改表中文名
+	{
+		if(uf_isNullValue()==false) return;
+		{	
+	        var sb = new Sys.StringBuilder();
+	        sb.append("<update tableName='FC_ENTITY'>");
+	 		sb.append("<set>tbchnname='"+txtTableChName.value+"',userType='"+$id('userType').value+"',isSaveHistory='"+$id('isSaveHistory').value+"'</set>");
+	 		sb.append("<where> tbname = '"+tbname+"'</where>");
+	 		sb.append("</update>");
+		}
+		xmlSql=sb.toString();
+	}
+	if(saveAdd == false){
+		doSaveData(xmlSql,function(){alert("保存成功");refreshUpGrid();})// 保存
+	}else{
+		doSaveData(xmlSql,function(){//  保存新增
+			alert("保存成功");
+			dataset1.Field('TBNAME').Value='';
+			dataset1.fset_cont1();	
+			txtTableChName.value="";
+			txtTableName.readOnly=false;
+			})
+	}
+}
+
+function uf_tableNameNull()
+{
+	var sValue=txtTableName.value;
+	if(IsSpace(sValue))
+	{	
+		alert("表名不能为空");
+		return false;		
+	}
+	else
+	{
+		return true;
+	}	
+}
+
+function uf_isNullValue()
+{
+	var sValue=txtTableChName.value;
+	if(IsSpace(sValue)) 
+	{	
+		alert("表中文名不能为空");
+		return false;		
+	}
+	else
+	{
+		return true;
+	}	
+		
+}
+
+function uf_evaluate()
+{
+	if(fcpubdata.databaseTypeName == "oracle")  txtTableName.value = txtTableName.value.toUpperCase( );//如果是oracle库，表名转大写
+	if(txtTableChName.value == '') {txtTableChName.value=txtTableName.value;txtTableChName.fireEvent("onchange");}
+}
+
+
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" AutoResizeXml billtaborder="<root><taborder>txtTableName</taborder><taborder>txtTableChName</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>cmdSaveNew</taborder><taborder>radioSqlType</taborder><taborder>userType</taborder><taborder>isSaveHistory</taborder></root>" dj_sn="entity" caption="表信息编辑" type="ZK" isfile="是" center="居中" posleft postop poswidth="255" posheight="270" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" controlno="SKButton:0;SKDBedit:0;checkbox:2;label:16;radio:1;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:10;text:8;hr:0;checkboxlist:0;radiolist:0;dropdownlist:4;grid:1;dataset:4;spin:0;excel:0;tree:0;ebshow:0;ebiao:1;layout:0;page:0;eblayout:0;test:undefined" contxml="<root><checkbox><id>isSaveHistory</id></checkbox><label><id>label5</id><id>label6</id><id>Label2</id></label><radio><id>radioSqlType</id></radio><button><id>cmdOk</id><id>cmdClose</id><id>cmdSaveNew</id></button><text><id>txtTableName</id><id>txtTableChName</id></text><dropdownlist><id>userType</id></dropdownlist><dataset><id>dataset1</id></dataset></root>" idtype="1" runsave keyfield entertype="修改" codeheader OtherSave="否" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" BLONresizeBefore BLONresizeAfter allBrowser="否" useHelp envType="电脑" runParams><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" format="<fields><field><fieldname>KEYPREFIX</fieldname><datatype>字符</datatype><displaylabel>KEYPREFIX</displaylabel><size>3</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>ORGID</fieldname><datatype>字符</datatype><displaylabel>ORGID</displaylabel><size>11</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>OWNERID</fieldname><datatype>字符</datatype><displaylabel>OWNERID</displaylabel><size>11</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>TBCHNNAME</fieldname><datatype>字符</datatype><displaylabel>TBCHNNAME</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>TBNAME</fieldname><datatype>字符</datatype><displaylabel>TBNAME</displaylabel><size>50</size><precision></precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>userType</fieldname><datatype>字符</datatype><displaylabel>用户分类</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isSaveHistory</fieldname><datatype>字符</datatype><displaylabel>是否保存历史记录</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" controltype="dataset" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%9A%94%CC%98%AA%B6%A0%B6%C0jbXrn%DA%F2%EC%E8Xrn%9A%94%CC%98%AA%B6%A0%B6%C0XrnXrnXrn%FC%DE%D8%F2%D8Xn%96Xn%90%F6%D2%EA%D0%E8%D8Xt%96Xr%7CXt%90X%7C%92%DA%D4%EE%F8%D2%D6%D0%F6%D0j%EC%D2%E2j%9A%E0%D8%E6%D6Xr%7EXr%7C%F6%D2%EA%D0%E8%D8Xr%7CXr%80j%BA%D0%E6%F8%D8X%7C%96Xt%90Xr%7C" onSetText='bill_ondatasetsettext("<dsid><KEYPREFIX></KEYPREFIX><ORGID></ORGID><OWNERID></OWNERID><TBCHNNAME></TBCHNNAME><TBNAME></TBNAME><userType></userType><isSaveHistory></isSaveHistory></dsid>")' onGetText='bill_ondatasetgettext("<dsid><KEYPREFIX></KEYPREFIX><ORGID></ORGID><OWNERID></OWNERID><TBCHNNAME></TBCHNNAME><TBNAME></TBNAME><userType></userType><isSaveHistory></isSaveHistory></dsid>")' onValid='bill_ondatasetvalid("<dsid><KEYPREFIX></KEYPREFIX><ORGID></ORGID><OWNERID></OWNERID><TBCHNNAME></TBCHNNAME><TBNAME></TBNAME><userType></userType><isSaveHistory></isSaveHistory></dsid>")' async="否" isSubGrid="否" opensortno="1" pubpara="否" saveastable="FC_ENTITY" isaddemptyrec="否" submittype="2" submitno="1" issubds="否" fieldtrans="<root><field><name>showUnitId</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>showUnitName</name><trans></trans><rtrans></rtrans><sql>select%20id%20as%20showUnitId%2Cname%20as%20showUnitName%20from%20fcq_unit%20where%20deleteMark%3D0</sql></field><field><name>addUnitId</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>addUnitName</name><trans></trans><rtrans></rtrans><sql>select%20id%20as%20addUnitId%2Cname%20as%20addUnitName%20from%20fcq_unit%20where%20deleteMark%3D0</sql></field><field><name>editUnitId</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>editUnitName</name><trans></trans><rtrans></rtrans><sql>select%20id%20as%20editUnitId%2Cname%20as%20editUnitName%20from%20fcq_unit%20where%20deleteMark%3D0</sql></field><field><name>queryUnitName</name><trans></trans><rtrans></rtrans><sql>select%20id%20as%20queryUnitId%2Cname%20as%20queryUnitName%20from%20fcq_unit%20where%20deleteMark%3D0</sql></field><field><name>listUnitName</name><trans></trans><rtrans></rtrans><sql>select%20id%20as%20listUnitId%2Cname%20as%20listUnitName%20from%20fcq_unit%20where%20deleteMark%3D0</sql></field></root>"></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 179px; HEIGHT: 20px; TOP: 37px; LEFT: 65px" id=txtTableName onmovestart=moveStart() onchange='bill_onclick("uf_evaluate()")' size=28 dataset="dataset1" controltype="text" field="TBNAME" china="TBNAME"><INPUT style="POSITION: absolute; WIDTH: 180px; HEIGHT: 20px; TOP: 61px; LEFT: 64px" id=txtTableChName onmovestart=moveStart() size=28 dataset="dataset1" controltype="text" field="TBCHNNAME" china="TBCHNNAME"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 42px; LEFT: 6px" id=label5 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">表名：</LABEL><LABEL style="POSITION: absolute; WIDTH: 68px; HEIGHT: 16px; TOP: 66px; LEFT: 6px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否" NotBg="否">表中文名：</LABEL><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 65px; HEIGHT: 26px; BORDER-TOP: 0px; TOP: 5px; BORDER-RIGHT: 0px; LEFT: 5px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_saveTable(false);")'></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 65px; HEIGHT: 26px; BORDER-TOP: 0px; TOP: 5px; BORDER-RIGHT: 0px; LEFT: 74px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 21px; TOP: 4px; LEFT: 142px" id=cmdSaveNew onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_saveTable(true)")'>保存并新建</BUTTON> 
+<FIELDSET style="POSITION: absolute; WIDTH: 238px; HEIGHT: 57px; TOP: 81px; LEFT: 6px" id=radioSqlType onmovestart=moveStart() contentEditable=false controltype="radio" NotBg="否" value="1" temptext="修改真正库结构及实体表的信息&#13;&#10;只修改实体表的信息 " tempvalue="1&#13;&#10;2" aspect="纵向" legend><LEGEND></LEGEND><INPUT id=RGradioSqlType1 onclick=radioSqlType.value=RGradioSqlType[0].value; value=1 CHECKED type=radio name=RGradioSqlType text="修改真正库结构及实体表的信息"><SPAN>修改真正库结构及实体表的信息</SPAN>&nbsp;<BR><INPUT id=RGradioSqlType2 onclick=radioSqlType.value=RGradioSqlType[1].value; value=2 type=radio name=RGradioSqlType text="只修改实体表的信息 "><SPAN>只修改实体表的信息 </SPAN>&nbsp;</FIELDSET>&nbsp; <SPAN style="POSITION: absolute; WIDTH: 78px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 154px; LEFT: 6px" id=Label2 controltype="label" inputTag="否" align="Left">自定义分类：</SPAN><fc:fc_code id=userType dataset="dataset1" left="77" top="150" width="166" height="20" format="" visible="是" controltype="dropdownlist" sqltrans="%F4%D8%E6%D8%D4%F6Xrn%D6%E0%F4%F6%E0%EA%D4%F6Xrn%F8%F4%D8%F2%B6%u0100%EE%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%CC%D8%EA%F6%E0%F6%u0100" field="userType" align="undefined" FieldNameList="" isTreeNewSql="0" isShowTree="0" sql2="null" position="absolute" multiselect="否" addrow="否" blnempty="否" blninput="是" datasourceName="" xml=""></fc:fc_code> 
+<DIV style="POSITION: absolute; WIDTH: 230px; HEIGHT: 20px; TOP: 175px; LEFT: 3px" id=isSaveHistory onmovestart=moveStart() noWrap dataset="dataset1" controltype="checkbox" field="isSaveHistory" china="是否保存历史记录" value="0" falsevalue="0" truevalue="1"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>是否保存历史数据</SPAN></DIV></DIV><script></script></body></html>

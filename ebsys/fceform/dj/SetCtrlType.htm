@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+	var obj = fcpubdata.obj[0];
+	SetTextValue(obj.style.width,txtWidth)
+	SetTextValue(obj.style.height,txtHeight)
+	SetTextValue(obj.style.top,txtTop)
+	SetTextValue(obj.style.left,txtLeft)
+	SetTextValue(obj.id,FCDBedit2)
+	if(IsSpace(obj.controltype)){
+		SKDBcombobox1.value = "";	
+	}else{
+		SKDBcombobox1.value = obj.controltype;
+	}
+	FCDBedit2.onchange = function uf_id_onchange() {
+								var sR = CheckContSameName(fcpubdata.obj[3],FCDBedit2.value,obj,fcpubdata.obj[2]) ;
+								if(sR != ""){
+									alert(sR);
+									event.returnValue = false ;
+								}
+						}
+	switch(obj.style.position){
+		case 'static':{
+			SKDBcombobox3.value="static";
+			txtLeft.value="";
+			txtTop.value="";
+			break;	
+		}
+		case 'absolute':{
+			SKDBcombobox3.value="absolute";
+			break;	
+		}
+		case 'relative':{
+			SKDBcombobox3.value="relative";
+			break;	
+		}
+	}
+	new Eform.SysForm().setButtonImage();
+}
+function uf_ok() {
+	var obj = fcpubdata.obj[0];
+	obj.controltype = SKDBcombobox1.value ;
+	obj.id = FCDBedit2.value;
+	switch(SKDBcombobox3.value){
+		case 'static':{
+			obj.style.position="static";
+			break;	
+		}
+		case 'absolute':{
+			obj.style.position="absolute";
+			break;	
+		}
+		case 'relative':{
+			obj.style.position="relative";
+			break;	
+		}
+	}
+	window.close();	
+}
+
+function uf_changeVal(){
+	if(SKDBcombobox3.value=="static"){
+		txtLeft.value="";
+		txtTop.value="";
+	}	
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="210" poswidth="356" entertype="修改" codeheader="BBB" mkbh caption="设置ControlType属性" type="LR" dj_sn="SetCtrlType" billtaborder="<root><taborder>FCDBedit2</taborder><taborder>SKDBcombobox1</taborder><taborder>SKDBcombobox3</taborder><taborder>txtLeft</taborder><taborder>txtTop</taborder><taborder>txtWidth</taborder><taborder>txtHeight</taborder><taborder>cmdClose</taborder><taborder>cmdOk</taborder></root>" contxml="<root><label><id>Label1</id><id>Label11</id><id>Label6</id><id>Label9</id><id>Label10</id><id>Label7</id><id>Label8</id><id>Label13</id></label><combobox><id>SKDBcombobox1</id><id>SKDBcombobox3</id></combobox><shape><id>Shape6</id></shape><tab><id>PageControl1</id></tab><button><id>cmdClose</id><id>cmdOk</id></button><text><id>FCDBedit2</id><id>txtLeft</id><id>txtTop</id><id>txtWidth</id><id>txtHeight</id></text></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 348px; HEIGHT: 139px; TOP: 0px; LEFT: 0px" id=PageControl1 class=tab-pane controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV style="WIDTH: 348px; HEIGHT: 121px" class=tab-page>
+<H2 class=tab>属性</H2><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 146px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 43px; LEFT: 94px" id=SKDBcombobox1 controltype="combobox" backheight="25" backwidth="146" temptext="shape&#13;&#10;div&#13;&#10;label&#13;&#10;img&#13;&#10;dropdownlist&#13;&#10;textarea&#13;&#10;checkboxlist&#13;&#10;radiolist&#13;&#10;checkbox&#13;&#10;tree&#13;&#10;a&#13;&#10;grid&#13;&#10;dataset&#13;&#10;button&#13;&#10;text&#13;&#10;listbox&#13;&#10;chart&#13;&#10;dbimg&#13;&#10;combobox&#13;&#10;radio&#13;&#10;tab&#13;&#10;upload" tempvalue="shape&#13;&#10;div&#13;&#10;label&#13;&#10;img&#13;&#10;dropdownlist&#13;&#10;textarea&#13;&#10;checkboxlist&#13;&#10;radiolist&#13;&#10;checkbox&#13;&#10;tree&#13;&#10;a&#13;&#10;grid&#13;&#10;dataset&#13;&#10;button&#13;&#10;text&#13;&#10;listbox&#13;&#10;chart&#13;&#10;dbimg&#13;&#10;combobox&#13;&#10;radio&#13;&#10;tab&#13;&#10;upload" sql check="1" sqltrans><OPTION selected value=shape>shape</OPTION><OPTION value=div>div</OPTION><OPTION value=label>label</OPTION><OPTION value=img>img</OPTION><OPTION value=dropdownlist>dropdownlist</OPTION><OPTION value=textarea>textarea</OPTION><OPTION value=checkboxlist>checkboxlist</OPTION><OPTION value=radiolist>radiolist</OPTION><OPTION value=checkbox>checkbox</OPTION><OPTION value=tree>tree</OPTION><OPTION value=a>a</OPTION><OPTION value=grid>grid</OPTION><OPTION value=dataset>dataset</OPTION><OPTION value=button>button</OPTION><OPTION value=text>text</OPTION><OPTION value=listbox>listbox</OPTION><OPTION value=chart>chart</OPTION><OPTION value=dbimg>dbimg</OPTION><OPTION value=combobox>combobox</OPTION><OPTION value=radio>radio</OPTION><OPTION value=tab>tab</OPTION><OPTION value=upload>upload</OPTION></SELECT><SPAN style="POSITION: absolute; WIDTH: 71px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 47px; LEFT: 18px" id=Label1 controltype="label" value="Label1">Controltype：</SPAN><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 6px; FONT-SIZE: 12px; TOP: 23px; LEFT: 48px" id=Label11 controltype="label" value="Label11">控件ID：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 146px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 18px; LEFT: 94px" id=FCDBedit2 controltype="text" china CanSelect="false"></INPUT></DIV>
+<DIV style="WIDTH: 348px; HEIGHT: 121px" class=tab-page>
+<H2 class=tab>样式</H2><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 31px; LEFT: 19px" id=Label6 controltype="label" value="Label6">定位类型：</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 67px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 26px; LEFT: 74px" id=SKDBcombobox3 onchange='bill_onclick("uf_changeVal()")' controltype="combobox" china backheight="25" backwidth="67" temptext="静态&#13;&#10;绝对" tempvalue="static&#13;&#10;absolute" sql check="1" sqltrans><OPTION selected value=static>静态</OPTION><OPTION value=absolute>绝对</OPTION></SELECT><SPAN style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 6px; FONT-SIZE: 12px; TOP: 57px; LEFT: 53px" id=Label9 controltype="label" value="Label9">左：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 45px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 53px; LEFT: 74px" id=txtLeft controltype="text" china CanSelect="false"></INPUT><SPAN style="POSITION: absolute; WIDTH: 25px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 8px; FONT-SIZE: 12px; TOP: 57px; LEFT: 122px" id=Label10 controltype="label" value="Label10">上：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 45px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 53px; LEFT: 142px" id=txtTop controltype="text" china CanSelect="false"></INPUT><SPAN style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 10px; FONT-SIZE: 12px; TOP: 57px; LEFT: 192px" id=Label7 controltype="label" value="Label7">宽：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 45px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 53px; LEFT: 211px" id=txtWidth controltype="text" china CanSelect="false"></INPUT><SPAN style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 6px; FONT-SIZE: 12px; TOP: 57px; LEFT: 263px" id=Label8 controltype="label" value="Label8">高：</SPAN><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 45px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 53px; LEFT: 284px" id=txtHeight controltype="text" china CanSelect="false"></INPUT> 
+<DIV style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 11px; LEFT: 10px" id=Label13 onmovestart=moveStart() noWrap controltype="label" value="Label13">位置</DIV><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 293px; DISPLAY: block; HEIGHT: 15px; TOP: 17px; LEFT: 35px" id=Shape6 onresize="" controltype="shape" id1="3" from = "0,0" to = "230pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+<BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 149px; LEFT: 259px" id=cmdClose onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 149px; LEFT: 176px" id=cmdOk onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON></DIV></body></html>

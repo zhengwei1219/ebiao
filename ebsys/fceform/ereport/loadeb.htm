@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<TITLE>e表</TITLE>
+
+    <script type="text/javascript" src="../../zk/workflat/js/jquery/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="../../zk/workflat/js/jquery/jquery-ui-1.8.11.custom.min.js"></script>
+		
+		
+	<script src="../js/csjsrequest.js"></script>
+	<script src="../js/MicrosoftAjax.js"></script>
+	<script src="../js/fcpub.js"></script>
+
+    <script type="text/javascript" src="../../zk/workflat/js/jquery/external/jquery.dialog.js" ></script>
+
+</head>
+<body style="MARGIN:0px;overflow:hidden;" onload="window_onload()" onresize="window_onresize()">
+<iframe width="100%" height="100%"  id="ebrun" name="ebrun" border=0 scrolling=no></iframe>
+<script>
+    
+    function window_onload() {
+        $id("ebrun").src = "./ebrun.htm" + document.location.search;
+        window_onresize()
+    }
+    function window_onresize() {
+        var oWinSize = getClientSize();
+        $id("ebrun").width = oWinSize.width;
+        $id("ebrun").height = oWinSize.height;
+    }
+</script>
+</body>
+
+</html>

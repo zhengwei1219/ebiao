@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrPub = new Array();
+function uf_open(){
+	new Eform.SysForm().setButtonImage();
+	var arr=fcpubdata.obj;
+	if(IsSpace(arr[1])) return;
+	//arr[1]=UnRepXml(arr[1]);
+	//CopyToPub(arr[1])
+	var oXml = SetDom(arr[1]) ;
+	var sOption="" ;
+	var l=oXml.documentElement.childNodes.length ;
+	//alert(oXml.documentElement.xml)
+	for(var i=0;i<l;i++){
+		var arrTmp = new Array()
+		arrTmp[0]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(0).text) ;
+		arrTmp[1]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(1).text) ;
+		arrTmp[2]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(2).text) ;
+		arrTmp[3]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(3).text) ;
+		arrTmp[4]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(4).text) ;
+		arrTmp[5]=UnRepXml(oXml.documentElement.childNodes(i).childNodes(5).text) ;
+		arrPub[i]=arrTmp ;
+		sOption += "<option>" + arrTmp[0] +"</option>" ;
+	}
+	//alert(sOption)
+	SKDBListBox1.outerHTML = SelectAddOption(SKDBListBox1,sOption);
+	
+}
+function uf_addCond(){
+	var arr1 = new Array()
+	arr1[0]=fcpubdata.obj[0]
+	var arr=DjOpen('termstyle',arr1,'展现','有模式窗口','直接','条件格式')  ;
+	if(typeof(arr)=="undefined"){
+		return;
+	}
+	arrPub[SKDBListBox1.options.length] = arr 
+	var oOpt=document.createElement("option");
+	oOpt.text=arr[0];
+	SKDBListBox1.add(oOpt);
+	
+}
+
+function uf_amendCond(){
+	if(SKDBListBox1.selectedIndex<0){
+		return;
+	}
+	var arr1 = new Array()
+	arr1[0]=fcpubdata.obj[0]
+	arr1[1]=arrPub[SKDBListBox1.selectedIndex]
+	var arr=DjOpen('termstyle',arr1,'展现','有模式窗口','直接','条件格式');	
+	if(typeof(arr)=="undefined"){
+		return;
+	}
+	arrPub[SKDBListBox1.selectedIndex] = arr 
+	SKDBListBox1.options(SKDBListBox1.selectedIndex).text = arr[0]
+	
+}
+function uf_ok(){
+	var sxml="";
+	var sxml0="";
+	var sxml1="";
+	var sxml2="";
+	var sxml3="";
+	var sxml4="";
+	var sxml5="";
+	for(i=0;i<arrPub.length;i++){
+		sxml0="<Node0>"+RepXml(arrPub[i][0])+"</Node0>"
+		sxml1="<Node1>"+RepXml(arrPub[i][1])+"</Node1>"
+		sxml2="<Node2>"+RepXml(arrPub[i][2])+"</Node2>"
+		sxml3="<Node3>"+RepXml(arrPub[i][3])+"</Node3>"
+		sxml4="<Node4>"+RepXml(arrPub[i][4])+"</Node4>"
+		sxml5="<Node5>"+RepXml(arrPub[i][5])+"</Node5>"
+		sxml=sxml+"<Term>"+sxml0+sxml1+sxml2+sxml3+sxml4+sxml5+"</Term>"
+	}
+	sxml = "<root>"+sxml+"</root>" ;
+	window.returnValue=sxml;
+	window.close();
+}
+
+//删除
+function uf_delCond(){
+	
+	if(SKDBListBox1.selectedIndex<0){
+		return;
+	}
+	var sIndex=SKDBListBox1.selectedIndex;
+	var slen=SKDBListBox1.options.length-1;
+	var arr1 = arrPub.slice(0,SKDBListBox1.selectedIndex);
+	var arr2 = arrPub.slice(SKDBListBox1.selectedIndex+1);
+	if(sIndex=="0" && sIndex!=slen){
+		arrPub=arr2;	
+	}
+	if(sIndex!="0" && sIndex==slen){
+		arrPub=arr1
+	}
+	if(sIndex!="0" && sIndex!=slen){
+		arrPub=arr1.concat(arr2);
+	}
+	if(sIndex=="0" && sIndex==slen){
+		arrPub=new Array();	
+	}
+	SKDBListBox1.remove(SKDBListBox1.selectedIndex) ;
+}
+//上移
+function uf_itemUp(){
+     for (var i=SKDBListBox1.length-1;i>0;i--){
+      if (SKDBListBox1.options(i).selected){
+      	
+        var s
+        var arr=new Array();
+        s=SKDBListBox1.options(i-1).text ;
+        
+        arr[0]=arrPub[i-1];
+        arrPub[i-1]=arrPub[i];
+        arrPub[i]=arr[0];
+        
+        SKDBListBox1.options(i-1).text=SKDBListBox1.options(i).text ;
+        SKDBListBox1.options(i).text=s ;
+        SKDBListBox1.options(i-1).selected=true ;
+        break ;
+      }
+    }
+}
+//下移
+function uf_itemDown(){
+   for (var i=0;i<SKDBListBox1.length-1;i++){
+    if (SKDBListBox1.options(i).selected){
+    	
+      var arr=new Array;
+      var s
+      s=SKDBListBox1.options(i+1).text ;
+      
+      arr[0]=arrPub[i+1];
+      arrPub[i+1]=arrPub[i];
+      arrPub[i]=arr[0];
+      
+      SKDBListBox1.options(i+1).text=SKDBListBox1.options(i).text ;
+      SKDBListBox1.options(i).text=s ;
+      SKDBListBox1.options(i+1).selected=true ;
+      break ;
+    }
+  }
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="240" poswidth="300" entertype="修改" codeheader mkbh caption="添加条件格式" type="LR" dj_sn="termcard" billtaborder="<root><taborder>SKDBListBox1</taborder><taborder>FCButton1</taborder><taborder>FCButton2</taborder><taborder>FCButton3</taborder><taborder>FCButton4</taborder><taborder>FCButton5</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" contxml="<root><label><id>Label1</id></label><listbox><id>SKDBListBox1</id></listbox><button><id>FCButton1</id><id>FCButton2</id><id>FCButton3</id><id>FCButton4</id><id>FCButton5</id><id>cmdOk</id><id>cmdClose</id></button></root>" blmode="其他" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><SPAN style="POSITION: absolute; WIDTH: 94px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 6px; FONT-WEIGHT: bold; LEFT: 14px" id=Label1 controltype="label" value="Label1">条件格式：</SPAN><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 24px; LEFT: 207px" id=FCButton1 onclick='bill_onclick("uf_addCond()")' dropstyle="否" controltype="button">添 加</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 54px; LEFT: 207px" id=FCButton2 onclick='bill_onclick("uf_amendCond()")' dropstyle="否" controltype="button">修 改</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 84px; LEFT: 207px" id=FCButton3 onclick='bill_onclick("uf_delCond()")' dropstyle="否" controltype="button">删 除</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 114px; LEFT: 207px" id=FCButton4 onclick='bill_onclick("uf_itemUp()")' dropstyle="否" controltype="button">上 移</BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 146px; LEFT: 207px" id=FCButton5 onclick='bill_onclick("uf_itemDown()")' dropstyle="否" controltype="button">下 移</BUTTON><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 194px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 147px; FONT-SIZE: 12px; TOP: 25px; LEFT: 8px" id=SKDBListBox1 size=8 controltype="listbox" china ondblclick='bill_ondblclick("uf_amendCond()")' temptext tempvalue sql check="1" sqltrans vValue></SELECT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 178px; LEFT: 115px" id=cmdOk onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 178px; LEFT: 198px" id=cmdClose onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON></DIV></body></html>

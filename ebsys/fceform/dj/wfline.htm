@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../css/dj.css); 
+	</STYLE>
+		<script src="../js/MicrosoftAjax.js"></script>
+		<script src="../js/fcpub.js"></script>
+		<script src="../js/fcrundj.js"></script>
+		<script src="../js/tabpane.js"></script>		
+	</HEAD>
+	<body background="../images/ef_run_background.gif"  onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var curObj;
+var isChangeStep=false;
+function uf_open() {
+	PropWinOnload();
+	uf_initList(cboBeginStep,true);
+	uf_initList(cboEndStep,false);
+	
+	curObj=fcpubdata.obj[0] ;
+	new Eform.SysForm().setValue(cboBeginStep,curObj.beginStep);
+	
+	new Eform.SysForm().setValue(cboEndStep,curObj.endStep);
+}
+function uf_ok() {
+	if(PropWinClickOk()) return ;
+	curObj.beginStep=cboBeginStep.value;
+	curObj.endStep=cboEndStep.value;
+	
+	if(isChangeStep) { //刷新线的位置
+		var oDesignWin = fcpubdata.obj[6] ;
+		oDesignWin.adjustLinePos(curObj);
+	}
+	window.close();
+}
+function uf_initList(cboList,isBegin){
+	cboList.options.length=0;
+	if(isBegin) {
+	    var oOpt=document.createElement("option")
+	    oOpt.text = "开始";
+	    oOpt.value = "BeginStep";
+	    cboList.add(oOpt);
+		
+	}
+	var oXmlMain = fcpubdata.obj[3];	 //设计器窗口的oContXml
+    for(var i=0;i<oXmlMain.documentElement.childNodes.length;i++){
+		if(oXmlMain.documentElement.childNodes(i).nodeName == "wfstep"){
+			var oNode = oXmlMain.documentElement.childNodes(i);
+		    for(var i=0;i<oNode.childNodes.length;i++){
+			    var oOpt=document.createElement("option")
+			    oOpt.text = fcpubdata.obj[6].$id(oNode.childNodes(i).text).value;
+			    oOpt.value = oNode.childNodes(i).text;
+			    cboList.add(oOpt);
+		    }
+			
+			break;
+		}
+	}	
+	
+	
+}
+
+function uf_isChangeStep(){isChangeStep=true;}
+
+</script><script src='../js/fcopendj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><script src='../js/webfxlayout.js'></script><link id='luna-tab-style-sheet' type='text/css' rel='stylesheet' href='../css/luna/tab.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV class=dj id=SKbillsheet onkeydown="" ondblclick="" jslib="fcopendj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;~userfunc.js" blmode="其它" mkbh="E5" dj_id="255" para="<r></r>" billtaborder="<root><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtId</taborder><taborder>cboBeginStep</taborder><taborder>cboEndStep</taborder></root>" controlno="SKButton:5;SKDBedit:4;checkbox:0;label:4;radio:0;listbox:0;textarea:1;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:0;div:0;DsMain_field:0;a:0;button:2;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0" contxml="<root><label><id>Label1</id><id>label3</id><id>label4</id></label><combobox><id>cboBeginStep</id><id>cboEndStep</id></combobox><tab><id>PageControl4</id></tab><button><id>cmdOk</id><id>cmdClose</id></button><text><id>txtId</id></text></root>" roleXml="<root></root>" runsave OtherSave="否" codeheader keyfield entertype="修改" idtype="1" BLONclose BLONopenBefore BLONopen="uf_open()" window="有模式窗口" toolbar="不带工具栏" posheight="373" poswidth="340" postop posleft center="居中" isfile="是" type="LR" caption="流程中动作属性" dj_sn="wfline" AutoResizeXml><DIV class=tab-pane id=PageControl4 style="LEFT: 2px; WIDTH: 329px; POSITION: absolute; TOP: 1px; HEIGHT: 308px" controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV class=tab-page style="WIDTH: 329px; HEIGHT: 290px">
+<H2 class=tab>属性</H2><SPAN id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 19px; WIDTH: 90px; POSITION: absolute; TOP: 30px; HEIGHT: 15px" controltype="label" align="Left">控件ID(N)：</SPAN><INPUT id=txtId style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 83px; WIDTH: 150px; POSITION: absolute; TOP: 24px; HEIGHT: 20px; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: left" size=21 controltype="text" china> <LABEL id=label3 style="LEFT: 22px; WIDTH: 59px; POSITION: absolute; TOP: 65px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">起始步骤</LABEL><SELECT id=cboBeginStep style="LEFT: 83px; WIDTH: 225px; POSITION: absolute; TOP: 60px; HEIGHT: 25px" onmovestart=moveStart() onchange='bill_onclick("uf_isChangeStep()")' controltype="combobox" backwidth="225" backheight="25" check="1" sql tempvalue temptext sqltrans></SELECT><SELECT id=cboEndStep style="LEFT: 83px; WIDTH: 225px; POSITION: absolute; TOP: 88px; HEIGHT: 25px" onmovestart=moveStart() onchange='bill_onclick("uf_isChangeStep()")' controltype="combobox" backwidth="225" backheight="25" check="1" sql tempvalue temptext sqltrans></SELECT><LABEL id=label4 style="LEFT: 22px; WIDTH: 59px; POSITION: absolute; TOP: 93px; HEIGHT: 15px" onmovestart=moveStart() controltype="label" NotBg="否">目的步骤</LABEL></DIV>
+<DIV class=tab-page style="WIDTH: 329px; HEIGHT: 290px">
+<H2 class=tab>事件</H2>&nbsp;</DIV></DIV>
+<SCRIPT>var PageControl4 = new WebFXTabPane( document.getElementById( "PageControl4" ) );</SCRIPT>
+<BUTTON id=cmdOk style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 168px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 314px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON id=cmdClose style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 250px; WIDTH: 79px; FONT-FAMILY: ; POSITION: absolute; TOP: 314px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT>&#13;&#10;</body></html>

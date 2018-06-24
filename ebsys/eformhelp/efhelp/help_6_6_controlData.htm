@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>用代码控制数据集及其它输入控件</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+			<style type="text/css"> .MsoNormal { margin-left: 80px; height: 14px; }
+	</style>
+			<script language="javascript" type="text/javascript">
+// <!CDATA[
+
+            function IMG6_onclick() {
+
+            }
+
+// ]]>
+			</script>
+	</head>
+	<body leftmargin="0" topmargin="0">
+		<table class="tableTitle">
+			<tr>
+				<td class="title">用代码控制数据集及其它输入控件</td>
+			</tr>
+			<tr>
+				<td class="aTd ">
+					<a class="aDwHomepage" href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+			</tr>
+		</table>
+		<div class="mainDiv">&nbsp;&nbsp;&nbsp;&nbsp; 
+			数据集中的数据用xml属性来取得,即ds.xml便可取得整个数据集的数据,它是XML格式的,包含字段信息.也可以用ds.oDom来取得数据集中数据的dom对象. 
+			数据集绑定到界面上的控件分两类,一个是grid控件,另一个是其它零散控件,如text,radio,dropdownlist等.数据集中还含有一个当前行记录的数组，表示数据集的当前行数据，固定最多只有一条记录，刚打开数据集时是指第一条记录。它是由一个javascript的数组来保存的。可用 
+			ds.Field(‘字段名’).Value 命令来存取它的值，数据集中的数据(指 
+			ds.xml)先取出当前行记录到这个记录当前行的数组中,可以用ds.MoveFirst() ds.MovePrev() ds.MoveNext() 
+			ds.MoveLast() ds.SetPos(pos) 等方法来移动当前行记录, 每次记录移动时都会改变它的值,把当前行记录回写到数据集中时用 
+			dataset1.Update() 命令。表格(grid)控件，用数据集的 ds.dset_cont() 命令直接将整个数据集的数据都放入到表格控件中。用 <img src="images/help_6_6_1_1.gif" id="IMG1"><br>
+			ds.fset_cont() 命令将最新的当前行记录刷新表格控件的当前行记录，用 ds.cont_onDataChange() 
+			命令将表格控件上改动在当前行记录回写到数据集的当前行记录中。零散控件，如编辑框，combobox等，它是相对表格控件而言的，指非表格控件。因为它们的机制差不多，所以就在一起说明。用 
+			ds.fset_cont1() 命令用数据集的最新的当前行记录刷新此数据集所绑定的所有零散控件，用 ds.cont1_fset() 
+			命令则是将绑定的零散控件上的变动后的值回写到数据集的当前行记录中。数据集的dset_fset()方法是在数据集的SetPos()方法中使用的，因为dset_fset()方法没有对它的参数进行检查，而数据集的SetPos()是对参数进行过检查的。 &nbsp;<div class="divTitle">1. 数据集的xml数据与数据集的当前行</div>
+			&nbsp;&nbsp;&nbsp;&nbsp; 数据集的XML结构数据用数据集的dset_fset()方法 --&gt; 提交到数据集的当前行记录。<br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 数据集的当前行记录用数据集的Updata()方法 --&gt; 提交到数据集的XML结构数据。<br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 数据流向图如下：&nbsp;
+			<br>
+			<br>
+			<div class="divTitle">1.1 设计界面设置</div>
+			&nbsp;&nbsp;&nbsp;&nbsp; 单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_controlData3'>用代码控制数据集xml数据区与数据集当前行</a>
+			进入表单设计界面.数据集当前行的数据保存在数组中，要获取数据集当前行的字段值用dataset1.Field('字段名').Value，自定义函数如下<br>
+			&nbsp;&nbsp;&nbsp;
+			<p align="left" class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> datasetRowValue()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>txtId.value <span style="COLOR:red">=</span> dataset1.Field(<span style="COLOR:purple">"semployeeid"</span>).Value;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">dataset1. Field("semployeeid").Value</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">获取集数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">semployeeid</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">字段值</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>txtCode.value <span style="COLOR:red">=</span> dataset1.Field(<span style="COLOR:purple">"semployeecode"</span>).Value;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">dataset1.Field("semployeecode").Value</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">获取集数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">semployeecode</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">字段值</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>txtName.value <span style="COLOR:red">=</span>  dataset1.Field(<span style="COLOR:purple">"semployeename"</span>).Value;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">dataset1. Field("semployeename").Value</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">获取集数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">semployeename</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">字段值</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>txtSex.value <span style="COLOR:red">=</span>  dataset1.Field(<span style="COLOR:purple">"ssex"</span>).Value;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">dataset1. 
+                Field("ssex").Value</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">获取集数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">ssex</span><span style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:宋体;
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-bidi-font-family:'Courier New'">字段值</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			修改数据集当前行的数据后，用数据集的Update方法把修改后的数据集当前行的字段值提交到数据集的xml数据区，自定义函数如下：
+			<p align="left" class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> updataXml()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.Field(<span style="COLOR:purple">"semployeeid"</span>).Value
+                <span style="COLOR:red">=</span> txtId.value;<o:p>
+						<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<span style="COLOR:green">//数据集当前行的semployeeid字段赋值</span>
+						</span>
+					</o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.Field(<span style="COLOR:purple">"semployeecode"</span>).Value
+                <span style="COLOR:red">=</span> txtCode.value;<o:p>
+						<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<span style="COLOR:green">//<o:p>数据集当前行的semployeecode字段赋值</o:p></span>
+						</span>
+					</o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.Field(<span style="COLOR:purple">"semployeename"</span>).Value
+                <span style="COLOR:red">=</span> txtName.value ;<o:p>
+						<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<span style="COLOR:green">//<o:p>数据集当前行的semployeename字段赋值</o:p></span>
+						</span>
+						<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<o:p></o:p>
+						</span>
+					</o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.Field(<span style="COLOR:purple">"ssex"</span>).Value
+                <span style="COLOR:red">=</span> txtSex.value;<o:p>
+						<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<span style="COLOR:green">//</span>
+						</span>
+						<span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">
+							<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+								<o:p>数据集当前行的ssex字段赋值</o:p>
+							</span>
+						</span>
+						<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+							<o:p></o:p>
+						</span>
+					</o:p></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.Update(</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">);<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">提交数据集当前行数组中的数据到数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">xml</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据中</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>textareaXmlData.value<span style="COLOR:red">=</span>dataset1.xml;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">把数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">xml</span><span style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:宋体;
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-bidi-font-family:'Courier New'">数据赋给</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">textarea</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">控件</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:1">&nbsp; </span>
+				</span>
+			</p>
+			&nbsp;&nbsp;&nbsp;&nbsp; 数据集dataset1用下列方法来翻动数据集的行记录使数据集当前行记录改变<p>
+				dataset1.MoveFirst() //移动到第一行
+				<br>
+				dataset1.MovePrev() //移动到上一行<br>
+				dataset1.MoveNext() //移动到下一行<br>
+				dataset1.MoveLast() //移动到最后一行<br>
+				dataset1.SetPos(pos) //定位那条记录是当前记录， pos是记录号从0开始
+			</p>
+			<div class="divTitle">1.2 运行界面</div>
+			<br>
+			&nbsp;&nbsp;&nbsp; 运行表单，进入表单运行界面，单击表单【数据集的当前行数组中的数据】按钮在界面显示数据集当前行的数据如下图：<br>
+			<img src="images/help_6_6_1_2.gif" id="IMG2"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;修改显示的数据集当前行中的字段值，林冲改为林下雪，男改成女，单击用【修改数据集的xml结构的数据】按钮，用数据集的Update()方法将数据集当前行数组中的数据提交到数据集的xml数据区。如下图：
+			<br>
+			<img src="images/help_6_6_1_3.gif" id="IMG3"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;用数据集的MoveFirst()方法把数据集的第一行记录刷新到数据集的当前行，用数据集的MovePrev()方法把数据集当前的上一条记录刷新到数据集的当前行，用数据集的MoveNext()方法把数据集当前行的下一条记录刷新到数据集的当前行，MoveLast()方法把数据集的最后一行记录刷新到数据集的当前行。<br>
+			<div class="divTitle">2.&nbsp; 数据集的当前行和零散控件</div>
+			&nbsp;&nbsp;&nbsp; 
+			零散控件指除grid控件以外的其它输入控件，如text控件。用数据集的cont1_fset()方法把绑定数据集零散控件的值刷新到数据集的当前行中，数据集的fset_cont1()方法把数据集的当前行的数据刷新到绑定数据集的零散控件上。
+			<div class="divTitle">2.1 设计界面设置</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_controlData4'>用代码控制数据集当前行和零散控件</a>
+			进入设计表单界面。<br>
+			<img src="images/help_6_6_2_1.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			左侧是与数据集绑定的零散控件，右边是通过调用函数uf_datasetRowData()来显示数据集的当前行的字段值 
+			，uf_datasetRowData()函数代码如下：
+			<P class="MsoNormal" id="P1" align="left"><B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: blue; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">&nbsp;&nbsp;&nbsp; 
+function</SPAN></B><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"> 
+uf_datasetRowData()<B><SPAN style="COLOR: blue">{/span&gt;</B><SPAN style="COLOR: green">//</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">显示数据集当前行中的数据</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">
+					<O:P></O:P>
+				</SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>txtId.value 
+<SPAN style="COLOR: red">=</SPAN>  dataset1.Field(<SPAN style="COLOR: purple">"semployeeid"</SPAN>).Value;<SPAN style="COLOR: green">//</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">用</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">dataset1. 
+Field("semployeeid").Value</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">获取集数据集当前行</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">semployeeid</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">字段值</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">
+					<O:P></O:P>
+				</SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN>txtCode1.value <SPAN style="COLOR: red">=</SPAN>  dataset1.Field(<SPAN style="COLOR: purple">"semployeecode"</SPAN>).Value;<SPAN style="COLOR: green">//</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">用</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">dataset1. 
+Field("semployeecode").Value</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">获取集数据集当前行</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">semployeecode</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">字段值</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">
+					<O:P></O:P>
+				</SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN>txtName1.value <SPAN style="COLOR: red">=</SPAN>  dataset1.Field(<SPAN style="COLOR: purple">"semployeename"</SPAN>).Value;<SPAN style="COLOR: green">//</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">用</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">dataset1. 
+Field("semployeename").Value</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">获取集数据集当前行</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">semployeename</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">字段值</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">
+					<O:P></O:P>
+				</SPAN></P>
+			<P class="MsoNormal" align="left"><SPAN lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN>txtSex.value <SPAN style="COLOR: red">=</SPAN>  dataset1.Field(<SPAN style="COLOR: purple">"ssex"</SPAN>).Value;<SPAN style="COLOR: green">//</SPAN></SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">用</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">dataset1. 
+Field("ssex").Value</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">获取集数据集当前行</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes">ssex</SPAN><SPAN style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 宋体; mso-font-kerning: 0pt; mso-no-proof: yes; mso-ascii-font-family: 'Courier New'; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: 'Courier New'; mso-bidi-font-family: 'Courier New'">字段值</SPAN><SPAN lang="EN-US" style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><o:p></o:p>
+				</SPAN></P>
+			<p class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击【数据集的cont1_fset()方法把绑定数据集零散控件的值提交到数据集的当前行中】按钮调用uf_refreshData()函数，函数中调用数据集的cont1_fset()方法把与数据集绑定的零散控件的值刷新到数据集的当前行中，自定义函数uf_refreshData()如下：
+			<p align="left" class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_refreshData()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>dataset1.cont1_fset();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">零散控件的值提交到数据集的</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes">xml</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据区的当前行中</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>uf_datasetRowData();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">显示数据集当前行中的数据</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击【fset_cont1()方法把数据集的当前行记录刷新到绑定数据集的零散控件上】按钮调用uf_refresh()函数，此函数先调用数据集的dest_fset()的方法选择数据集的第二条记录为数据集当前行记录，然后用数据集的fset_cont1()方法把数据集当前行记录中的字段值刷新到与数据集绑定的零散控件上，uf_refresh()函数代码如下：<p align="left" class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_refresh()<b><span style="COLOR:blue">{</span></b><span style="COLOR:green">//cont1_fset()</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">方法把数据集把当前行数据提交到零散控件上</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>dataset1.dset_fset(1);<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">xml</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据区的第二条记录提交到数据集的当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>dataset1.fset_cont1();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据集当前行的数据提交到绑定数据集的零散控件上</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>uf_datasetRowData()<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">在界面上显示数据集当前行中的数据</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}<o:p></o:p></span></b></p>
+			<br>
+			<div class="divTitle">2.2 运行界面</div>
+			&nbsp;&nbsp;&nbsp; 
+			单击运行图片进入表单运行界面，把职员名称林冲修改为林冲冲，职员编码A3333修改为A6766，单击【fset_cont1()方法把数据集的当前行记录刷新到绑定数据集的零散控件上】按钮显示数据集当前行的字段值如下图：<br>
+			<img src="images/help_6_6_2_2.gif" id="IMG4">
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			单击【fset_cont1()方法把数据集的当前行记录刷新到绑定数据集的零散控件上】按钮，数据集的方法dataset1.dset_fset(1);是把数据集的数据区中的第二条记录刷新到数据集的当前行记录中，用数据集的dataset1.fset_cont1()方法，把数据集当前行记录刷新到绑定数据集的零散控件上，第二条记录职员名称是姜和3，界面图如下：<br>
+			<img src="images/help_6_6_2_3.gif" id="IMG5">&nbsp;
+			<div class="divTitle">3. 数据集与绑定数据集的表格控件</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;数据集的dset_cont()方法把数据集的数据刷新到表格，数据集的fset_cont() 
+			命令将最新的当前行记录刷新到表格控件的当前行td中。
+			<div class="divTitle">3.1 设计界面设置</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_gridDataset5'>用代码控制数据集当前行和绑定数据集的表格控件</a>进入表单设计页面,按钮【数据集fset_cont()方法将数据集最新的当前行记录刷新表格控件的当前行记录】调用uf_editRowValue()函数，在uf_editRowValue()函数中，dataset1.Field('semployeename').Value是获取数据集当前行semployeename字段的值，用数据集的fset_cont()方法，将修改后的数据集当前行记录刷新表格控件的当前行记录，代码如下：<p align="left" class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_editRowValue()<b><span style="COLOR:blue">{</span></b>
+                <span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:宋体;
+mso-font-kerning:0pt;
+mso-no-proof:yes;
+mso-ascii-font-family:'Courier New';
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:'Courier New';
+mso-bidi-font-family:'Courier New'">修改数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">semployeename</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">的字段值后刷新到表格当前行</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>dataset1.Field(<span style="COLOR:purple">'semployeename'</span>).Value
+                <span style="COLOR:red">=</span> <span style="COLOR:purple">"</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">修改</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">"</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> <span style="COLOR:red">+</span> dataset1.Field(<span style="COLOR:purple">'semployeename'</span>).Value;<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">修改数据集当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">semployeename</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">字段的值</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>dataset1.fset_cont();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes"> 
+                dataset1.fset_cont() </span>
+				<span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">命令将最新的当前行记录刷新表格控件的当前行记录</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b style="MARGIN-LEFT: 40px">
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+			&nbsp;&nbsp;&nbsp; 
+			按钮【数据集fset_cont()方法将数据集最新的当前行记录刷新表格控件的当前行记录】，调用uf_dataToGrid()函数，此函数功能是先用数据集的oDom属性来得到数据集的dom对象，修改数据集中的数据，然后用数据集的dest_fset()方法把数据集中的数据刷新到绑定数据集的表格控件上，uf_dataToGrid()函数如下：<p align="left" class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_dataToGrid()<b><span style="COLOR:blue">{</span></b><span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">dset_cont()</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">方法把数据集的数据刷新到表格</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.oDom.<b>
+						<span style="COLOR:blue">do</span></b>cumentElement.childNodes(3).childNodes(4).text<span style="COLOR:red">=</span><span style="COLOR:purple">"</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">修改名称</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:purple;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">"</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">;<b><span style="COLOR:blue">{</span></b><span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">修改数据集的数据</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+				</span></p>
+			<p align="left" class="MsoNormal">
+				<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>dataset1.dset_cont();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">用数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:green;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">dset_cont()</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">方法把数据集的数据刷新到表格</span><span lang="EN-US" style="FONT-SIZE:
+11pt;COLOR:
+green;FONT-FAMILY:
+'Courier New';mso-font-kerning:
+0pt;mso-no-proof:
+yes"><o:p></o:p>
+				</span></p>
+			<p class="MsoNormal">
+				<b>
+					<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+			<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">
+			<div class="divTitle">
+					3.2 运行界面</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;用代码控制数据集当前行与绑定数据集的表格控件的运行界面如下：<br>
+			<img src="images/help_6_6_3_2.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;单击【数据集fset_cont()方法将数据集最新的当前行记录刷新表格控件的当前记录】按钮，将数据集当前行semployeename字段的值（修改林冲）刷新到表格控件的当前行如下图：<br>
+			<img src="images/help_6_6_3_4.gif"><br>
+			&nbsp;&nbsp;&nbsp;单击【用dest_cont()方法将数据集的数据刷新到表格】按钮，将数据集的oDom属性来得到数据集的dom对象，修改数据集中的数据，然后用数据集的dest_fset()方法把数据集中的数据刷新到绑定数据集的表格控件上，界面图如下：<br>
+			<img src="images/help_6_6_3_5.gif"><br>
+			<div class="divTitle">4.1 数据集绑定表格控件又绑定零散控件</div>&nbsp;&nbsp;&nbsp;&nbsp;
+				在表单中一个数据集可以同时绑定表格控件和零散控件。单击<a class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_contorlDataset6">
+					数据集绑定表格控件又绑定零散控件</a>进入表单设计页面,<br><img src="images/help_6_6_4_2.gif" id="IMG6" onclick="return IMG6_onclick()"><br>&nbsp;&nbsp;&nbsp;&nbsp;修改数据集当前行semployeename和ssex字段的值后，用数据集的fset_cont()和fset_cont1()把数据集当前行的值刷新到绑定数据集的表格控件和零散控件上，界面图如下：<br>
+				<img src="images/help_6_6_4_3.gif"><br>
+				<div class="divTitle">5. 刷新上一窗口数据集</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;通常在列表表单中，选择一行记录后要在卡片表单中修改这条记录的详细信息，修改完后在上一窗口的列表单中刷新数据集。
+				<div class="divTitle">5.1 列表表单</div>&nbsp;&nbsp;&nbsp;&nbsp;列表表单中通常显示主要信息，数据的添加修改在卡片表中处理，单击<a class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_contorlDataset7">
+					列表表单</a>进入表单设计页面,运行表单表单运行界面如下：
+				<br><img src="images/help_6_6_5_1.gif"><br>
+				<div class="divTitle">5.2 被列表表单打开的卡片表单</div>&nbsp;&nbsp;&nbsp;&nbsp;卡片表单从输入方式比较丰富，而且字段过多它不像表格控件那样拥挤，单击<a class="shili" href="../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=help_6_6_contorlDataset7_1">
+					卡片表单</a>进入表单设计页面，【保存数据后刷新上一窗口数据集】按钮调入的uf_saveRefresh函数如下：<p align="left" class="MsoNormal">
+					<b>
+						<span lang="EN-US" style="FONT-SIZE:11pt;
+COLOR:blue;
+FONT-FAMILY:'Courier New';
+mso-font-kerning:0pt;
+mso-no-proof:yes">function</span></b><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"> uf_saveRefresh()<b><span style="COLOR:blue">{<o:p></o:p></span></b></span></p>
+            <p align="left" class="MsoNormal">
+					<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>
+							<span style="COLOR:blue">$eform</span></b>(<span style="COLOR:purple">'</span></span><span style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">提交数据</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:purple;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">'</span><span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">);<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: 'Courier New'; mso-font-kerning: 0pt; mso-no-proof: yes"><span style="COLOR:green">//</span>
+							</span>
+							<span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">保存数据</span>
+						</span></span></p>
+            <p align="left" class="MsoNormal">
+					<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>copydataset(dataset1,fcpubdata.obj);<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">把当前表单的数据集数据赋值给上一窗口数据集的当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+					</span></p>
+            <p align="left" class="MsoNormal">
+					<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>fcpubdata.obj.fset_cont();<span style="mso-tab-count:1">&nbsp; </span>
+                <span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">上一窗口数据集当前行刷新到绑定数据集的表格控件的当前行</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+					</span></p>
+            <p align="left" class="MsoNormal">
+					<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; </span>fcpubdata.obj.Update();<span style="COLOR:green">//</span></span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">提交上一窗口数据集当前行到数据集的</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">xml</span><span style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:宋体;mso-font-kerning:0pt;mso-no-proof:yes;mso-ascii-font-family:'Courier New';mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:'Courier New';mso-bidi-font-family:'Courier New'">数据中</span><span lang="EN-US" style="FONT-SIZE:11pt;COLOR:green;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><o:p></o:p>
+					</span></p><p align="left" class="MsoNormal">
+					<span lang="EN-US" style="FONT-SIZE:11pt;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes"><span style="mso-tab-count:
+1">&nbsp;&nbsp; window.close</span>();<span style="COLOR:green">//关闭窗口</span></span></p>
+            <p class="MsoNormal">
+					<b>
+						<span lang="EN-US" style="FONT-SIZE:11pt;COLOR:blue;FONT-FAMILY:'Courier New';mso-font-kerning:0pt;mso-no-proof:yes">}</span></b></p>
+&nbsp;<br>
+				<div class="divTitle">5.3 运行表单</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;双击职员编号A00004，打开修改表单界面把职员名称姜和3修改为姜和，性别修改为男<br>
+				<img src="images/help_6_6_5_2.gif"><br>&nbsp;&nbsp;&nbsp;&nbsp;单击【保存数据后刷新上一窗口数据集】按钮，上一窗口界面图如下：<br><img src="images/help_6_6_5_3.gif">
+		</div>
+		</SPAN></SPAN>
+	</body>
+</html>

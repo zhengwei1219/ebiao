@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_open()
+{
+	e_PropWinOnload();
+	var xmlRet=SelectSql("select id,name,url,formName from fcq_unit  where formName='"+comcode.value+"'",1,1);
+	var oXml=SetDom(xmlRet);
+	var unitid = oXml.documentElement.childNodes(0).childNodes(0).text; 
+	txtMouldId.value = unitid;
+	txtTitle.value = oXml.documentElement.childNodes(0).childNodes(1).text; 
+	var url1=oXml.documentElement.childNodes(0).childNodes(2).text;
+	if(IsSpace(url1) == false) url1 = "../../fceform/common/djframe.htm?" + url1;
+	//if(IsSpace(unitid) == false) unitid = "&unitid=" + unitid;
+	txtMoreUrl.value = url1;
+	txtMainUrl.value = url1;	
+	comcode.value = oXml.documentElement.childNodes(0).childNodes(3).text;
+}
+function uf_save()
+{
+	var str="TA[";
+	var str1="]]";
+	var xml="<type><![CDA"+str+txtType.value+str1+"></type>";
+      xml+="<moduleid><![CDA"+str+txtMouldId.value + str1+"></moduleid>";
+      xml+="<nodecode><![CDA"+str+comcode.value +str1+"></nodecode>";
+      xml+="<title><![CDA"+str+txtTitle.value +str1+"></title>";
+      xml+="<moretype><![CDA"+str+txtMoreType.value + str1+"></moretype>";
+      xml+="<moreurl><![CDA"+str+txtMoreUrl.value +str1+"></moreurl>";
+      xml+="<settingtype><![CDA"+str+txtSetType.value + str1+"></settingtype>";
+      xml+="<setting><![CDA"+str+txtSetType.value + str1+"></setting>";
+      xml+="<mainurl><![CDA"+str+txtMainUrl.value + str1+"></mainurl>";
+      xml+="<sign><![CDA"+str+txtSign.value + str1+"></sign>";
+      xml+="<elsetype1><![CDA"+str+txtElseType1.value + str1+"></elsetype1>";
+      xml+="<elseurl1><![CDA"+str+txtElseUrl1.value + str1+"></elseurl1>";
+      xml+="<elsetype2><![CDA"+str+txtElseType2.value + str1+"></elsetype2>";
+      xml+="<elsetype2><![CDA"+str+txtElseUrl2.value + str1+"></elsetype2>";
+      xml=escape(xml);
+      var xmlSql="<update tableName='fcq_unit'>"+"<set>modulexml='"+xml+"'</set> <where>  formName = '"+comcode.value+"'</where> </update>";
+	doSaveData(xmlSql,function (){alert("保存成功")});	
+
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType BLONclose BLONopenBefore isfile="是" postop posleft window="当前窗口" toolbar="不带工具栏" BLONopen="uf_open()" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label6</id><id>label7</id><id>label8</id><id>label9</id><id>label10</id><id>label11</id><id>label12</id><id>label13</id><id>label14</id></label><combobox><id>comcode</id></combobox><button><id>cmdSave</id></button><text><id>txtType</id><id>txtSet</id><id>txtMainUrl</id><id>txtElseType1</id><id>txtElseType2</id><id>txtElseUrl1</id><id>txtElseUrl2</id><id>txtSign</id><id>txtTitle</id><id>txtMoreType</id><id>txtMoreUrl</id><id>txtSetType</id><id>txtMouldId</id></text></root>" billtaborder="<root><taborder>comcode</taborder><taborder>cmdSave</taborder><taborder>txtType</taborder><taborder>txtSet</taborder><taborder>txtMainUrl</taborder><taborder>txtElseType1</taborder><taborder>txtElseType2</taborder><taborder>txtElseUrl1</taborder><taborder>txtElseUrl2</taborder><taborder>txtSign</taborder><taborder>txtTitle</taborder><taborder>txtMoreType</taborder><taborder>txtMoreUrl</taborder><taborder>txtSetType</taborder><taborder>txtMouldId</taborder></root>" dj_sn="zk_unit_mould" type="ZK" caption="生成功能模块的xml串" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:14;radio:0;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:1;div:0;DsMain_field:0;a:0;button:1;text:14;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:0;dataset:1;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" center="  " AutoResizeXml><LABEL id=label1 style="LEFT: 353px; WIDTH: 65px; POSITION: absolute; TOP: 88px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">其它类型2</LABEL><LABEL id=label2 style="LEFT: 353px; WIDTH: 65px; POSITION: absolute; TOP: 64px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">其它类型1</LABEL><LABEL id=label3 style="LEFT: 353px; WIDTH: 65px; POSITION: absolute; TOP: 40px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">标记</LABEL><LABEL id=label4 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 207px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">主要url</LABEL><LABEL id=label5 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 88px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">窗口标题</LABEL><LABEL id=label6 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 16px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">模块编号</LABEL><LABEL id=label7 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 43px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">模块id</LABEL><LABEL id=label8 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 63px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">类型</LABEL><LABEL id=label9 style="LEFT: 354px; WIDTH: 65px; POSITION: absolute; TOP: 111px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">设置类型</LABEL><LABEL id=label10 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 112px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">更多类型</LABEL><LABEL id=label11 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 160px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">其它url1</LABEL><LABEL id=label12 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 183px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">其它url2</LABEL><LABEL id=label13 style="LEFT: 15px; WIDTH: 65px; POSITION: absolute; TOP: 138px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">更多url</LABEL><LABEL id=label14 style="LEFT: 353px; WIDTH: 65px; POSITION: absolute; TOP: 15px; HEIGHT: 15px" onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">设置</LABEL><INPUT id=txtType style="LEFT: 78px; WIDTH: 187px; POSITION: absolute; TOP: 58px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><SELECT id=comcode style="LEFT: 78px; WIDTH: 188px; POSITION: absolute; TOP: 9px; HEIGHT: 25px" onmovestart=moveStart() onchange='bill_onclick("uf_open()")' controltype="combobox" datasourceName async="否" check="2" sql tempvalue temptext sqltrans="%F4%D8%E6%D8%D4%F6Xrn%DA%EC%F2%E8%AA%D0%E8%D8Xr%94%EA%D0%E8%D8Xrn%DA%F2%EC%E8Xrn%DA%D4%F0%CC%F8%EA%E0%F6"></SELECT><INPUT id=txtSet style="LEFT: 427px; WIDTH: 150px; POSITION: absolute; TOP: 10px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><INPUT id=txtMainUrl style="LEFT: 78px; WIDTH: 499px; POSITION: absolute; TOP: 202px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=89 controltype="text"><INPUT id=txtElseType1 style="LEFT: 427px; WIDTH: 150px; POSITION: absolute; TOP: 58px; HEIGHT: 20px" onmovestart=moveStart() size=19 controltype="text"><INPUT id=txtElseType2 style="LEFT: 427px; WIDTH: 150px; POSITION: absolute; TOP: 82px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><INPUT id=txtElseUrl1 style="LEFT: 78px; WIDTH: 499px; POSITION: absolute; TOP: 154px; HEIGHT: 20px" onmovestart=moveStart() size=90 controltype="text"><INPUT id=txtElseUrl2 style="LEFT: 78px; WIDTH: 499px; POSITION: absolute; TOP: 178px; HEIGHT: 20px" onmovestart=moveStart() size=88 controltype="text"><INPUT id=txtSign style="LEFT: 427px; WIDTH: 150px; POSITION: absolute; TOP: 34px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><INPUT id=txtTitle style="LEFT: 78px; WIDTH: 187px; POSITION: absolute; TOP: 82px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=33 controltype="text"><INPUT id=txtMoreType style="LEFT: 78px; WIDTH: 187px; POSITION: absolute; TOP: 106px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><INPUT id=txtMoreUrl style="LEFT: 78px; WIDTH: 499px; POSITION: absolute; TOP: 130px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=89 controltype="text"><INPUT id=txtSetType style="LEFT: 427px; WIDTH: 150px; POSITION: absolute; TOP: 106px; HEIGHT: 20px" onmovestart=moveStart() controltype="text"><BUTTON id=cmdSave style="LEFT: 501px; WIDTH: 75px; POSITION: absolute; TOP: 230px; HEIGHT: 25px" onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_save()")' dropstyle="否"></BUTTON><INPUT id=txtMouldId style="LEFT: 78px; WIDTH: 187px; POSITION: absolute; TOP: 34px; HEIGHT: 20px" onmovestart=moveStart() readOnly size=31 controltype="text"></DIV></body></html>

@@ -1,0 +1,84 @@
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//var fromType="";
+//var sRetUrl="";
+function uf_open(){
+	new Eform.SysForm().setButtonImage()
+}
+
+
+function uf_addReportUnitDot()//从文件中的报表创建功能点
+{
+	var spath = '/ebfile';  
+	var sRet = DjOpen('getUrl',[spath,'file','yes','htm'],'展现','有模式窗口','直接','选择e表文件');
+	if(isSpace(sRet)==false){
+		txtUrlPath.value=sRet;
+        dataset1.Field('fromType').Value = 4;
+        dataset1.Field('chnfromtype').Value = '文件中报表';
+        var sIndex = sRet.indexOf('/');
+        var sName=sRet.substring(sIndex+1, sRet.length);
+        dataset1.Field('fromName').Value = sName; 
+        txtName.value=sName;
+        txtName.fireEvent("onchange");
+	}
+}
+
+
+function uf_save(){
+	var fileName = $id('txtUrlPath').value;
+	var url = "";
+		var radioValue = GetDivRadioValue(radiolist1,'text');
+	if(radioValue == "other|&|"){
+		alert("选中其他后，没输入路径");
+		return;
+	}
+	if(uf_checkParams() == false) return;//检查参数格式是否合法
+     dataset1.Field('fromName').Value =  escape(dataset1.Field('fromName').Value);
+	var runParams='&name=/ebfile/'+dataset1.Field('fromName').Value;
+	if(IsSpace($id('params').value) == false) runParams += "&runParams="+escape($id('params').value);
+	/*if(radioValue.indexOf("other|&|") != -1) {//为其他，可以自定义路径
+		url = RepStr(radioValue,'other|&|','');	
+        dataset1.Field('fromType').Value = 5;//类型自定义
+        dataset1.Field('chnfromtype').Value = '自定义';
+	}else*/
+	if(radioValue == "fceform/common/djframe.htm?djsn=ebr_m_file&djtype=ST"){//在手机版表单中运行报表
+		dataset1.Field('paramUrl').Value =runParams;
+		dataset1.Field('envType').Value = '手机';
+		dataset1.Field('fromType').Value = 2;
+		dataset1.Field('fromName').Value = 'ebr_m_file';
+	}else if(radioValue == "fceform/common/djframe.htm?djsn=ebr_file&djtype=ST"){//在电脑版表单中运行报表
+		dataset1.Field('fromType').Value = 2;
+		dataset1.Field('paramUrl').Value =runParams;
+		dataset1.Field('envType').Value = '电脑';
+		dataset1.Field('fromName').Value = 'ebr_file';
+	}
+	dataset1.Field('genTime').Value = GetTime();
+	dataset1.Field('url').Value = url;
+	$eform('提交数据成功后刷新上一窗口');
+}
+
+function uf_checkParams(){
+	var param = $id('params').value;
+	if(IsSpace(param) == false) {
+		var denghao = param.indexOf('=');
+		if(param.indexOf('&') != 0 ||  denghao < 2 || denghao == param.length-1){
+			alert("url参数应输入&paramName=value的形式");
+			return false;
+		}
+	}	
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../../fceform/htc/dataset.htc)",0);</script><script src='../../fceform/js/fcdataset.js'></script>
+<DIV id=SKbillsheet toolbar="不带工具栏" userToolbar='<tr rowstate="add"><td>ok</td><td>提交数据成功后刷新上一窗口</td><td></td><td>uf_save()</td><td></td><td></td><td></td><td></td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" isCheckPermit="否" alertType="1" userType contxml="<root><label><id>label1</id><id>label2</id><id>label4</id><id>label6</id></label><button><id>cmdDropDown1</id><id>cmdOk</id><id>cmdClose</id></button><text><id>txtUrlPath</id><id>txtName</id><id>params</id></text><radiolist><id>radiolist1</id></radiolist><dataset><id>dataset1</id></dataset></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:6;radio:1;listbox:0;textarea:0;combobox:2;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:6;text:7;hr:0;checkboxlist:0;radiolist:1;dropdownlist:0;grid:0;dataset:1;spin:1;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:1;eblayout:0;test:undefined" billtaborder="<root><taborder>cmdDropDown1</taborder><taborder>txtUrlPath</taborder><taborder>txtName</taborder><taborder>params</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder></root>" isfile="是" posheight="230" poswidth="555" postop posleft window="有模式窗口" caption="报表文件添加到功能点" type="ZK" dj_sn="zk_report_file_add_unit" BLONopen="uf_open();" center="居中" BLONclose BLONopenBefore AutoResizeXml envType="电脑" useHelp allBrowser="否" BLONresizeAfter BLONresizeBefore runParams viewType=" "><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 19px; HEIGHT: 20px; BORDER-TOP: 0px; TOP: 28px; BORDER-RIGHT: 0px; LEFT: 514px" id=cmdDropDown1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_addReportUnitDot()")'></BUTTON><INPUT style="POSITION: absolute; WIDTH: 444px; HEIGHT: 20px; TOP: 28px; LEFT: 70px" id=txtUrlPath onmovestart=moveStart() readOnly size=66 controltype="text"><?xml:namespace prefix = fc /><fc:dataset id=dataset1 idtype="1" controltype="dataset" format="<fields><field><fieldname>deleteMark</fieldname><datatype>整数</datatype><displaylabel>删除标记</displaylabel><size>4</size><precision></precision><fieldkind>变量默认值</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fromName</fieldname><datatype>字符</datatype><displaylabel>表单sn</displaylabel><size>500</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fromType</fieldname><datatype>整数</datatype><displaylabel>类别（表单/报表/其它）</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>ID</fieldname><datatype>字符</datatype><displaylabel>ID</displaylabel><size>11</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>是</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>NAME</fieldname><datatype>字符</datatype><displaylabel>NAME</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>是</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>sortNo</fieldname><datatype>整数</datatype><displaylabel>排序</displaylabel><size>4</size><precision></precision><fieldkind>变量默认值</fieldkind><defaultvalue>getMaxIntNo('SOR')</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>URL</fieldname><datatype>字符</datatype><displaylabel>URL</displaylabel><size>2000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnfromtype</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>url1</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>100</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>fceform/ereport/ebrun.htm?</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>envType</fieldname><datatype>字符</datatype><displaylabel>新建字段</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>电脑</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>paramUrl</fieldname><datatype>字符</datatype><displaylabel>url参数</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>genTime</fieldname><datatype>日期</datatype><displaylabel>新建字段</displaylabel><size>8</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" fieldtrans="<root><field><name>deleteMark</name><trans></trans><rtrans></rtrans><sql></sql></field><field><name>chnfromtype</name><trans></trans><rtrans></rtrans><sql></sql></field></root>" idparam="UNI" async="否" isSubGrid="否" pubpara="否" isaddemptyrec="否" submittype="2" submitno="1" savetable="FCQ_UNIT" issubds="否" opensortno="1" onValid='bill_ondatasetvalid("<dsid><deleteMark></deleteMark><fromName></fromName><fromType></fromType><ID></ID><NAME></NAME><sortNo>$valid(&amp;quot;整数&amp;quot;);</sortNo><URL></URL><chnfromtype></chnfromtype><url1></url1><envType></envType><paramUrl></paramUrl><genTime></genTime></dsid>")' onGetText='bill_ondatasetgettext("<dsid><deleteMark></deleteMark><fromName></fromName><fromType></fromType><ID></ID><NAME></NAME><sortNo></sortNo><URL></URL><chnfromtype></chnfromtype><url1></url1><envType></envType><paramUrl></paramUrl><genTime></genTime></dsid>")' onSetText='bill_ondatasetsettext("<dsid><deleteMark></deleteMark><fromName></fromName><fromType></fromType><ID></ID><NAME></NAME><sortNo></sortNo><URL></URL><chnfromtype></chnfromtype><url1></url1><envType></envType><paramUrl></paramUrl><genTime></genTime></dsid>")'></fc:dataset><INPUT style="POSITION: absolute; WIDTH: 463px; HEIGHT: 18px; TOP: 55px; LEFT: 70px" id=txtName onmovestart=moveStart() size=83 controltype="text" dataset="dataset1" china="NAME" field="NAME"><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 30px; LEFT: 11px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">文件路径</LABEL><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 60px; LEFT: 11px" id=label2 onmovestart=moveStart() controltype="label" inputTag="否">名称</LABEL><LABEL style="POSITION: absolute; WIDTH: 51px; HEIGHT: 22px; TOP: 85px; LEFT: 11px" id=label4 onmovestart=moveStart() controltype="label" inputTag="否">运行报表的url</LABEL> 
+<DIV style="BORDER-BOTTOM: 1px solid; POSITION: absolute; BORDER-LEFT: 1px solid; WIDTH: 465px; HEIGHT: 80px; OVERFLOW: auto; BORDER-TOP: 1px solid; TOP: 84px; BORDER-RIGHT: 1px solid; LEFT: 69px" id=radiolist1 class=control-border-color onmovestart=moveStart() controltype="radiolist" dataset="dataset1" async="否" sqltrans datasourceName china="新建字段" field="url1" sql check="1" temptext="fceform/ereport/ebrun.htm?&#13;&#10;fceform/common/djframe.htm?djsn=ebr_file&amp;amp;djtype=ST&#13;&#10;fceform/common/djframe.htm?djsn=ebr_m_file&amp;amp;djtype=ST" tempvalue="fceform/ereport/ebrun.htm?&#13;&#10;fceform/common/djframe.htm?djsn=ebr_file&amp;amp;djtype=ST&#13;&#10;fceform/common/djframe.htm?djsn=ebr_m_file&amp;amp;djtype=ST" other="否" rows="1">radiolist</DIV><LABEL style="POSITION: absolute; WIDTH: 51px; HEIGHT: 15px; TOP: 173px; LEFT: 11px" id=label6 onmovestart=moveStart() controltype="label" inputTag="否">url参数</LABEL><INPUT style="POSITION: absolute; WIDTH: 466px; HEIGHT: 20px; TOP: 170px; LEFT: 69px" id=params onmovestart=moveStart() size=84 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 65px; HEIGHT: 25px; TOP: 2px; LEFT: 11px" id=cmdOk onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_save()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 65px; HEIGHT: 25px; TOP: 2px; LEFT: 82px" id=cmdClose onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;$eform('关闭窗口')&quot;)"></BUTTON></DIV><script></script></body></html>

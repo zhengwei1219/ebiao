@@ -1,0 +1,32 @@
+<HTML >
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<TITLE>eForm自定义表单V5.1</TITLE>
+<script src="../js/csjsrequest.js"></script>
+<script language="javascript">
+	var topdjsn= Request.QueryString("djsn");
+//window.moveTo(0,0);
+//window.resizeTo(screen.availWidth,screen.availHeight);
+	if(Request.QueryString("ebuse").toString() == "yes"){
+		document.title ="报表参数表单设计器";
+	}
+</script>
+</HEAD>
+<frameset rows=56,89%,0 frameborder=1 border=0>
+	<frame id="menu" src="menutoolbar.htm" scrolling=no border=0 frameborder=1  resize >
+<!-- <frame id="topic" name="rightmain" src="layout.htm"  scrolling=auto border=0  frameborder=1  bordercolor=LightGrey marginwidth=1 noresize>
+-->
+	<frameset id=main1 cols=0,100%  resize frameborder="0" framespacing="2">
+		<frame id="objlist" src="objlist.htm" scrolling=no  resize style="border-right: 1px #00a3e4 solid">
+		<frameset id=main2 rows="*,27"  border=0 resize style="border-left: 1px #00a3e4 solid">
+			<frame id="topic" name="rightmain" src="layout.htm"  scrolling=auto border=0 frameborder=0 bordercolor=LightGrey marginwidth=1 resize>
+			<frame id="selhtml" src="selhtml.htm" scrolling=no border=0 frameborder=0  resize >
+		</frameset>
+
+	</frameset>
+
+</frameset>
+
+</HTML>
+

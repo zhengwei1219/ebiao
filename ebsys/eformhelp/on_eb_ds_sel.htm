@@ -1,0 +1,39 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>选择常用数据集</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width="99.8%" bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  e表<br> 
+<b><font style='font-size:13px;'>&nbsp;选择常用数据集</font></b></td>
+</tr>
+</table>
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">一些数据集常常可能在多个报表中反复使用,为了避免重复设置,可以将这些数据集设置为常用数据集.如何实现这样的功能呢?<br>
+1 需要在自己的数据库中建如下一个表,将常用数据集的配置信息都保存在这个表中.这个操作只需要在开始使用时做一次就可以了.<br>
+<pre>
+	fc_ebds 常用报表数据集
+		name not null varchar(50) 中文名称
+		orgid not null char(11)
+		sqlstr	varchar(2000) 
+		param varchar(2000)
+		fieldchn varchar(2000)
+		dsn varchar(50)
+		dstype varchar(12)
+
+	建表结构的SQL语句是:
+		CREATE TABLE FC_EBDS (
+			name varchar (50)  NOT NULL ,
+			orgid char (11)  NOT NULL ,
+			sqlstr varchar (2000)  NULL ,
+			param varchar (2000)  NULL ,
+			fieldchn varchar (2000)  NULL ,
+			dsn varchar (50)  NULL ,
+			dstype varchar (12)  NULL 
+		)	
+		
+</pre><br>
+2 在配置好了一个数据集后,如果需要将此数据集设置为常用数据集,可以点 存为常用数据集 按钮,这样以后在别的报表中再需要此数据集时,便不用从头来设置,可以选择产生了.<br>
+3 在增加数据集时,可以选择一个常用数据集,以简化数据集的设置操作.<br>
+</FONT><br>
+</body>
+</html>
+

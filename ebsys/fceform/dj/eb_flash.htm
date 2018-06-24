@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_open() {
+	e_PropWinOnload();
+
+	if(IsSpace(fcpubdata.obj.chartseries) == false){
+		dataset1.OpenXmlData(unescape(fcpubdata.obj.chartseries));
+	}
+	var s = fcpubdata.obj.innerText
+	if(s.substring(0,7) != "=flash(") return ;
+	s = s.substring(8,s.length-2) ; //去掉外面的flash(
+	var arr = s.split("&");
+	for(var i=0;i<arr.length;i++){
+		var arr1 = arr[i].split("=");
+		var sName = arr1[0];
+		var sValue = arr1[1];
+		if(sName == "maxcols")  txtMaxCols.value = sValue;
+		if(sName == "type")  cboType.value = sValue;
+		if(sName == "xlabel")  txtxLabel.value = sValue;
+		if(sName == "dataXml")  txtOther.value = unescape(sValue);
+	}
+
+	
+	
+	
+}
+function uf_ok() {
+	if(DsBeforeSave(dataset1,grid1)) return;
+	var s = "";
+	var sTmp = "";
+	sTmp = new Eapi.Str().trim(cboType.value);
+	if(IsSpace(sTmp)==false) s += "type="+sTmp+"&";
+	sTmp = new Eapi.Str().trim(txtxLabel.value);
+	if(IsSpace(sTmp)==false) s += "xlabel="+sTmp+"&";
+	sTmp = txtMaxCols.value;
+	if(sTmp!="0") s += "maxcols="+sTmp+"&";
+	
+	var bool = false;
+	var tgrid = grid1.tab;
+	var l = tgrid.rows.length;
+	for(var i=1;i<l;i++){
+		var sName = tgrid.rows(i).cells(1).innerText;
+		if(IsSpace(sName)) continue;
+		var sValue = tgrid.rows(i).cells(2).innerText;
+		if(IsSpace(sValue)) continue;
+		s += "s"+(9+i)+"_name="+sName+"&";
+		s += "s"+(9+i)+"_value="+sValue+"&";
+		var sLink = tgrid.rows(i).cells(3).innerText;
+		if(IsSpace(sLink) == false){
+			s += "s"+(9+i)+"_link="+sLink+"&";
+		}
+		bool=true;
+	}
+	if(bool==false){
+		alert("至少要设置好一行系列!");
+		return;	
+	}
+	s += "seriesCount="+(l-1)+"&";
+	sTmp = new Eapi.Str().trim(txtOther.value);
+	if(IsSpace(sTmp)){
+		alert("XML数据不能为空!");
+		return;	
+	} 
+	s += "dataXml="+escape(sTmp)+"&";
+	
+	if(s!= "") s= s.substring(0,s.length-1);
+	s = "=flash(\"" + s + "\")";
+	window.returnValue = s;
+	
+	fcpubdata.obj.chartseries = escape(dataset1.xml);
+	fcpubdata.obj.e_data_type="8"; //强制单元格数据类型为统计图
+	fcpubdata.obj.style.backgroundImage="url(../images/eb_design_cell_chart.gif)";
+	window.close();
+	
+}
+</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../js/fcdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fcdate.js&#13;&#10;~userfunc.js" userType dj_sn="eb_flash" caption="chart属性" type="PR" isfile="是" center="居中" posleft postop poswidth="430" posheight="380" toolbar="不带工具栏" window="有模式窗口" BLONopen="uf_open()" BLONopenBefore BLONclose idtype="1" entertype="修改" keyfield codeheader="BBB" OtherSave="否" billtaborder="<root><taborder>txtxLabel</taborder><taborder>grid1</taborder><taborder>cmdAdd</taborder><taborder>cmdDel</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtMaxCols</taborder><taborder>txtOther</taborder><taborder>button13</taborder><taborder>txtEscape</taborder><taborder>cboType</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:2;label:50;radio:1;listbox:0;textarea:1;combobox:7;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:2;tab:1;div:0;DsMain_field:0;a:0;button:13;text:20;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:1;dataset:1;spin:12;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" contxml="<root><label><id>label7</id><id>label40</id><id>label47</id><id>label48</id><id>label50</id></label><textarea><id>txtOther</id></textarea><tab><id>tab1</id></tab><button><id>cmdAdd</id><id>cmdDel</id><id>button13</id><id>cmdOk</id><id>cmdClose</id></button><text><id>txtxLabel</id><id>txtEscape</id></text><dropdownlist><id>cboType</id></dropdownlist><grid><id>grid1</id></grid><dataset><id>dataset1</id></dataset><spin><id>txtMaxCols</id></spin></root>" mkbh AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 403px; HEIGHT: 311px; TOP: 1px; LEFT: 3px" id=tab1 class=tab-pane controltype="tab" IsHideTitle="undefined" showtype="luna">
+<DIV style="WIDTH: 403px; HEIGHT: 293px" class=tab-page>
+<H2 class=tab>常规</H2>
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 54px; FONT-FAMILY: 宋体; HEIGHT: 15px; FONT-SIZE: 10pt; TOP: 36px; LEFT: 210px" id=label7 onmovestart=moveStart() noWrap controltype="label" value="label7" NotBg="否">x轴标签值:</DIV><INPUT style="POSITION: absolute; WIDTH: 95px; HEIGHT: 20px; TOP: 33px; LEFT: 278px" id=txtxLabel onmovestart=moveStart() size=15 controltype="text"><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<grid1><col></col><col></col><col></col></grid1>")' id=grid1 ondblclick='bill_ongriddblclick("<grid1><col></col><col></col><col></col></grid1>")' onclick='bill_ongridclick("<grid1><col></col><col></col><col></col></grid1>")' controltype="grid" dataset="dataset1" visible="是" bodyrows="-1" bodyrowheight="-1" hideVscroll="否" SetRowHeight="是" readonly="否" autoappend="否" autowidth="否" autoheight="否" canselect="是" format="<cols><col><fname>name</fname><cname>系列名</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>value</fname><cname>系列值</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>80</columnwidth><align>left</align></col><col><fname>link</fname><cname>超链接</cname><width>10</width><dtype>字符</dtype><readonly>否</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>180</columnwidth><align>left</align></col></cols>" width="385" height="123" top="142" left="5" hideHscroll="否" autosize="否" ParentPos="相对"> 
+<TABLE style="POSITION: absolute; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><BUTTON style="POSITION: absolute; WIDTH: 66px; HEIGHT: 21px; TOP: 119px; LEFT: 55px" id=cmdAdd onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("dataset1.Append()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 66px; HEIGHT: 21px; TOP: 119px; LEFT: 125px" id=cmdDel onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("dataset1.Delete()")'></BUTTON>&nbsp; 
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 127px; LEFT: 11px" id=label40 onmovestart=moveStart() noWrap controltype="label" value="label40" NotBg="否">系列：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 40px; HEIGHT: 15px; TOP: 12px; LEFT: 212px" id=label47 onmovestart=moveStart() noWrap controltype="label" value="label47" NotBg="否">仅用前</DIV>
+<DIV style="POSITION: absolute; WIDTH: 35px; HEIGHT: 22px; TOP: 7px; LEFT: 251px; align: undefined" id=txtMaxCols class=xpSpin align="undefined ParentPos='相对' " controltype="spin" value="0" dataset="undefined" field="undefined" width="35px" height="22px" top="7px" left="251px" enabled="否" Min="0" Max="32000" NextNum="1" display="" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize=""></DIV>
+<DIV style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 12px; LEFT: 290px" id=label48 onmovestart=moveStart() noWrap controltype="label" value="label48" NotBg="否">条数据来画图</DIV><LABEL style="POSITION: absolute; WIDTH: 155px; HEIGHT: 18px; TOP: 11px; LEFT: 12px" id=label50 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">图形类型文件名:</LABEL><fc:fc_code id=cboType controltype="dropdownlist" dataset="undefined" field="undefined" visible="是" datasourceName="" sql2="undefined" xml="<tr height='16px' ><td>Area2D</td><td>Area2D</td></tr><tr height='16px' ><td>Bar2D</td><td>Bar2D</td></tr><tr height='16px' ><td>Bubble</td><td>Bubble</td></tr><tr height='16px' ><td>Column2D</td><td>Column2D</td></tr><tr height='16px' ><td>Column3D</td><td>Column3D</td></tr><tr height='16px' ><td>Doughnut2D</td><td>Doughnut2D</td></tr><tr height='16px' ><td>Doughnut3D</td><td>Doughnut3D</td></tr><tr height='16px' ><td>Line</td><td>Line</td></tr><tr height='16px' ><td>MSArea</td><td>MSArea</td></tr><tr height='16px' ><td>MSBar2D</td><td>MSBar2D</td></tr><tr height='16px' ><td>MSBar3D</td><td>MSBar3D</td></tr><tr height='16px' ><td>MSColumn2D</td><td>MSColumn2D</td></tr><tr height='16px' ><td>MSColumn3D</td><td>MSColumn3D</td></tr><tr height='16px' ><td>MSColumn3DLineDY</td><td>MSColumn3DLineDY</td></tr><tr height='16px' ><td>MSColumnLine3D</td><td>MSColumnLine3D</td></tr><tr height='16px' ><td>MSCombi2D</td><td>MSCombi2D</td></tr><tr height='16px' ><td>MSCombi3D</td><td>MSCombi3D</td></tr><tr height='16px' ><td>MSCombiDY2D</td><td>MSCombiDY2D</td></tr><tr height='16px' ><td>MSLine</td><td>MSLine</td></tr><tr height='16px' ><td>MSStackedColumn2D</td><td>MSStackedColumn2D</td></tr><tr height='16px' ><td>MSStackedColumn2DLineDY</td><td>MSStackedColumn2DLineDY</td></tr><tr height='16px' ><td>Pie2D</td><td>Pie2D</td></tr><tr height='16px' ><td>Pie3D</td><td>Pie3D</td></tr><tr height='16px' ><td>Scatter</td><td>Scatter</td></tr><tr height='16px' ><td>ScrollArea2D</td><td>ScrollArea2D</td></tr><tr height='16px' ><td>ScrollColumn2D</td><td>ScrollColumn2D</td></tr><tr height='16px' ><td>ScrollCombi2D</td><td>ScrollCombi2D</td></tr><tr height='16px' ><td>ScrollCombiDY2D</td><td>ScrollCombiDY2D</td></tr><tr height='16px' ><td>ScrollLine2D</td><td>ScrollLine2D</td></tr><tr height='16px' ><td>ScrollStackedColumn2D</td><td>ScrollStackedColumn2D</td></tr><tr height='16px' ><td>StackedArea2D</td><td>StackedArea2D</td></tr><tr height='16px' ><td>StackedBar2D</td><td>StackedBar2D</td></tr><tr height='16px' ><td>StackedBar3D</td><td>StackedBar3D</td></tr><tr height='16px' ><td>StackedColumn2D</td><td>StackedColumn2D</td></tr><tr height='16px' ><td>StackedColumn3D</td><td>StackedColumn3D</td></tr><tr height='16px' ><td>StackedColumn3DLineDY</td><td>StackedColumn3DLineDY</td></tr>" multiselect="否" addrow="否" blnempty="否" blninput="是" format="" width="186" height="20" top="30" left="11" position="absolute" align="undefined" sqltrans="" enabled="false" ParentPos="相对"></fc:fc_code></DIV>
+<DIV style="WIDTH: 403px; HEIGHT: 293px" class=tab-page>
+<H2 class=tab>XML数据</H2><TEXTAREA style="POSITION: absolute; WIDTH: 384px; HEIGHT: 250px; TOP: 8px; LEFT: 4px" id=txtOther onmovestart=moveStart() cols=76 controltype="textarea" value="textarea1" induce="否"></TEXTAREA><INPUT style="POSITION: absolute; WIDTH: 338px; HEIGHT: 20px; TOP: 266px; LEFT: 5px" id=txtEscape onmovestart=moveStart() size=60 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 47px; HEIGHT: 25px; TOP: 262px; LEFT: 343px" id=button13 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("txtEscape.value = escape(txtEscape.value);")'>转码</BUTTON></DIV></DIV>
+<SCRIPT>var tab1 = new WebFXTabPane( document.getElementById( "tab1" ) );</SCRIPT>
+<fc:dataset id=dataset1 idtype="1" controltype="dataset" pubpara="否" opensortno="1" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" format="<fields><field><fieldname>name</fieldname><datatype>字符</datatype><displaylabel>系列名</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>value</fieldname><datatype>字符</datatype><displaylabel>系列值</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>link</fieldname><datatype>字符</datatype><displaylabel>超链接</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><name></name><value></value><link></link></dsid>")' onGetText='bill_ondatasetgettext("<dsid><name></name><value></value><link></link></dsid>")' onSetText='bill_ondatasetsettext("<dsid><name></name><value></value><link></link></dsid>")'></fc:dataset><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 321px; LEFT: 248px" id=cmdOk onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_ok()")'></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 321px; LEFT: 322px" id=cmdClose onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("CloseBill()")'></BUTTON></DIV><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT></body></html>

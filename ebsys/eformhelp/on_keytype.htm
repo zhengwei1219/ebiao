@@ -1,0 +1,31 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>表单属性的主键字段类别</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width="99.8%" bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="  TOP:4px;left:10px;">  eForm自定义表单<br>
+<b><font style='font-size:13px;'>&nbsp;表单属性的主键字段类别</font></b></td>
+</tr>
+</table>
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a></span><br>
+&nbsp;<b><FONT style="font-size:12px;">表单属性的主键字段类别</FONT></b><br>
+<span style='position:absolute;left:7px;'>
+&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">表单属性的主键字段类别，分为特定格式ID值、自动编号ID值、oracle序列作ID、单个字段作主键、多个字段作主键、自定义主键值、GUID作主键字段。</FONT><br>
+
+<table border=1 width="92%" style='border-collapse:collapse;'>
+<tr style='height:21px;'><td style='width:120px;'><FONT style="font-size:12px;">特定格式ID值：</FONT></td><td><FONT style="font-size:12px;">表示调用后台的函数来生成主键字段的值，需传一个三个字母的参数，
+生成XXX00000001格式。它的主键字段一般为char型长度为11。每个类别（如：XXX）的最大号保存在FC_MAXBH表中，主键字段的id号由最大号前面补0来生成八位整数，如果主键字段的数据类型为int型的话，则主键字段的值就是每个类别（如：XXX）的最大号；否则主键字段的值就是由3个字母的ID标识中设置的值加上八位整数。当然也可以在3个字母的ID标识中只输入两个字母（如：AA），此时主键字段的值就是AA00000001这种格式，它要求主键字段的长度为10。
+</FONT></td></tr>
+<tr style='height:41px;'><td style='width:120px;'><FONT style="font-size:12px;">自动编号ID值：</FONT></td><td><FONT style="font-size:12px;">供sqlserver数据库使用，表示Sql server的识别种子字段，字段的值由数据库自动产生。</FONT></td></tr>
+<tr style='height:31px;'><td style='width:120px;'><FONT style="font-size:12px;">oracle序列作ID：</FONT></td><td><FONT style="font-size:12px;">仅供oracle数据库使用，表示用oracle的序列作主键字段值时使用；需传一个序列名，称作参数。</FONT></td></tr>
+<tr style='height:31px;'><td style='width:120px;'><FONT style="font-size:12px;">单个字段作主键：</FONT></td><td><FONT style="font-size:12px;">表示单个字段作主键，主键字段的值要先给好，且要保持唯一性。</FONT></td></tr>
+<tr style='height:31px;'><td style='width:120px;'><FONT style="font-size:12px;">多个字段作主键：</FONT></td><td><FONT style="font-size:12px;">表示多个字段作主键，每个主键字段的值要先给好，且要保持唯一性。选多个主键字段时，主键字段要在数据集属性窗口的数据项中定义，在字段的主键前画钩，它表示多个字段合起来且不重复。</FONT></td></tr>
+<tr style='height:31px;'><td style='width:120px;'><FONT style="font-size:12px;">自定义主键值:   </font></td><td><font style="font-size:12px;">表示主键字段的值由自己的程序自动生成。在WebBill.cs(或是WebBill.java)文件中的getUserKey函数中定义主键字段的值的生成规则。</font> </td></tr>
+<tr style='height:31px;'><td style='width:120px;'><FONT style="font-size:12px;">GUID作主键字段:   </font></td><td><font style="font-size:12px;">表示主键字段的值为一个新生成的GUID值。</font> </td></tr>
+</table>
+</span>
+
+<br>
+
+</body>
+</html>
+

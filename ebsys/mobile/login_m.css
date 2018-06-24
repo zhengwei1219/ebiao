@@ -1,0 +1,24 @@
+*{padding:0;margin:0;}
+ul,ui{ list-style::none;}
+img{ border:0;}
+
+body{ -webkit-text-size-adjust:none;background:#f4eee9;min-width:320px;margin:0;padding:0;font-family:"microsoft yahei",Verdana,Arial,Helvetica,sans-serif;font-size:1em;color: #666666;margin:0px;overflow-x:hidden;}
+.header{width:100%; height:43px; background:url(blue.png) repeat-x;}
+.htitle{width:100%;text-align:center;font:16px Verdana, Arial, Helvetica, sans-serif; font-weight:bold;color:#fff; line-height:40px; padding-top:10px; padding-bottom:10px;}
+
+.container{ width:100%; position:relative;}
+.div_login{ padding:30px 0 0 10px; }
+.div_login span{ line-height:20px;padding-top:4px; padding-bottom:1px;}
+
+.div_login input{ width:93%;font-size:1em;background-color:#F4F4F4;border:1px solid #a4a4a4; padding:8px;;height:18px;line-height:18px;-moz-box-shadow:0 1px 3px #c8c8c8 inset;-webkit-box-shadow:0 1px 3px #c8c8c8 inset;box-shadow:0 1px 3px #c8c8c8 inset;vertical-align:text-top;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;}
+
+.div_but{height:80px;margin-top:40px; padding:0px; border:0px;}
+.loginBtn{display: block; height: 44px; width: 80%; border: 0; line-height: 44px; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; box-shadow: 0 0 6px #999; -webkit-box-shadow: 0 0 6px #999; -moz-box-shadow: 0 0 6px #999; background: url(loginbtn3.png) repeat-x; text-align: center; color: #fff; font-size: 1.2em; font-weight:bold;cursor: pointer; }
+
+
+
+.footer{border-top:1px solid #fcfaf9;text-align:center;background:#f5f2e5;padding:15px 0;font-size:.8125em;}
+.footer div{margin:5px 0;}
+.footer a{color:#67738a;}
+.footer .gray{font-size:.8125em;}
+

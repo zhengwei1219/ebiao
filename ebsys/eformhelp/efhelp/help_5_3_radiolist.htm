@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>radiolist控件</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">radiolist控件</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1.radiolist控件</div>
+        &nbsp;&nbsp;&nbsp; radiolist控件是由多个type=radio 的input元素装在一个div中组成的.它可以设置显示记录的列数,初始值控件值,取值,赋值.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_5_3_radiolist'>radiolist控件</A> 进入radiolist控件设计界面.
+       <div class="divTitle">2. radiolist控件的设置</div>
+       &nbsp;&nbsp;&nbsp; 在表单界面中双击radiolist控件进入radiolist控件的属性页面,来设置它要显示记录的列数,初始化控件的数据时,要设置它的取值方式是标准的,还是来自sql语句.<br /><img  src ="images/help_5_3_3.gif"/><br />&nbsp;&nbsp;&nbsp; 它的取值代码为:<p>GetDivRadioValue(obj,isText)</p>  &nbsp;&nbsp;&nbsp;&nbsp;obj为radiolist对象,isText !="是" 表示取value值,否则取显示值.我们在此表单中显示取值代码如下<p>alert(GetDivRadioValue(radiolist1,'是'))</p>
+          &nbsp;&nbsp;&nbsp;  赋值代码为:<p>SetDivRadioValue(obj,strX,isText)</p> &nbsp;&nbsp;&nbsp;&nbsp;obj为radiolist对象,strX为要给的值,isText !="是" 表示取value值,否则取显示值. 例如：我们在此表单中的赋值方法如下<p>SetDivRadioValue(radiolist1,'张飞','是')</p>   &nbsp;&nbsp;&nbsp;&nbsp;如果需要用SQL语句的运行结果来初始化它,先要将控件的取值方式属性设置为SQL语句,然后写代码：DivRadioInitLoad(obj, sql, callback, context) obj为radiolist对象,sql 为新的ＳＱＬ语句,如为空则表示用控件原来的ＳＱＬ语句,callback为回调函数, context为要上下文对象． <br />
+       <div class="divTitle">3.运行radiolist控件示例界面图</div>
+       &nbsp;&nbsp;&nbsp; 这是运行radiolist控件的界面:<br />
+       <img  src ="images/help_5_3_2.gif"/>
+</div>
+</body>
+</html>

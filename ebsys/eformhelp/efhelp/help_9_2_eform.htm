@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>表单皮肤切换</title>
+ <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+    </head>
+
+<body leftmargin="0" topmargin="0">
+    <table  class="tableTitle">
+        <tr><td class="title">表单皮肤切换</td></tr>
+        <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+        </tr>
+    </table>
+   <div  class=mainDiv>
+    <div class="divTitle">1.css样式文件的位置及可用皮肤</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;eform切换皮肤的css文件放在ebsys/fceform/css目录下,它有base(基本样式),blue(蓝色),green(绿色),light().<br /><img  src ="images/help_9_2_1.gif"/><div class="divTitle">2. 皮肤切换方法</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;eform表单的皮肤可以在fcpub.js的fcpubdata对象的skins属性赋值或者在表单运行的url后面传参&skins=blue来实现切换皮肤.
+           <div class="divTitle">2.1 在ebsys/fceform/js/fcpub.js下切换皮肤</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;给fcpub.js的fcpubdata对象的skins属性赋值,可以实现皮肤的切换,blue是蓝色,green是绿色.若你用脚本赋值可以实现动态修改皮肤.<br />
+           <img src ="images/help_9_2_2.gif" />
+           <div class="divTitle">2.2&nbsp; 在运行表单的url地址后面加参数</div>
+           &nbsp;&nbsp;&nbsp;&nbsp;在运行表单时带上要设置皮肤的参数如下在url的后面添加了&skins=blue,打开的表单皮肤是蓝色.如果在url的后面添加了&skins=green,那打开表单的皮肤是绿色.
+           <p>http://localhost/webbill/ebsys/fceform/common/djframe.htm?djsn=changeSkin&djtype=OF&skins=blue</p>
+    </div>
+</html>

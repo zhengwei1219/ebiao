@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_InitPage()
+{
+	div1.innerHTML = getFormInfo();
+}
+
+function uf_maxwin(){
+   window.dialogLeft=0;
+   window.dialogTop=0;
+
+   window.dialogWidth= screen.availWidth+"px";
+   window.dialogHeight=screen.availHeight+"px";
+
+}
+function getFormInfo()
+{
+	var strXml = new Sys.StringBuilder();
+	strXml.append("<table cellpadding=\"1\" cellspacing=\"1\"   border='1' style='BORDER-COLLAPSE:collapse;TABLE-LAYOUT:fixed;' frame=box>");
+	strXml.append("<tr style=\"font-size:14px; font-family:'宋体';background-color:#D6E7FF;\">");
+	
+	strXml.append("<td width='50' align='center'><b>行号</b></td>");
+	strXml.append("<td width='50' align='center'><b>列号</b></td>");
+	strXml.append("<td align='center'><b>配置信息</b></td>");
+	strXml.append("</tr>");
+	var oTable=fcpubdata.obj[0];
+	strXml.append(uf_getCol(oTable));
+	strXml.append(uf_getRow(oTable));
+	strXml.append(uf_getCell(oTable));	
+	
+	strXml.append("</table>");
+	return strXml.toString();
+	
+}
+function uf_getCol(oTable){
+	var strXml = new Sys.StringBuilder();
+	for(var i=0;i<oTable.childNodes(0).childNodes.length;i++){
+		var sProp = new Sys.StringBuilder();
+		if(oTable.childNodes(0).childNodes(i).e_hide_col == "1"){
+			sProp.append("<b>隐藏</b> ");	
+		}
+		if(oTable.childNodes(0).childNodes(i).e_page_break_col == "1"){
+			sProp.append("<b>列后分页</b> ");	
+		}
+
+		if(IsSpace(oTable.childNodes(0).childNodes(i).x_hide_col) == false ){
+			sProp.append("<b>隐藏列的公式:</b>"+unescape(oTable.childNodes(0).childNodes(i).x_hide_col)+" ");	
+		}
+		if(IsSpace(oTable.childNodes(0).childNodes(i).x_col_width) == false ){
+			sProp.append("<b>列宽公式值:</b>"+unescape(oTable.childNodes(0).childNodes(i).x_col_width)+" ");	
+		}
+		if(sProp.isEmpty() == false){
+			strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+			strXml.append("<td></td>");
+			strXml.append("<td width='50' align='center'>"+IntToLbl(i+1)+"</td>");				
+			strXml.append("<td>");
+			strXml.append(sProp);
+			strXml.append("</td>");
+			strXml.append("</tr>");
+		}
+	}
+	return strXml;
+}
+function uf_getRow(oTable){
+	var strXml = new Sys.StringBuilder();
+	for(var i=0;i<oTable.rows.length;i++){
+		var sProp = new Sys.StringBuilder();
+		if(oTable.rows(i).e_hide_row == "1"){
+			sProp.append("<b>隐藏</b> ");	
+		}
+		if(oTable.rows(i).e_page_break_row == "1"){
+			sProp.append("<b>行后分页</b> ");	
+		}
+
+		if(IsSpace(oTable.rows(i).x_hide_row) == false ){
+			sProp.append("<b>隐藏行的公式:</b>"+unescape(oTable.rows(i).x_hide_row)+" ");	
+		}
+		if(IsSpace(oTable.rows(i).x_row_height) == false ){
+			sProp.append("<b>行高公式值:</b>"+unescape(oTable.rows(i).x_row_height)+" ");	
+		}
+		if(sProp.isEmpty() == false){
+			strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+			strXml.append("<td width='50' align='center'>"+(i+1)+"</td>");				
+			strXml.append("<td></td>");
+			strXml.append("<td>");
+			strXml.append(sProp);
+			strXml.append("</td>");
+			strXml.append("</tr>");
+		}
+	}
+	return strXml;
+}
+function uf_getCell(oTable){
+	var strXml = new Sys.StringBuilder();
+	for(var i=1;i<oTable.rows.length;i++){
+		for(var j=1;j<oTable.rows(i).cells.length;j++){
+			var sProp = new Sys.StringBuilder();
+			var oCell = oTable.rows(i).cells(j);
+			if(IsSpace(oCell.e_display_value) == false){
+				sProp.append("<b>显示值:</b>"+oCell.e_display_value+" ");	
+			}
+			if(IsSpace(oCell.x_display_value) == false){
+				sProp.append("<b>显示值公式:</b>"+unescape(oCell.x_display_value)+" ");	
+			}
+			if(IsSpace(oCell.e_display_style) == false){
+				sProp.append("<b>显示格式:</b>"+oCell.e_display_style+" ");	
+			}
+			if(IsSpace(oCell.e_left_head) == false){
+				sProp.append("<b>左顶格:</b>"+oCell.e_left_head+" ");	
+			}
+			if(IsSpace(oCell.e_top_head) == false){
+				sProp.append("<b>上顶格:</b>"+oCell.e_top_head+" ");	
+			}
+			if(IsSpace(oCell.x_html_value) == false){
+				sProp.append("<b>HTML值公式:</b>"+unescape(oCell.x_html_value)+" ");	
+			}
+			
+			if(oCell.e_extensible == "0"){
+				sProp.append("<b>扩展方向:</b>不可扩展 ");	
+			} else if (oCell.e_extensible == "1"){
+				sProp.append("<b>扩展方向:</b>纵向扩展 ");	
+			} else if (oCell.e_extensible == "2"){
+				sProp.append("<b>扩展方向:</b>横向扩展 ");	
+			}
+			if(oCell.e_adjust_size == "1"){
+				sProp.append("<b>当内容超过单元格的大小时:</b>扩大单元格 ");	
+			} else if (oCell.e_adjust_size == "3"){
+				sProp.append("<b>当内容超过单元格的大小时:</b>缩小内容 ");	
+			}
+			if(oCell.e_split_text == "1"){
+				sProp.append("<b>合并格分页时文本拆分显示</b> ");	
+			}
+			if(oCell.e_allocate_right == "1"){
+				sProp.append("<b>相对表的右边位置固定</b> ");	
+			}
+			if(oCell.e_lean_line == "2"){
+				sProp.append("<b>单元格斜线</b> ");	
+			}
+			
+			if(IsSpace(oCell.classbak) == false){
+				sProp.append("<b>样式class:</b>"+oCell.classbak+" ");	
+			}
+			if(IsSpace(oCell.x_style) == false){
+				sProp.append("<b>style值公式:</b>"+unescape(oCell.x_style)+" ");	
+			}
+			if(IsSpace(oCell.e_link_target) == false){
+				sProp.append("<b>打开超链接窗口:</b>"+oCell.e_link_target+" ");	
+			}
+			if(IsSpace(oCell.x_link) == false){
+				sProp.append("<b>超链接公式:</b>"+unescape(oCell.x_link)+" ");	
+			}
+			if(IsSpace(oCell.x_page_break_row) == false){
+				sProp.append("<b>行后分页公式:</b>"+unescape(oCell.x_page_break_row)+" ");	
+			}
+			if(IsSpace(oCell.x_page_break_col) == false){
+				sProp.append("<b>列后分页公式:</b>"+unescape(oCell.x_page_break_col)+" ");	
+			}
+			if(IsSpace(oCell.x_hide_row) == false){
+				sProp.append("<b>隐藏行公式:</b>"+unescape(oCell.x_hide_row)+" ");	
+			}
+			if(IsSpace(oCell.x_hide_col) == false){
+				sProp.append("<b>隐藏列公式:</b>"+unescape(oCell.x_hide_col)+" ");	
+			}
+			if(IsSpace(oCell.x_visible) == false){
+				sProp.append("<b>是否可见公式:</b>"+unescape(oCell.x_visible)+" ");	
+			}
+			if(IsSpace(oCell.x_wordwrap) == false){
+				sProp.append("<b>自动折行公式:</b>"+unescape(oCell.x_wordwrap)+" ");	
+			}
+	
+			if(oCell.e_page_break_row == "1"){
+				sProp.append("<b>行后分页</b> ");	
+			}
+			if(oCell.e_page_break_col == "1"){
+				sProp.append("<b>列后分页</b> ");	
+			}
+			if(oCell.e_hide_row == "1"){
+				sProp.append("<b>隐藏行</b> ");	
+			}
+			if(oCell.e_hide_col == "1"){
+				sProp.append("<b>隐藏列</b> ");	
+			}
+			if(oCell.e_wordwrap == "1"){
+				sProp.append("<b>自动折行</b> ");	
+			}
+			if(oCell.e_visible == "0"){
+				sProp.append("<b>不可见</b> ");	
+			}
+			if(sProp.isEmpty() == false){
+				strXml.append("<tr style=\"font-size:12px; font-family:'宋体';\">");
+				strXml.append("<td width='50' align='center'>"+(i+1)+"</td>");				
+				strXml.append("<td width='50' align='center'>"+IntToLbl(j+1)+"</td>");				
+				strXml.append("<td>");
+				strXml.append(sProp);
+				strXml.append("</td>");
+				strXml.append("</tr>");
+			}
+		}
+	}
+	return strXml;
+}
+
+/**
+* 1--->A由索引号取得字母
+**/
+function IntToLbl(index){
+        // The index is 1 based.  Convert 1 to A, 2 to B, 25 to Y, 26 to Z, 27 to AA, 28 to AB.
+        // TODO: Got a bug when index > 676.  675==YZ.  676==YZ.  677== AAA, which skips ZA series.
+        //       In the spirit of billg, who needs more than 676 columns anyways?
+        var b = (index - 1).toString(26).toUpperCase();   // Radix is 26.
+        var c = [];
+        for (var i = 0; i < b.length; i++) {
+            var x = b.charCodeAt(i);
+            if (i <= 0 && b.length > 1)                   // Leftmost digit is special, where 1 is A.
+                x = x - 1;
+            if (x <= 57)                                  // x <= '9'.
+                c.push(String.fromCharCode(x - 48 + 65)); // x - '0' + 'A'.
+            else
+                c.push(String.fromCharCode(x + 10));
+        }
+        return c.join("");
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" runsave userType BLONclose BLONopenBefore idtype="1" OtherSave="否" isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_InitPage();" contxml="<root><label><id>label2</id></label><div><id>div1</id></div><button><id>button1</id><id>SKButton3</id></button></root>" billtaborder="<root><taborder>button1</taborder><taborder>SKButton3</taborder></root>" dj_sn="eb_showinfo" type="LR" caption="e表配制信息" codeheader entertype="修改" poswidth="750" posheight="550" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:2;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:1;DsMain_field:0;a:0;button:1;text:1;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield center="居中" AutoResizeXml><DIV style="BORDER-BOTTOM: black 1px solid; POSITION: absolute; BORDER-LEFT: black 1px solid; OVERFLOW-X: hidden; OVERFLOW-Y: auto; WIDTH: 98%; HEIGHT: 90%; BORDER-TOP: black 1px solid; TOP: 30px; BORDER-RIGHT: black 1px solid; LEFT: 6px" id=div1 onmovestart=moveStart() NotBg="否" controltype="div"></DIV><LABEL style="POSITION: absolute; WIDTH: 193px; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12pt; TOP: 5px; FONT-WEIGHT: bold; LEFT: 7px" id=label2 onmovestart=moveStart() NotBg="否" controltype="label" inputTag="否">配置信息</LABEL><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 3px; LEFT: 288px" id=button1 onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("window.close();")'>关闭</BUTTON><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 75px; DISPLAY: block; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 3px; LEFT: 208px" id=SKButton3 value=最大化 type=button controltype="button" dropstyle="否" onclick='bill_onclick("uf_maxwin()")'></DIV></body></html>

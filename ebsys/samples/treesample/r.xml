@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="gb2312"?>
+<TreeNode>
+	<TreeNode text="无限级XML树型"  xml="http://localhost/webbill/ebsys/samples/treesample/1.xml" />
+	<TreeNode text="fason"  xml="http://localhost/webbill/ebsys/samples/treesample/test.xml" />
+	<TreeNode text="fason1" />
+
+</TreeNode>

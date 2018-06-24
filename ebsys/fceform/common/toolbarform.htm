@@ -1,0 +1,110 @@
+<HTML>
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<TITLE></TITLE>
+		<META content="Microsoft Visual Studio 6.0" name="GENERATOR">
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/csjsrequest.js"></script>
+		<script language="javascript">
+SetAllButtonImage();
+
+/**
+*设置按钮为图形按钮
+*@date 2004-02-16
+**/
+function SetAllButtonImage() 
+{	
+	var oButtons={
+		ok : ["55","ef_run_button_ok1.gif","提交数据成功后退出"],
+		close : ["55","ef_run_button_close1.gif","关闭窗口"],
+		add : ["55","ef_run_button_add.gif","新增"],
+		del : ["55","ef_run_button_del.gif","删除"],
+		edit : ["55","ef_run_button_edit.gif","修改保存"],  
+		save : ["55","ef_run_button_save.gif","提交数据成功后提示"],  
+		addrow : ["65","ef_run_button_addrow.gif","增加行"],
+		deleterow : ["65","ef_run_button_deleterow.gif","删除行"],
+		saveadd : ["92","ef_run_button_saveadd.gif","提交数据成功后新增"],
+		query : ["55","ef_run_button_query.gif","查询"],
+		first : ["64","ef_run_button_first.gif","第一页"],
+		up : ["60","ef_run_button_up1.gif","上一页"],
+		down : ["60","ef_run_button_down1.gif","下一页"],
+		last : ["64","ef_run_button_last.gif","最后页"]
+	}
+	var pubHtm="";
+	var sTitle=parent.document.title; //窗口标题
+	var sButtonDisplay=Request.QueryString("type").toString(); //工具栏类别
+		if(sButtonDisplay=="1")
+		{
+			addProp("ok");
+			addProp("close");
+		}
+		if(sButtonDisplay=="2")
+		{
+			addProp("add");
+			addProp("del");
+		}
+		if(sButtonDisplay=="3")
+		{
+			addProp("first");
+			addProp("up");
+			addProp("down");
+			addProp("last");
+			addProp("add");
+			addProp("del");
+			addProp("save");
+		}
+		if(sButtonDisplay=="4")
+		{
+			addProp("up");
+			addProp("down");
+			addProp("first");
+			addProp("last");
+			addProp("addrow");
+			addProp("deleterow");
+
+			addProp("add");
+			addProp("del");
+			addProp("save");
+		}
+		if(sButtonDisplay=="5")
+		{
+			addProp("ok");
+			addProp("close");
+			addProp("saveadd");
+			addProp("add");
+		}
+		if(sButtonDisplay=="7")
+		{
+			addProp("addrow");
+			addProp("deleterow");
+			addProp("savegrid");
+
+		}
+		var sHtml='<table  border=0 cellspacing=0>';
+		sHtml+='<tr bgcolor="#F0F0F0"><td>'+pubHtm+'</td></tr></table>';
+	if(sButtonDisplay=="6")
+	{	
+	    addProp("query");
+	    
+		var sHtml='<table  border=0 cellspacing=0>'
+		sHtml+='<tr bgcolor="#F0F0F0"><td>'+pubHtm+'</td>'
+		sHtml+='<TD><INPUT style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BACKGROUND-IMAGE: url(../../fceform/images/ef_run_button_right2.gif); BORDER-LEFT: medium none; WIDTH: 24px; BORDER-BOTTOM: medium none; HEIGHT: 26px"type="button"></TD>'
+		sHtml+='<TD><INPUT class="buttonpage" style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BACKGROUND-IMAGE: url(../../fceform/images/ef_run_button_right1.gif); BORDER-LEFT: medium none; WIDTH: 22px; BORDER-BOTTOM: medium none; HEIGHT: 26px"onclick="movepage(2)" type="button"></TD>'
+		sHtml+='<TD><INPUT class="buttonpageno" id="pageno" style="WIDTH: 40px" disabled name="pageno"></TD>'
+		sHtml+='<TD><INPUT class="buttonpage" style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BACKGROUND-IMAGE: url(../../fceform/images/ef_run_button_left1.gif); BORDER-LEFT: medium none; WIDTH: 22px; BORDER-BOTTOM: medium none; HEIGHT: 26px"onclick="movepage(3)" type="button"></TD>'
+		sHtml+='<TD><INPUT class="buttonpage" style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BACKGROUND-IMAGE: url(../../fceform/images/ef_run_button_left2.gif); BORDER-LEFT: medium none; WIDTH: 24px; BORDER-BOTTOM: medium none; HEIGHT: 26px"onclick="movepage(4)" type="button" rules="rows"></TD>'
+		sHtml+='<TD>页尺寸 <INPUT class="buttonpageno" id="pagesize" style="WIDTH: 35px" value="20" name="pagesize"></TD></TR></TBODY></TABLE></tr></table>';
+	}
+	document.write(sHtml);
+	function addProp(name)
+    {
+		var value = oButtons[name];
+		pubHtm+='   <input type="button"  style="width:'+value[0]+';height:26;background-image: url(../../fceform/images/'+value[1]+')" onclick=parent.topic.execScript("$eform(\''+value[2]+'\')") >';
+		return(pubHtm);
+	}    
+}
+		</script>
+	</HEAD>
+	<BODY leftmargin="0" topmargin="0" background="../../fceform/images/ef_run_background.gif" >
+	</BODY>
+</HTML>

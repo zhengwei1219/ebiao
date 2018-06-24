@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var objNav=new Object();
+objNav.prevPage = "wizard_first" ;
+objNav.nextPage = "wizard_inputstyle" ;
+objNav.saveConfig = saveConfig;
+objNav.isOk = true;
+
+function uf_open() {
+	objNav.config = parent.parent.toolbar.WizardConfig ;
+	PropWinOnload(); 
+    //SetButtonImage(cmdUp,"../../fceform/images/ef_run_button_up.gif") ;
+    //SetButtonImage(cmdDown,"../../fceform/images/ef_run_button_down.gif") ;
+	new Eapi.DbStru().listTables($id("cboSelPkTab"));
+	
+    SetTextValue(objNav.config.mainTableName,$id("cboSelPkTab"));
+    SetTextValue(objNav.config.mainKeyField,$id("cboSelPkField"));
+    if(IsSpace(objNav.config.mainFieldsHtml1) == false) $id("lstSelField1").outerHTML = objNav.config.mainFieldsHtml1;
+    if(IsSpace(objNav.config.mainFieldsHtml2) == false) $id("lstSelField2").outerHTML = objNav.config.mainFieldsHtml2;
+    
+    parent.parent.toolbar.execScript("new Eform.Wizard().disabledButton();")
+    
+}
+//保存配置信息,由工具栏来调用
+function saveConfig(){
+	var sValue = new Eapi.Str().trim($id("cboSelPkTab").value);
+	if(IsSpace(sValue)){
+		alert("主表名不能为空!");
+		objNav.isOk = false;
+		return;
+	}
+	objNav.config.mainTableName = sValue;
+	var sValue = new Eapi.Str().trim($id("cboSelPkField").value);
+	if(IsSpace(sValue)){
+		alert("主键不能为空!");
+		objNav.isOk = false;
+		return;
+	}
+	objNav.config.mainKeyField = sValue;
+	if($id("lstSelField2").options.length == 0 ){
+		alert("已选字段不能为空!");
+		objNav.isOk = false;
+		return;
+	}
+	objNav.config.mainFields = new Eapi.Str().comboToStr($id("lstSelField2"));
+	objNav.config.mainFieldsHtml1=$id("lstSelField1").outerHTML;
+	objNav.config.mainFieldsHtml2=$id("lstSelField2").outerHTML;
+	objNav.isOk = true;
+	
+}
+
+
+
+//选择主表名称,在lstSelField2控件中列出选择主表中的字段
+function uf_SelTabValue() {
+	lstSelField1.options.length = 0;
+	lstSelField2.options.length = 0;
+	var tableName = cboSelPkTab.value;
+	new Eapi.DbStru().listFields(tableName,lstSelField2);
+	new Eapi.DbStru().listFields(tableName,cboSelPkField);
+	//找主键字段
+	SelectSql("select fdname,fdtype from FC_ENTITYSUB where tbname='"+tableName+"' and type = 'ID字段'",1,1,
+		function (result){
+			var ret = result.value;
+			var oXml = SetDom(ret);
+			if(oXml.documentElement == null) return;
+			if(oXml.documentElement.childNodes.length==0) return;
+			cboSelPkField.value = oXml.documentElement.childNodes(0).childNodes(0).text;	
+			objNav.config.mainKeyFieldDataType = oXml.documentElement.childNodes(0).childNodes(1).text;
+		});
+}
+//objLeft向右objRight增加值,
+function add(objLeft,objRight,sValue){	
+	for (var i=objLeft.length-1;i>=0;i--){
+		if (objLeft.options(i).selected){
+			var oOpt=document.createElement("option")
+			oOpt.text=objLeft.options(i).text
+			oOpt.value=objLeft.options(i).value
+			if (objLeft.id==sValue){
+				objRight.add(oOpt)
+			}
+			
+			objLeft.remove(i)
+		
+		}
+	}
+}
+//把objLeft中所有的值给objRight控件
+function uf_addlist(objLeft,objRight,sValue) {	
+	for (var i=objLeft.length-1;i>=0;i--){
+		var oOpt=document.createElement("option")
+		oOpt.text=objLeft.options(i).text
+		oOpt.value=objLeft.options(i).value
+		if (objLeft.id==sValue){
+			objRight.add(oOpt)
+		}
+		objLeft.remove(i)
+	}
+}
+//objRight向右objLeft增加值,
+function Sellist(objLeft,objRight,sValue) {
+	for (var i=objRight.length-1;i>=0;i--){
+		if (objRight.options(i).selected){
+			var oOpt=document.createElement("option")
+			oOpt.text=objRight.options(i).text
+			oOpt.value=objRight.options(i).value
+			if (objRight.id == sValue){
+				objLeft.add(oOpt)
+			}
+			objRight.remove(i)
+		}
+	}	
+}
+//把objRight中所有的值给objLeft控件
+function uf_del(objLeft,objRight,sValue) {
+	for (var i=objRight.length-1;i>=0;i--){
+		var oOpt=document.createElement("option")
+		oOpt.text=objRight.options(i).text
+		oOpt.value=objRight.options(i).value
+		if (objRight.id==sValue){
+			objLeft.add(oOpt)
+		}
+
+		objRight.remove(i)
+	}
+		
+}
+//listbox控件的值上移
+function uf_up(obj){
+     for (var i=obj.length-1;i>0;i--){
+      if (obj.options(i).selected == true){
+        var s
+        var d
+        s=obj.options(i-1).text ;
+        d=obj.options(i-1).value ;
+        obj.options(i-1).text=obj.options(i).text ;
+        obj.options(i-1).value=obj.options(i).value ;
+        obj.options(i).text=s ;
+        obj.options(i).value=d ;
+        obj.options(i).selected=false ;
+        obj.options(i-1).selected=true ;
+        break ;
+      }
+    }
+}
+//listbox控件的值下移
+function uf_down(obj){
+   for (var i=0;i<obj.length-1;i++){
+    if (obj.options(i).selected == true){
+      var s="";
+      var d="";
+      s=obj.options(i+1).text ;
+      d=obj.options(i+1).value ;
+      obj.options(i+1).text=obj.options(i).text ;
+      obj.options(i+1).value=obj.options(i).value ;
+      obj.options(i).text=s ;
+      obj.options(i).value=d ;
+	  obj.options(i).selected=false
+     obj.options(i+1).selected=true ;
+      break ;
+    }
+  }
+}
+</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../../fceform/htc/fc_code.htc)",0);</script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" mkbh toolbar="不带工具栏" dj_sn="wizard_maininput" type="ZK" caption="wizard_maininput" codeheader="BBB" keyfield BLONopen="uf_open()" window="当前窗口" entertype="修改" posleft postop poswidth posheight isfile="是" OtherSave="否" idtype="1" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:1;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>Label1</id><id>Label2</id><id>Label8</id><id>Label7</id></label><listbox><id>lstSelField1</id><id>lstSelField2</id></listbox><button><id>cmd_CheckAllRight</id><id>cmdCheckRight</id><id>cmd_CheckLeft</id><id>cmd_CheckAllLeft</id><id>cmdSmallUp</id><id>cmdSmallDown</id></button><dropdownlist><id>cboSelPkTab</id><id>cboSelPkField</id></dropdownlist></root>" center="  " BLONopenBefore BLONclose runsave billtaborder="<root><taborder>lstSelField1</taborder><taborder>lstSelField2</taborder><taborder>cmd_CheckAllRight</taborder><taborder>cmdCheckRight</taborder><taborder>cmd_CheckLeft</taborder><taborder>cmd_CheckAllLeft</taborder><taborder>cmdSmallUp</taborder><taborder>cmdSmallDown</taborder><taborder>cboSelPkTab</taborder><taborder>cboSelPkField</taborder></root>" AutoResizeXml><DIV id=Label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 9px; WIDTH: 24px; FONT-FAMILY: ; POSITION: absolute; TOP: 31px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="Label1">主表名：</DIV><?xml:namespace prefix = fc /><fc:fc_code id=cboSelPkTab style="FONT-SIZE: 12px; FONT-FAMILY: ; BACKGROUND-COLOR: #ffffff" height="20" width="143" controltype="dropdownlist" datasourceName="" visible="是" format="英 文 表 名| 中 文 表 名" sql2="" xml="" multiselect="否" addrow="否" blnempty="否" blninput="是" onselchange='bill_onclick("uf_SelTabValue()")' sqltrans="" top="27" left="52" field="undefined" position="absolute" align="left" dataset="undefined" enabled="false" isShowTree="undefined" isTreeNewSql="undefined" FieldNameList="undefined"></fc:fc_code> 
+<DIV id=Label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 241px; WIDTH: 18px; FONT-FAMILY: ; POSITION: absolute; TOP: 31px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="Label2">主键：</DIV><fc:fc_code id=cboSelPkField style="FONT-SIZE: 12px; FONT-FAMILY: ; BACKGROUND-COLOR: #ffffff" height="20" width="159" controltype="dropdownlist" datasourceName="" visible="是" format="字段名称 !|  中文名称|" sql2="" xml="" multiselect="否" addrow="否" blnempty="否" blninput="是" sqltrans="" top="27" left="274" field="undefined" position="absolute" align="left" dataset="undefined" enabled="false" isShowTree="undefined" isTreeNewSql="undefined" FieldNameList="undefined"></fc:fc_code> 
+<DIV id=Label8 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 245px; WIDTH: 24px; FONT-FAMILY: ; POSITION: absolute; TOP: 60px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="Label8">已选字段</DIV>
+<DIV id=Label7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 8px; WIDTH: 24px; FONT-FAMILY: ; POSITION: absolute; TOP: 60px; HEIGHT: 15px" onmovestart=moveStart() noWrap controltype="label" value="Label7">待选字段</DIV><SELECT id=lstSelField1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 7px; WIDTH: 188px; FONT-FAMILY: ; POSITION: absolute; TOP: 77px; HEIGHT: 230px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() multiple size=8 controltype="listbox" sql check="1" temptext tempvalue ondblclick="bill_ondblclick(&quot;add(lstSelField1,lstSelField2,'lstSelField1')&quot;)" backheight="230" backwidth="188" sqltrans></SELECT><BUTTON id=cmd_CheckAllRight style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 201px; WIDTH: 36px; FONT-FAMILY: ; POSITION: absolute; TOP: 101px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;uf_addlist(lstSelField1,lstSelField2,'lstSelField1')&quot;)">&gt;&gt;</BUTTON><BUTTON id=cmdCheckRight style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 201px; WIDTH: 36px; FONT-FAMILY: ; POSITION: absolute; TOP: 131px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;add(lstSelField1,lstSelField2,'lstSelField1')&quot;)">&gt;</BUTTON><BUTTON id=cmd_CheckLeft style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 201px; WIDTH: 36px; FONT-FAMILY: ; POSITION: absolute; TOP: 177px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;Sellist(lstSelField1,lstSelField2,'lstSelField2')&quot;)">&lt;</BUTTON><BUTTON id=cmd_CheckAllLeft style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 201px; WIDTH: 36px; FONT-FAMILY: ; POSITION: absolute; TOP: 207px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick="bill_onclick(&quot;uf_del(lstSelField1,lstSelField2,'lstSelField2')&quot;)">&lt;&lt;</BUTTON><SELECT id=lstSelField2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 241px; WIDTH: 192px; FONT-FAMILY: ; POSITION: absolute; TOP: 77px; HEIGHT: 230px; BACKGROUND-COLOR: #ffffff" onmovestart=moveStart() multiple size=8 controltype="listbox" sql check="1" temptext tempvalue ondblclick="bill_ondblclick(&quot;Sellist(lstSelField1,lstSelField2,'lstSelField2')&quot;)" backheight="230" backwidth="192" sqltrans></SELECT><BUTTON id=cmdSmallUp style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 437px; WIDTH: 22px; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; POSITION: absolute; TOP: 150px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_up(lstSelField2)")'></BUTTON><BUTTON id=cmdSmallDown style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 437px; WIDTH: 22px; FONT-FAMILY: ; POSITION: absolute; TOP: 175px; HEIGHT: 22px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_down(lstSelField2)")'></BUTTON></DIV></body></html>

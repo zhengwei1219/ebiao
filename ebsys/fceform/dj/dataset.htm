@@ -1,0 +1,648 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <STYLE>
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var arrProps = ["id","saveastable","opensortno","pubpara","isaddemptyrec","isSubGrid",
+	"opensql","BeforeOpen",
+	"submittype","submitno","savetable","idtype","idparam",
+	"issubds","subdsfield","masterds","masterdsfield","async",
+	"BeforeOpen","AfterOpen","BeforePost","AfterPost","BeforeScroll","AfterScroll"] ;
+var obj;  //当前控件
+var oMain; //SKbillsheet对象
+var dssub1;
+function uf_open(){
+
+
+	SKBILLgrid1.IsOrder="否"
+
+	obj=fcpubdata.obj[0]     //IMG对象
+	oMain=fcpubdata.obj[2];
+	dssub1 = $id("dssub1");
+	var oSysForm = new Eform.SysForm()
+	oSysForm.setButtonImage();
+	oSysForm.jsonToCont(obj,arrProps);
+	//SetButtonImage($id("cmdGridRowUp"),"../../fceform/images/ef_run_button_up.gif") ;
+	//SetButtonImage($id("cmdGridRowDown"),"../../fceform/images/ef_run_button_down.gif") ;
+	PropWinOnload() 
+	var sXml=obj.formatxml ;
+	var tmpBool = false;
+	if(IsSpace(new Eapi.Str().trim(sXml))==false && sXml != "<root/>") {
+		var oX = SetDom(sXml);
+		if(oX.documentElement.childNodes.length>0){
+			if(oX.documentElement.childNodes(0).childNodes.length <= 26){
+				sXml = RepStr(sXml,"</tr>","<td></td><td></td></tr>");
+			}
+			var s="<set><pages>0</pages><fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>a</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnname</fieldname><datatype>字符</datatype><displaylabel>中文名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>新建字段</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>字符</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>字段宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>10</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>字段精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldkind</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>12</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>数据项</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>defaultvalue</fieldname><datatype>字符</datatype><displaylabel>默认值</displaylabel><size>2000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>displayformat</fieldname><datatype>字符</datatype><displaylabel>数据格式</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>readonly</fieldname><datatype>字符</datatype><displaylabel>只读</displaylabel><size>2000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>visible</fieldname><datatype>字符</datatype><displaylabel>显示</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>是</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>iskey</fieldname><datatype>字符</datatype><displaylabel>唯一</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnull</fieldname><datatype>字符</datatype><displaylabel>不能为空</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>valid</fieldname><datatype>字符</datatype><displaylabel>常规校验</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>是</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>procvalid</fieldname><datatype>字符</datatype><displaylabel>过程校验</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>primarykey</fieldname><datatype>字符</datatype><displaylabel>主键</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>link</fieldname><datatype>字符</datatype><displaylabel>超链接</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>target</fieldname><datatype>字符</datatype><displaylabel>窗口</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>href</fieldname><datatype>字符</datatype><displaylabel>地址</displaylabel><size>500</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>align</fieldname><datatype>字符</datatype><displaylabel>对齐</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>left</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>columnwidth</fieldname><datatype>字符</datatype><displaylabel>列宽</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>80</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>gettext</fieldname><datatype>字符</datatype><displaylabel>表现数据</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>settext</fieldname><datatype>字符</datatype><displaylabel>回写数据</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>datavalid</fieldname><datatype>字符</datatype><displaylabel>数据验证</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keydown</fieldname><datatype>字符</datatype><displaylabel>按键事件</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>click</fieldname><datatype>字符</datatype><displaylabel>鼠标单击</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dblclick</fieldname><datatype>字符</datatype><displaylabel>鼠标双击</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldvalid</fieldname><datatype>字符</datatype><displaylabel>字段数据验证</displaylabel><size>7000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tag</fieldname><datatype>字符</datatype><displaylabel>自定义</displaylabel><size>7000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields></set>"
+			dssub1.OpenXmlData(sXml.substring(0,sXml.length-7)+s+"</root>") ;
+			dssub1.fset_cont1()
+			tmpBool = true ;
+		}
+	} 
+	if(tmpBool == false){
+		dssub1.Append();
+		dssub1.fset_cont(0);
+	}
+	$id("id").onchange = function uf_id_onchange() {
+							
+							var sR = CheckContSameName(fcpubdata.obj[3],$id("id").value,obj,fcpubdata.obj[2]) ;
+							if(sR != ""){
+								alert(sR);
+								event.returnValue = false ;
+							}else{
+								alert("数据集名称修改后要手工把使用此数据集的地方都同步修改名称!");
+							}
+						}
+	
+	uf_linkCheckBox();
+
+	new Eapi.DbStru().listTables($id("saveastable"));
+
+	new Eapi.DbStru().listTables($id("savetable"));	
+	
+
+	uf_fddec();//小数位,显示格式
+	
+	//getDsnList(cboDsn,obj.datasourceName);
+	
+	uf_hide_subds();
+	$id("subdsfield").onclickopen = function uf_sel_self_field(){
+		var sb = new Sys.StringBuilder();
+		var len = dssub1.oDom.documentElement.childNodes.length-1;
+		for(var i=0;i<len;i++){
+			var fdName = dssub1.oDom.documentElement.childNodes(i).childNodes(0).text;
+			sb.append("<tr><td>"+fdName+"</td></tr>");	
+		}	
+		
+		$id("subdsfield").xml = sb.toString();
+	}
+	
+}
+
+function uf_ok() {
+	if($id("issubds").value == "是"){		;
+		if($id("subdsfield").value==""){
+			alert("从表数据集的字段不能为空!");
+			return;
+				
+		}
+		if($id("masterds").value==""){
+			alert("主表数据集不能为空!");
+			return;
+				
+		}
+		if($id("masterdsfield").value==""){
+			alert("主表数据集的字段不能为空!");
+			return;
+				
+		}
+		if($id("masterds").value==$id("id").value){
+			alert("主表数据集不能为自己!");
+			return;
+		}
+	}
+	if($id("pubpara").value == "是" && IsSpace(new Eapi.Str().trim($id("saveastable").value)) == false ){
+		alert("当勾上了不保存时保存表名应为空!")
+		return
+	}
+	if(new Eapi.Grid().isRepeat(SKBILLgrid1,1)) return;
+	new Eform.SysForm().contToJson(obj,arrProps);
+
+	dssub1.Update()
+	var oDom=dssub1.oDom
+	oDom.documentElement.removeChild(oDom.documentElement.childNodes(oDom.documentElement.childNodes.length-1))
+	obj.formatxml=oDom.documentElement.xml
+	
+	obj.datasourceName = cboDsn.value;
+	//传递查询表名,供设计时用
+	if(IsSpace(dssub1.queryTableName) == false) obj.queryTableName = dssub1.queryTableName;
+	CloseBill()
+}
+function uf_inserts() {
+	if(dssub1.RecordCount <1 ){
+		uf_add();
+	}
+	
+	DjOpen("datasetsel",dssub1,"展现",'有模式窗口','直接','批量增加字段');
+	
+	DsToGrid(SKBILLgrid1);
+}
+function uf_selfield() {
+	if(fcpubdata.dbStruDict == "") return ;
+	if(SKBILLgrid1.curTD.parentNode.rowIndex<1){
+		SKBILLgrid1.SetFocus(SKBILLgrid1.tab.rows(1).cells(1),"程序给焦点")  ;
+	}
+	var sql="select fdname,chnname,fdtype,fdsize,fddec from FC_FLDLIST where fdname like ':v_get%' order by fdname";
+	if(fcpubdata.dbStruDict == "FC_DBSTRU") 
+		sql="select distinct fdname,chnname,fdtype,fdsize,fddec from FC_DBSTRU where fdname like ':v_get%' order by fdname";
+	if(fcpubdata.dbStruDict == "FC_ENTITY") 
+		sql="select distinct fdname as 字段名,chnname as 字段中文名,fdname,chnname,fdtype,fdsize,fddec from FC_ENTITYSUB where fdname like ':v_get%' order by fdname";
+	
+	SelectZlSql(sql,"否","fdname,chnname,fdtype,fdsize,fddec",new Eapi.Str().trim(SKDBedit6.value),SKBILLgrid1)
+	dssub1.fset_cont1() ;
+	//dssub1.fset_cont()
+}
+function uf_keyenter() {
+	if(event.keyCode == 13) {
+		SKDBedit6.blur() ;
+		uf_selfield() ;
+	}
+	
+}
+function uf_add(sTag) {
+	if(sTag == "insert"){
+		dssub1.Insert();
+	}else{
+		dssub1.Append();
+	}
+	var sColor="#ffffff"
+	if(dssub1.RecordCount>0 ){
+		SKDBedit8.disabled=false
+		SKDBedit8.style.background=sColor
+		SKDBedit6.disabled=false
+		SKDBedit6.style.background=sColor
+		$id("cmdDropDown4").disabled=false
+		$id("cmdDropDown5").disabled=false
+		$id("cmdDropDown6").disabled=false
+		SKDBcombobox1.disabled=false
+		SKDBcombobox1.style.background=sColor
+		SKDBcombobox2.disabled=false
+		SKDBcombobox2.style.background=sColor
+		SKDBedit10.disabled=false
+		SKDBedit10.style.background=sColor
+		SKDBedit11.disabled=false
+		SKDBedit11.style.background=sColor
+		SKDBedit13.disabled=false
+		SKDBedit13.style.background=sColor
+		SKDBedit7.disabled=false
+		SKDBedit7.style.background=sColor
+	}
+	dssub1.fset_cont();
+}
+
+function uf_del() {
+	dssub1.Delete();
+	var sColor="#D0D0D1"
+	if(dssub1.RecordCount==0 ){
+		SKDBedit8.disabled=true
+		SKDBedit8.style.background=sColor
+		SKDBedit6.disabled=true
+		SKDBedit6.style.background=sColor
+		$id("cmdDropDown4").disabled=true
+		$id("cmdDropDown5").disabled=true
+		$id("cmdDropDown6").disabled=true
+		SKDBcombobox1.disabled=true
+		SKDBcombobox1.style.background=sColor
+		SKDBcombobox2.disabled=true
+		SKDBcombobox2.style.background=sColor
+		SKDBedit10.disabled=true
+		SKDBedit10.style.background=sColor
+		SKDBedit11.disabled=true
+		SKDBedit11.style.background=sColor
+		SKDBedit13.disabled=true
+		SKDBedit13.style.background=sColor
+		SKDBedit7.disabled=true
+		SKDBedit7.style.background=sColor
+	}
+}
+function uf_givevalue() {
+	var svalue = SKDBcombobox8.value ;
+	switch (svalue){
+		case "是" :
+		case "否" :
+			dssub1.Fields.Field['readonly'].Value=svalue
+			break;
+		case "" :
+			dssub1.Fields.Field['readonly'].Value="否"
+			break;
+		case "选" :
+			if(dssub1.Fields.Field['readonly'].Value.length == 1){
+				//alert("aa"+dssub1.Fields.Field['readonly'].Value)
+				dssub1.Fields.Field['readonly'].Value="选" ; //<code><xml><tr><td>是</td></tr><tr><td>否</td></tr></xml><format>"+RepXml("是否活动!")+"</format></code>";
+			}
+			break;
+		default :
+			dssub1.Fields.Field['readonly'].Value=svalue ;
+			break ;
+			
+	}
+	dssub1.bEdit=true;
+	dssub1.Update();	
+	uf_showbuttonset();
+}
+function uf_moverow() {
+	var s = dssub1.Fields.Field['readonly'].Value
+	
+	//alert(s)
+	SKDBcombobox8.value = s.substring(0,1) ;
+	if( SKDBcombobox8.value == "选" )
+		FCButton4.style.display = "block" ;
+	else
+		FCButton4.style.display = "none" ;
+		
+	uf_checkDisplay();	
+	uf_fddec();//小数位,显示格式	
+	
+	//显示fieldtrans
+	$id("txtFieldTrans").value = "" ;
+	$id("txtFieldTransRead").value = "" ;
+	$id("txtFieldTransSql").value = "" ;
+	if(typeof obj != "undefined"){
+		var s1 = obj.fieldtrans ;
+		if(IsSpace(s1) == false){
+			var oXml = SetDom(s1);
+			var oNode = oXml.documentElement.selectSingleNode("//field[name='"+dssub1.Fields.Field['fdname'].Value+"']");
+			if(oNode != null){
+				$id("txtFieldTrans").value = unescape(oNode.childNodes(1).text) ;
+				$id("txtFieldTransRead").value = unescape(oNode.childNodes(2).text) ;
+				if(oNode.childNodes.length > 3)
+					$id("txtFieldTransSql").value = unescape(oNode.childNodes(3).text) ;
+			}
+		}
+	}
+	uf_linkCheckBox();
+}
+function uf_txtFieldTrans_onchange() {
+	var s1 = obj.fieldtrans ;
+	if(IsSpace(s1) == false){
+		var oXml = SetDom(s1);
+	
+	}else{
+		var oXml = SetDom("<root></root>");
+	}
+	var value1 = escape($id("txtFieldTrans").value);
+	var value2 = escape($id("txtFieldTransRead").value);
+	var value3 = escape($id("txtFieldTransSql").value);
+	var oNode = oXml.documentElement.selectSingleNode("//field[name='"+dssub1.Fields.Field['fdname'].Value+"']");
+	if(oNode != null){
+		oXml.documentElement.removeChild(oNode);
+	}
+		var oAdd = SetDom("<field><name>"+dssub1.Fields.Field['fdname'].Value+"</name><trans>"+value1+"</trans><rtrans>"+value2+"</rtrans><sql>"+value3+"</sql></field>");
+		oXml.documentElement.appendChild(oAdd.documentElement);
+	
+	obj.fieldtrans = oXml.documentElement.xml;
+	
+}
+function uf_fccodeset() {
+	var o = new uf_fccodeobj()
+
+	var s = dssub1.Fields.Field['readonly'].Value
+	//alert(s)
+	if(s.length >1 ){
+		;
+		
+		var sxml = unescape(s.substring(1,s.length));
+		
+		var oXml = SetDom(sxml) ;
+		var l = oXml.documentElement.childNodes.length
+		for(var i=0;i<l;i++){
+			switch (oXml.documentElement.childNodes(i).nodeName) {
+				case "xml" :
+					o.xml=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "format" :
+					o.format=RepStr(oXml.documentElement.childNodes(i).text,"&nbsp;"," ") ;
+					break;
+				case "sql1" :
+					o.sql1=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "blninput" :
+					o.blninput=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "blnempty" :
+					o.blnempty=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "check" :
+					o.check=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "tempvalue" :
+					o.tempvalue=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "temptext" :
+					o.temptext=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "onclickopen" :
+					o.onclickopen=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "onselchange" :
+					o.onselchange=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "oninterchange" :
+					o.oninterchange=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "onchange" :
+					o.onchange=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "onkeydown" :
+					o.onkeydown=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "onclick" :
+					o.onclick=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "fieldnamelist" :
+					o.fieldnamelist=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "isShowTree" :
+					o.isShowTree=oXml.documentElement.childNodes(i).text ;
+					break;
+				case "isTreeNewSql" :
+					o.isTreeNewSql=oXml.documentElement.childNodes(i).text ;
+					break;
+				
+			}
+			
+		}
+	}
+	var obj = DjOpen("dsfccode",o,"展现",'有模式窗口','直接',"设置列的参照属性")
+	if(typeof obj != "undefined") {
+		var s = "<code>"
+		if(IsSpace(obj.xml) == false) s += "<xml>"+obj.xml+"</xml>" ;
+		 s += "<format>"+RepXml(RepStr(obj.format," ","&nbsp;"))+"</format>" ;
+		if(IsSpace(obj.sql1) == false) s += "<sql1>"+RepXml(obj.sql1)+"</sql1>" ;
+		if(IsSpace(obj.blninput) == false) s += "<blninput>"+obj.blninput+"</blninput>" ;
+		if(IsSpace(obj.blnempty) == false) s += "<blnempty>"+obj.blnempty+"</blnempty>" ;
+		if(IsSpace(obj.check) == false) s += "<check>"+obj.check+"</check>" ;
+		if(IsSpace(obj.tempvalue) == false) s += "<tempvalue>"+RepXml(obj.tempvalue)+"</tempvalue>" ;
+		if(IsSpace(obj.temptext) == false) s += "<temptext>"+RepXml(obj.temptext)+"</temptext>" ;
+		if(IsSpace(obj.onclickopen) == false) s += "<onclickopen>"+RepXml(obj.onclickopen)+"</onclickopen>" ;
+
+		if(IsSpace(obj.onselchange) == false) s += "<onselchange>"+RepXml(obj.onselchange)+"</onselchange>" ;
+		if(IsSpace(obj.oninterchange) == false) s += "<oninterchange>"+RepXml(obj.oninterchange)+"</oninterchange>" ;
+		if(IsSpace(obj.onchange) == false) s += "<onchange>"+RepXml(obj.onchange)+"</onchange>" ;
+		if(IsSpace(obj.onkeydown) == false) s += "<onkeydown>"+RepXml(obj.onkeydown)+"</onkeydown>" ;
+		if(IsSpace(obj.onclick) == false) s += "<onclick>"+RepXml(obj.onclick)+"</onclick>" ;
+		if(IsSpace(obj.fieldnamelist) == false) s += "<fieldnamelist>"+RepXml(obj.fieldnamelist)+"</fieldnamelist>" ;
+		if(IsSpace(obj.isShowTree) == false) s += "<isShowTree>"+RepXml(obj.isShowTree)+"</isShowTree>" ;
+		if(IsSpace(obj.isTreeNewSql) == false) s += "<isTreeNewSql>"+RepXml(obj.isTreeNewSql)+"</isTreeNewSql>" ;
+		s +="</code>"
+		dssub1.Fields.Field['readonly'].Value ="选" + escape(s) ;	
+		dssub1.bEdit=true;
+		dssub1.Update();	
+
+	}
+}
+function uf_fccodeobj(xml,format,sql1,blninput,blnempty,check,tempvalue,temptext,onclickopen) {
+	this.xml = xml ;
+	this.format = format ;
+	this.sql1 = sql1 ;
+	this.blninput = blninput ;
+	this.blnempty = blnempty ;
+	this.check = check ;
+	this.tempvalue = tempvalue ;
+	this.temptext = temptext ;
+	this.onclickopen = onclickopen ;
+}
+
+//字段验证
+function uf_datavalid() {
+	var arr1=new Array();
+	var obj=fcpubdata.obj[0];
+	arr1[0]=fcpubdata.obj[1];//当前数据集
+	var scur=""
+	var fdname = dssub1.Fields.Field['fdname'].Value;
+	var s1 = obj.validate;
+	if(IsSpace(s1)==false){
+		var oX = SetDom(s1);
+		var oNode = oX.documentElement.selectSingleNode("//field[name='"+fdname+"']");
+		if(oNode != null){
+			scur=oNode.xml;
+		}
+	}
+	arr1[1]=scur;
+	arr1[2]= fdname; //当前字段名
+	var sxml=DjOpen('validatecard',arr1,'展现','有模式窗口','直接','数据验证')  ;
+	var s = "" ;
+	if(IsSpace(sxml) ==false){
+		//刷新obj.validate
+		if(IsSpace(s1)){
+			obj.validate="<root>"+sxml+"</root>";
+		}else if(sxml == "del"){
+			if(oNode != null){
+				oX.documentElement.removeChild(oNode);
+				obj.validate=oX.documentElement.xml ;
+			}
+		}else if(oNode == null){
+			var oX1 = SetDom(sxml);
+			oX.documentElement.appendChild(oX1.documentElement);
+			obj.validate=oX.documentElement.xml ;
+		}else{
+			var oX1 = SetDom(sxml);
+			oX.documentElement.replaceChild(oX1.documentElement,oNode);
+			obj.validate=oX.documentElement.xml ;
+		}
+		
+		
+		if(IsSpace(sxml) == false && sxml != "del"){
+			var oXml=SetDom(sxml);
+			s ="("+oXml.documentElement.childNodes(2).text+") ?'"+oXml.documentElement.childNodes(4).text+"':'' "
+			s = escape(s) ;
+		}
+	}
+	dssub1.Fields.Field['fieldvalid'].Value =s ;	
+	dssub1.bEdit=true;
+	dssub1.Update();	
+}
+//显示
+function uf_checkDisplay(){
+	var sAttribute="";
+	if(SKDBcheckbox3.value=="否"){
+		sAttribute="none";
+		
+	}
+	
+	Label21.style.display=sAttribute;	
+	SKDBcombobox4.style.display=sAttribute;
+	Label29.style.display=sAttribute;
+	SKDBedit16.style.display=sAttribute;
+	SKDBcheckbox10.style.display=sAttribute;
+	Label7.style.display=sAttribute;
+	SKDBcombobox3.style.display=sAttribute;
+	Label6.style.display=sAttribute;
+	SKDBedit4.style.display=sAttribute;
+	Label69.style.display=sAttribute;
+	SKDBcombobox8.style.display=sAttribute;
+	Label16.style.display=sAttribute;
+	SKDBedit5.style.display=sAttribute;
+	SKDBedit12.style.display=sAttribute;
+	SKDBedit14.style.display=sAttribute;
+	Label22.style.display=sAttribute;
+	Label23.style.display=sAttribute;
+	$id("cmdDropDown4").style.display=sAttribute;
+	$id("cmdDropDown5").style.display=sAttribute;
+	$id("cmdDropDown6").style.display=sAttribute;
+	SKDBLike7.style.display=sAttribute;
+	SKDBLike6.style.display=sAttribute;
+	uf_linkCheckBox();	
+	uf_showbuttonset();
+}
+function uf_showbuttonset() {
+	if(SKDBcombobox8.value == "选" && SKDBcheckbox3.value=="是")	
+		FCButton4.style.display="";
+	else
+		FCButton4.style.display="none";
+}
+//超级连接
+function uf_linkCheckBox(){
+	
+	var sAttribute="";
+	if(SKDBcheckbox3.value=="是"){
+		if(SKDBcheckbox10.value=="否"){
+			sAttribute="none";
+		}
+		Label7.style.display=sAttribute;
+		Label6.style.display=sAttribute;
+		SKDBedit4.style.display=sAttribute;	
+		SKDBcombobox3.style.top = SKDBedit4.style.top; //不加此,则在初次显示时上移
+		SKDBcombobox3.style.display=sAttribute;
+	}
+}
+//小数位 与  显示格式
+function uf_fddec(){
+	var sAttribute="";
+	if(SKDBcombobox1.value!="实数"){
+		SKDBedit11.disabled=true	
+	}else{
+		SKDBedit11.removeAttribute("disabled");
+	}	
+	if(SKDBcombobox1.value!="实数" && SKDBcombobox1.value!="整数" && SKDBcombobox1.value!="日期" && SKDBcombobox1.value!="时间"){
+		sAttribute="none";	
+	}
+	SKDBedit7.style.display=sAttribute;
+	Label15.style.display=sAttribute;
+	SKDBLike4.style.display=sAttribute;
+}
+
+//生成SQL
+function uf_buildSql(){
+	var sRet = DjOpen("eb_gensql",cboDsn.value,"展现","有模式窗口","直接","SQL语句生成向导");
+	if(IsSpace(sRet) == false){
+		$id("opensql").value = sRet[0];	
+	}	
+}
+function uf_runsql(){
+	DjOpen("eb_runsql",[$id("opensql").value,cboDsn.value],"展现","有模式窗口","直接","运行sql语句");	
+}
+function uf_fx(txtObj){
+	var sb= new Sys.StringBuilder();
+	for(var i=0;i<dssub1.oDom.documentElement.childNodes.length-1;i++){
+		sb.append("<option value='"+dssub1.oDom.documentElement.childNodes(i).childNodes(0).text+"'>"+dssub1.oDom.documentElement.childNodes(i).childNodes(1).text+"</option>")	;
+	}
+	var sRet = DjOpen("js_fx",[sb.toString(),txtObj.value],"展现","有模式窗口","直接","设置公式");	
+	if(IsSpace(sRet) == false){
+		txtObj.value = sRet;	
+		txtObj.fireEvent("onchange");
+	}
+}
+
+
+//页签控件的点击事件
+function PubClickPageControl(index) {
+	if(index == 1){
+		SKBILLgrid1.ParentPos = "相对" ;
+		SKBILLgrid1.hideVscroll = false ;
+		SKBILLgrid1.hideHscroll = false ;
+		SKBILLgrid1.HScroll();  //重算滚动条
+		SKBILLgrid1.VScroll();
+	}
+}
+
+function uf_idtype() {
+	var sidtype = $id("idtype").value ;
+	var oLabel = $id("lblIdParam");
+	switch (sidtype) {
+		case "1" : //自已用的ID
+			oLabel.style.display = "" ;
+			oLabel.innerText = "ID标识" ;
+			$id("idparam").style.display = "" ;
+			break ;
+		case "3" : //oracle序列
+			oLabel.style.display = "" ;
+			oLabel.innerText = "序列名称" ;
+			$id("idparam").style.display = "" ;
+			break ;
+		case "2" :
+		case "4" :
+		case "5" :
+		case "8" :
+			oLabel.style.display = "none" ;
+			$id("idparam").style.display = "none" ;
+			break ;
+		case "6" : //自定义
+			oLabel.style.display = "" ;
+			oLabel.innerText = "自定义的参数值" ;
+			$id("idparam").style.display = "" ;
+			break ;
+	}
+
+}
+function uf_sel_ds_field() {
+	var arrtmp=contselfield(fcpubdata.obj[1]);
+	if(typeof arrtmp != "undefined"){
+		$id("masterds").value=arrtmp[0];
+		$id("masterdsfield").value=arrtmp[1];
+	}
+}
+function uf_hide_subds(){
+	if($id("issubds").value == "是"){
+		$id("divRel").style.display="";	
+	}else{
+		$id("divRel").style.display="none";	
+		$id("subdsfield").value="";
+		$id("masterds").value="";
+		$id("masterdsfield").value="";
+	}
+}
+function uf_GridChangeRow(bUp){
+	if(dssub1.Update() == ""){
+		GridChangeRow(bUp);
+	}
+}</script><script src='../js/fcopendj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script src='../js/fctorun.js'></script><script src='../../fceformext/js/userfunc.js'></script><script >document.styleSheets[0].addRule("fc\\:fc_code","behavior: url(../htc/fc_code.htc)",0);</script><script >document.styleSheets[0].addRule("fc\\:webgrid","behavior: url(../htc/webgrid.htc)",0);</script><script src='../js/fcwebgrid.js'></script><script >document.styleSheets[0].addRule("fc\\:dataset","behavior: url(../htc/dataset.htc)",0);</script><script src='../js/fcdataset.js'></script>
+<DIV onkeydown="" id=SKbillsheet class=dj ondblclick="" jslib="fcopendj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;fctorun.js&#13;&#10;~userfunc.js" dj_id="321" para="<r></r>" center="居中" keyfield controlno="SKButton:20;SKDBedit:48;checkbox:3;label:21;radio:0;listbox:0;textarea:0;combobox:4;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:1;shape:0;tab:0;div:3;DsMain_field:0;a:11;button:10;text:15;hr:0;checkboxlist:0;radiolist:0;dropdownlist:2;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:0" posheight="465" poswidth="530" entertype="修改" codeheader mkbh="E5" caption="dataset" type="LR" dj_sn="dataset" billtaborder="<root><taborder>SKDBedit4</taborder><taborder>SKDBedit7</taborder><taborder>SKDBedit13</taborder><taborder>SKDBedit11</taborder><taborder>SKDBedit10</taborder><taborder>SKDBedit8</taborder><taborder>SKDBedit30</taborder><taborder>SKDBedit20</taborder><taborder>SKDBedit5</taborder><taborder>SKDBedit12</taborder><taborder>SKDBedit14</taborder><taborder>SKDBedit16</taborder><taborder>SKDBcheckbox10</taborder><taborder>SKDBcheckbox7</taborder><taborder>SKDBcheckbox3</taborder><taborder>SKDBcheckbox9</taborder><taborder>SKDBcheckbox5</taborder><taborder>opensql</taborder><taborder>opensortno</taborder><taborder>SKDBcombobox1</taborder><taborder>SKDBcombobox2</taborder><taborder>SKDBcombobox3</taborder><taborder>SKDBcombobox4</taborder><taborder>SKDBcombobox8</taborder><taborder>FCButton23</taborder><taborder>FCButton4</taborder><taborder>FCButton8</taborder><taborder>cmdDropDown2</taborder><taborder>cmdDropDown3</taborder><taborder>cmdDropDown6</taborder><taborder>cmdDropDown5</taborder><taborder>cmdDropDown4</taborder><taborder>cmdDropDown7</taborder><taborder>cmdDropDown12</taborder><taborder>cmdDropDown11</taborder><taborder>cmdDropDown10</taborder><taborder>cmdDropDown9</taborder><taborder>cmdDropDown8</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>txtFieldTrans</taborder><taborder>SKBILLgrid1</taborder><taborder>cmdInsert</taborder><taborder>button9</taborder><taborder>id</taborder><taborder>BeforeOpen</taborder><taborder>AfterOpen</taborder><taborder>AfterPost</taborder><taborder>BeforeScroll</taborder><taborder>AfterScroll</taborder><taborder>BeforePost</taborder><taborder>button1</taborder><taborder>button2</taborder><taborder>button3</taborder><taborder>cmdDropDown1</taborder><taborder>SKDBedit6</taborder><taborder>txtFieldTransRead</taborder><taborder>cmdDropDown13</taborder><taborder>cmdDropDown14</taborder><taborder>cmdDropDown15</taborder><taborder>submittype</taborder><taborder>submitno</taborder><taborder>issubds</taborder><taborder>masterdsfield</taborder><taborder>idtype</taborder><taborder>idparam</taborder><taborder>cboDsn</taborder><taborder>savetable</taborder><taborder>button10</taborder><taborder>masterds</taborder><taborder>subdsfield</taborder><taborder>pubpara</taborder><taborder>isaddemptyrec</taborder><taborder>saveastable</taborder><taborder>isSubGrid</taborder><taborder>combobox4</taborder><taborder>cmdActionSet</taborder><taborder>async</taborder><taborder>txtFieldTransSql</taborder><taborder>cmdActionFcBug</taborder></root>" contxml="<root><checkbox><id>SKDBcheckbox10</id><id>SKDBcheckbox7</id><id>SKDBcheckbox3</id><id>SKDBcheckbox9</id><id>SKDBcheckbox5</id><id>issubds</id><id>pubpara</id><id>isaddemptyrec</id><id>isSubGrid</id><id>async</id></checkbox><label><id>Label1</id><id>Label5</id><id>Label68</id><id>label10</id><id>label16</id><id>Label8</id><id>Label9</id><id>lblDataType</id><id>lblDataLen</id><id>Label12</id><id>Label13</id><id>Label14</id><id>Label15</id><id>Label6</id><id>Label7</id><id>Label17</id><id>Label24</id><id>Label16</id><id>Label22</id><id>Label23</id><id>Label21</id><id>Label29</id><id>Label69</id><id>lblSaveTrans</id><id>lblReadTrans</id><id>label20</id><id>label5</id><id>label6</id><id>label7</id><id>label11</id><id>label12</id><id>label13</id><id>label14</id><id>lblIdParam</id><id>Label18</id><id>Label19</id><id>Label39</id><id>Label40</id><id>Label43</id><id>Label44</id><id>label19</id><id>label21</id><id>Label4</id><id>label18</id></label><radio><id>idtype</id></radio><textarea><id>opensql</id></textarea><combobox><id>opensortno</id><id>cboDsn</id><id>SKDBcombobox1</id><id>SKDBcombobox2</id><id>SKDBcombobox3</id><id>SKDBcombobox4</id><id>SKDBcombobox8</id><id>combobox4</id><id>submittype</id><id>submitno</id></combobox><tab><id>PageControl1</id></tab><div><id>cmdSmallUp</id><id>cmdSmallDown</id><id>divRel</id></div><a><id>SKDBLike11</id><id>a2</id><id>a5333</id><id>a10</id><id>a11</id><id>SKDBLike1</id><id>SKDBLike4</id><id>SKDBLike5</id><id>SKDBLike6</id><id>SKDBLike7</id><id>SKDBLike8</id><id>SKDBLike10</id><id>a3</id><id>a4</id><id>a6</id><id>a7</id><id>a8</id><id>a5</id><id>a0</id><id>a9</id><id>a1</id></a><button><id>FCButton23</id><id>button9</id><id>FCButton4</id><id>FCButton8</id><id>cmdDropDown2</id><id>cmdDropDown3</id><id>cmdDropDown6</id><id>cmdDropDown5</id><id>cmdDropDown4</id><id>cmdInsert</id><id>button1</id><id>button2</id><id>button3</id><id>cmdDropDown1</id><id>cmdDropDown13</id><id>cmdDropDown14</id><id>cmdDropDown15</id><id>cmdActionSet</id><id>button10</id><id>cmdDropDown7</id><id>cmdDropDown12</id><id>cmdDropDown11</id><id>cmdDropDown10</id><id>cmdDropDown9</id><id>cmdDropDown8</id><id>cmdOk</id><id>cmdClose</id><id>cmdActionFcBug</id></button><text><id>id</id><id>SKDBedit4</id><id>SKDBedit7</id><id>SKDBedit11</id><id>SKDBedit10</id><id>SKDBedit8</id><id>SKDBedit16</id><id>SKDBedit6</id><id>SKDBedit13</id><id>txtFieldTrans</id><id>txtFieldTransRead</id><id>SKDBedit20</id><id>SKDBedit30</id><id>SKDBedit5</id><id>SKDBedit12</id><id>SKDBedit14</id><id>txtFieldTransSql</id><id>masterdsfield</id><id>masterds</id><id>idparam</id><id>BeforeOpen</id><id>AfterOpen</id><id>BeforePost</id><id>AfterPost</id><id>BeforeScroll</id><id>AfterScroll</id></text><dropdownlist><id>subdsfield</id><id>savetable</id><id>saveastable</id></dropdownlist><grid><id>SKBILLgrid1</id></grid><dataset><id>dssub1</id></dataset></root>" blmode="其他" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONclose runsave userType BLONopenBefore alertType="1" isCheckPermit="否" AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 519px; HEIGHT: 396px; TOP: 1px; LEFT: 1px" id=PageControl1 class=tab-pane controltype="tab" IsHideTitle="null" showtype="luna">
+<DIV style="WIDTH: 519px; HEIGHT: 378px" class=tab-page>
+<H2 class=tab>打开</H2><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; HEIGHT: 13px; FONT-SIZE: 12px; TOP: 15px; LEFT: 22px" id=Label1 controltype="label" align="Left">控件ID：</SPAN><SPAN style="POSITION: absolute; WIDTH: 53px; DISPLAY: block; HEIGHT: 6px; FONT-SIZE: 12px; TOP: 72px; LEFT: 20px" id=Label5 controltype="label" align="Left">SQL语句:</SPAN><TEXTAREA style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; FONT-STYLE: normal; WIDTH: 493px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 278px; COLOR: #0000ff; FONT-SIZE: 12px; TOP: 87px; LEFT: 10px" id=opensql cols=18 rows=1 controltype="textarea" CustomAttr induce="否"></TEXTAREA> <SPAN style="POSITION: absolute; WIDTH: 68px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 16px; LEFT: 259px" id=Label68 value="Label68" controltype="label">打开次序：</SPAN><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 56px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 12px; LEFT: 319px" id=opensortno controltype="combobox" CustomAttr backheight="25" backwidth="56" sql check="1" temptext="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" sqltrans><OPTION selected value=1>1</OPTION><OPTION value=2>2</OPTION><OPTION value=3>3</OPTION><OPTION value=4>4</OPTION><OPTION value=5>5</OPTION><OPTION value=6>6</OPTION><OPTION value=7>7</OPTION><OPTION value=8>8</OPTION><OPTION value=9>9</OPTION></SELECT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 88px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 23px; FONT-SIZE: 12px; TOP: 62px; LEFT: 105px" id=FCButton23 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_buildSql()")' dropstyle="否">生成SQL向导</BUTTON><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 11px; LEFT: 381px; backgroundColor1: #ffffff" id=SKDBLike11 onmovestart=moveStart() href="javascript:ShowHelp('on_datasetisorder')" target=_self controltype="a" href1="javascript:ShowHelp('on_datasetisorder')">?</A><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 65px; LEFT: 77px; backgroundColor1: #ffffff" id=a2 onmovestart=moveStart() href="javascript:ShowHelp('on_SQL')" target=_self controltype="a" href1="javascript:ShowHelp('on_SQL')">?</A><BUTTON style="POSITION: absolute; WIDTH: 86px; HEIGHT: 23px; TOP: 62px; LEFT: 197px" id=button9 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_runsql()")' dropstyle="否">执行SQL语句</BUTTON><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 86px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 14px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 69px; LEFT: 297px" id=label10 controltype="label" align="Left" NotBg="否">存储过程写法：</SPAN><INPUT style="POSITION: absolute; WIDTH: 152px; HEIGHT: 20px; TOP: 12px; LEFT: 74px" id=id onmovestart=moveStart() size=30 controltype="text" CustomAttr><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 64px; LEFT: 385px; backgroundColor1: #ffffff" id=a5333 onmovestart=moveStart() href="javascript:ShowHelp('on_eform_proc')" target=_self controltype="a" href1="javascript:ShowHelp('on_eform_proc')" NotBg="否">?</A><LABEL style="POSITION: absolute; WIDTH: 83px; HEIGHT: 19px; TOP: 43px; LEFT: 20px" id=label16 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">数据源名称:</LABEL><SELECT style="POSITION: absolute; WIDTH: 148px; HEIGHT: 25px; TOP: 39px; LEFT: 95px" id=cboDsn onmovestart=moveStart() controltype="combobox" backheight="25" backwidth="148" sql check="1" temptext tempvalue sqltrans></SELECT> <A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 40px; LEFT: 248px; backgroundColor1: #ffffff" id=a10 onmovestart=moveStart() href="javascript:ShowHelp('on_dsn')" target=_self controltype="a" href1="javascript:ShowHelp('on_dsn')" NotBg="否">?</A><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 12px; LEFT: 232px; backgroundColor1: #ffffff" id=a11 onmovestart=moveStart() href="javascript:ShowHelp('on_id_dataset')" target=_self controltype="a" href1="javascript:ShowHelp('on_id_dataset')" NotBg="否">?</A></DIV>
+<DIV style="WIDTH: 519px; HEIGHT: 378px" class=tab-page>
+<H2 class=tab>字段</H2><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; HEIGHT: 10px; FONT-SIZE: 12px; TOP: 11px; LEFT: 245px" id=Label8 controltype="label" align="Left" NotBg="否" inputTag="否">字段名</SPAN><SPAN style="POSITION: absolute; WIDTH: 52px; DISPLAY: block; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 32px; LEFT: 246px" id=Label9 controltype="label" align="Left" NotBg="否" inputTag="否">中文名</SPAN><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 55px; LEFT: 234px" id=lblDataType controltype="label" align="Left" NotBg="否" inputTag="否">数据类型</SPAN><SPAN style="POSITION: absolute; WIDTH: 37px; DISPLAY: block; HEIGHT: 9px; FONT-SIZE: 12px; TOP: 57px; LEFT: 375px" id=lblDataLen controltype="label" align="Left" NotBg="否" inputTag="否">长度</SPAN><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; HEIGHT: 11px; FONT-SIZE: 12px; TOP: 57px; LEFT: 445px" id=Label12 controltype="label" align="Left" NotBg="否" inputTag="否">小数位</SPAN><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; HEIGHT: 16px; FONT-SIZE: 12px; TOP: 79px; LEFT: 246px" id=Label13 controltype="label" align="Left" NotBg="否" inputTag="否">数据项</SPAN><SPAN style="POSITION: absolute; WIDTH: 49px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 103px; LEFT: 245px" id=Label14 controltype="label" align="Left" NotBg="否" inputTag="否">默认值</SPAN><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 16px; FONT-SIZE: 12px; TOP: 80px; LEFT: 400px" id=Label15 controltype="label" align="Left" NotBg="否" inputTag="否">显示格式</SPAN><SPAN style="POSITION: absolute; WIDTH: 41px; DISPLAY: block; HEIGHT: 13px; FONT-SIZE: 12px; TOP: 264px; LEFT: 416px" id=Label6 controltype="label" align="Left" NotBg="否" inputTag="否">地址</SPAN><SPAN style="POSITION: absolute; WIDTH: 27px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 264px; LEFT: 317px" id=Label7 controltype="label" align="Left" NotBg="否" inputTag="否">窗口</SPAN><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 55px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 10px; COLOR: #800040; FONT-SIZE: 12px; TOP: 194px; LEFT: 388px" id=Label17 controltype="label" align="Left" NotBg="否" inputTag="否">回写数据</SPAN><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 55px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 14px; COLOR: #800040; FONT-SIZE: 12px; TOP: 194px; LEFT: 230px" id=Label24 controltype="label" align="Left" NotBg="否" inputTag="否">数据验证</SPAN><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 37px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 12px; COLOR: #800040; FONT-SIZE: 12px; TOP: 326px; LEFT: 257px" id=Label16 controltype="label" align="Left" NotBg="否" inputTag="否">按键</SPAN><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 64px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 16px; COLOR: #800040; FONT-SIZE: 12px; TOP: 324px; LEFT: 354px" id=Label22 controltype="label" align="Left" NotBg="否" inputTag="否">鼠标单击</SPAN><SPAN style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 61px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 12px; COLOR: #800040; FONT-SIZE: 12px; TOP: 348px; LEFT: 233px" id=Label23 controltype="label" align="Left" NotBg="否" inputTag="否">鼠标双击</SPAN><SPAN style="POSITION: absolute; WIDTH: 30px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 243px; LEFT: 317px" id=Label21 controltype="label" align="Left" NotBg="否" inputTag="否">对齐</SPAN><SPAN style="POSITION: absolute; WIDTH: 50px; DISPLAY: block; HEIGHT: 14px; FONT-SIZE: 12px; TOP: 243px; LEFT: 416px" id=Label29 controltype="label" align="Left" NotBg="否" inputTag="否">列宽</SPAN> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 59px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 258px; LEFT: 242px; backgroundColor1: #ffffff" id=SKDBcheckbox10 contentEditable=false value controltype="checkbox" CustomAttr onclick='bill_onclick("uf_linkCheckBox()")' NotBg="否" china="超链接" dataset="dssub1" field="link" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT CHECKED type=checkbox><SPAN>超链接</SPAN></DIV><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 63px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 259px; LEFT: 449px" id=SKDBedit4 size=4 controltype="text" dataset="dssub1" field="href" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 72px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 215px; LEFT: 299px" id=SKDBcheckbox7 contentEditable=false controltype="checkbox" china="不能为空" dataset="dssub1" field="isnull" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT type=checkbox><SPAN>不能为空</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 55px; DISPLAY: block; HEIGHT: 19px; FONT-SIZE: 12px; TOP: 237px; LEFT: 242px; backgroundColor1: #ffffff" id=SKDBcheckbox3 contentEditable=false controltype="checkbox" onclick='bill_onclick("uf_checkDisplay()")' china="显示" dataset="dssub1" field="visible" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT CHECKED type=checkbox><SPAN>显示</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 46px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 215px; LEFT: 242px" id=SKDBcheckbox9 contentEditable=false controltype="checkbox" china="主键" dataset="dssub1" field="primarykey" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT type=checkbox><SPAN>主键</SPAN></DIV>
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 72px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 216px; LEFT: 368px; backgroundColor1: #ffffff" id=SKDBcheckbox5 contentEditable=false controltype="checkbox" china="常规校验" dataset="dssub1" field="valid" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT CHECKED type=checkbox><SPAN>常规校验</SPAN></DIV><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 53px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 75px; LEFT: 458px" id=SKDBedit7 size=1 controltype="text" onclick='bill_onclick("")' dataset="dssub1" field="displayformat" ondblclick='bill_ondblclick("")' onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 29px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 52px; LEFT: 482px" id=SKDBedit11 size=32 controltype="text" onclick='bill_onclick("")' dataset="dssub1" field="fddec" ondblclick='bill_ondblclick("")' onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 31px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 52px; LEFT: 401px" id=SKDBedit10 controltype="text" onclick='bill_onclick("")' dataset="dssub1" field="fdsize" ondblclick='bill_ondblclick("")' onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 221px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 29px; LEFT: 290px" id=SKDBedit8 size=21 controltype="text" CustomAttr dataset="dssub1" field="chnname"><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 61px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 52px; LEFT: 290px" id=SKDBcombobox1 onchange='bill_onclick("uf_fddec();")' controltype="combobox" backheight="20" backwidth="61" sql check="1" temptext="字符&#13;&#10;整数&#13;&#10;实数&#13;&#10;文本&#13;&#10;图象&#13;&#10;自定&#13;&#10;日期&#13;&#10;时间" tempvalue="字符&#13;&#10;整数&#13;&#10;实数&#13;&#10;文本&#13;&#10;图象&#13;&#10;自定&#13;&#10;日期&#13;&#10;时间" dataset="dssub1" field="fdtype" onkeydown='bill_onkeydown("")' datasourceName sqltrans><OPTION selected value=字符>字符</OPTION><OPTION value=整数>整数</OPTION><OPTION value=实数>实数</OPTION><OPTION value=文本>文本</OPTION><OPTION value=图象>图象</OPTION><OPTION value=自定>自定</OPTION><OPTION value=日期>日期</OPTION><OPTION value=时间>时间</OPTION></SELECT><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 79px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 75px; LEFT: 290px" id=SKDBcombobox2 controltype="combobox" backheight="20" backwidth="79" sql onclick='bill_onclick("")' dataset="dssub1" field="fieldkind" onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")' sqltrans><OPTION selected value=数据项>数据项</OPTION><OPTION value=变量默认值>变量默认值</OPTION><OPTION value=实际计算项>实际计算项</OPTION><OPTION value=汇总项>汇总项</OPTION></SELECT><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 69px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 260px; LEFT: 343px" id=SKDBcombobox3 controltype="combobox" backheight="20" backwidth="69" sql onclick='bill_onclick("")' dataset="dssub1" field="target" onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")' sqltrans><OPTION selected value=_self>本窗口</OPTION><OPTION value=_blank>新窗口</OPTION><OPTION value=_parent>父窗口</OPTION><OPTION value=_top>顶层窗口</OPTION></SELECT><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 70px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 238px; LEFT: 343px" id=SKDBcombobox4 controltype="combobox" backheight="20" backwidth="70" sql onclick='bill_onclick("")' dataset="dssub1" field="align" onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")' sqltrans><OPTION selected value=left>左对齐</OPTION><OPTION value=right>右对齐</OPTION><OPTION value=center>居中</OPTION></SELECT><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 63px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 238px; LEFT: 449px" id=SKDBedit16 size=12 controltype="text" onclick='bill_onclick("")' dataset="dssub1" field="columnwidth" ondblclick='bill_ondblclick("")' onblur='bill_onexit("")' onfocus='bill_onenter("")' onkeydown='bill_onkeydown("")'><?xml:namespace prefix = fc /><fc:webgrid onkeydown='bill_ongridkeydown("<SKBILLgrid1><col></col><col></col></SKBILLgrid1>")' id=SKBILLgrid1 ondblclick='bill_ongriddblclick("<SKBILLgrid1><col>GridMultiSel()</col><col>GridMultiSel()</col></SKBILLgrid1>")' onclick='bill_ongridclick("<SKBILLgrid1><col></col><col></col></SKBILLgrid1>")' controltype="grid" dataset="dssub1" hideHscroll="auto" blRowNo="否" canselect="是" autoappend="否" autowidth="否" autoheight="否" readonly="否" SetRowHeight="是" bodyrowheight="-1" bodyrows="-1" hideVscroll="auto" visible="是" format="<cols><col><fname>fdname</fname><cname>西文字段名</cname><width>50</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>75</columnwidth><align>left</align></col><col><fname>chnname</fname><cname>中文名称</cname><width>40</width><dtype>字符</dtype><readonly>是</readonly><visible>是</visible><u></u><v></v><s></s><r></r><columnwidth>110</columnwidth><align>left</align></col></cols>" width="215" height="339" top="3" left="2" ParentPos="相对"> 
+<TABLE style="BACKGROUND-COLOR: #ffffff; BORDER-COLLAPSE: collapse; TABLE-LAYOUT: fixed; FONT-SIZE: 12px; TOP: 0px; LEFT: 0px" id=t cellSpacing=0 cellPadding=1 frame=box>
+<TBODY>
+<TR style="BACKGROUND-COLOR: #c0c0c0; FONT-SIZE: 12px" class=fcGridFirstRow>
+<TD></TD></TR></TBODY></TABLE></fc:webgrid><fc:dataset id=dssub1 idtype="1" controltype="dataset" opensortno="1" async="否" chnname="中文名称" isaddemptyrec="否" submittype="1" submitno="1" issubds="否" isSubGrid="否" pubpara="否" AfterScroll='bill_dsevent("AfterScroll","uf_moverow()")' format="<fields><field><fieldname>fdname</fieldname><datatype>字符</datatype><displaylabel>西文字段名</displaylabel><size>50</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>a</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>chnname</fieldname><datatype>字符</datatype><displaylabel>中文名称</displaylabel><size>40</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>新建字段</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>是</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdtype</fieldname><datatype>字符</datatype><displaylabel>字段类型</displaylabel><size>4</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>字符</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fdsize</fieldname><datatype>整数</datatype><displaylabel>字段宽度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>50</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fddec</fieldname><datatype>整数</datatype><displaylabel>字段精度</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>0</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>是</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldkind</fieldname><datatype>字符</datatype><displaylabel>类型</displaylabel><size>12</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>数据项</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>defaultvalue</fieldname><datatype>字符</datatype><displaylabel>默认值</displaylabel><size>2000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>displayformat</fieldname><datatype>字符</datatype><displaylabel>数据格式</displaylabel><size>20</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>readonly</fieldname><datatype>字符</datatype><displaylabel>只读</displaylabel><size>2000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>visible</fieldname><datatype>字符</datatype><displaylabel>显示</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>是</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>iskey</fieldname><datatype>字符</datatype><displaylabel>唯一</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>isnull</fieldname><datatype>字符</datatype><displaylabel>不能为空</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>valid</fieldname><datatype>字符</datatype><displaylabel>常规校验</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>是</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>procvalid</fieldname><datatype>字符</datatype><displaylabel>过程校验</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>primarykey</fieldname><datatype>字符</datatype><displaylabel>主键</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>link</fieldname><datatype>字符</datatype><displaylabel>超链接</displaylabel><size>2</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>否</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>target</fieldname><datatype>字符</datatype><displaylabel>窗口</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>href</fieldname><datatype>字符</datatype><displaylabel>地址</displaylabel><size>500</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>align</fieldname><datatype>字符</datatype><displaylabel>对齐</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>left</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>columnwidth</fieldname><datatype>字符</datatype><displaylabel>列宽</displaylabel><size>10</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue>80</defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>gettext</fieldname><datatype>字符</datatype><displaylabel>表现数据</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>settext</fieldname><datatype>字符</datatype><displaylabel>回写数据</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>datavalid</fieldname><datatype>字符</datatype><displaylabel>数据验证</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>keydown</fieldname><datatype>字符</datatype><displaylabel>按键事件</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>click</fieldname><datatype>字符</datatype><displaylabel>鼠标单击</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>dblclick</fieldname><datatype>字符</datatype><displaylabel>鼠标双击</displaylabel><size>1000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target>_blank</target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>fieldvalid</fieldname><datatype>字符</datatype><displaylabel>字段数据验证</displaylabel><size>7000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field><field><fieldname>tag</fieldname><datatype>字符</datatype><displaylabel>自定义</displaylabel><size>7000</size><precision>0</precision><fieldkind>数据项</fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><isnull>否</isnull><iskey>否</iskey><valid>否</valid><procvalid>否</procvalid><link>否</link><target></target><href></href><visible>否</visible><primarykey>否</primarykey><fieldvalid></fieldvalid><tag></tag></field></fields>" onValid='bill_ondatasetvalid("<dsid><fdname></fdname><chnname></chnname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><fieldkind></fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><readonly></readonly><visible></visible><iskey></iskey><isnull></isnull><valid></valid><procvalid></procvalid><primarykey></primarykey><link></link><target></target><href></href><align></align><columnwidth></columnwidth><gettext></gettext><settext></settext><datavalid></datavalid><keydown></keydown><click></click><dblclick></dblclick><fieldvalid></fieldvalid><tag></tag></dsid>")' onGetText='bill_ondatasetgettext("<dsid><fdname></fdname><chnname></chnname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><fieldkind></fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><readonly></readonly><visible></visible><iskey></iskey><isnull></isnull><valid></valid><procvalid></procvalid><primarykey></primarykey><link></link><target></target><href></href><align></align><columnwidth></columnwidth><gettext></gettext><settext></settext><datavalid></datavalid><keydown></keydown><click></click><dblclick></dblclick><fieldvalid></fieldvalid><tag></tag></dsid>")' onSetText='bill_ondatasetsettext("<dsid><fdname></fdname><chnname></chnname><fdtype></fdtype><fdsize></fdsize><fddec></fddec><fieldkind></fieldkind><defaultvalue></defaultvalue><displayformat></displayformat><readonly></readonly><visible></visible><iskey></iskey><isnull></isnull><valid></valid><procvalid></procvalid><primarykey></primarykey><link></link><target></target><href></href><align></align><columnwidth></columnwidth><gettext></gettext><settext></settext><datavalid></datavalid><keydown></keydown><click></click><dblclick></dblclick><fieldvalid></fieldvalid><tag></tag></dsid>")'></fc:dataset><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 41px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 287px; LEFT: 365px" id=FCButton4 controltype="button" onclick='bill_onclick("uf_fccodeset()")' dropstyle="否">设置</BUTTON><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 74px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 288px; LEFT: 290px" id=SKDBcombobox8 onchange='bill_onclick("uf_givevalue()")' controltype="combobox" backheight="25" backwidth="74" sql check="1" temptext="只读&#13;&#10;编辑框&#13;&#10;下拉列表&#13;&#10;复选框&#13;&#10;只读复选框" tempvalue="是&#13;&#10;否&#13;&#10;选&#13;&#10;勾&#13;&#10;灰" datasourceName async="否" sqltrans><OPTION selected value=是>只读</OPTION><OPTION value=否>编辑框</OPTION><OPTION value=选>下拉列表</OPTION><OPTION value=勾>复选框</OPTION><OPTION value=灰>只读复选框</OPTION></SELECT><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 17px; FONT-SIZE: 12px; TOP: 293px; LEFT: 233px" id=Label69 value="Label69" controltype="label" NotBg="否" inputTag="否">编辑格式</SPAN><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 58px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 23px; FONT-SIZE: 12px; TOP: 346px; LEFT: 150px" id=FCButton8 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_datavalid()")' dropstyle="否">字段验证</BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 190px; LEFT: 363px" id=cmdDropDown2 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction(SKDBedit20);SKDBedit20.fireEvent('onchange');&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 190px; LEFT: 493px" id=cmdDropDown3 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction(SKDBedit30);SKDBedit30.fireEvent('onchange');&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 344px; LEFT: 493px" id=cmdDropDown6 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction(SKDBedit14);SKDBedit14.fireEvent('onchange');&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 321px; LEFT: 493px" id=cmdDropDown5 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction(SKDBedit12);SKDBedit12.fireEvent('onchange');&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 321px; LEFT: 333px" id=cmdDropDown4 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction(SKDBedit5);SKDBedit5.fireEvent('onchange');&quot;)" dropstyle="是"></BUTTON><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 16px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; FONT-SIZE: 14px; TOP: 77px; LEFT: 371px; backgroundColor1: #ffffff" id=SKDBLike1 onmovestart=moveStart() href="javascript:ShowHelp('on_dataitem')" target=_self controltype="a" href1="javascript:ShowHelp('on_dataitem')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 76px; LEFT: 449px; backgroundColor1: #ffffff" id=SKDBLike4 onmovestart=moveStart() href="javascript:ShowHelp('on_showformule')" target=_self controltype="a" href1="javascript:ShowHelp('on_showformule')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 13px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 52px; LEFT: 354px; backgroundColor1: #ffffff" id=SKDBLike5 onmovestart=moveStart() href="javascript:ShowHelp('on_datatype')" target=_self controltype="a" href1="javascript:ShowHelp('on_datatype')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 11px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 242px; LEFT: 441px; backgroundColor1: #ffffff" id=SKDBLike6 onmovestart=moveStart() href="javascript:ShowHelp('on_colwidth')" target=_self controltype="a" href1="javascript:ShowHelp('on_colwidth')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 14px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 16px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 290px; LEFT: 282px; backgroundColor1: #ffffff" id=SKDBLike7 onmovestart=moveStart() href="javascript:ShowHelp('on_dataformule')" target=_self controltype="a" href1="javascript:ShowHelp('on_dataformule')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 16px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 350px; LEFT: 211px; backgroundColor1: #ffffff" id=SKDBLike8 onmovestart=moveStart() href="javascript:ShowHelp('on_datavalid')" target=_self controltype="a" href1="javascript:ShowHelp('on_datavalid')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 11px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; FONT-SIZE: 14px; TOP: 219px; LEFT: 441px; backgroundColor1: #ffffff" id=SKDBLike10 onmovestart=moveStart() href="javascript:ShowHelp('on_oftencheck')" target=_self controltype="a" href1="javascript:ShowHelp('on_oftencheck')">?</A> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 124px; LEFT: 244px" id=lblSaveTrans onmovestart=moveStart() noWrap value="label3" controltype="label" NotBg="否" inputTag="否">保存前转换</DIV></INPUT><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 123px; LEFT: 304px; backgroundColor1: #ffffff" id=a3 onmovestart=moveStart() href="javascript:ShowHelp('on_savetrans')" target=_self controltype="a" href1="javascript:ShowHelp('on_savetrans')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 238px; LEFT: 290px; backgroundColor1: #ffffff" id=a4 onmovestart=moveStart() href="javascript:ShowHelp('on_show')" target=_self controltype="a" href1="javascript:ShowHelp('on_show')">?</A><INPUT style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 22px; DISPLAY: block; HEIGHT: 22px; FONT-SIZE: 12px; TOP: 260px; LEFT: 218px" id=cmdInsert title=插入一行 value=插 type=button controltype="button" onclick="bill_onclick(&quot;uf_add('insert')&quot;)" dropstyle="否"><BUTTON style="POSITION: absolute; WIDTH: 60px; HEIGHT: 23px; TOP: 346px; LEFT: 3px" id=button1 onmovestart=moveStart() controltype="button" CustomAttr onclick='bill_onclick("uf_inserts()")' dropstyle="否">批量增加</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 35px; HEIGHT: 23px; TOP: 346px; LEFT: 69px" id=button2 onmovestart=moveStart() controltype="button" CustomAttr onclick='bill_onclick("uf_add()")' dropstyle="否">增加</BUTTON><BUTTON style="POSITION: absolute; WIDTH: 34px; HEIGHT: 23px; TOP: 346px; LEFT: 110px" id=button3 onmovestart=moveStart() controltype="button" CustomAttr onclick='bill_onclick("uf_del()")' dropstyle="否">删除</BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 7px; LEFT: 493px" id=cmdDropDown1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_selfield()")' dropstyle="是"></BUTTON> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 147px; LEFT: 244px" id=lblReadTrans onmovestart=moveStart() noWrap value="label3" controltype="label" NotBg="否" inputTag="否">读出时转换</DIV><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 98px; LEFT: 493px" id=cmdDropDown13 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_fx(SKDBedit13)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 120px; LEFT: 493px" id=cmdDropDown14 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_fx(txtFieldTrans)")' dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 143px; LEFT: 493px" id=cmdDropDown15 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_fx(txtFieldTransRead)")' dropstyle="是"></BUTTON><SELECT style="POSITION: absolute; WIDTH: 64px; HEIGHT: 25px; TOP: 217px; LEFT: 449px" id=combobox4 onmovestart=moveStart() controltype="combobox" backheight="25" backwidth="64" sql check="1" temptext="常规&#13;&#10;流程用" tempvalue="否&#13;&#10;是" china="过程校验" dataset="dssub1" field="procvalid" datasourceName sqltrans><OPTION selected value=否>常规</OPTION><OPTION value=是>流程用</OPTION></SELECT><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 25px; TOP: 284px; LEFT: 436px" id=cmdActionSet onmovestart=moveStart() controltype="button" onclick='bill_onclick("EformActionButtonClick()")' dropstyle="否">权限设置</BUTTON><INPUT style="POSITION: absolute; WIDTH: 203px; HEIGHT: 20px; TOP: 7px; LEFT: 291px" id=SKDBedit6 onmovestart=moveStart() size=35 controltype="text" CustomAttr china="西文字段名" dataset="dssub1" field="fdname" onkeydown='bill_onkeydown("uf_keyenter()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 204px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 98px; LEFT: 290px" id=SKDBedit13 size=19 controltype="text" dataset="dssub1" field="defaultvalue" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 181px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 120px; LEFT: 313px" id=txtFieldTrans onmovestart=moveStart() onchange='bill_onclick("uf_txtFieldTrans_onchange()")' controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")' CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 181px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 143px; LEFT: 313px" id=txtFieldTransRead onmovestart=moveStart() onchange='bill_onclick("uf_txtFieldTrans_onchange()")' controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")' CanSelect="false"><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 71px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 190px; LEFT: 293px" id=SKDBedit20 size=3 controltype="text" dataset="dssub1" field="datavalid" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 56px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 190px; LEFT: 438px" id=SKDBedit30 size=11 controltype="text" dataset="dssub1" field="settext" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 44px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 321px; LEFT: 290px" id=SKDBedit5 size=13 controltype="text" dataset="dssub1" field="keydown" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 83px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 321px; LEFT: 411px" id=SKDBedit12 size=16 controltype="text" dataset="dssub1" field="click" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 204px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 344px; LEFT: 290px" id=SKDBedit14 size=18 controltype="text" dataset="dssub1" field="dblclick" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'> 
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 19px; HEIGHT: 17px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 209px; LEFT: 218px" id=cmdSmallUp onmovestart=moveStart() title=上移一行 controltype="div" onclick='bill_onclick("uf_GridChangeRow(true)")' NotBg="否"></DIV>
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 19px; HEIGHT: 17px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 235px; LEFT: 219px" id=cmdSmallDown onmovestart=moveStart() title=下移一行 controltype="div" onclick='bill_onclick("uf_GridChangeRow(false)")' NotBg="否"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 78px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 169px; LEFT: 230px" id=label20 onmovestart=moveStart() noWrap value="label3" controltype="label" NotBg="否" inputTag="否">读出时SQL转换</DIV><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 181px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 165px; LEFT: 313px" id=txtFieldTransSql onmovestart=moveStart() onchange='bill_onclick("uf_txtFieldTrans_onchange()")' controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")' CanSelect="false"><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 218px; LEFT: 289px; backgroundColor1: #ffffff" id=a6 onmovestart=moveStart() href="javascript:ShowHelp('on_primarykey')" target=_self controltype="a" href1="javascript:ShowHelp('on_primarykey')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 167px; LEFT: 498px; backgroundColor1: #ffffff" id=a7 onmovestart=moveStart() href="javascript:ShowHelp('on_sqltrans')" target=_self controltype="a" href1="javascript:ShowHelp('on_sqltrans')">?</A><A style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 7px; DISPLAY: block; FONT-FAMILY: 黑体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 14px; TOP: 192px; LEFT: 281px; backgroundColor1: #ffffff" id=a8 onmovestart=moveStart() href="javascript:ShowHelp('on_validevent')" target=_self controltype="a" href1="javascript:ShowHelp('on_validevent')">?</A></DIV>
+<DIV style="WIDTH: 519px; HEIGHT: 378px" class=tab-page>
+<H2 class=tab>提交</H2><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 15px; LEFT: 9px" id=label5 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">提交类型:</LABEL><SELECT style="POSITION: absolute; WIDTH: 191px; HEIGHT: 25px; TOP: 11px; LEFT: 78px" id=submittype onmovestart=moveStart() controltype="combobox" backheight="25" backwidth="191" sql check="1" temptext="智能提交变动过的记录&#13;&#10;只提交当前的一条记录&#13;&#10;提交所有变动过的记录&#13;&#10;不提交&#13;&#10;提交所有记录" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5" sqltrans><OPTION selected value=1>智能提交变动过的记录</OPTION><OPTION value=2>只提交当前的一条记录</OPTION><OPTION value=3>提交所有变动过的记录</OPTION><OPTION value=4>不提交</OPTION><OPTION value=5>提交所有记录</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 38px; LEFT: 9px" id=label6 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">提交次序:</LABEL><SELECT style="POSITION: absolute; WIDTH: 43px; HEIGHT: 25px; TOP: 35px; LEFT: 78px" id=submitno onmovestart=moveStart() controltype="combobox" backheight="25" backwidth="43" sql check="1" temptext="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;7&#13;&#10;8&#13;&#10;9" sqltrans><OPTION selected value=1>1</OPTION><OPTION value=2>2</OPTION><OPTION value=3>3</OPTION><OPTION value=4>4</OPTION><OPTION value=5>5</OPTION><OPTION value=6>6</OPTION><OPTION value=7>7</OPTION><OPTION value=8>8</OPTION><OPTION value=9>9</OPTION></SELECT><LABEL style="POSITION: absolute; WIDTH: 65px; HEIGHT: 15px; TOP: 61px; LEFT: 8px" id=label7 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">保存表名:</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 181px; LEFT: 242px" id=issubds onmovestart=moveStart() noWrap value="否" controltype="checkbox" onclick='bill_onclick("uf_hide_subds()")' NotBg="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>本数据集为从表数据集</SPAN></DIV>
+<DIV style="BORDER-BOTTOM: black 1px solid; POSITION: absolute; BORDER-LEFT: black 1px solid; WIDTH: 266px; HEIGHT: 126px; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; TOP: 205px; LEFT: 234px" id=divRel onmovestart=moveStart() controltype="div" NotBg="否"><LABEL style="POSITION: absolute; WIDTH: 120px; HEIGHT: 16px; TOP: 11px; LEFT: 12px" id=label11 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">从表数据集的字段:</LABEL><LABEL style="POSITION: absolute; WIDTH: 15px; HEIGHT: 15px; TOP: 37px; LEFT: 91px" id=label12 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">=</LABEL><LABEL style="POSITION: absolute; WIDTH: 78px; HEIGHT: 17px; TOP: 69px; LEFT: 16px" id=label13 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">主表数据集:</LABEL><LABEL style="POSITION: absolute; WIDTH: 118px; HEIGHT: 22px; TOP: 97px; LEFT: 14px" id=label14 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">主表数据集的字段:</LABEL><INPUT style="POSITION: absolute; WIDTH: 110px; HEIGHT: 20px; TOP: 92px; LEFT: 138px" id=masterdsfield onmovestart=moveStart() controltype="text"><fc:fc_code id=subdsfield controltype="dropdownlist" align="undefined" dataset="null" field="null" datasourceName="" visible="是" addrow="否" xml="" format="" multiselect="否" blnempty="否" blninput="是" sql2="null" FieldNameList="null" isTreeNewSql="null" isShowTree="null" width="106" height="18" top="9" left="139" sqltrans="" position="absolute"></fc:fc_code><BUTTON style="POSITION: absolute; WIDTH: 45px; HEIGHT: 21px; TOP: 66px; LEFT: 89px" id=button10 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_sel_ds_field()")' dropstyle="否">选择</BUTTON><INPUT style="POSITION: absolute; WIDTH: 110px; HEIGHT: 20px; TOP: 67px; LEFT: 138px" id=masterds onmovestart=moveStart() controltype="text"></DIV>
+<FIELDSET style="POSITION: absolute; WIDTH: 141px; DISPLAY: block; HEIGHT: 200px; FONT-SIZE: 12px; TOP: 155px; LEFT: 10px; backgroundColor1: #ffffff" id=idtype contentEditable=false value="1" controltype="radio" temptext="特定格式ID值&#13;&#10;自动编号ID值&#13;&#10;oracle序列作ID&#13;&#10;单个字段作主键&#13;&#10;多个字段作主键&#13;&#10;自定义主键的值&#13;&#10;GUID作主键字段" tempvalue="1&#13;&#10;2&#13;&#10;3&#13;&#10;4&#13;&#10;5&#13;&#10;6&#13;&#10;8" onclick='bill_onclick("uf_idtype()")' NotBg="否" legend="主键字段类别" aspect="纵向"><LEGEND>主键字段类别</LEGEND><INPUT id=RGidtype1 onclick=idtype.value=RGidtype[0].value; name=RGidtype value=1 CHECKED type=radio text="特定格式ID值"><SPAN>特定格式ID值</SPAN>&nbsp;<BR><INPUT id=RGidtype2 onclick=idtype.value=RGidtype[1].value; name=RGidtype value=2 type=radio text="自动编号ID值"><SPAN>自动编号ID值</SPAN>&nbsp;<BR><INPUT id=RGidtype3 onclick=idtype.value=RGidtype[2].value; name=RGidtype value=3 type=radio text="oracle序列作ID"><SPAN>oracle序列作ID</SPAN>&nbsp;<BR><INPUT id=RGidtype4 onclick=idtype.value=RGidtype[3].value; name=RGidtype value=4 type=radio text="单个字段作主键"><SPAN>单个字段作主键</SPAN>&nbsp;<BR><INPUT id=RGidtype5 onclick=idtype.value=RGidtype[4].value; name=RGidtype value=5 type=radio text="多个字段作主键"><SPAN>多个字段作主键</SPAN>&nbsp;<BR><INPUT id=RGidtype6 onclick=idtype.value=RGidtype[5].value; name=RGidtype value=6 type=radio text="自定义主键的值"><SPAN>自定义主键的值</SPAN>&nbsp;<BR><INPUT id=RGidtype7 onclick=idtype.value=RGidtype[6].value; name=RGidtype value=8 type=radio text="GUID作主键字段"><SPAN>GUID作主键字段</SPAN>&nbsp;</FIELDSET><A style="POSITION: absolute; WIDTH: 14px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 149px; LEFT: 111px; backgroundColor1: #ffffff" id=a5 onmovestart=moveStart() href="javascript:ShowHelp('on_keytype')" target=_self controltype="a" href1="javascript:ShowHelp('on_keytype')">?</A><INPUT style="POSITION: absolute; WIDTH: 43px; HEIGHT: 20px; TOP: 324px; LEFT: 100px" id=idparam onmovestart=moveStart() size=7 controltype="text"><SPAN style="POSITION: absolute; TEXT-ALIGN: right; WIDTH: 86px; DISPLAY: block; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 326px; LEFT: 8px; backgroundColor1: #c0c0c0" id=lblIdParam controltype="label" align="Left" NotBg="否" inputTag="否">ID标识</SPAN><fc:fc_code id=savetable controltype="dropdownlist" align="undefined" dataset="null" field="null" datasourceName="" visible="是" addrow="否" xml="" format="英文表名|中文表名" multiselect="否" blnempty="否" blninput="是" sql2="" FieldNameList="null" isTreeNewSql="null" isShowTree="null" width="191" height="20" top="59" left="77" ParentPos="相对" sqltrans="" position="absolute"></fc:fc_code><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 60px; LEFT: 280px; backgroundColor1: #ffffff" id=a0 onmovestart=moveStart() href="javascript:ShowHelp('on_savetable')" target=_self controltype="a" href1="javascript:ShowHelp('on_savetable')">?</A><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 9px; LEFT: 280px; backgroundColor1: #ffffff" id=a9 onmovestart=moveStart() href="javascript:ShowHelp('on_submittype')" target=_self controltype="a" href1="javascript:ShowHelp('on_submittype')">?</A></DIV>
+<DIV style="WIDTH: 519px; HEIGHT: 378px" class=tab-page>
+<H2 class=tab>事件</H2><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 68px; LEFT: 27px" id=Label18 controltype="label" align="Left">打开之后：</SPAN><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 11px; FONT-SIZE: 12px; TOP: 44px; LEFT: 27px" id=Label19 controltype="label" align="Left">打开之前：</SPAN><SPAN style="POSITION: absolute; WIDTH: 81px; DISPLAY: block; HEIGHT: 17px; FONT-SIZE: 12px; TOP: 177px; LEFT: 10px" id=Label39 controltype="label" align="Left" inputTag="否">移动记录之前</SPAN><SPAN style="POSITION: absolute; WIDTH: 80px; DISPLAY: block; HEIGHT: 14px; FONT-SIZE: 12px; TOP: 201px; LEFT: 9px" id=Label40 controltype="label" align="Left" inputTag="否">移动记录之后</SPAN><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 92px; LEFT: 27px" id=Label43 controltype="label" align="Left" inputTag="否">保存之前：</SPAN><SPAN style="POSITION: absolute; WIDTH: 61px; DISPLAY: block; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 118px; LEFT: 27px" id=Label44 controltype="label" align="Left" inputTag="否">保存之后：</SPAN><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 41px; LEFT: 457px" id=cmdDropDown7 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('BeforeOpen'))&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 197px; LEFT: 457px" id=cmdDropDown12 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('AfterScroll'))&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 172px; LEFT: 457px" id=cmdDropDown11 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('BeforeScroll'))&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 113px; LEFT: 457px" id=cmdDropDown10 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('AfterPost'))&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 88px; LEFT: 457px" id=cmdDropDown9 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('BeforePost'))&quot;)" dropstyle="是"></BUTTON><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #d4d0c8; WIDTH: 17px; DISPLAY: block; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 66px; LEFT: 457px" id=cmdDropDown8 onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;SelFunction($id('AfterOpen'))&quot;)" dropstyle="是"></BUTTON> 
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 78px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 21px; LEFT: 92px" id=label19 onmovestart=moveStart() noWrap value="Label24" controltype="label">事件代码（不支持双引号！）</DIV><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 41px; LEFT: 85px" id=BeforeOpen onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 66px; LEFT: 85px" id=AfterOpen onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 88px; LEFT: 85px" id=BeforePost onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 113px; LEFT: 85px" id=AfterPost onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 172px; LEFT: 85px" id=BeforeScroll onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'><INPUT style="POSITION: absolute; WIDTH: 373px; HEIGHT: 20px; TOP: 197px; LEFT: 85px" id=AfterScroll onmovestart=moveStart() size=67 controltype="text" ondblclick='bill_ondblclick("EventCodeOpenBigWindow()")'> 
+<DIV style="POSITION: absolute; FONT-STYLE: normal; WIDTH: 78px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 15px; COLOR: #b2b2b2; FONT-SIZE: 12px; TOP: 139px; LEFT: 27px" id=label21 onmovestart=moveStart() noWrap value="Label24" controltype="label" inputTag="否">此处的保存不是指保存到后台的数据库中,而是指保存数据到数据集中(即ds.xml中).</DIV></DIV>
+<DIV style="WIDTH: 519px; HEIGHT: 378px" class=tab-page>
+<H2 class=tab>其它</H2><SPAN style="POSITION: absolute; WIDTH: 70px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 12px; FONT-SIZE: 12px; TOP: 276px; LEFT: 25px" id=Label4 controltype="label" align="Left">保存表名：</SPAN><fc:fc_code style="FONT-FAMILY: ; FONT-SIZE: 12px" id=saveastable controltype="dropdownlist" align="undefined" dataset="null" field="null" datasourceName="" visible="否" addrow="否" xml="" format="英文表名|中文表名" multiselect="否" blnempty="否" blninput="是" sql2="" FieldNameList="" isTreeNewSql="0" isShowTree="0" width="167" height="20" top="272" left="85" ParentPos="相对" sqltrans="" position="absolute"></fc:fc_code><A style="POSITION: absolute; WIDTH: 12px; DISPLAY: none; FONT-FAMILY: 宋体; HEIGHT: 18px; COLOR: #0000ff; FONT-SIZE: 16px; FONT-WEIGHT: bold; TOP: 273px; LEFT: 401px; backgroundColor1: #ffffff" id=a1 onmovestart=moveStart() href="javascript:ShowHelp('on_notsavetable')" target=_self controltype="a" href1="javascript:ShowHelp('on_notsavetable')">?</A> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 68px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 273px; LEFT: 323px; backgroundColor1: #ffffff" id=pubpara onmovestart=moveStart() noWrap value="否" controltype="checkbox" NotBg="否" divtype="checkbox" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>不保存</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 20px; LEFT: 15px" id=isaddemptyrec onmovestart=moveStart() noWrap value="否" controltype="checkbox" NotBg="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>初次进入时是否加空记录</SPAN></DIV><LABEL style="POSITION: absolute; WIDTH: 147px; DISPLAY: none; FONT-FAMILY: ; HEIGHT: 18px; FONT-SIZE: 12px; TOP: 245px; LEFT: 9px" id=label18 onmovestart=moveStart() controltype="label" NotBg="否" inputTag="否">兼容以前的表单的设置:</LABEL> 
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 80px; LEFT: 15px" id=isSubGrid onmovestart=moveStart() noWrap value="否" controltype="checkbox" NotBg="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>和ebiao控件连用时,是否为明细数据集</SPAN></DIV>
+<DIV style="POSITION: absolute; WIDTH: 80px; HEIGHT: 20px; TOP: 51px; LEFT: 15px" id=async onmovestart=moveStart() noWrap value="否" controltype="checkbox" NotBg="否" truevalue="是" falsevalue="否"><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>初次进入时是否异步打开</SPAN></DIV></DIV></DIV>
+<SCRIPT>var PageControl1 = new WebFXTabPane( document.getElementById( "PageControl1" ) );</SCRIPT>
+</INPUT><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 403px; LEFT: 352px" id=cmdOk controltype="button" CustomAttr onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 403px; LEFT: 434px" id=cmdClose controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 50px; HEIGHT: 25px; TOP: 402px; LEFT: 4px" id=cmdActionFcBug onmovestart=moveStart() controltype="button" onclick='bill_onclick("PropWinActionFcBug()")'>提问</BUTTON></DIV><script></script><OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" VIEWASTEXT></OBJECT>
+</body></html>

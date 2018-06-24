@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table">ex_leave_apply</meta>
+  <meta name="bs_desc_field"></meta>
+  <meta name="bs_id_field">leave_id</meta>
+  <initial-actions>
+    <action id="109" name="初始化动作">
+      <results>
+        <unconditional-result id="2410" old-status="Finished" status="Underway" step="3806"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="1619" name="结束节点">
+    </step>
+    <step id="3806" name="分配步骤">
+      <actions>
+        <action id="718" name="分配步骤" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_dynamic_node_define%26djtype%3DWF%26dynamic_node_id%3D1416%26dynamic_node_type%3Dsplit">
+          <results>
+            <unconditional-result id="9209" old-status="Finished" status="Underway" split="1416"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="1679" name="步动节点A">
+      <tasks>
+        <task name="分支后节点A的任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">${user_a}</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">1679</arg>
+          <arg name="user">${user_a}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="2595" name="步动节点A" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_new_dynamic%26djtype%3DWF_EX">
+          <meta name="rela_instance_id">true</meta>
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">2595</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">1679</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="517" old-status="Finished" status="Underway" step="3486"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3486" name="步动节点B">
+      <tasks>
+        <task name="分支后节点B的任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">${user_b}</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">3486</arg>
+          <arg name="user">${user_b}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="8740" name="步动节点B" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_check_dynamic%26djtype%3DWF_EX">
+          <meta name="rela_instance_id">true</meta>
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">8740</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">3486</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <result id="801" old-status="Finished" status="Underway" step="1679">
+              <conditions>
+                <condition type="class">
+                  <arg name="class.chn">判断此动作执行的次数</arg>
+                  <arg name="class.name">cn.com.fcsoft.leave.RepeatNumCondition</arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="3189" old-status="Finished" status="Underway" step="3733"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3733" name="步动节点C">
+      <tasks>
+        <task name="分支后节点C的任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="username">${user_c}</arg>
+          <arg name="taskTypeChn">直接指派型</arg>
+          <arg name="taskType">2</arg>
+          <arg name="stepId">3733</arg>
+          <arg name="user">${user_c}</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="8442" name="步动节点C" view="/fceform/common/djframe.htm%3Fdjsn%3Dleave_check%26djtype%3DWF_EX">
+          <meta name="rela_instance_id">true</meta>
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">8442</arg>
+                <arg name="class.chn">判断直接指派任务的执行人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.DirectTaskCondition</arg>
+                <arg name="step_id">3733</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="5640" old-status="Finished" status="Underway" step="1679">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="class.chn"><![CDATA[自定义脚本]]></arg>
+                  <arg name="class.name"><![CDATA[beanshell]]></arg>
+                  <arg name="script"><![CDATA[
+propertySet.getString("opinion").Equals("0")
+]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="7732" old-status="Finished" status="Underway" join="7209"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="3799" name="复查节点">
+      <tasks>
+        <task name="复查任务" classname="cn.com.fcsoft.workflow.util.GenerateTask">
+          <arg name="rolename">普通职员</arg>
+          <arg name="taskTypeChn">竞争型</arg>
+          <arg name="taskType">1</arg>
+          <arg name="role">ROL00000001</arg>
+          <arg name="stepId">3799</arg>
+          <arg name="signScale">100</arg>
+        </task>
+      </tasks>
+      <actions>
+        <action id="2563" name="复查节点" view="/fceform/common/djframe.htm%3Fdjsn%3Dwf_leave_view%26djtype%3DWF_EX">
+          <restrict-to>
+            <conditions>
+              <condition type="class">
+                <arg name="action_id">2563</arg>
+                <arg name="class.chn">判断竞争型任务的签收人</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.CompetitionTaskCondition</arg>
+                <arg name="step_id">3799</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.chn">将数据集中的字段信息保存到流程变量中</arg>
+              <arg name="class.name">cn.com.fcsoft.extend.ActionPreFunction</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="2352" old-status="Finished" status="Underway" step="1619"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="1416"
+ name="动态分支"
+ is-dynamic="1"
+>
+      <params>
+<param 
+ name="user_a"
+ desc="步骤A的任务执行用户"
+ />
+<param 
+ name="user_b"
+ desc="步骤B的任务执行用户"
+ />
+<param 
+ name="user_c"
+ desc="步骤c的任务执行用户"
+ />
+<param 
+ name="repeat_num"
+ desc="重复次数"
+ />
+</params>
+        <unconditional-result id="3934" old-status="Finished" status="Underway" step="1679"/>
+      </split>
+  </splits>
+  <joins>
+    <join id="7209"
+ name="动态合并"
+ is-dynamic="1"
+>
+      <conditions>
+        <condition type="class">
+          <arg name="split_id">1416</arg>
+          <arg name="class.chn">判断所有动态创建的分支是否都完成了</arg>
+          <arg name="class.name">cn.com.fcsoft.workflow.util.DynamicJoinCondition</arg>
+        </condition>
+      </conditions>
+      <unconditional-result id="604" old-status="Finished" status="Underway" step="3799"/>
+    </join>
+  </joins>
+</workflow>

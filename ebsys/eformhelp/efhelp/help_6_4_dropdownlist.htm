@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>dropdownlist控件同名字段传递</title>
+   <link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+</head>
+
+<body leftmargin="0" topmargin="0">
+<table class="tableTitle">
+    <tr><td  class="title">dropdownlist控件同名字段传递</td></tr>
+    <tr><td class="aTd "> <a class ="aDwHomepage"  href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+    </tr>
+</table> 
+       <div  class="mainDiv">
+       <div class="divTitle">1. dropdownlist控件返回值时是根据同名字段传递数据规则</div>
+       
+      &nbsp;&nbsp;&nbsp;  dropdownlist控件同名字段传递能同时对绑定数据集多个字段的零散控件进行选择输入.单击<a class="shili" href='../../fceform/design/design.htm?isfile=yes&djtype=FT&djsn=help_6_4_dropdownlist'>dropdownlist控件同名字段传递</a> 进入dropdownlist控件同名字段传递表单设计界面.
+       
+       <div class="divTitle">2.1&nbsp; dropdownlist控件同名字段传递设置</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;设置dropdownlist控件中的sql语句,用于单击dropdownlist控件的下拉按钮,在它弹出的数据列表中显示要选择的数据,<br />
+        <img  src ="images/help_6_4_1.gif"/><br />    &nbsp;&nbsp;   选择返回时，根据当前dropdownlist控件所绑定的数据集，找到这个数据集的字段名列表，和dropdownlist控件中的设置sql语句所产生的字段名列表进行比较，同名的则传递，将dropdownlist控件的下拉列表中选择的行的同名字段的列的值传递给当前dropdownlist控件所绑定的数据集的对应字段上。然后再由数据集分发到它所绑定的控件上。
+       <div class="divTitle">2.2&nbsp; 运行界面图</div>
+       &nbsp;&nbsp;&nbsp;&nbsp;单击表单运行按钮进入运行页面,单击表单的下拉按钮弹出一个以表格显示出的数据,如下图,单击财务部选择的数据提交到数据集,数据集在把部门编号和部门名称返回到它绑定的同名字段的控件.<br />
+       <img  src ="images/help_6_4_2.gif"/>
+        <div class="divTitle">3 表格中dropdownlist控件同名字段传递</div>
+        <div class="divTitle">3.1 表格中dropdownlist控件同名字段传递作用</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;在表格中通过单击下拉控件,弹出下拉列表,选择下拉列表中的数据,通过数据集返回到表格控件,假如你下拉列表中的三个字段名与数据集中的三个字段名相同,那表格控件中其它字段也会被数据集赋值.
+        <div class="divTitle">3.2 表格中dropdownlist控件同名字段传递设置</div> 
+         &nbsp;&nbsp;&nbsp;  在数据集设置字段sdeptid,sdeptcode,sdeptname三个字段,sdeptname字段的编辑格式为下拉列表<br /><img src ="images/help_6_4_3.gif" /><br />&nbsp;&nbsp;&nbsp;&nbsp;单击【设置】按钮，进入下拉列表设置列的参照属性页,设置下拉列表的sql语句,在下拉列表控件中的sql语句中没有查询sdeptid字段,在下拉控件选择的数据中和数据集就不会有sdeptid字段的值.<br /><img src ="images/help_6_4_4.gif" /><br />
+           &nbsp;&nbsp;&nbsp;&nbsp;表格控件与数据集绑定. <div class="divTitle">3.3 运行界面</div><img  src ="images/help_6_4_5.gif"/><br />&nbsp;&nbsp;&nbsp;&nbsp;数据返回到数据集，部门编号字段的值是006和部门名称字段的值是财务部,然后通过数据集返回到表格控件.<br /><img  src ="images/help_6_4_6.gif"/></div> 
+</body>
+</html>

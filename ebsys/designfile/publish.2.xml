@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="gb2312"?>
+<workflow>
+  <meta name="bs_table"></meta>
+  <meta name="bs_id_field"></meta>
+  <meta name="bs_desc_field"></meta>
+  <initial-actions>
+    <action id="7161" name="初始化动作">
+      <restrict-to>
+        <conditions type="AND">
+          <condition type="beanshell">
+            <arg name="script"><![CDATA[true]]></arg>
+          </condition>
+          <condition type="class">
+            <arg name="group">writer</arg>
+            <arg name="class.name">cn.com.fcsoft.workflow.util.OSUserGroupCondition</arg>
+          </condition>
+        </conditions>
+      </restrict-to>
+      <pre-functions>
+        <function type="class">
+          <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+        </function>
+      </pre-functions>
+      <results>
+        <unconditional-result id="3291" old-status="Finished" status="Underway" step="5920" owner="${caller}"/>
+      </results>
+    </action>
+  </initial-actions>
+  <steps>
+    <step id="9012" name="结束节点">
+    </step>
+    <step id="5920" name="撰写初稿">
+      <external-permissions>
+        <permission name="permA">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="5436" name="完成初稿">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="beanshell">
+              <arg name="script"><![CDATA[
+         string caller = context.getCaller();
+         propertySet.setString("caller", caller);
+         bool test = true;
+         string yuck = null;
+         string blah = "987654321";
+         string aas = "prefunction";         
+]]></arg>
+            </function>
+          </pre-functions>
+          <results>
+            <result id="996" old-status="Finished" split="1271">
+              <conditions>
+                <condition type="beanshell">
+                  <arg name="script"><![CDATA[
+propertySet.getString("caller").Equals("test")
+]]></arg>
+                </condition>
+              </conditions>
+            </result>
+            <unconditional-result id="2792" old-status="Finished" status="" split="2123"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="8700" name="校对稿件">
+      <actions>
+        <action id="3724" name="完成校对">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="group">editor</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.OSUserGroupCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">8700</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="5492" old-status="Finished" status="Underway" step="9469" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="2990" name="加入可以处理队列">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Queued</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="7892" old-status="Finished" status="Underway" step="8700" owner="${caller}"/>
+          </results>
+        </action>
+        <action id="1789" name="等候下次处理">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="group">editor</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.OSUserGroupCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="3520" old-status="Finished" status="Queued" step="8700"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="9469" name="检查校对">
+      <external-permissions>
+        <permission name="permA">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="619" name="需要二审">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="3839" old-status="Finished" status="Queued" step="5885"/>
+          </results>
+        </action>
+        <action id="8073" name="可以出版">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">8700</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="3312" old-status="Finished" status="Underway" step="4778" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="7269" name="重新校对">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">8700</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="8920" old-status="Finished" status="Underway" step="8700" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5885" name="二审阶段">
+      <external-permissions>
+        <permission name="permC">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+        </permission>
+      </external-permissions>
+      <actions>
+        <action id="3552" name="二审通过">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.MostRecentOwner</arg>
+              <arg name="stepId">9469</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="749" old-status="Finished" status="Underway" step="9469" owner="${mostRecentOwner}"/>
+          </results>
+        </action>
+        <action id="3071" name="准备二审">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Queued</arg>
+              </condition>
+              <condition type="class">
+                <arg name="group">publisher</arg>
+                <arg name="class.name">cn.com.fcsoft.workflow.util.OSUserGroupCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="7152" old-status="Finished" status="Underway" step="5885" owner="${caller}"/>
+          </results>
+        </action>
+        <action id="5109" name="排队等候">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="4214" old-status="Finished" status="Queued" step="5885"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="4778" name="出版稿件">
+      <actions>
+        <action id="2732" name="出版">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <pre-functions>
+            <function type="class">
+              <arg name="class.name">cn.com.fcsoft.workflow.util.Caller</arg>
+            </function>
+          </pre-functions>
+          <results>
+            <unconditional-result id="579" old-status="Finished" status="Finished" step="9012" owner="${caller}"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="5737" name="封面设计">
+      <actions>
+        <action id="100" name="设计封面">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="stepId">5737</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+                <arg name="stepId">5737</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="1170" old-status="Finished" status="" join="3935"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7528" name="封面插图">
+      <actions>
+        <action id="7258" name="设计插图">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="stepId">7528</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+                <arg name="stepId">7528</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="1269" old-status="Finished" status="Underway" step="7148" owner="test"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+    <step id="7148" name="封面排版">
+      <actions>
+        <action id="576" name="排版处理">
+          <restrict-to>
+            <conditions type="AND">
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.StatusCondition</arg>
+                <arg name="stepId">7148</arg>
+                <arg name="status">Underway</arg>
+              </condition>
+              <condition type="class">
+                <arg name="class.name">cn.com.fcsoft.workflow.util.AllowOwnerOnlyCondition</arg>
+                <arg name="stepId">7148</arg>
+              </condition>
+            </conditions>
+          </restrict-to>
+          <results>
+            <unconditional-result id="4359" old-status="Finished" status="" join="3935"/>
+          </results>
+        </action>
+      </actions>
+    </step>
+  </steps>
+  <splits>
+    <split id="2123"
+ name="老用户"
+>
+      <unconditional-result id="5858" old-status="Finished" status="Underway" step="8700"/>
+    </split>
+    <split id="1271"
+ name="新用户分支"
+>
+      <unconditional-result id="5108" old-status="Finished" status="Underway" step="5737" owner="test"/>
+      <unconditional-result id="3431" old-status="Finished" status="Underway" step="7528" owner="test"/>
+    </split>
+  </splits>
+  <joins>
+    <join id="3935"
+ name="协同设计"
+>
+      <unconditional-result id="6335" old-status="Finished" status="Underway" step="8700"/>
+    </join>
+  </joins>
+</workflow>

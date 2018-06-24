@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>信息输入</title>
+<script src="../js/MicrosoftAjax.js"></script>
+<script src="../js/fcpub.js"></script>
+<script language="javascript">
+//传调用处传入Label内容
+function window_onload(){
+	lbl.innerText = window.dialogArguments
+}
+function cmdOk_onclick() {
+	var s1=msg.value 
+	if(isSpace(s1)){
+		alert("不能为空!")
+		msg.focus()
+		return
+	}
+
+	window.returnValue=s1
+	self.close()
+
+}
+	
+
+</script>
+</head>
+<body bgcolor=#c0c0c0 onload=window_onload() >
+
+
+
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="font-size:12px">
+  <tr height=30 ></tr>
+  <tr>
+    <td colspan="1" id="lbl" >&nbsp;&nbsp;请选择或输入要图片的文件的位置:</td>
+  </tr>
+  <tr>
+    <td align=right ><input id="msg"  size="50"></td>
+  </tr>
+  <tr height=50 ></tr>
+  <tr>
+    <td  align=right ><input id="cmdOk" type=button value=" 确 定 " onclick=cmdOk_onclick() ></td>
+  </tr>
+</table>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,347 @@
+<HTML>
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<TITLE></TITLE>
+		<!--<LINK href="../../fceform/css/skins/blue/style/efskin.css" type="text/css" rel="stylesheet">-->
+		<!--<LINK href="../../zk/main/css/skin/green/style.css" type="text/css" rel="stylesheet">-->
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/csjsrequest.js"></script>
+		<script src="../../fceform/js/fcskins.js"></script>
+		<script src="../../fceformext/js/userfunc.js"></script>
+		<script language="javascript">
+		//var skinColor=fcpubdata.skins ;
+		    var pubHtm = ""; //保存产生的HTML串
+		    var htmQuery = ""; //查询组的html串
+		    var allHtml = ""; //所有的html串
+		    var arrButton = new Array(); //有文字button集合
+
+		    function writeStyle() {
+		        new Eapi.Css().actionSkins();
+		        document.write( '<LINK href="../../fceform/css/skins/' + fcpubdata.skins + '/style/efskin.css" type="text/css" rel="stylesheet">');
+
+		    }
+		    writeStyle();
+		    
+
+
+function genHtml() {
+    //var oButtons = fcpubdata.toolbarButtons;
+
+	var sTitle=parent.document.title; //窗口标题
+	var sButtonDisplay = Request.QueryString("type").toString(); //工具栏类别
+	if (sButtonDisplay == "88") {  //自定义工具栏
+
+	    DelayRunCommand(100, function() {
+	        //document.write("abc")
+
+	        var sXml = from_toolbar_to_dj().$id("SKbillsheet").getAttribute("userToolbar");
+
+	        var oXml = SetDom("<root>" + sXml + "</root>");
+	        if (oXml.documentElement != null) {
+	            var count = 0;
+	            for (var i = 0; i < oXml.documentElement.childNodes.length; i++) {
+	                var sID = NavJs.getNodeValue11(oXml,i,0);
+	                var sMsg = NavJs.getNodeValue11(oXml,i,1);
+	                var sText = NavJs.getNodeValue11(oXml,i,2);
+	                var sCommand = NavJs.getNodeValue11(oXml,i,3);
+	                var sWidth = NavJs.getNodeValue11(oXml,i,4);
+	                var isSysId = IsSpace(fcpubdata.toolbarButtons[sID]) == false;
+
+	                //如写了按钮上的文字,则根据文字长度自动生成sWidth
+	                if (IsSpace(sText) == false && IsSpace(sWidth)) {
+	                    var iRate = 18;
+	                    if (sText.length <= 2) iRate = 22;
+	                    sWidth = (sText.length * iRate) + "px";
+	                }
+
+	                //alert(sText)
+	                var iPermit = 0; //
+	                if (oXml.documentElement.childNodes[i].childNodes.length >= 7) {
+	                    var expHide = NavJs.getNodeValue11(oXml,i,5);
+	                    expHide = unescape(expHide);
+	                    if (IsSpace(expHide) == false) {
+	                        try {
+	                            var bHide = from_toolbar_to_dj().eval(expHide);
+	                        } catch (e) {
+	                            alert("工具栏控钮的权限表达式 " + expHide + " 计算出错,错误信息是:" + e.description);
+	                        }
+	                        if (bHide) iPermit = 1;
+	                    }
+	                    if (iPermit == 0) {
+	                        var expHide = NavJs.getNodeValue11(oXml,i,6);
+	                        expHide = unescape(expHide);
+	                        if (IsSpace(expHide) == false) {
+	                            try {
+	                                var bHide = from_toolbar_to_dj().eval(expHide);
+	                            } catch (e) {
+	                                alert("工具栏控钮的权限表达式 " + expHide + " 计算出错,错误信息是:" + e.description);
+	                            }
+	                            if (bHide) iPermit = 2;
+	                            //alert(iPermit);
+	                        }
+	                    }
+	                }
+
+	                if (isSysId && IsSpace(sText)) {
+	                    addProp(sID, iPermit, sCommand);
+	                } else {
+	                    if (isSysId && IsSpace(sCommand)) {
+	                        sCommand = '$eform(\'' + fcpubdata.toolbarButtons[sID][2] + '\')';
+
+	                    }
+	                    var sDisplay = "";
+	                    var sDisabled = "";
+	                    if (iPermit == 1) sDisplay = "display:none;";
+	                    if (iPermit == 2) {
+	                        sDisabled = " disabled style=\"filter:alpha(opacity=50);\" ";
+	                        
+	                    }
+	                    if (IsSpace(sCommand)) sCommand = "alert('请配置点击事件的代码!')";
+	                    var curHtml = '<TD valign=top style="' + sDisplay + ';width:' + sWidth + '"><button ' + sDisabled + 'id=' + sID + ' onclick=parent.topic.execScript("' + sCommand + '") title="' + sMsg + '" > ' + sText + '</button></TD>';
+	                    pubHtm += curHtml;
+	                    arrButton[count] = sID;
+	                    count++;
+	                }
+	            }
+
+	            writeHtml();
+
+	            for (var j = 0; j < count; j++) {
+	                var oo = $id(arrButton[j]);
+	                //alert(oo.outerHTML)
+	                new Eform.Skins().oneButton(oo);
+	                //SetOneButtonStyle(oo);
+
+	            }
+
+	        }
+	    });
+	    return;
+	}
+	
+	if(sButtonDisplay=="1")
+	{
+		addProp("ok");
+		addProp("close");
+	}
+	if(sButtonDisplay=="2")
+	{
+		addProp("openwinadd");
+		addProp("griddel");
+	}
+	if(sButtonDisplay=="3")
+	{
+		addProp("first");
+		addProp("up");
+		addProp("down");
+		addProp("last");
+		addProp("add");
+		addProp("del");
+		addProp("save");
+	}
+	if(sButtonDisplay=="4")
+	{
+		addProp("first");
+		addProp("up");
+		addProp("down");
+		addProp("last");
+		addProp("addrow");
+		addProp("deleterow");
+
+		addProp("add");
+		addProp("del");
+		addProp("save");
+	}
+	if(sButtonDisplay=="5")
+	{
+		addProp("ok");
+		addProp("close");
+		addProp("saveadd");
+		addProp("add");
+	}
+    if(sButtonDisplay=="6")
+    {	
+        addProp("query");
+    }
+	if(sButtonDisplay=="7")
+	{
+		addProp("addrow");
+		addProp("deleterow");
+		addProp("save");
+	}
+	if(sButtonDisplay=="8")
+	{
+	    addProp("query");
+		addProp("addrow");
+		addProp("deleterow");
+		addProp("save");
+	}
+	if(sButtonDisplay=="9")
+	{
+	    addProp("query");
+		addProp("openwinadd");
+		addProp("griddel");
+	}
+	if(sButtonDisplay=="10")
+	{
+		addProp("ok");
+		addProp("close");
+		addProp("printpreview");
+		addProp("selectprint");
+
+    }
+    writeHtml();
+    
+}
+function writeHtml() {
+    allHtml += '<table class="buttontable" border=0 margin=0 padding=0 cellspacing=0> ';
+    allHtml += '<tr class="buttontr"><TD class="tdleft"> </TD>' + htmQuery + pubHtm + '</tr></table>';
+    //document.body.insertAdjacentHTML("afterBegin", allHtml);
+    NavJs.insertHtml("afterBegin", document.body, allHtml);
+
+}
+/**
+* iPermit = 1 表示隐藏,iPermit =2 表示禁用
+* sCommand 为按钮的点击事件代码.
+**/
+function addProp(name,iPermit,sCommand) {
+    var value = fcpubdata.toolbarButtons[name];
+    var width1 = ToInt(value[0]) + 5;
+    if(name =="griddel") name="del";
+    var classname = "button" + name;
+    if (name == "ok") classname = "cmdOk";
+    if (name == "close") classname = "cmdClose";
+
+    var sDisplay = "";
+    var sDisabled = "";
+    if (iPermit == 1) sDisplay = "display:none;";
+    if (iPermit == 2) {
+        sDisabled = " disabled style=\"filter:alpha(opacity=50);\" ";
+    }        
+    var buttonValue = ""; //value[3];
+    //if (fcpubdata.toolbarStyle != "base") buttonValue = ""; //如果不是基本色button的值为空；
+    if (name == "query") {
+        var curHtml = '<input ' + sDisabled + ' class="' + classname + '" type="button" style="border:1px"  value="' + buttonValue + '" onmouseover=\'this.className="' + classname + '-over" \'onmouseout=\'this.className="' + classname + '"\'   onclick=from_toolbar_to_dj().eval("$eform(\'工具栏查询\')") title="' + value[2] + '" >';
+        var sHtml = "";
+        sHtml += '<td style="'+sDisplay+'" >' + curHtml + '</td>'
+        sHtml += '<TD style="' + sDisplay + '" ><INPUT ' + sDisabled + 'id="firstpage" class="buttonfirstpage" onclick="movepage(1)" type="button" onmouseover=\'this.className="buttonfirstpage-over"\' onmouseout=\'this.className="buttonfirstpage"\'></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><INPUT ' + sDisabled + 'id="uppage" class="buttonuppage" onclick="movepage(2)" type="button" onmouseover=\'this.className="buttonuppage-over"\' onmouseout=\'this.className="buttonuppage"\'></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><INPUT id="pageno" class="buttonpageno" style="WIDTH: 40px" disabled ></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><INPUT ' + sDisabled + 'id="downpage" class="buttondownpage" onclick="movepage(3)" type="button" onmouseover=\'this.className="buttondownpage-over"\'  onmouseout=\'this.className="buttondownpage"\'></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><INPUT ' + sDisabled + 'id="lastpage" class="buttonlastpage" onclick="movepage(4)" type="button" rules="rows" onmouseover=\'this.className="buttonlastpage-over"\'  onmouseout=\'this.className="buttonlastpage"\'></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><span style = "font-size: 12px;" id="pagesizelabel">页尺寸</span><INPUT ' + sDisabled + 'id="pagesize" class="buttonpageno" style="WIDTH: 35px" value="20" ></TD>';
+        sHtml += '<TD style="' + sDisplay + '" ><span style = "font-size: 12px;" id="pagegotolabel">转到</span><INPUT ' + sDisabled + 'id="pagegoto" class="buttonpagenogoto" value="1" type="text"  style="WIDTH: 35px" ><span style = "font-size: 12px;" id="pagegoto1label">页</span></TD>';
+        //htmQuery = sHtml;
+        pubHtm += sHtml;        
+    } 
+    else if (name == "wf_free_select"){//自由流跳转下拉combox
+	    var curHtml = '<TD style="' + sDisplay + ';padding-top:2px;">';
+	    curHtml+='<select ' + sDisabled + 'id="' + name + '" ></select>';
+	    curHtml+='</TD>';
+        pubHtm += curHtml;
+		
+		
+    }
+    else 
+    {
+    
+    var sClick = sCommand;
+    if (IsSpace(sClick)) sClick = '$eform(\'' + value[2] + '\')';
+    var curHtml = '<TD style="' + sDisplay + ';padding-top:2px;"><button ' + sDisabled + 'id="' + name + '" class="' + classname + '" onmouseover=\'this.className="' + classname + '-over" \'onmouseout=\'this.className="' + classname + '"\' onclick=from_toolbar_to_dj().eval("' + sClick + '") title="' + value[2] + '" > ' + buttonValue + '</button></TD>'; //class="td' + name + '"
+    
+        pubHtm += curHtml;
+    }
+    return pubHtm;
+    //}  
+}
+
+/**
+* 翻页
+*@param ipos =1,2,3,4 表示移到头,上,下,尾
+*@date 2004-02-10
+**/
+function movepage(ipos) {
+    var sRun = "var dssub1=Getdssub1();"
+    if (ipos == 1) {
+        sRun += "dssub1.FirstPage();"
+    } else if (ipos == 2) {
+        sRun += "dssub1.PrevPage();"
+    } else if (ipos == 3) {
+        sRun += "dssub1.NextPage();"
+    } else if (ipos == 4) {
+        sRun += "dssub1.LastPage();"
+    }
+
+    from_toolbar_to_dj().eval(sRun);
+    var iPageNo = from_toolbar_to_dj().dssub1.PageNo;
+    if (iPageNo < 1) iPageNo = 1;
+    var iPageCount = from_toolbar_to_dj().dssub1.PageCount;
+    if (iPageCount < 1) iPageCount = 1;
+    $id("pageno").value = iPageNo + "/" + iPageCount;
+    $id("pagegoto").value = iPageNo;  //把当前页号赋给跳转页
+}
+/**
+*运行查询
+*@date 2004-02-10
+**/
+function Run() {
+
+    var ipagesize = $id("pagesize").value;
+    ipagesize = parseInt(ipagesize,10);
+    if (isNaN(ipagesize)) {
+        alert("页尺寸必须是整数!");
+        return;
+    }
+    var ipagegoto = $id("pagegoto").value;
+    ipagegoto = parseInt(ipagegoto, 10);
+    if (isNaN(ipagegoto)) {
+        alert("跳转页数必须是整数!");
+        return;
+    }
+    if (ipagegoto < 1) ipagegoto = 1;
+    
+	var sRun = "var odssub1=Getdssub1();var grid1=GetDsGrid(odssub1); odssub1.PageSize=" + ipagesize + ";";
+	sRun += " odssub1.PageNo=" + ipagegoto + ";";
+	sRun += " odssub1.Open(odssub1.opensql,'是');try { grid1.SetFocus(grid1.FindFirstTD(grid1.FixRows),'程序给焦点');}catch(e){};";
+
+	sRun += " var iPageCount = odssub1.PageCount; if(iPageCount < 1) iPageCount=1;";
+	sRun += " var iPageNo = odssub1.PageNo; if(iPageNo < 1) iPageNo=1;";
+    //sRun +=" if("+ipagegoto+" > iPageCount) parent.toolbar.pagegoto.value=iPageCount;"//跳转页的值大于总页数时，总页数的值就替换跳转页的值
+    //sRun += " if(" + ipagegoto + " != odssub1.PageNo) odssub1.PageNo=parseInt(parent.toolbar.pagegoto.value);"//跳转页的页数和当前页不一样时，跳转页的值替换当前页的值
+    sRun += "parent.toolbar.$id('pageno').value = iPageNo+'/'+iPageCount;";
+    //sRun += "parent.toolbar.pagegoto.value = odssub1.PageNo";
+    sRun += "if(" + ipagegoto + " > iPageCount) alert('转到页数不要大于总页数,这会造成查不到记录!');";
+    from_toolbar_to_dj().eval(sRun)
+
+
+}
+function window_onload() {
+    genHtml();
+    //装入自由流下拉列表内容。2011-6-11
+    
+    if ($id("wf_free_select")!=null){
+		wftools_loadfree($id("wf_free_select"));
+    
+    }
+    //calcWinHeight();
+}
+/**
+* 在 toolbar 窗口访问表单所在窗口,返回window对象, 2012-04-17 my add
+**/
+function from_toolbar_to_dj() {
+    return $win("topic", parent);
+}
+
+//function calcWinHeight() {
+//    var sHeight = 31;
+//    window.parent.document.getElementById("toolbar").style.height = sHeight + "px";
+//    window.parent.document.getElementById("topic").style.height = (window.parent.document.documentElement.offsetHeight - sHeight - 0) + "px";
+//}
+
+
+		</script>
+	</HEAD>
+	<BODY leftmargin="0" topmargin="0" onload=window_onload()  >
+	</BODY>
+</HTML>

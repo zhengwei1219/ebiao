@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>多附件上传</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<link rel="stylesheet" type="text/css" href="efhelpstyle.css">
+	</head>
+	<body leftmargin="0" topmargin="0">
+		<table class="tableTitle">
+			<tr>
+				<td class="title">多附件上传</td>
+			</tr>
+			<tr>
+				<td class="aTd ">
+					<a class="aDwHomepage" href='http://www.fcsoft.com.cn'>返回公司首页</a><a class="aHelpHomePage" href='efhelp_index.htm'>返回帮助首页</a></td>
+			</tr>
+		</table>
+		<div class="mainDiv">
+			<div class="divTitle">1.在数据库的fc_attch表中保存附加的路径</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;在附加上传控件的属性窗口中选择保存附加路径到数据库，附加上传后路径保存在数据库的fc_attch表中，如下图：<br>
+			<img src="images/help_8_8_3.gif"><br>
+			<div class="divTitle">1.1 多附件上传时保存附加到fceformext/res/目录，把路径保存到数据库的fc_attach表中</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;上传控件可以一次上传多个附件,文件上传后,上传文件的内容不会保存在数据库中,还仍然是以文件的形式存在服务器端,但文件名被改为GUID组成的唯一的文件名,上传控件用到了fc_attach表,也就是说,如在表单中用了上传控件的话,就必须在数据库中建有fc_attach表,fc_attach表的记录中存有上传的文件名和GUID组成的临时文件的关联信息,它还保存了上传的文件属于哪个的(即主键字段值KEY值),以便能找到修改和查看.注意一个表单只能放一个上传控件 
+			.单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=loadfiled'>
+				列表表单</a> 进入列表表单设计界面.
+			<div class="divTitle">1.2 多附件上传的设置</div>
+			&nbsp;&nbsp;&nbsp; 单击 <a class="shili" href='../../fceform/design/design.htm?isfile=yes&amp;djtype=FT&amp;djsn=loadfiled1'>
+				附件上传</a> 进入附件上传设计界面,上传文件的内容不会保存在数据库中,它存放在/fceformext/res/目录下,fc_attach表的记录中存有上传的文件名和GUID组成的临时文件的关联信息,我们在upload附加上传控件中,单击附加上传，进入上传界面,选择上传的文件.
+			<br>
+			<img src="images/help_8_9_1.gif"><br>
+			&nbsp;&nbsp;&nbsp; 图片上传后，会在 fceformext/res目录下存放两个文件如下图<br>
+			<img src="images/help_8_9_2.gif"><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;数据库的fc_attach表中会增加两条记录,一个附件一条记录.<br>
+			<img src='images/help_8_9_3.gif'><br>
+			&nbsp;&nbsp;&nbsp; extend字段是上传附件的类型.<br>
+			&nbsp;&nbsp;&nbsp; djbh字段是上传附件表中的id字段,我们是fc_item表中主键字段是ZBF00000017的记录在上传的两个附件.<br>
+			&nbsp;&nbsp;&nbsp; filename字段是上传附件的原地址.<br>
+			&nbsp;&nbsp;&nbsp; attachid是fc_attach表的id.<br>
+			&nbsp;&nbsp;&nbsp; djsn是数据库中的表名.&nbsp;<br>
+			&nbsp;&nbsp;&nbsp; filepos是现在附件放置的路径.
+			<div class="divTitle">2. 附加保存在数据库fc_attach表的filedata字段中的类型</div>
+			&nbsp;&nbsp;&nbsp;在fc_attach表中，sql server 
+			数据库fc_attach表的filedata字段类型是image，oracle数据库fc_attach表的filedata字段类型是 blob或long 
+			raw，oracle数据库中的fc_attach表如下：<br>
+			<img src="images/help_8_9_4.gif"><br>
+			<br>
+			<br>
+			<br>
+			<br>
+		</div>
+	</body>
+</html>

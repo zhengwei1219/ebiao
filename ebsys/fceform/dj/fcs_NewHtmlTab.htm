@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>//初始化函数
+function uf_open(){
+ 	NumEdit1.value='2';
+ 	NumEdit2.value='2';
+ 	NumEdit3.value='1';
+ 	NumEdit5.value='1';
+ 	NumEdit4.value='2';
+ 	FCDBedit1.value='100';
+ 	FCDBedit1.disabled=true;
+ 	SKDBRadioGroup1.disabled=true;
+ 	SetRadioValue(SKDBRadioGroup1,'1');
+ 	SetCheckBoxValue(SKDBcheckbox1,"是");
+ 	uf_ischeck();
+ 	PropWinOnload();
+}
+//是否指定控件的宽度
+function uf_ischeck(){
+   if (SKDBcheckbox1.value=='是'){
+     FCDBedit1.disabled=false;
+ 	 SKDBRadioGroup1.disabled=false; 
+   }else {
+     FCDBedit1.disabled=true;
+ 	 SKDBRadioGroup1.disabled=true;      
+ 	 SetRadioValue(SKDBRadioGroup1,'1');
+   }
+}
+function uf_ok() {
+  if (NumEdit1.value < 1 || NumEdit2.value < 1){
+		alert('请填入一个在1和25之间的整数！')  
+  		return ;
+  }
+  var sTab = '' ;
+  if(SKDBRadioGroup1.value == 1){
+  	var dw = "px";
+  }else{
+  	dw = "%";
+  }
+ // alert(fcpubdata.position)
+  sTab += '<table border='+NumEdit3.value+' style="position:' +fcpubdata.obj.position+ ';" align='+SKDBcombobox1.value+' cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+' width="'+FCDBedit1.value+dw+'">'	
+  	for(var i=0;i<NumEdit1.value;i++){
+  		sTab += '<tr>'
+  		for(var k=0;k<NumEdit2.value;k++){
+  			sTab += '<td></td>'
+  		}
+  		sTab += '</tr>'
+  	}
+  sTab += '</table>'
+  window.returnValue = sTab;
+  window.close();
+}
+/*
+function uf_onclick(){
+	if (uf_checkdata()==true) {
+	    var sTable='';
+	   
+	    if ((SKDBcombobox1.selectedIndex==0) || (SKDBcheckbox1.value=='是'))  {
+		    if (SKDBRadioGroup1.value=='百分比(P)'){
+				   	sTable='<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+'   width='+FCDBedit1.value+'%>'
+ 	 				for (j=1;j<=NumEdit1.value;j++){
+ 	 	   				sTable=sTable+'<tr>'
+ 	 	   				for (i=1;i<=NumEdit2.value;i++){
+							sTable=sTable+'<td></td>'
+	 	   				}
+	    				sTable=sTable+'</tr>'
+	 				}
+	 			sTable=sTable+'</table>'
+	 		}else {
+				   	sTable='<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+'   width='+FCDBedit1.value+'px>'
+ 	 				for (j=1;j<=NumEdit1.value;j++){
+ 	 	   				sTable=sTable+'<tr>'
+ 	 	   				for (i=1;i<=NumEdit2.value;i++){
+							sTable=sTable+'<td></td>'
+	 	   				}
+	    				sTable=sTable+'</tr>'
+	 				}
+	 			sTable=sTable+'</table>'	 		
+	 		}
+	 		
+	    }else{
+	      if (SKDBcombobox1.selectedIndex==1) {
+		    	sTable='<div align=left>'
+				sTable=sTable+'<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+'>'
+ 	 			for (j=1;j<=NumEdit1.value;j++){
+ 	 	   			sTable=sTable+'<tr>'
+ 	 	   			for (i=1;i<=NumEdit2.value;i++){
+					sTable=sTable+'<td></td>'
+	 	   			}
+	    			sTable=sTable+'</tr>'
+	 			}
+		 		sTable=sTable+'</table></div>'
+		  }	    
+	      if (SKDBcombobox1.selectedIndex==2)  {
+				sTable='<div align=right>'
+				sTable=sTable+'<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+'  cellspacing='+NumEdit4.value+'>'
+ 	 			for (j=1;j<=NumEdit1.value;j++){
+ 	 	   			sTable=sTable+'<tr>'
+ 	 	   			for (i=1;i<=NumEdit2.value;i++){
+						sTable=sTable+'<td></td>'
+	 	   			}
+	    			sTable=sTable+'</tr>'
+	 			}
+		 		sTable=sTable+'</table></div>'
+		  }	
+		  if (SKDBcombobox1.selectedIndex==3) {
+		  		sTable='<div align=center>'
+		  		sTable=sTable+'<center>'
+		  		sTable=sTable+'<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+'>'
+ 	 			for (j=1;j<=NumEdit1.value;j++){
+ 	 	   			sTable=sTable+'<tr>'
+ 	 	   			for (i=1;i<=NumEdit2.value;i++){
+					sTable=sTable+'<td></td>'
+	 	   			}
+	    			sTable=sTable+'</tr>'
+	 			}
+		 		sTable=sTable+'</table></center></div>'
+		  }  
+		  if (SKDBcombobox1.selectedIndex==4)  {
+		  		sTable='<div align=justify>'
+		  		sTable=sTable+'<table border='+NumEdit3.value+'  cellpadding='+NumEdit5.value+' cellspacing='+NumEdit4.value+'>'
+ 	 			for (j=1;j<=NumEdit1.value;j++){
+ 	 	   			sTable=sTable+'<tr>'
+ 	 	   			for (i=1;i<=NumEdit2.value;i++){
+					sTable=sTable+'<td></td>'
+	 	   			}
+	    			sTable=sTable+'</tr>'
+	 			}
+		 		sTable=sTable+'</table></div>'
+		  		
+		  }
+		   		   
+	    }
+	    
+	 	//alert(sTable);
+	 	CopyToPub(sTable);
+	 	//window.returnValue=sTable;
+	 }
+
+}*/</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcstring.js'></script><script src='../js/fcnumdate.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/shape.css'  /><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/><script >document.styleSheets[0].addRule(".xpSpin","behavior: url(../htc/NumEdit.htc)",0);</script>
+<DIV id=SKbillsheet ondrop=bill_ondrop() jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" userType BLONclose BLONopenBefore idtype="1" OtherSave="否" isfile="是" postop posleft window="有模式窗口" toolbar="不带工具栏" BLONopen="uf_open()" contxml="<root><checkbox><id>SKDBcheckbox1</id></checkbox><label><id>Label1</id><id>Label2</id><id>Label3</id><id>Label4</id><id>Label5</id><id>Label6</id><id>Label7</id><id>Label8</id></label><radio><id>SKDBRadioGroup1</id></radio><combobox><id>SKDBcombobox1</id></combobox><shape><id>Shape6</id><id>shape0</id></shape><button><id>cmdOk</id><id>cmdClose</id></button><text><id>FCDBedit1</id></text><spin><id>NumEdit1</id><id>NumEdit2</id><id>NumEdit3</id><id>NumEdit4</id><id>NumEdit5</id></spin></root>" billtaborder="<root><taborder>SKDBcheckbox1</taborder><taborder>SKDBRadioGroup1</taborder><taborder>SKDBcombobox1</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>FCDBedit1</taborder><taborder>NumEdit1</taborder><taborder>NumEdit2</taborder><taborder>NumEdit3</taborder><taborder>NumEdit4</taborder><taborder>NumEdit5</taborder></root>" dj_sn="fcs_NewHtmlTab" type="LR" caption="新建表格" mkbh codeheader="BBB" entertype="修改" poswidth="380" posheight="240" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" keyfield center="居中" AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 5px; LEFT: 9px" id=Label1 class=label_title onmovestart=moveStart() noWrap value="Label1" controltype="label" NotBg="否" inputTag="否">大小</DIV>
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 27px; LEFT: 62px" id=Label2 onmovestart=moveStart() noWrap value="Label2" controltype="label">行数：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 73px; HEIGHT: 22px; TOP: 21px; LEFT: 95px; align: left" id=NumEdit1 class=xpSpin align=left value="" controltype="spin" Min="1" Max="32000" NextNum="1" enabled="否" height="22px" width="73px" top="21px" left="95px" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px" dataset="undefined" field="undefined"></DIV> 
+<DIV style="POSITION: absolute; WIDTH: 18px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 26px; LEFT: 179px" id=Label3 onmovestart=moveStart() noWrap value="Label3" controltype="label">列数：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 73px; HEIGHT: 22px; TOP: 21px; LEFT: 211px; align: left" id=NumEdit2 class=xpSpin align=left value="" controltype="spin" Min="1" Max="32000" NextNum="1" enabled="否" height="22px" width="73px" top="21px" left="211px" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px" dataset="undefined" field="undefined"></DIV> 
+<DIV style="POSITION: absolute; WIDTH: 12px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 45px; LEFT: 9px" id=Label4 class=label_title onmovestart=moveStart() noWrap value="Label4" controltype="label" NotBg="否" inputTag="否">布局</DIV>
+<DIV style="POSITION: absolute; WIDTH: 30px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 66px; LEFT: 37px" id=Label5 onmovestart=moveStart() noWrap value="Label5" controltype="label">对齐方式：</DIV><SELECT style="POSITION: absolute; BACKGROUND-COLOR: #ffffff; WIDTH: 73px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 62px; LEFT: 95px" id=SKDBcombobox1 onmovestart=moveStart() controltype="combobox" check="1" sql tempvalue="left&#13;&#10;right&#13;&#10;center" temptext="左对齐&#13;&#10;右对齐&#13;&#10;水平居中" china sqltrans><OPTION selected value=left>左对齐</OPTION><OPTION value=right>右对齐</OPTION><OPTION value=center>水平居中</OPTION></SELECT> 
+<DIV style="POSITION: absolute; TEXT-ALIGN: left; WIDTH: 80px; DISPLAY: block; FONT-FAMILY: 宋体; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 62px; LEFT: 176px; backgroundColor1: #ffffff" id=SKDBcheckbox1 onmovestart=moveStart() noWrap value="否" controltype="checkbox" falsevalue="否" truevalue="是" divtype="checkbox" china onclick='bill_onclick("uf_ischeck()")'><INPUT oncontrolselect=controlselectcancel() type=checkbox><SPAN>指定宽度：</SPAN></DIV><INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 64px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 89px; LEFT: 180px" id=FCDBedit1 onmovestart=moveStart() controltype="text" china CanSelect="false"></INPUT> 
+<FIELDSET style="POSITION: absolute; WIDTH: 84px; DISPLAY: block; HEIGHT: 63px; FONT-SIZE: 12px; TOP: 85px; LEFT: 253px; backgroundColor1: #ffffff" id=SKDBRadioGroup1 onmovestart=moveStart() contentEditable=false value="像素(X)" controltype="radio" tempvalue="1&#13;&#10;2" temptext="像素&#13;&#10;百分比" china readOnly="false" aspect="纵向" legend="单位"><LEGEND>单位</LEGEND><INPUT value=1 type=radio name=RGSKDBRadioGroup1 text="像素"><SPAN onclick=RGSKDBRadioGroup1[0].checked=true;SKDBRadioGroup1.value=RGSKDBRadioGroup1[0].value;RGSKDBRadioGroup1[0].focus();>像素</SPAN>&nbsp;<BR><INPUT value=2 type=radio name=RGSKDBRadioGroup1 text="百分比"><SPAN onclick=RGSKDBRadioGroup1[1].checked=true;SKDBRadioGroup1.value=RGSKDBRadioGroup1[1].value;RGSKDBRadioGroup1[1].focus();>百分比</SPAN>&nbsp;</FIELDSET> 
+<DIV style="POSITION: absolute; WIDTH: 30px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 91px; LEFT: 37px" id=Label6 onmovestart=moveStart() noWrap value="Label6" controltype="label">边框明细：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 73px; HEIGHT: 22px; TOP: 85px; LEFT: 95px; align: left" id=NumEdit3 class=xpSpin align=left value="" controltype="spin" Min="1" Max="32000" NextNum="1" enabled="否" height="22px" width="73px" top="85px" left="95px" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px" dataset="undefined" field="undefined"></DIV> 
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 116px; LEFT: 26px" id=Label7 onmovestart=moveStart() noWrap value="Label7" controltype="label">单元格边距：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 36px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 15px; FONT-SIZE: 12px; TOP: 141px; LEFT: 26px" id=Label8 onmovestart=moveStart() noWrap value="Label8" controltype="label">单元格间距：</DIV>
+<DIV style="POSITION: absolute; WIDTH: 73px; HEIGHT: 22px; TOP: 136px; LEFT: 95px; align: left" id=NumEdit4 class=xpSpin align=left value="" controltype="spin" Min="1" Max="32000" NextNum="1" enabled="否" height="22px" width="73px" top="136px" left="95px" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px" dataset="undefined" field="undefined"></DIV>
+<DIV style="POSITION: absolute; WIDTH: 73px; HEIGHT: 22px; TOP: 110px; LEFT: 95px; align: left" id=NumEdit5 class=xpSpin align=left value="" controltype="spin" Min="1" Max="32000" NextNum="1" enabled="否" height="22px" width="73px" top="110px" left="95px" display="block" fontweight="" color="" backgroundcolor="" fontfamily="" fontstyle="" fontsize="12px" dataset="undefined" field="undefined"></DIV><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 173px; LEFT: 183px" id=cmdOk onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_ok()")' dropstyle="否"></BUTTON><BUTTON style="POSITION: absolute; BACKGROUND-COLOR: #d4d0c8; WIDTH: 79px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 25px; FONT-SIZE: 12px; TOP: 173px; LEFT: 266px" id=cmdClose onmovestart=moveStart() controltype="button" onclick='bill_onclick("CloseBill()")' dropstyle="否"></BUTTON><?xml:namespace prefix = v /><v:line style="POSITION: absolute; WIDTH: 331px; DISPLAY: block; HEIGHT: 100px; TOP: 11px; LEFT: 32px" id=Shape6 onresize="" controltype="shape" id1="3" from = "0,0" to = "243.75pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line><v:line style="POSITION: absolute; WIDTH: 331px; DISPLAY: block; HEIGHT: 100px; TOP: 52px; LEFT: 32px" id=shape0 onresize="" controltype="shape" id1="3" from = "0,0" to = "243.75pt,0" fillcolor = "white" strokecolor = "#d6d3bd" strokeweight = ".75pt"><v:stroke></v:stroke></v:line></DIV></body></html>

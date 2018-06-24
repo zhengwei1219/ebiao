@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	@import url(../../fceform/css/dj.css); 
+	</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body bgcolor="#d4d0c8" background="../../fceform/images/ef_run_background.gif" onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>
+   
+   			
+      
+
+pub_djhtm()
+		</script>
+<script>function uf_click() {
+	var str = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath +"/eformWebControl.aspx")	;
+	alert(str)
+}</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><script src='../../fceform/../fceformext/js/userfunc.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/>
+<DIV id=SKbillsheet toolbar="不带工具栏" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id><id>label6</id><id>label7</id><id>label8</id><id>label11</id><id>label12</id><id>label13</id><id>label14</id><id>label15</id><id>label16</id><id>label17</id><id>label18</id></label><button><id>button1</id></button></root>" jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" billtaborder="<root><taborder>button1</taborder></root>" dj_sn="sh_98_WebControl" type="SH" caption="eform调用Web控件库" mkbh codeheader="BBB" entertype="修改" poswidth posheight controlno="SKButton:0;SKDBedit:0;checkbox:0;label:18;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;SKDBTreeView:0;a:0;button:0;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0" keyfield window="当前窗口" posleft postop isfile="否" idtype="1"><BUTTON id=button1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 30px; WIDTH: 131px; FONT-FAMILY: ; POSITION: absolute; TOP: 343px; HEIGHT: 25px; BACKGROUND-COLOR: #d4d0c8" onmovestart=moveStart() controltype="button" dropstyle="否" onclick='bill_onclick("uf_click()")'>调用Web自定义控件</BUTTON> 
+<DIV id=label1 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 26px; WIDTH: 138px; FONT-FAMILY: ; POSITION: absolute; TOP: 41px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label1" controltype="label">1.做一个WebbillControl.dll</DIV>
+<DIV id=label2 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 26px; WIDTH: 582px; FONT-FAMILY: ; POSITION: absolute; TOP: 217px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label2" controltype="label">3.新建一个eformWebControl.aspx文件,在当前文件中引入:using WebbillControl;,在onload时调用方法：</DIV>
+<DIV id=label3 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 26px; WIDTH: 192px; FONT-FAMILY: ; POSITION: absolute; TOP: 263px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label3" controltype="label">4.在点击按钮时调用：function uf_click() {</DIV>
+<DIV id=label4 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 53px; WIDTH: 654px; FONT-FAMILY: ; POSITION: absolute; TOP: 238px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label4" controltype="label">WebbillControl.WebControl o = new WebbillControl.WebControl();Response.Write(o.WebControlText);</DIV>
+<DIV id=label5 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 165px; WIDTH: 648px; FONT-FAMILY: ; POSITION: absolute; TOP: 281px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label5" controltype="label">var str = new Eapi.RunAjax().sendHttp(location.protocol+"//"+location.host + fcpubdata.servletPath +"/eformWebControl.aspx") ; </DIV>
+<DIV id=label6 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 165px; WIDTH: 66px; FONT-FAMILY: ; POSITION: absolute; TOP: 303px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label6" controltype="label">alert(str);</DIV>
+<DIV id=label7 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 147px; WIDTH: 6px; FONT-FAMILY: ; POSITION: absolute; TOP: 323px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label7" controltype="label">}</DIV>
+<DIV id=label8 style="DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; LEFT: 16px; WIDTH: 90px; COLOR: #0000ff; FONT-FAMILY: 宋体; POSITION: absolute; TOP: 11px; HEIGHT: 15px; TEXT-ALIGN: left; TEXT-DECORATION: underline; backgroundColor1: #c0c0c0; " onmovestart=moveStart() noWrap value="label8" controltype="label">eform调用Web控件库示例</DIV>
+<DIV id=label11 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 56px; WIDTH: 186px; FONT-FAMILY: ; POSITION: absolute; TOP: 59px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label11" controltype="label">1.新建一个Web控件库,命名(WebbillControl)</DIV>
+<DIV id=label12 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 56px; WIDTH: 324px; FONT-FAMILY: ; POSITION: absolute; TOP: 81px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label12" controltype="label">2.在WebCustomControl1.cs文件的命名为：namespace WebbillControl</DIV>
+<DIV id=label13 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 56px; WIDTH: 210px; FONT-FAMILY: ; POSITION: absolute; TOP: 103px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label13" controltype="label">3.定义属性：public string WebControlText</DIV>
+<DIV id=label14 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 160px; WIDTH: 246px; FONT-FAMILY: ; POSITION: absolute; TOP: 123px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label14" controltype="label">get {&nbsp; return "eform调用Web自定义控件演示示例。";&nbsp;&nbsp; }</DIV>
+<DIV id=label15 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 161px; WIDTH: 162px; FONT-FAMILY: ; POSITION: absolute; TOP: 141px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label15" controltype="label">set&nbsp; {&nbsp;&nbsp; text = value;&nbsp;&nbsp;&nbsp; }</DIV>
+<DIV id=label16 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 128px; WIDTH: 6px; FONT-FAMILY: ; POSITION: absolute; TOP: 155px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label16" controltype="label">}</DIV>
+<DIV id=label17 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 26px; WIDTH: 198px; FONT-FAMILY: ; POSITION: absolute; TOP: 195px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label17" controltype="label">2.将WebbillControl.dll引用到当前项目中在项目中</DIV>
+<DIV id=label18 style="DISPLAY: block; FONT-SIZE: 12px; LEFT: 56px; WIDTH: 60px; FONT-FAMILY: ; POSITION: absolute; TOP: 172px; HEIGHT: 15px;  " onmovestart=moveStart() noWrap value="label18" controltype="label">4.然后生成解决方案</DIV></DIV></body></html>

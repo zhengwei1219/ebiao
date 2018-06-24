@@ -1,0 +1,43 @@
+<!Doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	    <link rel="stylesheet" type="text/css" href="../../fceform/css/dj.css">
+		<STYLE> .userData{behavior:url(#default#userData);}</STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_openBefore(){
+	//var reportname=$urlParam("name"); 
+	//if(IsSpace(reportname)) reportname = "/ebfile/samples/s_simplelist.htm";
+	var reportname = fcpubdata.runParams["name"];
+
+	$id("elList").setAttribute("reportName",unescape(reportname));
+	var runParams=fcpubdata.runParams["runParams"];// $urlParam("runParams"); 
+	if(!IsSpace(runParams))
+		$id("elList").setAttribute("runParams",runParams);
+		
+	//$id("elList").setAttribute("runParams", "userid='USR_0000003'" + "&username='xxxx'"); 
+}
+function uf_openAfter(){
+	new Eapi.FormTemp().buttonsCss([
+		{ cssName: "uppage", width: 20, height: 20,title:"显示上一页"},
+		{ cssName: "downpage", width: 20, height: 20,title:"显示下一页"},
+		{ cssName: "closewin", width: 66, height: 21,title:"关闭"}
+		
+	]);
+	
+	new Eapi.FormTemp().toolbarConts(fcpubdata.runParams["toolbar"]);
+	new Eapi.FormTemp().openAfter();
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../js/fczk.js'></script><script src='../../fceformext/js/userfunc.js'></script><script src='../js/fcebiao.js'></script><script src='../ereport/js/loadreport.js'></script><script src='../js/fczk.js'></script><script src='../htc/dataset.js'></script><script src='../js/fcdataset.js'></script><script src='../htc/fc_code.js'></script>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;fczk.js&#13;&#10;~userfunc.js" runParams="toolbar = closewin,uppage,pageCount,|,downpage, lblPageGo,pageGo,lblPageTo&#13;&#10;name = /ebfile/samples/s_simplelist.htm&#13;&#10;runParams = " addHtml jsUser="function%20uf_openBefore%28%29%7B%0D%0A%09var%20reportname%3D%22/ebfile/samples/s_simplelist.htm%22%3B//%24urlParam%28%22ebiaoName%22%29%0D%0A%09%24id%28%22elList%22%29.setAttribute%28%22reportName%22%2Creportname%29%3B%0D%0A%09%24id%28%22elList%22%29.setAttribute%28%22runParams%22%2C%20%22userid%3D%27USR_0000003%27%22%20+%20%22%26username%3D%27xxxx%27%22%29%3B%20%0D%0A%7D%0D%0Afunction%20uf_openAfter%28%29%7B%0D%0A%09%0D%0A%09new%20Eapi.FormTemp%28%29.openAfter%28%29%3B%0D%0A%0D%0A%09%0D%0A%7D%0D%0A" BLONresize BLONresizeBefore BLONresizeAfter allBrowser="是" useHelp="通用的在手机上运行文件中的报表。" isCheckPermit="否" alertType="1" userType contxml="<root><label><id>lblPageGo</id><id>lblPageTo</id></label><combobox><id>pageGo</id></combobox><div><id>toolbarleft</id><id>toolbarmiddle</id><id>toolbarright</id></div><button><id>uppage</id><id>downpage</id><id>closewin</id></button><text><id>pageCount</id></text><eblayout><id>elList</id></eblayout></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:4;radio:0;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:10;text:2;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0;eblayout:1;test:undefined" billtaborder="<root><taborder>closewin</taborder><taborder>pageGo</taborder><taborder>uppage</taborder><taborder>downpage</taborder><taborder>pageCount</taborder></root>" isfile="是" posheight poswidth postop posleft window="当前窗口" caption="手机上运行E表文件" type="ST" dj_sn="ebr_m_file" BLONopen="uf_openAfter();" center="  " BLONclose BLONopenBefore="uf_openBefore()" envType="手机" toolbar="不带工具栏" AutoResizeXml="<record id ='elList'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>2</HExt><HSetUnit>px</HSetUnit><MinH>100</MinH></record>"><DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; OVERFLOW-X: hidden; OVERFLOW-Y: hidden; BACKGROUND-COLOR: #ffffff; WIDTH: 588px; HEIGHT: 279px; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 29px; LEFT: 3px" id=elList onmovestart=moveStart() class=control-border-color opensortno="1" isShowView="是" isAddId="否" isOnloadRun="否" resizeTypeW="不变化" resizeTypeH="不变化" contentType="rptFile" reportName="/ebfile/samples/s_simplelist.htm" onDsGen onFieldGen onContGen runAfter resizeType="1" beforeGen beforeDsGen afterDsGen beforeContGen afterContGen afterGen AutoSizeXml="<record id ='elList'><Halign>不动</Halign><HWidth></HWidth><HUnit>px</HUnit><WSetType>伸缩设置</WSetType><Width></Width><WExt>2</WExt><WSetUnit>px</WSetUnit><MinW>200</MinW><Palign>不动</Palign><PWidth></PWidth><PUnit>px</PUnit><HSetType>伸缩设置</HSetType><Height></Height><HExt>2</HExt><HSetUnit>px</HSetUnit><MinH>100</MinH></record>" controltype="eblayout"></DIV>
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 4px; HEIGHT: 26px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 1px; LEFT: 3px" id=toolbarleft onmovestart=moveStart() class=toolbarleft controltype="div"></DIV>
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 294px; HEIGHT: 26px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 1px; LEFT: 7px" id=toolbarmiddle onmovestart=moveStart() class=toolbarmiddle controltype="div"><BUTTON style="POSITION: absolute; WIDTH: 20px; DISPLAY: none; HEIGHT: 20px; TOP: 2px; LEFT: 93px" id=uppage onmovestart=moveStart() controltype="button" onclick='bill_onclick("new Eapi.FormTemp().pageListPrev()")'>上</BUTTON><INPUT style="POSITION: absolute; WIDTH: 31px; DISPLAY: none; HEIGHT: 16px; TOP: 3px; LEFT: 116px" id=pageCount onmovestart=moveStart() readOnly size=4 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 20px; DISPLAY: none; HEIGHT: 20px; TOP: 2px; LEFT: 151px" id=downpage onmovestart=moveStart() controltype="button" onclick='bill_onclick("new Eapi.FormTemp().pageListNext()")'>下</BUTTON><LABEL style="POSITION: absolute; WIDTH: 18px; DISPLAY: none; HEIGHT: 14px; TOP: 6px; LEFT: 203px" id=lblPageGo onmovestart=moveStart() controltype="label" inputTag="否">到</LABEL><SELECT style="POSITION: absolute; WIDTH: 38px; DISPLAY: none; HEIGHT: 20px; TOP: 3px; LEFT: 220px" id=pageGo onmovestart=moveStart() onchange="bill_onclick(&quot;new Eapi.FormTemp().pageListGoto($id('pageGo').options[$id('pageGo').selectedIndex].text)&quot;)" controltype="combobox" async="否" tempvalue temptext check="1" sql datasourceName sqltrans></SELECT><LABEL style="POSITION: absolute; WIDTH: 17px; DISPLAY: none; HEIGHT: 14px; TOP: 7px; LEFT: 262px" id=lblPageTo onmovestart=moveStart() controltype="label" inputTag="否">页</LABEL><BUTTON style="POSITION: absolute; WIDTH: 66px; DISPLAY: none; HEIGHT: 21px; TOP: 2px; LEFT: 3px" id=closewin onmovestart=moveStart() controltype="button" onclick="bill_onclick(&quot;parent.location.replace('../../mobile/content.htm');&quot;)">关闭</BUTTON></DIV>
+<DIV style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; WIDTH: 8px; HEIGHT: 26px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TOP: 1px; LEFT: 301px" id=toolbarright onmovestart=moveStart() class=toolbarright controltype="div"></DIV></DIV><script></script></body></html>

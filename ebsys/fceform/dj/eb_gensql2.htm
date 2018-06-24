@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>var obj ; 
+function uf_open() {
+	obj = fcpubdata.obj;
+	txtTable1.value = obj.table1;
+	txtTable2.value = obj.table2;
+	txtField1.value = obj.td1.innerText;
+	txtField2.value = obj.td2.innerText;
+	//cboOp.value = obj.op;
+	SetRadioValue(rdo1,obj.join);
+	e_PropWinOnload();
+}
+function uf_ok() {
+	//obj.op = cboOp.value;
+	obj.join =rdo1.value;
+	CloseBill();
+}
+function uf_del() {
+	window.returnValue = "del";
+	CloseBill();
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/><link type='text/css' rel='stylesheet' href='../css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" center="居中" keyfield controlno="SKButton:0;SKDBedit:0;checkbox:1;label:5;radio:1;listbox:0;textarea:0;combobox:1;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:2;text:4;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0" posheight="250" poswidth="420" entertype="修改" codeheader="BBB" mkbh caption="设置表间关系" type="ST" dj_sn="eb_gensql2" billtaborder="<root><taborder>txtTable1</taborder><taborder>cmdOk</taborder><taborder>cmdClose</taborder><taborder>cboOp</taborder><taborder>txtTable2</taborder><taborder>txtField1</taborder><taborder>txtField2</taborder><taborder>button2</taborder><taborder>rdo1</taborder></root>" contxml="<root><label><id>label1</id><id>label2</id><id>label3</id><id>label4</id><id>label5</id></label><radio><id>rdo1</id></radio><combobox><id>cboOp</id></combobox><button><id>cmdOk</id><id>cmdClose</id><id>button2</id></button><text><id>txtTable1</id><id>txtTable2</id><id>txtField1</id><id>txtField2</id></text></root>" BLONopen="uf_open()" toolbar="不带工具栏" window="有模式窗口" posleft postop isfile="是" OtherSave="否" idtype="1" BLONopenBefore BLONclose userType AutoResizeXml><DIV style="POSITION: absolute; WIDTH: 39px; FONT-FAMILY: 宋体; HEIGHT: 15px; TOP: 15px; FONT-WEIGHT: bold; LEFT: 16px" id=label1 onmovestart=moveStart() noWrap controltype="label" value="label1" NotBg="否">联接条件:</DIV><INPUT style="POSITION: absolute; WIDTH: 127px; HEIGHT: 20px; TOP: 58px; LEFT: 23px" id=txtTable1 onmovestart=moveStart() readOnly controltype="text"> 
+<DIV style="POSITION: absolute; WIDTH: 41px; HEIGHT: 15px; TOP: 41px; LEFT: 23px" id=label2 onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">左表:</DIV><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 6px; LEFT: 257px" id=cmdOk onmovestart=moveStart() onclick='bill_onclick("uf_ok()")' dropstyle="否" controltype="button"></BUTTON><BUTTON style="POSITION: absolute; WIDTH: 55px; HEIGHT: 26px; TOP: 6px; LEFT: 331px" id=cmdClose onmovestart=moveStart() onclick='bill_onclick("CloseBill()")' dropstyle="否" controltype="button"></BUTTON><INPUT style="POSITION: absolute; WIDTH: 127px; HEIGHT: 20px; TOP: 58px; LEFT: 262px" id=txtTable2 onmovestart=moveStart() readOnly controltype="text"><INPUT style="POSITION: absolute; WIDTH: 127px; HEIGHT: 20px; TOP: 96px; LEFT: 23px" id=txtField1 onmovestart=moveStart() readOnly controltype="text"><INPUT style="POSITION: absolute; WIDTH: 127px; HEIGHT: 20px; TOP: 96px; LEFT: 262px" id=txtField2 onmovestart=moveStart() readOnly controltype="text"> 
+<DIV style="POSITION: absolute; WIDTH: 41px; HEIGHT: 15px; TOP: 79px; LEFT: 23px" id=label3 onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">左列:</DIV><SELECT style="POSITION: absolute; WIDTH: 47px; DISPLAY: none; HEIGHT: 25px; TOP: 71px; LEFT: 177px" id=cboOp onmovestart=moveStart() controltype="combobox" temptext="=&#13;&#10;!=&#13;&#10;>&#13;&#10;>=&#13;&#10;<&#13;&#10;<=" tempvalue="=&#13;&#10;!=&#13;&#10;>&#13;&#10;>=&#13;&#10;<&#13;&#10;<=" sql check="1" sqltrans><OPTION selected value==>=</OPTION><OPTION value=!=>!=</OPTION><OPTION value=">">&gt;</OPTION><OPTION value=">=">&gt;=</OPTION><OPTION value="<">&lt;</OPTION><OPTION value="<=">&lt;=</OPTION></SELECT><BUTTON style="POSITION: absolute; WIDTH: 75px; HEIGHT: 26px; TOP: 5px; LEFT: 163px" id=button2 onmovestart=moveStart() onclick='bill_onclick("uf_del()")' dropstyle="否" controltype="button">删除联接</BUTTON> 
+<FIELDSET style="POSITION: absolute; WIDTH: 391px; HEIGHT: 84px; COLOR: #000000; TOP: 125px; LEFT: 12px" id=rdo1 onmovestart=moveStart() contentEditable=false controltype="radio" value="right" NotBg="否" temptext="只包含来自两个表的联接字段相等处的行    ( inner join )     &#13;&#10;包含左表的所有行和右表的联接字段相等处的行(left join)&#13;&#10;包含右表的所有行和左表的联接字段相等处的行(right join)" tempvalue="inner&#13;&#10;left&#13;&#10;right" legend aspect="横向"><LEGEND></LEGEND><INPUT value=inner CHECKED type=radio name=RGrdo1 text="只包含来自两个表的联接字段相等处的行" ( inner join )><SPAN onclick=RGrdo1[0].checked=true;rdo1.value=RGrdo1[0].value;RGrdo1[0].focus();>只包含来自两个表的联接字段相等处的行 ( inner join ) </SPAN>&nbsp;<BR><INPUT value=left type=radio name=RGrdo1 text="包含左表的所有行和右表的联接字段相等处的行(left" join)><SPAN onclick=RGrdo1[1].checked=true;rdo1.value=RGrdo1[1].value;RGrdo1[1].focus();>包含左表的所有行和右表的联接字段相等处的行(left join)</SPAN>&nbsp;<BR><INPUT value=right type=radio name=RGrdo1 text="包含右表的所有行和左表的联接字段相等处的行(right" join)><SPAN onclick=RGrdo1[2].checked=true;rdo1.value=RGrdo1[2].value;RGrdo1[2].focus();>包含右表的所有行和左表的联接字段相等处的行(right join)</SPAN>&nbsp;</FIELDSET> 
+<DIV style="POSITION: absolute; WIDTH: 41px; HEIGHT: 15px; TOP: 40px; LEFT: 263px" id=label4 onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">右表:</DIV>
+<DIV style="POSITION: absolute; WIDTH: 41px; HEIGHT: 15px; TOP: 79px; LEFT: 262px" id=label5 onmovestart=moveStart() noWrap controltype="label" value="label2" NotBg="否">右列:</DIV></DIV></body></html>

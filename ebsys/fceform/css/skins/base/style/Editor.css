@@ -1,0 +1,44 @@
+
+TABLE.Toolbar
+{
+	BACKGROUND-IMAGE: URL(../images/ef_design_ToolbarBg.gif);
+    BORDER-COLLAPSE: collapse;
+	HEIGHT: 26px;
+}
+/*TABLE.Toolbar TD
+{
+	BACKGROUND-IMAGE: URL(../images/ef_design_ToolbarRIGHT11.gif); 
+	BACKGROUND-REPEAT:no-repeat;
+	BACKGROUND-POSITION:RIGHT;
+	padding-right:1px;
+	HEIGHT: 26px;
+	LEFT: 0px;
+	POSITION: relative;
+	TOP: 0px;
+}
+TABLE.Toolbar TR
+{
+	BACKGROUND-IMAGE: URL(../images/ef_design_ToolbarRight.gif);
+	BACKGROUND-REPEAT:no-repeat;
+	BACKGROUND-POSITION:RIGHT;
+	padding-left:1px;
+	HEIGHT: 26px;
+	LEFT: 0px;
+	POSITION: relative;
+	TOP: 0px;
+}*/
+.rightend
+{
+	BACKGROUND: URL(../images/ef_runbackground.gif) no-repeat 0px -1256px;height:26px;padding-left:10px;
+}
+
+.leftstart
+{
+	BACKGROUND: URL(../images/ef_runbackground.gif) no-repeat 0px -1204px;height:26px;padding-left:6px;
+}
+BODY
+{
+	BACKGROUND-COLOR:#E3E3E3;
+	MARGIN: 0px;
+	PADDING: 0px;
+}

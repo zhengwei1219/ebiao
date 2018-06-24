@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>
+function uf_setValue(){
+	var sValue=txtInputValue.value;
+	var strParameter="username="+escape(sValue);
+	//SetSession(strParameter,function (){
+	//	alert("赋给Session变量的值是："+sValue)
+	//});
+	//var sRet = SendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion + "?key=setSession&"+strParameter,"")
+	//alert("ok")	
+	SetSession(strParameter);
+	alert("ok");
+}
+function uf_getValue()
+{
+	alert(GetSessionOne("username"));
+	GetSession("username=",function (arr){
+		txtName.value = unescape(arr["username"]);
+		
+	});
+	/*
+	var strParameter="username=";
+	SendHttp(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion + "?key=getSession&"+strParameter,"");
+	var arr =fcpubdata.pubSession.split("&"); 
+	txtName.value = unescape(arr["username"]);
+	*/
+}
+	</script><script src='../../fceform/js/fcopendj.js'></script><script defer src='../../fceform/js/fcsavedj.js'></script><script src='../../fceform/js/fcstring.js'></script><script src='../../fceform/js/fcnumdate.js'></script><script src='../../fceform/js/fcselfuse.js'></script><script src='../../fceform/js/fcbasecont.js'></script><script defer src='../../fceform/js/fcother.js'></script><script defer src='../../fceform/js/selectdate.js'></script><link href=../../fceform/css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../../fceform/css/shape.css'  /><link type='text/css' rel='stylesheet' href='../../fceform/css/Button.css'/><link type='text/css' rel='stylesheet' href='../../fceform/css/TextStyle.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcstring.js&#13;&#10;fcnumdate.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js" isCheckPermit="否" alertType="1" userType userToolbar='<tr rowstate="add"><td>addrow</td><td>增加行</td><td></td><td></td><td></td><td>getpubvalue%28%27%u7528%u6237.ID%27%29%3D%3D%27USR_0000001%27</td><td></td><td>%3Croot%3E%3Cuser%20chnname%3D%22%u674E%u660E%22%3EUSR_0000001%3C/user%3E%3Cprofile%20chnname%3D%22%22%3E%3C/profile%3E%3C/root%3E</td><td></td></tr><tr rowstate="add"><td>close</td><td>关闭窗口</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>' dj_sn="SessionVar" caption="Session变量" type="EX" isfile="是" posleft postop poswidth posheight toolbar="自定义工具栏" window="当前窗口" BLONopen idtype="1" entertype="展现" keyfield codeheader="BBB" OtherSave="否" contxml="<root><shape><id>Shape1</id><id>shape1</id></shape><button><id>cmdSave</id><id>button3</id></button><text><id>txtInputValue</id><id>txtName</id></text></root>" controlno="SKButton:0;SKDBedit:0;checkbox:0;label:0;radio:0;listbox:0;textarea:0;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:1;tab:0;div:0;DsMain_field:0;a:0;button:5;text:4;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" billtaborder="<root><taborder>txtInputValue</taborder><taborder>cmdSave</taborder><taborder>txtName</taborder><taborder>button3</taborder></root>" mkbh center="  " BLONopenBefore BLONclose runsave AutoResizeXml><?xml:namespace prefix = v /><v:RoundRect style="POSITION: absolute; WIDTH: 289px; HEIGHT: 37px; TOP: 39px; LEFT: 15px" id=Shape1 onmovestart=moveStart() cover="9" controltype="shape" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "#bcdef8" strokecolor = "#0080c0" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect><BUTTON style="BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; BACKGROUND-COLOR: #95c2e3; WIDTH: 120px; DISPLAY: block; FONT-FAMILY: ; HEIGHT: 20px; FONT-SIZE: 12px; BORDER-TOP: 0px; TOP: 47px; BORDER-RIGHT: 0px; LEFT: 170px" id=cmdSave onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_setValue()")' dropstyle="否">赋值给Session变量</BUTTON> <INPUT style="POSITION: absolute; TEXT-ALIGN: left; BACKGROUND-COLOR: #ffffff; WIDTH: 124px; DISPLAY: block; HEIGHT: 20px; FONT-SIZE: 12px; TOP: 47px; LEFT: 29px" id=txtInputValue onmovestart=moveStart() value=value1 size=22 controltype="text" CanSelect="false"></INPUT> </INPUT><v:RoundRect style="POSITION: absolute; WIDTH: 273px; HEIGHT: 37px; TOP: 39px; LEFT: 325px" id=shape1 onmovestart=moveStart() cover="9" controltype="shape" arcsize = "4321f" coordsize = "21600,21600" fillcolor = "#0080ff" strokecolor = "black" strokeweight = ".75pt"><v:stroke></v:stroke></v:RoundRect><INPUT style="POSITION: absolute; WIDTH: 119px; HEIGHT: 20px; TOP: 47px; LEFT: 338px" id=txtName onmovestart=moveStart() size=21 controltype="text"><BUTTON style="POSITION: absolute; WIDTH: 115px; HEIGHT: 20px; TOP: 47px; LEFT: 474px" id=button3 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_getValue()")' dropstyle="否">接收Session变量</BUTTON></DIV></body></html>

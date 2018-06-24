@@ -1,0 +1,32 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><title>dataset控件</title></head>
+<body leftmargin='0' topmargin='0'>
+<table id="title" border="1" cellpadding="0" cellspacing="0" width='99.8%' bgcolor="#99ccff">
+<tr><td style="HEIGHT:40px">&nbsp;<img src="image/line.bmp" style="TOP:4px;left:10px;">  eForm自定义表单<br>
+&nbsp;<b><font style='font-size:13px;'>dataset控件</font></b></td>
+</tr>
+</table>
+
+
+&nbsp;<a href='online_index.htm'><FONT style="font-size:12px;">返回首页</FONT></a><br>
+
+&nbsp;<b><FONT style="font-size:12px;">dataset控件</FONT></b></td></tr>
+<table>
+<tr><td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT style="font-size:12px;">dataset是表单开发的数据层,后台数据库中的数据和前台界面上的控件之间通过dataset来进行数据交互.读数据时,执行数据集属性窗口中的SQL语句,其运行结果以XML串方式来初始化数据集,由数据集将数据分发到它所绑定的控件上.这样便实现了将数据库中的数据读出到界面上的过程了.写数据时,先将数据集所绑定的控件上的数据保存到数据集中,即用数据集来收集表单上所有要保存的数据,然后将一个表单的所有数据集的数据提交到后台,在后台将数据转换成SQL命令,然后再执行这些SQL命令保存数据到数据库中.这样便实现 了将界面上的输入数据保存到数据库中了.<br>
+数据集中的数据用xml属性来取得,即ds.xml便可取得整个数据集的数据,它是XML格式的,包含字段信息.也可以用ds.oDom来取得数据集中数据的dom对象.<br>
+数据集绑定到界面上的控件分两类,一个是grid控件,另一个是其它零散控件,如text,radio,dropdownlist等.数据集中还含有一个当前行记录的数组,用它标识当前记录以及当前行指针.数据集刚打开时,
+第一条记录是当前记录.数据集的当前记录的某个字段的值是用代码: ds.Field('字段名').Value ,可以用它来取值和赋值.<br>
+数据集中的数据(指 ds.xml)先取出当前行记录到这个记录当前行的数组中,可以用ds.MoveFirst() ds.MovePrev() ds.MoveNext() ds.MoveLast() ds.SetPos(pos) 等方法来移动当前行记录, 如当前行记录的数组中发生变化,可以通过 ds.Update()方法将变动值更新到数据集中(即改动了ds.xml的值).如果要将当前行记录刷新到数据集绑定的零散控件上,可以执行 ds.fset_cont1()方法,刷新到grid控件上是执行ds.fset_cont()方法. 反过来,要将零散控件上的值保存到数据集的当前行数组中的话,要执行 ds.cont1_fset()方法,将零散控件上的当前行的值保存到数据集的当前行数组中的话,要执行 ds.cont_onDataChange()方法, 如果要直接将数据集中的所有行的数据(指 ds.xml)刷新到grid上,可以执行 ds.dset_cont()方法.<br>
+
+
+
+
+ </FONT>
+</td></tr>
+</table>
+<br>
+
+</body>
+</html>
+

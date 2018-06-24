@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<TreeNode>
+	<TreeNode  text="无限级XML树型" href="" target="" />
+	<TreeNode text="fason"/>
+	<TreeNode text="功能">
+		<TreeNode text="异步加载/一次加载"/>
+		<TreeNode text="静态/数据库方式加载">
+			<TreeNode text="XML数据文件"/>
+			<TreeNode text="数据库"/>
+		</TreeNode>		
+		<TreeNode text="Arrow键操作"/>
+	</TreeNode>
+</TreeNode>

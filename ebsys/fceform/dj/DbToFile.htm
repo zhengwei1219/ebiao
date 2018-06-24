@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns:fc xmlns:v="urn:schemas-microsoft-com:vml">
+	<HEAD>
+	    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<STYLE> .userData{behavior:url(#default#userData);}
+	        @import url(../../fceform/css/dj.css); 
+	    </STYLE>
+		<script src="../../fceform/js/MicrosoftAjax.js"></script>
+		<script src="../../fceform/js/fcpub.js"></script>
+		<script src="../../fceform/js/fcrundj.js"></script>
+		<script src="../../fceform/js/tabpane.js"></script>		
+	</HEAD>
+	<body onload="pub_window_onload()"
+		onkeydown="RunTabindex()" onbeforeunload="pub_window_onbeforeunload()" onkeypress="pub_window_onkeypress()"
+		onresize="pub_window_onresize()">
+		<script>pub_djhtm();</script>
+<script>function uf_test(){
+	window.open(location.protocol+"//"+location.host+ fcpubdata.servletPath + "/WebBill"+fcpubdata.dotnetVersion+"?key=DbToFile&type="+radio1.value,"");
+}</script><script src='../js/fcopendj.js'></script><script defer src='../js/fcsavedj.js'></script><script src='../js/fcselfuse.js'></script><script src='../js/fcbasecont.js'></script><script defer src='../js/fcother.js'></script><script defer src='../js/selectdate.js'></script><script src='../../fceformext/js/userfunc.js'></script><link href=../css/tabstyle.css type=text/css rel=stylesheet><link type='text/css' rel='stylesheet' href='../css/Button.css'/>
+<DIV id=SKbillsheet jslib="fcopendj.js&#13;&#10;fcsavedj.js&#13;&#10;fcselfuse.js&#13;&#10;fcbasecont.js&#13;&#10;fcother.js&#13;&#10;selectdate.js&#13;&#10;~userfunc.js" dj_sn="DbToFile" caption="备份数据库的内容供下载" type="ST" isfile="是" center="  " posleft postop poswidth posheight toolbar="不带工具栏" window="当前窗口" BLONopen BLONopenBefore BLONclose userType alertType="1" isCheckPermit="否" billtaborder="<root><taborder>button1</taborder><taborder>radio1</taborder></root>" controlno="SKButton:0;SKDBedit:0;checkbox:1;label:1;radio:1;listbox:0;textarea:1;combobox:0;password:0;upload:0;SKDBtext:0;chart:0;dbimg:0;img:0;SKBILLgrid:0;shape:0;tab:0;div:0;DsMain_field:0;a:0;button:1;text:0;hr:0;checkboxlist:0;radiolist:0;dropdownlist:0;grid:0;dataset:0;spin:0;excel:0;tree:0;ebshow:0;ebiao:0;layout:0;page:0" contxml="<root><label><id>label1</id></label><radio><id>radio1</id></radio><button><id>button1</id></button></root>" AutoResizeXml><BUTTON style="POSITION: absolute; WIDTH: 88px; HEIGHT: 25px; TOP: 1px; LEFT: 226px" id=button1 onmovestart=moveStart() controltype="button" onclick='bill_onclick("uf_test()")'>生成并下载</BUTTON><LABEL style="POSITION: absolute; WIDTH: 147px; HEIGHT: 22px; TOP: 6px; LEFT: 12px" id=label1 onmovestart=moveStart() controltype="label" inputTag="否">选择要生成的内容:</LABEL> 
+<FIELDSET style="POSITION: absolute; WIDTH: 319px; HEIGHT: 65px; TOP: 23px; LEFT: 10px" id=radio1 onmovestart=moveStart() contentEditable=false controltype="radio" value="1" temptext="生成系统表记录及用户表结构&#13;&#10;生成系统表记录及用户表结构及用户表记录" tempvalue="1&#13;&#10;2" aspect="纵向" legend><LEGEND></LEGEND><INPUT id=RGradio11 onclick=radio1.value=RGradio1[0].value; value=1 CHECKED type=radio name=RGradio1 text="生成系统表记录及用户表结构"><SPAN>生成系统表记录及用户表结构</SPAN>&nbsp;<BR><INPUT id=RGradio12 onclick=radio1.value=RGradio1[1].value; value=2 type=radio name=RGradio1 text="生成系统表记录及用户表结构及用户表记录"><SPAN>生成系统表记录及用户表结构及用户表记录</SPAN>&nbsp;</FIELDSET></DIV></body></html>
